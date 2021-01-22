@@ -13,7 +13,7 @@ Log_Write(const path[], const str[], {Float,_}:...)
 	    File:file,
 	    string[1024]
 	;
-	if ((start = strfind(path, "/")) != -1) {
+	if((start = strfind(path, "/")) != -1) {
 	    strmid(string, path, 0, start + 1);
 	}
 	#emit LOAD.S.pri 8
@@ -21,10 +21,10 @@ Log_Write(const path[], const str[], {Float,_}:...)
 
 	file = fopen(path, io_append);
 
-	if (!file)
+	if(!file)
 	    return printf("[LOG ERROR]: File '%s' doesn't exist!", path);
 
-	if (args > 8)
+	if(args > 8)
 	{
 		#emit ADDR.pri str
 		#emit STOR.pri start
@@ -63,16 +63,16 @@ FormatNumber(number, prefix[] = "$")
 
 	format(value, sizeof(value), "%d", (number < 0) ? (-number) : (number));
 
-	if ((length = strlen(value)) > 3)
+	if((length = strlen(value)) > 3)
 	{
 		for (new i = length, l = 0; --i >= 0; l ++) {
-		    if ((l > 0) && (l % 3 == 0)) strins(value, ",", i + 1);
+		    if((l > 0) && (l % 3 == 0)) strins(value, ",", i + 1);
 		}
 	}
-	if (prefix[0] != 0)
+	if(prefix[0] != 0)
 	    strins(value, prefix, 0);
 
-	if (number < 0)
+	if(number < 0)
 		strins(value, "-", 0);
 
 	return value;
@@ -222,28 +222,28 @@ stock IsValidNick(name[])
 		Underscore;
 	
 	split(name, namesplit, '_');
-    if (strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
+    if(strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
     {
         // Firstname and Lastname contains more than 1 character + it there are separated with '_' char. Continue...
     }
     else return 0; // No need to continue...
 
     FirstLetterOfFirstname = namesplit[0][0];
-	if (FirstLetterOfFirstname >= 'A' && FirstLetterOfFirstname <= 'Z')
+	if(FirstLetterOfFirstname >= 'A' && FirstLetterOfFirstname <= 'Z')
 	{
         // First letter of Firstname is capitalized. Continue...
 	}
 	else return 0; // No need to continue...
 
 	FirstLetterOfLastname = namesplit[1][0];
-    if (FirstLetterOfLastname >= 'A' && FirstLetterOfLastname <= 'Z')
+    if(FirstLetterOfLastname >= 'A' && FirstLetterOfLastname <= 'Z')
     {
 		// First letter of Lastname is capitalized. Continue...
 	}
 	else return 0; // No need to continue...
 
 	ThirdLetterOfLastname = namesplit[1][2];
-    if (ThirdLetterOfLastname >= 'A' && ThirdLetterOfLastname <= 'Z' || ThirdLetterOfLastname >= 'a' && ThirdLetterOfLastname <= 'z')
+    if(ThirdLetterOfLastname >= 'A' && ThirdLetterOfLastname <= 'Z' || ThirdLetterOfLastname >= 'a' && ThirdLetterOfLastname <= 'z')
     {
 		// Third letter of Lastname can be uppercase and lowercase (uppercase for Lastnames like McLaren). Continue...
 	}
@@ -251,7 +251,7 @@ stock IsValidNick(name[])
 
     for(new i = 0; i < length; i++)
 	{
-		if (name[i] != FirstLetterOfFirstname && name[i] != FirstLetterOfLastname && name[i] != ThirdLetterOfLastname && name[i] != '_')
+		if(name[i] != FirstLetterOfFirstname && name[i] != FirstLetterOfLastname && name[i] != ThirdLetterOfLastname && name[i] != '_')
 		{
 			if(name[i] >= 'a' && name[i] <= 'z')
 			{
@@ -261,10 +261,10 @@ stock IsValidNick(name[])
 		}
 
 		// This checks that '_' char can be used only one time (to prevent names like this Firstname_Lastname_Something)...
-		if (name[i] == '_')
+		if(name[i] == '_')
 		{
 			Underscore++;
-			if (Underscore > 1) return 0; // No need to continue...
+			if(Underscore > 1) return 0; // No need to continue...
 		}
 	}
 	return 1; // All check are ok, Name is valid...
@@ -279,40 +279,40 @@ IsNumeric(const string[])
 {
 	for(new i = 0, j = strlen(string); i < j; i++)
 	{
-		if (string[i] > '9' || string[i] < '0') return 0;
+		if(string[i] > '9' || string[i] < '0') return 0;
 	}
 	return 1;
 }
 
 UnixTimestampToTime(timestamp, compare = -1) 
 {
-    if (compare == -1) {
+    if(compare == -1) {
         compare = gettimestamp();
     }
     new
         n,
 		Float:d = (timestamp > compare) ? timestamp - compare : compare - timestamp,
         returnstr[32];
-    if (d < 60) {
+    if(d < 60) {
         format(returnstr, sizeof(returnstr), "< 1 minute");
         return returnstr;
-    } else if (d < 3600) {
+    } else if(d < 3600) {
         n = floatround(floatdiv(d, 60.0), floatround_floor);
         format(returnstr, sizeof(returnstr), "minuta");
-    } else if (d < 86400) {
+    } else if(d < 86400) {
         n = floatround(floatdiv(d, 3600.0), floatround_floor);
         format(returnstr, sizeof(returnstr), "sat(i)");
-    } else if (d < 2592000) {
+    } else if(d < 2592000) {
         n = floatround(floatdiv(d, 86400.0), floatround_floor);
         format(returnstr, sizeof(returnstr), "dan(a)");
-    } else if (d < 31536000) {
+    } else if(d < 31536000) {
         n = floatround(floatdiv(d, 2592000.0), floatround_floor);
         format(returnstr, sizeof(returnstr), "mjesec");
     } else {
         n = floatround(floatdiv(d, 31536000.0), floatround_floor);
         format(returnstr, sizeof(returnstr), "godina");
     }
-    if (n == 1) {
+    if(n == 1) {
         format(returnstr, sizeof(returnstr), "1 %s", returnstr);
     } else {
         format(returnstr, sizeof(returnstr), "%d %ss", n, returnstr);
@@ -388,13 +388,13 @@ IsSafeForTextDraw(str[])
 	new safetil = -5;
 	for (new i = 0; i < strlen(str); i++) 
 	{
-		if ((str[i] == 126) && (i > safetil))
+		if((str[i] == 126) && (i > safetil))
 		{
-			if (i >= strlen(str) - 1) // not enough room for the tag to end at all. 
+			if(i >= strlen(str) - 1) // not enough room for the tag to end at all. 
 				return false;
-			if (str[i + 1] == 126)
+			if(str[i + 1] == 126)
 				return false; // a tilde following a tilde.
-			if (str[i + 2] != 126)
+			if(str[i + 2] != 126)
 				return false; // a tilde not followed by another tilde after 2 chars
 			safetil = i + 2; // tilde tag was verified as safe, ignore anything up to this location from further checks (otherwise it'll report tag end tilde as improperly started tag..).
 		}

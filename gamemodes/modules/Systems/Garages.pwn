@@ -211,7 +211,7 @@ forward OnHouseGaragesLoad();
 public OnHouseGaragesLoad()
 {
     new num_rows = cache_num_rows();
-    if (!num_rows) return printf("MySQL Report: No garages exist to load.");
+    if(!num_rows) return printf("MySQL Report: No garages exist to load.");
 
     for (new row = 0; row < num_rows; row++)
     {
@@ -253,7 +253,7 @@ CheckPlayerGarageInt(playerid)
 {
     foreach(new garage: Garage)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
 		{
 			Player_SetInGarage(playerid, garage);
 			break;
@@ -267,7 +267,7 @@ GetGarageFromSQL(sqlid)
     new garageid = -1;
     foreach(new garage: Garage)
 	{
-		if(GarageInfo[ garage ][ gOwnerID ] == sqlid) 
+		if(GarageInfo[garage][gOwnerID] == sqlid) 
 		{
 			garageid = garage;
 			break;
@@ -516,14 +516,14 @@ hook OnGameModeInit()
 
 hook function ResetPlayerVariables(playerid)
 {
-    if (GarageBuyer[playerid] != INVALID_PLAYER_ID)
+    if(GarageBuyer[playerid] != INVALID_PLAYER_ID)
     {
         new buyer = GarageBuyer[playerid];
         GarageSeller[buyer]    = INVALID_PLAYER_ID;
         GarageBuyer [playerid] = INVALID_PLAYER_ID;
         GaragePrice [buyer]    = 0;
     }
-    if (GarageSeller[playerid] != INVALID_PLAYER_ID)
+    if(GarageSeller[playerid] != INVALID_PLAYER_ID)
     {
         new seller = GarageSeller[playerid];
         GarageBuyer [seller]   = INVALID_PLAYER_ID;
@@ -540,14 +540,14 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 {
     new 
         garage = Area_GetGarageID(areaid);
-    if (!Iter_Contains(Garage, garage))
+    if(!Iter_Contains(Garage, garage))
         return 1;
     
     new
         string[128];
 
     CreateGarageInfoTD(playerid);
-    if (!GarageInfo[garage][gOwnerID])            
+    if(!GarageInfo[garage][gOwnerID])            
     {
         format(string, sizeof(string), "Garaza je na prodaju~n~Adresa: %s~n~Cijena: %d~g~$~n~",
             GarageInfo[garage][gAdress],
@@ -576,7 +576,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
     new 
         garage = Area_GetGarageID(areaid);
     
-    if (!Iter_Contains(Garage, garage)) 
+    if(!Iter_Contains(Garage, garage)) 
         return 1;
 
     DestroyGarageInfoTD(playerid);
@@ -589,14 +589,14 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    if (dialogid == DIALOG_GARAGE_SELL)
+    if(dialogid == DIALOG_GARAGE_SELL)
     {
-        if (response)
+        if(response)
         {
             new seller = GarageSeller[playerid];
-            if (seller == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio prodaju garaze!");
-            if (!IsPlayerConnected(seller)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prodavac nije online!");
-            if (AC_GetPlayerMoney(playerid) < GaragePrice[playerid]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", GaragePrice[playerid]);
+            if(seller == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio prodaju garaze!");
+            if(!IsPlayerConnected(seller)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prodavac nije online!");
+            if(AC_GetPlayerMoney(playerid) < GaragePrice[playerid]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", GaragePrice[playerid]);
 
             new garage = PlayerKeys[seller][pGarageKey];
             PlayerKeys[playerid][pGarageKey] = PlayerKeys[seller][pGarageKey];
@@ -633,7 +633,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:create_garage(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337)
+    if(PlayerInfo[playerid][pAdmin] < 1337)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
         return 1;
@@ -644,9 +644,9 @@ CMD:create_garage(playerid, params[])
         garage = Iter_Free(Garage),
         adress[16];
 
-    if (sscanf(params, "ddds[16]", type, price, houseid, adress)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /create_garage [tip][cijena][houseid][adresa]");
-    if (type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /create_garage [tip] [cijena] [houseid] [adresa]"), SendClientMessage(playerid, COLOR_GREY, "[!] - Ako ne zelite da garaza bude spojena uz kucu unesite pod 'houseid' -> 9999'.");
-    if (strlen(adress) < 1 || strlen(adress) > 16) return SendErrorMessage(playerid, "Adresa mora imati minimalno 1, a maksimalno 16 slova!");
+    if(sscanf(params, "ddds[16]", type, price, houseid, adress)) return SendClientMessage(playerid, COLOR_RED, "[?]: /create_garage [tip][cijena][houseid][adresa]");
+    if(type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[?]: /create_garage [tip][cijena][houseid][adresa]"), SendClientMessage(playerid, COLOR_GREY, "[!] - Ako ne zelite da garaza bude spojena uz kucu unesite pod 'houseid' -> 9999'.");
+    if(strlen(adress) < 1 || strlen(adress) > 16) return SendErrorMessage(playerid, "Adresa mora imati minimalno 1, a maksimalno 16 slova!");
 
     GetPlayerPos(playerid, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]);
     GarageInfo[garage][gOwnerID]            = 0;
@@ -689,21 +689,21 @@ CMD:garage(playerid, params[])
     new
         param[10],
         garage = PlayerKeys[playerid][pGarageKey];
-    if (sscanf(params, "s[10] ", param))
+    if(sscanf(params, "s[10] ", param))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage [odabir]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /garage [odabir]");
         SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: buy - sell - lock - locate - changeint(admin)");
         return 1;
     }
 
-    if (!strcmp(param, "lock", true))
+    if(!strcmp(param, "lock", true))
     {
-        if (garage == -1)
+        if(garage == -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete garazu!");
             return 1;
         }
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ])
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ])
             || Player_InGarage(playerid) != INVALID_HOUSE_ID)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje garaze!");
@@ -711,13 +711,13 @@ CMD:garage(playerid, params[])
         }
 
         new string[64];
-        if (!GarageInfo[garage][gLocked])
+        if(!GarageInfo[garage][gLocked])
         {
             GarageInfo[garage][gLocked] = 1;
             GameTextForPlayer(playerid, "~r~Garaza zakljucana", 2000, 1);
             format(string, sizeof(string), "* %s zakljucava garazu.", GetName(playerid));
         }
-        else if (GarageInfo[garage][gLocked])
+        else if(GarageInfo[garage][gLocked])
         {
             GarageInfo[garage][gLocked] = 0;
             GameTextForPlayer(playerid, "~g~Garaza otkljucana", 2000, 1);
@@ -726,9 +726,9 @@ CMD:garage(playerid, params[])
         SendClientMessage(playerid, COLOR_PURPLE, string);
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
     }
-    else if (!strcmp(param, "buy", true))
+    else if(!strcmp(param, "buy", true))
     {
-        if (garage != -1)
+        if(garage != -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete garazu!");
             return 1;
@@ -736,17 +736,17 @@ CMD:garage(playerid, params[])
 
         new 
             nearGarage = Player_InfrontGarage(playerid);
-        if (nearGarage == -1)
+        if(nearGarage == -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
             return 1;
         }
-        if (AC_GetPlayerMoney(playerid) < GarageInfo[nearGarage][gPrice])
+        if(AC_GetPlayerMoney(playerid) < GarageInfo[nearGarage][gPrice])
         {
             SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)", GarageInfo[nearGarage][gPrice]);
             return 1;
         }
-        if (GarageInfo[nearGarage][gHouseID] != INVALID_HOUSE_ID && GarageInfo[nearGarage][gHouseID] != PlayerKeys[playerid][pHouseKey])
+        if(GarageInfo[nearGarage][gHouseID] != INVALID_HOUSE_ID && GarageInfo[nearGarage][gHouseID] != PlayerKeys[playerid][pHouseKey])
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu na kojoj je garaza!");
             return 1;
@@ -763,15 +763,15 @@ CMD:garage(playerid, params[])
         );
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili garazu za (%d$)", GarageInfo[nearGarage][gPrice]);
     }
-    else if (!strcmp(param, "sell", true))
+    else if(!strcmp(param, "sell", true))
     {
-        if (garage == -1)
+        if(garage == -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete garazu!");
             return 1;
         }
 
-        if (GarageBuyer[playerid] != INVALID_PLAYER_ID)
+        if(GarageBuyer[playerid] != INVALID_PLAYER_ID)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste nekome ponudili prodaju garaze!");
             return 1;
@@ -780,17 +780,17 @@ CMD:garage(playerid, params[])
         new
             giveplayerid,
             price;
-        if (sscanf(params, "s[10]ud", param, giveplayerid, price))
-            return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage sell [playerid / Part of name][cijena]");
-        if (!IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid])
+        if(sscanf(params, "s[10]ud", param, giveplayerid, price))
+            return SendClientMessage(playerid, COLOR_RED, "[?]: /garage sell [playerid / Part of name][cijena]");
+        if(!IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
-        if (!ProxDetectorS(5.0, playerid, giveplayerid))
+        if(!ProxDetectorS(5.0, playerid, giveplayerid))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
-        if (PlayerKeys[giveplayerid][pGarageKey] != -1)
+        if(PlayerKeys[giveplayerid][pGarageKey] != -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kupac vec posjeduje garazu!");
-        if (GarageInfo[garage][gHouseID] != INVALID_HOUSE_ID && PlayerKeys[giveplayerid][pHouseKey] != GarageInfo[garage][gHouseID])
+        if(GarageInfo[garage][gHouseID] != INVALID_HOUSE_ID && PlayerKeys[giveplayerid][pHouseKey] != GarageInfo[garage][gHouseID])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik nema tu kucu!");
-        if (price < 5000 || price > 999999)
+        if(price < 5000 || price > 999999)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prodajna cijena garaze ne moze biti manja od 5000$, ni veca od 999 999$!");
 
         GarageSeller[giveplayerid] = playerid;
@@ -803,24 +803,24 @@ CMD:garage(playerid, params[])
                             price
         );
     }
-    else if (!strcmp(param, "locate", true))
+    else if(!strcmp(param, "locate", true))
     {
-        if (garage == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete garazu!");
+        if(garage == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete garazu!");
 
         SetPlayerCheckpoint(playerid, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], 5.0);
     }
-    else if (!strcmp(param, "changeint", true))
+    else if(!strcmp(param, "changeint", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 
         new type, garageid;
-        if (sscanf(params, "s[10]ii", param, garageid, type))
+        if(sscanf(params, "s[10]ii", param, garageid, type))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage changeint [garageid][tip (0-3)]");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /garage changeint [garageid][tip (0-3)]");
             return 1;
         }
-        if (type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage changeint [tip (0-3)]");
-        if (!Iter_Contains(Garage, garageid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
+        if(type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[?]: /garage changeint [tip (0-3)]");
+        if(!Iter_Contains(Garage, garageid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
 
         GarageInfo[garageid][gExitX] = GaragesIntInfo[type][giX];
         GarageInfo[garageid][gExitY] = GaragesIntInfo[type][giY];
@@ -833,16 +833,16 @@ CMD:garage(playerid, params[])
             GarageInfo[garageid][gSQLID]
         );
     }
-    else if (!strcmp(param, "delete", true))
+    else if(!strcmp(param, "delete", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
         new 
             garageid = Player_InfrontGarage(playerid);
-        if (garageid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
+        if(garageid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
 
         mysql_fquery(g_SQL, "DELETE FROM server_garages WHERE id = '%d' LIMIT 1", GarageInfo[garageid][gSQLID]);
 
-        if (IsValidDynamicPickup(GarageInfo[garageid][gEnterPck]))
+        if(IsValidDynamicPickup(GarageInfo[garageid][gEnterPck]))
             DestroyDynamicPickup(GarageInfo[garageid][gEnterPck]);
         
         if(IsValidDynamicArea(GarageInfo[garageid][gAreaID]))
@@ -863,7 +863,7 @@ CMD:garage(playerid, params[])
     }
     else
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage [odabir]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /garage [odabir]");
         SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: buy - sell - lock - locate - changeint(admin) - delete(admin)");
         return 1;
     }
@@ -872,19 +872,19 @@ CMD:garage(playerid, params[])
 
 CMD:garageo(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1)
+    if(PlayerInfo[playerid][pAdmin] < 1)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
         return 1;
     }
 
     new garage;
-    if (sscanf(params, "i", garage))
+    if(sscanf(params, "i", garage))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageo [garageid]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /garageo [garageid]");
         return 1;
     }
-    if (!Iter_Contains(Garage, garage))
+    if(!Iter_Contains(Garage, garage))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ta garaza ne postoji!");
         return 1;
@@ -896,19 +896,19 @@ CMD:garageo(playerid, params[])
 
 CMD:garageentrance(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337)
+    if(PlayerInfo[playerid][pAdmin] < 1337)
     {
         SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
         return 1;
     }
 
     new proplev;
-    if (sscanf(params, "i", proplev))
+    if(sscanf(params, "i", proplev))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageentrance [garageid]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /garageentrance [garageid]");
         return 1;
     }
-    if (!Iter_Contains(Garage, proplev))
+    if(!Iter_Contains(Garage, proplev))
     {
         SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", proplev);
         return 1;
@@ -939,18 +939,18 @@ CMD:customgarageint(playerid, params[])
         Float:X, Float:Y, Float:Z,
         garageid;
 
-    if (PlayerInfo[playerid][pAdmin] < 1337)
+    if(PlayerInfo[playerid][pAdmin] < 1337)
     {
         SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
         return 1;
     }
-    if (sscanf(params, "ifff", garageid, X, Y, Z))
+    if(sscanf(params, "ifff", garageid, X, Y, Z))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /customgarageint [garageid] [X] [Y] [Z]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /customgarageint [garageid][X][Y][Z]");
         SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
         return 1;
     }
-    if (garageid < 0 || garageid >= MAX_GARAGES)
+    if(garageid < 0 || garageid >= MAX_GARAGES)
     {
         SendClientMessage(playerid,COLOR_RED, "Nema garaze sa tim ID!");
         return 1;

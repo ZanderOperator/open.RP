@@ -193,7 +193,7 @@ static Float:internal_BS_GPATP(Float:x2, Float:y2, Float:X, Float:Y)
 	DX = floatabs(floatsub(x2,X));
 	DY = floatabs(floatsub(y2,Y));
 
-	if (DY == 0.0 || DX == 0.0)
+	if(DY == 0.0 || DX == 0.0)
 	{
 		if(DY == 0 && DX > 0) angle = 0.0;
 		else if(DY == 0 && DX < 0) angle = 180.0;
@@ -224,7 +224,7 @@ static internal_BS_IsCameraAimingAt(weaponid,Float:x, Float:y, Float:z,Float:vec
 	{
 		case 34,35,36:
 		{
-			if (internal_BS_DCTTL(camera_x, camera_y, camera_z, x, y, z, vector_x, vector_y, vector_z) < radius) return true;
+			if(internal_BS_DCTTL(camera_x, camera_y, camera_z, x, y, z, vector_x, vector_y, vector_z) < radius) return true;
 			return false;
 		}
 		case 30,31: {vertical = 4.0; horizontal = -1.6;}
@@ -236,9 +236,9 @@ static internal_BS_IsCameraAimingAt(weaponid,Float:x, Float:y, Float:z,Float:vec
 
 	internal_BS_GXYIFOP(resize_x, resize_y, internal_BS_GPATP(0, 0, vector_x, vector_y)+horizontal, floatcos(angle+vertical, degrees));
 	#if !defined BUSTAIM_DISABLE_WSTATS
-		if ((BustAim_g_DCTTL_temp = internal_BS_DCTTL(camera_x, camera_y, camera_z, x, y, z, resize_x, resize_y, resize_z)) < radius) return true;
+		if((BustAim_g_DCTTL_temp = internal_BS_DCTTL(camera_x, camera_y, camera_z, x, y, z, resize_x, resize_y, resize_z)) < radius) return true;
 	#else
-		if (internal_BS_DCTTL(camera_x, camera_y, camera_z, x, y, z, resize_x, resize_y, resize_z) < radius) return true;
+		if(internal_BS_DCTTL(camera_x, camera_y, camera_z, x, y, z, resize_x, resize_y, resize_z) < radius) return true;
 	#endif
 	return false;
 }

@@ -388,7 +388,7 @@ public OPBA_AirbrakeTeleport(playerid)
 							#if defined OnPlayerBreakAir
 
 								#if defined _FLaggersIncluded_
-									if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+									if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 									{
 										OPBA_PlayerDelayer{playerid} = true;
 										SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -419,7 +419,7 @@ public OPBA_AirbrakeTeleport(playerid)
 								#if defined OnPlayerBreakAir
 
 									#if defined _FLaggersIncluded_
-										if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+										if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 										{
 											OPBA_PlayerDelayer{playerid} = true;
 											SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -443,7 +443,7 @@ public OPBA_AirbrakeTeleport(playerid)
 							#if defined OnPlayerBreakAir
 
 								#if defined _FLaggersIncluded_
-									if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+									if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 									{
 										OPBA_PlayerDelayer{playerid} = true;
 										SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -474,7 +474,7 @@ public OPBA_AirbrakeTeleport(playerid)
 								#if defined OnPlayerBreakAir
 								
 									#if defined _FLaggersIncluded_
-										if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+										if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 										{
 											OPBA_PlayerDelayer{playerid} = true;
 											SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -505,7 +505,7 @@ public OPBA_AirbrakeTeleport(playerid)
 						#if defined OnPlayerBreakAir
 							
 							#if defined _FLaggersIncluded_
-								if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+								if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 								{
 									OPBA_PlayerDelayer{playerid} = true;
 									SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -536,7 +536,7 @@ public OPBA_AirbrakeTeleport(playerid)
 							#if defined OnPlayerBreakAir
 								
 								#if defined _FLaggersIncluded_
-									if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+									if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 									{
 										OPBA_PlayerDelayer{playerid} = true;
 										SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -562,7 +562,7 @@ public OPBA_AirbrakeTeleport(playerid)
 						#if defined OnPlayerBreakAir
 							
 							#if defined _FLaggersIncluded_
-								if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+								if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 								{
 									OPBA_PlayerDelayer{playerid} = true;
 									SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -593,7 +593,7 @@ public OPBA_AirbrakeTeleport(playerid)
 							#if defined OnPlayerBreakAir
 								
 								#if defined _FLaggersIncluded_
-									if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+									if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 									{
 										OPBA_PlayerDelayer{playerid} = true;
 										SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -623,7 +623,7 @@ public OPBA_AirbrakeTeleport(playerid)
 							#if defined OnPlayerBreakAir
 							
 								#if defined _FLaggersIncluded_
-									if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+									if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 									{
 										OPBA_PlayerDelayer{playerid} = true;
 										SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -654,7 +654,7 @@ public OPBA_AirbrakeTeleport(playerid)
 								#if defined OnPlayerBreakAir
 								
 									#if defined _FLaggersIncluded_
-										if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+										if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 										{
 											OPBA_PlayerDelayer{playerid} = true;
 											SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -678,7 +678,7 @@ public OPBA_AirbrakeTeleport(playerid)
 							#if defined OnPlayerBreakAir
 								
 								#if defined _FLaggersIncluded_
-									if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+									if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 									{
 										OPBA_PlayerDelayer{playerid} = true;
 										SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -709,7 +709,7 @@ public OPBA_AirbrakeTeleport(playerid)
 								#if defined OnPlayerBreakAir
 									
 									#if defined _FLaggersIncluded_
-										if( (IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
+										if((IsPlayerLagging(playerid) || OPBA_WarnsIncrease{playerid} > 0) && !OPBA_PlayerDelayer{playerid})
 										{
 											OPBA_PlayerDelayer{playerid} = true;
 											SetTimerEx("OPBA_PlayerRDelayer", 4100, false, "i", playerid);
@@ -808,12 +808,12 @@ public OPBA_SetVehicleToRespawn(vehicleid)
 	if(vehicleid < 0 || vehicleid > MAX_VEHICLES) return 0;
 	if(OPBA_VOwner[vehicleid] != INVALID_PLAYER_ID)
 	{
-		OPBA_Player[ OPBA_VOwner[vehicleid] ][RacVRspwn] = true;
+		OPBA_Player[OPBA_VOwner[vehicleid]][RacVRspwn] = true;
 		SetTimerEx("OPBA_RVRSPWN", 1000, false, "i", OPBA_VOwner[vehicleid]);
 	}
 	else if(OPBA_VPassenger[vehicleid] != INVALID_PLAYER_ID)
 	{
-		OPBA_Player[ OPBA_VPassenger[vehicleid] ][RacPassengerTP] = true;
+		OPBA_Player[OPBA_VPassenger[vehicleid]][RacPassengerTP] = true;
 		SetTimerEx("OPBA_PassengerRTP", OPBA_RESET_TIME, false, "i", OPBA_VPassenger[vehicleid]);
 	}
 
@@ -868,7 +868,7 @@ public OPBA_SetVehiclePos(vehicleid, Float:x, Float:y, Float:z)
 
 	else if(OPBA_VPassenger[vehicleid] != INVALID_PLAYER_ID)
 	{
-		OPBA_Player[ OPBA_VPassenger[vehicleid] ][RacPassengerTP] = true;
+		OPBA_Player[OPBA_VPassenger[vehicleid]][RacPassengerTP] = true;
 		SetTimerEx("OPBA_PassengerRTP", 1000, false, "i", OPBA_VPassenger[vehicleid]);
 
 		OPBA_Player[OPBA_VPassenger[vehicleid]][RacX] = x, OPBA_Player[OPBA_VPassenger[vehicleid]][RacY] = y,
@@ -914,9 +914,9 @@ public OnVehicleDeath(vehicleid, killerid)
 {
 	if(OPBA_VPassenger[vehicleid] != INVALID_PLAYER_ID)
 	{
-		if(!OPBA_Player[ OPBA_VPassenger[vehicleid] ][RacVDeath])
+		if(!OPBA_Player[OPBA_VPassenger[vehicleid]][RacVDeath])
 		{
-			OPBA_Player[ OPBA_VPassenger[vehicleid] ][RacVDeath] = true;
+			OPBA_Player[OPBA_VPassenger[vehicleid]][RacVDeath] = true;
 			SetTimerEx("OPBA_ResetVDeath", 1200, false, "i", OPBA_VPassenger[vehicleid]);
 		}
 	}
@@ -1126,7 +1126,7 @@ public OnPlayerUpdate(playerid)
 	{
 		OPBA_Player[playerid][RacSurf] =1;
 	}
-	else if( OPBA_Player[playerid][RacSurf] == 1 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
+	else if(OPBA_Player[playerid][RacSurf] == 1 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
 	{
 		OPBA_Player[playerid][RacSurf] =2;
 		SetTimerEx("OPBA_RPSURF", 3000, false, "i", playerid);
@@ -1478,35 +1478,35 @@ static stock OPBA_memset(aArray[], iValue, iSize = sizeof(aArray)) {//by Slice
 	// Loop until there is nothing more to fill
 	while (iSize > 0) {
 		// I have to do this because the FILL instruction doesn't accept a dynamic number.
-		if (iSize >= 4096) {
+		if(iSize >= 4096) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 4096
 		
 			iSize	-= 4096;
 			iAddress += 4096;
-		} else if (iSize >= 1024) {
+		} else if(iSize >= 1024) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 1024
 
 			iSize	-= 1024;
 			iAddress += 1024;
-		} else if (iSize >= 256) {
+		} else if(iSize >= 256) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 256
 
 			iSize	-= 256;
 			iAddress += 256;
-		} else if (iSize >= 64) {
+		} else if(iSize >= 64) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 64
 
 			iSize	-= 64;
 			iAddress += 64;
-		} else if (iSize >= 16) {
+		} else if(iSize >= 16) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 16

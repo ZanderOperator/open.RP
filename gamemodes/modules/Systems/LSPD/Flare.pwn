@@ -65,7 +65,7 @@ static CreateFlare(Float:x, Float:y, Float:z, Float:Angle)
 {
     for (new i = 0; i < sizeof(FlareInfo); i++)
     {
-        if (FlareInfo[i][flCreated] == 0)
+        if(FlareInfo[i][flCreated] == 0)
         {
             FlareInfo[i][flCreated] = 1;
             FlareInfo[i][flX] = x;
@@ -81,7 +81,7 @@ static DeleteAllFlare()
 {
     for (new i = 0; i < sizeof(FlareInfo); i++)
     {
-        if (FlareInfo[i][flCreated] == 1)
+        if(FlareInfo[i][flCreated] == 1)
         {
             FlareInfo[i][flCreated] = 0;
             FlareInfo[i][flX] = 0;
@@ -96,9 +96,9 @@ static DeleteClosestFlare(playerid)
 {
     for (new i = 0; i < sizeof(FlareInfo); i++)
     {
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, FlareInfo[i][flX], FlareInfo[i][flY], FlareInfo[i][flZ]))
+        if(IsPlayerInRangeOfPoint(playerid, 5.0, FlareInfo[i][flX], FlareInfo[i][flY], FlareInfo[i][flZ]))
         {
-            if (FlareInfo[i][flCreated] == 1)
+            if(FlareInfo[i][flCreated] == 1)
             {
                 FlareInfo[i][flCreated] = 0;
                 FlareInfo[i][flX] = 0;
@@ -124,7 +124,7 @@ static DeleteClosestFlare(playerid)
 
 CMD:flares(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || PlayerInfo[playerid][pAdmin] >= 2 || IsFDMember(playerid)))
+    if(!(IsACop(playerid) || IsASD(playerid) || PlayerInfo[playerid][pAdmin] >= 2 || IsFDMember(playerid)))
     {
         return 1;
     }
@@ -139,12 +139,12 @@ CMD:flares(playerid, params[])
 
 CMD:dflares(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid)))
+    if(!(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid)))
     {
         return 1;
     }
 
-    if (PlayerFaction[playerid][pRank] >= 2)
+    if(PlayerFaction[playerid][pRank] >= 2)
     {
         DeleteClosestFlare(playerid);
     }
@@ -153,12 +153,12 @@ CMD:dflares(playerid, params[])
 
 CMD:daflares(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || PlayerInfo[playerid][pAdmin] >= 2 || IsFDMember(playerid)))
+    if(!(IsACop(playerid) || IsASD(playerid) || PlayerInfo[playerid][pAdmin] >= 2 || IsFDMember(playerid)))
     {
         return 1;
     }
 
-    if (PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
+    if(PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
     {
         DeleteAllFlare();
     }

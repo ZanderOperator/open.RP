@@ -369,7 +369,7 @@ stock GetVehicleRandomColors(modelid, &color1, &color2)
     color1 = 0;
     color2 = 0;
  
-    if (!(400 <= modelid <= 611))
+    if(!(400 <= modelid <= 611))
     {
         return 0;
     }
@@ -377,11 +377,11 @@ stock GetVehicleRandomColors(modelid, &color1, &color2)
     {
         modelid -= 400;
  
-        if (!s_CarColors[modelid][0])
+        if(!s_CarColors[modelid][0])
         {
             return 0;
         }
-        else if (s_CarColors[modelid][0] == 2)
+        else if(s_CarColors[modelid][0] == 2)
         {
             color1 = s_CarColors[modelid][1];
             color2 = s_CarColors[modelid][2];
@@ -412,11 +412,11 @@ stock SetVehicleParams(vehicleid, type, status, delay = 0)
     new
         params[7];
  
-    if (GetVehicleParamsEx(vehicleid, params[0], params[1], params[2], params[3], params[4], params[5], params[6]))
+    if(GetVehicleParamsEx(vehicleid, params[0], params[1], params[2], params[3], params[4], params[5], params[6]))
     {
         params[type] = status;
  
-        if (delay > 0)
+        if(delay > 0)
         {
             SetTimerEx("EVF_SetVehicleParamsEx", delay, false, "iiiiiiii", vehicleid, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
         }
@@ -433,7 +433,7 @@ stock GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
 {
     new Float:fPos[4], Float:fSize[3];
  
-    if (!IsValidVehicle(vehicleid))
+    if(!IsValidVehicle(vehicleid))
     {
         x = 0.0;
         y = 0.0;
@@ -485,7 +485,7 @@ stock GetNearestVehicle(playerid)
  
     for (new i = 1, j = GetVehiclePoolSize(); i <= j; i ++)
     {
-        if (!IsVehicleStreamedIn(i, playerid))
+        if(!IsVehicleStreamedIn(i, playerid))
         {
             continue;
         }
@@ -497,7 +497,7 @@ stock GetNearestVehicle(playerid)
  
             fRadius = floatsqroot((fSX + fSX) + (fSY + fSY));
  
-            if (IsPlayerInRangeOfPoint(playerid, fRadius, fX, fY, fZ) && GetPlayerInterior(playerid) == GetVehicleInterior(i) && GetPlayerVirtualWorld(playerid) == GetVehicleVirtualWorld(i))
+            if(IsPlayerInRangeOfPoint(playerid, fRadius, fX, fY, fZ) && GetPlayerInterior(playerid) == GetVehicleInterior(i) && GetPlayerVirtualWorld(playerid) == GetVehicleVirtualWorld(i))
             {
                 return i;
             }
@@ -510,7 +510,7 @@ stock GetVehicleDriver(vehicleid)
 {
     for (new i = 0; i < MAX_PLAYERS; i ++)
     {
-        if (GetPlayerState(i) == PLAYER_STATE_DRIVER && IsPlayerInVehicle(i, vehicleid))
+        if(GetPlayerState(i) == PLAYER_STATE_DRIVER && IsPlayerInVehicle(i, vehicleid))
         {
             return i;
         }
@@ -520,7 +520,7 @@ stock GetVehicleDriver(vehicleid)
  
 stock IsVehicleSeatOccupied(vehicleid, seatid)
 {
-    if (!GetVehicleModel(vehicleid))
+    if(!GetVehicleModel(vehicleid))
     {
         return 0;
     }
@@ -528,7 +528,7 @@ stock IsVehicleSeatOccupied(vehicleid, seatid)
     {
         for (new i = 0; i < MAX_PLAYERS; i ++)
         {
-            if (IsPlayerInVehicle(i, vehicleid) && GetPlayerVehicleSeat(i) == seatid)
+            if(IsPlayerInVehicle(i, vehicleid) && GetPlayerVehicleSeat(i) == seatid)
             {
                 return 1;
             }
@@ -542,11 +542,11 @@ stock GetVehicleNextSeat(vehicleid, passenger = 1)
     new
         seats = GetVehicleSeats(vehicleid);
  
-    if (seats > 1)
+    if(seats > 1)
     {
         for (new i = passenger; i < seats; i ++)
         {
-            if (!IsVehicleSeatOccupied(vehicleid, i))
+            if(!IsVehicleSeatOccupied(vehicleid, i))
             {
                 return i;
             }
@@ -575,7 +575,7 @@ stock Float:GetVehicleTopSpeed(vehicleid)
 {
     new model = GetVehicleModel(vehicleid);
  
-    if (model)
+    if(model)
     {
         return float(s_TopSpeed[(model - 400)]);
     }
@@ -584,7 +584,7 @@ stock Float:GetVehicleTopSpeed(vehicleid)
  
 stock GetVehicleInterior(vehicleid)
 {
-    if (IsValidVehicle(vehicleid))
+    if(IsValidVehicle(vehicleid))
     {
         return GetVehiclePropertyValue(vehicleid, e_VEHICLE_INTERIOR);
     }
@@ -593,7 +593,7 @@ stock GetVehicleInterior(vehicleid)
  
 stock GetVehicleColor(vehicleid, &color1, &color2)
 {
-    if (IsValidVehicle(vehicleid))
+    if(IsValidVehicle(vehicleid))
     {
         color1 = GetVehiclePropertyValue(vehicleid, e_VEHICLE_COLOR_1);
         color2 = GetVehiclePropertyValue(vehicleid, e_VEHICLE_COLOR_2);
@@ -604,9 +604,9 @@ stock GetVehicleColor(vehicleid, &color1, &color2)
  
 stock GetVehiclePaintjob(vehicleid)
 {
-    if (IsValidVehicle(vehicleid))
+    if(IsValidVehicle(vehicleid))
     {
-        if (IsVehiclePropertySet(vehicleid, e_VEHICLE_PAINTJOB))
+        if(IsVehiclePropertySet(vehicleid, e_VEHICLE_PAINTJOB))
         {
             return GetVehiclePropertyValue(vehicleid, e_VEHICLE_PAINTJOB);
         }
@@ -620,7 +620,7 @@ stock GetVehiclePaintjob(vehicleid)
  
 stock ResetVehiclePaintjob(vehicleid)
 {
-    if (IsValidVehicle(vehicleid))
+    if(IsValidVehicle(vehicleid))
     {
         ChangeVehiclePaintjob(vehicleid, INVALID_PAINTJOB_ID);
         SetVehiclePropertyValue(vehicleid, e_VEHICLE_PAINTJOB, INVALID_PAINTJOB_ID);
@@ -634,7 +634,7 @@ stock EVF_LinkVehicleToInterior(vehicleid, interiorid)
     new
         ret = LinkVehicleToInterior(vehicleid, interiorid);
  
-    if (ret)
+    if(ret)
     {
         SetVehiclePropertyValue(vehicleid, e_VEHICLE_INTERIOR, interiorid);
     }
@@ -645,26 +645,26 @@ stock EVF_CreateVehicle(modelid, Float:x, Float:y, Float:z, Float:a, color1, col
 {
     new vehicleid = INVALID_VEHICLE_ID;
  
-    if (400 <= modelid <= 611)
+    if(400 <= modelid <= 611)
     {
         new
             randcolor1,
             randcolor2;
  
-        if (GetVehicleRandomColors(modelid, randcolor1, randcolor2))
+        if(GetVehicleRandomColors(modelid, randcolor1, randcolor2))
         {
-            if (color1 == -1)
+            if(color1 == -1)
             {
                 color1 = randcolor1;
             }
-            if (color2 == -1)
+            if(color2 == -1)
             {
                 color2 = randcolor2;
             }
         }
         vehicleid = CreateVehicle(modelid, x, y, z, a, color1, color2, respawn_delay, addsiren);
  
-        if (vehicleid != INVALID_VEHICLE_ID)
+        if(vehicleid != INVALID_VEHICLE_ID)
         {
             ResetVehicleProperties(vehicleid);
  
@@ -679,9 +679,9 @@ stock EVF_CreateVehicle(modelid, Float:x, Float:y, Float:z, Float:a, color1, col
  
 stock EVF_DestroyVehicle(vehicleid)
 {
-    if (IsValidVehicle(vehicleid))
+    if(IsValidVehicle(vehicleid))
     {
-        if (CallLocalFunction("OnVehicleDestroyed", "i", vehicleid) > 0 || funcidx("OnVehicleDestroyed") == -1)
+        if(CallLocalFunction("OnVehicleDestroyed", "i", vehicleid) > 0 || funcidx("OnVehicleDestroyed") == -1)
         {
             ResetVehicleProperties(vehicleid);
  
@@ -695,26 +695,26 @@ stock EVF_AddStaticVehicle(modelid, Float:x, Float:y, Float:z, Float:a, color1, 
 {
     new vehicleid = INVALID_VEHICLE_ID;
  
-    if (400 <= modelid <= 611)
+    if(400 <= modelid <= 611)
     {
         new
             randcolor1,
             randcolor2;
  
-        if (GetVehicleRandomColors(modelid, randcolor1, randcolor2))
+        if(GetVehicleRandomColors(modelid, randcolor1, randcolor2))
         {
-            if (color1 == -1)
+            if(color1 == -1)
             {
                 color1 = randcolor1;
             }
-            if (color2 == -1)
+            if(color2 == -1)
             {
                 color2 = randcolor2;
             }
         }
         vehicleid = AddStaticVehicle(modelid, x, y, z, a, color1, color2);
  
-        if (vehicleid != INVALID_VEHICLE_ID)
+        if(vehicleid != INVALID_VEHICLE_ID)
         {
             ResetVehicleProperties(vehicleid);
  
@@ -731,26 +731,26 @@ stock EVF_AddStaticVehicleEx(modelid, Float:x, Float:y, Float:z, Float:a, color1
 {
     new vehicleid = INVALID_VEHICLE_ID;
  
-    if (400 <= modelid <= 611)
+    if(400 <= modelid <= 611)
     {
         new
             randcolor1,
             randcolor2;
  
-        if (GetVehicleRandomColors(modelid, randcolor1, randcolor2))
+        if(GetVehicleRandomColors(modelid, randcolor1, randcolor2))
         {
-            if (color1 == -1)
+            if(color1 == -1)
             {
                 color1 = randcolor1;
             }
-            if (color2 == -1)
+            if(color2 == -1)
             {
                 color2 = randcolor2;
             }
         }
         vehicleid = AddStaticVehicleEx(modelid, x, y, z, a, color1, color2, respawn_delay, addsiren);
  
-        if (vehicleid != INVALID_VEHICLE_ID)
+        if(vehicleid != INVALID_VEHICLE_ID)
         {
             ResetVehicleProperties(vehicleid);
  
@@ -768,7 +768,7 @@ stock EVF_ChangeVehicleColor(vehicleid, color1, color2)
     new
         ret = ChangeVehicleColor(vehicleid, color1, color2);
  
-    if (ret)
+    if(ret)
     {
         SetVehiclePropertyValue(vehicleid, e_VEHICLE_COLOR_1, color1);
         SetVehiclePropertyValue(vehicleid, e_VEHICLE_COLOR_2, color2);
@@ -781,7 +781,7 @@ stock EVF_ChangeVehiclePaintjob(vehicleid, paintjobid)
     new
         ret = ChangeVehiclePaintjob(vehicleid, paintjobid);
  
-    if (ret)
+    if(ret)
     {
         SetVehiclePropertyValue(vehicleid, e_VEHICLE_PAINTJOB, paintjobid);
     }
@@ -790,16 +790,16 @@ stock EVF_ChangeVehiclePaintjob(vehicleid, paintjobid)
  
 public OnPlayerUpdate(playerid)
 {
-    if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+    if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
     {
         new
             vehicleid = GetPlayerVehicleID(playerid),
             trailerid = GetVehicleTrailer(vehicleid)
         ;
  
-        if (s_VehicleTrailerID[vehicleid] != trailerid)
+        if(s_VehicleTrailerID[vehicleid] != trailerid)
         {
-            if (trailerid != 0)
+            if(trailerid != 0)
             {
                 CallLocalFunction("OnTrailerHooked", "iii", playerid, vehicleid, trailerid);
             }
@@ -819,7 +819,7 @@ public OnPlayerUpdate(playerid)
  
 public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if ((hittype == BULLET_HIT_TYPE_VEHICLE) && (22 <= weaponid <= 38))
+    if((hittype == BULLET_HIT_TYPE_VEHICLE) && (22 <= weaponid <= 38))
     {
         CallLocalFunction("OnPlayerShootVehicle", "iii", playerid, hitid, weaponid);
     }

@@ -996,7 +996,7 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 		Float:yDelta_b = pt3y - pt2y,
 		Float:xDelta_b = pt3x - pt2x;
 
-	if (floatabs(xDelta_a) <= 0.000000001 && floatabs(yDelta_b) <= 0.000000001) {
+	if(floatabs(xDelta_a) <= 0.000000001 && floatabs(yDelta_b) <= 0.000000001) {
 		m_x = 0.5 * (pt2x + pt3x);
 		m_y = 0.5 * (pt1y + pt2y);
 		return VectorSize(m_x - pt1x, m_y - pt1y, 0.0);
@@ -1005,7 +1005,7 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 	new Float:aSlope = yDelta_a / xDelta_a,
 		Float:bSlope = yDelta_b / xDelta_b;
 
-	if (floatabs(aSlope-bSlope) <= 0.000000001)
+	if(floatabs(aSlope-bSlope) <= 0.000000001)
 		return -1.0;
 
 	m_x = (aSlope * bSlope * (pt1y - pt3y) + bSlope * (pt1x + pt2x) - aSlope * (pt2x + pt3x)) / (2.0 * (bSlope - aSlope));
@@ -1019,7 +1019,7 @@ stock Float:CA_GetRoomCenter(Float:x, Float:y, Float:z, &Float:m_x, &Float:m_y)
 public OnFilterScriptExit()
 {
 	CA_DestroyAllObjects_DC();
-	if (funcidx("CA_OnFilterScriptExit") != -1)
+	if(funcidx("CA_OnFilterScriptExit") != -1)
 	{
 		return CallLocalFunction("CA_OnFilterScriptExit", "");
 	}
@@ -1039,7 +1039,7 @@ forward CA_OnFilterScriptExit();
 public OnGameModeExit()
 {
 	CA_DestroyAllObjects_DC();
-	if (funcidx("CA_OnGameModeExit") != -1)
+	if(funcidx("CA_OnGameModeExit") != -1)
 	{
 		return CallLocalFunction("CA_OnGameModeExit", "");
 	}

@@ -253,7 +253,7 @@ GetComplexRoomFromSQL(sqlid)
 stock GetComplexRooms(sqlid)
 {
     new dest[MAX_PLAYER_NAME];
-    if (sqlid > 0)
+    if(sqlid > 0)
     {
         new
             Cache:result,
@@ -277,7 +277,7 @@ static stock GetComplexInfoID(ownerid)
     new complex_id = INVALID_COMPLEX_ID;
     foreach(new cid: ComplexRoom)
     {
-        if (ComplexRoomInfo[cid][cOwnerID] == ownerid)
+        if(ComplexRoomInfo[cid][cOwnerID] == ownerid)
         {
             complex_id = cid;
             break;
@@ -291,7 +291,7 @@ stock GetComplexEnumID(roomid)
     new value;
     foreach(new c: Complex)
     {
-        if (ComplexInfo[c][cSQLID] == ComplexRoomInfo[roomid][cComplexID])
+        if(ComplexInfo[c][cSQLID] == ComplexRoomInfo[roomid][cComplexID])
         {
             value = c;
             break;
@@ -316,14 +316,14 @@ stock CP_GetComplexID(checkpointid)
 
 static stock CreateComplexEnter(complex_id)
 {
-    if (complex_id == INVALID_COMPLEX_ID) return 0;
+    if(complex_id == INVALID_COMPLEX_ID) return 0;
     
     if(IsValidDynamicPickup(ComplexInfo[complex_id][cPickup]))
         DestroyDynamicPickup(ComplexInfo[complex_id][cPickup]);
         
     ComplexInfo[complex_id][cPickup] = CreateDynamicPickup(1273, 2, ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ], -1, -1, -1, 100.0);
     
-    if (IsValidDynamicCP(ComplexInfo[complex_id][cEnterCP]))
+    if(IsValidDynamicCP(ComplexInfo[complex_id][cEnterCP]))
         DestroyDynamicCP(ComplexInfo[complex_id][cEnterCP]);
     
     ComplexInfo[complex_id][cEnterCP] = CreateDynamicCP(ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ]-1.0, 2.0, -1, -1, -1, 5.0);
@@ -346,15 +346,15 @@ stock CP_GetComplexRoomID(checkpointid)
 
 static stock CreateCRoomEnter(complex_id)
 {
-    if (complex_id == INVALID_COMPLEX_ID) return 0;
-    if (!ComplexRoomInfo[complex_id][cActive]) return 0;
+    if(complex_id == INVALID_COMPLEX_ID) return 0;
+    if(!ComplexRoomInfo[complex_id][cActive]) return 0;
     
     if(IsValidDynamicPickup(ComplexRoomInfo[complex_id][cRPickup]))
         DestroyDynamicPickup(ComplexRoomInfo[complex_id][cRPickup]);
     
     ComplexRoomInfo[complex_id][cRPickup] = CreateDynamicPickup(1273, 2, ComplexRoomInfo[complex_id][cEnterX], ComplexRoomInfo[complex_id][cEnterY], ComplexRoomInfo[complex_id][cEnterZ], ComplexRoomInfo[complex_id][cVWExit], ComplexRoomInfo[complex_id][cIntExit], -1, 30.0);
     
-    if (IsValidDynamicCP(ComplexRoomInfo[complex_id][cEnterCP]))
+    if(IsValidDynamicCP(ComplexRoomInfo[complex_id][cEnterCP]))
         DestroyDynamicCP(ComplexRoomInfo[complex_id][cEnterCP]);
     
     ComplexRoomInfo[complex_id][cEnterCP] = CreateDynamicCP(ComplexRoomInfo[complex_id][cEnterX], ComplexRoomInfo[complex_id][cEnterY], ComplexRoomInfo[complex_id][cEnterZ]-1.0, 2.0, ComplexRoomInfo[complex_id][cVWExit], ComplexRoomInfo[complex_id][cIntExit], -1, 5.0);
@@ -427,7 +427,7 @@ forward OnComplexRoomsLoad();
 public OnComplexRoomsLoad()
 {
     new num_rows = cache_num_rows();
-    if (!num_rows) return printf("MySQL Report: No complex rooms exist to load.");
+    if(!num_rows) return printf("MySQL Report: No complex rooms exist to load.");
 
     for (new row = 0; row < num_rows; row++)
     {
@@ -510,7 +510,7 @@ forward OnServerComplexLoad();
 public OnServerComplexLoad()
 {
     new num_rows = cache_num_rows();
-    if (!num_rows) return printf("MySQL Report: No complex exist to load.");
+    if(!num_rows) return printf("MySQL Report: No complex exist to load.");
 
     for (new row = 0; row < num_rows; row++)
     {
@@ -567,10 +567,10 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
     
     new 
         complex_id = CP_GetComplexID(checkpointid);
-    if (Iter_Contains(Complex, complex_id))
+    if(Iter_Contains(Complex, complex_id))
     {
         CreateCompInfoTD(playerid);
-        if (ComplexInfo[complex_id][cOwnerID] != -1)
+        if(ComplexInfo[complex_id][cOwnerID] != -1)
         {
             format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Cijena: %d~g~$~n~~w~Broj soba: %s",
                 ComplexInfo[complex_id][cName],
@@ -603,7 +603,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
     {
         CreateCompInfoTD(playerid);
 
-        if (ComplexRoomInfo[croom_id][cOwnerID] != -1)
+        if(ComplexRoomInfo[croom_id][cOwnerID] != -1)
         {
             format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena renta: %d~g~$~n~~w~Ocjena: %d",
                 ConvertSQLIDToName(ComplexRoomInfo[croom_id][cOwnerID]),
@@ -660,13 +660,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_COMPLEX_MAIN:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
                 case 0:
                 {
-                    if (!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterX], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterY], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
+                    if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterX], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterY], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
                     // TODO: use va_ShowPlayerDialog
                     new str[48];
                     format(str, sizeof(str), "\tStanje u blagajni: %d{0BB716}$", ComplexInfo[PlayerKeys[playerid][pComplexKey]][cTill]);
@@ -674,21 +674,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1: //Promjena naziva complexa
                 {
-                    if (!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterX], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterY], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
+                    if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterX], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterY], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
 
                     ShowPlayerDialog(playerid, DIALOG_COMPLEX_CHANGENAME, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Molimo unesite novi naziv vaseg kompleksa:", "Enter", "Close");
                     return 1;
                 }
                 case 2:
                 {
-                    if (!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterX], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterY], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
+                    if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterX], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterY], ComplexInfo[PlayerKeys[playerid][pComplexKey]][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
 
                     new
                         string[2048] = "Address\tQuality\tPricing\tStatus\n",
                         row[74];
                     foreach(new c : ComplexRoom)
                     {
-                        if (ComplexRoomInfo[c][cComplexID] == ComplexInfo[PlayerKeys[playerid][pComplexKey]][cSQLID])
+                        if(ComplexRoomInfo[c][cComplexID] == ComplexInfo[PlayerKeys[playerid][pComplexKey]][cSQLID])
                         {
                             format(row, sizeof(row), "%s\t%d\t%d$\t%s\n",
                                 ComplexRoomInfo[c][cAdress],
@@ -705,7 +705,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 {
                     new complex = PlayerKeys[playerid][pComplexKey];
-                    if (!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ]))
+                    if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ]))
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
                         return 1;
@@ -719,7 +719,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new
                         complex = PlayerKeys[playerid][pComplexKey];
 
-                    if (!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ]))
+                    if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ]))
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svog kompleksa!");
                         return 1;
@@ -744,7 +744,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         PlayerInfo[playerid][pSQLID]
                     );
 
-                    if (GetPlayerVirtualWorld(playerid) == ComplexInfo[complex][cViwo])
+                    if(GetPlayerVirtualWorld(playerid) == ComplexInfo[complex][cViwo])
                         SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ]);
                     return 1;
                 }
@@ -752,9 +752,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     new 
                         complex = Player_InfrontApartment(playerid);
-                    if (complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti ispred stana od stanara.");
+                    if(complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti ispred stana od stanara.");
 
-                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbacili %s iz vaseg Complex-a!", ConvertSQLIDToName(ComplexRoomInfo[complex][cOwnerID]));
+                    va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste izbacili %s iz vaseg Complex-a!", ConvertSQLIDToName(ComplexRoomInfo[complex][cOwnerID]));
 
                     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
                         ComplexRoomInfo[complex][cSQLID]
@@ -769,15 +769,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_BANK:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new complex = PlayerKeys[playerid][pComplexKey];
             ComplexToPlayerMoney(playerid, complex, ComplexInfo[complex][cTill]);
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste podigli novac sa blagajne.");
+            SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste podigli novac sa blagajne.");
         }
         case DIALOG_COMPLEX_ROOMS:
         {
-            if (!response) return 1;
+            if(!response) return 1;
             // TODO: really test this logic out and printf needed variables
             // it might be broken
             new
@@ -786,16 +786,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 count = 0;
             foreach(new c : ComplexRoom)
             {
-                if (ComplexRoomInfo[c][cComplexID] == ComplexInfo[complex][cSQLID])
+                if(ComplexRoomInfo[c][cComplexID] == ComplexInfo[complex][cSQLID])
                 {
-                    if (++count == item)
+                    if(++count == item)
                     {
                         SelectedRoom[playerid] = c;
                         break;
                     }
                 }
             }
-            if (ComplexRoomInfo[SelectedRoom[playerid]][cActive])
+            if(ComplexRoomInfo[SelectedRoom[playerid]][cActive])
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_ROOM_INFO, DIALOG_STYLE_LIST, "COMPLEX MENU", "Promjeni cijenu\nRenoviraj interijer(7500$)", "Enter", "Close");
             else
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_ROOM_INFO_2, DIALOG_STYLE_LIST, "COMPLEX MENU", "Promjeni cijenu\nOsposobi sobu(10000$)", "Enter", "Close");
@@ -803,7 +803,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_ROOM_INFO_2:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -815,16 +815,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     new room_id = SelectedRoom[playerid];
-                    if (ComplexRoomInfo[room_id][cActive])
+                    if(ComplexRoomInfo[room_id][cActive])
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba je vec kreirana");
                         return 1;
                     }
 
-                    if (AC_GetPlayerMoney(playerid) < 10000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca.");
+                    if(AC_GetPlayerMoney(playerid) < 10000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca.");
 
                     PlayerToBudgetMoney(playerid, 10000); // Novac od igraca ide u proracun
-                    SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste kreirali novu sobu.");
+                    SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste kreirali novu sobu.");
 
                     ComplexRoomInfo[room_id][cActive] = 1;
                     ComplexRoomInfo[room_id][cRPickup] = CreateDynamicPickup(1273, 2, ComplexRoomInfo[room_id][cEnterX], ComplexRoomInfo[room_id][cEnterY], ComplexRoomInfo[room_id][cEnterZ], ComplexRoomInfo[room_id][cVWExit], ComplexRoomInfo[room_id][cIntExit], -1, 30.0);
@@ -839,7 +839,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_ROOM_INFO:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -851,15 +851,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     new room_id = SelectedRoom[playerid];
-                    if (ComplexRoomInfo[room_id][cQuality] == 3)
+                    if(ComplexRoomInfo[room_id][cQuality] == 3)
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba se ne moze vise unaprijediti!");
                         return 1;
                     }
-                    if (AC_GetPlayerMoney(playerid) < 7500) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca.");
+                    if(AC_GetPlayerMoney(playerid) < 7500) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca.");
 
                     PlayerToBudgetMoney(playerid, 7500); // Novac od igraca ide u proracun
-                    SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste unaprijedili interior sobe.");
+                    SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste unaprijedili interior sobe.");
                     ComplexRoomInfo[room_id][cQuality]++;
 
                     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET quality = '%d' WHERE id = '%d'",
@@ -872,10 +872,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_ROOM_PRICE:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new value = strval(inputtext);
-            if (value < 50 || value > 500)
+            if(value < 50 || value > 500)
             {
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_ROOM_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu sobe za rent:\n{ed2a37}Nepravilna cijena!", "Enter", "Close");
                 return 1;
@@ -889,20 +889,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 ComplexRoomInfo[room_id][cSQLID]
             );
 
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izmjenili cijenu renta sobe.");
+            SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste izmjenili cijenu renta sobe.");
             return 1;
         }
         case DIALOG_COMPLEX_CHANGENAME:
         {
-            if (!response) return 1;
-            if (strlen(inputtext) < 3)
+            if(!response) return 1;
+            if(strlen(inputtext) < 3)
             {
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_CHANGENAME, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Molimo unesite novi naziv vaseg kompleksa:\n{ed2a37}Naziv je prekratak!", "Enter", "Close");
                 return 1;
             }
 
             new complex_id = PlayerKeys[playerid][pComplexKey];
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si promjenio naziv kompleksa.");
+            SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si promjenio naziv kompleksa.");
           
             // TODO: strcpy
             format(ComplexInfo[complex_id][cName], 25, inputtext);
@@ -914,8 +914,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_SELL:
         {
-            if (!response) return 1;
-            if (isnull(inputtext))
+            if(!response) return 1;
+            if(isnull(inputtext))
             {
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_CHANGENAME, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Molimo unesite novi naziv vaseg kompleksa:\n{ed2a37}Niste unijeli ID!", "Enter", "Close");
                 return 1;
@@ -924,10 +924,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new
                 pID = strval(inputtext),
                 complex_id = PlayerKeys[playerid][pComplexKey];
-            if (!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti blizu vaseg kompleksa!");
-            if (!IsPlayerConnected(pID) || !SafeSpawned[pID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
-            if (!ProxDetectorS(5.0, playerid, pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
-            if (PlayerKeys[pID][pComplexKey] != INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kompleks!");
+            if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti blizu vaseg kompleksa!");
+            if(!IsPlayerConnected(pID) || !SafeSpawned[pID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
+            if(!ProxDetectorS(5.0, playerid, pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
+            if(PlayerKeys[pID][pComplexKey] != INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kompleks!");
 
             GlobalSellingPlayerID[playerid] = pID;
             ShowPlayerDialog(playerid, DIALOG_COMPLEX_SELL_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu za koju zelite prodati kompleks:", "Enter", "Close");
@@ -935,10 +935,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_SELL_PRICE:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new value = strval(inputtext);
-            if (value < 5000 || value > 9999999)
+            if(value < 5000 || value > 9999999)
             {
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_SELL_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu za koju zelite prodati kompleks:\n{ed2a37}Cijena ne moze biti manja od 5000$!", "Enter", "Close");
                 return 1;
@@ -948,7 +948,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 complexprice = value,
                 pID = GlobalSellingPlayerID[playerid];
 
-            if (AC_GetPlayerMoney(pID) < complexprice) return ShowPlayerDialog(playerid, DIALOG_COMPLEX_SELL_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu za koju zelite prodati kompleks:\n{ed2a37}Igrac nema toliko novca!", "Enter", "Close");
+            if(AC_GetPlayerMoney(pID) < complexprice) return ShowPlayerDialog(playerid, DIALOG_COMPLEX_SELL_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu za koju zelite prodati kompleks:\n{ed2a37}Igrac nema toliko novca!", "Enter", "Close");
 
             GlobalSellingPrice[pID] = complexprice;
             GlobalSellingPlayerID[pID] = playerid;
@@ -961,7 +961,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_COMPLEX_SELL_2:
         {
-            if (response)
+            if(response)
             {
                 new
                     pID = GlobalSellingPlayerID[playerid],
@@ -974,8 +974,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 ComplexInfo[complex_id][cOwnerID] = PlayerInfo[playerid][pSQLID];
 
                 PlayerToPlayerMoneyTAX(playerid, pID, complexprice, true, LOG_TYPE_COMPLEXSELL); // IGrac igracu TAXED transkacija za prodaju complexa
-                va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste kupili kompleks od %s za %d$", GetName(pID), complexprice);
-                va_SendClientMessage(pID, COLOR_RED, "[ ! ] Igrac %s je kupio od vas kompleks za %d", GetName(playerid), complexprice);
+                va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste kupili kompleks od %s za %d$", GetName(pID), complexprice);
+                va_SendClientMessage(pID, COLOR_RED, "[!] Igrac %s je kupio od vas kompleks za %d", GetName(playerid), complexprice);
 
                 PlayerInfo[playerid][pSpawnChange] = 3;
 
@@ -994,9 +994,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerInfo[pID][pSQLID]
                 );
 
-                if ((PlayerKeys[pID][pHouseKey] != INVALID_HOUSE_ID) || (PlayerKeys[pID][pRentKey] != INVALID_HOUSE_ID))
+                if((PlayerKeys[pID][pHouseKey] != INVALID_HOUSE_ID) || (PlayerKeys[pID][pRentKey] != INVALID_HOUSE_ID))
                     PlayerInfo[pID][pSpawnChange] = 1;
-                else if (PlayerFaction[pID][pMember] != 0 || PlayerFaction[pID][pLeader] != 0)
+                else if(PlayerFaction[pID][pMember] != 0 || PlayerFaction[pID][pLeader] != 0)
                     PlayerInfo[pID][pSpawnChange] = 2;
                 else PlayerInfo[pID][pSpawnChange] = 0;
 
@@ -1035,7 +1035,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:buycomplex(playerid, params[])
 {
-    if (PlayerKeys[playerid][pComplexKey] != INVALID_COMPLEX_ID)
+    if(PlayerKeys[playerid][pComplexKey] != INVALID_COMPLEX_ID)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete kompleks!");
         return 1;
@@ -1043,16 +1043,16 @@ CMD:buycomplex(playerid, params[])
 
     new 
         complex = Player_InfrontApartment(playerid);
-    if (complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nema soba complexa u blizini.");
-    if (ComplexInfo[complex][cOwnerID] != -1) return 1;
+    if(complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nema soba complexa u blizini.");
+    if(ComplexInfo[complex][cOwnerID] != -1) return 1;
 
-    if (PlayerInfo[playerid][pLevel] < ComplexInfo[complex][cLevel])
+    if(PlayerInfo[playerid][pLevel] < ComplexInfo[complex][cLevel])
     {
         va_SendClientMessage(playerid, COLOR_RED, "Moras biti level %d da bi kupio kompleks!", ComplexInfo[complex][cLevel]);
         return 1;
     }
 
-    if (AC_GetPlayerMoney(playerid) < ComplexInfo[complex][cPrice])
+    if(AC_GetPlayerMoney(playerid) < ComplexInfo[complex][cPrice])
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas novaca da bi kupio kompleks!");
         return 1;
@@ -1070,7 +1070,7 @@ CMD:buycomplex(playerid, params[])
     );
 
     PlayerToBudgetMoney(playerid, ComplexInfo[complex][cPrice]); // Novac od kupljenog complexa na buy ide u proracun
-    SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste kompleks, koristite /help za vise informacija!");
+    SendClientMessage(playerid, COLOR_RED, "[!] Kupili ste kompleks, koristite /help za vise informacija!");
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/buy_complex.txt", "(%s) %s [SQLID: %d] bought Complex %s [SQLID: %d] for %d$.",
@@ -1087,7 +1087,7 @@ CMD:buycomplex(playerid, params[])
 
 CMD:complex(playerid, params[])
 {
-    if (PlayerKeys[playerid][pComplexKey] == INVALID_COMPLEX_ID)
+    if(PlayerKeys[playerid][pComplexKey] == INVALID_COMPLEX_ID)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne posjedujete kompleks.");
         return 1;
@@ -1098,7 +1098,7 @@ CMD:complex(playerid, params[])
 
 CMD:rentroom(playerid, params[])
 {
-    if (PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+    if(PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec rentate complex sobu.");
         return 1;
@@ -1106,16 +1106,16 @@ CMD:rentroom(playerid, params[])
 
     new 
         complex = Player_InfrontApartment(playerid);
-    if (complex == INVALID_COMPLEX_ID) 
+    if(complex == INVALID_COMPLEX_ID) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se ispred stana u Complexu.");
 
-    if (ComplexRoomInfo[complex][cOwnerID] != -1)
+    if(ComplexRoomInfo[complex][cOwnerID] != -1)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba je zauzeta!");
         return 1;
     }
 
-    if (AC_GetPlayerMoney(playerid) < ComplexRoomInfo[complex][cValue]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas novaca da bi zakupio sobu!");
+    if(AC_GetPlayerMoney(playerid) < ComplexRoomInfo[complex][cValue]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas novaca da bi zakupio sobu!");
 
     PlayerKeys[playerid][pComplexRoomKey] = complex;
     PlayerInfo[playerid][pSpawnChange] = 3;
@@ -1133,8 +1133,8 @@ CMD:rentroom(playerid, params[])
 
     new complex_id = GetComplexEnumID(complex);
     PlayerToComplexMoneyTAX(playerid, complex_id, ComplexRoomInfo[complex][cValue]);
-    SendClientMessage(playerid, COLOR_RED, "[ ! ] Zakupili ste kompleks sobu, koristite /help za vise informacija!");
-    SendClientMessage(playerid, COLOR_RED, "[ ! ] Spawn Vam je automatski prebacen na iznajmljenu sobu u kompleksu.");
+    SendClientMessage(playerid, COLOR_RED, "[!] Zakupili ste kompleks sobu, koristite /help za vise informacija!");
+    SendClientMessage(playerid, COLOR_RED, "[!] Spawn Vam je automatski prebacen na iznajmljenu sobu u kompleksu.");
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/buy_complex.txt", "(%s) %s rented Complex Room %s[SQLID: %d] for %d$ in Complex %s.",
@@ -1143,7 +1143,7 @@ CMD:rentroom(playerid, params[])
         ComplexRoomInfo[complex][cAdress],
         ComplexRoomInfo[complex][cSQLID],
         ComplexRoomInfo[complex][cValue],
-        ComplexInfo[ ComplexRoomInfo[complex][cComplexID] ][cName]
+        ComplexInfo[ComplexRoomInfo[complex][cComplexID]][cName]
     );
     #endif
     return 1;
@@ -1152,7 +1152,7 @@ CMD:rentroom(playerid, params[])
 CMD:unrentroom(playerid, params[])
 {
     new complex_id = PlayerKeys[playerid][pComplexRoomKey];
-    if (complex_id == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi nemate zakupljenu sobu!");
+    if(complex_id == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi nemate zakupljenu sobu!");
 
     mysql_fquery(g_SQL,"UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
         ComplexRoomInfo[complex_id][cSQLID]
@@ -1161,7 +1161,7 @@ CMD:unrentroom(playerid, params[])
     ComplexRoomInfo[complex_id][cOwnerID] = -1;
     PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 
-    if (PlayerFaction[playerid][pMember] != 0 || PlayerFaction[playerid][pLeader] != 0)
+    if(PlayerFaction[playerid][pMember] != 0 || PlayerFaction[playerid][pLeader] != 0)
         PlayerInfo[playerid][pSpawnChange] = 2;
     else
         PlayerInfo[playerid][pSpawnChange] = 0;

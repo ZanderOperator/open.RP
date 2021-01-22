@@ -560,7 +560,7 @@ new ObjectModel[MAX_PLAYERS] = 0;
 */
 stock HandlePlayerObjectSelection(playerid, item)
 {
-	switch( Bit8_Get( gr_MallType, playerid ) ) 
+	switch( Bit8_Get( gr_MallType, playerid )) 
 	{
 		case MALL_REGULAR_CLOTHING: {
 			ObjectModel[playerid] = NCObjects[item][ncmodel];
@@ -568,7 +568,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				NCObjects[item][ncattachname],
 				NCObjects[item][ncmodel],
@@ -582,7 +582,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				TSObjects[item][tsname],
 				TSObjects[item][tsmodel],
@@ -596,7 +596,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				TechnoObjects[item][teattachname],
 				TechnoObjects[item][teattachmodel],
@@ -610,7 +610,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				SportsObjects[item][sportsname],
 				SportsObjects[item][sportsmodel],
@@ -624,7 +624,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				PDObjects[item][pdname],
 				PDObjects[item][pdmodel],
@@ -638,7 +638,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				FDObjects[item][fdname],
 				FDObjects[item][fdmodel],
@@ -652,7 +652,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				GOVObjects[item][govname],
 				GOVObjects[item][govmodel],
@@ -666,7 +666,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				PremiumObjects[item][premattachname],
 				PremiumObjects[item][premmodel],
@@ -680,7 +680,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 			Bit8_Set( gr_HandleItem, playerid, item );
 			
 			new
-				tmpString[ 128 ];
+				tmpString[128];
 			format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 				HLObjects[item][hlattachname],
 				HLObjects[item][hlmodel],
@@ -867,7 +867,7 @@ stock IsObjectAttached(playerid, modelid)
 	new 
 		found = -1;
 	for(new i=0; i<MAX_CUSTOMIZED_OBJECTS; i++) {
-		if( PlayerObject[playerid][i][poPlaced] && PlayerObject[playerid][i][poModelid] == modelid ) {
+		if(PlayerObject[playerid][i][poPlaced] && PlayerObject[playerid][i][poModelid] == modelid ) {
 			found = i;
 			break;
 		}
@@ -877,37 +877,37 @@ stock IsObjectAttached(playerid, modelid)
 
 stock SetPlayerObjects(playerid)
 {
-	if( PlayerObject[playerid][0][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 0) && PlayerObject[playerid][0][poPlaced]) {
+	if(PlayerObject[playerid][0][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 0) && PlayerObject[playerid][0][poPlaced]) {
 		PlayerObject[playerid][0][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 0, PlayerObject[playerid][0][poModelid], PlayerObject[playerid][0][poBoneId],PlayerObject[playerid][0][poPosX],PlayerObject[playerid][0][poPosY],PlayerObject[playerid][0][poPosZ],PlayerObject[playerid][0][poRotX],PlayerObject[playerid][0][poRotY],PlayerObject[playerid][0][poRotZ],PlayerObject[playerid][0][poScaleX],PlayerObject[playerid][0][poScaleY],PlayerObject[playerid][0][poScaleZ],PlayerObject[playerid][0][poColor1],PlayerObject[playerid][0][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][1][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 1) && PlayerObject[playerid][1][poPlaced]) {
+	if(PlayerObject[playerid][1][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 1) && PlayerObject[playerid][1][poPlaced]) {
 		PlayerObject[playerid][1][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 1, PlayerObject[playerid][1][poModelid], PlayerObject[playerid][1][poBoneId],PlayerObject[playerid][1][poPosX],PlayerObject[playerid][1][poPosY],PlayerObject[playerid][1][poPosZ],PlayerObject[playerid][1][poRotX],PlayerObject[playerid][1][poRotY],PlayerObject[playerid][1][poRotZ],PlayerObject[playerid][1][poScaleX],PlayerObject[playerid][1][poScaleY],PlayerObject[playerid][1][poScaleZ],PlayerObject[playerid][1][poColor1],PlayerObject[playerid][1][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][2][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 2) && PlayerObject[playerid][2][poPlaced]) {
+	if(PlayerObject[playerid][2][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 2) && PlayerObject[playerid][2][poPlaced]) {
 		PlayerObject[playerid][2][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 2, PlayerObject[playerid][2][poModelid], PlayerObject[playerid][2][poBoneId],PlayerObject[playerid][2][poPosX],PlayerObject[playerid][2][poPosY],PlayerObject[playerid][2][poPosZ],PlayerObject[playerid][2][poRotX],PlayerObject[playerid][2][poRotY],PlayerObject[playerid][2][poRotZ],PlayerObject[playerid][2][poScaleX],PlayerObject[playerid][2][poScaleY],PlayerObject[playerid][2][poScaleZ],PlayerObject[playerid][2][poColor1],PlayerObject[playerid][2][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][3][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 3) && PlayerObject[playerid][3][poPlaced]) {
+	if(PlayerObject[playerid][3][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 3) && PlayerObject[playerid][3][poPlaced]) {
 		PlayerObject[playerid][3][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 3, PlayerObject[playerid][3][poModelid], PlayerObject[playerid][3][poBoneId],PlayerObject[playerid][3][poPosX],PlayerObject[playerid][3][poPosY],PlayerObject[playerid][3][poPosZ],PlayerObject[playerid][3][poRotX],PlayerObject[playerid][3][poRotY],PlayerObject[playerid][3][poRotZ],PlayerObject[playerid][3][poScaleX],PlayerObject[playerid][3][poScaleY],PlayerObject[playerid][3][poScaleZ],PlayerObject[playerid][3][poColor1],PlayerObject[playerid][3][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][4][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 4) && PlayerObject[playerid][4][poPlaced]) {
+	if(PlayerObject[playerid][4][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 4) && PlayerObject[playerid][4][poPlaced]) {
 		PlayerObject[playerid][4][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 4, PlayerObject[playerid][4][poModelid], PlayerObject[playerid][4][poBoneId],PlayerObject[playerid][4][poPosX],PlayerObject[playerid][4][poPosY],PlayerObject[playerid][4][poPosZ],PlayerObject[playerid][4][poRotX],PlayerObject[playerid][4][poRotY],PlayerObject[playerid][4][poRotZ],PlayerObject[playerid][4][poScaleX],PlayerObject[playerid][4][poScaleY],PlayerObject[playerid][4][poScaleZ],PlayerObject[playerid][4][poColor1],PlayerObject[playerid][4][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][5][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 5) && PlayerObject[playerid][5][poPlaced]) {
+	if(PlayerObject[playerid][5][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 5) && PlayerObject[playerid][5][poPlaced]) {
 		PlayerObject[playerid][5][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 5, PlayerObject[playerid][5][poModelid], PlayerObject[playerid][5][poBoneId],PlayerObject[playerid][5][poPosX],PlayerObject[playerid][5][poPosY],PlayerObject[playerid][5][poPosZ],PlayerObject[playerid][5][poRotX],PlayerObject[playerid][5][poRotY],PlayerObject[playerid][5][poRotZ],PlayerObject[playerid][5][poScaleX],PlayerObject[playerid][5][poScaleY],PlayerObject[playerid][5][poScaleZ],PlayerObject[playerid][5][poColor1],PlayerObject[playerid][5][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][6][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 6) && PlayerObject[playerid][6][poPlaced]) {
+	if(PlayerObject[playerid][6][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 6) && PlayerObject[playerid][6][poPlaced]) {
 		PlayerObject[playerid][6][poPlaced] = true;
 		SetPlayerAttachedObject(playerid, 6, PlayerObject[playerid][6][poModelid], PlayerObject[playerid][6][poBoneId],PlayerObject[playerid][6][poPosX],PlayerObject[playerid][6][poPosY],PlayerObject[playerid][6][poPosZ],PlayerObject[playerid][6][poRotX],PlayerObject[playerid][6][poRotY],PlayerObject[playerid][6][poRotZ],PlayerObject[playerid][6][poScaleX],PlayerObject[playerid][6][poScaleY],PlayerObject[playerid][6][poScaleZ],PlayerObject[playerid][6][poColor1],PlayerObject[playerid][6][poColor2]);
 	}
@@ -974,30 +974,30 @@ hook function ResetPlayerVariables(playerid)
 	
 	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)
 	{
-		PlayerObject[ playerid ][i][poSQLID]		= -1;
-		PlayerObject[ playerid ][i][ poModelid ]	= -1;
-		PlayerObject[ playerid ][i][ poBoneId ]		= 0;
-		PlayerObject[ playerid ][i][ poPlaced ]		= false;
-		PlayerObject[ playerid ][i][ poPosX ]   	= 0.0;
-		PlayerObject[ playerid ][i][ poPosY ]		= 0.0;
-		PlayerObject[ playerid ][i][ poPosZ ]		= 0.0;
-		PlayerObject[ playerid ][i][ poRotX ]		= 0.0;
-		PlayerObject[ playerid ][i][ poRotY ]		= 0.0;
-		PlayerObject[ playerid ][i][ poRotZ ]		= 0.0;
-		PlayerObject[ playerid ][i][ poScaleX ]		= 1.0;
-		PlayerObject[ playerid ][i][ poScaleY ]		= 1.0;
-		PlayerObject[ playerid ][i][ poScaleZ ]		= 1.0;
-		PlayerObject[ playerid ][i][ poColor1 ] 	= 0;
-		PlayerObject[ playerid ][i][ poColor2 ] 	= 0;
+		PlayerObject[playerid][i][poSQLID]		= -1;
+		PlayerObject[playerid][i][poModelid]	= -1;
+		PlayerObject[playerid][i][poBoneId]		= 0;
+		PlayerObject[playerid][i][poPlaced]		= false;
+		PlayerObject[playerid][i][poPosX]   	= 0.0;
+		PlayerObject[playerid][i][poPosY]		= 0.0;
+		PlayerObject[playerid][i][poPosZ]		= 0.0;
+		PlayerObject[playerid][i][poRotX]		= 0.0;
+		PlayerObject[playerid][i][poRotY]		= 0.0;
+		PlayerObject[playerid][i][poRotZ]		= 0.0;
+		PlayerObject[playerid][i][poScaleX]		= 1.0;
+		PlayerObject[playerid][i][poScaleY]		= 1.0;
+		PlayerObject[playerid][i][poScaleZ]		= 1.0;
+		PlayerObject[playerid][i][poColor1] 	= 0;
+		PlayerObject[playerid][i][poColor2] 	= 0;
 
-		if( IsPlayerAttachedObjectSlotUsed(playerid, i) )
+		if(IsPlayerAttachedObjectSlotUsed(playerid, i))
 			RemovePlayerAttachedObject( playerid, i );
 	}
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 7) )
+	if(IsPlayerAttachedObjectSlotUsed(playerid, 7))
 		RemovePlayerAttachedObject( playerid, 7 );
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 8) )
+	if(IsPlayerAttachedObjectSlotUsed(playerid, 8))
 		RemovePlayerAttachedObject( playerid, 8 );
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
+	if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
 		RemovePlayerAttachedObject( playerid, 9 );
 
 	return continue(playerid);
@@ -1022,13 +1022,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	switch( dialogid )
 	{
 		case DIALOG_OBJECTS_BUY: {
-			if( !response ) return 1;
+			if(!response ) return 1;
 			new
 				money = Bit8_Get( gr_ObjectPrice, playerid );
 
    			if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
 	   		money = 0;
-			if( AC_GetPlayerMoney(playerid) < money ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+			if(AC_GetPlayerMoney(playerid) < money ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 			
 			new bstring[256];
             for(new x;x<sizeof(AttachmentBones);x++)
@@ -1040,14 +1040,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_OBJECT_BONE_SELECTION: {
-			if( !response ) {
+			if(!response ) {
 				new
 					item = Bit8_Get( gr_HandleItem, playerid );
-				switch( Bit8_Get( gr_MallType, playerid ) ) 
+				switch( Bit8_Get( gr_MallType, playerid )) 
 				{
 					case MALL_REGULAR_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							NCObjects[item][ncattachname],
 							NCObjects[item][ncmodel],
@@ -1057,7 +1057,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_TOOLKIT_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							TSObjects[item][tsname],
 							TSObjects[item][tsmodel],
@@ -1067,7 +1067,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_TECHNO_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							TechnoObjects[item][teattachname],
 							TechnoObjects[item][teattachmodel],
@@ -1077,7 +1077,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_SPORTS_CLOTHING: {			
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							SportsObjects[item][sportsname],
 							SportsObjects[item][sportsmodel],
@@ -1087,7 +1087,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_PD_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							PDObjects[item][pdname],
 							PDObjects[item][pdmodel],
@@ -1097,7 +1097,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_FD_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							FDObjects[item][fdname],
 							FDObjects[item][fdmodel],
@@ -1107,7 +1107,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_GOV_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							GOVObjects[item][govname],
 							GOVObjects[item][govmodel],
@@ -1117,7 +1117,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case MALL_PREM_CLOTHING: {
 						new
-							tmpString[ 128 ];
+							tmpString[128];
 						format( tmpString, 128, ""COL_GREEN"Naziv: "COL_WHITE"%s\n"COL_GREEN"Modelid: "COL_WHITE"%d\n"COL_GREEN"Cijena: "COL_WHITE"%d",
 							PremiumObjects[item][premattachname],
 							PremiumObjects[item][premmodel],
@@ -1139,7 +1139,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_NEWCLOTHING: {
-			if( !response ) return 1;
+			if(!response ) return 1;
 			if(PlayerObject[playerid][listitem][poModelid] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot vam nije prazan, koritite /objects delete prvo!");
 			else
 			{
@@ -1147,7 +1147,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ResetObjectsVariables(playerid);
 				ResetObjectEnum(playerid, listitem);
 				
-				switch( Bit8_Get( gr_MallType, playerid ) ) 
+				switch( Bit8_Get( gr_MallType, playerid )) 
 				{
 					case MALL_REGULAR_CLOTHING: 
 					{
@@ -1255,7 +1255,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_DELETECLOTHING: {
-			if( !response ) return 1;
+			if(!response ) return 1;
 			if(PlayerObject[playerid][listitem][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot vam je prazan, ne mozete ga obrisati!");
 			
 			if(IsPlayerAttachedObjectSlotUsed(playerid, listitem))
@@ -1351,7 +1351,7 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 
 public OnPlayerChangeSelectedColor(playerid, column, row)
 {
-	if( Bit1_Get(r_ColorSelect, playerid) ) {
+	if(Bit1_Get(r_ColorSelect, playerid)) {
 		new
 			index = Bit4_Get(r_ColorSlotId, playerid);
 		RemovePlayerAttachedObject(playerid, index);
@@ -1363,7 +1363,7 @@ public OnPlayerChangeSelectedColor(playerid, column, row)
 
 public OnPlayerSelectColor(playerid, column, row)
 {
-	if( Bit1_Get(r_ColorSelect, playerid) ) {
+	if(Bit1_Get(r_ColorSelect, playerid)) {
 		new
 			index = Bit4_Get(r_ColorSlotId, playerid);
 		RemovePlayerAttachedObject(playerid, index);
@@ -1378,23 +1378,23 @@ public OnPlayerSelectColor(playerid, column, row)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if( Bit1_Get(r_ColorSelect, playerid) ) {
-		if ((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT))
+	if(Bit1_Get(r_ColorSelect, playerid)) {
+		if((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT))
 			MoveColorDialogCursor(playerid, CURSOR_MOVE_LEFT);
-		else if ((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT))
+		else if((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT))
 			MoveColorDialogCursor(playerid, CURSOR_MOVE_RIGHT);
-		else if ((newkeys & KEY_YES) && !(oldkeys & KEY_YES))
+		else if((newkeys & KEY_YES) && !(oldkeys & KEY_YES))
 			MoveColorDialogCursor(playerid, CURSOR_MOVE_UP);
-		else if ((newkeys & KEY_NO) && !(oldkeys & KEY_NO))
+		else if((newkeys & KEY_NO) && !(oldkeys & KEY_NO))
 			MoveColorDialogCursor(playerid, CURSOR_MOVE_DOWN);
-		else if ((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT)) {
+		else if((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT)) {
 			SelectCurrentColor(playerid);
 			HidePlayerColorSelectDialog(playerid);
 			DestroyColorSelectionDialog(playerid);
 			Bit1_Set(r_ColorSelect, playerid, false);
 			TogglePlayerControllable(playerid, true);
 		}
-		else if ((newkeys & KEY_CROUCH) && !(oldkeys & KEY_CROUCH)) {
+		else if((newkeys & KEY_CROUCH) && !(oldkeys & KEY_CROUCH)) {
 			new
 				index = Bit4_Get(r_ColorSlotId, playerid);
 			RemovePlayerAttachedObject(playerid, index);
@@ -1424,7 +1424,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 CMD:objects(playerid, params[])
 {
 	new item[16], izbor;
-    if (sscanf(params, "s[16] ", item))
+    if(sscanf(params, "s[16] ", item))
 	{
 		SendClientMessage(playerid, COLOR_LIGHTBLUE, "KORISTENJE: /objects [opcija]");
 		SendClientMessage(playerid, COLOR_WHITE, "[OPCIJE]: buy, delete, attach, detach, edit, changebone");
@@ -1435,7 +1435,7 @@ CMD:objects(playerid, params[])
 	    if(!IsAnArraySlotFree(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova");
 	    if(!IsSlotFree(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova");
 		new
-			tmpString[ 128 ];
+			tmpString[128];
 		if(IsPlayerInRangeOfPoint(playerid,10,1096.0909, -1440.6428, 14.7926))//Obican clothing
 		{
 	        for(new x=0; x < MAX_CUSTOMIZED_OBJECTS; x++)
@@ -1608,7 +1608,7 @@ CMD:objects(playerid, params[])
 	else if(strcmp(item,"delete",true) == 0)
 	{
 		new
-			tmpString[ 128 ];
+			tmpString[128];
 	    for(new x;x<MAX_CUSTOMIZED_OBJECTS;x++)
         {
             if(PlayerObject[playerid][x][poModelid] != -1) {
@@ -1625,7 +1625,7 @@ CMD:objects(playerid, params[])
 	}	
 	else if(strcmp(item,"attach",true) == 0)
 	{
-	    if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects attach [0-6]");
+	    if(sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects attach [0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
@@ -1639,7 +1639,7 @@ CMD:objects(playerid, params[])
 	}
 	else if(strcmp(item,"detach",true) == 0)
 	{
-        if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects detach [0-6]");
+        if(sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects detach [0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(!PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
@@ -1652,21 +1652,21 @@ CMD:objects(playerid, params[])
 	else if(strcmp(item,"edit",true) == 0)
 	{
 		new
-			pick[ 6 ];
-        if (sscanf(params, "s[16]s[6]i", item, pick, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects edit [color/edit][0-6]");
+			pick[6];
+        if(sscanf(params, "s[16]s[6]i", item, pick, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects edit [color/edit][0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(!PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate objekt pod tim slotom!");
 		
-		if( !strcmp(pick, "edit", true) ) {
+		if(!strcmp(pick, "edit", true)) {
 			EditAttachedObject(playerid, izbor);
 			Bit2_Set(gr_TipEdita, playerid, 2);
 			
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Usli ste u editanje objekta. Mozete mjenjati poziciju, velicinu i ostalo.");
 			SendClientMessage(playerid, COLOR_YELLOW, "HINT: KORISTENJE {FFFF00}~k~~PED_SPRINT~{FFFFFF} da okrenes kameru.");
 		}
-		else if( !strcmp(pick, "color", true) ) {
+		else if(!strcmp(pick, "color", true)) {
 			Bit4_Set(r_ColorSlotId, playerid, izbor);
 			CreateColorSelectionDialog(playerid);
 			ShowPlayerColorSelectDialog(playerid);
@@ -1679,9 +1679,9 @@ CMD:objects(playerid, params[])
 	else if(strcmp(item,"changebone",true) == 0)
 	{
 	    new bone[16], selectedmodelid;
-        if (sscanf(params, "s[16]is[16]", item, izbor, bone))
+        if(sscanf(params, "s[16]is[16]", item, izbor, bone))
 		{
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "KORISTENJE: /objects changebone [0-6] [bone]");
+			SendClientMessage(playerid, COLOR_LIGHTBLUE, "KORISTENJE: /objects changebone [0-6][bone]");
 			SendClientMessage(playerid, COLOR_WHITE, "Bone IDs: spine, head, leftupperarm, rightupperarm, lefthand, righthand");
 			SendClientMessage(playerid, COLOR_WHITE, "leftthigh, rightthigh, leftfoot, rightfoot, rightcalf, leftcalf, leftforearm");
 			SendClientMessage(playerid, COLOR_WHITE, "rightforearm, leftclavicle, rightclavicle, neck, jaw");

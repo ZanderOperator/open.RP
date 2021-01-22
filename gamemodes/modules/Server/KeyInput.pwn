@@ -38,7 +38,7 @@ enum E_PLAYER_INPUT_DATA
 	piTask
 }
 new
-	InputInfo[ MAX_PLAYERS ][ E_PLAYER_INPUT_DATA ];
+	InputInfo[MAX_PLAYERS][E_PLAYER_INPUT_DATA];
 	
 static stock 
 	Bit1:PlayerUsingKeyInput<MAX_PLAYERS>,
@@ -60,15 +60,15 @@ static stock
 ptask WholeKeyInputTimer[1000](playerid)
 {
 	if(Bit1_Get(PlayerUsingKeyInput, playerid)) {
-		if( --InputInfo[ playerid ][ piWholeTime ] == 0 ) {
-			CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[ playerid ][ piTask ], 0);
+		if(--InputInfo[playerid][piWholeTime] == 0 ) {
+			CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[playerid][piTask], 0);
 			DisablePlayerKeyInput(playerid);
 			return 1;
 		}
 		
 		new
-			tmpString[ 32 ];
-		format(tmpString, 32, "VRIJEME: %d", InputInfo[ playerid ][ piWholeTime ]);
+			tmpString[32];
+		format(tmpString, 32, "VRIJEME: %d", InputInfo[playerid][piWholeTime]);
 		PlayerTextDrawSetString(playerid, KeyInputTimeTD[playerid], tmpString);
 	}
 	return 1;
@@ -80,7 +80,7 @@ timer KeyInputTimer[100](playerid)
 	{
 		ChangePlayerInputKey(playerid);
 		// Showkey
-		GameTextForPlayer(playerid, InputInfo[ playerid ][ piKey ] ? ("~g~~k~~CONVERSATION_YES~") : ("~r~~k~~CONVERSATION_NO~"), InputInfo[ playerid ][ piKeyTime ], 4);
+		GameTextForPlayer(playerid, InputInfo[playerid][piKey] ? ("~g~~k~~CONVERSATION_YES~") : ("~r~~k~~CONVERSATION_NO~"), InputInfo[playerid][piKeyTime], 4);
 		return 1;
 	}
 	return 1;
@@ -97,23 +97,23 @@ timer KeyInputTimer[100](playerid)
 */
 stock static DestroyKeyInputTDs(playerid)
 {
-	if( KeyInputBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, KeyInputBcg[playerid]);
 		KeyInputBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( KeyInputBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, KeyInputBcg1[playerid]);
 		KeyInputBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( KeyInputBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, KeyInputBcg2[playerid]);
 		KeyInputBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( KeyInputTimeTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputTimeTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, KeyInputTimeTD[playerid]);
 		KeyInputTimeTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( KeyInputScoreTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputScoreTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, KeyInputScoreTD[playerid]);
 		KeyInputScoreTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -201,12 +201,12 @@ stock DisablePlayerKeyInput(playerid)
 stock SetPlayerKeyInput(playerid, total_score, key_time, whole_time, type)
 {
 	// Vars
-	InputInfo[ playerid ][ piKey ]			= random(2); // 1 - YES, 0 - NO
-	InputInfo[ playerid ][ piTotalScore ]	= total_score;
-	InputInfo[ playerid ][ piTempScore ]	= 0;
-	InputInfo[ playerid ][ piKeyTime ]		= key_time;
-	InputInfo[ playerid ][ piWholeTime ]	= whole_time;
-	InputInfo[ playerid ][ piTask ] 		= type;
+	InputInfo[playerid][piKey]			= random(2); // 1 - YES, 0 - NO
+	InputInfo[playerid][piTotalScore]	= total_score;
+	InputInfo[playerid][piTempScore]	= 0;
+	InputInfo[playerid][piKeyTime]		= key_time;
+	InputInfo[playerid][piWholeTime]	= whole_time;
+	InputInfo[playerid][piTask] 		= type;
 	// Timers
 	defer KeyInputTimer[key_time](playerid);
 	Bit1_Set(PlayerUsingKeyInput, playerid, true);
@@ -214,19 +214,19 @@ stock SetPlayerKeyInput(playerid, total_score, key_time, whole_time, type)
 	// Showkey
 	CreateKeyInputTDs(playerid);
 	new
-		tmpString[ 32 ];
+		tmpString[32];
 	format(tmpString, 32, "VRIJEME: %d", whole_time);
 	PlayerTextDrawSetString(playerid, KeyInputTimeTD[playerid], tmpString);
 	
-	format(tmpString, 32, "SCORE: %d/%d", InputInfo[ playerid ][ piTempScore ], InputInfo[ playerid ][ piTotalScore ]);
+	format(tmpString, 32, "SCORE: %d/%d", InputInfo[playerid][piTempScore], InputInfo[playerid][piTotalScore]);
 	PlayerTextDrawSetString(playerid, KeyInputScoreTD[playerid], tmpString);
 	return 1;
 }
 
 stock ChangePlayerInputKey(playerid)
 {
-	InputInfo[ playerid ][ piInputed ] 	= false;
-	InputInfo[ playerid ][ piKey ]		= random(2); // 1 - YES, 0 - NO
+	InputInfo[playerid][piInputed] 	= false;
+	InputInfo[playerid][piKey]		= random(2); // 1 - YES, 0 - NO
 	return 1;
 }
 
@@ -242,7 +242,7 @@ stock ChangePlayerInputKey(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-	if( Bit1_Get(PlayerUsingKeyInput, playerid) )
+	if(Bit1_Get(PlayerUsingKeyInput, playerid))
 		DisablePlayerKeyInput(playerid);
 			
     return 1;
@@ -250,78 +250,78 @@ public OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	new key_time = InputInfo[ playerid ][ piKeyTime ];
-	if( PRESSED(KEY_YES) ) { 
-		if( Bit1_Get(PlayerUsingKeyInput, playerid) ) {
-			if( InputInfo[ playerid ][ piKey ] != -1 ) {
-				if( InputInfo[ playerid ][ piInputed ] ) return 1;
+	new key_time = InputInfo[playerid][piKeyTime];
+	if(PRESSED(KEY_YES)) { 
+		if(Bit1_Get(PlayerUsingKeyInput, playerid)) {
+			if(InputInfo[playerid][piKey] != -1 ) {
+				if(InputInfo[playerid][piInputed] ) return 1;
 				
-				if( InputInfo[ playerid ][ piKey ] ) { // KEY_YES
+				if(InputInfo[playerid][piKey] ) { // KEY_YES
 					GameTextForPlayer(playerid, "~n~", 2, 4);
-					InputInfo[ playerid ][ piKey ] = -1;
-					InputInfo[ playerid ][ piInputed ] = false;
+					InputInfo[playerid][piKey] = -1;
+					InputInfo[playerid][piInputed] = false;
 					
-					if( ++InputInfo[ playerid ][ piTempScore ] == InputInfo[ playerid ][ piTotalScore ] ) {
-						CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[ playerid ][ piTask ], 1);
+					if(++InputInfo[playerid][piTempScore] == InputInfo[playerid][piTotalScore] ) {
+						CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[playerid][piTask], 1);
 						DisablePlayerKeyInput(playerid);
 					} else
 						defer KeyInputTimer[key_time](playerid);
 						
 					new
-						tmpString[ 32 ];
-					format(tmpString, 32, "SCORE: %d/%d", InputInfo[ playerid ][ piTempScore ], InputInfo[ playerid ][ piTotalScore ]);
+						tmpString[32];
+					format(tmpString, 32, "SCORE: %d/%d", InputInfo[playerid][piTempScore], InputInfo[playerid][piTotalScore]);
 					PlayerTextDrawSetString(playerid, KeyInputScoreTD[playerid], tmpString);
 				}
 				else {
 					GameTextForPlayer(playerid, "~n~", 2, 4);
-					InputInfo[ playerid ][ piKey ] = -1;
-					InputInfo[ playerid ][ piInputed ] = false;
+					InputInfo[playerid][piKey] = -1;
+					InputInfo[playerid][piInputed] = false;
 
-					if( InputInfo[playerid][piTempScore] > 0)
-						InputInfo[ playerid ][ piTempScore ]--;
+					if(InputInfo[playerid][piTempScore] > 0)
+						InputInfo[playerid][piTempScore]--;
 
 					defer KeyInputTimer[key_time](playerid);
 					
 					new
-						tmpString[ 32 ];
-					format(tmpString, 32, "SCORE: %d/%d", InputInfo[ playerid ][ piTempScore ], InputInfo[ playerid ][ piTotalScore ]);
+						tmpString[32];
+					format(tmpString, 32, "SCORE: %d/%d", InputInfo[playerid][piTempScore], InputInfo[playerid][piTotalScore]);
 					PlayerTextDrawSetString(playerid, KeyInputScoreTD[playerid], tmpString);
 				}
 			}
 		}
 	}
-	if( PRESSED(KEY_NO) ) {
-		if( Bit1_Get(PlayerUsingKeyInput, playerid) ) {
-			if( InputInfo[ playerid ][ piKey ] != -1 ) {
-				if( InputInfo[ playerid ][ piInputed ] ) return 1;
+	if(PRESSED(KEY_NO)) {
+		if(Bit1_Get(PlayerUsingKeyInput, playerid)) {
+			if(InputInfo[playerid][piKey] != -1 ) {
+				if(InputInfo[playerid][piInputed] ) return 1;
 				
-				if( !InputInfo[ playerid ][ piKey ] ) { // KEY_NO
+				if(!InputInfo[playerid][piKey] ) { // KEY_NO
 					GameTextForPlayer(playerid, "~n~", 2, 4);
-					InputInfo[ playerid ][ piKey ] = -1;
-					InputInfo[ playerid ][ piInputed ] = false;
+					InputInfo[playerid][piKey] = -1;
+					InputInfo[playerid][piInputed] = false;
 					
-					if( ++InputInfo[ playerid ][ piTempScore ] == InputInfo[ playerid ][ piTotalScore ] ) {
-						CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[ playerid ][ piTask ], 1);
+					if(++InputInfo[playerid][piTempScore] == InputInfo[playerid][piTotalScore] ) {
+						CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[playerid][piTask], 1);
 						DisablePlayerKeyInput(playerid);
 					} else
 						defer KeyInputTimer[key_time](playerid);
 					
 					new
-						tmpString[ 32 ];
-					format(tmpString, 32, "SCORE: %d/%d", InputInfo[ playerid ][ piTempScore ], InputInfo[ playerid ][ piTotalScore ]);
+						tmpString[32];
+					format(tmpString, 32, "SCORE: %d/%d", InputInfo[playerid][piTempScore], InputInfo[playerid][piTotalScore]);
 					PlayerTextDrawSetString(playerid, KeyInputScoreTD[playerid], tmpString);
 				}
 				else {
 					GameTextForPlayer(playerid, "~n~", 2, 4);
-					InputInfo[ playerid ][ piKey ] = -1;
-					InputInfo[ playerid ][ piInputed ] = false;
-					if( InputInfo[playerid][piTempScore] > 0)
-						InputInfo[ playerid ][ piTempScore ]--;
+					InputInfo[playerid][piKey] = -1;
+					InputInfo[playerid][piInputed] = false;
+					if(InputInfo[playerid][piTempScore] > 0)
+						InputInfo[playerid][piTempScore]--;
 					defer KeyInputTimer[key_time](playerid);
 
 					new
-						tmpString[ 32 ];
-					format(tmpString, 32, "SCORE: %d/%d", InputInfo[ playerid ][ piTempScore ], InputInfo[ playerid ][ piTotalScore ]);
+						tmpString[32];
+					format(tmpString, 32, "SCORE: %d/%d", InputInfo[playerid][piTempScore], InputInfo[playerid][piTotalScore]);
 					PlayerTextDrawSetString(playerid, KeyInputScoreTD[playerid], tmpString);
 				}
 			}

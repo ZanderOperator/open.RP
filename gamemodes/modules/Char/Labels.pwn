@@ -254,7 +254,7 @@ stock IsPlayerNearRoadblock(playerid)
 */
 CMD:roadblock(playerid, params[])
 {
-	if( !IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid) && !IsAFM(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+	if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid) && !IsAFM(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
 	if(AddingRoadblock[playerid])
 		return SendClientMessage(playerid, COLOR_RED, "Prvo prestanite postavljati prepreku...");
@@ -266,12 +266,12 @@ CMD:roadblock(playerid, params[])
 CMD:rrb(playerid, params[])
 {
 
-	if( !IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+	if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
 	new
 		id, str[128];
 
- 	if( (id = IsPlayerNearRoadblock(playerid)) != -1)
+ 	if((id = IsPlayerNearRoadblock(playerid)) != -1)
 	{
       	format(str, sizeof(str), "** HQ: %s %s unistava roadblock '%s' sa lokacije %s! **", ReturnPlayerRankName(playerid), GetName(playerid, true),
 			GetRoadblockNameFromModel(Labels[id][LabelsModelID]), Labels[id][RoadblockLocation]);
@@ -288,7 +288,7 @@ CMD:rrb(playerid, params[])
 CMD:removeall(playerid, params[])
 {
 
-	if( !IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+	if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
 	new
 		str[128];

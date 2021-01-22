@@ -38,7 +38,7 @@ LoadPlayerCredit(playerid)
 			mysql_fquery_ex(g_SQL, 
 				"INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
 					VALUES ('%d', '0', '0', '0', '0', '0', '0')",
-				PlayerInfo[ playerid ][ pSQLID ]
+				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;
 		}
@@ -175,7 +175,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{	
 		case DIALOG_CREDIT:
 		{	
-			if( !response ) 
+			if(!response ) 
 				return 1;
 
 			new 
@@ -295,7 +295,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ACCEPT_SAVINGS: 
 		{
-			if( !response ) 
+			if(!response ) 
 				return ResetSavingsVars(playerid), SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Odbili ste staviti novac na stedni racun.");
 			
 			PlayerSavings[playerid][pSavingsCool] = 0;
@@ -417,20 +417,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
 {
 	new
-		btmpString[ 128 ];
-	PlayerInfo[ playerid ][ pBank ] -= MoneyAmmount;
-	PlayerInfo[ giveplayerid ][ pBank ] += MoneyAmmount;
+		btmpString[128];
+	PlayerInfo[playerid][pBank] -= MoneyAmmount;
+	PlayerInfo[giveplayerid][pBank] += MoneyAmmount;
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
 	va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
 	
 	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
-		PlayerInfo[ playerid ][ pBank ],
-		PlayerInfo[ playerid ][ pSQLID]
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
 	);
 
 	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
-		PlayerInfo[ giveplayerid ][ pBank ],
-		PlayerInfo[ giveplayerid ][ pSQLID]
+		PlayerInfo[giveplayerid][pBank],
+		PlayerInfo[giveplayerid][pSQLID]
 	);
 		
 	if(MoneyAmmount >= 1000) {
@@ -535,7 +535,7 @@ IsPlayerCredible(playerid, amount)
 	if(value)
 	{
 		new ratevalue = amount / 250;
-		if( (PaydayInfo[playerid][pProfit] + 100) < ratevalue && PlayerInfo[playerid][pBank] < (amount * 0.7) )
+		if((PaydayInfo[playerid][pProfit] + 100) < ratevalue && PlayerInfo[playerid][pBank] < (amount * 0.7))
 		{
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati barem %d$ profita po placi/70% iznosa kredita na banci da bi mogli redovno placati kredit.", (ratevalue + 100));
 			value = false;
@@ -650,7 +650,7 @@ TakePlayerProperty(playerid)
 				vehicleid = PlayerKeys[playerid][pVehicleKey];
 			va_SendClientMessage(playerid, 
 				COLOR_RED, 
-				"[ ! ]: The Bank seized your %s as payment of credit costs (%s).", 
+				"[!]: The Bank seized your %s as payment of credit costs (%s).", 
 				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
 				FormatNumber(CreditInfo[playerid][cAmount])
 			);
@@ -711,39 +711,39 @@ ResetSavingsVars(playerid)
 CMD:bank(playerid, params[])
 {
 	if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
-	if( PlayerDeath[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+	if(PlayerDeath[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 	
 	new
-		pick[ 15 ];
-	if( sscanf( params, "s[15] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bank [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] withdraw - deposit - transfer");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] credit - checkcredit - paycredit - savings - savingsinfo");
+		pick[15];
+	if(sscanf( params, "s[15] ", pick )) {
+		SendClientMessage(playerid, COLOR_RED, "[?]: /bank [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[!] withdraw - deposit - transfer");
+		SendClientMessage(playerid, COLOR_RED, "[!] credit - checkcredit - paycredit - savings - savingsinfo");
 		return 1;
 	}
-	if( !strcmp( pick, "withdraw", true ) ) {
+	if(!strcmp( pick, "withdraw", true )) {
 		new
 			moneys;
-		if( sscanf( params, "s[15]i", pick, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bank withdraw [kolicina novca]");
-		if( moneys > PlayerInfo[ playerid ][ pBank ] || moneys < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca  na banci!");
+		if(sscanf( params, "s[15]i", pick, moneys )) return SendClientMessage(playerid, COLOR_RED, "[?]: /bank withdraw [kolicina novca]");
+		if(moneys > PlayerInfo[playerid][pBank] || moneys < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca  na banci!");
 		
 		BankToPlayerMoney(playerid, moneys);
 		
 		new
-			tmpString[ 128 ];
+			tmpString[128];
 		format(tmpString, sizeof(tmpString), "[BANKA]: Podigli ste %d$ s vaseg racuna, Ukupno preostalo: %d$",
 			moneys, 
-			PlayerInfo[ playerid ][ pBank ] 
+			PlayerInfo[playerid][pBank] 
 		);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, tmpString);
 		
 	}
-	else if( !strcmp( pick, "deposit", true ) ) {
+	else if(!strcmp( pick, "deposit", true )) {
 		new
 			moneys;
 			
-		if( sscanf( params, "s[15]i", pick, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bank deposit [kolicina novca]");
-		if( moneys > AC_GetPlayerMoney(playerid) || moneys < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca");
+		if(sscanf( params, "s[15]i", pick, moneys )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank deposit [kolicina novca]");
+		if(moneys > AC_GetPlayerMoney(playerid) || moneys < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca");
 		
 		PlayerToBankMoney(playerid, moneys);
 		
@@ -760,13 +760,13 @@ CMD:bank(playerid, params[])
 		);
 		#endif
 	}
-	else if( !strcmp( pick, "transfer", true ) ) {
+	else if(!strcmp( pick, "transfer", true )) {
 		new
 			moneys, giveplayerid;
-		if( sscanf( params, "s[15]ui", pick, giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bank transfer [Playerid / Part of name][iznos]");
-		if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 2+!");
-		if( giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
-		if( moneys > 0 && PlayerInfo[ playerid ][ pBank ] >= moneys ) 
+		if(sscanf( params, "s[15]ui", pick, giveplayerid, moneys )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank transfer [Playerid / Part of name][iznos]");
+		if(PlayerInfo[playerid][pLevel] < 2 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 2+!");
+		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
+		if(moneys > 0 && PlayerInfo[playerid][pBank] >= moneys ) 
 			BankTransferMoney(playerid, giveplayerid, moneys);
 		
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi iznos transakcije!");
@@ -790,7 +790,7 @@ CMD:bank(playerid, params[])
 		if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristit ovu komandu !");
 		new money, time, buffer[128];
 		if(sscanf(params, "s[15]ii", pick, time, money)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bank savings [vrijeme] [svota]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bank savings [vrijeme][svota]");
 			SendClientMessage(playerid, COLOR_RED, "OPTION: Vrijeme: 10 - 100 In Game sati(1 sat = 1% kamate) | Svota: 1$ - 200 000$");
 			return 1;
 		}
@@ -824,7 +824,7 @@ CMD:bank(playerid, params[])
 	}
 	else if(!strcmp(pick, "paycredit", true))
 	{
-		if( PlayerDeath[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+		if(PlayerDeath[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ti nemas dignut kredit");
 		if(CreditInfo[playerid][cCreditType] > 4 && !CreditInfo[playerid][cUsed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Jos uvijek niste iskoristili namjenski kredit, prvo obavite kupovinu!");
 		
@@ -833,20 +833,20 @@ CMD:bank(playerid, params[])
 			money, 
 			cashdeposit;
 			
-		if (sscanf(params, "s[15]i", pick, cashdeposit)) 
+		if(sscanf(params, "s[15]i", pick, cashdeposit)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bank paycredit [kolicina rata]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bank paycredit [kolicina rata]");
 			if(CreditInfo[playerid][cUnpaid] > 0)
 				va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Imate %d neplacenih rata kredita, tako da se prvo ona podmiruju!", CreditInfo[playerid][cUnpaid]);
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Imate jos %d rata za otplatiti.", rest);
+			va_SendClientMessage(playerid, COLOR_RED, "[!] Imate jos %d rata za otplatiti.", rest);
 			return 1;
 		}
-		if( AntiSpamInfo[ playerid ][ asCreditPay ] > gettimestamp() ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BANK_CREDITPAY);
-		if (cashdeposit > rest || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata !");
+		if(AntiSpamInfo[playerid][asCreditPay] > gettimestamp()) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BANK_CREDITPAY);
+		if(cashdeposit > rest || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata !");
 		
 		if(CreditInfo[playerid][cUnpaid] > 0)
 		{
-			if (cashdeposit > CreditInfo[playerid][cUnpaid] || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko neplacenih rata !");
+			if(cashdeposit > CreditInfo[playerid][cUnpaid] || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko neplacenih rata !");
 			money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
 			if(AC_GetPlayerMoney(playerid) >= money) 
 			{
@@ -878,7 +878,7 @@ CMD:bank(playerid, params[])
 		if(CreditInfo[playerid][cRate] >= 250)
 		{
 			ResetCreditVars(playerid);
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
+			SendClientMessage(playerid, COLOR_RED, "[!] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
 		}
 
 		mysql_save:
@@ -888,7 +888,7 @@ CMD:bank(playerid, params[])
 		Log_Write("/logfiles/credit_pay.txt", "(%s) %s paid %d credit rates for $%s",  ReturnDate(), GetName(playerid, false), cashdeposit, money);
 		#endif
 		
-		AntiSpamInfo[ playerid ][ asCreditPay ] = gettimestamp() + ANTI_SPAM_BANK_CREDITPAY;
+		AntiSpamInfo[playerid][asCreditPay] = gettimestamp() + ANTI_SPAM_BANK_CREDITPAY;
 		return 1;
 	}
 	return 1;

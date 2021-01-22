@@ -76,121 +76,121 @@ hook OnGameModeInit()
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     // TODO: bounds checking for PlayerFaction[playerid][pMember] and extract it to a variable
-    if (PRESSED(KEY_YES))
+    if(PRESSED(KEY_YES))
     {
-        if (IsPlayerInRangeOfPoint(playerid, 3.0, 1288.548217, 755.028747, -97.373825))
+        if(IsPlayerInRangeOfPoint(playerid, 3.0, 1288.548217, 755.028747, -97.373825))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
-            if (gov_status[0] == 0)
+            if(gov_status[0] == 0)
             {
                 SetDynamicObjectRot(gov_doors[0], 0.000000, 0.000000, -180.000000);
                 SetDynamicObjectRot(gov_doors[1], 0.000000, 0.000000, -180.000000);
                 gov_status[0] = 1;
             }
-            else if (gov_status[0] == 1)
+            else if(gov_status[0] == 1)
             {
                 SetDynamicObjectRot(gov_doors[0], 0.000000, 0.000000, -270.000000);
                 SetDynamicObjectRot(gov_doors[1], 0.000000, 0.000000, -90.000000);
                 gov_status[0] = 0;
             }
         }
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1288.548217, 755.028747, -92.923904))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1288.548217, 755.028747, -92.923904))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
-            if (gov_status[2] == 0)
+            if(gov_status[2] == 0)
             {
                 SetDynamicObjectRot(gov_doors[2], 0.000007, -0.000000, 179.999969);
                 SetDynamicObjectRot(gov_doors[3], -0.000007, 0.000000, -179.999969);
                 gov_status[2] = 1;
             }
-            else if (gov_status[2] == 1)
+            else if(gov_status[2] == 1)
             {
                 SetDynamicObjectRot(gov_doors[2], 0.000007, -0.000000, 89.999969);
                 SetDynamicObjectRot(gov_doors[3], -0.000007, 0.000000, -89.999969);
                 gov_status[2] = 0;
             }
         }
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1312.890625, 758.029113, -97.393829))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1312.890625, 758.029113, -97.393829))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
-            if (gov_status[4] == 0)
+            if(gov_status[4] == 0)
             {
                 SetDynamicObjectRot(gov_doors[4], -0.000007, 0.000000, 0.000053);
                 SetDynamicObjectRot(gov_doors[5], 0.000007, 0.000000, 359.999908);
                 gov_status[4] = 1;
             }
-            else if (gov_status[4] == 1)
+            else if(gov_status[4] == 1)
             {
                 SetDynamicObjectRot(gov_doors[4], -0.000007, 0.000000, 270.000061);
                 SetDynamicObjectRot(gov_doors[5], 0.000007, 0.000000, 89.999908);
                 gov_status[4] = 0;
             }
         }
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1305.600341, 778.698486, -97.373817))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1305.600341, 778.698486, -97.373817))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
-            if (gov_status[6] == 0)
+            if(gov_status[6] == 0)
             {
                 SetDynamicObjectRot(gov_doors[6], -0.000015, 0.000007, 90.000045);
                 SetDynamicObjectRot(gov_doors[7], 0.000015, -0.000007, 449.999816);
                 gov_status[6] = 1;
             }
-            else if (gov_status[6] == 1)
+            else if(gov_status[6] == 1)
             {
                 SetDynamicObjectRot(gov_doors[6], -0.000015, 0.000007, 360.000061);
                 SetDynamicObjectRot(gov_doors[7], 0.000015, -0.000007, 539.999816);
                 gov_status[6] = 0;
             }
         }
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1308.890136, 783.608825, -97.393829))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1308.890136, 783.608825, -97.393829))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
-            if (gov_status[8] == 0)
+            if(gov_status[8] == 0)
             {
                 SetDynamicObjectRot(gov_doors[8], 0.000007, 0.000000, 359.999908);
                 gov_status[8] = 1;
             }
-            else if (gov_status[8] == 1)
+            else if(gov_status[8] == 1)
             {
                 SetDynamicObjectRot(gov_doors[8], 0.000007, 0.000000, 89.999908);
                 gov_status[8] = 0;
             }
         }
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1308.890136, 794.949096, -97.393829))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1308.890136, 794.949096, -97.393829))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
-            if (gov_status[9] == 0)
+            if(gov_status[9] == 0)
             {
                 SetDynamicObjectRot(gov_doors[9], 0.000007, 0.000000, 359.999908);
                 gov_status[9] = 1;
             }
-            else if (gov_status[9] == 1)
+            else if(gov_status[9] == 1)
             {
                 SetDynamicObjectRot(gov_doors[9], 0.000007, 0.000000, 629.999877);
                 gov_status[9] = 0;
             }
         }
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1312.850585, 755.799133, -92.923858))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1312.850585, 755.799133, -92.923858))
         {
-            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
-            if (gov_status[10] == 0)
+            if(gov_status[10] == 0)
             {
                 SetDynamicObjectRot(gov_doors[10], 0.000007, 0.000000, 359.999908);
                 gov_status[10] = 1;
             }
-            else if (gov_status[10] == 1)
+            else if(gov_status[10] == 1)
             {
                 SetDynamicObjectRot(gov_doors[10], 0.000007, 0.000000, 89.999908);
                 gov_status[10] = 0;
@@ -213,13 +213,13 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 CMD:govgarage(playerid, params[])
 {
-    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+    if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
         return SendClientMessage(playerid, COLOR_RED, "Nisi pripadnik vlade!");
 
-    if (IsPlayerInRangeOfPoint(playerid, 15.0, 1480.7675, -1827.8673, 13.5469)
+    if(IsPlayerInRangeOfPoint(playerid, 15.0, 1480.7675, -1827.8673, 13.5469)
         && GetPlayerVirtualWorld(playerid) == 0)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 284.8465, -1540.9485, 24.5968, 6, 0, false);
         }
@@ -230,7 +230,7 @@ CMD:govgarage(playerid, params[])
 
             foreach (new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 6);
                 }
@@ -241,10 +241,10 @@ CMD:govgarage(playerid, params[])
             SetVehicleZAngle(vehicleid, 325.2156);
         }
     }
-    else if (IsPlayerInRangeOfPoint(playerid, 10.0, 284.8465, -1540.9485, 24.5968)
+    else if(IsPlayerInRangeOfPoint(playerid, 10.0, 284.8465, -1540.9485, 24.5968)
              && GetPlayerVirtualWorld(playerid) == 6)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 1480.7675, -1827.8673, 13.5469, 0, 0, false);
         }
@@ -256,7 +256,7 @@ CMD:govgarage(playerid, params[])
 
             foreach (new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 0);
                 }

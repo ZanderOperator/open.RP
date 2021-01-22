@@ -157,22 +157,22 @@ GivePlayerPayCheck(playerid)
 	{
 		new house = PlayerKeys[playerid][pHouseKey];
 
-		houselost += floatround( 0.001 * HouseInfo[ house ][ hValue ] );
+		houselost += floatround( 0.001 * HouseInfo[house][hValue] );
 		format(f_dialog,sizeof(f_dialog), "\n\tTroskovi kuce + porez: %s", FormatNumber(houselost));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		PlayerBankToBudgetMoney(playerid, houselost); // u proracun novac od kuce
 		profit -= houselost;
 	}
 
-	if( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID && PlayerKeys[playerid][pRentKey] >= 0 )  
+	if(PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID && PlayerKeys[playerid][pRentKey] >= 0 )  
 	{
 		new house = PlayerKeys[playerid][pRentKey];
-		if(PlayerInfo[playerid][pBank] >= HouseInfo[ house ][ hRent ])
+		if(PlayerInfo[playerid][pBank] >= HouseInfo[house][hRent])
 		{
-			rentlost += HouseInfo[ house ][ hRent ];
-			profit -= HouseInfo[ house ][ hRent ];
+			rentlost += HouseInfo[house][hRent];
+			profit -= HouseInfo[house][hRent];
 
-			PlayerBankToHouseMoneyTAX(playerid, house, HouseInfo[ house ][ hRent ]);
+			PlayerBankToHouseMoneyTAX(playerid, house, HouseInfo[house][hRent]);
 
 			format(f_dialog,sizeof(f_dialog), "\n\tTroskovi najma kuce: %s", FormatNumber(rentlost));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
@@ -182,7 +182,7 @@ GivePlayerPayCheck(playerid)
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Izbaceni ste iz podstanarstva jer nemate za najamninu na bankovnom racunu.");
 			PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
 			PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
-			PlayerInfo[ playerid ][ pSpawnChange ] = 0;
+			PlayerInfo[playerid][pSpawnChange] = 0;
 			SetPlayerSpawnInfo(playerid);
 		}
 	}
@@ -211,12 +211,12 @@ GivePlayerPayCheck(playerid)
 		profit += complexlost;
     }
 
-	if( PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID ) {
+	if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID ) {
 
 		new bizid = PlayerKeys[playerid][pBizzKey],
 			possibility = minrand(0, 800);
 
-		if (possibility >= 200) 
+		if(possibility >= 200) 
 		{
 			BudgetToBusinessMoney ( bizid, possibility);
 			format(f_dialog,sizeof(f_dialog), "\n\tPoslovanja biznisa: +%s", FormatNumber(possibility));
@@ -292,14 +292,14 @@ GivePlayerPayCheck(playerid)
 		else 
 		{
 			PlayerBankToBudgetMoney(playerid, kreditlost); // Novac od rate kredita ide u proracun
-			CreditInfo[ playerid ][ cRate ] += 1; // dodaje mu ratu kredita za jedan
+			CreditInfo[playerid][cRate] += 1; // dodaje mu ratu kredita za jedan
 			format(f_dialog,sizeof(f_dialog), "\n\tRata kredita: -%s", FormatNumber(kreditlost));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
-		if( CreditInfo[ playerid ][ cRate ] >= 250 ) 
+		if(CreditInfo[playerid][cRate] >= 250 ) 
 		{ 
-			CreditInfo[ playerid ][ cRate ] 		= 0;
-			CreditInfo[ playerid ][ cCreditType ] 	= 0;
+			CreditInfo[playerid][cRate] 		= 0;
+			CreditInfo[playerid][cCreditType] 	= 0;
 			format(f_dialog,sizeof(f_dialog), "\n\tOtplatili ste zadnju ratu kredita!");
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
@@ -410,7 +410,7 @@ GivePlayerPayCheck(playerid)
 	if(PlayerInfo[playerid][pLevel] < 5) // Ako nema posao dobiva socijalnu pomoc
 	{
 		new levelrespect = ( PlayerInfo[playerid][pLevel] + 1 ) * 4; // Trenutni respekti za njegov level
-		if ( PlayerInfo[playerid][pRespects] <= levelrespect ) 
+		if(PlayerInfo[playerid][pRespects] <= levelrespect ) 
 		{ // Ako ima manje respekata od za trenutni level
 			new level = PlayerInfo[playerid][pLevel],
 				fsalary = 1000 / level, // SOCIAL_HELP
@@ -468,11 +468,11 @@ GivePlayerPayCheck(playerid)
 	}
 
 	happy_hours:
-	if( HappyHours )
+	if(HappyHours )
 		PlayerInfo[playerid][pRespects] += ( PlayerInfo[playerid][pLevel] < HappyHoursLVL ) ? 2 : 1;
 	else 
 	{
-	    if( ExpInfo[playerid][eDayPayDays] > 5 )
+	    if(ExpInfo[playerid][eDayPayDays] > 5 )
 	        PlayerInfo[playerid][pRespects] += ExpInfo[playerid][eDayPayDays];
 		else
 			PlayerInfo[playerid][pRespects]++;
@@ -512,10 +512,10 @@ GivePlayerPayCheck(playerid)
 		PlayerJob[playerid][pContractTime]++;
 
 
-	if( ++PlayerGym[playerid][pGymCounter] >= 6 ) 
+	if(++PlayerGym[playerid][pGymCounter] >= 6 ) 
 	{
 		PlayerGym[playerid][pMuscle]--;
-		if( PlayerGym[playerid][pMuscle] <= 0 ) 
+		if(PlayerGym[playerid][pMuscle] <= 0 ) 
 			PlayerGym[playerid][pMuscle] = 0;
 		else
 		{
@@ -524,10 +524,10 @@ GivePlayerPayCheck(playerid)
 			PlayerGym[playerid][pGymCounter] = 0;
 		}
 	}
-	if( PlayerHealth[playerid][pHunger] == 5.0 ) 
+	if(PlayerHealth[playerid][pHunger] == 5.0 ) 
 	{
 		PlayerGym[playerid][pGymCounter] += 2;
-		if( PlayerGym[playerid][pGymCounter] >= 6 ) 
+		if(PlayerGym[playerid][pGymCounter] >= 6 ) 
 		{
 			PlayerGym[playerid][pMuscle]--;
 			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara i lose prehrane Muscle Level Vam se spustio na %d!\n", PlayerGym[playerid][pMuscle]);
@@ -548,7 +548,7 @@ GivePlayerPayCheck(playerid)
 
 	new 
 		expamount = (PlayerInfo[playerid][pLevel] + 1) * 4;
-	if (PlayerInfo[playerid][pRespects] == expamount) 
+	if(PlayerInfo[playerid][pRespects] == expamount) 
 	{
 		LevelUp(playerid);
 		va_GameTextForPlayer(playerid,

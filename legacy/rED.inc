@@ -65,11 +65,11 @@ stock Dialog_O(playerid, function[], style, caption[], info[], button1[], button
 		args
 	;
 
-	if (!strlen(info))
+	if(!strlen(info))
 	{
 	    return 0;
 	}
-	if ((args = numargs()) > 7)
+	if((args = numargs()) > 7)
 	{
 	    while (--args >= 7)
 		{
@@ -116,11 +116,11 @@ stock Dialog_Show(playerid, dialogid, style, const caption[], const info[], cons
 		string[4096],
 		args
 	;
-	if (!strlen(info))
+	if(!strlen(info))
 	{
 		return 0;
 	}
-	if ((args = numargs()) > 7)
+	if((args = numargs()) > 7)
 	{
 		while (--args >= 7)
 		{
@@ -164,30 +164,30 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	static
 		s_Public = cellmax;
-	if (s_Public == cellmax)
+	if(s_Public == cellmax)
 	{
 		s_Public = funcidx("OnDialogPerformed");
 	}
 	// Sanitize inputs.
 	for (new i = 0, l = strlen(inputtext); i < l; i ++)
 	{
-		if (inputtext[i] == '%')
+		if(inputtext[i] == '%')
 		{
 			inputtext[i] = '#';
 		}
 	}
 	
-	if (dialogid == 32700 && s_DialogID[playerid] > -1)
+	if(dialogid == 32700 && s_DialogID[playerid] > -1)
 	{
 		new
 			pDialogID = s_DialogID[playerid];
 		Dialog_Close(playerid);
-		if ((s_Public == -1) || (CallLocalFunction("OnDialogPerformed", "dddd", playerid, pDialogID, response, pDialogID != -1)))
+		if((s_Public == -1) || (CallLocalFunction("OnDialogPerformed", "dddd", playerid, pDialogID, response, pDialogID != -1)))
 		{	
 			CallLocalFunction("OnDialogResponse", "dddds", playerid, pDialogID, response, listitem, (!inputtext[0]) ? ("\1") : (inputtext));
 		}
 	}
-	else if (dialogid == 32700 && strlen(s_DialogName[playerid]) > 0)
+	else if(dialogid == 32700 && strlen(s_DialogName[playerid]) > 0)
 	{
 		new
 		    string[40];
@@ -197,7 +197,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 		Dialog_Close(playerid);
 
-		if ((s_Public == -1) || (CallLocalFunction("OnDialogPerformed", "dsdd", playerid, string[7], response, funcidx(string) != -1)))
+		if((s_Public == -1) || (CallLocalFunction("OnDialogPerformed", "dsdd", playerid, string[7], response, funcidx(string) != -1)))
 		{
 	 		CallLocalFunction(string, "ddds", playerid, response, listitem, (!inputtext[0]) ? ("\1") : (inputtext));
 		}

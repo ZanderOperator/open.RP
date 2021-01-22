@@ -4,7 +4,7 @@ stock IsAtATM(playerid)
 {
     if(IsPlayerConnected(playerid))
 	{
-        if (IsPlayerInRangeOfPoint(playerid,5.0,1153.35,-1455.98,15.79)      ||
+        if(IsPlayerInRangeOfPoint(playerid,5.0,1153.35,-1455.98,15.79)      ||
             IsPlayerInRangeOfPoint(playerid,5.0,1137.12,-1630.50,13.88)      ||
             IsPlayerInRangeOfPoint(playerid,5.0,603.15,-1247.18,18.40)       ||
             IsPlayerInRangeOfPoint(playerid,5.0,-1981.71,120.82,27.67)       ||
@@ -34,8 +34,8 @@ CMD:atm(playerid, params[])
 	new option[9], amount, string[77];
     if(sscanf(params, "s[9] ", option))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atm [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] withdraw, status");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /atm [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[!] withdraw, status");
 		return 1;
 	}
 	
@@ -46,8 +46,8 @@ CMD:atm(playerid, params[])
 	}
 	else if(!strcmp(option, "withdraw", true))
 	{
-		if(sscanf(params, "s[9]i", option, amount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atm withdraw [iznos]");
-		if (amount > PlayerInfo[playerid][pBank] || amount < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca!");
+		if(sscanf(params, "s[9]i", option, amount)) return SendClientMessage(playerid, COLOR_RED, "[?]: /atm withdraw [iznos]");
+		if(amount > PlayerInfo[playerid][pBank] || amount < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca!");
 		BankToPlayerMoney(playerid, amount); // novac dolazi igracu na ruke iz banke
 		format(string, sizeof(string), "Uzeli ste %d$ s vaseg racuna! Preostalo vam je %d$ na vasem racunu!", amount, PlayerInfo[playerid][pBank]);
 		SendClientMessage(playerid, COLOR_GREY, string);

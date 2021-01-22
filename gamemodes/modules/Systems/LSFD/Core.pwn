@@ -133,14 +133,14 @@ stock Player_SetStretcherSpawned(playerid, bool:v)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if (Player_StretcherSpawned(playerid))
+    if(Player_StretcherSpawned(playerid))
     {
-        if (IsValidObject(StretcherObj[playerid]))
+        if(IsValidObject(StretcherObj[playerid]))
         {
             DestroyObject(StretcherObj[playerid]);
             StretcherObj[playerid] = INVALID_OBJECT_ID;
         }
-        else if (IsValidDynamicObject(StretcherObj[playerid]))
+        else if(IsValidDynamicObject(StretcherObj[playerid]))
         {
             DestroyDynamicObject(StretcherObj[playerid]);
             StretcherObj[playerid] = INVALID_OBJECT_ID;
@@ -156,7 +156,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-    if (!response)
+    if(!response)
     {
         return 1;
     }
@@ -166,22 +166,22 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
         case MODEL_SELECTION_FDSKIN:
         {
             SetPlayerSkin(playerid, fdskins_selection[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uzeli ste skin ID %d.", fdskins_selection[index]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", fdskins_selection[index]);
         }
         case MODEL_SELECTION_LAWSKIN:
         {
             SetPlayerSkin(playerid, lawskins_police[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uzeli ste skin ID %d.", lawskins_police[index]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", lawskins_police[index]);
         }
         case MODEL_SELECTION_GOVSKIN:
         {
             SetPlayerSkin(playerid, govskins_gov[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uzeli ste skin ID %d.", govskins_gov[index]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", govskins_gov[index]);
         }
         case MODEL_SELECTION_SDSKIN:
         {
             SetPlayerSkin(playerid, lawskins_sheriff[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uzeli ste skin ID %d.", lawskins_sheriff[index]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", lawskins_sheriff[index]);
         }
     }
     return 1;
@@ -195,9 +195,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_GOV_EQUIP:
         {
-            if (!response)
+            if(!response)
             {
-                if (VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
+                if(VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
                 {
                     new
                         engine, lights, alarm, doors, bonnet, boot, objective;
@@ -230,7 +230,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         Float:tempheal;
                     GetPlayerHealth(playerid,tempheal);
 
-                    if (tempheal < 100.0)
+                    if(tempheal < 100.0)
                         SetPlayerHealth(playerid,99.9);
 
                     PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
@@ -244,7 +244,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_GOV_EQUIP_DUTY:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
                 return 1;
@@ -253,7 +253,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {   // On Duty
-                    if (Player_OnLawDuty(playerid))
+                    if(Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
                         return 1;
@@ -270,7 +270,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 {   // Off Duty
-                    if (!Player_OnLawDuty(playerid))
+                    if(!Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                         return 1;
@@ -295,9 +295,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP:
         {
-            if (!response)
+            if(!response)
             {
-                if (VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
+                if(VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
                 {
                     new
                         engine, lights, alarm, doors, bonnet, boot, objective;
@@ -346,7 +346,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP_DUTY:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
                 return 1;
@@ -356,7 +356,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {   // On Duty
-                    if (Player_OnLawDuty(playerid))
+                    if(Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
                         return 1;
@@ -374,7 +374,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 {   // Off Duty
-                    if (!Player_OnLawDuty(playerid))
+                    if(!Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                         return 1;
@@ -399,7 +399,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP_SKIN:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
                 return 1;
@@ -422,7 +422,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP_MD:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Choose", "Exit");
                 return 1;
@@ -430,7 +430,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             static const skins_array[] = {70, 274, 275, 276, 308};
 
-            if (0 <= listitem <= 4)
+            if(0 <= listitem <= 4)
             {
                 PlayerAppearance[playerid][pTmpSkin] = skins_array[listitem];
             }
@@ -442,7 +442,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP_FD:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Choose", "Exit");
                 return 1;
@@ -461,7 +461,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP_RADNICI:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Choose", "Exit");
                 return 1;
@@ -476,7 +476,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FD_EQUIP_MISC:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
                 return 1;
@@ -504,7 +504,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 3:
                 { // Kisik
-                    if (IsPlayerAttachedObjectSlotUsed(playerid, 9))
+                    if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
                         RemovePlayerAttachedObject(playerid, 9);
 
                     Player_SetHaveOxygen(playerid, true);
@@ -519,9 +519,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_PD_EQUIP:
         {
-            if (!response)
+            if(!response)
             {
-                if (VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
+                if(VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
                 {
                     new
                         engine, lights, alarm, doors, bonnet, boot, objective;
@@ -535,7 +535,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 {   // Skins
                     //ShowPlayerDialog(playerid, DIALOG_PD_SKIN, DIALOG_STYLE_LIST, "ODABIR SKINA", "71\n93\n211\n217\n265\n267\n280\n281\n282\n283\n284\n288\nCivilni skin", "Choose", "Abort");
-                    if (IsACop(playerid))
+                    if(IsACop(playerid))
                     {
                         for(new i = 0; i < sizeof(lawskins_police); i++)
                         {
@@ -547,7 +547,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         }
                         fselection_show(playerid, MODEL_SELECTION_LAWSKIN, "Police Clothes"); 
                     }
-                    else if (IsASD(playerid))
+                    else if(IsASD(playerid))
                     {
                         for(new i = 0; i < sizeof(lawskins_sheriff); i++)
                         {
@@ -569,7 +569,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new
                         Float:tempheal;
                     GetPlayerHealth(playerid,tempheal);
-                    if (tempheal < 100.0)
+                    if(tempheal < 100.0)
                         SetPlayerHealth(playerid,99.9);
 
                     PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
@@ -580,8 +580,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 3:
                 { // Buygun
-                    if (PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
-                    if (IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
+                    if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
+                    if(IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
                     ShowPlayerDialog(playerid,DIALOG_PD_BUYGUN,DIALOG_STYLE_LIST,"POLICE ARMOURY","Desert Eagle - 50 metaka\nShotgun - 50 metaka\nMP5 - 150 metaka\nM4 - 200 metaka\nSniper Rifle - 50 metaka\nKnife\nTeargas - 10\nColt45 - 50\nSilenced - 50 metaka\nSpraycan\nNitestick\nBean Bag - 50 metaka\nRifle - 50 komanda","Choose","Exit");
                 }
             }
@@ -589,7 +589,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_PD_EQUIP_DUTY:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
                 return 1;
@@ -598,13 +598,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {   // Onduty
-                    if (Player_OnLawDuty(playerid))
+                    if(Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
                         return 1;
                     }
 
-                    if (!CheckPlayerWeapons(playerid, 24))
+                    if(!CheckPlayerWeapons(playerid, 24))
                         return 1;
 
                     AC_ResetPlayerWeapons(playerid); 
@@ -628,7 +628,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 {   // Off Duty
-                    if (!Player_OnLawDuty(playerid))
+                    if(!Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                         return 1;
@@ -673,12 +673,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         vehicleid = GetPlayerVehicleID(playerid),
         siren = GetVehicleParamsSirenState(vehicleid);
 
-    if (!IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi pripadnik vlade!");
-    if (!IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi u vozilu.");
+    if(!IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi pripadnik vlade!");
+    if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi u vozilu.");
 
     siren ^= 1; // toggle
 
-    if (siren)
+    if(siren)
         GameTextForPlayer(playerid, "SIRENA UKLJUCENA", 1000, 4);
     else
         GameTextForPlayer(playerid, "SIRENA ISKLJUCENA", 1000, 4);
@@ -688,27 +688,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:equipment(playerid, params[])
 {
-    if (IsFDMember(playerid))
+    if(IsFDMember(playerid))
     {
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, 1176.2422,-1344.8013,-53.6860) || IsPlayerInRangeOfPoint(playerid, 10.0, 1244.3059,-1253.0569,13.5403) || IsPlayerInRangeOfPoint(playerid, 10.0, 1068.8527,-1764.5013,-37.2122))
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, 1176.2422,-1344.8013,-53.6860) || IsPlayerInRangeOfPoint(playerid, 10.0, 1244.3059,-1253.0569,13.5403) || IsPlayerInRangeOfPoint(playerid, 10.0, 1068.8527,-1764.5013,-37.2122))
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
         else
         {
             new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_FD);
-            if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice/FD vozila!");
+            if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice/FD vozila!");
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal\nCivil Skin", "Choose", "Abort");
         }
     }
-    else if (IsACop(playerid) || IsASD(playerid))
+    else if(IsACop(playerid) || IsASD(playerid))
     {
-        if (IsPlayerInRangeOfPoint(playerid,5.0,2040.6858,1260.2460,-11.1115) || IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425) || IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) || IsPlayerInRangeOfPoint(playerid, 10.0, 2097.3110,-2123.7720,-44.1565) || IsPlayerInRangeOfPoint(playerid, 10.0, 2878.4600,-844.5946,-21.6994))
+        if(IsPlayerInRangeOfPoint(playerid,5.0,2040.6858,1260.2460,-11.1115) || IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425) || IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) || IsPlayerInRangeOfPoint(playerid, 10.0, 2097.3110,-2123.7720,-44.1565) || IsPlayerInRangeOfPoint(playerid, 10.0, 2878.4600,-844.5946,-21.6994))
             ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LAW Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
         else
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice!");
     }
-    else if (IsAGov(playerid))
+    else if(IsAGov(playerid))
     {
-        if (IsPlayerInRangeOfPoint(playerid,5.0,1315.3967,758.2388,-93.1678))
+        if(IsPlayerInRangeOfPoint(playerid,5.0,1315.3967,758.2388,-93.1678))
             ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Choose", "Abort");
         else
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice!");
@@ -719,10 +719,10 @@ CMD:equipment(playerid, params[])
 
 CMD:oxygen(playerid, params[])
 {
-    if (!IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSFD!");
-    if (!Player_HaveOxygen(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate bocu s kisikom!");
+    if(!IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSFD!");
+    if(!Player_HaveOxygen(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate bocu s kisikom!");
 
-    if (IsPlayerAttachedObjectSlotUsed(playerid, 9))
+    if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
         RemovePlayerAttachedObject(playerid, 9);
     else
         SetPlayerAttachedObject(playerid, 9, 1009, 1, 0.0, -0.12, 0.0, 270.0, 180.0, 0.0, 1.1, 1.1, 1.1);
@@ -731,7 +731,7 @@ CMD:oxygen(playerid, params[])
 
 CMD:createexplosion(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] <= 1337)
+    if(PlayerInfo[playerid][pAdmin] <= 1337)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten za koristenje ove komande!");
         return 1;
@@ -739,7 +739,7 @@ CMD:createexplosion(playerid, params[])
 
     new Float:X, Float:Y, Float:Z,
         type;
-    if (sscanf(params, "d", type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createexplosion [type]");
+    if(sscanf(params, "d", type)) return SendClientMessage(playerid, COLOR_RED, "[?]: /createexplosion [type]");
 
     GetPlayerPos(playerid, X, Y, Z);
     CreateExplosion(X, Y, Z, type, 15.0);
@@ -749,13 +749,13 @@ CMD:createexplosion(playerid, params[])
 
 CMD:rtcfdcars(playerid, params[])
 {
-    if (PlayerFaction[playerid][pLeader] != 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi lider LSFDa!");
+    if(PlayerFaction[playerid][pLeader] != 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi lider LSFDa!");
 
     for (new x = 0; x < MAX_VEHICLES; x++)
     {
-        if (VehicleInfo[x][vFaction] == 2)
+        if(VehicleInfo[x][vFaction] == 2)
         {
-            if (!IsVehicleOccupied(x))
+            if(!IsVehicleOccupied(x))
                 SetVehicleToRespawn(x);
         }
     }
@@ -764,11 +764,11 @@ CMD:rtcfdcars(playerid, params[])
 
 CMD:fdlift(playerid, params[])
 {
-    if (IsFDMember(playerid))
+    if(IsFDMember(playerid))
     {
-        if (IsPlayerInRangeOfPoint(playerid, 2.0, 1160.9481,-1331.8121,-53.6800) || IsPlayerInRangeOfPoint(playerid, 2.0, 1155.6108,-1331.7755,-53.6800) || IsPlayerInRangeOfPoint(playerid, 2.0, 1133.4607,-1330.7346,-53.6900))
+        if(IsPlayerInRangeOfPoint(playerid, 2.0, 1160.9481,-1331.8121,-53.6800) || IsPlayerInRangeOfPoint(playerid, 2.0, 1155.6108,-1331.7755,-53.6800) || IsPlayerInRangeOfPoint(playerid, 2.0, 1133.4607,-1330.7346,-53.6900))
             SetPlayerPosEx(playerid, 1161.7253, -1329.7349, 31.5077, 0, 0, false);
-        else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1161.7253, -1329.7349, 31.5077))
+        else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1161.7253, -1329.7349, 31.5077))
             SetPlayerPosEx(playerid, 1160.7086, -1331.2377, -53.8716, 1, 1, true);
     }
     return 1;
@@ -776,14 +776,14 @@ CMD:fdlift(playerid, params[])
 
 CMD:recover(playerid, params[])
 {
-    if (!IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste LSFD!");
+    if(!IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste LSFD!");
 
     new giveplayerid;
-    if (sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /recover [dio imena/playerid]");
-    if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
-    if (!PlayerDeath[giveplayerid][pKilled] && !PlayerWounded[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
-    if (!ProxDetectorS(3.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
-    if (DeathCountStarted_Get(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac je mrtav i ne moze se reviveati!");
+    if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /recover [dio imena/playerid]");
+    if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
+    if(!PlayerDeath[giveplayerid][pKilled] && !PlayerWounded[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
+    if(!ProxDetectorS(3.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
+    if(DeathCountStarted_Get(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac je mrtav i ne moze se reviveati!");
 
     StopPlayerDeath(giveplayerid);
     ResetPlayerWounded(giveplayerid);
@@ -793,10 +793,10 @@ CMD:recover(playerid, params[])
 
     mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
 
-    va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Bolnicar %s vas je izlijecio i vise niste u post death stanju!",
+    va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Bolnicar %s vas je izlijecio i vise niste u post death stanju!",
         GetName(playerid)
     );
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Izlijecili ste %s i on vise nije u post death stanju!",
+    va_SendClientMessage(playerid, COLOR_RED, "[!] Izlijecili ste %s i on vise nije u post death stanju!",
         GetName(giveplayerid)
     );
     return 1;
@@ -804,21 +804,21 @@ CMD:recover(playerid, params[])
 
 CMD:stretcher(playerid, params[])
 {
-    if (!IsFDMember(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi clan LSFDa.");
+    if(!IsFDMember(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi clan LSFDa.");
     new
         param[10];
-    if (sscanf(params, "s[16] ", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /stretcher [get/drop/pick/destroy]");
-    if (!strcmp(param, "get", true, 3))
+    if(sscanf(params, "s[16] ", param)) return SendClientMessage(playerid, COLOR_RED, "[?]: /stretcher [get/drop/pick/destroy]");
+    if(!strcmp(param, "get", true, 3))
     {
-        if (IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne mozes koristiti ovo u vozilu.");
-        if (Player_StretcherSpawned(playerid)) return SendClientMessage(playerid,COLOR_RED, "Vec si spawnao jedna nosila.");
+        if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne mozes koristiti ovo u vozilu.");
+        if(Player_StretcherSpawned(playerid)) return SendClientMessage(playerid,COLOR_RED, "Vec si spawnao jedna nosila.");
 
         new
             Float:X, Float:Y, Float:Z, Float:angle;
         GetPlayerPos(playerid, X, Y, Z);
         GetPlayerFacingAngle(playerid, angle);
 
-        if (IsValidDynamicObject(StretcherObj[playerid]))
+        if(IsValidDynamicObject(StretcherObj[playerid]))
         {
             DestroyDynamicObject(StretcherObj[playerid]);
             StretcherObj[playerid] = INVALID_OBJECT_ID;
@@ -832,15 +832,15 @@ CMD:stretcher(playerid, params[])
         Player_SetUsingStretcher(playerid, true);
         Player_SetStretcherSpawned(playerid, true);
     }
-    else if (!strcmp(param, "drop", true, 4))
+    else if(!strcmp(param, "drop", true, 4))
     {
-        if (!Player_UsingStretcher(playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne koristis nosila.");
+        if(!Player_UsingStretcher(playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne koristis nosila.");
 
         new Float:X, Float:Y, Float:Z, Float:R;
         GetPlayerPos(playerid, X, Y, Z);
         GetPlayerFacingAngle(playerid, R);
 
-        if (IsValidDynamicObject(StretcherObj[playerid]))
+        if(IsValidDynamicObject(StretcherObj[playerid]))
         {
             DestroyDynamicObject(StretcherObj[playerid]);
             StretcherObj[playerid] = INVALID_OBJECT_ID;
@@ -853,11 +853,11 @@ CMD:stretcher(playerid, params[])
         Player_SetUsingStretcher(playerid, false);
         Player_SetStretcherSpawned(playerid, true);
     }
-    else if (!strcmp(param, "destroy", true, 7))
+    else if(!strcmp(param, "destroy", true, 7))
     {
-        if (!Player_StretcherSpawned(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi spawnao nosila.");
+        if(!Player_StretcherSpawned(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi spawnao nosila.");
 
-        if (IsValidDynamicObject(StretcherObj[playerid]))
+        if(IsValidDynamicObject(StretcherObj[playerid]))
         {
             DestroyDynamicObject(StretcherObj[playerid]);
             StretcherObj[playerid] = INVALID_OBJECT_ID;
@@ -867,16 +867,16 @@ CMD:stretcher(playerid, params[])
         Player_SetUsingStretcher(playerid, false);
         Player_SetStretcherSpawned(playerid, false);
     }
-    else if (!strcmp(param, "pick", true, 4))
+    else if(!strcmp(param, "pick", true, 4))
     {
         new
             Float:X, Float:Y, Float:Z, Float:angle;
         GetPlayerPos(playerid, X, Y, Z);
         GetPlayerFacingAngle(playerid, angle);
 
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z) && !Player_UsingStretcher(playerid))
+        if(IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z) && !Player_UsingStretcher(playerid))
         {
-            if (IsValidDynamicObject(StretcherObj[playerid]))
+            if(IsValidDynamicObject(StretcherObj[playerid]))
             {
                 DestroyDynamicObject(StretcherObj[playerid]);
                 StretcherObj[playerid] = INVALID_OBJECT_ID;
@@ -899,16 +899,16 @@ CMD:treatment(playerid, params[])
     new
         giveplayerid, time;
 
-    if (!IsFDMember(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste doktor!");
-    if (sscanf( params, "ui", giveplayerid, time)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /treatment [playerid / Part of name][minute]");
-    if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unijeli ste krivi playerid!");
-    if (time < 0 || time > 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vremena tretmana!");
-    if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe stavljati na tretman!");
-    if (PlayerJail[giveplayerid ][pJailed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac je vec na tretmanu ili je zatvoren!");
+    if(!IsFDMember(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste doktor!");
+    if(sscanf( params, "ui", giveplayerid, time)) return SendClientMessage(playerid, COLOR_RED, "[?]: /treatment [playerid / Part of name][minute]");
+    if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unijeli ste krivi playerid!");
+    if(time < 0 || time > 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vremena tretmana!");
+    if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe stavljati na tretman!");
+    if(PlayerJail[giveplayerid][pJailed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac je vec na tretmanu ili je zatvoren!");
 
     PutPlayerInJail(giveplayerid, time, 5); // 5 je treatment program
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Postavio si %s na lijecenje.",GetName(giveplayerid, true));
-    va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljen si na lijecenje od strane doktora %s.",GetName(playerid, true));
+    va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Postavljen si na lijecenje od strane doktora %s.",GetName(playerid, true));
     return 1;
 }
 
@@ -918,18 +918,18 @@ CMD:confirmation(playerid, params[])
     new year, month, day;
     new rand = random(9999);
 
-    if (!IsFDMember(playerid) || PlayerFaction[playerid][pRank] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste doktor ili ste premal rank");
-    if (IsFDMember(playerid) && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
-    if (sscanf(params, "s[20]u", option, giveplayerid))
+    if(!IsFDMember(playerid) || PlayerFaction[playerid][pRank] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste doktor ili ste premal rank");
+    if(IsFDMember(playerid) && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
+    if(sscanf(params, "s[20]u", option, giveplayerid))
     {
         SendClientMessage(playerid, COLOR_RED, "|__________________ {FA5656]Davanje uvjerenja __________________|");
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /confirmation [opcija] [Ime_Igraca/ID]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] psihicka_sposobnost, zdrav_sposobnost, radna_sposobnost");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /confirmation [opcija][Ime_Igraca/ID]");
+        SendClientMessage(playerid, COLOR_RED, "[!] psihicka_sposobnost, zdrav_sposobnost, radna_sposobnost");
         SendClientMessage(playerid, COLOR_RED, "|_______________________________________________________|");
         return 1;
     }
 
-    if (strcmp(option,"psihicka_sposobnost",true) == 0)
+    if(strcmp(option,"psihicka_sposobnost",true) == 0)
     {
         getdate(year, month, day);
         format(string, sizeof(string), "________________ #%d Lijecnicka potvrda _________________", rand);
@@ -952,7 +952,7 @@ CMD:confirmation(playerid, params[])
         SendClientMessage(giveplayerid, -1, string);
         PlayerToFactionMoney(giveplayerid, FACTION_TYPE_FD, PSIHO_PRICE);
     }
-    else if (strcmp(option,"zdrav_sposobnost",true) == 0)
+    else if(strcmp(option,"zdrav_sposobnost",true) == 0)
     {
         getdate(year, month, day);
         format(string, sizeof(string), "________________ #%d Lijecnicka potvrda _________________", rand);
@@ -975,7 +975,7 @@ CMD:confirmation(playerid, params[])
         SendClientMessage(giveplayerid, -1, string);
         PlayerToFactionMoney(giveplayerid, FACTION_TYPE_FD, ZDRAV_PRICE);
     }
-    else if (strcmp(option,"radna_sposobnost",true) == 0)
+    else if(strcmp(option,"radna_sposobnost",true) == 0)
     {
         getdate(year, month, day);
         format(string, sizeof(string), "_____________________ #%d Lijecnicko uvjerenje _________________", rand);
@@ -1007,13 +1007,13 @@ CMD:injectp(playerid, params[])
     new
         giveplayerid;
 
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /injectp [playerid / Part of name]");
-    if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
-    if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe lije�iti.");
-    if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /injectp [playerid / Part of name]");
+    if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
+    if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe lije�iti.");
+    if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");
 
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Poslali ste zahtjev za injekciju %s", GetName(giveplayerid));
-    va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je poslao zahtjev za injekciju, kucajte /accept inject za lijecenje!", GetName(playerid));
+    va_SendClientMessage(playerid, COLOR_RED, "[!] Poslali ste zahtjev za injekciju %s", GetName(giveplayerid));
+    va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je poslao zahtjev za injekciju, kucajte /accept inject za lijecenje!", GetName(playerid));
 
     InjectPlayer[playerid]      = giveplayerid;
     InjectPlayer[giveplayerid]  = playerid;

@@ -246,7 +246,7 @@ static IsValidComponentForVehicle(vehicleid, componentid)
 	new modelid = GetVehicleModel(vehicleid);
 
 	// Check for nitrous, wheels, and hydraulics.
-	if ((1008 <= componentid <= 1010) || (componentid == 1025) || (1073 <= componentid <= 1087) || (1096 <= componentid <= 1098))
+	if((1008 <= componentid <= 1010) || (componentid == 1025) || (1073 <= componentid <= 1087) || (1096 <= componentid <= 1098))
 	{
 		switch (modelid)
 		{
@@ -266,7 +266,7 @@ static IsValidComponentForVehicle(vehicleid, componentid)
 	
 		for (new i = 0; i < sizeof(s_ValidComponentArray[]); i ++)
 		{
-			if (s_ValidComponentArray[modelid][i] == componentid)
+			if(s_ValidComponentArray[modelid][i] == componentid)
 			{
 				return true;
 			}
@@ -302,7 +302,7 @@ public OnEnterExitModShop(playerid, enterexit, interiorid)
 
 public OnVehicleMod(playerid, vehicleid, componentid)
 {
-	if (!IsValidComponentForVehicle(vehicleid, componentid) || GetPlayerState(playerid) == PLAYER_STATE_PASSENGER)
+	if(!IsValidComponentForVehicle(vehicleid, componentid) || GetPlayerState(playerid) == PLAYER_STATE_PASSENGER)
 	{
 		CallLocalFunction("OnVehicleModEx", "iiiii", playerid, vehicleid, componentid, true);
 		return 0;

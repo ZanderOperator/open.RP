@@ -61,7 +61,7 @@ public RemoveSlideCheck(playerid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if( (newkeys & 128) && ( newkeys & 8)  && (newkeys & 2))
+	if((newkeys & 128) && ( newkeys & 8)  && (newkeys & 2))
 	{
 		if(!SBA_Player[playerid][possibleslide]) SetTimerEx("RemoveSlideCheck",2000,false,"i",playerid);
 		SBA_Player[playerid][possibleslide] =true;
@@ -109,7 +109,7 @@ stock GetPlayerOnFootSpeed(playerid)
 stock IsPAiming(playerid)
 {
 	new playeranim = GetPlayerAnimationIndex(playerid);
-	if (((playeranim >= 1160) && (playeranim <= 1163)) || (playeranim == 1167) || (playeranim == 1365) ||
+	if(((playeranim >= 1160) && (playeranim <= 1163)) || (playeranim == 1167) || (playeranim == 1365) ||
 	(playeranim == 1643) || (playeranim == 1453) || (playeranim == 220)) return 1;
 
 	return 0;

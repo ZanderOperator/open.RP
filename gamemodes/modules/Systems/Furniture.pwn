@@ -139,27 +139,27 @@ forward OnFurnitureObjectCreates(houseid, index);
 
 static stock DestroyFurnitureBlankIntTDs(playerid)
 {
-    if (IntBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntBcg1[playerid]);
         IntBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntBcg2[playerid]);
         IntBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntTitle[playerid]);
         IntTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntName[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntName[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntName[playerid]);
         IntName[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntPrice[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntPrice[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntPrice[playerid]);
         IntPrice[playerid] = PlayerText:INVALID_TEXT_DRAW;
@@ -231,8 +231,8 @@ static stock CreateFurnitureBlankIntTDs(playerid, name[], price)
 
 static stock SetPlayerInteriorPreview(playerid, interior)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-    if (interior > sizeof(BlankInts)) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
+    if(interior > sizeof(BlankInts)) return 0;
 
     PreviewingInterior[playerid] = interior;
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno pregledavate interijer %s. Za kupnju kucajte /bint buy!", BlankInts[interior][iName]);
@@ -246,7 +246,7 @@ static stock BuyBlankInterior(playerid, house)
     // TODO: house bounds check
     new interior = PreviewingInterior[playerid];
 
-    if (AC_GetPlayerMoney(playerid) < BlankInts[interior][iPrice]) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu enterijera (%d$)!", BlankInts[interior][iPrice]);
+    if(AC_GetPlayerMoney(playerid) < BlankInts[interior][iPrice]) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu enterijera (%d$)!", BlankInts[interior][iPrice]);
 
     HouseInfo[house][hExitX] = BlankInts[interior][iPosX];
     HouseInfo[house][hExitY] = BlankInts[interior][iPosY];
@@ -274,8 +274,8 @@ static stock BuyBlankInterior(playerid, house)
 
 static stock ExitBlankInteriorPreview(playerid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-    if (PreviewingInterior[playerid] == -1) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
+    if(PreviewingInterior[playerid] == -1) return 0;
 
     DestroyFurnitureBlankIntTDs(playerid);
 
@@ -298,7 +298,7 @@ GetHouseFurnitureSlot(playerid, houseid)
 
 GetFurnitureSlots(playerid, donator_level)
 {
-    if (PlayerInfo[playerid][pExtraFurniture] == 1)
+    if(PlayerInfo[playerid][pExtraFurniture] == 1)
         return FURNITURE_PREMIUM_OBJECTS;
 
     switch (donator_level)
@@ -317,7 +317,7 @@ GetFurnitureSlots(playerid, donator_level)
 
 UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 {
-    if (!House_Exists(houseid))
+    if(!House_Exists(houseid))
         return 1;
 
     HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]);
@@ -327,8 +327,8 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
         HouseInfo[houseid][hSQLID]
     );
 
-    if (admin_name != -1)
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Game Admin %s adjusted your House Furniture Slots, now you have %d slots available.", GetName(admin_name, true), HouseInfo[houseid][hFurSlots]);
+    if(admin_name != -1)
+        va_SendClientMessage(playerid, COLOR_RED, "[!] Game Admin %s adjusted your House Furniture Slots, now you have %d slots available.", GetName(admin_name, true), HouseInfo[houseid][hFurSlots]);
     return 1;
 }
 
@@ -359,11 +359,11 @@ SetPlayerPremiumFurniture(playerid, houseid)
 public OnFurnitureObjectsLoad(houseid)
 {
     // TODO: houseid bounds check
-    if (!cache_num_rows())
+    if(!cache_num_rows())
         return 0;
 
     new objectCount = cache_num_rows();
-    if (objectCount > MAX_FURNITURE_SLOTS)
+    if(objectCount > MAX_FURNITURE_SLOTS)
         objectCount = MAX_FURNITURE_SLOTS;
 
     new i;
@@ -405,14 +405,14 @@ public OnFurnitureObjectsLoad(houseid)
             colorid;
         for (new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
         {
-            if (HouseInfo[houseid][hFurColId][i][colslot] > -1)
+            if(HouseInfo[houseid][hFurColId][i][colslot] > -1)
             {
-                sscanf(ColorList[ HouseInfo[houseid][hFurColId][i][colslot] ][clRGB], "h", colorid);
-                SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][i][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][i][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][i][colslot] ][tName], colorid);
+                sscanf(ColorList[HouseInfo[houseid][hFurColId][i][colslot]][clRGB], "h", colorid);
+                SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tName], colorid);
             }
             else
             {
-                SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][i][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][i][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][i][colslot] ][tName], 0);
+                SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tName], 0);
             }
         }
     }
@@ -483,7 +483,7 @@ stock ResetHouseFurnitureEnum(houseid)
     // TODO: houseid bounds check
     foreach(new index: HouseFurInt[houseid])
     {
-        if (IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
+        if(IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
         {
             DestroyDynamicObject(HouseInfo[houseid][hFurObjectid][index]);
             HouseInfo[houseid][hFurObjectid][index] = INVALID_OBJECT_ID;
@@ -491,7 +491,7 @@ stock ResetHouseFurnitureEnum(houseid)
         HouseInfo[houseid][hFurSQL][index]        = 0;
         HouseInfo[houseid][hFurModelid][index]    = -1;
         HouseInfo[houseid][hExists][index]        = 0;
-        HouseInfo[houseid][ hFurCounter]          = 0;
+        HouseInfo[houseid][hFurCounter]          = 0;
         HouseInfo[houseid][hFurObjectid][index]   = INVALID_OBJECT_ID;
         HouseInfo[houseid][hFurPosX][index]       = 0.0;
         HouseInfo[houseid][hFurPosY][index]       = 0.0;
@@ -518,12 +518,12 @@ static stock GetPlayerFurnitureHouse(playerid)
 {
     new 
         houseid = INVALID_HOUSE_ID;
-    if (PlayerEditingHouse[playerid] != INVALID_HOUSE_ID)
+    if(PlayerEditingHouse[playerid] != INVALID_HOUSE_ID)
     {
         if(Player_InHouse(playerid) == PlayerEditingHouse[playerid])
             houseid = PlayerEditingHouse[playerid];
     }
-    else if (PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+    else if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
     {
         if(Player_InHouse(playerid) == PlayerKeys[playerid][pHouseKey])
             houseid = PlayerKeys[playerid][pHouseKey];
@@ -785,9 +785,9 @@ RotateHouseFurDoor(houseid, playerid)
 {
     foreach(new i: HouseFurInt[houseid])
     {
-        if (HouseInfo[houseid][hFurDoor][i])
+        if(HouseInfo[houseid][hFurDoor][i])
         {
-            if (IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i] ))
+            if(IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i] ))
             {
                 SetFurnitureDoorRotation(houseid, i);
                 break;
@@ -816,7 +816,7 @@ static stock ShowPlayerTextureList(playerid)
         );
         strcat(texture_buffer, motd);
 
-        if (ObjectTextures[i][tModel] == 1319)
+        if(ObjectTextures[i][tModel] == 1319)
             break;
 
         TextureDialogItem[playerid][dialogPos] = i;
@@ -838,7 +838,7 @@ static stock ShowSearchedTextureList(playerid, string[])
     format(texture_buffer, sizeof(texture_buffer), "Model\tTXD\tIme\n");
     for (new i = amount; i < max_amount; i++)
     {
-        if (strfind(ObjectTextures[i][tTXDName], string, true) != -1)
+        if(strfind(ObjectTextures[i][tTXDName], string, true) != -1)
         {
             format(motd, sizeof(motd), "%d\t%s\t%s\n",
                 ObjectTextures[i][tModel],
@@ -847,7 +847,7 @@ static stock ShowSearchedTextureList(playerid, string[])
             );
             strcat(texture_buffer, motd);
 
-            if (ObjectTextures[i][tModel] == 1319)
+            if(ObjectTextures[i][tModel] == 1319)
                 break;
 
             TextureDialogItem[playerid][dialogPos] = i;
@@ -870,7 +870,7 @@ static stock ShowModelSearchedTextureList(playerid, modelid)
     format(texture_buffer, sizeof(texture_buffer), "Model\tTXD\tIme\n");
     for (new i = amount; i < max_amount; i++)
     {
-        if (ObjectTextures[i][tModel] == modelid)
+        if(ObjectTextures[i][tModel] == modelid)
         {
             format(motd, sizeof(motd), "%d\t%s\t%s\n",
                 ObjectTextures[i][tModel],
@@ -879,7 +879,7 @@ static stock ShowModelSearchedTextureList(playerid, modelid)
             );
             strcat(texture_buffer, motd);
 
-            if (ObjectTextures[i][tModel] == 1319)
+            if(ObjectTextures[i][tModel] == 1319)
                 break;
 
             TextureDialogItem[playerid][dialogPos] = i;
@@ -899,7 +899,7 @@ static stock GetPlayerTextureItem(playerid, listitem)
 
     while (i < 15)
     {
-        if (i == listitem)
+        if(i == listitem)
         {
             index = TextureDialogItem[playerid][i];
             break;
@@ -911,7 +911,7 @@ static stock GetPlayerTextureItem(playerid, listitem)
 
 static stock CreateFurniturePreviewObject(playerid, modelid, index)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
 
     new
         Float:X, Float:Y, Float:Z;
@@ -930,18 +930,18 @@ static stock CreateFurniturePreviewObject(playerid, modelid, index)
 
 static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, bool:doors)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
 
     new 
         houseid = GetPlayerFurnitureHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID)
+    if(houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     new 
         index = GetHouseFurnitureSlot(playerid, houseid);
     if(index == -1)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
-    if (HouseInfo[houseid][hFurCounter] >= GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
+    if(HouseInfo[houseid][hFurCounter] >= GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
     
     HouseInfo[houseid][hFurModelid][index]  = modelid;
@@ -964,14 +964,14 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
     HouseInfo[houseid][hExists][index]      = 1;
     HouseInfo[houseid][hFurCounter]++;
 
-    if (doors)
+    if(doors)
     {
         HouseInfo[houseid][hFurDoor][index]     = 1;
         HouseInfo[houseid][hFurDoorZ][index]    = -1.0;
         HouseInfo[houseid][hFurDoorLckd][index] = 0;
     }
 
-    if (IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
+    if(IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
     {
         DestroyPlayerObject(playerid, PlayerPrwsObject[playerid]);
         PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
@@ -1007,14 +1007,14 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 
 static stock CopyFurnitureObject(playerid, copyid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
 
     new houseid = GetPlayerFurnitureHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID)
+    if(houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     new index = Iter_Free(HouseFurInt[houseid]);
-    if (HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
+    if(HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 
     HouseInfo[houseid][hFurCounter]++;
@@ -1044,13 +1044,13 @@ static stock CopyFurnitureObject(playerid, copyid)
         colorid;
     for (new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
     {
-        if (HouseInfo[houseid][hFurColId][index][colslot] > -1)
+        if(HouseInfo[houseid][hFurColId][index][colslot] > -1)
         {
-            sscanf(ColorList[ HouseInfo[houseid][hFurColId][index][colslot] ][clRGB], "h", colorid);
-            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tName], colorid);
+            sscanf(ColorList[HouseInfo[houseid][hFurColId][index][colslot]][clRGB], "h", colorid);
+            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tName], colorid);
         }
         else
-            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tName], 0);
+            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tName], 0);
     }
 
     InsertFurnitureObject(houseid, index);
@@ -1063,13 +1063,13 @@ static stock CopyFurnitureObject(playerid, copyid)
 static stock EditFurnitureObject(playerid, index)
 {
     // TODO: proper index bounds checking
-    if (playerid == INVALID_PLAYER_ID || index == -1) return 0;
+    if(playerid == INVALID_PLAYER_ID || index == -1) return 0;
 
     new houseid = GetPlayerFurnitureHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID)
+    if(houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
-    if (IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
+    if(IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
     {
         DestroyDynamicObject(HouseInfo[houseid][hFurObjectid][index]);
         HouseInfo[houseid][hFurObjectid][index] = INVALID_OBJECT_ID;
@@ -1088,17 +1088,17 @@ static stock EditFurnitureObject(playerid, index)
 
 static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-    if (!IsValidPlayerObject(playerid, PlayerEditObject[playerid])) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
+    if(!IsValidPlayerObject(playerid, PlayerEditObject[playerid])) return 0;
 
     // TODO: index bounds check
     new index = PlayerEditIndex[playerid];
     new houseid = GetPlayerFurnitureHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID)
+    if(houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     CancelEdit(playerid);
-    if (IsValidPlayerObject(playerid, PlayerEditObject[playerid]))
+    if(IsValidPlayerObject(playerid, PlayerEditObject[playerid]))
     {
         DestroyPlayerObject(playerid, PlayerEditObject[playerid]);
         PlayerEditObject[playerid] = INVALID_OBJECT_ID;
@@ -1127,14 +1127,14 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     new colorid;
     for (new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
     {
-        if (HouseInfo[houseid][hFurColId][index][colslot] > -1)
+        if(HouseInfo[houseid][hFurColId][index][colslot] > -1)
         {
-            sscanf(ColorList[ HouseInfo[houseid][hFurColId][index][colslot] ][clRGB], "h", colorid);
-            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tName], colorid);
+            sscanf(ColorList[HouseInfo[houseid][hFurColId][index][colslot]][clRGB], "h", colorid);
+            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tName], colorid);
         }
         else
         {
-            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tName], 0);
+            SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][index][colslot]][tName], 0);
         }
     }
 
@@ -1148,12 +1148,12 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 
 static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
     // TODO: proper index bounds check
-    if (index > sizeof(ObjectTextures)) return 0;
+    if(index > sizeof(ObjectTextures)) return 0;
 
     new houseid = GetPlayerFurnitureHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID)
+    if(houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][slotid], slot, ObjectTextures[index][tModel], ObjectTextures[index][tTXDName], ObjectTextures[index][tName], 0);
@@ -1173,13 +1173,13 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
 
 static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
     // TODO: proper index bounds check
     // TODO: slot, slotid bounds check
-    if (index > sizeof(ObjectTextures)) return 0;
+    if(index > sizeof(ObjectTextures)) return 0;
 
     new houseid = GetPlayerFurnitureHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID)
+    if(houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     new txtId = HouseInfo[houseid][hFurTxtId][slotid],
@@ -1201,12 +1201,12 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
 
 static stock DeleteFurnitureObject(houseid, playerid, index)
 {
-    if (houseid == INVALID_HOUSE_ID) return 0;
+    if(houseid == INVALID_HOUSE_ID) return 0;
     // TODO: houseid, index bounds check
 
     mysql_fquery(g_SQL, "DELETE FROM furniture WHERE sqlid = '%d'", HouseInfo[houseid][hFurSQL][index]);
 
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", HouseInfo[houseid][hFurModelid][index], index);
+    va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", HouseInfo[houseid][hFurModelid][index], index);
 
     DestroyDynamicObject(HouseInfo[houseid][hFurObjectid][index]);
 
@@ -1242,9 +1242,9 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
     // TODO: houseid bounds check
     foreach(new index: HouseFurInt[houseid])
     {
-        if (HouseInfo[houseid][hFurSQL][index])
+        if(HouseInfo[houseid][hFurSQL][index])
         {
-            if (IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
+            if(IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
             {
                 DestroyDynamicObject(HouseInfo[houseid][hFurObjectid][index]);
                 HouseInfo[houseid][hFurObjectid][index] = INVALID_OBJECT_ID;
@@ -1302,12 +1302,12 @@ static stock CanDoorOpen(modelid)
 static stock SetFurnitureDoorRotation(houseid, index)
 {
     // TODO: houseid bounds check
-    if (!CanDoorOpen(HouseInfo[houseid][hFurModelid][index]))
+    if(!CanDoorOpen(HouseInfo[houseid][hFurModelid][index]))
     {
         return 1;
     }
     // TODO: repetitive code, already saw something similar somewhere else. reuse functions, don't copy paste code
-    if ((-90.0 <= HouseInfo[houseid][hFurDoorZ][index] <= 90.0) && HouseInfo[houseid][hFurDoorZ][index] != -1.0)
+    if((-90.0 <= HouseInfo[houseid][hFurDoorZ][index] <= 90.0) && HouseInfo[houseid][hFurDoorZ][index] != -1.0)
     { //Vrata zatvorena
         new Float:rot;
         switch (HouseInfo[houseid][hFurModelid][index])
@@ -1325,7 +1325,7 @@ static stock SetFurnitureDoorRotation(houseid, index)
         return 1;
     }
 
-    SetDynamicObjectRot(HouseInfo[houseid][ hFurObjectid][index],
+    SetDynamicObjectRot(HouseInfo[houseid][hFurObjectid][index],
         HouseInfo[houseid][hFurRotX][index],
         HouseInfo[houseid][hFurRotY][index],
         HouseInfo[houseid][hFurRotZ][index]
@@ -1603,9 +1603,9 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     DestroyFurnitureBlankIntTDs(playerid);
 
-    if (EditState[playerid] != -1)
+    if(EditState[playerid] != -1)
     {
-        if (IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
+        if(IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
         {
             CancelEdit(playerid);
             DestroyPlayerObject(playerid, PlayerPrwsObject[playerid]);
@@ -1637,18 +1637,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_BLANK_INTS_LIST:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
-            if (!SetPlayerInteriorPreview(playerid, listitem)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint test!");
+            if(!SetPlayerInteriorPreview(playerid, listitem)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint test!");
             return 1;
         }
         case DIALOG_FURNITURE_MENU:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new
                 houseid = GetPlayerFurnitureHouse(playerid);
-            if (houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu ili ju ne uredjujete!");
+            if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu ili ju ne uredjujete!");
 
             switch (listitem)
             {
@@ -1670,7 +1670,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_BUY:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
             switch (listitem)
             {
@@ -1704,7 +1704,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_OBJCS:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
 
             switch (FurnObjectsType[playerid])
             {
@@ -1716,7 +1716,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Kauci
                             for (new i = 0; i < sizeof(ObjectsCouch); i++)
                             {
-                                if (ObjectsCouch[i][ceId] != 0)
+                                if(ObjectsCouch[i][ceId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsCouch[i][ceId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsCouch[i][ceId]);
@@ -1727,7 +1727,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Fotelje
                             for (new i = 0; i < sizeof(ObjectsArmChair); i++)
                             {
-                                if (ObjectsArmChair[i][armId] != 0)
+                                if(ObjectsArmChair[i][armId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsArmChair[i][armId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsArmChair[i][armId]);
@@ -1738,7 +1738,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Stolovi
                             for (new i = 0; i < sizeof(ObjectsTables); i++)
                             {
-                                if (ObjectsTables[i][tablId] != 0)
+                                if(ObjectsTables[i][tablId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsTables[i][tablId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsTables[i][tablId]);
@@ -1749,7 +1749,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Ormarici
                             for (new i = 0; i < sizeof(ObjectsCabinets); i++)
                             {
-                                if (ObjectsCabinets[i][cabId] != 0)
+                                if(ObjectsCabinets[i][cabId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsCabinets[i][cabId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsCabinets[i][cabId]);
@@ -1760,7 +1760,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Televizori
                             for (new i = 0; i < sizeof(ObjectsTelevision); i++)
                             {
-                                if (ObjectsTelevision[i][tvId] != 0)
+                                if(ObjectsTelevision[i][tvId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsTelevision[i][tvId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsTelevision[i][tvId]);
@@ -1771,7 +1771,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Video
                             for (new i = 0; i < sizeof(ObjectsVideo); i++)
                             {
-                                if (ObjectsVideo[i][vidId] != 0)
+                                if(ObjectsVideo[i][vidId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsVideo[i][vidId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsVideo[i][vidId]);
@@ -1782,7 +1782,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Hi-Fi
                             for (new i = 0; i < sizeof(ObjectsHiFi); i++)
                             {
-                                if (ObjectsHiFi[i][hfId] != 0)
+                                if(ObjectsHiFi[i][hfId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsHiFi[i][hfId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsHiFi[i][hfId]);
@@ -1793,7 +1793,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Zvucnici
                             for (new i = 0; i < sizeof(ObjectsStereo); i++)
                             {
-                                if (ObjectsStereo[i][stId] != 0)
+                                if(ObjectsStereo[i][stId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsStereo[i][stId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsStereo[i][stId]);
@@ -1804,7 +1804,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Tepisi
                             for (new i = 0; i < sizeof(ObjectsRugs); i++)
                             {
-                                if (ObjectsRugs[i][rId] != 0)
+                                if(ObjectsRugs[i][rId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsRugs[i][rId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsRugs[i][rId]);
@@ -1815,7 +1815,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Svijetla
                             for (new i = 0; i < sizeof(ObjectsLights); i++)
                             {
-                                if (ObjectsLights[i][lgtId] != 0)
+                                if(ObjectsLights[i][lgtId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsLights[i][lgtId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
@@ -1826,7 +1826,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Vrata
                             for (new i = 0; i < sizeof(ObjectsDoor); i++)
                             {
-                                if (ObjectsDoor[i][doorId] != 0)
+                                if(ObjectsDoor[i][doorId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsDoor[i][doorId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsDoor[i][doorId]);
@@ -1844,7 +1844,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Frizider
                             for (new i = 0; i < sizeof(ObjectsFridge); i++)
                             {
-                                if (ObjectsFridge[i][frId] != 0)
+                                if(ObjectsFridge[i][frId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsFridge[i][frId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsFridge[i][frId]);
@@ -1855,7 +1855,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Ormarici
                             for (new i = 0; i < sizeof(ObjectsKitchenCabinets); i++)
                             {
-                                if (ObjectsKitchenCabinets[i][kcId] != 0)
+                                if(ObjectsKitchenCabinets[i][kcId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsKitchenCabinets[i][kcId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsKitchenCabinets[i][kcId]);
@@ -1866,7 +1866,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Sudoperi
                             for (new i = 0; i < sizeof(ObjectsSink); i++)
                             {
-                                if (ObjectsSink[i][snkId] != 0)
+                                if(ObjectsSink[i][snkId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsSink[i][snkId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsSink[i][snkId]);
@@ -1877,7 +1877,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Stednjak
                             for (new i = 0; i < sizeof(ObjectsStove); i++)
                             {
-                                if (ObjectsStove[i][stId] != 0)
+                                if(ObjectsStove[i][stId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsStove[i][stId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsStove[i][stId]);
@@ -1888,7 +1888,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Mikrovalna
                             for (new i = 0; i < sizeof(ObjectsMicroWave); i++)
                             {
-                                if (ObjectsMicroWave[i][mwId] != 0)
+                                if(ObjectsMicroWave[i][mwId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsMicroWave[i][mwId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsMicroWave[i][mwId]);
@@ -1899,7 +1899,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Kante
                             for (new i = 0; i < sizeof(ObjectsTrashCan); i++)
                             {
-                                if (ObjectsTrashCan[i][tcId] != 0)
+                                if(ObjectsTrashCan[i][tcId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsTrashCan[i][tcId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsTrashCan[i][tcId]);
@@ -1910,7 +1910,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Svijetla
                             for (new i = 0; i < sizeof(ObjectsLights); i++)
                             {
-                                if (ObjectsLights[i][lgtId] != 0)
+                                if(ObjectsLights[i][lgtId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsLights[i][lgtId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
@@ -1921,7 +1921,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Posudje
                             for (new i = 0; i < sizeof(ObjectsKitchenDishes); i++)
                             {
-                                if (ObjectsKitchenDishes[i][dishId] != 0)
+                                if(ObjectsKitchenDishes[i][dishId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsKitchenDishes[i][dishId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsKitchenDishes[i][dishId]);
@@ -1939,7 +1939,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // WC
                             for (new i = 0; i < sizeof(ObjectsToilet); i++)
                             {
-                                if (ObjectsToilet[i][toId] != 0)
+                                if(ObjectsToilet[i][toId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsToilet[i][toId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsToilet[i][toId]);
@@ -1950,7 +1950,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Kade
                             for (new i = 0; i < sizeof(ObjectsBath); i++)
                             {
-                                if (ObjectsBath[i][baId] != 0)
+                                if(ObjectsBath[i][baId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsBath[i][baId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsBath[i][baId]);
@@ -1961,7 +1961,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Ogledalo
                             for (new i = 0; i < sizeof(ObjectsMirror); i++)
                             {
-                                if (ObjectsMirror[i][miId] != 0)
+                                if(ObjectsMirror[i][miId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsMirror[i][miId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsMirror[i][miId]);
@@ -1979,7 +1979,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsBed); i++)
                             {
-                                if (ObjectsBed[i][bdId] != 0)
+                                if(ObjectsBed[i][bdId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsBed[i][bdId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsBed[i][bdId]);
@@ -1990,7 +1990,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsNightStand); i++)
                             {
-                                if (ObjectsNightStand[i][nsId] != 0)
+                                if(ObjectsNightStand[i][nsId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsNightStand[i][nsId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsNightStand[i][nsId]);
@@ -2001,7 +2001,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsChest); i++)
                             {
-                                if (ObjectsChest[i][cId] != 0)
+                                if(ObjectsChest[i][cId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsChest[i][cId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsChest[i][cId]);
@@ -2012,7 +2012,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsClothes); i++)
                             {
-                                if (ObjectsClothes[i][cloId] != 0)
+                                if(ObjectsClothes[i][cloId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsClothes[i][cloId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsClothes[i][cloId]);
@@ -2023,7 +2023,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsPlants); i++)
                             {
-                                if (ObjectsPlants[i][plntId] != 0)
+                                if(ObjectsPlants[i][plntId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsPlants[i][plntId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsPlants[i][plntId]);
@@ -2034,7 +2034,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsPaint); i++)
                             {
-                                if (ObjectsPaint[i][pntId] != 0)
+                                if(ObjectsPaint[i][pntId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsPaint[i][pntId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsPaint[i][pntId]);
@@ -2045,7 +2045,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsLights); i++)
                             {
-                                if (ObjectsLights[i][lgtId] != 0)
+                                if(ObjectsLights[i][lgtId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsLights[i][lgtId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
@@ -2056,7 +2056,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsTables); i++)
                             {
-                                if (ObjectsTables[i][tablId] != 0)
+                                if(ObjectsTables[i][tablId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsTables[i][tablId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsTables[i][tablId]);
@@ -2067,7 +2067,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsChair); i++)
                             {
-                                if (ObjectsChair[i][chId] != 0)
+                                if(ObjectsChair[i][chId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsChair[i][chId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsChair[i][chId]);
@@ -2078,7 +2078,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsHeater); i++)
                             {
-                                if (ObjectsHeater[i][htrId] != 0)
+                                if(ObjectsHeater[i][htrId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsHeater[i][htrId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsHeater[i][htrId]);
@@ -2089,7 +2089,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsCurtains); i++)
                             {
-                                if (ObjectsCurtains[i][crtId] != 0)
+                                if(ObjectsCurtains[i][crtId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsCurtains[i][crtId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsCurtains[i][crtId]);
@@ -2100,7 +2100,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsWindows); i++)
                             {
-                                if (ObjectsWindows[i][wnId] != 0)
+                                if(ObjectsWindows[i][wnId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsWindows[i][wnId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsWindows[i][wnId]);
@@ -2118,7 +2118,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsFun); i++)
                             {
-                                if (ObjectsFun[i][fnId] != 0)
+                                if(ObjectsFun[i][fnId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsFun[i][fnId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsFun[i][fnId]);
@@ -2129,7 +2129,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsDrinks); i++)
                             {
-                                if (ObjectsDrinks[i][drnksId] != 0)
+                                if(ObjectsDrinks[i][drnksId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsDrinks[i][drnksId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsDrinks[i][drnksId]);
@@ -2140,7 +2140,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsSports); i++)
                             {
-                                if (ObjectsSports[i][gmId] != 0)
+                                if(ObjectsSports[i][gmId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsSports[i][gmId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsSports[i][gmId]);
@@ -2151,7 +2151,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsRest); i++)
                             {
-                                if (ObjectsRest[i][etcId] != 0)
+                                if(ObjectsRest[i][etcId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsRest[i][etcId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsRest[i][etcId]);
@@ -2162,7 +2162,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsWalls); i++)
                             {
-                                if (ObjectsWalls[i][wlId] != 0)
+                                if(ObjectsWalls[i][wlId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsWalls[i][wlId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsWalls[i][wlId]);
@@ -2171,15 +2171,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         }
                         case 5:
                         {
-                            if (!PlayerVIP[playerid][pDonateRank])
+                            if(!PlayerVIP[playerid][pDonateRank])
                             {
-                                SendClientMessage(playerid, COLOR_RED, "[ ! ] Samo VIP korisnici mogu ovo koristiti!");
+                                SendClientMessage(playerid, COLOR_RED, "[!] Samo VIP korisnici mogu ovo koristiti!");
                                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
                                 return 1;
                             }
                             for (new i = 0; i < sizeof(ObjectsAnimals); i++)
                             {
-                                if (ObjectsAnimals[i][amId] != 0)
+                                if(ObjectsAnimals[i][amId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsAnimals[i][amId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsAnimals[i][amId]);
@@ -2190,7 +2190,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsOffice); i++)
                             {
-                                if (ObjectsOffice[i][ofId] != 0)
+                                if(ObjectsOffice[i][ofId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsOffice[i][ofId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsOffice[i][ofId]);
@@ -2201,7 +2201,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(FurnitureM); i++)
                             {
-                                if (FurnitureM[i][fmId] != 0)
+                                if(FurnitureM[i][fmId] != 0)
                                 {
                                     fselection_add_item(playerid, FurnitureM[i][fmId]);
                                     Player_ModelToIndexSet(playerid, i, FurnitureM[i][fmId]);
@@ -2212,7 +2212,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsFood); i++)
                             {
-                                if (ObjectsFood[i][foodId] != 0)
+                                if(ObjectsFood[i][foodId] != 0)
                                 {
                                     fselection_add_item(playerid, ObjectsFood[i][foodId]);
                                     Player_ModelToIndexSet(playerid, i, ObjectsFood[i][foodId]);
@@ -2228,7 +2228,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_EDIT_LIST:
         {
-            if (!response)
+            if(!response)
                 return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
             switch (listitem)
@@ -2282,8 +2282,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         houseid = GetPlayerFurnitureHouse(playerid),
                         index   = PlayerEditIndex[playerid];
 
-                    if (houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu ili ju ne uredjujete!");
-                    if (!CopyFurnitureObject(playerid, index)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se pogreska! Ponovno pokusajte kopirati objekt!");
+                    if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu ili ju ne uredjujete!");
+                    if(!CopyFurnitureObject(playerid, index)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se pogreska! Ponovno pokusajte kopirati objekt!");
                 }
                 case 4:
                 {   // Obrisi
@@ -2298,11 +2298,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_DELETE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
             new 
                 houseid = GetPlayerFurnitureHouse(playerid);
-            if (houseid == INVALID_HOUSE_ID)
+            if(houseid == INVALID_HOUSE_ID)
                 return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
             DeleteFurnitureObject(houseid, playerid, PlayerEditIndex[playerid]);
@@ -2310,19 +2310,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_TXTS:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
             // TODO: why is this hardcoded?
-            if (listitem == 15) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
-            if (listitem == 16 && LastTextureListIndex[playerid] < 40)
+            if(listitem == 15) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
+            if(listitem == 16 && LastTextureListIndex[playerid] < 40)
             {
                 LastTextureListIndex[playerid]++;
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
                 return 1;
             }
-            if (listitem == 17 && LastTextureListIndex[playerid] > 0)
+            if(listitem == 17 && LastTextureListIndex[playerid] > 0)
             {
-                if (--LastTextureListIndex[playerid] <= 0)
+                if(--LastTextureListIndex[playerid] <= 0)
                     LastTextureListIndex[playerid] = 1;
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
                 return 1;
@@ -2334,13 +2334,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_TXTS_SRCH_1:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 
-            if (listitem == 0)
+            if(listitem == 0)
             {
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_2, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (TXDName (MINIMUM 3 ZNAKA)):", "Input", "Abort");
             }
-            else if (listitem == 1)
+            else if(listitem == 1)
             {
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_3, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite modelid teksture:", "Input", "Abort");
             }
@@ -2348,8 +2348,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_TXTS_SRCH_2:
         {
-            if (!response) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
-            if (strlen(inputtext) < 3)
+            if(!response) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(strlen(inputtext) < 3)
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti minimalno 3 znaka kao ime TXD-a!");
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (ime ili ime TXD-a):", "Input", "Abort");
@@ -2361,14 +2361,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_TXTS_SRCH_3:
         {
-            if (!response) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
-            if (strlen(inputtext) < 4)
+            if(!response) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(strlen(inputtext) < 4)
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti minimalno 4 znaka kao modelid TXD-a!");
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
                 return 1;
             }
-            if (!IsNumeric(inputtext))
+            if(!IsNumeric(inputtext))
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti numericki!");
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
@@ -2380,14 +2380,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_TXTS_SLOT:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 
             new houseid = GetPlayerFurnitureHouse(playerid);
-            if (houseid == INVALID_HOUSE_ID)
+            if(houseid == INVALID_HOUSE_ID)
                 return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
             new slot = strval(inputtext);
-            if (slot < 1 || slot > 5)
+            if(slot < 1 || slot > 5)
             {
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(1-5)", "Input", "Abort");
                 return 1;
@@ -2404,13 +2404,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_TXTS_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
-            if (!SetFurnitureObjectTexture(playerid, PlayerEditTxtSlot[playerid], PlayerEditTxtIndex[playerid], PlayerEditIndex[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
+            if(!SetFurnitureObjectTexture(playerid, PlayerEditTxtSlot[playerid], PlayerEditTxtIndex[playerid], PlayerEditIndex[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
             return 1;
         }
         case DIALOG_FURNITURE_COL_LIST:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             PlayerEditTxtIndex[playerid] = listitem;
             ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Input", "Abort");
@@ -2418,7 +2418,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_COL_SLOT:
         {
-            if (!response)
+            if(!response)
             {
                 new
                     buffer[4096],
@@ -2438,11 +2438,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             new houseid = GetPlayerFurnitureHouse(playerid);
-            if (houseid == INVALID_HOUSE_ID)
+            if(houseid == INVALID_HOUSE_ID)
                 return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
             new slotid = strval(inputtext);
-            if (slotid < 1 || slotid > 5)
+            if(slotid < 1 || slotid > 5)
             {
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
                 return 1;
@@ -2466,17 +2466,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_COL_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
 
-            if (!SetFurnitureObjectColor(playerid, PlayerEditTxtSlot[playerid], PlayerEditTxtIndex[playerid], PlayerEditIndex[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
+            if(!SetFurnitureObjectColor(playerid, PlayerEditTxtSlot[playerid], PlayerEditTxtIndex[playerid], PlayerEditIndex[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
             return 1;
         }
         case DIALOG_FURNITURE_SLOT_DELETE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
             new slot = strval(inputtext);
-            if (slot < 1 || slot > 5)
+            if(slot < 1 || slot > 5)
             {
                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(1-5)", "Input", "Abort");
                 return 1;
@@ -2488,10 +2488,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_SLOT_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Input", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Input", "Abort");
 
             new houseid = GetPlayerFurnitureHouse(playerid);
-            if (houseid == INVALID_HOUSE_ID)
+            if(houseid == INVALID_HOUSE_ID)
                 return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
             // TODO: houseid, slot, edit_index bounds check
@@ -2517,10 +2517,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FURNITURE_BINT_SURE:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new houseid = PlayerKeys[playerid][pHouseKey];
-            if (!BuyBlankInterior(playerid, houseid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint buy!");
+            if(!BuyBlankInterior(playerid, houseid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint buy!");
             return 1;
         }
     }
@@ -2533,13 +2533,13 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
     {
         case EDIT_STATE_PREVIEW:
         {
-            if (response == EDIT_RESPONSE_FINAL)
+            if(response == EDIT_RESPONSE_FINAL)
             {
                 CreateFurnitureObject(playerid, PlayerPrwsModel[playerid], fX, fY, fZ, fRotX, fRotY, fRotZ, (FurObjectSection[playerid] == 10) ? true : false);
             }
-            else if (response == EDIT_RESPONSE_CANCEL)
+            else if(response == EDIT_RESPONSE_CANCEL)
             {
-                if (IsValidPlayerObject(playerid, objectid))
+                if(IsValidPlayerObject(playerid, objectid))
                 {
                     DestroyPlayerObject(playerid, PlayerPrwsObject[playerid]);
                     PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
@@ -2555,18 +2555,18 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
         }
         case EDIT_STATE_EDIT:
         {
-            if (PlayerEditObject[playerid] != objectid)
+            if(PlayerEditObject[playerid] != objectid)
             {
                 return;
             }
 
-            if (response == EDIT_RESPONSE_FINAL)
+            if(response == EDIT_RESPONSE_FINAL)
             {
                 SetFurnitureObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
             }
-            else if (response == EDIT_RESPONSE_CANCEL)
+            else if(response == EDIT_RESPONSE_CANCEL)
             {
-                if (IsValidPlayerObject(playerid, objectid))
+                if(IsValidPlayerObject(playerid, objectid))
                 {
                     SetFurnitureObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
                     EditState[playerid] = -1;
@@ -2582,7 +2582,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
     {
         case DIALOG_FURNITURE_EDIT:
         {
-            if (!response)
+            if(!response)
                 return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
             PlayerEditIndex[playerid] = Player_ModelToIndex(playerid, modelid);
@@ -2591,7 +2591,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
         }
         case DIALOG_FURNITURE_OBJS_BUY:
         {
-            if (!response)
+            if(!response)
             {
                 switch (FurnObjectsType[playerid])
                 {
@@ -2605,7 +2605,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
             }
 
             new index = Player_ModelToIndex(playerid, modelid);
-            if (AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index))
+            if(AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index))
             {
                 SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", GetFurnitureObjectPrice(playerid, index));
 
@@ -2649,20 +2649,20 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 
 CMD:bint(playerid, params[])
 {
-    //if (!PlayerInfo[playerid][pAdmin]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+    //if(!PlayerInfo[playerid][pAdmin]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
     new param[6];
-    if (sscanf(params, "s[6]", param))
+    if(sscanf(params, "s[6]", param))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bint [test/buy/exit]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /bint [test/buy/exit]");
         return 1;
     }
 
-    if (!strcmp(param, "test", true))
+    if(!strcmp(param, "test", true))
     {
         new houseid = PlayerKeys[playerid][pHouseKey];
         // TODO: why are there some houseids hardcoded here? remove this.
-        if (houseid == INVALID_HOUSE_ID || (556 < houseid < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
-        if (!IsPlayerInRangeOfPoint(playerid, 50.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
+        if(houseid == INVALID_HOUSE_ID || (556 < houseid < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
+        if(!IsPlayerInRangeOfPoint(playerid, 50.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
 
         new buffer[1024] = "Naziv\tCijena\n";
         new row[42];
@@ -2673,18 +2673,18 @@ CMD:bint(playerid, params[])
         }
         ShowPlayerDialog(playerid, DIALOG_BLANK_INTS_LIST, DIALOG_STYLE_TABLIST_HEADERS, "Blank Interiors", buffer, "Choose", "Abort");
     }
-    else if (!strcmp(param, "buy", true))
+    else if(!strcmp(param, "buy", true))
     {
-        if (PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo uci i pregledati prazan interijer!");
+        if(PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo uci i pregledati prazan interijer!");
         new houseid = PlayerKeys[playerid][pHouseKey];
-        if (houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu!");
+        if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu!");
 
-        ShowPlayerDialog(playerid, DIALOG_FURNITURE_BINT_SURE, DIALOG_STYLE_MSGBOX, "{3C95C2} [ INTERIOR - WARNING ]", "Zelite li kupiti prazan interijer?\n"COL_RED"[UPOZORENJE]: Police s oruzjem, droga i trenutni namjestaj u vasoj kuci ce biti obrisan\nNapominjemo Vam da prije nego sto se odlucite za promijenu interiora, izvadite oruzje i drogu.", "Yes", "No");
+        ShowPlayerDialog(playerid, DIALOG_FURNITURE_BINT_SURE, DIALOG_STYLE_MSGBOX, "{3C95C2} [INTERIOR - WARNING]", "Zelite li kupiti prazan interijer?\n"COL_RED"[UPOZORENJE]: Police s oruzjem, droga i trenutni namjestaj u vasoj kuci ce biti obrisan\nNapominjemo Vam da prije nego sto se odlucite za promijenu interiora, izvadite oruzje i drogu.", "Yes", "No");
     }
-    else if (!strcmp(param, "exit", true))
+    else if(!strcmp(param, "exit", true))
     {
-        if (PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne gledate prazne interijere!");
-        if (!ExitBlankInteriorPreview(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint exit!");
+        if(PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne gledate prazne interijere!");
+        if(!ExitBlankInteriorPreview(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint exit!");
     }
     return 1;
 }
@@ -2704,19 +2704,19 @@ CMD:furniture(playerid, params[])
         param[8],
         furhouse = GetPlayerFurnitureHouse(playerid);
     // TODO: why are some house IDs hardcoded here? remove this
-    if (furhouse == INVALID_HOUSE_ID || (556 < furhouse < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu/imati dozvolu za namjestanje interijera-");
-    if (sscanf(params, "s[8]", param))
+    if(furhouse == INVALID_HOUSE_ID || (556 < furhouse < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu/imati dozvolu za namjestanje interijera-");
+    if(sscanf(params, "s[8]", param))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture [approve/menu]");
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", Iter_Count(HouseFurInt[furhouse]), GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]));
+        SendClientMessage(playerid, COLOR_RED, "[?]: /furniture [approve/menu]");
+        va_SendClientMessage(playerid, COLOR_RED, "[!] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", Iter_Count(HouseFurInt[furhouse]), GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]));
         return 1;
     }
 
-    if (!strcmp("menu", param, true))
+    if(!strcmp("menu", param, true))
     {
-        if (EditState[playerid] != -1)
+        if(EditState[playerid] != -1)
         {
-            if (IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
+            if(IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
             {
                 CancelEdit(playerid);
                 DestroyPlayerObject(playerid, PlayerPrwsObject[playerid]);
@@ -2726,37 +2726,37 @@ CMD:furniture(playerid, params[])
         }
         new
             houseid = GetPlayerFurnitureHouse(playerid);
-        if (houseid == INVALID_HOUSE_ID) 
+        if(houseid == INVALID_HOUSE_ID) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
 
         ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
         return 1;
     }
-    else if (!strcmp("approve", param, true))
+    else if(!strcmp("approve", param, true))
     {
-        if (PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
+        if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 
         new giveplayerid;
-        if (sscanf(params, "s[8]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture approve [dio imena/playerid]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida!");
-        if (!ProxDetectorS(8.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
+        if(sscanf(params, "s[8]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /furniture approve [dio imena/playerid]");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida!");
+        if(!ProxDetectorS(8.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 
-        if (PlayerEditingHouse[giveplayerid] == PlayerKeys[playerid][pHouseKey])
+        if(PlayerEditingHouse[giveplayerid] == PlayerKeys[playerid][pHouseKey])
         {
             PlayerEditingHouse[giveplayerid] = INVALID_HOUSE_ID;
             SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste %s dopustenje za uredjivanje kuce!", GetName(giveplayerid, false));
-            va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je skinio dopustenje za uredjivanje njegove kuce!", GetName(playerid, false));
+            va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je skinio dopustenje za uredjivanje njegove kuce!", GetName(playerid, false));
             return 1;
         }
 
         foreach (new i : Player)
         {
-            if (PlayerEditingHouse[i] == PlayerKeys[playerid][pHouseKey])
+            if(PlayerEditingHouse[i] == PlayerKeys[playerid][pHouseKey])
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste odobrili %s da vam uredjuje kucu!", GetName(i, false));
         }
         PlayerEditingHouse[giveplayerid] = PlayerKeys[playerid][pHouseKey];
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da vam uredjuje kucu!", GetName(giveplayerid, false));
-        va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mu uredjujete kucu. Kucajte /furniture menu!", GetName(playerid, false));
+        va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dopustio da mu uredjujete kucu. Kucajte /furniture menu!", GetName(playerid, false));
         return 1;
     }
     return 1;
@@ -2768,9 +2768,9 @@ CMD:door(playerid, params[])
         houseid  = Player_InHouse(playerid),
         biznisid = Player_InBusiness(playerid);
 
-    if (houseid != INVALID_HOUSE_ID)
+    if(houseid != INVALID_HOUSE_ID)
         RotateHouseFurDoor(houseid, playerid);
-    else if (biznisid != INVALID_BIZNIS_ID)
+    else if(biznisid != INVALID_BIZNIS_ID)
         RotateBizzFurDoor(biznisid, playerid);
     
     return 1;
@@ -2780,28 +2780,28 @@ CMD:afurniture(playerid, params[])
 { // leo - novo.
     new action[15], target_id, house_id;
 
-    if (PlayerInfo[playerid][pAdmin] < 1)
+    if(PlayerInfo[playerid][pAdmin] < 1)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1+).");
-    if (sscanf(params, "s[15]", action))
+    if(sscanf(params, "s[15]", action))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] /afurniture [option].");
+        SendClientMessage(playerid, COLOR_RED, "[!] /afurniture [option].");
         va_SendClientMessage(playerid, 0xAFAFAFAA, "(options): reload, checkslots, update(vip), setpremium(%d slots).", FURNITURE_PREMIUM_OBJECTS);
         return 1;
     }
 
-    if (!strcmp(action, "reload", true))
+    if(!strcmp(action, "reload", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 3)
+        if(PlayerInfo[playerid][pAdmin] < 3)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 3+).");
 
-        if (sscanf(params, "s[15]i", action, house_id))
+        if(sscanf(params, "s[15]i", action, house_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture reload [house_id].");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /afurniture reload [house_id].");
             return 1;
         }
-        if (!House_Exists(house_id))
+        if(!House_Exists(house_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
+            SendClientMessage(playerid, COLOR_RED, "[!]: Neispravan ID kuce (kuca ne postoji)!");
             return 1;
         }
 
@@ -2809,24 +2809,24 @@ CMD:afurniture(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Svi furniture objekti su reloadani!");
         return 1;
     }
-    else if (!strcmp(action, "checkslots", true))
+    else if(!strcmp(action, "checkslots", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 4)
+        if(PlayerInfo[playerid][pAdmin] < 4)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 4+).");
 
-        if (sscanf(params, "s[15]ui", action, target_id, house_id))
+        if(sscanf(params, "s[15]ui", action, target_id, house_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture checkslots [playerid] [house_id].");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /afurniture checkslots [playerid][house_id].");
             return 1;
         }
-        if (target_id == INVALID_PLAYER_ID)
+        if(target_id == INVALID_PLAYER_ID)
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
+            SendClientMessage(playerid, COLOR_RED, "[!]: Taj igrac nije online!");
             return 1;
         }
-        if (!House_Exists(house_id))
+        if(!House_Exists(house_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
+            SendClientMessage(playerid, COLOR_RED, "[!]: Neispravan ID kuce (kuca ne postoji)!");
             return 1;
         }
 
@@ -2834,45 +2834,45 @@ CMD:afurniture(playerid, params[])
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sljedeci free slot: %d(house: %d).", FreeFurniture_Slot[target_id], house_id);
         return 1;
     }
-    else if (!strcmp(action, "setpremium", true))
+    else if(!strcmp(action, "setpremium", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1338)
+        if(PlayerInfo[playerid][pAdmin] < 1338)
             return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Vi ne mozete koristit ovu komandu.");
 
-        if (sscanf(params, "s[15]ui", action, target_id, house_id))
+        if(sscanf(params, "s[15]ui", action, target_id, house_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture setpremium [playerid] [house_id].");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /afurniture setpremium [playerid][house_id].");
             return 1;
         }
-        if (target_id == INVALID_PLAYER_ID)
+        if(target_id == INVALID_PLAYER_ID)
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
+            SendClientMessage(playerid, COLOR_RED, "[!]: Taj igrac nije online!");
             return 1;
         }
-        if (!House_Exists(house_id))
+        if(!House_Exists(house_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
+            SendClientMessage(playerid, COLOR_RED, "[!]: Neispravan ID kuce (kuca ne postoji)!");
             return 1;
         }
 
         SetPlayerPremiumFurniture(target_id, house_id);
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Postavili ste igracu %s (house_id: %d) premium furniture slotove (%d).", GetName(target_id, true), house_id, FURNITURE_PREMIUM_OBJECTS);
-        va_SendClientMessage(target_id, COLOR_RED, "[ ! ] Administrator %s vam je postavio premium furniture slotove (%d).", GetName(playerid, true), FURNITURE_PREMIUM_OBJECTS);
+        va_SendClientMessage(target_id, COLOR_RED, "[!] Administrator %s vam je postavio premium furniture slotove (%d).", GetName(playerid, true), FURNITURE_PREMIUM_OBJECTS);
         return 1;
     }
-    else if (!strcmp(action, "update", true))
+    else if(!strcmp(action, "update", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337)
+        if(PlayerInfo[playerid][pAdmin] < 1337)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
-        if (sscanf(params, "s[15]u", action, target_id))
+        if(sscanf(params, "s[15]u", action, target_id))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture update [playerid].");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /afurniture update [playerid].");
             return 1;
         }
-        if (target_id == INVALID_PLAYER_ID)
+        if(target_id == INVALID_PLAYER_ID)
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
+            SendClientMessage(playerid, COLOR_RED, "[!]: Taj igrac nije online!");
             return 1;
         }
 

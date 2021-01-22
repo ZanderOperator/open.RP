@@ -28,7 +28,7 @@ enum E_ADS_DATA {
 	adSenderId,
 	adStyle,
 	adPrice,
-	adText[ MAX_AD_TEXT ],
+	adText[MAX_AD_TEXT],
 	adTimes,
 	adTimeStamp
 }
@@ -38,7 +38,7 @@ static stock
 enum E_PLAYER_ADS_DATA {
 	padStyle,
 	padPrice,
-	padText[ MAX_AD_TEXT ],
+	padText[MAX_AD_TEXT],
 	padTimes
 }
 static stock
@@ -87,12 +87,12 @@ stock static PlayerGotAd(playerid)
 stock static ShowPlayerAdsList()
 {
 	new
-		buffer[ 4096 ],
+		buffer[4096],
 		motd[200];
 	format(buffer, 4096, "Tip\tKontakt\tTekst\tCijena\n");
 	foreach(new i: Ads)
 	{
-	    if( AdsInfo[i][adSenderId] != 0 )
+	    if(AdsInfo[i][adSenderId] != 0 )
 		{
 			format(motd, 200, ""COL_WHITE"%s\t%d\t%s\t"COL_GREEN"%d$\n",
 				GetAdStyleString(AdsInfo[i][adStyle]),
@@ -198,7 +198,7 @@ stock static CreateAdForPlayer(playerid)
 	
 	PlayerAdsInfo[playerid][padStyle] 		= -1;
 	PlayerAdsInfo[playerid][padPrice]		= 0;
-	PlayerAdsInfo[playerid][padText][ 0 ] 	= EOS;
+	PlayerAdsInfo[playerid][padText][0] 	= EOS;
 	PlayerAdsInfo[playerid][padTimes] 		= 0;
 	return 1;
 }
@@ -220,7 +220,7 @@ task SendAutomaticAdMessage[1000]()
 				AdsInfo[i][adSenderId]	= 0;
 				AdsInfo[i][adStyle] 	= -1;
 				AdsInfo[i][adPrice]		= 0;
-				AdsInfo[i][adText][ 0 ] = EOS;
+				AdsInfo[i][adText][0] = EOS;
 				AdsInfo[i][adTimeStamp] = 0;
 				AdsInfo[i][adTimes]		= 0;
 				
@@ -256,7 +256,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	
 	PlayerAdsInfo[playerid][padStyle] 		= -1;
 	PlayerAdsInfo[playerid][padPrice]		= 0;
-	PlayerAdsInfo[playerid][padText][ 0 ] 	= EOS;
+	PlayerAdsInfo[playerid][padText][0] 	= EOS;
 	PlayerAdsInfo[playerid][padTimes] 		= 0;
 	return 1;
 }
@@ -277,7 +277,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 1: 
 				{
-					LastAdsListIndex[ playerid ] = 0;
+					LastAdsListIndex[playerid] = 0;
 					ShowPlayerDialog(playerid, DIALOG_ADS_WHOLE, DIALOG_STYLE_TABLIST_HEADERS, "LS OGLASNIK - Oglasi", ShowPlayerAdsList(), "Choose", "Abort");
 					
 					new
@@ -290,10 +290,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ADS_CREATE_STYLE: {
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Choose", "Close");
-			if( listitem == AD_STYLE_CMRC ) {
+			if(listitem == AD_STYLE_CMRC ) {
 				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame:", "Commit", "Abort");
 			}
-			else if( listitem == AD_STYLE_BUY){
+			else if(listitem == AD_STYLE_BUY){
 			    ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu:", "Commit", "Abort");
 				//ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Choose", "Abort");
 			}
@@ -309,7 +309,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
 					new
-						tmpString[ 128 ];
+						tmpString[128];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
 					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu:", "Commit", "Abort");
@@ -328,7 +328,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
 					new
-						tmpString[ 128 ];
+						tmpString[128];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
 					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju:", "Commit", "Abort");
@@ -347,7 +347,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
 					new
-						tmpString[ 128 ];
+						tmpString[128];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
 					
@@ -372,7 +372,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Commit", "Abort", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			else if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_SELL)
 				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za prodaju oglasa:", "Commit", "Abort");
-			else if (PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC)
+			else if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC)
 				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Commit", "Abort", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			return 1;
 		}
@@ -432,30 +432,30 @@ CMD:carad(playerid, params[])
 	new vehicleid = GetPlayerVehicleID(playerid);
 	if(PlayerKeys[playerid][pVehicleKey] > -1 && PlayerKeys[playerid][pVehicleKey] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati spawnati CO i morate biti u njemu!");
 	new pick[8];
-	if(sscanf(params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carad [set/delete]");
+	if(sscanf(params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /carad [set/delete]");
 	if(!strcmp(pick, "set", true))
 	{
 		new text[64], partOne[22], partTwo[22], partThree[22];
-		if(sscanf(params, "s[8]s[64]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carad set [text (64 znaka max)]");
+		if(sscanf(params, "s[8]s[64]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "[?]: /carad set [text (64 znaka max)]");
 		new money = strlen(text) * 6;
 		if(AC_GetPlayerMoney(playerid) < money) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za postavljanje oglasa (%d$)", money);
-		if(VehicleInfo[ vehicleid ][ vVehicleAdId ] != Text3D:INVALID_3DTEXT_ID)  return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Vec postoji oglas na vasem vozilu! Prvo korisite /carad delete");
+		if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)  return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Vec postoji oglas na vasem vozilu! Prvo korisite /carad delete");
 		strmid(partOne, text, 0, 21);
 		strmid(partTwo, text, 22, 43);
 		strmid(partThree, text, 44, strlen(text));
 		new tmpString[64];
 		format(tmpString, sizeof(tmpString), "%s\n%s\n%s", partOne, partTwo, partThree);
-		VehicleInfo[ vehicleid ][ vVehicleAdId ] = CreateDynamic3DTextLabel(text, COLOR_WHITE, 0.9697, -1.7760, 0.0680, 4.0, INVALID_PLAYER_ID, vehicleid, 1, -1, -1, -1, 4.0);
+		VehicleInfo[vehicleid][vVehicleAdId] = CreateDynamic3DTextLabel(text, COLOR_WHITE, 0.9697, -1.7760, 0.0680, 4.0, INVALID_PLAYER_ID, vehicleid, 1, -1, -1, -1, 4.0);
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Postavili ste oglas na vozilo i platili %d$", money);
 		PlayerToFactionMoneyTAX( playerid, FACTION_TYPE_NEWS, money); // placanje oglasa novac u faction bank od LSNa
 	}
 	else if(!strcmp(pick, "delete", true))
 	{
-		if(VehicleInfo[ vehicleid ][ vVehicleAdId ] != Text3D:INVALID_3DTEXT_ID)
+		if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)
 		{
-			DestroyDynamic3DTextLabel( VehicleInfo[ vehicleid ][ vVehicleAdId ] );
-			VehicleInfo[ vehicleid ][ vVehicleAdId ] = Text3D:INVALID_3DTEXT_ID;
+			DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vVehicleAdId] );
+			VehicleInfo[vehicleid][vVehicleAdId] = Text3D:INVALID_3DTEXT_ID;
 		}
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Obrisali ste oglas sa svoga vozila!");
 	}

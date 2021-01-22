@@ -145,7 +145,7 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0
 {
-	if( IsPlayerInAnyVehicle(playerid) )
+	if(IsPlayerInAnyVehicle(playerid))
 	{
 		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER && Player_PhoneStatus(playerid) == 0)
 		{
@@ -180,7 +180,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	{
 		new
 			model = GetVehicleModel(GetPlayerVehicleID(playerid));
-		if( IsAHelio(model) || IsAPlane(model) || IsABike(model)) return 1;
+		if(IsAHelio(model) || IsAPlane(model) || IsABike(model)) return 1;
 		CreateSpeedoTextDraws(playerid);
 	}
 	else if(newstate == PLAYER_STATE_ONFOOT && Player_UsingSpeedometer(playerid))

@@ -244,9 +244,9 @@ public __bans_funcinc() {
 
 // Compare two unsigned numbers
 stock _CompareUnsigned(iOper1, iOper2) {
-	if ((iOper1 & 0x80000000) && !(iOper2 & 0x80000000))
+	if((iOper1 & 0x80000000) && !(iOper2 & 0x80000000))
 		return 1;
-	else if ((iOper2 & 0x80000000) && !(iOper1 & 0x80000000))
+	else if((iOper2 & 0x80000000) && !(iOper1 & 0x80000000))
 		return -1;
 	else {
 		iOper1 &= 0x7FFFFFFF;
@@ -279,7 +279,7 @@ stock IP:GetIntegerIP({IP, _}:...)
 			for (new i = 24; i >= 0; i -= 8) {
 				iIP |= IP:(strval(s_szIP[++iPos]) << i);
 
-				if (i && -1 == (iPos = strfind(s_szIP, ".", _, iPos)))
+				if(i && -1 == (iPos = strfind(s_szIP, ".", _, iPos)))
 					return INVALID_IP;
 			}
 		}
@@ -369,7 +369,7 @@ stock _GetIPRangeString(IPRange<Range>) {
 	for (new i = 1; i <= 4; i++) {
 		iDiff = IP_OCTET(Range[e_iStart], i) - IP_OCTET(Range[e_iEnd], i);
 		
-		if (!(iDiff == 0 || iDiff == 255 || iDiff == -255)) {
+		if(!(iDiff == 0 || iDiff == 255 || iDiff == -255)) {
 			bWildCardsOnly = false;
 			
 			break;
@@ -378,13 +378,13 @@ stock _GetIPRangeString(IPRange<Range>) {
 	
 	s_szBuffer[0] = 0;
 	
-	if (bWildCardsOnly) {
+	if(bWildCardsOnly) {
 		
 		for (new i = 1; i <= 4; i++) {
-			if (i > 1)
+			if(i > 1)
 				strcat(s_szBuffer, ".");
 			
-			if (IP_OCTET(Range[e_iStart], i) == IP_OCTET(Range[e_iEnd], i)) {
+			if(IP_OCTET(Range[e_iStart], i) == IP_OCTET(Range[e_iEnd], i)) {
 				iLength = strlen(s_szBuffer);
 				
 				format(s_szBuffer[iLength], sizeof(s_szBuffer) - iLength, "%d", IP_OCTET(Range[e_iStart], i));
@@ -392,7 +392,7 @@ stock _GetIPRangeString(IPRange<Range>) {
 				strcat(s_szBuffer, "*");
 		}
 	} else {
-		if (CompareUnsigned(Range[e_iStart], Range[e_iEnd]) == 1) {
+		if(CompareUnsigned(Range[e_iStart], Range[e_iEnd]) == 1) {
 			strcat(s_szBuffer, GetIPString(Range[e_iEnd]));
 			strcat(s_szBuffer, " - ");
 			strcat(s_szBuffer, GetIPString(Range[e_iStart]));
@@ -426,7 +426,7 @@ stock IP:_GetIPRange(IPRange<Range>, {IP, e_IP_RANGE, _}:...) {
 					getstringarg(szIP, 1);
 					
 					for (new iPos = -1, i = 24, iVal; i >= 0; i -= 8) {
-						if (szIP[++iPos] == '*') {
+						if(szIP[++iPos] == '*') {
 							Range[e_iEnd] |= IP:(255 << i);
 						} else {
 							iVal = strval(szIP[iPos]) << i;
@@ -435,7 +435,7 @@ stock IP:_GetIPRange(IPRange<Range>, {IP, e_IP_RANGE, _}:...) {
 							Range[e_iEnd] |= IP:iVal;
 						}
 
-						if (i && -1 == (iPos = strfind(szIP, ".", _, iPos)))
+						if(i && -1 == (iPos = strfind(szIP, ".", _, iPos)))
 							break;
 					}
 				}
@@ -517,7 +517,7 @@ stock GetDurationFromString(const szDuration[]) {
 	iPos = 0;
 	
 	// Fix for strval ignoring long strings
-	if (strlen(gs_szBuffer[iPos]) > 32) {
+	if(strlen(gs_szBuffer[iPos]) > 32) {
 		cTempChar = gs_szBuffer[iPos + 32];
 		
 		gs_szBuffer[iPos + 32] = 0;
@@ -525,7 +525,7 @@ stock GetDurationFromString(const szDuration[]) {
 	
 	// The current position in the string (iPos) should now be at the first number
 	while (0 != (iValue = strval(gs_szBuffer[iPos]))) {
-		if (cTempChar) {
+		if(cTempChar) {
 			gs_szBuffer[iPos + 32] = cTempChar;
 			
 			cTempChar = 0;
@@ -535,10 +535,10 @@ stock GetDurationFromString(const szDuration[]) {
 		while (0 < gs_szBuffer[iPos] <= ' ') iPos++;
 		
 		// EOS check
-		if (!gs_szBuffer[iPos]) return 0;
+		if(!gs_szBuffer[iPos]) return 0;
 		
 		// Allow a leading minus sign
-		if (gs_szBuffer[iPos] == '-') iPos++;
+		if(gs_szBuffer[iPos] == '-') iPos++;
 		
 		// Skip the number we just put into strval
 		while ('0' <= gs_szBuffer[iPos] <= '9') iPos++;
@@ -547,7 +547,7 @@ stock GetDurationFromString(const szDuration[]) {
 		while (0 < gs_szBuffer[iPos] <= ' ') iPos++;
 		
 		// EOS check
-		if (!gs_szBuffer[iPos]) return 0;
+		if(!gs_szBuffer[iPos]) return 0;
 		
 		// Start of the multiplier (hour, second, etc.)
 		i = iPos;
@@ -556,7 +556,7 @@ stock GetDurationFromString(const szDuration[]) {
 		while (gs_szBuffer[i] > ' ' && !('0' <= gs_szBuffer[i] <= '9') && gs_szBuffer[i] != '-') i++;
 		
 		// No word? Invalid format
-		if (i == iPos) return 0;
+		if(i == iPos) return 0;
 		
 		// Zero-out szWord and use strcat to copy the fragment we just found from gs_szBuffer
 		szWord[0] = 0;
@@ -567,10 +567,10 @@ stock GetDurationFromString(const szDuration[]) {
 		iPos = i;
 		
 		// Null check
-		if (!(iLength = strlen(szWord))) return 0;
+		if(!(iLength = strlen(szWord))) return 0;
 		
 		// Remove trailing s so we won't have to search after, for example, both "hour" and "hours"
-		if (iLength > 1 && tolower(szWord[iLength - 1]) == 's')
+		if(iLength > 1 && tolower(szWord[iLength - 1]) == 's')
 			szWord[iLength - 1] = 0;
 		
 		// Loop through the duration multiplier list
@@ -578,7 +578,7 @@ stock GetDurationFromString(const szDuration[]) {
 		bMultiplierFound = false;
 		
 		for (i = 0; i < sizeof(gs_DurationMultipliers); i++) {
-			if (!strcmp(szWord, gs_DurationMultipliers[i][e_szWord], true)) {
+			if(!strcmp(szWord, gs_DurationMultipliers[i][e_szWord], true)) {
 				bMultiplierFound = true;
 				
 				// Multiply the number we got from strval with whatever this multiplier has
@@ -589,11 +589,11 @@ stock GetDurationFromString(const szDuration[]) {
 		}
 		
 		// Give a warning  if a multiplier wasn't found
-		if (!bMultiplierFound)
+		if(!bMultiplierFound)
 			printf("WARNING: Unknown multiplier in GetDurationFromString (\"%s\").", szWord);
 		
 		// Fix for strval ignoring long strings
-		if (strlen(gs_szBuffer[iPos]) > 32) {
+		if(strlen(gs_szBuffer[iPos]) > 32) {
 			cTempChar = gs_szBuffer[iPos + 32];
 			
 			gs_szBuffer[iPos + 32] = 0;
@@ -627,39 +627,39 @@ stock GetStringFromDuration(iDuration) {
 	iYears = iDuration / DURATION_YEAR;
 	iDuration = iDuration % DURATION_YEAR;
 	
-	if (iYears)
+	if(iYears)
 		format(s_szBuffer, sizeof(s_szBuffer), iYears == 1 ? ("%d year, ") : ("%d years, "), iYears);
 	
 	iMonths   = iDuration / DURATION_MONTH;
 	iDuration = iDuration % DURATION_MONTH;
 	
-	if (iMonths)
+	if(iMonths)
 		format(s_szBuffer[(iLength = strlen(s_szBuffer))], sizeof(s_szBuffer) - iLength, iMonths == 1 ? ("%d month, ") : ("%d months, "), iMonths);
 	
 	iWeeks    = iDuration / DURATION_WEEK;
 	iDuration = iDuration % DURATION_WEEK;
 	
-	if (iWeeks)
+	if(iWeeks)
 		format(s_szBuffer[(iLength = strlen(s_szBuffer))], sizeof(s_szBuffer) - iLength, iWeeks == 1 ? ("%d week, ") : ("%d weeks, "), iWeeks);
 	
 	iDays     = iDuration / DURATION_DAY;
 	iDuration = iDuration % DURATION_DAY;
 	
-	if (iDays)
+	if(iDays)
 		format(s_szBuffer[(iLength = strlen(s_szBuffer))], sizeof(s_szBuffer) - iLength, iDays == 1 ? ("%d day, ") : ("%d days, "), iDays);
 	
 	iHours    = iDuration / DURATION_HOUR;
 	iDuration = iDuration % DURATION_HOUR;
 	
-	if (iHours)
+	if(iHours)
 		format(s_szBuffer[(iLength = strlen(s_szBuffer))], sizeof(s_szBuffer) - iLength, iHours == 1 ? ("%d hour, ") : ("%d hours, "), iHours);
 	
 	iMinutes = iDuration / DURATION_MINUTE;
 	
-	if (iMinutes)
+	if(iMinutes)
 		format(s_szBuffer[(iLength = strlen(s_szBuffer))], sizeof(s_szBuffer) - iLength, iMinutes == 1 ? ("%d minute, ") : ("%d minutes, "), iMinutes);
 	
-	if (!s_szBuffer[0]) {
+	if(!s_szBuffer[0]) {
 		format(s_szBuffer[(iLength = strlen(s_szBuffer))], sizeof(s_szBuffer) - iLength, iDuration == 1 ? ("%d second") : ("%d seconds"), iDuration);
 	} else {
 		iLength = strlen(s_szBuffer);
@@ -672,7 +672,7 @@ stock GetStringFromDuration(iDuration) {
 	while (-1 != (iPos = strfind(s_szBuffer, ",", _, iPos)))
 		iLastPos = iPos++;
 	
-	if (iLastPos != -1) {
+	if(iLastPos != -1) {
 		s_szBuffer[iLastPos] = ' ';
 		
 		strins(s_szBuffer, "and", iLastPos + 1);
@@ -728,15 +728,15 @@ stock OpenBanDB() {
 		s_bIsInitialized = false
 	;
 	
-	if (gs_dbBanDatabase || (gs_dbBanDatabase = db_open(gs_szBanDatabaseName))) {
-		if (gs_iKeepAliveTimer == -1 || gs_iKeepAliveTime > 1) {
-			if (gs_iKeepAliveTimer != -1)
+	if(gs_dbBanDatabase || (gs_dbBanDatabase = db_open(gs_szBanDatabaseName))) {
+		if(gs_iKeepAliveTimer == -1 || gs_iKeepAliveTime > 1) {
+			if(gs_iKeepAliveTimer != -1)
 				KillTimer(gs_iKeepAliveTimer);
 		
 			gs_iKeepAliveTimer = SetTimer("CloseBanDB", min(1, gs_iKeepAliveTime), false);
 		}
 		
-		if (!s_bIsInitialized) {
+		if(!s_bIsInitialized) {
 			new
 				DBResult:dbrResult,
 				         iRows,
@@ -747,7 +747,7 @@ stock OpenBanDB() {
 			
 			dbrResult = db_query(gs_dbBanDatabase, !"VACUUM;");
 			
-			if (dbrResult)
+			if(dbrResult)
 				db_free_result(dbrResult);
 			
 			for (new i = 0; i < sizeof(gs_Tables); i++) {
@@ -757,16 +757,16 @@ stock OpenBanDB() {
 				
 				iRows = db_num_rows(dbrResult);
 				
-				if (!iRows) {
+				if(!iRows) {
 					gs_szBuffer[0] = 0;
 					
 					format(gs_szBuffer, sizeof(gs_szBuffer), "CREATE TABLE IF NOT EXISTS `%s` (\n\t", gs_Tables[i][e_szName]);
 					
 					for (new bool:bFirst = true, c = 0; c < sizeof(gs_Columns); c++) {
-						if (gs_Columns[c][e_iTable] != i)
+						if(gs_Columns[c][e_iTable] != i)
 							continue;
 						
-						if (bFirst)
+						if(bFirst)
 							bFirst = false;
 						else
 							strcat(gs_szBuffer, ",\n\t");
@@ -775,7 +775,7 @@ stock OpenBanDB() {
 						
 						format(gs_szBuffer[iLength], sizeof(gs_szBuffer) - iLength, "`%s` %s %s", gs_Columns[c][e_szName], gs_Columns[c][e_szType], gs_Columns[c][e_szConstraint]);
 						
-						if (gs_Columns[c][e_szDefault][0]) {
+						if(gs_Columns[c][e_szDefault][0]) {
 							iLength = strlen(gs_szBuffer);
 							
 							format(gs_szBuffer[iLength], sizeof(gs_szBuffer) - iLength, " DEFAULT(%s)", gs_Columns[c][e_szDefault]);
@@ -793,7 +793,7 @@ stock OpenBanDB() {
 					;
 					
 					for (new c = 0; c < sizeof(gs_Columns); c++) {
-						if (gs_Columns[c][e_iTable] != i)
+						if(gs_Columns[c][e_iTable] != i)
 							bCreateColumn[c] = false;
 					}
 						
@@ -801,7 +801,7 @@ stock OpenBanDB() {
 						db_get_field_assoc(dbrResult, "name", gs_szBuffer, sizeof(gs_szBuffer) - 1);
 						
 						for (c = 0; c < sizeof(gs_Columns); c++) {
-							if (!strcmp(gs_Columns[c][e_szName], gs_szBuffer, false))
+							if(!strcmp(gs_Columns[c][e_szName], gs_szBuffer, false))
 								bCreateColumn[c] = false;
 						}
 						
@@ -809,12 +809,12 @@ stock OpenBanDB() {
 					}
 					
 					for (new c = 0; c < sizeof(gs_Columns); c++) {
-						if (bCreateColumn[c]) {
+						if(bCreateColumn[c]) {
 							printf("Column \"%s\" does not exist in table \"%s\", it will now be created.", gs_Columns[c][e_szName], gs_Tables[i][e_szName]);
 							
 							format(gs_szBuffer, sizeof(gs_szBuffer), "ALTER TABLE `%s` ADD COLUMN `%s` %s %s", gs_Tables[i][e_szName], gs_Columns[c][e_szName], gs_Columns[c][e_szType], gs_Columns[c][e_szConstraint], gs_Columns[c][e_szDefault]);
 							
-							if (gs_Columns[c][e_szDefault][0]) {
+							if(gs_Columns[c][e_szDefault][0]) {
 								iLength = strlen(gs_szBuffer);
 
 								format(gs_szBuffer[iLength], sizeof(gs_szBuffer) - iLength, " DEFAULT(%s)", gs_Columns[c][e_szDefault]);
@@ -842,13 +842,13 @@ stock OpenBanDB() {
 // Used mainly for debugging
 
 stock ClearBanDB() {
-	if (gs_dbBanDatabase)
+	if(gs_dbBanDatabase)
 		db_close(gs_dbBanDatabase);
 	
-	if (fexist(gs_szBanDatabaseName))
+	if(fexist(gs_szBanDatabaseName))
 		fremove(gs_szBanDatabaseName);
 	
-	if (gs_dbBanDatabase) {
+	if(gs_dbBanDatabase) {
 		gs_dbBanDatabase = DB:0;
 		
 		OpenBanDB();
@@ -858,7 +858,7 @@ stock ClearBanDB() {
 // Used in a timer from OpenBanDB
 forward CloseBanDB();
 public  CloseBanDB() {
-	if (gs_dbBanDatabase)
+	if(gs_dbBanDatabase)
 		db_close(gs_dbBanDatabase);
 	
 	gs_iKeepAliveTimer = -1;
@@ -868,7 +868,7 @@ public  CloseBanDB() {
 // Get the UNIX timestsamp (with the local timezone).
 // I know, I'm lazy.. The function can run approx. 120 times/ms, though, so I'm ok with it.
 stock GetUnixTimestamp() {
-	if (!OpenBanDB())
+	if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetUnixTimestamp.");
 	else {
 		
@@ -876,9 +876,9 @@ stock GetUnixTimestamp() {
 			DBResult:dbrResult = db_query(gs_dbBanDatabase, !"SELECT strftime('%s','now','localtime')")
 		;
 		
-		if (!dbrResult)
+		if(!dbrResult)
 			print(!"ERROR: No result returned to GetUnixTimestamp.");
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 
 			print(!"ERROR: No rows returned to GetUnixTimestamp.");
@@ -913,7 +913,7 @@ stock EscapeSQLiteString(String[], iSize = sizeof(String)) {
 
 // Ban an IP range
 stock __BanIPRange(IPRange<Range>, iDuration = DURATION_PERMANENT, ...) {
-	if (!OpenBanDB())
+	if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in BanIPRange.");
 	else {
 		new
@@ -922,17 +922,17 @@ stock __BanIPRange(IPRange<Range>, iDuration = DURATION_PERMANENT, ...) {
 			DBResult:dbrResult
 		;
 		
-		if (iDuration)
+		if(iDuration)
 			iExpires = GetUnixTimestamp() + iDuration;
 		
 		format(gs_szBuffer, sizeof(gs_szBuffer), "INSERT INTO bans (ip_start, ip_end, expires) VALUES (" IP_ARG_FORMAT "," IP_ARG_FORMAT ", %d); SELECT last_insert_rowid();", IP_ARG(Range[e_iStart]), IP_ARG(Range[e_iEnd]), iExpires);
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (!dbrResult) {
+		if(!dbrResult) {
 			print(!"ERROR: No result returned to BanIPRange.");
 			printf("ERROR: Query: %s", gs_szBuffer);
-		} else if (!db_num_rows(dbrResult)) {
+		} else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 			
 			print(!"ERROR: No rows returned to BanIPRange.");
@@ -942,7 +942,7 @@ stock __BanIPRange(IPRange<Range>, iDuration = DURATION_PERMANENT, ...) {
 			
 			db_free_result(dbrResult);
 			
-			if (!(iBanIndex = strval(gs_szBuffer)))
+			if(!(iBanIndex = strval(gs_szBuffer)))
 				print(!"ERROR: Invalid ban index given from query in BanIPRange.");
 			else
 				return iBanIndex;
@@ -968,13 +968,13 @@ stock BanIP({IP, _}:...) {
 	
 	Range[e_iPoundSign] = '#';
 	
-	if (!(1 <= iArgCount <= 2)) {
+	if(!(1 <= iArgCount <= 2)) {
 		printf("ERROR: An invalid number of arguments were passed to BanIP (%d), expected 1 or 2.", iArgCount);
 		
 		return 0;
 	}
 	
-	if (iArgCount > 1)
+	if(iArgCount > 1)
 		iDuration = getarg(1);
 	
  	switch (iArg = getarg(0)) {
@@ -1005,7 +1005,7 @@ stock BanIP({IP, _}:...) {
 stock BanPlayer(iPlayer, iDuration = DURATION_PERMANENT) {
 	new iBanIndex = BanIP(ReturnPlayerIP(iPlayer), iDuration);
 	
-	if (iBanIndex) {
+	if(iBanIndex) {
 		GetPlayerName(iPlayer, gs_szBuffer, sizeof(gs_szBuffer));
 		
 		SetBanInfoString(iBanIndex, "nickname", gs_szBuffer);
@@ -1018,9 +1018,9 @@ stock BanPlayer(iPlayer, iDuration = DURATION_PERMANENT) {
 
 // Remove a ban (still keeps it in the database, but its expiration will be set to DURATION_EXPIRED which means lifted)
 stock LiftBan(iBanIndex) {
-	if (!iBanIndex)
+	if(!iBanIndex)
 		print(!"ERROR: Invalid ban index passed to LiftBan.");
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in LiftBan.");
 	else {
 		new
@@ -1031,9 +1031,9 @@ stock LiftBan(iBanIndex) {
 
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 
-		if (!dbrResult)
+		if(!dbrResult)
 			printf("ERROR: No result returned to LiftBan(%d).", iBanIndex);
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 
 			printf("ERROR: No rows returned to LiftBan(%d).", iBanIndex);
@@ -1057,7 +1057,7 @@ stock GetIPBanIndex({IP, _}:...) {
 		IP:iIP = INVALID_IP
 	;
 	
-	if ((iArgCount = numargs()) != 1) {
+	if((iArgCount = numargs()) != 1) {
 		printf("ERROR: An invalid number of arguments were passed to GetIPBanIndex (%d), expected 1.", iArgCount);
 		
 		return 0;
@@ -1079,9 +1079,9 @@ stock GetIPBanIndex({IP, _}:...) {
 		}
 	}
 	
-	if (iIP == INVALID_IP)
+	if(iIP == INVALID_IP)
 		print(!"ERROR: Invalid IP passed to GetIPBanIndex.");
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetIPBanIndex.");
 	else {
 		new
@@ -1092,8 +1092,8 @@ stock GetIPBanIndex({IP, _}:...) {
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (dbrResult) {
-			if (!db_num_rows(dbrResult)) {
+		if(dbrResult) {
+			if(!db_num_rows(dbrResult)) {
 				db_free_result(dbrResult);
 			} else {
 				db_get_field(dbrResult, 0, gs_szBuffer, sizeof(gs_szBuffer) - 1);
@@ -1117,9 +1117,9 @@ stock _GetIPBanIndices(IP:iIP, aiDestination[], iDestinationSize = sizeof(aiDest
 		iIndices = 0
 	;
 	
-	if (iIP == INVALID_IP)
+	if(iIP == INVALID_IP)
 		print(!"ERROR: Invalid IP passed to GetIPBanIndices.");
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetIPBanIndices.");
 	else {
 		new
@@ -1131,8 +1131,8 @@ stock _GetIPBanIndices(IP:iIP, aiDestination[], iDestinationSize = sizeof(aiDest
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (dbrResult) {
-			if (!(iRows = db_num_rows(dbrResult))) {
+		if(dbrResult) {
+			if(!(iRows = db_num_rows(dbrResult))) {
 				db_free_result(dbrResult);
 			} else {
 				while (iRows--) {
@@ -1140,7 +1140,7 @@ stock _GetIPBanIndices(IP:iIP, aiDestination[], iDestinationSize = sizeof(aiDest
 					
 					aiDestination[iIndices++] = strval(gs_szBuffer);
 					
-					if (iIndices >= iDestinationSize) {
+					if(iIndices >= iDestinationSize) {
 						printf("WARNING: There were more ban indices found than the destination array could fit in GetIPBanIndices (found: %d, array size: %d).", iRows + iIndices, iDestinationSize);
 						
 						break;
@@ -1169,9 +1169,9 @@ stock GetPlayerBanIndices(iPlayer, aiDestination[], iDestinationSize = sizeof(ai
 
 // Get the type of a ban index
 stock GetBanType(iBanIndex) {
-	if (!iBanIndex)
+	if(!iBanIndex)
 		return BAN_TYPE_NONE;
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetBanType.");
 	else {
 		new
@@ -1182,9 +1182,9 @@ stock GetBanType(iBanIndex) {
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (!dbrResult)
+		if(!dbrResult)
 			printf("ERROR: No result returned to GetBanType(%d).", iBanIndex);
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 			
 			printf("ERROR: No rows returned to GetBanType(%d).", iBanIndex);
@@ -1202,9 +1202,9 @@ stock GetBanType(iBanIndex) {
 
 // Get the expiration date of a ban
 stock GetBanExpirationTime(iBanIndex) {
-	if (!iBanIndex)
+	if(!iBanIndex)
 		return BAN_TYPE_NONE;
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetBanExpirationTime.");
 	else {
 		new
@@ -1215,9 +1215,9 @@ stock GetBanExpirationTime(iBanIndex) {
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (!dbrResult)
+		if(!dbrResult)
 			printf("ERROR: No result returned to GetBanExpirationTime(%d).", iBanIndex);
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 			
 			printf("ERROR: No rows returned to GetBanExpirationTime(%d).", iBanIndex);
@@ -1235,9 +1235,9 @@ stock GetBanExpirationTime(iBanIndex) {
 
 // Set the expiration date of a ban
 stock SetBanExpirationTime(iBanIndex, iExpiration) {
-	if (!iBanIndex)
+	if(!iBanIndex)
 		return BAN_TYPE_NONE;
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in SetBanExpirationTime.");
 	else {
 		new
@@ -1248,9 +1248,9 @@ stock SetBanExpirationTime(iBanIndex, iExpiration) {
 
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 
-		if (!dbrResult)
+		if(!dbrResult)
 			printf("ERROR: No result returned to SetBanExpirationTime(%d, %d).", iBanIndex, iExpiration);
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 
 			printf("ERROR: No rows returned to SetBanExpirationTime(%d, %d).", iBanIndex, iExpiration);
@@ -1268,7 +1268,7 @@ stock SetBanExpirationTime(iBanIndex, iExpiration) {
 
 // Set info for a ban
 static stock SetBanInfo(iBanIndex, const szKey[], iValueType, {_, Float}:...) {
-	if (numargs() != 4) {
+	if(numargs() != 4) {
 		printf("ERROR: An invalid number of arguments were passed to SetBanInfo (%d), expected 4.", numargs());
 		
 		return 0;
@@ -1283,15 +1283,15 @@ static stock SetBanInfo(iBanIndex, const szKey[], iValueType, {_, Float}:...) {
 		}
 	}
 	
-	if (!iBanIndex)
+	if(!iBanIndex)
 		print(!"ERROR: Invalid ban index passed to SetBanInfo.");
-	else if (!strcmp(szKey, "expires", true))
+	else if(!strcmp(szKey, "expires", true))
 		return SetBanExpirationTime(iBanIndex, getarg(3));
-	else if (!strcmp(szKey, "time_left", true))
+	else if(!strcmp(szKey, "time_left", true))
 		return SetBanExpirationTime(iBanIndex, GetUnixTimestamp() + getarg(3));
-	else if (!strcmp(szKey, "type", true))
+	else if(!strcmp(szKey, "type", true))
 		print(!"ERROR: The ban type cannot be changed with SetBanInfo.");
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in SetBanInfo.");
 	else {
 		new
@@ -1337,9 +1337,9 @@ static stock SetBanInfo(iBanIndex, const szKey[], iValueType, {_, Float}:...) {
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 
-		if (!dbrResult)
+		if(!dbrResult)
 			printf("NOTICE: No result returned to SetBanInfo(%d, \"%s\", %d, ...).", iBanIndex, szKey, iValueType);
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 
 			printf("NOTICE: No rows returned to SetBanInfo(%d, \"%s\", %d, ...).", iBanIndex, szKey, iValueType);
@@ -1376,15 +1376,15 @@ static stock GetBanInfo(iBanIndex, const szKey[], iValueType) {
 		}
 	}
 	
-	if (!iBanIndex)
+	if(!iBanIndex)
 		print(!"ERROR: Invalid ban index passed to GetBanInfo.");
-	else if (iValueType == VALUE_TYPE_INT && !strcmp(szKey, "expires", true))
+	else if(iValueType == VALUE_TYPE_INT && !strcmp(szKey, "expires", true))
 		return GetBanExpirationTime(iBanIndex);
-	else if (!strcmp(szKey, "time_left", true))
+	else if(!strcmp(szKey, "time_left", true))
 		return max(0, GetBanExpirationTime(iBanIndex) - GetUnixTimestamp());
-	else if (iValueType == VALUE_TYPE_INT && !strcmp(szKey, "type", true))
+	else if(iValueType == VALUE_TYPE_INT && !strcmp(szKey, "type", true))
 		return GetBanType(iBanIndex);
-	else if (!OpenBanDB())
+	else if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetBanInfo.");
 	else {
 		new
@@ -1401,9 +1401,9 @@ static stock GetBanInfo(iBanIndex, const szKey[], iValueType) {
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (!dbrResult)
+		if(!dbrResult)
 			printf("NOTICE: No result returned to GetBanInfo(%d, \"%s\").", iBanIndex, szKey);
-		else if (!db_num_rows(dbrResult)) {
+		else if(!db_num_rows(dbrResult)) {
 			db_free_result(dbrResult);
 			
 			printf("NOTICE: No rows returned to GetBanInfo(%d, \"%s\").", iBanIndex, szKey);
@@ -1437,7 +1437,7 @@ stock Float:GetBanInfoFloat(iBanIndex, const szKey[])
 stock GetBanInfoStringCopy(iBanIndex, const szKey[], szDestination[], iLength = sizeof(szDestination)) {
 	szDestination[0] = 0;
 	
-	if (GetBanInfo(iBanIndex, szKey, VALUE_TYPE_STRING)) {
+	if(GetBanInfo(iBanIndex, szKey, VALUE_TYPE_STRING)) {
 		strcat(szDestination, gs_szBuffer, iLength);
 		
 		return true;
@@ -1451,7 +1451,7 @@ stock GetBanInfoString(iBanIndex, const szKey[]) {
 		s_szBuffer[256]
 	;
 	
-	if (!GetBanInfo(iBanIndex, szKey, VALUE_TYPE_STRING))
+	if(!GetBanInfo(iBanIndex, szKey, VALUE_TYPE_STRING))
 		gs_szBuffer[0] = 0;
 	
 	s_szBuffer[0] = 0;
@@ -1467,7 +1467,7 @@ stock _GetBanIPRange(IPRange<Range>, iBanIndex) {
 	Range[e_iEnd] = IP:0;
 	
 	
-	if (!OpenBanDB())
+	if(!OpenBanDB())
 		print(!"ERROR: Unable to open the ban DB in GetBanIPRange.");
 	else {
 		new
@@ -1478,11 +1478,11 @@ stock _GetBanIPRange(IPRange<Range>, iBanIndex) {
 		
 		dbrResult = db_query(gs_dbBanDatabase, gs_szBuffer);
 		
-		if (!dbrResult) {
+		if(!dbrResult) {
 			printf("NOTICE: No result returned to GetBanIPRange(%d).", iBanIndex);
 			
 			return;
-		} else if (!db_num_rows(dbrResult)) {
+		} else if(!db_num_rows(dbrResult)) {
 			printf("NOTICE: No rows returned to GetBanIPRange(%d).", iBanIndex);
 		} else {
 			db_get_field(dbrResult, 0, gs_szBuffer, sizeof(gs_szBuffer) - 1);

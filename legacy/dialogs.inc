@@ -86,7 +86,7 @@ static Dialog_ScrollBar(page, totalPages, &Float:y, Float:maxHeight, &Float:heig
 
 static Dialog_CreatePlayerDialog(playerid, caption[], button1[], button2[], bool:smallVersion)
 {
-	if (smallVersion)
+	if(smallVersion)
 	{
 	    // Header
 	    playerDialogTextDraw[playerid][playerDialogTextDrawCount[playerid]] = CreatePlayerTextDraw(playerid,220.000000, 140.000000, caption);
@@ -220,7 +220,7 @@ static Dialog_CreatePlayerDialog(playerid, caption[], button1[], button2[], bool
 	    {
 	        for (new b; b < MAX_SMALL_DIALOG_LIST_COLUMNS; b++)
 	        {
-	            if (((a * MAX_SMALL_DIALOG_LIST_COLUMNS) + b) >= playerDialogTotalListitems[playerid])
+	            if(((a * MAX_SMALL_DIALOG_LIST_COLUMNS) + b) >= playerDialogTotalListitems[playerid])
 	            {
 	                break;
 	            }
@@ -242,7 +242,7 @@ static Dialog_CreatePlayerDialog(playerid, caption[], button1[], button2[], bool
 				PlayerTextDrawSetSelectable(playerid,playerDialogTextDraw[playerid][playerDialogTextDrawCount[playerid]], 1);
 				PlayerTextDrawShow(playerid, playerDialogTextDraw[playerid][playerDialogTextDrawCount[playerid]++]);
 
-				if (playerDialogText[playerid][(a * MAX_SMALL_DIALOG_LIST_COLUMNS) + b]{0})
+				if(playerDialogText[playerid][(a * MAX_SMALL_DIALOG_LIST_COLUMNS) + b]{0})
 				{
 					strunpack(text, playerDialogText[playerid][(a * MAX_SMALL_DIALOG_LIST_COLUMNS) + b]);
 					playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_TEXT][(a * MAX_SMALL_DIALOG_LIST_COLUMNS) + b] = playerDialogTextDrawCount[playerid];
@@ -440,7 +440,7 @@ static Dialog_CreatePlayerDialog(playerid, caption[], button1[], button2[], bool
 		}
 	}
 
-	if (button2[0])
+	if(button2[0])
 	{
 		// Left button
 		playerDialogTextDraw[playerid][playerDialogTextDrawCount[playerid]] = CreatePlayerTextDraw(playerid,249.000000, 309.000000, "LD_POOL:ball");
@@ -721,14 +721,14 @@ static Dialog_CreatePlayerDialog(playerid, caption[], button1[], button2[], bool
 
 static Dialog_UpdatePlayerDialog(playerid)
 {
-	if (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
+	if(playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
 	{
 	    return 0;
 	}
 
 	new index;
 	new pages = NumOfPages(playerDialogTotalListitems[playerid], (MAX_DIALOG_LIST_ROWS * MAX_DIALOG_LIST_COLUMNS));
-	if (pages > 1)
+	if(pages > 1)
 	{
 	    index = playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_SCROLL_BAR];
 	    PlayerTextDrawDestroy(playerid, playerDialogTextDraw[playerid][index]);
@@ -766,7 +766,7 @@ static Dialog_UpdatePlayerDialog(playerid)
 			itemid = (((a * MAX_DIALOG_LIST_COLUMNS) + b) + (playerDialogPage[playerid] * (MAX_DIALOG_LIST_COLUMNS * MAX_DIALOG_LIST_ROWS)));
 
 			index = playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_MODEL][(a * MAX_DIALOG_LIST_COLUMNS) + b];
-			if (itemid >= playerDialogTotalListitems[playerid])
+			if(itemid >= playerDialogTotalListitems[playerid])
 			{
 			    PlayerTextDrawHide(playerid, playerDialogTextDraw[playerid][index]);
 			}
@@ -780,13 +780,13 @@ static Dialog_UpdatePlayerDialog(playerid)
 			}
 
 			index = playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_TEXT][(a * MAX_DIALOG_LIST_COLUMNS) + b];
-			if (itemid >= playerDialogTotalListitems[playerid])
+			if(itemid >= playerDialogTotalListitems[playerid])
 			{
 			    PlayerTextDrawHide(playerid, playerDialogTextDraw[playerid][index]);
 			}
 			else
 			{
-			    if (playerDialogText[playerid][itemid]{0})
+			    if(playerDialogText[playerid][itemid]{0})
 			    {
 					strunpack(text, playerDialogText[playerid][itemid]);
 					PlayerTextDrawSetString(playerid, playerDialogTextDraw[playerid][index], text);
@@ -820,19 +820,19 @@ static Dialog_HidePlayerDialog(playerid)
 
 stock Dialog_ShowPlayerDialog(playerid, dialogid, style, caption[], info[], button1[], button2[])
 {
-	if (playerid < 0 || playerid >= MAX_PLAYERS)
+	if(playerid < 0 || playerid >= MAX_PLAYERS)
 	{
 	    return 0;
 	}
 
-	if (playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
+	if(playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
 	{
 		Dialog_HidePlayerDialog(playerid);
   	}
 
-	if (dialogid < 0)
+	if(dialogid < 0)
 	{
-	    if (style == DIALOG_STYLE_PREVIEW_MODEL)
+	    if(style == DIALOG_STYLE_PREVIEW_MODEL)
 	    {
 	        return 1;
 	    }
@@ -840,7 +840,7 @@ stock Dialog_ShowPlayerDialog(playerid, dialogid, style, caption[], info[], butt
 	    return ShowPlayerDialog(playerid, dialogid, style, caption, info, button1, button2);
 	}
 
-	if (style != DIALOG_STYLE_PREVIEW_MODEL)
+	if(style != DIALOG_STYLE_PREVIEW_MODEL)
 	{
 	    return ShowPlayerDialog(playerid, dialogid, style, caption, info, button1, button2);
 	}
@@ -852,12 +852,12 @@ stock Dialog_ShowPlayerDialog(playerid, dialogid, style, caption[], info[], butt
 	new string[sizeof modelid/*modelid*/ + 1/*\n*/ + MAX_DIALOG_LIST_ITEM_SIZE/*text*/];
 	for (new i, len = strlen(info); i < len; i++)
 	{
-		if (info[i] == '\n')
+		if(info[i] == '\n')
 		{
 			strmid(string, info, pos, i);
 			pos = i + 1;
 		}
-		else if (i == (len - 1))
+		else if(i == (len - 1))
 		{
 			strmid(string, info, pos, len);
 		}
@@ -866,7 +866,7 @@ stock Dialog_ShowPlayerDialog(playerid, dialogid, style, caption[], info[], butt
 		    continue;
 		}
 
-		if (playerDialogTotalListitems[playerid] == MAX_DIALOG_LIST_ITEMS)
+		if(playerDialogTotalListitems[playerid] == MAX_DIALOG_LIST_ITEMS)
   		{
     		printf("[PrevModelDialog.inc] - Warning: You have more than \"MAX_DIALOG_LIST_ITEMS\" (i.e. "#MAX_DIALOG_LIST_ITEMS" listitems), only the items under the limit were loaded.");
 			break;
@@ -875,7 +875,7 @@ stock Dialog_ShowPlayerDialog(playerid, dialogid, style, caption[], info[], butt
 
 		playerDialogText[playerid][index]{0} = EOS;
 		pos2 = strfind(string, "\t", true);
-		if (pos2 == -1)
+		if(pos2 == -1)
 		{
 		    playerDialogModel[playerid][index] = strval(string);
 		}
@@ -887,7 +887,7 @@ stock Dialog_ShowPlayerDialog(playerid, dialogid, style, caption[], info[], butt
 		}
 	}
 
-	if (playerDialogTotalListitems[playerid] == 0)
+	if(playerDialogTotalListitems[playerid] == 0)
 	{
 	    return 0;
 	}
@@ -914,17 +914,17 @@ native Dialog_ShowPreviewModelDialog(playerid, dialogid, caption[], models[], la
 */
 stock Dialog_ShowPreviewModelDialog(playerid, dialogid, caption[], models[], labels[][], button1[], button2[], size = sizeof models)
 {
-	if (playerid < 0 || playerid >= MAX_PLAYERS)
+	if(playerid < 0 || playerid >= MAX_PLAYERS)
 	{
 	    return 0;
 	}
 
-	if (playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
+	if(playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
 	{
 		Dialog_HidePlayerDialog(playerid);
   	}
 
-	if (dialogid < 0)
+	if(dialogid < 0)
 	{
 	    return 1;
 	}
@@ -932,7 +932,7 @@ stock Dialog_ShowPreviewModelDialog(playerid, dialogid, caption[], models[], lab
 	new index;
 	for (new i; i < size; i++)
 	{
-		if (playerDialogTotalListitems[playerid] == MAX_DIALOG_LIST_ITEMS)
+		if(playerDialogTotalListitems[playerid] == MAX_DIALOG_LIST_ITEMS)
   		{
     		printf("[PrevModelDialog.inc] - Warning: You have more than \"MAX_DIALOG_LIST_ITEMS\" (i.e. "#MAX_DIALOG_LIST_ITEMS" listitems), only the items under the limit were loaded.");
 			break;
@@ -943,7 +943,7 @@ stock Dialog_ShowPreviewModelDialog(playerid, dialogid, caption[], models[], lab
 		strpack(playerDialogText[playerid][index], labels[i], MAX_DIALOG_LIST_ITEM_SIZE);
 	}
 
-	if (playerDialogTotalListitems[playerid] == 0)
+	if(playerDialogTotalListitems[playerid] == 0)
 	{
 	    return 0;
 	}
@@ -967,12 +967,12 @@ native Dialog_SetListitemPreviewRot(playerid, listitem, Float:rx, Float:ry, Floa
 */
 stock Dialog_SetListitemPreviewRot(playerid, listitem, Float:rx, Float:ry, Float:rz, Float:zoom, materialcolor1, materialcolor2)
 {
-	if (playerid < 0 || playerid >= MAX_PLAYERS)
+	if(playerid < 0 || playerid >= MAX_PLAYERS)
 	{
 	    return 0;
 	}
 
-	if (listitem < 0 || listitem >= MAX_DIALOG_LIST_ITEMS)
+	if(listitem < 0 || listitem >= MAX_DIALOG_LIST_ITEMS)
 	{
 	    return 0;
 	}
@@ -1019,14 +1019,14 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if (playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
+	if(playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
 	{
-	    if (clickedid == Text:INVALID_TEXT_DRAW)
+	    if(clickedid == Text:INVALID_TEXT_DRAW)
 	    {
 			new dialogid = playerDialogID[playerid];
 
             new listitem;
-			if (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
+			if(playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
 			{
 			    listitem = playerDialogListitem[playerid];
 			}
@@ -1062,17 +1062,17 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
-	if (playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
+	if(playerDialogID[playerid] >= 0 && playerDialogStyle[playerid] == DIALOG_STYLE_PREVIEW_MODEL)
 	{
-	    if (playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_SCROLL_UP]])
+	    if(playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_SCROLL_UP]])
 	    {
-			if (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
+			if(playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
 			{
 			    return 1;
 			}
 			else
 			{
-			    if ((playerDialogPage[playerid] - 1) < 0)
+			    if((playerDialogPage[playerid] - 1) < 0)
 			    {
 			        return 1;
 			    }
@@ -1084,15 +1084,15 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	    	return 1;
 	    }
 
-	    if (playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_SCROLL_DOWN]])
+	    if(playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_SCROLL_DOWN]])
 	    {
-			if (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
+			if(playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
 			{
 			    return 1;
 			}
 			else
 			{
-			    if ((playerDialogPage[playerid] + 1) >= NumOfPages(playerDialogTotalListitems[playerid], (MAX_DIALOG_LIST_ROWS * MAX_DIALOG_LIST_COLUMNS)))
+			    if((playerDialogPage[playerid] + 1) >= NumOfPages(playerDialogTotalListitems[playerid], (MAX_DIALOG_LIST_ROWS * MAX_DIALOG_LIST_COLUMNS)))
 			    {
 			        return 1;
 			    }
@@ -1104,12 +1104,12 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	    	return 1;
 	    }
 
-	    if (playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_LEFT_BUTTON]] || playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_MIDDLE_BUTTON]])
+	    if(playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_LEFT_BUTTON]] || playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_MIDDLE_BUTTON]])
 	    {
 			new dialogid = playerDialogID[playerid];
 
             new listitem;
-			if (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
+			if(playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
 			{
 			    listitem = playerDialogListitem[playerid];
 			}
@@ -1126,12 +1126,12 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	    	return CancelSelectTextDraw(playerid);
 	    }
 
-	    if (playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_RIGHT_BUTTON]])
+	    if(playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_RIGHT_BUTTON]])
 	    {
 			new dialogid = playerDialogID[playerid];
 
             new listitem;
-			if (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
+			if(playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS))
 			{
 			    listitem = playerDialogListitem[playerid];
 			}
@@ -1150,9 +1150,9 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
 	    for (new i, j = (playerDialogTotalListitems[playerid] <= (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS)) ? (MAX_SMALL_DIALOG_LIST_ROWS * MAX_SMALL_DIALOG_LIST_COLUMNS) : (MAX_DIALOG_LIST_ROWS * MAX_DIALOG_LIST_COLUMNS); i < j; i++)
 	    {
-	        if (playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_MODEL][i]])
+	        if(playertextid == playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_MODEL][i]])
 	        {
-	            if ((GetTickCount() - playerDialogClickTickCount[playerid][i]) <= 200)
+	            if((GetTickCount() - playerDialogClickTickCount[playerid][i]) <= 200)
 	            {
 	                return OnPlayerClickPlayerTextDraw(playerid, playerDialogTextDraw[playerid][playerDialogTextDrawID[playerid][DIALOG_TEXTDRAW_LEFT_BUTTON]]);
 	            }

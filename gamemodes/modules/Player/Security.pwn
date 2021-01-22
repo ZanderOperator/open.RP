@@ -195,7 +195,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
-			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
+			if(strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 			{
 				new tmpString[175];
 				format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\n"COL_RED"Nedozvoljeni znakovi u sigurnosnom odgovoru!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
@@ -249,7 +249,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(isnull(inputtext))
 				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Ostavili ste prazno polje novog E-Maila!", "Input", "Abort");
-			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
+			if(strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Nedozvoljeni znakovi u E-Mailu!", "Input", "Abort");
 			if(strlen(inputtext) > MAX_PLAYER_MAIL-1) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Prevelik unos e-mail adrese!", "Input", "Abort");
 			if(!IsValidEMail(inputtext)) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Tu adresu netko koristi ili nije po standardima (obrati se adminima)!", "Input", "Abort");
@@ -278,7 +278,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(isnull(inputtext))
 				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Ostavili ste prazno polje!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 			
-			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
+			if(strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Nedozvoljeni znakovi u unesenoj sifri!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 			
 			if(strlen(inputtext) < 3) 
@@ -340,7 +340,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else
 			{
-				new tmpString[ 128 ];
+				new tmpString[128];
 				format( tmpString, sizeof(tmpString), "%s\n"COL_RED"Niste unijeli valjani odgovor na sigurnosno pitanje!", secQuestions[PlayerInfo[playerid][pSecQuestion]] );
 				ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", tmpString, "Input", "Abort");
 			}
@@ -378,8 +378,8 @@ CMD:changepass(playerid, params[])
 {
 	new Cache: mysql_search, usersql, usernick[MAX_PLAYER_NAME], passnew[32];
 	
-	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changepass [Ime_Prezime] [password].");
+	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[?]: /changepass [Ime_Prezime][password].");
 	
 	// mysql search
 	mysql_search = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", usernick));
@@ -389,6 +389,6 @@ CMD:changepass(playerid, params[])
 	cache_delete(mysql_search);
 	
 	bcrypt_hash(passnew, BCRYPT_COST, "OnPasswordUpdateEx", "d", usersql);
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste igracu %s postavili novu lozinku: %s", usernick, passnew);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste igracu %s postavili novu lozinku: %s", usernick, passnew);
 	return 1;
 }

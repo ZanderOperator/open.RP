@@ -63,7 +63,7 @@ hook OnPlayerSpawn(playerid)
 stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 1, toggleable = 1) // ReWrap
 {
 	forcesync = 1;
-	if( PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
+	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
@@ -79,7 +79,7 @@ stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lock
 
 stock SetPlayerSpecialActionEx(playerid, actionid) // ReWrap
 {
-	if( PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
+	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
@@ -104,7 +104,7 @@ CMD:dance(playerid, params[])
 	    case 4:
 	        SetPlayerSpecialActionEx(playerid, SPECIAL_ACTION_DANCE4);
 	    default:
-	        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /dance [1-4]");
+	        SendClientMessage(playerid, COLOR_RED, "[?]: /dance [1-4]");
 	}
 	return 1;
 }
@@ -126,7 +126,7 @@ CMD:lean(playerid, params[])
 		case 3:
         	ApplyAnimationEx(playerid,"BAR","BARman_idle",3.0,0,1,1,1,0);
 		default:
-		    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lean [1-3]");
+		    SendClientMessage(playerid, COLOR_RED, "[?]: /lean [1-3]");
 	}
     return 1;
 }
@@ -142,7 +142,7 @@ CMD:injured(playerid, params[])
 	    case 3:
 	        ApplyAnimationEx(playerid, "SWAT", "gnstwall_injurd", 4.0, 1, 0, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /injured [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /injured [1-3]");
 	}
 	return 1;
 }
@@ -160,7 +160,7 @@ CMD:sit(playerid, params[])
 	    case 4:
 	        ApplyAnimationEx(playerid, "BEACH", "ParkSit_W_loop", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /sit [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /sit [1-2]");
 	}
 	return 1;
 }
@@ -176,7 +176,7 @@ CMD:carsit(playerid, params[])
 		case 3:
 		    ApplyAnimationEx(playerid, "LOWRIDER", "lrgirl_idleloop", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carsit [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /carsit [1-3]");
 	}
 	return 1;
 }
@@ -214,7 +214,7 @@ CMD:stand(playerid, params[])
 		case 14:
 		    ApplyAnimation(playerid, "OTB", "wtchrace_loop", 4.1, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /stand [1-12]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /stand [1-12]");
 	}
 	return 1;
 }
@@ -253,7 +253,7 @@ CMD:walk(playerid, params[])
 		case 15:
 			ApplyAnimationEx(playerid, "MUSCULAR", "MuscleWalk", 4.0999, 1, 1, 1, 1, 1, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /walk [1-15]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /walk [1-15]");
 	}
 	return 1;
 }
@@ -277,7 +277,7 @@ CMD:fwalk(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "PED", "WOMAN_walkshop", 4.0999, 1, 1, 1, 1, 1, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /fwalk [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /fwalk [1-7]");
 	}
 	return 1;
 }
@@ -305,7 +305,7 @@ CMD:crack(playerid, params[])
 		case 9:
 			ApplyAnimationEx(playerid, "SWAT", "gnstwall_injurd", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /crack [1-9]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /crack [1-9]");
 	}
 	return 1;
 }
@@ -327,7 +327,7 @@ CMD:rap(playerid, params[])
 	    case 3:
 	        ApplyAnimationEx(playerid, "RAPPING", "RAP_C_Loop", 4.0, 1, 1, 1, 1, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rap [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /rap [1-3]");
 	}
 	return 1;
 }
@@ -341,7 +341,7 @@ CMD:wank(playerid, params[])
 	    case 2:
 	        ApplyAnimationEx(playerid, "PAULNMAC", "wank_in", 4.0, 1, 1, 1, 1, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /wank [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /wank [1-2]");
 	}
 	return 1;
 }
@@ -389,7 +389,7 @@ CMD:strip(playerid, params[])
 		case 19:
 			ApplyAnimationEx(playerid, "STRIP", "PUN_LOOP", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /strip [1-19]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /strip [1-19]");
 	}
 	return 1;
 }
@@ -407,7 +407,7 @@ CMD:bj(playerid, params[])
 	    case 4:
 	        ApplyAnimationEx(playerid, "BLOWJOBZ", "BJ_COUCH_LOOP_W", 4.1, 0, 1, 1, 1, 1);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bj [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bj [1-4]");
 	}
 	return 1;
 }
@@ -469,7 +469,7 @@ CMD:gsign(playerid, params[])
 	    case 5:
 	        ApplyAnimationEx(playerid, "GHANDS", "gsign5", 4.0, 0, 1, 1, 1, 1);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gsign [1-5]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /gsign [1-5]");
 	}
 	return 1;
 }
@@ -501,7 +501,7 @@ CMD:celebrate(playerid, params[])
 	    case 2:
 	        ApplyAnimationEx(playerid, "GYMNASIUM", "gym_tread_celebrate", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /celebrate [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /celebrate [1-2]");
 	}
 	return 1;
 }
@@ -515,7 +515,7 @@ CMD:win(playerid, params[])
 	    case 2:
 	        ApplyAnimationEx(playerid, "CASINO", "Roulette_win", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /win [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /win [1-2]");
 	}
 	return 1;
 }
@@ -535,7 +535,7 @@ CMD:deal(playerid, params[])
 	    case 2:
 	        ApplyAnimationEx(playerid, "DEALER", "DRUGS_BUY", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /deal [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /deal [1-2]");
 	}
 	return 1;
 }
@@ -549,7 +549,7 @@ CMD:invite(playerid, params[])
 	    case 2:
 	        ApplyAnimationEx(playerid, "GANGS", "Invite_No", 4.1, 0, 1, 1, 1, 1);
      	default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /invite [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /invite [1-2]");
 	}
 	return 1;
 }
@@ -602,7 +602,7 @@ CMD:lookout(playerid, params[])
 		case 6:
 			ApplyAnimationEx(playerid, "PED", "roadcross_old", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /lookout [1-6]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /lookout [1-6]");
 	}
 	return 1;
 }
@@ -624,7 +624,7 @@ CMD:crossarms(playerid, params[])
 	    case 3:
 	        ApplyAnimationEx(playerid, "DEALER", "DEALER_IDLE_01", 4.0, 0, 1, 1, 1, -1);
      	default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /crossarms [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /crossarms [1-3]");
 	}
 	return 1;
 }
@@ -642,7 +642,7 @@ CMD:lay(playerid, params[])
 	    case 4:
 	        ApplyAnimationEx(playerid,"BEACH","PARKSIT_W_LOOP", 4.0, 1, 0, 0, 0, 0);
         default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lay [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /lay [1-4]");
 	}
 	return 1;
 }
@@ -672,7 +672,7 @@ CMD:eatanim(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "PED", "gum_eat", 4.0999, 1, 1, 1, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /eatanim [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /eatanim [1-7]");
 	}
 	return 1;
 }
@@ -690,7 +690,7 @@ CMD:wave(playerid, params[])
 		case 4:
 			ApplyAnimationEx(playerid, "PED", "endchat_03", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /wave [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /wave [1-4]");
 	}
 	return 1;
 }
@@ -724,7 +724,7 @@ CMD:smoke(playerid, params[])
 		case 12:
 			ApplyAnimationEx(playerid, "SMOKING", "M_smk_tap", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /smoke [1-12]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /smoke [1-12]");
 	}
 	return 1;
 }
@@ -748,7 +748,7 @@ CMD:chat(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "PED", "IDLE_chat", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /chat [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /chat [1-7]");
 	}
 	return 1;
 }
@@ -786,7 +786,7 @@ CMD:bat(playerid, params[])
 	    case 5:
 	        ApplyAnimationEx(playerid, "CRACK", "Bbalbat_Idle_02", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bat [1-5]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bat [1-5]");
 	}
 	return 1;
 }
@@ -808,7 +808,7 @@ CMD:cry(playerid, params[])
      	case 3:
 			ApplyAnimationEx(playerid, "GRAVEYARD", "prst_loopa", 4.0999, 0, 1, 1, 1, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cry [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /cry [1-2]");
 	}
 	return 1;
 }
@@ -842,7 +842,7 @@ CMD:aim(playerid, params[])
 		case 6:
 			ApplyAnimationEx(playerid, "PED", "gang_gunstand", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /aim [1-6]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /aim [1-6]");
 	}
 	return 1;
 }
@@ -866,7 +866,7 @@ CMD:gang(playerid, params[])
 	    case 7:
 	        ApplyAnimationEx(playerid, "GANGS", "hndshkfa", 4.0, 0, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gang [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /gang [1-7]");
 	}
 	return 1;
 }
@@ -884,7 +884,7 @@ CMD:bed(playerid, params[])
 	    case 4:
 	        ApplyAnimationEx(playerid, "INT_HOUSE", "BED_Loop_R", 4.0, 1, 0, 0, 0, 0);
 	    default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bed [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bed [1-4]");
 	}
 	return 1;
 }
@@ -920,7 +920,7 @@ CMD:kiss(playerid, params[])
 	    case 7:
 	        ApplyAnimationEx(playerid, "KISSING", "Playa_Kiss_03", 4.0, 0, 0, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /kiss [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /kiss [1-7]");
 	}
 	return 1;
 }
@@ -946,7 +946,7 @@ CMD:ghand(playerid, params[])
 	    case 5:
 	       	ApplyAnimationEx(playerid, "GHANDS", "gsign5LH", 4.0, 0, 1, 1, 1, 1);
    		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ghand [1-5]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /ghand [1-5]");
 	}
 	return 1;
 }
@@ -968,7 +968,7 @@ CMD:basket(playerid, params[])
 	    case 6:
 	       	ApplyAnimationEx(playerid, "BSKTBALL", "BBALL_run", 4.1, 1, 1, 1, 1, 1);
    		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /basket [1-6]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /basket [1-6]");
 	}
 	return 1;
 }
@@ -990,7 +990,7 @@ CMD:box(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "FIGHT_B", "FightB_IDLE", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /box [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /box [1-3]");
 	}
 	return 1;
 }
@@ -1030,7 +1030,7 @@ CMD:bar(playerid, params[])
 		case 12:
 			ApplyAnimationEx(playerid, "BAR", "dnk_stndM_loop", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bar [1-12]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /bar [1-12]");
 	}
 	return 1;
 }
@@ -1056,7 +1056,7 @@ CMD:dead(playerid, params[])
 	    case 2:
 	        ApplyAnimationEx(playerid, "PARACHUTE", "FALL_skyDive_DIE", 4.0, 0, 1, 1, 1, -1);
    		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /dead [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /dead [1-2]");
 	}
 	return 1;
 }
@@ -1100,7 +1100,7 @@ CMD:carry(playerid, params[])
 		case 8:
 			SetPlayerSpecialActionEx(playerid, 25);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /carry [1-8]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /carry [1-8]");
 	}
 	return 1;
 }
@@ -1120,7 +1120,7 @@ CMD:what(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid,"benchpress","gym_bp_celebrate", 4.0, 0, 0, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /what [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /what [1-2]");
     }
     return 1;
 }
@@ -1142,7 +1142,7 @@ CMD:chill(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "RAPPING", "RAP_B_Loop", 4.1, 1, 1, 1, 1, 1);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /chill [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /chill [1-3]");
     }
     return 1;
 }
@@ -1168,7 +1168,7 @@ CMD:face(playerid, params[])
 		case 8:
 			ApplyAnimationEx(playerid, "PED", "Idle_Gang1", 4.0999, 0, 0, 0, 1, 1, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /face [1-8]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /face [1-8]");
 	}
 	return 1;
 }
@@ -1192,7 +1192,7 @@ CMD:scared(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "ON_LOOKERS", "panic_shout", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /scared [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /scared [1-7]");
 	}
 	return 1;
 }
@@ -1210,7 +1210,7 @@ CMD:roll(playerid, params[])
 		case 4:
 			ApplyAnimationEx(playerid, "PED", "CAR_rollout_LHS", 4.0, 0, 1, 1, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /roll [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /roll [1-4]");
 	}
 	return 1;
 }
@@ -1224,7 +1224,7 @@ CMD:fall(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "PED", "FLOOR_hit_f", 4.0999, 0, 1, 1, 1, 1, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /fall [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /fall [1-2]");
 	}
 	return 1;
 }
@@ -1262,7 +1262,7 @@ CMD:shot(playerid, params[])
 		case 5:
 			ApplyAnimationEx(playerid, "PED", "KO_skid_front", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /shot [1-5]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /shot [1-5]");
 	}
 	return 1;
 }
@@ -1282,7 +1282,7 @@ CMD:spin(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "PED", "KO_spin_R", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /spin [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /spin [1-2]");
 	}
 	return 1;
 }
@@ -1308,7 +1308,7 @@ CMD:asex(playerid, params[])
 		case 8:
 			ApplyAnimationEx(playerid, "SNM", "SPANKING_ENDP", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /asex [1-8]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /asex [1-8]");
 	}
 	return 1;
 }
@@ -1332,7 +1332,7 @@ CMD:reload(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "COLT45", "sawnoff_reload", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /reload [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /reload [1-7]");
 	}
 	return 1;
 }
@@ -1356,7 +1356,7 @@ CMD:riot(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "RIOT", "RIOT_shout", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /riot [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /riot [1-7]");
 	}
 	return 1;
 }
@@ -1378,7 +1378,7 @@ CMD:deejay(playerid, params[])
 		case 6:
 			ApplyAnimationEx(playerid, "SCRATCHING", "sclng_r", 4.0999, 1, 0, 0, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /deejay [1-6]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /deejay [1-6]");
 	}
 	return 1;
 }
@@ -1424,7 +1424,7 @@ CMD:cop(playerid, params[])
 		case 18:
 			ApplyAnimationEx(playerid, "PED", "ARRESTgun", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /cop [1-18]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /cop [1-18]");
 	}
 	return 1;
 }
@@ -1440,7 +1440,7 @@ CMD:console(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "CRIB", "PED_Console_Win", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /console [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /console [1-3]");
 	}
 	return 1;
 }
@@ -1478,7 +1478,7 @@ CMD:dancer(playerid, params[])
 		case 14:
 		    ApplyAnimationEx(playerid, "WOP", "Dance_G1", 4.0999, 1, 1, 1, 1, 1, 1);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /dancer [1-13]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /dancer [1-13]");
 	}
 	return 1;
 }
@@ -1529,7 +1529,7 @@ CMD:beach(playerid, params[])
 		case 18:
 			ApplyAnimationEx(playerid, "SUNBATHE", "SitnWait_out_W", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /beach [1-18]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /beach [1-18]");
 	}
 	return 1;
 }
@@ -1553,7 +1553,7 @@ CMD:bombs(playerid, params[])
 		case 7:
 			ApplyAnimationEx(playerid, "MISC", "Plunger_01", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bombs [1-7]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /bombs [1-7]");
 	}
 	return 1;
 }
@@ -1587,7 +1587,7 @@ CMD:camera(playerid, params[])
 		case 12:
 			ApplyAnimationEx(playerid, "CAMERA", "picstnd_take", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /camera [1-12]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /camera [1-12]");
 	}
 	return 1;
 }
@@ -1601,7 +1601,7 @@ CMD:fixcar(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "CAR", "Fix_Car_Out", 4.0999, 0, 0, 0, 0, 0, 1);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /fixcar [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /fixcar [1-2]");
 	}
 	return 1;
 }
@@ -1668,7 +1668,7 @@ CMD:caranim(playerid, params[])
 		    ApplyAnimationEx(playerid, "PED", "CAR_tune_radio", 4.0999, 0, 1, 1, 1, 0, 1);
 
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /caranim [1-19]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /caranim [1-19]");
 	}
 	return 1;
 }
@@ -1732,7 +1732,7 @@ CMD:casinoanim(playerid, params[])
 		case 24:
 			ApplyAnimationEx(playerid, "CASINO", "Slot_win_out", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /casinoanim [1-24]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /casinoanim [1-24]");
 	}
 	return 1;
 }
@@ -1768,7 +1768,7 @@ CMD:clothesanim(playerid, params[])
 		case 13:
 			ApplyAnimationEx(playerid, "CLOTHES", "CLO_Pose_Watch", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /clothesanim [1-13]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /clothesanim [1-13]");
 	}
 	return 1;
 }
@@ -1842,7 +1842,7 @@ CMD:gym(playerid, params[])
 		case 29:
 			ApplyAnimationEx(playerid, "GYMNASIUM", "gym_walk_falloff", 4.0999, 0, 0, 0, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /gym [1-29]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /gym [1-29]");
 	}
 	return 1;
 }
@@ -1858,7 +1858,7 @@ CMD:no(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "PED", "endchat_02", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /no [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /no [1-3]");
 	}
 	return 1;
 }
@@ -1872,7 +1872,7 @@ CMD:lookaround(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "ON_LOOKERS", "lkup_loop", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /lookaround [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /lookaround [1-2]");
 	}
 	return 1;
 }
@@ -1888,7 +1888,7 @@ CMD:point(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "ON_LOOKERS", "Pointup_loop", 4.0999, 0, 0, 0, 1, 1, 1);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /point [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /point [1-3]");
 	}
 	return 1;
 }
@@ -1908,7 +1908,7 @@ CMD:panicanim(playerid, params[])
 		case 5:
 			ApplyAnimationEx(playerid, "ON_LOOKERS", "panic_cower", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /panicanim [1-5]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /panicanim [1-5]");
 	}
 	return 1;
 }
@@ -1926,7 +1926,7 @@ CMD:shoutanim(playerid, params[])
 		case 4:
 			ApplyAnimationEx(playerid, "ON_LOOKERS", "shout_loop", 4.0999, 0, 1, 1, 1, 1, 1);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /shoutanim [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /shoutanim [1-3]");
 	}
 	return 1;
 }
@@ -1940,7 +1940,7 @@ CMD:giftanim(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "KISSING", "gift_give", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /gift [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /gift [1-2]");
 	}
 	return 1;
 }
@@ -1958,7 +1958,7 @@ CMD:argue(playerid, params[])
 		case 4:
 			ApplyAnimationEx(playerid, "KISSING", "GF_CarArgue_02", 4.0999, 1, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /argue [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /argue [1-4]");
 	}
 	return 1;
 }
@@ -1974,7 +1974,7 @@ CMD:comeon(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "RYDER", "RYD_Beckon_03", 4.0999, 0, 0, 0, 1, 1, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /comeon [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /comeon [1-3]");
 	}
 	return 1;
 }
@@ -1992,7 +1992,7 @@ CMD:serve(playerid, params[])
 		case 4:
 			ApplyAnimationEx(playerid, "SHOP", "SHP_Serve_Start", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /serve [1-4]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /serve [1-4]");
 	}
 	return 1;
 }
@@ -2012,7 +2012,7 @@ CMD:idles(playerid, params[])
 		case 5:
 			ApplyAnimationEx(playerid, "benchpress", "gym_bp_celebrate", 4.0999, 0, 1, 1, 0, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /idles [1-5]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /idles [1-5]");
 	}
 	return 1;
 }
@@ -2026,7 +2026,7 @@ CMD:windowanim(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "MISC", "bng_wndw_02", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /windowanim [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /windowanim [1-2]");
 	}
 	return 1;
 }
@@ -2040,7 +2040,7 @@ CMD:hiker(playerid, params[])
 		case 2:
 			ApplyAnimationEx(playerid, "MISC", "Hiker_Pose_L", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /hiker [1-2]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /hiker [1-2]");
 	}
 	return 1;
 }
@@ -2056,7 +2056,7 @@ CMD:push(playerid, params[])
 		case 3:
 			ApplyAnimationEx(playerid, "GANGS", "shake_carSH", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /push [1-3]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /push [1-3]");
 	}
 	return 1;
 }
@@ -2096,7 +2096,7 @@ CMD:parksit(playerid, params[])
 		case 9:
 			ApplyAnimationEx(playerid, "SUNBATHE", "SitnWait_in_W", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /parksit [1-9]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /parksit [1-9]");
 	}
 	return 1;
 }
@@ -2131,7 +2131,7 @@ CMD:hairanim(playerid, params[])
 		case 13:
 			ApplyAnimationEx(playerid, "HAIRCUTS", "BRB_Sit_Out", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /hairanim [1-13]");
+			SendClientMessage(playerid, COLOR_RED, "[?]:  /hairanim [1-13]");
 	}
 	return 1;
 }
@@ -2163,7 +2163,7 @@ CMD:cribanim(playerid, params[])
 		case 11:
 			ApplyAnimationEx(playerid, "CRIB", "CRIB_Use_Switch", 4.0999, 0, 1, 1, 1, 0, 0);
 		default:
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cribanim [1-11]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /cribanim [1-11]");
 	}
 	return 1;
 }

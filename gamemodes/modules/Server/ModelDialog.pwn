@@ -55,7 +55,7 @@ LoadServerSkins(f_name[])
     new File:f, str[75];
 	format(str, sizeof(str), "%s", f_name);
 	f = fopen(str, io_read);
-	if( !f ) 
+	if(!f ) 
     {
 		printf("WARNING: Failed to load Model List: \"%s\"", f_name);
 		return 1;

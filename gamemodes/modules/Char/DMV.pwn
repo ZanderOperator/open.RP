@@ -167,7 +167,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}	
 			else
 			{
-				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Prekinuli ste test! Imali ste %d tocnih odgovora te %d neodgovorenih.", PlayerAnswers[playerid], (5 - PlayerQuestion[playerid]));
+				va_SendClientMessage(playerid, COLOR_RED, "[!] Prekinuli ste test! Imali ste %d tocnih odgovora te %d neodgovorenih.", PlayerAnswers[playerid], (5 - PlayerQuestion[playerid]));
 				ShowPlayerDialog(playerid, DIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove", "Choose", "Exit");
 				
 				PlayerQuestion[playerid] = -1;

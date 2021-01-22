@@ -113,7 +113,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 CMD:rope(playerid, params[])
 {
-	if(IsASD(playerid) || IsFDMember(playerid) && !Roped[playerid] && GetPlayerVehicleSeat(playerid) != 0 && IsPlayerInAnyVehicle(playerid) )
+	if(IsASD(playerid) || IsFDMember(playerid) && !Roped[playerid] && GetPlayerVehicleSeat(playerid) != 0 && IsPlayerInAnyVehicle(playerid))
 	{
 		GetPlayerPos(playerid,pl_pos[playerid][0],pl_pos[playerid][1],pl_pos[playerid][2]);
 		MapAndreas_FindZ_For2DCoord(pl_pos[playerid][0],pl_pos[playerid][1],pl_pos[playerid][3]);

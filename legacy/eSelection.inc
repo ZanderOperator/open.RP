@@ -73,7 +73,7 @@ static const g_arrVehicleColors[256] = {
 
 stock SetModelPreviewRotation(modelid, Float:x, Float:y, Float:z, Float:zoom = 1.0)
 {
-	for (new i = 0; i != MAX_CUSTOM_ROTATIONS; i ++) if (!g_eMenuCustomRotation[i][g_eItemModel]) {
+	for (new i = 0; i != MAX_CUSTOM_ROTATIONS; i ++) if(!g_eMenuCustomRotation[i][g_eItemModel]) {
 		g_eMenuCustomRotation[i][g_eItemModel] = modelid;
 		g_eMenuCustomRotation[i][g_eItemRotX] = x;
 		g_eMenuCustomRotation[i][g_eItemRotY] = y;
@@ -87,7 +87,7 @@ stock SetModelPreviewRotation(modelid, Float:x, Float:y, Float:z, Float:zoom = 1
 
 stock HideModelESelectionMenu(playerid)
 {
-	if (!IsPlayerConnected(playerid) || !g_ePlayerMenuData[playerid][g_eMenuShown])
+	if(!IsPlayerConnected(playerid) || !g_ePlayerMenuData[playerid][g_eMenuShown])
 	    return 0;
 
 	for (new i = 0; i < 6; i ++) {
@@ -95,14 +95,14 @@ stock HideModelESelectionMenu(playerid)
 	}
 	for (new i = 0; i != MAX_MENU_ITEMS; i ++)
 	{
-	    if (i < 18)
+	    if(i < 18)
 	    {
-	        if (g_ePlayerMenuData[playerid][g_eMenuItems][i] != PlayerText:INVALID_TEXT_DRAW)
+	        if(g_ePlayerMenuData[playerid][g_eMenuItems][i] != PlayerText:INVALID_TEXT_DRAW)
 	        {
 	            PlayerTextDrawDestroy(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i]);
                 g_ePlayerMenuData[playerid][g_eMenuItems][i] = PlayerText:INVALID_TEXT_DRAW;
 			}
-	    	if (g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW)
+	    	if(g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW)
 	    	{
                 PlayerTextDrawDestroy(playerid, g_ePlayerMenuData[playerid][g_eMenuAmounts][i]);
                 g_ePlayerMenuData[playerid][g_eMenuAmounts][i] = PlayerText:INVALID_TEXT_DRAW;
@@ -129,13 +129,13 @@ stock HideModelESelectionMenu(playerid)
 
 stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeof(items), Float:fRotX = 0.0, Float:fRotY = 0.0, Float:fRotZ = 0.0, Float:fZoom = 1.0, carcol = -1, bool:amount = false, amounts[] = {-1})
 {
-	if (!IsPlayerConnected(playerid))
+	if(!IsPlayerConnected(playerid))
 	    return 0;
 
-	if (size > MAX_MENU_ITEMS)
+	if(size > MAX_MENU_ITEMS)
 	    return printf("** Warning: Please increase \"MAX_MENU_ITEMS\" if you want to create more items.");
 
-	if (g_ePlayerMenuData[playerid][g_eMenuShown])
+	if(g_ePlayerMenuData[playerid][g_eMenuShown])
 	{
 	    HideModelESelectionMenu(playerid);
 	}
@@ -153,13 +153,13 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
 
  	for (new i = 0, idx = 0; i != MAX_MENU_ITEMS; i ++)
 	{
- 		if (i >= size)
+ 		if(i >= size)
  		{
  	        g_ePlayerMenuData[playerid][g_eMenuModels][i] = -1;
  	    }
  	    else
 		{
-		    if (items[i] == -1)
+		    if(items[i] == -1)
 			{
                 g_ePlayerMenuData[playerid][g_eMenuModels][i] = -1;
                 g_ePlayerMenuData[playerid][g_eMenuAmount][i] = 0;
@@ -169,13 +169,13 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
 	   			g_ePlayerMenuData[playerid][g_eMenuTotalItems]++;
 				g_ePlayerMenuData[playerid][g_eMenuModels][i] = items[i];
 
-				if (amount) {
+				if(amount) {
 	                g_ePlayerMenuData[playerid][g_eMenuAmount][i] = amounts[i];
 				}
 			}
-			if (i < 18 && items[i] != -1)
+			if(i < 18 && items[i] != -1)
 			{
-				if (idx > 0 && (idx % 6) == 0)
+				if(idx > 0 && (idx % 6) == 0)
 				{
 	   				x = 140.0;
 	  	    		y += 55.0;
@@ -186,7 +186,7 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
 	        	}
 	        	idx++;
 
-	        	if (i < 18 && items[i] != -1)
+	        	if(i < 18 && items[i] != -1)
 				{
 				    g_ePlayerMenuData[playerid][g_eMenuItems][i] = CreatePlayerTextDraw(playerid, x, y, "_");
 
@@ -203,7 +203,7 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
 					PlayerTextDrawSetPreviewModel(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i], items[i]);
                     PlayerTextDrawSetPreviewRot(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i], fRotX, fRotY, fRotZ, fZoom);
 
-					if (amount && amounts[i] != -1)
+					if(amount && amounts[i] != -1)
 					{
 					    format(str, 16, "%d", amounts[i]);
 
@@ -220,13 +220,13 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
 					{
 					    g_ePlayerMenuData[playerid][g_eMenuAmounts][i] = PlayerText:INVALID_TEXT_DRAW;
 					}
-                    if (carcol != -1)
+                    if(carcol != -1)
                     {
 						PlayerTextDrawSetPreviewVehCol(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i], carcol, carcol);
 					}
 					for (new j = 0; j != MAX_CUSTOM_ROTATIONS; j ++)
 					{
-						if (g_eMenuCustomRotation[j][g_eItemModel] == items[i])
+						if(g_eMenuCustomRotation[j][g_eItemModel] == items[i])
 						{
 							PlayerTextDrawSetPreviewRot(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i], g_eMenuCustomRotation[j][g_eItemRotX], g_eMenuCustomRotation[j][g_eItemRotY], g_eMenuCustomRotation[j][g_eItemRotZ], g_eMenuCustomRotation[j][g_eItemZoom]);
 							break;
@@ -326,10 +326,10 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
     for (new i = 0; i < 6; i ++) {
 	    PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuTextdraws][i]);
 	}
-	for (new i = 0; i < 18; i ++) if (g_ePlayerMenuData[playerid][g_eMenuModels][i] != -1) {
+	for (new i = 0; i < 18; i ++) if(g_ePlayerMenuData[playerid][g_eMenuModels][i] != -1) {
 	    PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i]);
 
-	    if (g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW) {
+	    if(g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW) {
 	        PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuAmounts][i]);
 		}
 	}
@@ -339,13 +339,13 @@ stock ShowModelESelectionMenu(playerid, header[], extraid, items[], size = sizeo
 
 stock ShowColorSelectionMenu(playerid, extraid, colors[], size = sizeof(colors))
 {
-	if (!IsPlayerConnected(playerid))
+	if(!IsPlayerConnected(playerid))
 	    return 0;
 
-	if (size > MAX_MENU_ITEMS)
+	if(size > MAX_MENU_ITEMS)
 	    return printf("** Warning: Please increase \"MAX_MENU_ITEMS\" if you want to create more items.");
 
-	if (g_ePlayerMenuData[playerid][g_eMenuShown])
+	if(g_ePlayerMenuData[playerid][g_eMenuShown])
 	{
 	    HideModelESelectionMenu(playerid);
 	}
@@ -362,13 +362,13 @@ stock ShowColorSelectionMenu(playerid, extraid, colors[], size = sizeof(colors))
 
  	for (new i = 0, idx = 0; i != MAX_MENU_ITEMS; i ++)
 	{
- 	    if (i >= size)
+ 	    if(i >= size)
 		{
  	        g_ePlayerMenuData[playerid][g_eMenuModels][i] = -1;
  	    }
  	    else
 		{
-		    if (colors[i] == -1)
+		    if(colors[i] == -1)
 			{
                 g_ePlayerMenuData[playerid][g_eMenuModels][i] = -1;
       		}
@@ -377,9 +377,9 @@ stock ShowColorSelectionMenu(playerid, extraid, colors[], size = sizeof(colors))
 	   			g_ePlayerMenuData[playerid][g_eMenuTotalItems]++;
 				g_ePlayerMenuData[playerid][g_eMenuModels][i] = colors[i];
 			}
-			if (idx < 18 && colors[i] != -1)
+			if(idx < 18 && colors[i] != -1)
 			{
-				if (idx > 0 && (idx % 6) == 0)
+				if(idx > 0 && (idx % 6) == 0)
 				{
 	   				x = 140.0;
 	  	    		y += 55.0;
@@ -390,7 +390,7 @@ stock ShowColorSelectionMenu(playerid, extraid, colors[], size = sizeof(colors))
 	        	}
 	        	idx++;
 
-	        	if (colors[i] != -1)
+	        	if(colors[i] != -1)
 				{
 				    g_ePlayerMenuData[playerid][g_eMenuItems][i] = CreatePlayerTextDraw(playerid, x, y, "_");
 
@@ -496,10 +496,10 @@ stock ShowColorSelectionMenu(playerid, extraid, colors[], size = sizeof(colors))
     for (new i = 0; i < 6; i ++) {
 	    PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuTextdraws][i]);
 	}
-	for (new i = 0; i < 18; i ++) if (g_ePlayerMenuData[playerid][g_eMenuModels][i] != -1) {
+	for (new i = 0; i < 18; i ++) if(g_ePlayerMenuData[playerid][g_eMenuModels][i] != -1) {
 	    PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i]);
 
-	    if (g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW) {
+	    if(g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW) {
 	        PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuAmounts][i]);
 		}
 	}
@@ -509,13 +509,13 @@ stock ShowColorSelectionMenu(playerid, extraid, colors[], size = sizeof(colors))
 
 stock ShowPlayerColors(playerid, extraid, colors[], size = sizeof(colors))
 {
-	if (!IsPlayerConnected(playerid))
+	if(!IsPlayerConnected(playerid))
 	    return 0;
 
-	if (size > MAX_MENU_ITEMS)
+	if(size > MAX_MENU_ITEMS)
 	    return printf("** Warning: Please increase \"MAX_MENU_ITEMS\" if you want to create more items.");
 
-	if (g_ePlayerMenuData[playerid][g_eMenuShown])
+	if(g_ePlayerMenuData[playerid][g_eMenuShown])
 	{
 	    HideModelESelectionMenu(playerid);
 	}
@@ -532,13 +532,13 @@ stock ShowPlayerColors(playerid, extraid, colors[], size = sizeof(colors))
 
  	for (new i = 0, idx = 0; i != MAX_MENU_ITEMS; i ++)
 	{
- 	    if (i >= size)
+ 	    if(i >= size)
 		{
  	        g_ePlayerMenuData[playerid][g_eMenuModels][i] = -1;
  	    }
  	    else
 		{
-		    if (colors[i] == -1)
+		    if(colors[i] == -1)
 			{
                 g_ePlayerMenuData[playerid][g_eMenuModels][i] = -1;
       		}
@@ -547,9 +547,9 @@ stock ShowPlayerColors(playerid, extraid, colors[], size = sizeof(colors))
 	   			g_ePlayerMenuData[playerid][g_eMenuTotalItems]++;
 				g_ePlayerMenuData[playerid][g_eMenuModels][i] = colors[i];
 			}
-			if (idx < 18 && colors[i] != -1)
+			if(idx < 18 && colors[i] != -1)
 			{
-				if (idx > 0 && (idx % 6) == 0)
+				if(idx > 0 && (idx % 6) == 0)
 				{
 	   				x = 140.0;
 	  	    		y += 55.0;
@@ -560,7 +560,7 @@ stock ShowPlayerColors(playerid, extraid, colors[], size = sizeof(colors))
 	        	}
 	        	idx++;
 
-	        	if (colors[i] != -1)
+	        	if(colors[i] != -1)
 				{
 				    g_ePlayerMenuData[playerid][g_eMenuItems][i] = CreatePlayerTextDraw(playerid, x, y, "_");
 
@@ -666,10 +666,10 @@ stock ShowPlayerColors(playerid, extraid, colors[], size = sizeof(colors))
     for (new i = 0; i < 6; i ++) {
 	    PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuTextdraws][i]);
 	}
-	for (new i = 0; i < 18; i ++) if (g_ePlayerMenuData[playerid][g_eMenuModels][i] != -1) {
+	for (new i = 0; i < 18; i ++) if(g_ePlayerMenuData[playerid][g_eMenuModels][i] != -1) {
 	    PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i]);
 
-	    if (g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW) {
+	    if(g_ePlayerMenuData[playerid][g_eMenuAmounts][i] != PlayerText:INVALID_TEXT_DRAW) {
 	        PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuAmounts][i]);
 		}
 	}
@@ -679,12 +679,12 @@ stock ShowPlayerColors(playerid, extraid, colors[], size = sizeof(colors))
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if (g_ePlayerMenuData[playerid][g_eMenuIgnore] || (GetTickCount() - g_ePlayerMenuData[playerid][g_eMenuTime]) < 200)
+	if(g_ePlayerMenuData[playerid][g_eMenuIgnore] || (GetTickCount() - g_ePlayerMenuData[playerid][g_eMenuTime]) < 200)
 	{
 	    g_ePlayerMenuData[playerid][g_eMenuIgnore] = false;
 	    return CallLocalFunction("MS_OnPlayerClickTextDraw", "dd", playerid, _:clickedid);
 	}
-	else if ((clickedid == Text:INVALID_TEXT_DRAW && g_ePlayerMenuData[playerid][g_eMenuShown]))
+	else if((clickedid == Text:INVALID_TEXT_DRAW && g_ePlayerMenuData[playerid][g_eMenuShown]))
 	{
 	    CallLocalFunction("OnModelSelectionResponse", "ddddd", playerid, g_ePlayerMenuData[playerid][g_eMenuExtra], 0, 0, MODEL_RESPONSE_CANCEL);
 	    HideModelESelectionMenu(playerid);
@@ -694,9 +694,9 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 stock Menu_SetPage(playerid, page)
 {
-	if (g_ePlayerMenuData[playerid][g_eMenuShown])
+	if(g_ePlayerMenuData[playerid][g_eMenuShown])
 	{
-	    if (page < 1 || page > g_ePlayerMenuData[playerid][g_eMenuPages])
+	    if(page < 1 || page > g_ePlayerMenuData[playerid][g_eMenuPages])
 		    return 0;
 
 	    new
@@ -708,18 +708,18 @@ stock Menu_SetPage(playerid, page)
 		}
 		for (new i = start; i != start + 18 && i < MAX_MENU_ITEMS; i ++)
 		{
-  			if (g_ePlayerMenuData[playerid][g_eMenuModels][i] == -1)
+  			if(g_ePlayerMenuData[playerid][g_eMenuModels][i] == -1)
   			{
      			PlayerTextDrawHide(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i - start]);
 
-		        if (g_ePlayerMenuData[playerid][g_eMenuAmounts][i - start] != PlayerText:INVALID_TEXT_DRAW)
+		        if(g_ePlayerMenuData[playerid][g_eMenuAmounts][i - start] != PlayerText:INVALID_TEXT_DRAW)
 				{
     			    PlayerTextDrawHide(playerid, g_ePlayerMenuData[playerid][g_eMenuAmounts][i - start]);
 				}
 			}
 			else
 			{
-			    if (g_ePlayerMenuData[playerid][g_eMenuType] == 2)
+			    if(g_ePlayerMenuData[playerid][g_eMenuType] == 2)
 				{
 			        PlayerTextDrawSetPreviewModel(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i - start], 19300);
 			        PlayerTextDrawBackgroundColor(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i - start], g_arrVehicleColors[g_ePlayerMenuData[playerid][g_eMenuModels][i]]);
@@ -730,7 +730,7 @@ stock Menu_SetPage(playerid, page)
 
 				    for (new j = 0; j != MAX_CUSTOM_ROTATIONS; j ++)
 					{
-						if (g_eMenuCustomRotation[j][g_eItemModel] == g_ePlayerMenuData[playerid][g_eMenuModels][i])
+						if(g_eMenuCustomRotation[j][g_eItemModel] == g_ePlayerMenuData[playerid][g_eMenuModels][i])
 						{
 							PlayerTextDrawSetPreviewRot(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i - start], g_eMenuCustomRotation[j][g_eItemRotX], g_eMenuCustomRotation[j][g_eItemRotY], g_eMenuCustomRotation[j][g_eItemRotZ], g_eMenuCustomRotation[j][g_eItemZoom]);
 							break;
@@ -741,7 +741,7 @@ stock Menu_SetPage(playerid, page)
 		        PlayerTextDrawHide(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i - start]);
 		        PlayerTextDrawShow(playerid, g_ePlayerMenuData[playerid][g_eMenuItems][i - start]);
 
-		        if (g_ePlayerMenuData[playerid][g_eMenuAmounts][i - start] != PlayerText:INVALID_TEXT_DRAW)
+		        if(g_ePlayerMenuData[playerid][g_eMenuAmounts][i - start] != PlayerText:INVALID_TEXT_DRAW)
 				{
 				    format(str, sizeof(str), "%d", g_ePlayerMenuData[playerid][g_eMenuAmount][i]);
 					PlayerTextDrawSetString(playerid, g_ePlayerMenuData[playerid][g_eMenuAmounts][i - start], str);
@@ -761,28 +761,28 @@ stock Menu_SetPage(playerid, page)
 
 public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
-	if (!g_ePlayerMenuData[playerid][g_eMenuShown] || (GetTickCount() - g_ePlayerMenuData[playerid][g_eMenuTime]) < 600)
+	if(!g_ePlayerMenuData[playerid][g_eMenuShown] || (GetTickCount() - g_ePlayerMenuData[playerid][g_eMenuTime]) < 600)
 	{
 		return CallLocalFunction("MS_OnPlayerClickPlayerTextDraw", "ii", playerid, _:playertextid);
 	}
-    if (playertextid == g_ePlayerMenuData[playerid][g_eMenuTextdraws][5])
+    if(playertextid == g_ePlayerMenuData[playerid][g_eMenuTextdraws][5])
 	{
         CallLocalFunction("OnModelSelectionResponse", "ddddd", playerid, g_ePlayerMenuData[playerid][g_eMenuExtra], 0, 0, MODEL_RESPONSE_CANCEL);
         HideModelESelectionMenu(playerid);
 	}
 	else
 	{
-		if (playertextid == g_ePlayerMenuData[playerid][g_eMenuTextdraws][3])
+		if(playertextid == g_ePlayerMenuData[playerid][g_eMenuTextdraws][3])
 		{
-			if (g_ePlayerMenuData[playerid][g_eMenuPage] == g_ePlayerMenuData[playerid][g_eMenuPages])
+			if(g_ePlayerMenuData[playerid][g_eMenuPage] == g_ePlayerMenuData[playerid][g_eMenuPages])
 			    return 0;
 
 			else
 				Menu_SetPage(playerid, g_ePlayerMenuData[playerid][g_eMenuPage] + 1);
 		}
-		else if (playertextid == g_ePlayerMenuData[playerid][g_eMenuTextdraws][4])
+		else if(playertextid == g_ePlayerMenuData[playerid][g_eMenuTextdraws][4])
 		{
-			if (g_ePlayerMenuData[playerid][g_eMenuPage] < 2)
+			if(g_ePlayerMenuData[playerid][g_eMenuPage] < 2)
 			    return 0;
 
 	        else
@@ -790,7 +790,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 		}
 		else for (new i = 0; i < 18; i ++)
 		{
-		    if (g_ePlayerMenuData[playerid][g_eMenuItems][i] == playertextid)
+		    if(g_ePlayerMenuData[playerid][g_eMenuItems][i] == playertextid)
 			{
 		        new
 					index = (i + (g_ePlayerMenuData[playerid][g_eMenuPage] - 1) * 18),

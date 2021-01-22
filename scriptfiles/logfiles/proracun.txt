@@ -32,7 +32,7 @@
 [02/05/2020] Travis Palmer je uzeo 40000$ iz proracuna (498840423$).
 [03/05/2020] Travis Palmer je stavio 100000$ u proracun (498592396$).
 [05/05/2020] 05/05/2020, 20:59:01 Mayor David Quetzalcoatl je digao 1140000$ iz biznisa Skyline Casino (ID 89 [MySQL ID: 116]).
-[06/05/2020] [06/05/2020, 06:39:54] [SERVER] Radi manjka novca u ilegalnom proracunu [499080548$], ilegalni proracun je automatski podesen n
+[06/05/2020][06/05/2020, 06:39:54][SERVER] Radi manjka novca u ilegalnom proracunu [499080548$], ilegalni proracun je automatski podesen n
 [07/05/2020] Travis Palmer je uzeo 50000$ iz proracuna (499016284$).
 [08/05/2020] Travis Palmer je uzeo 30000$ iz proracuna (498223722$).
 [10/05/2020] Travis Palmer je uzeo 50000$ iz proracuna (497720107$).

@@ -89,9 +89,9 @@ MoveProstitute(playerid, prostitute_id) {
 	if(ProstituteData[prostitute_id][TipMoney] != 0 && ProstituteName[prostitute_id] == (false))
 		format(buffer, (64), "(TIP: $%d)\n'Y'", ProstituteData[prostitute_id][TipMoney]);
 	if(ProstituteData[prostitute_id][TipMoney] != 0 && ProstituteName[prostitute_id] == (true))
-		format(buffer, (64), "[ %s ]\n(TIP: $%d)\n'Y'", ProstituteData[prostitute_id][prName], ProstituteData[prostitute_id][TipMoney]);
+		format(buffer, (64), "[%s]\n(TIP: $%d)\n'Y'", ProstituteData[prostitute_id][prName], ProstituteData[prostitute_id][TipMoney]);
 	if(ProstituteData[prostitute_id][TipMoney] == 0 && ProstituteName[prostitute_id] == (true))
-		format(buffer, (64), "[ %s ]", ProstituteData[prostitute_id][prName]);
+		format(buffer, (64), "[%s]", ProstituteData[prostitute_id][prName]);
 
 	if(IsValidDynamic3DTextLabel(ProstituteData[prostitute_id][prShowName])) {
 		DestroyDynamic3DTextLabel(ProstituteData[prostitute_id][prShowName]);
@@ -127,9 +127,9 @@ SetProstituteName(playerid, prostitute_id, prostitute_name[])
 
 	new buffer[64];
 	if(ProstituteData[prostitute_id][TipMoney] != 0 && ProstituteName[prostitute_id] == (true))
-		format(buffer, (64), "[ %s ]\n(TIP: $%d)\n'Y'", prostitute_name, ProstituteData[prostitute_id][TipMoney]);
+		format(buffer, (64), "[%s]\n(TIP: $%d)\n'Y'", prostitute_name, ProstituteData[prostitute_id][TipMoney]);
 	if(ProstituteData[prostitute_id][TipMoney] == 0 && ProstituteName[prostitute_id] == (true))
-		format(buffer, (64), "[ %s ]", prostitute_name);
+		format(buffer, (64), "[%s]", prostitute_name);
 
 	if(IsValidDynamic3DTextLabel(ProstituteData[prostitute_id][prShowName])) {
 		DestroyDynamic3DTextLabel(ProstituteData[prostitute_id][prShowName]);
@@ -147,7 +147,7 @@ SetProstitutePriceTip(playerid, prostitute_id, tipmoney) {
 	if(ProstituteData[prostitute_id][TipMoney] != 0 && ProstituteName[prostitute_id] == (false))
 		format(buffer, 64, "(TIP: $%d)\n'Y'", ProstituteData[prostitute_id][TipMoney]);
 	if(ProstituteData[prostitute_id][TipMoney] != 0 && ProstituteName[prostitute_id] == (true))
-		format(buffer, 64, "[ %s ]\n(TIP: $%d)\n'Y'", ProstituteData[prostitute_id][prName], ProstituteData[prostitute_id][TipMoney]);
+		format(buffer, 64, "[%s]\n(TIP: $%d)\n'Y'", ProstituteData[prostitute_id][prName], ProstituteData[prostitute_id][TipMoney]);
 
 	if(IsValidDynamic3DTextLabel(ProstituteData[prostitute_id][prShowName])) {
 		DestroyDynamic3DTextLabel(ProstituteData[prostitute_id][prShowName]);
@@ -249,14 +249,14 @@ SetProstituteAnim(prostitute_id, anim_id) {
 	- hooks
 */
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
-	if( PRESSED(KEY_YES) ) {
+	if(PRESSED(KEY_YES)) {
 		foreach(new i : PROSTITUTE) {
 			if(IsPlayerInRangeOfPoint(playerid, 5.0, ProstituteData[i][prPos][0], ProstituteData[i][prPos][1], ProstituteData[i][prPos][2])) {
-				if( ProstituteData[i][TipMoney] == 0)
+				if(ProstituteData[i][TipMoney] == 0)
 					return (true);
-				if( AC_GetPlayerMoney( playerid ) <  ProstituteData[i][TipMoney])
+				if(AC_GetPlayerMoney( playerid ) <  ProstituteData[i][TipMoney])
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise novca.");
-				if( gettimestamp() < quick_timer[playerid])
+				if(gettimestamp() < quick_timer[playerid])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati %d sekundi.", QUICK_TIMER_COOLDOWN);
 
 				ProstituteData[i][prEarned] += ProstituteData[i][TipMoney];
@@ -298,7 +298,7 @@ CMD:prostitute(playerid, const params[]) {
 		new p_i = Iter_Free(PROSTITUTE);
 
 		if(sscanf(params, "s[25]i", action, skin_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute create [skin_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute create [skin_id].");
 			return (true);
 		}
 		CreateProstitute(playerid, skin_id, p_i);
@@ -307,7 +307,7 @@ CMD:prostitute(playerid, const params[]) {
 	if(strcmp(action,"changeskin", (true)) == 0) {
 
 		if(sscanf(params, "s[25]ii", action, prostitute_id, skin_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute changeskin [prostitute_id] [skin_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute changeskin [prostitute_id][skin_id].");
 			return (true);
 		}
 		ChangeProstituteSkin(playerid, prostitute_id, skin_id);
@@ -316,7 +316,7 @@ CMD:prostitute(playerid, const params[]) {
 	if(strcmp(action,"check", (true)) == 0) {
 
 		if(sscanf(params, "s[25]i", action, prostitute_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute check [prostitute_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute check [prostitute_id].");
 			return (true);
 		}
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Prostitute - Check", CheckProstitute(prostitute_id), "Close", "");
@@ -326,7 +326,7 @@ CMD:prostitute(playerid, const params[]) {
 		new alt_command[15];
 
 		if(sscanf(params, "s[25]s[15]", action, alt_command)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute earned [stats/withdraw].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute earned [stats/withdraw].");
 			return (true);
 		}
 
@@ -336,7 +336,7 @@ CMD:prostitute(playerid, const params[]) {
 					if(!strcmp(GetName(playerid), ProstituteData[i][prOwner], (false)))
 						return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete provijeriti tu prostitutku, nije u vasem posjedu.");
 
-					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Prostitute Name: %s, Prostitute Earned: %s, Prostitute Tip Price: %s.",
+					va_SendClientMessage(playerid, COLOR_RED, "[!] Prostitute Name: %s, Prostitute Earned: %s, Prostitute Tip Price: %s.",
 						ProstituteData[i][prName],
 						FormatNumber(ProstituteData[i][prEarned]),
 						FormatNumber(ProstituteData[i][TipMoney])
@@ -354,7 +354,7 @@ CMD:prostitute(playerid, const params[]) {
 					if(ProstituteData[i][prEarned] == 0)
 						return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ta prostitutka nije nista zaradila.");
 
-					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste uzeli novac(%s) koji je vasa prostitutka ('%s') zaradila.",
+					va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste uzeli novac(%s) koji je vasa prostitutka ('%s') zaradila.",
 						FormatNumber(ProstituteData[i][prEarned]),
 						ProstituteData[i][prName]
 					);
@@ -369,7 +369,7 @@ CMD:prostitute(playerid, const params[]) {
 		new prostitute_name[MAX_PLAYER_NAME];
 
 		if(sscanf(params, "s[25]is[24]", action, prostitute_id, prostitute_name)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute setname [prostitute_id] [name].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute setname [prostitute_id][name].");
 			SendClientMessage(playerid, COLOR_WHITE, "[HINT]: Da maknete ime, pod 'name' upisite 'None'.");
 			return (true);
 		}
@@ -380,7 +380,7 @@ CMD:prostitute(playerid, const params[]) {
 		new tipmoney;
 
 		if(sscanf(params, "s[25]ii", action, prostitute_id, tipmoney)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute tipmoney [prostitute_id] [price].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute tipmoney [prostitute_id][price].");
 			SendClientMessage(playerid, COLOR_WHITE, "[HINT]: Da maknete mogucnost dobivanja baksisa, stavite cijenu na '0'.");
 			return (true);
 		}
@@ -392,7 +392,7 @@ CMD:prostitute(playerid, const params[]) {
 
 	if(strcmp(action,"delete", (true)) == 0) {
 		if(sscanf(params, "s[25]i", action, prostitute_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute delete [prostitute_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute delete [prostitute_id].");
 			return (true);
 		}
 		DeleteProstitute(playerid, prostitute_id);
@@ -401,7 +401,7 @@ CMD:prostitute(playerid, const params[]) {
 	if(strcmp(action,"move", (true)) == 0) {
 
 		if(sscanf(params, "s[25]i", action, prostitute_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute move [prostitute_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute move [prostitute_id].");
 			return (true);
 		}
 		MoveProstitute(playerid, prostitute_id);
@@ -410,7 +410,7 @@ CMD:prostitute(playerid, const params[]) {
 		new anim_id;
 
 		if(sscanf(params, "s[25]ii", action, prostitute_id, anim_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute setanim [prostitute_id] [anim_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /prostitute setanim [prostitute_id][anim_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[DANCE ANIM] 1..=>..14");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[STRIP ANIM] 15..=>..33");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[BLOWJOB ANIM] 34..=>..37");

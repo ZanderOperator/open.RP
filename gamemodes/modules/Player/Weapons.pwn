@@ -54,7 +54,7 @@ static
 GetWeaponNameEx(weaponid)
 {
 	new 
-		weaponName[ 32 ];
+		weaponName[32];
 
 	switch(weaponid) 
 	{
@@ -228,7 +228,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 {
 	if(PlayerWeapons[playerid][pwAmmo][slotid] <= 0 || PlayerWeapons[playerid][pwWeaponId][slotid] <= 0) 
 		return 1;
-	if( !SafeSpawned[playerid] )  
+	if(!SafeSpawned[playerid] )  
 		return 1;
 
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
@@ -283,17 +283,17 @@ stock AC_DecreasePlayerWeaponAmmo(playerid, weaponid, amount)
 	new
 		slot = GetWeaponSlot(weaponid);
 	PlayerWeapons[playerid][pwAmmo][slot] -= amount;
-	if( PlayerWeapons[playerid][pwAmmo][slot] <= 0 )
+	if(PlayerWeapons[playerid][pwAmmo][slot] <= 0 )
 		AC_ResetPlayerWeapon(playerid, weaponid);
 	return 1;
 }
 
 stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:hidden=false)
 {
-	if( playerid == INVALID_PLAYER_ID ) return 0;
-	if( !weaponid ) return 0;
-	if( !ammo ) 	return 0;
-	if( PlayerInfo[playerid][pLevel] < 2 ) return 0;
+	if(playerid == INVALID_PLAYER_ID ) return 0;
+	if(!weaponid ) return 0;
+	if(!ammo ) 	return 0;
+	if(PlayerInfo[playerid][pLevel] < 2 ) return 0;
 
 	new
 		slot = GetWeaponSlot(weaponid);
@@ -377,7 +377,7 @@ stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 		}
 		case 2:
 		{
-			if (!Player_HasTaserGun(playerid))
+			if(!Player_HasTaserGun(playerid))
 			{
 				if(SecondaryWeapon[playerid] != 0 && SecondaryWeapon[playerid] != weaponid)
 				{
@@ -392,7 +392,7 @@ stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 				else if(SecondaryWeapon[playerid] == weaponid)
 					value = true;
 			}
-			else if( weaponid == WEAPON_SILENCED )
+			else if(weaponid == WEAPON_SILENCED )
 				value = true;
 		}
 	}
@@ -519,21 +519,21 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if (playerid == INVALID_PLAYER_ID)
+    if(playerid == INVALID_PLAYER_ID)
     {
         Kick(playerid);
         return 0;
     }
-    if (!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
+    if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
     {
         return 0;
     }
-    if (weaponid <= 0 || weaponid > 46)
+    if(weaponid <= 0 || weaponid > 46)
     {
         Kick(playerid);
         return 0;
     }
-    if (weaponid < 22 || weaponid > 38)
+    if(weaponid < 22 || weaponid > 38)
     {
         return 0;
     }

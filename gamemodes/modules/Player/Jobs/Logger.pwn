@@ -193,7 +193,7 @@ hook OnDynamicObjectMoved(objectid)
 
 	        GetXYInFrontOfObject(TreeeInfo[i][objid], x, y, CP_DIST_FROM_TREE);
 			TreeeInfo[i][cpid] = CreateDynamicCP(x, y, trees[i][2], CP_TREE_SIZE, -1, -1, TreeeInfo[i][pCutting]);
-			SendClientMessage(TreeeInfo[i][pCutting], COLOR_RED, "[ ! ] Oti�i do checkpointa kako bi nastavio posao!");
+			SendClientMessage(TreeeInfo[i][pCutting], COLOR_RED, "[!] Oti�i do checkpointa kako bi nastavio posao!");
 		}
 	}
 	return 1;
@@ -270,7 +270,7 @@ hook OnPlayerPickUpPickup(playerid, pickupid)
 hook OnVehicleDeath(vehicleid, killerid)
 {
 	if(RemoveWoodFromVehicle(vehicleid))
-	    SendClientMessage(killerid, COLOR_RED, "[ ! ] UniStili ste vsSe vozilo te su drva iz njega unistena.");
+	    SendClientMessage(killerid, COLOR_RED, "[!] UniStili ste vsSe vozilo te su drva iz njega unistena.");
 
 	return 1;
 }
@@ -618,7 +618,7 @@ timer RespawnTree[TREE_RESPAWN_TIME * 60 * 1000](treeid)
 
 CMD:cuttree(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 		
     if(PlayerJob[playerid][pFreeWorks] < 1)
@@ -671,7 +671,7 @@ CMD:cuttree(playerid, params[])
 
 CMD:stopcuttree(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 		
     if(CuttingTree[playerid] == -1)
@@ -698,7 +698,7 @@ cmd_stopcuttree2(playerid)
 
 CMD:treeinfo(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	new
@@ -710,7 +710,7 @@ CMD:treeinfo(playerid, params[])
 	static
 	    tstr[55];
 	    
-	format(tstr, sizeof(tstr), "[ ! ] Drvo u koje gledate je %s i visine je %dm!", GetWoodName(TreeeInfo[id][w_type]), TreeeInfo[id][height]);
+	format(tstr, sizeof(tstr), "[!] Drvo u koje gledate je %s i visine je %dm!", GetWoodName(TreeeInfo[id][w_type]), TreeeInfo[id][height]);
 	SendClientMessage(playerid, COLOR_WHITE, tstr);
 	//cmd_me(playerid, "baca pogled na drvo te ga potom detaljno pregledava.");
 	return 1;
@@ -736,7 +736,7 @@ CMD:gototree(playerid, params[])
 
 CMD:putwood(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(!pWood[playerid])
@@ -776,7 +776,7 @@ CMD:putwood(playerid, params[])
 
 CMD:checkvehwood(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -810,7 +810,7 @@ CMD:checkvehwood(playerid, params[])
 
 CMD:checkmywood(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(!pWood[playerid])
@@ -827,7 +827,7 @@ CMD:checkmywood(playerid, params[])
 
 CMD:pickupwood(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -850,7 +850,7 @@ CMD:pickupwood(playerid, params[])
 
 CMD:takewood(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(pWood[playerid])
@@ -867,7 +867,7 @@ CMD:takewood(playerid, params[])
 	
 	new slot;
 	if(sscanf(params, "d", slot))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /takewood [slot]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /takewood [slot]");
 	if(slot <= 0 || slot >= 6)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Slot vozila ne moZe biti manji od 1 ni veci od 5!");
 		
@@ -892,7 +892,7 @@ CMD:takewood(playerid, params[])
 	static
 		takestr[47];
 		
-	format(takestr, sizeof(takestr), "[ ! ] Uzeli ste %s[%d] drva iz vozila!", GetWoodName(pWoodT[playerid]), pWood[playerid]);
+	format(takestr, sizeof(takestr), "[!] Uzeli ste %s[%d] drva iz vozila!", GetWoodName(pWoodT[playerid]), pWood[playerid]);
 	SendClientMessage(playerid, COLOR_GREEN, takestr);
 	
 	//cmd_me(playerid, "grabi drva iz gepeka te ih nosi.");
@@ -911,7 +911,7 @@ CMD:takewood(playerid, params[])
 
 CMD:sellwood(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 	    
 	if(IsPlayerInAnyVehicle(playerid))
@@ -925,7 +925,7 @@ CMD:sellwood(playerid, params[])
 	
 	// Placa
 	new money = pWood[playerid] + 200 + (GetPlayerSkillLevel(playerid) * 25);
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Zaradio si $%d, placa ti je sjela na racun.", money);
 	BudgetToPlayerBankMoney(playerid, money); // novac sjeda na racun iz proracuna
 	PaydayInfo[playerid][pPayDayMoney] += money;
 	PlayerJob[playerid][pFreeWorks] -= 5;

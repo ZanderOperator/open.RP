@@ -348,15 +348,15 @@
         #define PR_EXPAND_ARR4(%0) %0[0],%0[1],%0[2],%0[3]
 
         stock BS_PackHealthArmour(health, armour, &healthArmour) {
-            if (health > 0 && health < 100) {
+            if(health > 0 && health < 100) {
                 healthArmour = (health / 7) << 4;
-            } else if (health >= 100) {
+            } else if(health >= 100) {
                 healthArmour = 0xF << 4;
             }
 
-            if (armour > 0 && armour < 100) {
+            if(armour > 0 && armour < 100) {
                 healthArmour |= (armour / 7);
-            } else if (armour >= 100) {
+            } else if(armour >= 100) {
                 healthArmour |= 0xF;
             }
         }
@@ -367,17 +367,17 @@
             armourTemp = (healthArmour & 0x0F);
             healthTemp = (healthArmour >> 4);
 
-            if (armourTemp == 0xF) {
+            if(armourTemp == 0xF) {
                 armour = 100;
-            } else if (armourTemp == 0) {
+            } else if(armourTemp == 0) {
                 armour = 0;
             } else {
                 armour = armourTemp * 7;
             }
 
-            if (healthTemp == 0xF) {
+            if(healthTemp == 0xF) {
                 health = 100;
-            } else if (healthTemp == 0) {
+            } else if(healthTemp == 0) {
                 health = 0;
             } else {
                 health = healthTemp * 7;
@@ -386,12 +386,12 @@
 
         stock BS_ReadOnFootSync(BitStream:bs, data[PR_OnFootSync], outcoming = false)
         {
-            if (outcoming) {
+            if(outcoming) {
                 new hasLeftRight, hasUpDown, hasSurfInfo, hasAnimation, healthArmour;
 
                 BS_ReadValue(bs, PR_BOOL, hasLeftRight);
 
-                if (hasLeftRight) {
+                if(hasLeftRight) {
                     BS_ReadValue(bs, PR_UINT16, data[PR_lrKey]);
                 } else {
                     data[PR_lrKey] = 0;
@@ -399,7 +399,7 @@
 
                 BS_ReadValue(bs, PR_BOOL, hasUpDown);
 
-                if (hasUpDown) {
+                if(hasUpDown) {
                     BS_ReadValue(bs, PR_UINT16, data[PR_udKey]);
                 } else {
                     data[PR_udKey] = 0;
@@ -419,7 +419,7 @@
 
                 BS_UnpackHealthArmour(healthArmour, data[PR_health], data[PR_armour]);
 
-                if (hasSurfInfo) {
+                if(hasSurfInfo) {
                     BS_ReadValue(
                         bs,
                         PR_UINT16, data[PR_surfingVehicleId],
@@ -431,7 +431,7 @@
 
                 BS_ReadValue(bs, PR_BOOL, hasAnimation);
 
-                if (hasAnimation) {
+                if(hasAnimation) {
                     BS_ReadValue(
                         bs,
                         PR_INT16, data[PR_animationId],
@@ -465,7 +465,7 @@
 
         stock BS_ReadInCarSync(BitStream:bs, data[PR_InCarSync], outcoming = false)
         {
-            if (outcoming) {
+            if(outcoming) {
                 new vehicleHealth, healthArmour;
 
                 BS_ReadValue(
@@ -492,7 +492,7 @@
 
                 BS_ReadValue(bs, PR_BOOL, hasTrainSpeed);
 
-                if (hasTrainSpeed) {
+                if(hasTrainSpeed) {
                     BS_ReadValue(bs, PR_FLOAT, data[PR_trainSpeed]);
                 } else {
                     data[PR_trainSpeed] = 0.0;
@@ -500,7 +500,7 @@
 
                 BS_ReadValue(bs, PR_BOOL, hasTrailer);
 
-                if (hasTrailer) {
+                if(hasTrailer) {
                     BS_ReadValue(bs, PR_UINT16, data[PR_trailerId]);
                 } else {
                     data[PR_trailerId] = 0;
@@ -617,7 +617,7 @@
 
             BS_GetNumberOfBytesUsed(bs, numberOfBytes);
 
-            if (numberOfBytes > 5) {
+            if(numberOfBytes > 5) {
                 numberOfSlots = (numberOfBytes - 5) / 4;
             }
 
@@ -637,7 +637,7 @@
                     PR_UINT16, ammo
                 );
 
-                if (slotId < PR_MAX_WEAPON_SLOTS) {
+                if(slotId < PR_MAX_WEAPON_SLOTS) {
                     data[PR_slotWeaponId][slotId] = weaponId;
                     data[PR_slotWeaponAmmo][slotId] = ammo;
                     data[PR_slotUpdated][slotId] = true;
@@ -664,10 +664,10 @@
 
         stock BS_WriteOnFootSync(BitStream:bs, data[PR_OnFootSync], outcoming = false)
         {
-            if (outcoming) {
+            if(outcoming) {
                 new healthArmour;
 
-                if (data[PR_lrKey]) {
+                if(data[PR_lrKey]) {
                     BS_WriteValue(
                         bs,
                         PR_BOOL, true,
@@ -677,7 +677,7 @@
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
 
-                if (data[PR_udKey]) {
+                if(data[PR_udKey]) {
                     BS_WriteValue(
                         bs,
                         PR_BOOL, true,
@@ -700,7 +700,7 @@
                     PR_VECTOR, data[PR_velocity]
                 );
 
-                if (data[PR_surfingVehicleId]) {
+                if(data[PR_surfingVehicleId]) {
                     BS_WriteValue(
                         bs,
                         PR_BOOL, true,
@@ -711,7 +711,7 @@
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
 
-                if (data[PR_animationId] || data[PR_animationFlags]) {
+                if(data[PR_animationId] || data[PR_animationFlags]) {
                     BS_WriteValue(
                         bs,
                         PR_BOOL, true,
@@ -745,7 +745,7 @@
 
         stock BS_WriteInCarSync(BitStream:bs, data[PR_InCarSync], outcoming = false)
         {
-            if (outcoming) {
+            if(outcoming) {
                 new healthArmour;
 
                 BS_PackHealthArmour(data[PR_playerHealth], data[PR_armour], healthArmour);
@@ -766,7 +766,7 @@
                     PR_BOOL, data[PR_landingGearState]
                 );
 
-                if (data[PR_trainSpeed]) {
+                if(data[PR_trainSpeed]) {
                     BS_WriteValue(bs,
                         PR_BOOL, true,
                         PR_FLOAT, data[PR_trainSpeed]
@@ -775,7 +775,7 @@
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
 
-                if (data[PR_trailerId]) {
+                if(data[PR_trailerId]) {
                     BS_WriteValue(bs,
                         PR_BOOL, true,
                         PR_UINT16, data[PR_trailerId]
@@ -898,7 +898,7 @@
             );
 
             for (new slotId; slotId < PR_MAX_WEAPON_SLOTS; ++slotId) {
-                if (!data[PR_slotUpdated][slotId]) {
+                if(!data[PR_slotUpdated][slotId]) {
                     continue;
                 }
 
@@ -935,7 +935,7 @@
             #else
             for (new i = GetPlayerPoolSize(); i >= 0; --i) {
             #endif
-                if (!IsPlayerStreamedIn(i, playerid)) {
+                if(!IsPlayerStreamedIn(i, playerid)) {
                     continue;
                 }
 
@@ -950,7 +950,7 @@
             #else
             for (new i = GetPlayerPoolSize(); i >= 0; --i) {
             #endif
-                if (!IsPlayerStreamedIn(i, playerid)) {
+                if(!IsPlayerStreamedIn(i, playerid)) {
                     continue;
                 }
 
@@ -965,7 +965,7 @@
             #else
             for (new i = GetPlayerPoolSize(); i >= 0; --i) {
             #endif
-                if (i == excludedplayerid || !IsVehicleStreamedIn(vehicleid, i)) {
+                if(i == excludedplayerid || !IsVehicleStreamedIn(vehicleid, i)) {
                     continue;
                 }
 
@@ -980,7 +980,7 @@
             #else
             for (new i = GetPlayerPoolSize(); i >= 0; --i) {
             #endif
-                if (i == excludedplayerid || !IsVehicleStreamedIn(vehicleid, i)) {
+                if(i == excludedplayerid || !IsVehicleStreamedIn(vehicleid, i)) {
                     continue;
                 }
 

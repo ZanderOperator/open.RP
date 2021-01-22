@@ -1133,7 +1133,7 @@ stock PHY_QuatFromAxisAngle(Float:x, Float:y, Float:z, Float:angle, &Float:q_w, 
 
 	s = floatsqroot(x*x + y*y + z*z);
 
-	if (s > 0.01)
+	if(s > 0.01)
 	{
 
 		x /= s;
@@ -1162,7 +1162,7 @@ stock PHY_QuatFromAxisAngle(Float:x, Float:y, Float:z, Float:angle, &Float:q_w, 
 stock PHY_QuatNormalize(&Float:q_w, &Float:q_x, &Float:q_y, &Float:q_z)
 {
 	new Float:magnitude = floatsqroot(q_w*q_w + q_x*q_x + q_y*q_y + q_z*q_z);
-	if (magnitude == 0.0)
+	if(magnitude == 0.0)
 	{
 		q_w = 1.0;
 		q_x = 0.0;

@@ -57,7 +57,7 @@ static
 
 CreateRobTextdraws(playerid, bool: td_status)
 {
-    if (td_status == false)
+    if(td_status == false)
     {
         for (new i = 0; i < MAX_ROB_TDS; i++)
         {
@@ -311,7 +311,7 @@ PlayerHitCombination(playerid, combination_id)
             StorageRob(playerid, Storage_PlayerNearRack(playerid));
 
             TogglePlayerControllable(playerid, true);
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] [ROBBERY]: Uspjesno ste provalili u gunrack safe, sada mozete ukrasti oruzje.");
+            SendClientMessage(playerid, COLOR_RED, "[!][ROBBERY]: Uspjesno ste provalili u gunrack safe, sada mozete ukrasti oruzje.");
         }
     }
 
@@ -385,7 +385,7 @@ PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
 
 PlayStorageAlarm(playerid, bool: activated)
 {
-    if (activated)
+    if(activated)
     {
         PlayAudioStreamForPlayer(playerid, "http://k007.kiwi6.com/hotlink/0zdonr7uhx/house_alarm.mp3");
     }
@@ -409,7 +409,7 @@ PlayStorageAlarm(playerid, bool: activated)
 
 timer PlayerRobTimer[1000](playerid, house_id)
 {
-    if (!rob_started[playerid])
+    if(!rob_started[playerid])
     {
         return 1;
     }
@@ -420,24 +420,24 @@ timer PlayerRobTimer[1000](playerid, house_id)
     format(buffer, sizeof(buffer), "~y~(time)~w~_%d_seconds_remain...", rob_remaining[playerid]);
     PlayerTextDrawSetString(playerid, srobTD[playerid][13], buffer);
 
-    if (rob_remaining[playerid] < 0)
+    if(rob_remaining[playerid] < 0)
     {
         TogglePlayerControllable(playerid, true);
         PlayerStopRob(playerid);
 
         SendClientMessage(playerid, COLOR_RED, "[ROBBERY]: Niste na vrjeme unesli kombinaciju za sef, alarm se aktivirao.");
 
-        if (HouseInfo[house_id][hStorageAlarm] != 2)
+        if(HouseInfo[house_id][hStorageAlarm] != 2)
         {
             format(string, sizeof(string), "*[ALARM]: Prijavljena je kradja u kuci, adresa kuce: %s.", HouseInfo[house_id][hAdress]);
             SendRadioMessage(1, COLOR_YELLOW, string);
         }
 
-        if (HouseInfo[house_id][hStorageAlarm] != 0)
+        if(HouseInfo[house_id][hStorageAlarm] != 0)
         {
             foreach(new i : Player)
             {
-                if (IsPlayerInRangeOfPoint(i, 50.0, HouseInfo[house_id][hExitX], HouseInfo[house_id][hExitY], HouseInfo[house_id][hExitZ]) && GetPlayerVirtualWorld(i) == HouseInfo[house_id][hVirtualWorld])
+                if(IsPlayerInRangeOfPoint(i, 50.0, HouseInfo[house_id][hExitX], HouseInfo[house_id][hExitY], HouseInfo[house_id][hExitZ]) && GetPlayerVirtualWorld(i) == HouseInfo[house_id][hVirtualWorld])
                     PlayStorageAlarm(i, true);
             }
         }
@@ -468,24 +468,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_ROB_STORAGE:
         {
-            if (response)
+            if(response)
             {
                 new
                     storage_id = Storage_PlayerNearRack(playerid),
                     puzavac = IsCrounching(playerid);
 
-                if (storage_id == -1)
+                if(storage_id == -1)
                     return 1;
 
                 new
                     rack_weapon = Storage_GetRackWeaponInSlot(storage_id, listitem),
                     rack_ammo   = Storage_GetRackAmmoInSlot(storage_id, listitem);
-                if (rack_weapon <= 0)
+                if(rack_weapon <= 0)
                 {
                     return 1;
                 }
 
-                if (!CheckPlayerWeapons(playerid, rack_weapon)) return 1;
+                if(!CheckPlayerWeapons(playerid, rack_weapon)) return 1;
                 AC_GivePlayerWeapon(playerid, rack_weapon, rack_ammo);
                 SetAnimationForWeapon(playerid, rack_weapon, puzavac);
 
@@ -506,44 +506,44 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-    if (!rob_started[playerid])
+    if(!rob_started[playerid])
     {
         return 0;
     }
 
-    if (playertextid == srobTD[playerid][12])
+    if(playertextid == srobTD[playerid][12])
     {
         new string[128], house_id = Player_InHouse(playerid);
 
         PlayerStopRob(playerid);
         SendClientMessage(playerid, COLOR_RED, "[ROBBERY]: Zbog pokusaja obijanja gunrack-a, alarm se aktivirao. Policija je obavjestena.");
 
-        if (HouseInfo[house_id][hStorageAlarm] != 2)
+        if(HouseInfo[house_id][hStorageAlarm] != 2)
         {
             format(string, sizeof(string), "*[ALARM]: Prijavljena je kradja u kuci, adresa kuce: %s.", HouseInfo[house_id][hAdress]);
             SendRadioMessage(1, COLOR_YELLOW, string);
         }
 
-        if (HouseInfo[house_id][hStorageAlarm] != 0)
+        if(HouseInfo[house_id][hStorageAlarm] != 0)
         {
             foreach(new i : Player)
             {
-                if (IsPlayerInRangeOfPoint(i, 50.0, HouseInfo[house_id][hExitX], HouseInfo[house_id][hExitY], HouseInfo[house_id][hExitZ]) && GetPlayerVirtualWorld(i) == HouseInfo[house_id][hVirtualWorld])
+                if(IsPlayerInRangeOfPoint(i, 50.0, HouseInfo[house_id][hExitX], HouseInfo[house_id][hExitY], HouseInfo[house_id][hExitZ]) && GetPlayerVirtualWorld(i) == HouseInfo[house_id][hVirtualWorld])
                     PlayStorageAlarm(i, true);
             }
         }
     }
-    if (playertextid == srobTD[playerid][2])
+    if(playertextid == srobTD[playerid][2])
     {
         new buffer[3];
         rob_counter[playerid][0]++;
         format(buffer, sizeof(buffer), "%d", rob_counter[playerid][0]);
         PlayerTextDrawSetString(playerid, srobTD[playerid][3], buffer);
 
-        if (rob_counter[playerid][0] == rob_combinations[playerid][0])
+        if(rob_counter[playerid][0] == rob_combinations[playerid][0])
             PlayerHitCombination(playerid, 0);
     }
-    if (playertextid == srobTD[playerid][6])
+    if(playertextid == srobTD[playerid][6])
     {
         new buffer[3];
         rob_counter[playerid][1]++;
@@ -551,10 +551,10 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         format(buffer, sizeof(buffer), "%d", rob_counter[playerid][1]);
         PlayerTextDrawSetString(playerid, srobTD[playerid][4], buffer);
 
-        if (rob_counter[playerid][1] == rob_combinations[playerid][1])
+        if(rob_counter[playerid][1] == rob_combinations[playerid][1])
             PlayerHitCombination(playerid, 1);
     }
-    if (playertextid == srobTD[playerid][7])
+    if(playertextid == srobTD[playerid][7])
     {
         new buffer[3];
         rob_counter[playerid][2]++;
@@ -562,7 +562,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         format(buffer, sizeof(buffer), "%d", rob_counter[playerid][2]);
         PlayerTextDrawSetString(playerid, srobTD[playerid][5], buffer);
 
-        if (rob_counter[playerid][2] == rob_combinations[playerid][2])
+        if(rob_counter[playerid][2] == rob_combinations[playerid][2])
             PlayerHitCombination(playerid, 2);
     }
     return 1;
@@ -585,15 +585,15 @@ CMD:gunrack_rob(playerid, params[])
         storage_id = Storage_PlayerNearRack(playerid),
         house_id = Player_InHouse(playerid);
 
-    if (storage_id == -1)
+    if(storage_id == -1)
         return SendErrorMessage(playerid, "Kako bi zapoceli storage-rob, morate biti u blizini stalka.");
-    if (rob_started[playerid])
+    if(rob_started[playerid])
         return SendErrorMessage(playerid, "Vec ste zapoceli storage-rob, ne mozete ponovo.");
 
-    if (HouseInfo[house_id][hStorageAlarm] == 0)      rob_remaining[playerid] = MAX_ROB_TIME;
-    else if (HouseInfo[house_id][hStorageAlarm] == 1) rob_remaining[playerid] = 55;
-    else if (HouseInfo[house_id][hStorageAlarm] == 2) rob_remaining[playerid] = 45;
-    else if (HouseInfo[house_id][hStorageAlarm] == 3) rob_remaining[playerid] = MIN_ROB_TIME;
+    if(HouseInfo[house_id][hStorageAlarm] == 0)      rob_remaining[playerid] = MAX_ROB_TIME;
+    else if(HouseInfo[house_id][hStorageAlarm] == 1) rob_remaining[playerid] = 55;
+    else if(HouseInfo[house_id][hStorageAlarm] == 2) rob_remaining[playerid] = 45;
+    else if(HouseInfo[house_id][hStorageAlarm] == 3) rob_remaining[playerid] = MIN_ROB_TIME;
 
     CreateRobTextdraws(playerid, true);
     PlayerStartRob(playerid, storage_id, rob_remaining[playerid], house_id);

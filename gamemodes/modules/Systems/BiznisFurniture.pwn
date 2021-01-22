@@ -112,27 +112,27 @@ forward OnBizzFurnitureObjectCreate(biznisid, index);
 */
 static stock DestroyFurnitureBlankIntTDs(playerid)
 {
-    if (IntBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntBcg1[playerid]);
         IntBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntBcg2[playerid]);
         IntBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntTitle[playerid]);
         IntTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntName[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntName[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntName[playerid]);
         IntName[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
-    if (IntPrice[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(IntPrice[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, IntPrice[playerid]);
         IntPrice[playerid] = PlayerText:INVALID_TEXT_DRAW;
@@ -204,9 +204,9 @@ static stock CreateFurnitureBlankIntTDs(playerid, name[], price)
 
 static stock SetPlayerInteriorPreview(playerid, interior)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
     // TODO: proper bounds check
-    if (interior > sizeof(BlankBiznisInts)) return 0;
+    if(interior > sizeof(BlankBiznisInts)) return 0;
 
     BizzViewingInterior[playerid] = interior;
 
@@ -220,7 +220,7 @@ static stock BuyBlankInterior(playerid, biznisid)
 {
     new interior = BizzViewingInterior[playerid];
     // TODO: bounds check
-    if (AC_GetPlayerMoney(playerid) < BlankBiznisInts[interior][iPrice])
+    if(AC_GetPlayerMoney(playerid) < BlankBiznisInts[interior][iPrice])
     {
         va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate dovoljno novaca za kupovinu enterijera (%d$)!", BlankBiznisInts[interior][iPrice]);
         return 1;
@@ -254,8 +254,8 @@ static stock BuyBlankInterior(playerid, biznisid)
 
 static stock ExitBlankInteriorPreview(playerid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-    if (BizzViewingInterior[playerid] == -1) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
+    if(BizzViewingInterior[playerid] == -1) return 0;
 
     DestroyFurnitureBlankIntTDs(playerid);
 
@@ -278,8 +278,8 @@ static stock ExitBlankInteriorPreview(playerid)
 public OnBizzFurnitureObjectsLoad(biznisid)
 {
     new objectCount = cache_num_rows();
-    if (!objectCount) return 1;
-    if (objectCount > BIZZ_FURNITURE_VIP_GOLD_OBJCTS)
+    if(!objectCount) return 1;
+    if(objectCount > BIZZ_FURNITURE_VIP_GOLD_OBJCTS)
         objectCount = BIZZ_FURNITURE_VIP_GOLD_OBJCTS;
 
     for (new i = 0; i < objectCount; i++)
@@ -311,14 +311,14 @@ public OnBizzFurnitureObjectsLoad(biznisid)
         new colorid;
         for (new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
         {
-            if (BizzInfo[biznisid][bFurColId][i][slot] > -1)
+            if(BizzInfo[biznisid][bFurColId][i][slot] > -1)
             {
-                sscanf(ColorList[ BizzInfo[biznisid][bFurColId][i][slot] ][clRGB], "h", colorid);
-                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][i][slot] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][i][slot] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][i][slot] ][tName], colorid);
+                sscanf(ColorList[BizzInfo[biznisid][bFurColId][i][slot]][clRGB], "h", colorid);
+                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tName], colorid);
             }
             else
             {
-                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][i][slot] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][i][slot] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][i][slot] ][tName], 0);
+                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tName], 0);
             }
         }
         Iter_Add(BizzFurniture[biznisid], i);
@@ -386,21 +386,21 @@ stock LoadBiznisFurnitureObjects(biznisid)
 
 static stock GetPlayerFurnitureBiznis(playerid)
 {
-    if (PlayerEditingBiznis[playerid] != INVALID_BIZNIS_ID)
+    if(PlayerEditingBiznis[playerid] != INVALID_BIZNIS_ID)
     {
         new bizz = PlayerEditingBiznis[playerid];
         // TODO: bounds check
-        if (IsPlayerInRangeOfPoint(playerid, 500.0, BizzInfo[bizz][bExitX], BizzInfo[bizz][bExitY], BizzInfo[bizz][bExitZ])
+        if(IsPlayerInRangeOfPoint(playerid, 500.0, BizzInfo[bizz][bExitX], BizzInfo[bizz][bExitY], BizzInfo[bizz][bExitZ])
             && GetPlayerInterior(playerid) == BizzInfo[bizz][bInterior])
         {
             return PlayerEditingBiznis[playerid];
         }
     }
-    if (PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+    if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
     {
         new bizz = PlayerKeys[playerid][pBizzKey];
         // TODO: bounds check
-        if (IsPlayerInRangeOfPoint(playerid, 500.0, BizzInfo[bizz][bExitX], BizzInfo[bizz][bExitY], BizzInfo[bizz][bExitZ])
+        if(IsPlayerInRangeOfPoint(playerid, 500.0, BizzInfo[bizz][bExitX], BizzInfo[bizz][bExitY], BizzInfo[bizz][bExitZ])
             && GetPlayerInterior(playerid) == BizzInfo[bizz][bInterior])
         {
             return PlayerKeys[playerid][pBizzKey];
@@ -677,7 +677,7 @@ static stock ShowPlayerTextureList(playerid)
         );
         strcat(texture_buffer, motd, sizeof(texture_buffer));
 
-        if (ObjectTextures[i][tModel] == 1319)
+        if(ObjectTextures[i][tModel] == 1319)
             break;
 
         BizzTextureDialogItem[playerid][dialogPos] = i;
@@ -698,7 +698,7 @@ static stock ShowSearchedTextureList(playerid, string[])
     format(texture_buffer, sizeof(texture_buffer), "Model\tTXD\tIme\n");
     for (new i = amount; i < max_amount; i++)
     {
-        if (strfind(ObjectTextures[i][tTXDName], string, true) != -1)
+        if(strfind(ObjectTextures[i][tTXDName], string, true) != -1)
         {
             format(motd, sizeof(motd), "%d\t%s\t%s\n",
                 ObjectTextures[i][tModel],
@@ -707,7 +707,7 @@ static stock ShowSearchedTextureList(playerid, string[])
             );
             strcat(texture_buffer, motd, sizeof(texture_buffer));
 
-            if (ObjectTextures[i][tModel] == 1319)
+            if(ObjectTextures[i][tModel] == 1319)
                 break;
 
             BizzTextureDialogItem[playerid][dialogPos] = i;
@@ -729,7 +729,7 @@ static stock ShowModelSearchedTextureList(playerid, modelid)
     format(texture_buffer, sizeof(texture_buffer), "Model\tTXD\tIme\n");
     for (new i = amount; i < max_amount; i++)
     {
-        if (ObjectTextures[i][tModel] == modelid)
+        if(ObjectTextures[i][tModel] == modelid)
         {
             format(motd, sizeof(motd), "%d\t%s\t%s\n",
                 ObjectTextures[i][tModel],
@@ -738,7 +738,7 @@ static stock ShowModelSearchedTextureList(playerid, modelid)
             );
             strcat(texture_buffer, motd, sizeof(texture_buffer));
 
-            if (ObjectTextures[i][tModel] == 1319)
+            if(ObjectTextures[i][tModel] == 1319)
                 break;
 
             BizzTextureDialogItem[playerid][dialogPos] = i;
@@ -757,7 +757,7 @@ static stock GetPlayerTextureItem(playerid, listitem)
 
     while (i < 15)
     {
-        if (i == listitem)
+        if(i == listitem)
         {
             index = BizzTextureDialogItem[playerid][i];
             break;
@@ -769,7 +769,7 @@ static stock GetPlayerTextureItem(playerid, listitem)
 
 static stock CreateFurniturePreviewObject(playerid, modelid, index)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
 
     new
         Float:X, Float:Y, Float:Z;
@@ -793,15 +793,15 @@ static stock GetBiznisFurnitureSlot(biznisid)
 
 static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, bool:doors)
 {
-    if (playerid == INVALID_PLAYER_ID) 
+    if(playerid == INVALID_PLAYER_ID) 
         return 0;
     new
         biznisid = GetPlayerFurnitureBiznis(playerid),
         index   = GetBiznisFurnitureSlot(biznisid);
 
-    if (index <= -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate dovoljno mjesta za objekte!");
+    if(index <= -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate dovoljno mjesta za objekte!");
 
-    if (IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
+    if(IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
     {
         DestroyPlayerObject(playerid, BizzPlayerPrwsObject[playerid]);
         BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
@@ -821,7 +821,7 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
         BizzInfo[biznisid][bFurColId][index][i] = -1;
     }
 
-    if (doors)
+    if(doors)
     {
         BizzInfo[biznisid][bFurDoor][index]       = 1;
         BizzInfo[biznisid][bFurDoorZ][index]      = -1.0;
@@ -859,15 +859,15 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 
 static stock CopyFurnitureObject(playerid, copyid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
 
     new
         biznisid = GetPlayerFurnitureBiznis(playerid);
-    if (biznisid == INVALID_BIZNIS_ID) return 0;
+    if(biznisid == INVALID_BIZNIS_ID) return 0;
 
     new
         index   = GetBiznisFurnitureSlot(biznisid);
-    if (index == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate dovoljno mjesta za objekte!");
+    if(index == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate dovoljno mjesta za objekte!");
 
     BizzInfo[biznisid][bFurModelid][index]      = BizzInfo[biznisid][bFurModelid][copyid];
     BizzInfo[biznisid][bFurPosX][index]         = BizzInfo[biznisid][bFurPosX][copyid];
@@ -888,14 +888,14 @@ static stock CopyFurnitureObject(playerid, copyid)
     new colorid;
     for (new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
     {
-        if (BizzInfo[biznisid][bFurColId][index][slot] > -1)
+        if(BizzInfo[biznisid][bFurColId][index][slot] > -1)
         {
-            sscanf(ColorList[ BizzInfo[biznisid][bFurColId][index][slot] ][clRGB], "h", colorid);
-            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tName], colorid);
+            sscanf(ColorList[BizzInfo[biznisid][bFurColId][index][slot]][clRGB], "h", colorid);
+            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tName], colorid);
         }
         else
         {
-            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tName], 0);
+            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tName], 0);
         }
     }
 
@@ -909,13 +909,13 @@ static stock CopyFurnitureObject(playerid, copyid)
 static stock EditFurnitureObject(playerid, index)
 {
     // TODO: proper bounds checking
-    if (playerid == INVALID_PLAYER_ID || index == -1) return 0;
+    if(playerid == INVALID_PLAYER_ID || index == -1) return 0;
 
     new
         biznisid = GetPlayerFurnitureBiznis(playerid);
-    if (biznisid == INVALID_BIZNIS_ID) return 0;
+    if(biznisid == INVALID_BIZNIS_ID) return 0;
 
-    if (IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
+    if(IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
     {
         DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
         BizzInfo[biznisid][bFurObjectid][index] = INVALID_OBJECT_ID;
@@ -934,17 +934,17 @@ static stock EditFurnitureObject(playerid, index)
 
 static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-    if (!IsValidPlayerObject(playerid, BizzPlayerEditObject[playerid])) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
+    if(!IsValidPlayerObject(playerid, BizzPlayerEditObject[playerid])) return 0;
 
     new
         index = BizzPlayerEditIndex[playerid],
         biznisid = GetPlayerFurnitureBiznis(playerid);
 
-    if (biznisid == INVALID_BIZNIS_ID) return 0;
+    if(biznisid == INVALID_BIZNIS_ID) return 0;
 
     CancelEdit(playerid);
-    if (IsValidPlayerObject(playerid, BizzPlayerEditObject[playerid]))
+    if(IsValidPlayerObject(playerid, BizzPlayerEditObject[playerid]))
     {
         DestroyPlayerObject(playerid, BizzPlayerEditObject[playerid]);
         BizzPlayerEditObject[playerid] = INVALID_OBJECT_ID;
@@ -974,14 +974,14 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     new colorid;
     for (new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
     {
-        if (BizzInfo[biznisid][bFurColId][index][slot] > -1)
+        if(BizzInfo[biznisid][bFurColId][index][slot] > -1)
         {
-            sscanf(ColorList[ BizzInfo[biznisid][bFurColId][index][slot] ][clRGB], "h", colorid);
-            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tName], colorid);
+            sscanf(ColorList[BizzInfo[biznisid][bFurColId][index][slot]][clRGB], "h", colorid);
+            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tName], colorid);
         }
         else
         {
-            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slot] ][tName], 0);
+            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][index], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slot]][tName], 0);
         }
     }
 
@@ -995,13 +995,13 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 
 static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
     // TODO: proper bounds checking
-    if (index > sizeof(ObjectTextures)) return 0;
+    if(index > sizeof(ObjectTextures)) return 0;
 
     new
         biznisid = GetPlayerFurnitureBiznis(playerid);
-    if (biznisid == INVALID_BIZNIS_ID) return 0;
+    if(biznisid == INVALID_BIZNIS_ID) return 0;
 
     SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][slotid], slot, ObjectTextures[index][tModel], ObjectTextures[index][tTXDName], ObjectTextures[index][tName], 0);
     BizzPlayerEditTxtSlot[playerid]               = -1;
@@ -1018,8 +1018,8 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
 
 static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-    if (index > sizeof(ObjectTextures)) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
+    if(index > sizeof(ObjectTextures)) return 0;
 
     new
         biznisid = GetPlayerFurnitureBiznis(playerid),
@@ -1027,7 +1027,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
         colorid;
 
     sscanf(ColorList[index][clRGB], "h", colorid);
-    if (biznisid == INVALID_BIZNIS_ID) return 0;
+    if(biznisid == INVALID_BIZNIS_ID) return 0;
 
     SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][slotid], slot, ObjectTextures[txtId][tModel], ObjectTextures[txtId][tTXDName], ObjectTextures[txtId][tName], colorid);
     BizzPlayerEditTxtSlot[playerid]               = -1;
@@ -1045,7 +1045,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
 static stock DeleteFurnitureObject(biznisid, index, playerid)
 {
     // TODO: bounds checking, biznisid, index
-    if (biznisid == INVALID_BIZNIS_ID) return 0;
+    if(biznisid == INVALID_BIZNIS_ID) return 0;
 
     mysql_fquery(g_SQL, "DELETE FROM biznis_furniture WHERE sqlid = '%d'", BizzInfo[biznisid][bFurSQL][index]);
     DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
@@ -1069,7 +1069,7 @@ static stock DeleteFurnitureObject(biznisid, index, playerid)
     BizzInfo[biznisid][bFurSlots]--;
     Iter_Remove(BizzFurniture[biznisid], index);
 
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", BizzInfo[biznisid][bFurObjectid][index], index);
+    va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", BizzInfo[biznisid][bFurObjectid][index], index);
     return 1;
 }
 
@@ -1077,9 +1077,9 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
 {
     foreach(new index: BizzFurniture[biznisid])
     {
-        if (BizzInfo[biznisid][bFurSQL][index])
+        if(BizzInfo[biznisid][bFurSQL][index])
         {
-            if (IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
+            if(IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
             {
                 DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
                 BizzInfo[biznisid][bFurObjectid][index] = INVALID_OBJECT_ID;
@@ -1120,9 +1120,9 @@ RotateBizzFurDoor(biznisid, playerid)
 {
     foreach(new i: BizzFurniture[biznisid])
     {
-        if (BizzInfo[biznisid][bFurDoor][i])
+        if(BizzInfo[biznisid][bFurDoor][i])
         {
-            if (IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i] ))
+            if(IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i] ))
             {
                 SetFurnitureDoorRotation(biznisid, i);
                 return 1;
@@ -1146,9 +1146,9 @@ static stock CanDoorOpen(modelid)
 static stock SetFurnitureDoorRotation(biznisid, index)
 {
     // TODO: bounds checking for all input variables
-    if (CanDoorOpen(BizzInfo[biznisid][bFurModelid][index]))
+    if(CanDoorOpen(BizzInfo[biznisid][bFurModelid][index]))
     {
-        if ((-90.0 <= BizzInfo[biznisid][bFurDoorZ][index] <= 90.0) && BizzInfo[biznisid][bFurDoorZ][index] != -1.0)
+        if((-90.0 <= BizzInfo[biznisid][bFurDoorZ][index] <= 90.0) && BizzInfo[biznisid][bFurDoorZ][index] != -1.0)
         { //Vrata zatvorena
             new Float:rot;
             switch (BizzInfo[biznisid][bFurModelid][index])
@@ -1168,7 +1168,7 @@ static stock SetFurnitureDoorRotation(biznisid, index)
             return 1;
         }
 
-        SetDynamicObjectRot(BizzInfo[biznisid][ bFurObjectid][index],
+        SetDynamicObjectRot(BizzInfo[biznisid][bFurObjectid][index],
             BizzInfo[biznisid][bFurRotX][index],
             BizzInfo[biznisid][bFurRotY][index],
             BizzInfo[biznisid][bFurRotZ][index]
@@ -1182,9 +1182,9 @@ stock ReloadBizzFurniture(biznisid)
 {
     foreach(new index: BizzFurniture[biznisid])
     {
-        if (BizzInfo[biznisid][bFurSQL][index])
+        if(BizzInfo[biznisid][bFurSQL][index])
         {
-            if (IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
+            if(IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
             {
                 DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
                 BizzInfo[biznisid][bFurObjectid][index] = INVALID_OBJECT_ID;
@@ -1580,9 +1580,9 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     DestroyFurnitureBlankIntTDs(playerid);
 
-    if (BizzEditState[playerid] != -1)
+    if(BizzEditState[playerid] != -1)
     {
-        if (IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
+        if(IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
         {
             CancelEdit(playerid);
             DestroyPlayerObject(playerid, BizzPlayerPrwsObject[playerid]);
@@ -1613,18 +1613,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_BIZZ_BLANK_INTS_LIST:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
-            if (!SetPlayerInteriorPreview(playerid, listitem)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nekakva se pogreska dogodila, ponovno kucajte /bint test!");
+            if(!SetPlayerInteriorPreview(playerid, listitem)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nekakva se pogreska dogodila, ponovno kucajte /bint test!");
             return 1;
         }
         case DIALOG_BIZZ_FURN_MENU:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new
                 biznisid = GetPlayerFurnitureBiznis(playerid);
-            if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne posjedujete biznis ili ju ne uredjujete!");
+            if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne posjedujete biznis ili ju ne uredjujete!");
 
             switch (listitem)
             {
@@ -1646,7 +1646,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_BUY:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
             // TODO: I would extract this to a helper function and set BizzFurnObjectsType[playerid] = listitem + 1;
             switch (listitem)
             {
@@ -1694,7 +1694,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_OBJCS:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Nocni klub/bar\n24/7\nRestoran\nClothing Shop\nOstalo\n", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Nocni klub/bar\n24/7\nRestoran\nClothing Shop\nOstalo\n", "Choose", "Abort");
 
             switch (BizzFurnObjectsType[playerid])
             {
@@ -1706,7 +1706,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {  
                             for (new i = 0; i < sizeof(ObjectsChair); i++)
                             {
-                                if (ObjectsChair[i][chId] != 0)
+                                if(ObjectsChair[i][chId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsChair[i][chId]);
                                     fselection_add_item(playerid, ObjectsChair[i][chId]);
@@ -1717,7 +1717,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsCouch); i++)
                             {
-                                if (ObjectsCouch[i][ceId] != 0)
+                                if(ObjectsCouch[i][ceId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsCouch[i][ceId]);
                                     fselection_add_item(playerid, ObjectsCouch[i][ceId]);
@@ -1728,7 +1728,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsArmChair); i++)
                             {
-                                if (ObjectsArmChair[i][armId] != 0)
+                                if(ObjectsArmChair[i][armId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsArmChair[i][armId]);
                                     fselection_add_item(playerid, ObjectsArmChair[i][armId]);
@@ -1739,7 +1739,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsTables); i++)
                             {
-                                if (ObjectsTables[i][tablId] != 0)
+                                if(ObjectsTables[i][tablId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsTables[i][tablId]);
                                     fselection_add_item(playerid, ObjectsTables[i][tablId]);
@@ -1750,7 +1750,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsCabinets); i++)
                             {
-                                if (ObjectsCabinets[i][cabId] != 0)
+                                if(ObjectsCabinets[i][cabId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsCabinets[i][cabId]);
                                     fselection_add_item(playerid, ObjectsCabinets[i][cabId]);
@@ -1761,7 +1761,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsTelevision); i++)
                             {
-                                if (ObjectsTelevision[i][tvId] != 0)
+                                if(ObjectsTelevision[i][tvId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsTelevision[i][tvId]);
                                     fselection_add_item(playerid, ObjectsTelevision[i][tvId]);
@@ -1772,7 +1772,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsHiFi); i++)
                             {
-                                if (ObjectsHiFi[i][hfId] != 0)
+                                if(ObjectsHiFi[i][hfId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsHiFi[i][hfId]);
                                     fselection_add_item(playerid, ObjectsHiFi[i][hfId]);
@@ -1783,7 +1783,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsStereo); i++)
                             {
-                                if (ObjectsStereo[i][stId] != 0)
+                                if(ObjectsStereo[i][stId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsStereo[i][stId]);
                                     fselection_add_item(playerid, ObjectsStereo[i][stId]);
@@ -1794,7 +1794,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsRugs); i++)
                             {
-                                if (ObjectsRugs[i][rId] != 0)
+                                if(ObjectsRugs[i][rId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsRugs[i][rId]);
                                     fselection_add_item(playerid, ObjectsRugs[i][rId]);
@@ -1805,7 +1805,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsLights); i++)
                             {
-                                if (ObjectsLights[i][lgtId] != 0)
+                                if(ObjectsLights[i][lgtId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
                                     fselection_add_item(playerid, ObjectsLights[i][lgtId]);
@@ -1816,7 +1816,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsDoor); i++)
                             {
-                                if (ObjectsDoor[i][doorId] != 0)
+                                if(ObjectsDoor[i][doorId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsDoor[i][doorId]);
                                     fselection_add_item(playerid, ObjectsDoor[i][doorId]);
@@ -1827,7 +1827,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsRefrigerators); i++)
                             {
-                                if (ObjectsRefrigerators[i][refId] != 0)
+                                if(ObjectsRefrigerators[i][refId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsRefrigerators[i][refId]);
                                     fselection_add_item(playerid, ObjectsRefrigerators[i][refId]);
@@ -1838,7 +1838,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsBarDrinks); i++)
                             {
-                                if (ObjectsBarDrinks[i][bardId] != 0)
+                                if(ObjectsBarDrinks[i][bardId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsBarDrinks[i][bardId]);
                                     fselection_add_item(playerid, ObjectsBarDrinks[i][bardId]);
@@ -1849,7 +1849,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsFun); i++)
                             {
-                                if (ObjectsFun[i][fnId] != 0)
+                                if(ObjectsFun[i][fnId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsFun[i][fnId]);
                                     fselection_add_item(playerid, ObjectsFun[i][fnId]);
@@ -1867,7 +1867,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Frizider
                             for (new i = 0; i < sizeof(Objects247Fridge); i++)
                             {
-                                if (Objects247Fridge[i][sfrId] != 0)
+                                if(Objects247Fridge[i][sfrId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, Objects247Fridge[i][sfrId]);
                                     fselection_add_item(playerid, Objects247Fridge[i][sfrId]);
@@ -1878,7 +1878,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Pica
                             for (new i = 0; i < sizeof(ObjectsDrinks); i++)
                             {
-                                if (ObjectsDrinks[i][drnksId] != 0)
+                                if(ObjectsDrinks[i][drnksId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsDrinks[i][drnksId]);
                                     fselection_add_item(playerid, ObjectsDrinks[i][drnksId]);
@@ -1889,7 +1889,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Hrana
                             for (new i = 0; i < sizeof(ObjectsFood); i++)
                             {
-                                if (ObjectsFood[i][foodId] != 0)
+                                if(ObjectsFood[i][foodId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsFood[i][foodId]);
                                     fselection_add_item(playerid, ObjectsFood[i][foodId]);
@@ -1900,7 +1900,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Blagajna
                             for (new i = 0; i < sizeof(ObjectsCashRegister); i++)
                             {
-                                if (ObjectsCashRegister[i][crId] != 0)
+                                if(ObjectsCashRegister[i][crId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsCashRegister[i][crId]);
                                     fselection_add_item(playerid, ObjectsCashRegister[i][crId]);
@@ -1911,7 +1911,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Svijetla
                             for (new i = 0; i < sizeof(ObjectsLights); i++)
                             {
-                                if (ObjectsLights[i][lgtId] != 0)
+                                if(ObjectsLights[i][lgtId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
                                     fselection_add_item(playerid, ObjectsLights[i][lgtId]);
@@ -1922,7 +1922,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Kante
                             for (new i = 0; i < sizeof(ObjectsTrashCan); i++)
                             {
-                                if (ObjectsTrashCan[i][tcId] != 0)
+                                if(ObjectsTrashCan[i][tcId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsTrashCan[i][tcId]);
                                     fselection_add_item(playerid, ObjectsTrashCan[i][tcId]);
@@ -1933,7 +1933,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { // Ostalo
                             for (new i = 0; i < sizeof(Objects247Misc); i++)
                             {
-                                if (Objects247Misc[i][smiscId] != 0)
+                                if(Objects247Misc[i][smiscId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, Objects247Misc[i][smiscId]);
                                     fselection_add_item(playerid, Objects247Misc[i][smiscId]);
@@ -1951,7 +1951,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {  
                             for (new i = 0; i < sizeof(ObjectsChair); i++)
                             {
-                                if (ObjectsChair[i][chId] != 0)
+                                if(ObjectsChair[i][chId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsChair[i][chId]);
                                     fselection_add_item(playerid, ObjectsChair[i][chId]);
@@ -1962,7 +1962,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsTables); i++)
                             {
-                                if (ObjectsTables[i][tablId] != 0)
+                                if(ObjectsTables[i][tablId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsTables[i][tablId]);
                                     fselection_add_item(playerid, ObjectsTables[i][tablId]);
@@ -1973,7 +1973,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsCouch); i++)
                             {
-                                if (ObjectsCouch[i][ceId] != 0)
+                                if(ObjectsCouch[i][ceId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsCouch[i][ceId]);
                                     fselection_add_item(playerid, ObjectsCouch[i][ceId]);
@@ -1984,7 +1984,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsArmChair); i++)
                             {
-                                if (ObjectsArmChair[i][armId] != 0)
+                                if(ObjectsArmChair[i][armId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsArmChair[i][armId]);
                                     fselection_add_item(playerid, ObjectsArmChair[i][armId]);
@@ -1995,7 +1995,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsRefrigerators); i++)
                             {
-                                if (ObjectsRefrigerators[i][refId] != 0)
+                                if(ObjectsRefrigerators[i][refId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsRefrigerators[i][refId]);
                                     fselection_add_item(playerid, ObjectsRefrigerators[i][refId]);
@@ -2006,7 +2006,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsDrinks); i++)
                             {
-                                if (ObjectsDrinks[i][drnksId] != 0)
+                                if(ObjectsDrinks[i][drnksId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsDrinks[i][drnksId]);
                                     fselection_add_item(playerid, ObjectsDrinks[i][drnksId]);
@@ -2017,7 +2017,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsFood); i++)
                             {
-                                if (ObjectsFood[i][foodId] != 0)
+                                if(ObjectsFood[i][foodId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsFood[i][foodId]);
                                     fselection_add_item(playerid, ObjectsFood[i][foodId]);
@@ -2028,7 +2028,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsCashRegister); i++)
                             {
-                                if (ObjectsCashRegister[i][crId] != 0)
+                                if(ObjectsCashRegister[i][crId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsCashRegister[i][crId]);
                                     fselection_add_item(playerid, ObjectsCashRegister[i][crId]);
@@ -2039,7 +2039,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsKitchenDishes); i++)
                             {
-                                if (ObjectsKitchenDishes[i][dishId] != 0)
+                                if(ObjectsKitchenDishes[i][dishId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsKitchenDishes[i][dishId]);
                                     fselection_add_item(playerid, ObjectsKitchenDishes[i][dishId]);
@@ -2050,7 +2050,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsMicroWave); i++)
                             {
-                                if (ObjectsMicroWave[i][mwId] != 0)
+                                if(ObjectsMicroWave[i][mwId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsMicroWave[i][mwId]);
                                     fselection_add_item(playerid, ObjectsMicroWave[i][mwId]);
@@ -2061,7 +2061,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsStove); i++)
                             {
-                                if (ObjectsStove[i][stId] != 0)
+                                if(ObjectsStove[i][stId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsStove[i][stId]);
                                     fselection_add_item(playerid, ObjectsStove[i][stId]);
@@ -2072,7 +2072,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsKitchenCabinets); i++)
                             {
-                                if (ObjectsKitchenCabinets[i][kcId] != 0)
+                                if(ObjectsKitchenCabinets[i][kcId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsKitchenCabinets[i][kcId]);
                                     fselection_add_item(playerid, ObjectsKitchenCabinets[i][kcId]);
@@ -2083,7 +2083,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         { 
                             for (new i = 0; i < sizeof(ObjectsSink); i++)
                             {
-                                if (ObjectsSink[i][snkId] != 0)
+                                if(ObjectsSink[i][snkId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsSink[i][snkId]);
                                     fselection_add_item(playerid, ObjectsSink[i][snkId]);
@@ -2101,7 +2101,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsShelfs); i++)
                             {
-                                if (ObjectsShelfs[i][shelfId] != 0)
+                                if(ObjectsShelfs[i][shelfId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsShelfs[i][shelfId]);
                                     fselection_add_item(playerid, ObjectsShelfs[i][shelfId]);
@@ -2112,7 +2112,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsCashRegister); i++)
                             {
-                                if (ObjectsCashRegister[i][crId] != 0)
+                                if(ObjectsCashRegister[i][crId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsCashRegister[i][crId]);
                                     fselection_add_item(playerid, ObjectsCashRegister[i][crId]);
@@ -2123,7 +2123,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsClothes); i++)
                             {
-                                if (ObjectsClothes[i][cloId] != 0)
+                                if(ObjectsClothes[i][cloId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsClothes[i][cloId]);
                                     fselection_add_item(playerid, ObjectsClothes[i][cloId]);
@@ -2142,7 +2142,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsWareHouse); i++)
                             {
-                                if (ObjectsWareHouse[i][whId] != 0)
+                                if(ObjectsWareHouse[i][whId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsWareHouse[i][whId]);
                                     fselection_add_item(playerid, ObjectsWareHouse[i][whId]);
@@ -2153,7 +2153,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsParticles); i++)
                             {
-                                if (ObjectsParticles[i][partId] != 0)
+                                if(ObjectsParticles[i][partId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsParticles[i][partId]);
                                     fselection_add_item(playerid, ObjectsParticles[i][partId]);
@@ -2164,7 +2164,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsWalls); i++)
                             {
-                                if (ObjectsWalls[i][wlId] != 0)
+                                if(ObjectsWalls[i][wlId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsWalls[i][wlId]);
                                     fselection_add_item(playerid, ObjectsWalls[i][wlId]);
@@ -2175,7 +2175,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             for (new i = 0; i < sizeof(ObjectsSecurity); i++)
                             {
-                                if (ObjectsSecurity[i][secId] != 0)
+                                if(ObjectsSecurity[i][secId] != 0)
                                 {
                                     Player_ModelToIndexSet(playerid, i, ObjectsSecurity[i][secId]);
                                     fselection_add_item(playerid, ObjectsSecurity[i][secId]);
@@ -2191,7 +2191,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_EDIT_LIST:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
             switch (listitem)
             {
@@ -2247,8 +2247,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         biznisid = GetPlayerFurnitureBiznis(playerid),
                         index   = BizzPlayerEditIndex[playerid];
 
-                    if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne posjedujete biznis ili ju ne uredjujete!");
-                    if (!CopyFurnitureObject(playerid, index)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se pogreska! Ponovno pokusajte kopirati objekt!");
+                    if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne posjedujete biznis ili ju ne uredjujete!");
+                    if(!CopyFurnitureObject(playerid, index)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se pogreska! Ponovno pokusajte kopirati objekt!");
                 }
                 case 4:
                 {   // Obrisi
@@ -2263,25 +2263,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_DELETE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
             DeleteFurnitureObject(GetPlayerFurnitureBiznis(playerid), BizzPlayerEditIndex[playerid], playerid);
             return 1;
         }
         case DIALOG_BIZZ_FURN_TXTS:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
             // TODO: hardcoding listitems -- love it
-            if (listitem == 15) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
-            if (listitem == 16 && LastBizzTextureListIndex[playerid] < 40)
+            if(listitem == 15) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
+            if(listitem == 16 && LastBizzTextureListIndex[playerid] < 40)
             {
                 LastBizzTextureListIndex[playerid]++;
                 ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
                 return 1;
             }
-            if (listitem == 17 && LastBizzTextureListIndex[playerid] > 0)
+            if(listitem == 17 && LastBizzTextureListIndex[playerid] > 0)
             {
-                if (--LastBizzTextureListIndex[playerid] <= 0)
+                if(--LastBizzTextureListIndex[playerid] <= 0)
                     LastBizzTextureListIndex[playerid] = 1;
 
                 ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
@@ -2294,7 +2294,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_TXTS_SRCH_1:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 
             switch (listitem)
             {
@@ -2305,9 +2305,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_TXTS_SRCH_2:
         {
-            if (!response) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
-            if (strlen(inputtext) < 3)
+            if(strlen(inputtext) < 3)
             {
                 SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate unijeti minimalno 3 znaka kao ime TXD-a!");
                 ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (ime ili ime TXD-a):", "Input", "Abort");
@@ -2318,14 +2318,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_TXTS_SRCH_3:
         {
-            if (!response) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
-            if (strlen(inputtext) < 4)
+            if(!response) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(strlen(inputtext) < 4)
             {
                 SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate unijeti minimalno 4 znaka kao modelid TXD-a!");
                 ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
                 return 1;
             }
-            if (!IsNumeric(inputtext))
+            if(!IsNumeric(inputtext))
             {
                 SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Unos mora biti numericki!");
                 ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
@@ -2336,16 +2336,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_TXTS_SLOT:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 
             new slot = strval(inputtext);
-            if (0 <= slot <= 3)
+            if(0 <= slot <= 3)
             {
                 va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Yes", "No", slot);
                 BizzPlayerEditTxtSlot[playerid] = slot;
 
                 new index = BizzPlayerEditTxtIndex[playerid];
-                SetDynamicObjectMaterial(BizzInfo[ GetPlayerFurnitureBiznis(playerid) ][bFurObjectid][ BizzPlayerEditIndex[playerid] ], slot, ObjectTextures[index][tModel], ObjectTextures[index][tTXDName], ObjectTextures[index][tName], 0);
+                SetDynamicObjectMaterial(BizzInfo[GetPlayerFurnitureBiznis(playerid)][bFurObjectid][BizzPlayerEditIndex[playerid]], slot, ObjectTextures[index][tModel], ObjectTextures[index][tTXDName], ObjectTextures[index][tName], 0);
 
             }
             else
@@ -2356,13 +2356,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_TXTS_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
-            if (!SetFurnitureObjectTexture(playerid, BizzPlayerEditTxtSlot[playerid], BizzPlayerEditTxtIndex[playerid], BizzPlayerEditIndex[playerid])) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Doslo je do greske. Pokusajte ponovno!");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
+            if(!SetFurnitureObjectTexture(playerid, BizzPlayerEditTxtSlot[playerid], BizzPlayerEditTxtIndex[playerid], BizzPlayerEditIndex[playerid])) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Doslo je do greske. Pokusajte ponovno!");
             return 1;
         }
         case DIALOG_BIZZ_FURN_COL_LIST:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             BizzPlayerEditTxtIndex[playerid] = listitem;
             ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Input", "Abort");
@@ -2370,7 +2370,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_COL_SLOT:
         {
-            if (!response)
+            if(!response)
             {
                 new
                     buffer[4096],
@@ -2389,7 +2389,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             new slotid = strval(inputtext);
-            if (1 <= slotid <= MAX_COLOR_TEXT_SLOTS)
+            if(1 <= slotid <= MAX_COLOR_TEXT_SLOTS)
             {
                 va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Yes", "No", slotid);
                 BizzPlayerEditTxtSlot[playerid] = slotid - 1;
@@ -2399,8 +2399,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     index = BizzPlayerEditIndex[playerid],
                     biznisid = GetPlayerFurnitureBiznis(playerid);
                 // TODO: bounds checking
-                sscanf(ColorList[ BizzPlayerEditTxtIndex[playerid] ][clRGB], "h", colorid);
-                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][ BizzPlayerEditIndex[playerid] ], slotid, ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slotid] ][tModel], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slotid] ][tTXDName], ObjectTextures[ BizzInfo[biznisid][bFurTxtId][index][slotid] ][tName], colorid);
+                sscanf(ColorList[BizzPlayerEditTxtIndex[playerid]][clRGB], "h", colorid);
+                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][BizzPlayerEditIndex[playerid]], slotid, ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slotid]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slotid]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][index][slotid]][tName], colorid);
 
             }
             else
@@ -2411,17 +2411,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_COL_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
 
-            if (!SetFurnitureObjectColor(playerid, BizzPlayerEditTxtSlot[playerid], BizzPlayerEditTxtIndex[playerid], BizzPlayerEditIndex[playerid])) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Doslo je do greske. Pokusajte ponovno!");
+            if(!SetFurnitureObjectColor(playerid, BizzPlayerEditTxtSlot[playerid], BizzPlayerEditTxtIndex[playerid], BizzPlayerEditIndex[playerid])) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Doslo je do greske. Pokusajte ponovno!");
             return 1;
         }
         case DIALOG_BIZZ_FURN_SLOT_DELETE:
         {
-            if (!response) return  ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+            if(!response) return  ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
             new slot = strval(inputtext);
-            if (1 <= slot <= MAX_COLOR_TEXT_SLOTS)
+            if(1 <= slot <= MAX_COLOR_TEXT_SLOTS)
             {
                 BizzPlayerEditClsIndex[playerid] = slot - 1;
                 va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Yes", "No", slot);
@@ -2434,14 +2434,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_SLOT_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Input", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Input", "Abort");
 
             new
                 biznisid = GetPlayerFurnitureBiznis(playerid),
                 slot    = BizzPlayerEditClsIndex[playerid];
             // TODO: bounds checking
-            BizzInfo[biznisid][bFurTxtId][ BizzPlayerEditIndex[playerid] ][slot] = 0;
-            BizzInfo[biznisid][bFurColId][ BizzPlayerEditIndex[playerid] ][slot] = 0;
+            BizzInfo[biznisid][bFurTxtId][BizzPlayerEditIndex[playerid]][slot] = 0;
+            BizzInfo[biznisid][bFurColId][BizzPlayerEditIndex[playerid]][slot] = 0;
 
             mysql_fquery(g_SQL, "UPDATE furniture SET texture_%d = '0', color_%d = '0' WHERE sqlid = '%d'",
                 slot + 1,
@@ -2449,7 +2449,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 BizzInfo[biznisid][bFurSQL][slot]
             );
 
-            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][ BizzPlayerEditIndex[playerid] ], slot, -1, "none", "none", 0);
+            SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][BizzPlayerEditIndex[playerid]], slot, -1, "none", "none", 0);
 
             BizzPlayerEditIndex[playerid] = -1;
             BizzPlayerEditClsIndex[playerid] = -1;
@@ -2457,10 +2457,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_BIZZ_FURN_BINT_SURE:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new biznisid = PlayerKeys[playerid][pBizzKey];
-            if (!BuyBlankInterior(playerid, biznisid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se nekakva pogreska, ponovno kucajte /bint buy!");
+            if(!BuyBlankInterior(playerid, biznisid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se nekakva pogreska, ponovno kucajte /bint buy!");
             return 1;
         }
     }
@@ -2469,7 +2469,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
-    if (!playerobject)
+    if(!playerobject)
     {
         return 1;
     }
@@ -2477,13 +2477,13 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
     {
         case EDIT_STATE_PREVIEW:
         {
-            if (response == EDIT_RESPONSE_FINAL)
+            if(response == EDIT_RESPONSE_FINAL)
             {
                 CreateBiznisFurnitureObject(playerid, BizzPlayerPrwsModel[playerid], fX, fY, fZ, fRotX, fRotY, fRotZ, (BizzFurObjectSection[playerid] == 10) ? true : false);
             }
-            else if (response == EDIT_RESPONSE_CANCEL)
+            else if(response == EDIT_RESPONSE_CANCEL)
             {
-                if (IsValidPlayerObject(playerid, objectid))
+                if(IsValidPlayerObject(playerid, objectid))
                 {
                     DestroyPlayerObject(playerid, BizzPlayerPrwsObject[playerid]);
                     BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
@@ -2499,18 +2499,18 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
         }
         case EDIT_STATE_EDIT:
         {
-            if (BizzPlayerEditObject[playerid] != objectid)
+            if(BizzPlayerEditObject[playerid] != objectid)
             {
                 return 1;
             }
 
-            if (response == EDIT_RESPONSE_FINAL)
+            if(response == EDIT_RESPONSE_FINAL)
             {
                 SetFurnitureObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
             }
-            else if (response == EDIT_RESPONSE_CANCEL)
+            else if(response == EDIT_RESPONSE_CANCEL)
             {
-                if (IsValidPlayerObject(playerid, objectid))
+                if(IsValidPlayerObject(playerid, objectid))
                 {
                     SetFurnitureObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
                     BizzEditState[playerid] = -1;
@@ -2527,7 +2527,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
     {
         case DIALOG_BIZZ_FURN_EDIT:
         {
-            if (!response)
+            if(!response)
                 return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
             BizzPlayerEditIndex[playerid] = Player_ModelToIndex(playerid, modelid);
@@ -2538,9 +2538,9 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
         {
             new index = Player_ModelToIndex(playerid, modelid);
             new bool:moneycheck = (AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index));
-            if (!response || moneycheck)
+            if(!response || moneycheck)
             {
-                if (moneycheck)
+                if(moneycheck)
                 {
                     va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate dovoljno novaca za kupovinu objekta (%d$)!", GetFurnitureObjectPrice(playerid, index));
                 }
@@ -2583,16 +2583,16 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 */
 CMD:biznis_bint(playerid, params[])
 {
-    //if (!PlayerInfo[playerid][pAdmin]) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
-    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati biznis.");
+    //if(!PlayerInfo[playerid][pAdmin]) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
+    if(PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati biznis.");
 
     new param[6];
-    if (sscanf(params, "s[6]", param)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /biznis_bint [test/buy/exit]");
-    if (!strcmp(param, "test", true))
+    if(sscanf(params, "s[6]", param)) return SendClientMessage(playerid, COLOR_WHITE, "[?]: /biznis_bint [test/buy/exit]");
+    if(!strcmp(param, "test", true))
     {
         new biznisid = GetPlayerFurnitureBiznis(playerid);
-        if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
-        if (!IsPlayerInRangeOfPoint(playerid, 10000.0, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ]))
+        if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
+        if(!IsPlayerInRangeOfPoint(playerid, 10000.0, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ]))
         {
             // TODO: instead of this long range check maybe check if player is in interior, or if his interior matches
             // the business interior ID
@@ -2614,16 +2614,16 @@ CMD:biznis_bint(playerid, params[])
         }
         ShowPlayerDialog(playerid, DIALOG_BIZZ_BLANK_INTS_LIST, DIALOG_STYLE_TABLIST_HEADERS, "Blank Interiors", buffer, "Choose", "Abort");
     }
-    else if (!strcmp(param, "buy", true))
+    else if(!strcmp(param, "buy", true))
     {
-        if (BizzViewingInterior[playerid] == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate prvo uci i pregledati prazan interijer!");
+        if(BizzViewingInterior[playerid] == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate prvo uci i pregledati prazan interijer!");
 
         ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_BINT_SURE, DIALOG_STYLE_MSGBOX, "Blank Interiors", "Zelite li kupiti prazan interijer?\n"COL_RED"Svi prijasnji objekti ce se obrisati!", "Yes", "No");
     }
-    else if (!strcmp(param, "exit", true))
+    else if(!strcmp(param, "exit", true))
     {
-        if (BizzViewingInterior[playerid] == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne gledate prazne interijere!");
-        if (!ExitBlankInteriorPreview(playerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se nekakva pogreska, ponovno kucajte /bint exit!");
+        if(BizzViewingInterior[playerid] == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne gledate prazne interijere!");
+        if(!ExitBlankInteriorPreview(playerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se nekakva pogreska, ponovno kucajte /bint exit!");
     }
     return 1;
 }
@@ -2639,27 +2639,27 @@ CMD:biznis_bint(playerid, params[])
 CMD:biznis_furniture(playerid, params[])
 {
     new param[8];
-    if (sscanf(params, "s[8]", param))
+    if(sscanf(params, "s[8]", param))
     {
-        SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /biznis_furniture [approve/menu]");
+        SendClientMessage(playerid, COLOR_WHITE, "[?]: /biznis_furniture [approve/menu]");
         return 1;
     }
 
-    if (!strcmp(param, "menu", true))
+    if(!strcmp(param, "menu", true))
     {
         new biznisid = GetPlayerFurnitureBiznis(playerid);
-        if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
+        if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
 
-        if (!IsPlayerInRangeOfPoint(playerid, 10000.0, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ]))
+        if(!IsPlayerInRangeOfPoint(playerid, 10000.0, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ]))
         {
             // TODO: Interior check if bizzes are interiors
             SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate biti unutar biznisa!");
             return 1;
         }
 
-        if (BizzEditState[playerid] != -1)
+        if(BizzEditState[playerid] != -1)
         {
-            if (IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
+            if(IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
             {
                 CancelEdit(playerid);
                 DestroyPlayerObject(playerid, BizzPlayerPrwsObject[playerid]);
@@ -2669,12 +2669,12 @@ CMD:biznis_furniture(playerid, params[])
         }
         ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Biznis Furniture - Menu", "Kupi objekt\nUredi", "Choose", "Abort");
     }
-    else if (!strcmp(param, "approve", true))
+    else if(!strcmp(param, "approve", true))
     {
         new biznisid = GetPlayerFurnitureBiznis(playerid);
-        if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
+        if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
 
-        if (!IsPlayerInRangeOfPoint(playerid, 10000.0, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ]))
+        if(!IsPlayerInRangeOfPoint(playerid, 10000.0, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ]))
         {
             // TODO: interior check
             SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate biti unutar biznisa!");
@@ -2682,11 +2682,11 @@ CMD:biznis_furniture(playerid, params[])
         }
 
         new giveplayerid;
-        if (sscanf(params, "s[8]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /biznis_furniture approve [dio imena/playerid]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi unos playerida!");
-        if (!ProxDetectorS(10.0, playerid, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj igrac nije blizu vas!");
+        if(sscanf(params, "s[8]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_WHITE, "[?]: /biznis_furniture approve [dio imena/playerid]");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi unos playerida!");
+        if(!ProxDetectorS(10.0, playerid, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj igrac nije blizu vas!");
 
-        if (PlayerEditingBiznis[giveplayerid] == PlayerKeys[playerid][pBizzKey])
+        if(PlayerEditingBiznis[giveplayerid] == PlayerKeys[playerid][pBizzKey])
         {
             PlayerEditingBiznis[giveplayerid] = INVALID_BIZNIS_ID;
             va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Skinuli ste %s dopustenje za uredjivanje biznisa!", GetName(giveplayerid, false));
@@ -2702,11 +2702,11 @@ CMD:biznis_furniture(playerid, params[])
 
 CMD:reload_bfurniture(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
 
     new biznisid;
-    if (sscanf(params, "i", biznisid)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /reload_furniture [biznisid]");
-    if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi biznisid!");
+    if(sscanf(params, "i", biznisid)) return SendClientMessage(playerid, COLOR_WHITE, "[?]: /reload_furniture [biznisid]");
+    if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi biznisid!");
 
     ReloadBizzFurniture(biznisid);
     SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Svi furniture objekti su reloadani!");

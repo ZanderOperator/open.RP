@@ -148,7 +148,7 @@ Public: LoadingVehiclePackages(vehicleid)
 ListPlayerPackages(playerid, forplayerid)
 {
 	va_SendClientMessage(forplayerid, COLOR_LIGHTBLUE, 
-		"*______________ [ %s - Weapon Packages ] ______________*", 
+		"*______________ [%s - Weapon Packages] ______________*", 
 		GetName(playerid)
 	);
 	foreach(new i : P_PACKAGES[playerid]) 
@@ -186,7 +186,7 @@ RemoveWeaponPackages(playerid)
 {
 	foreach(new i : P_PACKAGES[playerid])
 	{
-		if (PlayerPackage[playerid][p_weapon][i] != 0)
+		if(PlayerPackage[playerid][p_weapon][i] != 0)
 			DeletePlayerPackage(playerid, i);
 	}
 	Iter_Clear(P_PACKAGES[playerid]);
@@ -418,9 +418,9 @@ hook OnPlayerEnterCheckpoint(playerid)
 			package_id = get_PackageID[playerid];
 
 		if(PackageOrdered[playerid] == false || package_id == INVALID_PACKAGE_ID)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemate narucenu posiljku, prvo je morate naruciti da bi ju provijerili.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Nemate narucenu posiljku, prvo je morate naruciti da bi ju provijerili.");
 
-		format(buffer, sizeof(buffer), "{FA5656}[ WAREHOUSE - WEAPON ORDER ]\n\nWeapon: %s.\nPackage Ammo: %d (ammo).\nPackage Price: %s.\nFaction: %s.\n\nZelite li preuzeti ovaj paket?",
+		format(buffer, sizeof(buffer), "{FA5656}[WAREHOUSE - WEAPON ORDER]\n\nWeapon: %s.\nPackage Ammo: %d (ammo).\nPackage Price: %s.\nFaction: %s.\n\nZelite li preuzeti ovaj paket?",
 			GetWeaponNameEx(PackageData[package_id][PackageWeapon]),
 			PackageData[package_id][PackageAmount],
 			FormatNumber(get_PackagePrice[playerid]),
@@ -490,8 +490,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			get_PackageAmount[playerid] = package_amount;
 
-			format(buffer, sizeof(buffer), "{3C95C2}[ WAREHOUSE - WEAPON PACKAGE ]\n\nWeapon: %s.\nPackage Ammo: %d (ammo).\nPackage Price: %s.\nFaction: %s.\n",
-				show_WeaponList[ package_wep ][ wep_Name ],
+			format(buffer, sizeof(buffer), "{3C95C2}[WAREHOUSE - WEAPON PACKAGE]\n\nWeapon: %s.\nPackage Ammo: %d (ammo).\nPackage Price: %s.\nFaction: %s.\n",
+				show_WeaponList[package_wep][wep_Name],
 				package_amount,
 				FormatNumber(package_price),
 				ReturnPlayerFactionName(playerid)
@@ -509,24 +509,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			new
 				package_amount = get_PackageAmount[playerid],
-				package_wep = get_PackageWeapon[ playerid ],
+				package_wep = get_PackageWeapon[playerid],
 				package_price = show_WeaponList[package_wep][wep_Price] * (package_amount);
 
-			if( Iter_Count(PACKAGES) == 10 )
+			if(Iter_Count(PACKAGES) == 10 )
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno je aktivno previse posiljka, pricekajte neko vrijeme da mozete naruciti posiljku.");
-			if( AC_GetPlayerMoney(playerid) < package_price ){
+			if(AC_GetPlayerMoney(playerid) < package_price ){
 				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nema� ni centa, a u neke bi vece �eme, hah.");
 				PlayerHangup(playerid);
 				return 0;
 			}
 			if(gettimestamp() < PackageCooldown)
 			{
-				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Morate sacekati %d sekundi kako bi narucili paket.", PACKAGE_COOLDOWN);
+				va_SendClientMessage(playerid, COLOR_RED, "[!] Morate sacekati %d sekundi kako bi narucili paket.", PACKAGE_COOLDOWN);
                 PlayerHangup(playerid);
 				return 0;
 			}
 			if(PackageOrdered[playerid] == true)
-					return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vi vec imate narucenu posiljku, da pogledate vasu posiljku kucajte /package checkorder.");
+					return SendClientMessage(playerid, COLOR_RED, "[!] Vi vec imate narucenu posiljku, da pogledate vasu posiljku kucajte /package checkorder.");
 			PlayerToIllegalBudgetMoney(playerid, package_price); // Ilegalni Budget dobiva novce
 
 			new free_id = Iter_Free(PACKAGES);
@@ -549,12 +549,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Dogovoreno. Kroz par minuta ces dobiti koordinate gdje da dodjes.");
 			PlayerHangup(playerid);
 
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste narucili paket %s sa %d metaka, cijena: %s.", 
+			va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste narucili paket %s sa %d metaka, cijena: %s.", 
 				GetWeaponNameEx(PackageData[free_id][PackageWeapon]), 
 				package_amount, 
 				FormatNumber(package_price)
 			);
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Kroz par minuta cete dobiti poziv sa informacijama u vezi vase posiljke.");
+			SendClientMessage(playerid, COLOR_RED, "[!] Kroz par minuta cete dobiti poziv sa informacijama u vezi vase posiljke.");
 
 			timer_Package[playerid] = defer CreatePackage[30000*MINUTES_TILL_PACKAGE_ARRIVE](playerid);
 
@@ -573,10 +573,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response)
 				return SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Ej kume daj se sa sobom dogovorili, jel hoces ili neces?!");
 		
-			if( Iter_Count(P_PACKAGES[playerid]) == MAX_PLAYER_PACKAGES )
-				return va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vi vec imate maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
-			if( PlayerInfo[playerid][pLevel] == 1 )
-				return SendMessage(playerid, COLOR_RED, "[ ! ] Ne mozete naruciti package jer ste level 1!");
+			if(Iter_Count(P_PACKAGES[playerid]) == MAX_PLAYER_PACKAGES )
+				return va_SendClientMessage(playerid, COLOR_RED, "[!] Vi vec imate maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
+			if(PlayerInfo[playerid][pLevel] == 1 )
+				return SendMessage(playerid, COLOR_RED, "[!] Ne mozete naruciti package jer ste level 1!");
 
 			new i = Iter_Free(P_PACKAGES[playerid]),
 				pack_id = get_PackageID[playerid];
@@ -591,11 +591,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Iter_Remove(PACKAGES, pack_id);
 			ResetPackageSettings(playerid);
 
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste preuzeli vasu posiljku (%s | %d ammo).", 
+			va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste preuzeli vasu posiljku (%s | %d ammo).", 
 				GetWeaponNameEx(PlayerPackage[playerid][p_weapon][i]),
 				PlayerPackage[playerid][p_amount][i]
 			);
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Za pregled paketa /package stats, za otpakiravanje /package unpackage");
+			SendClientMessage(playerid, COLOR_RED, "[!] Za pregled paketa /package stats, za otpakiravanje /package unpackage");
 
 			// Logs
 			Log_Write("/logfiles/weapon_packages.txt",  "(%s) [TAKE-PACKAGE] %s je preuzeo paket oruzja. (w_name: %s / w_amount: %d).",
@@ -618,7 +618,7 @@ hook OnPlayerUpdate(playerid)
 
         if(get_PlayerPos[playerid][0] != x && get_PlayerPos[playerid][1] != y && get_PlayerPos[playerid][2] != z) 
 		{
-            SendClientMessage(playerid, COLOR_LIGHTRED,"[ ! ] - Pomjerili ste se tokom obavljanja funkcije, ista je automatski prekinuta.");
+            SendClientMessage(playerid, COLOR_LIGHTRED,"[!] - Pomjerili ste se tokom obavljanja funkcije, ista je automatski prekinuta.");
 			PlayerUnpacking[playerid] = false;
 			stop timer_unpacking[playerid];
 		}
@@ -646,7 +646,7 @@ CMD:package(playerid, params[])
 
 	if(sscanf(params, "s[25] ", action)) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package [option].");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /package [option].");
 		SendClientMessage(playerid, COLOR_RED, "(options): stats, checkorder, unpackage, give");
 		SendClientMessage(playerid, COLOR_RED, "(vehicle): vehstats, vehput, vehtake");
 		if(PlayerInfo[playerid][pAdmin] != 0)
@@ -660,11 +660,11 @@ CMD:package(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[25]iii", action, targetid, weapon_id, ammo_amount)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package givepackage [targetid] [weapon_id](Armour ID: 60) [ammo_amount].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package givepackage [targetid][weapon_id](Armour ID: 60) [ammo_amount].");
 			return (true);
 		}
-		if( Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
-			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac vec ima maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
+		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
+			return va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac vec ima maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
 
 		new i = Iter_Free(P_PACKAGES[targetid]);
 
@@ -674,12 +674,12 @@ CMD:package(playerid, params[])
 		SavePlayerPackages(targetid, i);
 		Iter_Add(P_PACKAGES[targetid], i);
 
-		va_SendClientMessage(targetid, COLOR_RED, "[ ! ] Administrator {FA5656}%s vam je dao paket sa oruzjem %s - ammo: %d.", 
+		va_SendClientMessage(targetid, COLOR_RED, "[!] Administrator {FA5656}%s vam je dao paket sa oruzjem %s - ammo: %d.", 
 			GetName(playerid), 
 			GetWeaponNameEx(weapon_id), 
 			ammo_amount
 		);
-		SendFormatMessage(playerid, COLOR_RED, "[ ! ] Dali ste igracu %s paket sa oruzjem %s - ammo: %d.", 
+		SendFormatMessage(playerid, COLOR_RED, "[!] Dali ste igracu %s paket sa oruzjem %s - ammo: %d.", 
 			GetName(targetid), 
 			GetWeaponNameEx(weapon_id),
 			ammo_amount
@@ -695,7 +695,7 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]i", action, vehicleid)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vresetpackages [vehicleid].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package vresetpackages [vehicleid].");
 			return (true);
 		}
 		foreach(new i : V_PACKAGES[vehicleid]) 
@@ -708,7 +708,7 @@ CMD:package(playerid, params[])
 				mysql_fquery(g_SQL, "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][i]);
 			}
 		}
-		SendFormatMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste vozilu id %d obrisali sve weapon pakete.", vehicleid);
+		SendFormatMessage(playerid, COLOR_RED, "[!] Uspjesno ste vozilu id %d obrisali sve weapon pakete.", vehicleid);
 
 		Iter_Clear(V_PACKAGES[vehicleid]);
 	}
@@ -721,13 +721,13 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]i", action, vehicleid)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package checkveh [vehicleid].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package checkveh [vehicleid].");
 			return (true);
 		}
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "The vehicle must be private!");
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] |________ [ %s - Weapon Packages ] ________|", ReturnVehicleName(vehicleid));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] |________ [%s - Weapon Packages] ________|", ReturnVehicleName(vehicleid));
 		foreach(new i : V_PACKAGES[vehicleid]) 
 		{
 			if(VehicleInfo[vehicleid][packWepID][i] != 0)
@@ -748,7 +748,7 @@ CMD:package(playerid, params[])
 		if(vehicleid == -1)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have a vehicle spawned!");
 			
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] |________ [ %s - Weapon Packages ] ________|", ReturnVehicleName(vehicleid));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] |________ [%s - Weapon Packages] ________|", ReturnVehicleName(vehicleid));
 		foreach(new i : V_PACKAGES[vehicleid]) 
 		{
 			if(VehicleInfo[vehicleid][packWepID][i] != 0)
@@ -768,22 +768,22 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]i", action, package_id)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehtake [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package vehtake [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package vehstats.");
 			return (true);
 		}
-		if( vehicleid == INVALID_VEHICLE_ID )
+		if(vehicleid == INVALID_VEHICLE_ID )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
+		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti kod prtljaznika vozila.");
-		if( IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) )
+		if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete to koristiti!");
 		if(!Iter_Contains(V_PACKAGES[vehicleid], package_id))
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Unijeli ste pogresan package_id, na /package vehstats provjeravate vase pakete.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Unijeli ste pogresan package_id, na /package vehstats provjeravate vase pakete.");
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] You took %s weapon package(ammo: %d) from your %s.",
+		va_SendClientMessage(playerid, COLOR_RED, "[!] You took %s weapon package(ammo: %d) from your %s.",
 			GetWeaponNameEx(VehicleInfo[vehicleid][packWepID][package_id]),
 			VehicleInfo[vehicleid][packAmmo][package_id],
 			ReturnVehicleName(VehicleInfo[vehicleid][vModel])
@@ -799,22 +799,22 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]i", action, package_id)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehput [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package vehput [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package stats.");
 			return (true);
 		}
-		if( vehicleid == INVALID_VEHICLE_ID )
+		if(vehicleid == INVALID_VEHICLE_ID )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
+		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti kod prtljaznika vozila.");
-		if( IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) )
+		if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete to koristiti!");
 		if(!Iter_Contains(P_PACKAGES[playerid], package_id))
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] You left %s weapon package(ammo: %d) in your %s.",
+		va_SendClientMessage(playerid, COLOR_RED, "[!] You left %s weapon package(ammo: %d) in your %s.",
 			GetWeaponNameEx(VehicleInfo[vehicleid][packWepID][package_id]),
 			PlayerPackage[playerid][p_amount][package_id],
 			ReturnVehicleName(VehicleInfo[vehicleid][vModel])
@@ -830,34 +830,34 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]ii", action, targetid, package_id)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package give [playerid] [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package give [playerid][package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package stats.");
 			return (true);
 		}
-		if( !Iter_Contains(P_PACKAGES[playerid], package_id))
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ]Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
-		if( PlayerPackage[playerid][packExists][package_id] == 0)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Dogodila se greska, pokusajte ponovo kasnije ili se obratite administraciji."), DeletePlayerPackage(playerid, package_id), Iter_Remove(P_PACKAGES[playerid], package_id);
-		if( targetid == playerid)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ne mozete sebi dati paket oruzja.");
-		if( !ProxDetectorS(5.0, playerid, targetid) )
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Taj igrac nije blizu vas !");
+		if(!Iter_Contains(P_PACKAGES[playerid], package_id))
+			return SendClientMessage(playerid, COLOR_RED, "[!]Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
+		if(PlayerPackage[playerid][packExists][package_id] == 0)
+			return SendClientMessage(playerid, COLOR_RED, "[!] Dogodila se greska, pokusajte ponovo kasnije ili se obratite administraciji."), DeletePlayerPackage(playerid, package_id), Iter_Remove(P_PACKAGES[playerid], package_id);
+		if(targetid == playerid)
+			return SendClientMessage(playerid, COLOR_RED, "[!] Ne mozete sebi dati paket oruzja.");
+		if(!ProxDetectorS(5.0, playerid, targetid))
+			return SendClientMessage(playerid, COLOR_RED, "[!] Taj igrac nije blizu vas !");
 		if(PlayerUnpacking[playerid] == true)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ne mozete to sada, vec raspakujete paket.");
-		if( PlayerInfo[targetid][pLevel] == 1 )
-			return SendMessage(playerid, COLOR_RED, "[ ! ] Ne mozete dati package osobi koja je level 1!");
-		if( Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
-			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac vec ima maximum broj(%d) paketa kod sebe.", MAX_PLAYER_PACKAGES);
-		if( gettimestamp() < quickw_timer[playerid])
+			return SendClientMessage(playerid, COLOR_RED, "[!] Ne mozete to sada, vec raspakujete paket.");
+		if(PlayerInfo[targetid][pLevel] == 1 )
+			return SendMessage(playerid, COLOR_RED, "[!] Ne mozete dati package osobi koja je level 1!");
+		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
+			return va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac vec ima maximum broj(%d) paketa kod sebe.", MAX_PLAYER_PACKAGES);
+		if(gettimestamp() < quickw_timer[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati 2 sekundi.");
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] You gave %s a %s weapon package(ammo: %d).",
+		va_SendClientMessage(playerid, COLOR_RED, "[!] You gave %s a %s weapon package(ammo: %d).",
 			GetName(targetid),
 			package_id,
 			GetWeaponNameEx(PlayerPackage[playerid][p_weapon][package_id]),
 			PlayerPackage[playerid][p_amount][package_id]
 		);
-		va_SendClientMessage(targetid, COLOR_RED, "[ ! ] %s gave you a %s weapon package(ammo: %d).",
+		va_SendClientMessage(targetid, COLOR_RED, "[!] %s gave you a %s weapon package(ammo: %d).",
 			GetName(playerid),
 			GetWeaponNameEx(PlayerPackage[playerid][p_weapon][package_id]),
 			PlayerPackage[playerid][p_amount][package_id]
@@ -878,14 +878,14 @@ CMD:package(playerid, params[])
 		GetPlayerArmour(playerid, get_armor);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package unpackage [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package unpackage [package_id].");
 			SendClientMessage(playerid, COLOR_GRAD2, "[=>] package_id provjeravate na /package stats.");
 			return (true);
 		}
 		if(!Iter_Contains(P_PACKAGES[playerid], package_id) || PlayerPackage[playerid][packExists][package_id] == 0)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
 		if(PlayerUnpacking[playerid] == true)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vec raspakujete paket.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Vec raspakujete paket.");
 		// take_position
 		GetPlayerPos(playerid,x,y,z);
 		get_PlayerPos[playerid][0] = x,
@@ -908,7 +908,7 @@ CMD:package(playerid, params[])
 		SendClientMessage(playerid, COLOR_PURPLE, buffer);
 		SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 15, 10000);
 		
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukolike se pomjerite funkcija koju obavljate ce se prekinuti!");
+		SendClientMessage(playerid, COLOR_RED, "[!] Ukolike se pomjerite funkcija koju obavljate ce se prekinuti!");
 
 		// unpack_package
   		ApplyAnimationEx(playerid, "BOMBER", "BOM_Plant", 4.0, 0, 0, 0, 0, 0);
@@ -920,9 +920,9 @@ CMD:package(playerid, params[])
 		new buffer[284],
 			package_id = get_PackageID[playerid];
 		if(PackageOrdered[playerid] == false || package_id == INVALID_PACKAGE_ID)
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemate narucenu posiljku, prvo je morate naruciti da bi ju provijerili.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Nemate narucenu posiljku, prvo je morate naruciti da bi ju provijerili.");
 
-		format(buffer, sizeof(buffer), "{3C95C2}[ WAREHOUSE - WEAPON PACKAGE ]\n\nWeapon: %s.\nPackage Ammo: %d (ammo).\nPackage Price: %s.\nFaction: %s.",
+		format(buffer, sizeof(buffer), "{3C95C2}[WAREHOUSE - WEAPON PACKAGE]\n\nWeapon: %s.\nPackage Ammo: %d (ammo).\nPackage Price: %s.\nFaction: %s.",
 			GetWeaponNameEx(PackageData[package_id][PackageWeapon]),
 			PackageData[package_id][PackageAmount],
 			FormatNumber(get_PackagePrice[playerid]),
@@ -939,10 +939,10 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]i", action, targetid)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package checkplayer [targetid].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package checkplayer [targetid].");
 			return (true);
 		}
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] |________ [ %s - Weapon Packages ] ________|", GetName(targetid));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] |________ [%s - Weapon Packages] ________|", GetName(targetid));
 		foreach(new i : P_PACKAGES[targetid]) 
 		{
 			if(PlayerPackage[targetid][p_weapon][i] != 0)
@@ -964,7 +964,7 @@ CMD:package(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[25]i", action, targetid)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package resetpackages [targetid].");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /package resetpackages [targetid].");
 			return (true);
 		}
 		foreach(new i : P_PACKAGES[targetid])
@@ -973,13 +973,13 @@ CMD:package(playerid, params[])
 				DeletePlayerPackage(targetid, i);
 		}
 		Iter_Clear(P_PACKAGES[targetid]);
-		SendFormatMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste igracu %s obrisali sve weapon pakete.", GetName(targetid));
-		va_SendClientMessage(targetid, COLOR_RED, "[ ! ] Administrator %s vam je obrisao sve weapon pakete.", GetName(playerid));
+		SendFormatMessage(playerid, COLOR_RED, "[!] Uspjesno ste igracu %s obrisali sve weapon pakete.", GetName(targetid));
+		va_SendClientMessage(targetid, COLOR_RED, "[!] Administrator %s vam je obrisao sve weapon pakete.", GetName(playerid));
 	}
 
 	if(strcmp(action, "stats", true) == 0) 
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] |________ [ %s - Weapon Packages ] ________|", GetName(playerid));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] |________ [%s - Weapon Packages] ________|", GetName(playerid));
 		foreach(new i : P_PACKAGES[playerid]) 
 		{
 			if(PlayerPackage[playerid][p_weapon][i] != 0)

@@ -57,9 +57,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_WEAPONS_MELEE:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
-            if (AC_GetPlayerMoney(playerid) < MeleeWeapons[listitem][mwPrice]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", MeleeWeapons[listitem][mwPrice]);
+            if(AC_GetPlayerMoney(playerid) < MeleeWeapons[listitem][mwPrice]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", MeleeWeapons[listitem][mwPrice]);
 
             PlayerToIllegalBudgetMoney(playerid, MeleeWeapons[listitem][mwPrice]);
             AC_GivePlayerWeapon(playerid, MeleeWeapons[listitem][mwWeaponId], 1, true, false);
@@ -82,8 +82,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:buymelee(playerid, params[])
 {
-    if (PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komandu mogu koristiti level 2+ igraci!");
-    if (!IsPlayerInRangeOfPoint(playerid, 8.0, 2429.2859, -1953.6417, 3013.5000)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u Pawn Shopu!");
+    if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komandu mogu koristiti level 2+ igraci!");
+    if(!IsPlayerInRangeOfPoint(playerid, 8.0, 2429.2859, -1953.6417, 3013.5000)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u Pawn Shopu!");
 
     new string[256+1] = "Oruzje\tCijena\n";
     new row[32+1];

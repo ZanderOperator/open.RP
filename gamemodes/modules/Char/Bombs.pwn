@@ -22,11 +22,11 @@ enum E_PLAYER_BOMB_DATA {
 	bool:bPlanted,		// Da li je bomba postavljena?
 	bTime,				// Vrijeme nakon kojeg ce bomba eksplodirati
 	bObject,			// Objekt bombe
-	Float:bPos[ 3 ],	// XYZ pozicija bombe
+	Float:bPos[3],	// XYZ pozicija bombe
 	Timer:bTimer		// Timer id
 }
 new
-	BombInfo[ MAX_PLAYERS ][ E_PLAYER_BOMB_DATA ];
+	BombInfo[MAX_PLAYERS][E_PLAYER_BOMB_DATA];
 	
 new
 	Bit1:r_BombAccept<MAX_PLAYERS>		= { Bit1:false, ... },
@@ -43,19 +43,19 @@ new
 */
 stock ResetBombArrays(playerid)
 {
-	if(BombInfo[ playerid ][ bPlanted ])
-		stop BombInfo[ playerid ][ bTimer ];
-	BombInfo[ playerid ][ bType ]		= -1;
-	BombInfo[ playerid ][ bPlanted ]	= false;
-	BombInfo[ playerid ][ bTime	]		= 0;
-	BombInfo[ playerid ][ bVehicleid ]	= INVALID_VEHICLE_ID;
-	if( IsValidDynamicObject(BombInfo[ playerid ][ bObject ]) ) {
-		DestroyDynamicObject(BombInfo[ playerid ][ bObject ]);
-		BombInfo[ playerid ][ bObject ] = INVALID_OBJECT_ID;
+	if(BombInfo[playerid][bPlanted])
+		stop BombInfo[playerid][bTimer];
+	BombInfo[playerid][bType]		= -1;
+	BombInfo[playerid][bPlanted]	= false;
+	BombInfo[playerid][bTime	]		= 0;
+	BombInfo[playerid][bVehicleid]	= INVALID_VEHICLE_ID;
+	if(IsValidDynamicObject(BombInfo[playerid][bObject])) {
+		DestroyDynamicObject(BombInfo[playerid][bObject]);
+		BombInfo[playerid][bObject] = INVALID_OBJECT_ID;
 	}
-	BombInfo[ playerid ][ bPos ][ 0 ]	= 0.0;
-	BombInfo[ playerid ][ bPos ][ 1 ]	= 0.0;
-	BombInfo[ playerid ][ bPos ][ 2 ]	= 0.0;
+	BombInfo[playerid][bPos][0]	= 0.0;
+	BombInfo[playerid][bPos][1]	= 0.0;
+	BombInfo[playerid][bPos][2]	= 0.0;
 	
 	Bit1_Set( r_BombAccept, playerid, false);
 	Bit4_Set( r_BombType, playerid, 0);
@@ -63,42 +63,42 @@ stock ResetBombArrays(playerid)
 }
 stock CreateBomb(playerid, bomb_type = BOMB_TYPE_C4_TIME, bomb_time = MIN_BOMB_TIME, bomb_veh = INVALID_VEHICLE_ID)
 {
-	BombInfo[ playerid ][ bType ]		= bomb_type;
-	if( bomb_type == BOMB_TYPE_C4_TIME )
-		BombInfo[ playerid ][ bTimer ] = repeat OnTimerBombTicks(playerid);
-	BombInfo[ playerid ][ bPlanted ]	= true;
-	BombInfo[ playerid ][ bTime	]		= bomb_time;
-	BombInfo[ playerid ][ bVehicleid ]	= bomb_veh;
-	if( bomb_type == BOMB_TYPE_CAR )
+	BombInfo[playerid][bType]		= bomb_type;
+	if(bomb_type == BOMB_TYPE_C4_TIME )
+		BombInfo[playerid][bTimer] = repeat OnTimerBombTicks(playerid);
+	BombInfo[playerid][bPlanted]	= true;
+	BombInfo[playerid][bTime	]		= bomb_time;
+	BombInfo[playerid][bVehicleid]	= bomb_veh;
+	if(bomb_type == BOMB_TYPE_CAR )
 		Bit1_Set( gr_VehicleAttachedBomb, bomb_veh, true );
-	if( bomb_veh == INVALID_VEHICLE_ID ) {
-		GetPlayerPos(playerid, BombInfo[ playerid ][ bPos ][ 0 ], BombInfo[ playerid ][ bPos ][ 1 ], BombInfo[ playerid ][ bPos ][ 2 ]);
-		BombInfo[ playerid ][ bObject ] = CreateDynamicObject(1252, BombInfo[ playerid ][ bPos ][ 0 ], BombInfo[ playerid ][ bPos ][ 1 ], BombInfo[ playerid ][ bPos ][ 2 ], 0.0, 0.0, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);
+	if(bomb_veh == INVALID_VEHICLE_ID ) {
+		GetPlayerPos(playerid, BombInfo[playerid][bPos][0], BombInfo[playerid][bPos][1], BombInfo[playerid][bPos][2]);
+		BombInfo[playerid][bObject] = CreateDynamicObject(1252, BombInfo[playerid][bPos][0], BombInfo[playerid][bPos][1], BombInfo[playerid][bPos][2], 0.0, 0.0, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);
 	}
 	return 1;
 }
 stock DetonateBomb(playerid)
 {
-	if( !BombInfo[ playerid ][ bPlanted ] ) return 0;
+	if(!BombInfo[playerid][bPlanted] ) return 0;
 	
 	new 
 		Float: bX, 
 		Float: bY, 
 		Float: bZ;
 
-	if( BombInfo[ playerid ][ bVehicleid ] != INVALID_VEHICLE_ID ) 
+	if(BombInfo[playerid][bVehicleid] != INVALID_VEHICLE_ID ) 
 	{
-		GetVehiclePos(BombInfo[ playerid ][ bVehicleid ], bX, bY, bZ);
+		GetVehiclePos(BombInfo[playerid][bVehicleid], bX, bY, bZ);
   		CreateExplosion(bX, bY, bZ, 3, 10.0);
-		SetVehicleHealth(BombInfo[ playerid ][ bVehicleid ], 250.0);
-		UpdateVehicleDamageStatus(BombInfo[ playerid ][ bVehicleid ], 16909060, 16909060, 5, 15);
+		SetVehicleHealth(BombInfo[playerid][bVehicleid], 250.0);
+		UpdateVehicleDamageStatus(BombInfo[playerid][bVehicleid], 16909060, 16909060, 5, 15);
 	}
 	else
 	{
-		bX = BombInfo[ playerid ][ bPos ][ 0 ];
-		bY = BombInfo[ playerid ][ bPos ][ 1 ];
-		bZ = BombInfo[ playerid ][ bPos ][ 2 ];
-		CreateExplosion(BombInfo[ playerid ][ bPos ][ 0 ], BombInfo[ playerid ][ bPos ][ 1 ], BombInfo[ playerid ][ bPos ][ 2 ], 6, 450.0);
+		bX = BombInfo[playerid][bPos][0];
+		bY = BombInfo[playerid][bPos][1];
+		bZ = BombInfo[playerid][bPos][2];
+		CreateExplosion(BombInfo[playerid][bPos][0], BombInfo[playerid][bPos][1], BombInfo[playerid][bPos][2], 6, 450.0);
 	}
  	#if defined MODULE_DEATH
 	new 
@@ -107,7 +107,7 @@ stock DetonateBomb(playerid)
 		Float: armour;
 	foreach (new i : Player)
 	{
-		if (IsPlayerInRangeOfPoint(i, 20.0, bX, bY, bZ ))
+		if(IsPlayerInRangeOfPoint(i, 20.0, bX, bY, bZ ))
 		{
 			GetPlayerHealth(i, health);
 			GetPlayerArmour(i, armour);
@@ -121,9 +121,9 @@ stock DetonateBomb(playerid)
 
 timer OnTimerBombTicks[1000](playerid)
 {
-	if( --BombInfo[ playerid ][ bTime ] <= 0 ) {
+	if(--BombInfo[playerid][bTime] <= 0 ) {
 		DetonateBomb(playerid);
-		stop BombInfo[ playerid ][ bTimer ];
+		stop BombInfo[playerid][bTimer];
 	}
 }
 
@@ -142,26 +142,26 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_BOMB: 
 		{
-			if( !response ) return 1;
+			if(!response ) return 1;
 			switch(listitem) 
 			{
 				case 0: 
 				{
-					if( AC_GetPlayerMoney(playerid) < BOMB_C4_TIMER_PRICE ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za to!");
+					if(AC_GetPlayerMoney(playerid) < BOMB_C4_TIMER_PRICE ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za to!");
 					PlayerToIllegalBudgetMoney(playerid, BOMB_C4_TIMER_PRICE);
 					Bit4_Set( r_BombType, playerid, BOMB_TYPE_C4_TIME );
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili bombu na timer! Koristite /bomb plant za njeno postavljanje!");
 				}
 				case 1: 
 				{
-					if( AC_GetPlayerMoney(playerid) < BOMB_C4_TRIGGER_PRICE ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za to!");
+					if(AC_GetPlayerMoney(playerid) < BOMB_C4_TRIGGER_PRICE ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za to!");
 					PlayerToIllegalBudgetMoney(playerid, BOMB_C4_TRIGGER_PRICE);
 					Bit4_Set( r_BombType, playerid, BOMB_TYPE_C4_TRIG );
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili bombu na okidac! Koristite /bomb plant za njeno postavljanje!");
 				}
 				case 2: 
 				{
-					if( AC_GetPlayerMoney(playerid) < BOMB_CAR_PRICE ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za to!");
+					if(AC_GetPlayerMoney(playerid) < BOMB_CAR_PRICE ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za to!");
 					PlayerToIllegalBudgetMoney(playerid, BOMB_CAR_PRICE);
 					Bit4_Set( r_BombType, playerid, BOMB_TYPE_CAR );
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili bombu za vozilo! Koristite /bomb plant za njeno postavljanje!");
@@ -175,8 +175,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if( PRESSED(KEY_FIRE) ) {
-		if( BombInfo[ playerid ][ bPlanted ] && BombInfo[ playerid ][ bType ] == BOMB_TYPE_C4_TRIG ) 
+	if(PRESSED(KEY_FIRE)) {
+		if(BombInfo[playerid][bPlanted] && BombInfo[playerid][bType] == BOMB_TYPE_C4_TRIG ) 
 		{
 			if(AC_GetPlayerWeapon(playerid) == WEAPON_BOMB)
 			{
@@ -201,29 +201,29 @@ CMD:bomb(playerid, params[])
 {
 	new
 		param[8];
-	if( sscanf( params, "s[8] ", param) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb [buy/approve/plant]");
-	if( !strcmp(param, "buy", true) ) 
+	if(sscanf( params, "s[8] ", param)) return SendClientMessage(playerid, COLOR_RED, "[?]: /bomb [buy/approve/plant]");
+	if(!strcmp(param, "buy", true)) 
 	{
-		if( !IsPlayerInRangeOfPoint(playerid, 8.0, 2116.0029, 182.7116, 0.4943) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta gdje se kupuju bombe!");
-		if( !Bit1_Get( r_BombAccept, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate traziti admina level 4+ za dopustenje!");
-		if( !PlayerFaction[playerid][pMember] || !PlayerFaction[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u official organizaciji da kupujete bombu!");
+		if(!IsPlayerInRangeOfPoint(playerid, 8.0, 2116.0029, 182.7116, 0.4943)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta gdje se kupuju bombe!");
+		if(!Bit1_Get( r_BombAccept, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate traziti admina level 4+ za dopustenje!");
+		if(!PlayerFaction[playerid][pMember] || !PlayerFaction[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u official organizaciji da kupujete bombu!");
 		ShowPlayerDialog(playerid, DIALOG_BOMB, DIALOG_STYLE_LIST, "KUPOVINA BOMBI", "C4(Timer) [35.000$]\nC4(Trigger) [40.000$]\nCar Bomb[25.000$]", "Choose", "Abort");
 	}
-	else if( !strcmp(param, "approve", true) ) 
+	else if(!strcmp(param, "approve", true)) 
 	{
-		if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+		if(PlayerInfo[playerid][pAdmin] < 4 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 		new 
 			giveplayerid;
-		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb approve [dio imena/playerid]");
-		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos playerida!");
+		if(sscanf(params, "s[8]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /bomb approve [dio imena/playerid]");
+		if(giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos playerida!");
 		Bit1_Set( r_BombAccept, giveplayerid, true );
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s vam je dozvolio postavljanje bombe!", GetName(playerid, false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin %s vam je dozvolio postavljanje bombe!", GetName(playerid, false));
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Odobrili ste %s postavljanje bombe!", GetName(giveplayerid, false));		
 	}
-	else if( !strcmp(param, "plant", true) ) 
+	else if(!strcmp(param, "plant", true)) 
 	{
-		if( !Bit1_Get( r_BombAccept, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate traziti admina level 4+ za dopustenje!");
-		if( !Bit4_Get( r_BombType, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo kupiti bombu!");
+		if(!Bit1_Get( r_BombAccept, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate traziti admina level 4+ za dopustenje!");
+		if(!Bit4_Get( r_BombType, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo kupiti bombu!");
 		new
 			bomb_type = Bit4_Get( r_BombType, playerid );
 		switch(bomb_type) 
@@ -232,8 +232,8 @@ CMD:bomb(playerid, params[])
 			{
 				new
 					time;
-				if( sscanf( params, "s[8]i", param, time ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb plant [vrijeme (u sekundama)]");
-				if( time < MIN_BOMB_TIME || time > MAX_BOMB_TIME ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Timer na bombi mora biti u rasponu od %d do %d.", MIN_BOMB_TIME, MAX_BOMB_TIME); 
+				if(sscanf( params, "s[8]i", param, time )) return SendClientMessage(playerid, COLOR_RED, "[?]: /bomb plant [vrijeme (u sekundama)]");
+				if(time < MIN_BOMB_TIME || time > MAX_BOMB_TIME ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Timer na bombi mora biti u rasponu od %d do %d.", MIN_BOMB_TIME, MAX_BOMB_TIME); 
 				CreateBomb(playerid, BOMB_TYPE_C4_TIME, time, INVALID_VEHICLE_ID);
 			}
 			case BOMB_TYPE_CAR: 

@@ -32,8 +32,8 @@ static
     // Passanje listitem odabira za factionbank dialog mayora
     FactionListID[MAX_PLAYERS],
     // Varijabla koja sprema u kojoj pod kojim listitemom je koja fakcija (NPR ako je 2 ilegalna onda ce ovako izgledat)
-    // [0] [1] -> PD
-    // [1] [3] -> FD
+    // [0][1] -> PD
+    // [1][3] -> FD
     FactionToList[MAX_PLAYERS][10],
     GovMDC[MAX_PLAYERS] = {INVALID_PLAYER_ID, ...};
 
@@ -63,7 +63,7 @@ forward OnCityLoaded();
 public OnCityLoaded()
 {
     new rows = cache_num_rows();
-    if (!rows) return printf( "MySQL Report: No city info exist to load.");
+    if(!rows) return printf( "MySQL Report: No city info exist to load.");
 
     cache_get_value_name_int(0, "budget", CityInfo[cBudget]);
     cache_get_value_name_int(0, "illegalbudget", CityInfo[cIllegalBudget]);
@@ -112,7 +112,7 @@ stock ShowGovMDC(playerid, targetid)
 
     new bool:property = false,
         bool:bizz = false;
-    if (PlayerKeys[targetid][pHouseKey] != INVALID_HOUSE_ID)
+    if(PlayerKeys[targetid][pHouseKey] != INVALID_HOUSE_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Kuca: %s ((%d)) | Vrijednost nekretnine: %d$\n",
             HouseInfo[PlayerKeys[targetid][pHouseKey]][hAdress],
@@ -122,7 +122,7 @@ stock ShowGovMDC(playerid, targetid)
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
-    if (PlayerKeys[targetid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+    if(PlayerKeys[targetid][pComplexRoomKey] != INVALID_COMPLEX_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Stan: %s ((%d)) | Iznos najma: %d$\n",
             ComplexRoomInfo[PlayerKeys[targetid][pComplexRoomKey]][cAdress],
@@ -132,7 +132,7 @@ stock ShowGovMDC(playerid, targetid)
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
-    if (PlayerKeys[targetid][pComplexKey] != INVALID_COMPLEX_ID)
+    if(PlayerKeys[targetid][pComplexKey] != INVALID_COMPLEX_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Complex stanova: %s ((%d)) | Vrijednost nekretnine: %d$ | Stanje blagajne: %d$\n",
             ComplexInfo[PlayerKeys[targetid][pComplexKey]][cName],
@@ -143,13 +143,13 @@ stock ShowGovMDC(playerid, targetid)
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
-    if (property == false)
+    if(property == false)
     {
         format(motd, sizeof(motd),"{DCE4ED}Ne posjeduje nekretninu.\n");
         strcat(govDialog, motd, sizeof(govDialog));
     }
     new bizzid = PlayerKeys[targetid][pBizzKey];
-    if (bizzid != INVALID_BIZNIS_ID)
+    if(bizzid != INVALID_BIZNIS_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Biznis: %s ((%d)) | Vrijednost firme: %d$ | Stanje blagajne u firmi: %d$",
             BizzInfo[bizzid][bMessage],
@@ -160,7 +160,7 @@ stock ShowGovMDC(playerid, targetid)
         strcat(govDialog, motd, sizeof(govDialog));
         bizz = true;
     }
-    if (bizz == false)
+    if(bizz == false)
     {
         format(motd, sizeof(motd),"{DCE4ED}Ne posjeduje biznis.");
         strcat(govDialog, motd, sizeof(govDialog));
@@ -199,7 +199,7 @@ forward OnPlayerTransactionFinish(playerid, const searchednick[]);
 public OnPlayerTransactionFinish(playerid, const searchednick[])
 {
     new rows = cache_num_rows();
-    if (!rows) return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nije pronadjena trazena osoba.");
+    if(!rows) return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nije pronadjena trazena osoba.");
 
     // TODO: optimise memory usage by removing unecessary strings
     new
@@ -219,7 +219,7 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
     for (new i = 0; i < rows; i++ )
     {
         lenleft = sizeof(dialogstring) - strlen(dialogstring);
-        if (lenleft < sizeof(motd))
+        if(lenleft < sizeof(motd))
             break;
 
         cache_get_value_name_int(i,    "id"          ,    sqlid);
@@ -274,7 +274,7 @@ forward OnTransListQueryFinish(playerid, logtype);
 public OnTransListQueryFinish(playerid, logtype)
 {
     new rows = cache_num_rows();
-    if (!rows) return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nema nijednog unosa za trazeni upit.");
+    if(!rows) return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nema nijednog unosa za trazeni upit.");
 
     // TODO: optimise memory usage by removing unecessary strings
     new dialogstring[4096],
@@ -292,7 +292,7 @@ public OnTransListQueryFinish(playerid, logtype)
     for (new i = 0; i < rows; i++ )
     {
         lenleft = sizeof(dialogstring) - strlen(dialogstring);
-        if (lenleft < sizeof(motd))
+        if(lenleft < sizeof(motd))
             break;
 
         cache_get_value_name_int(i,    "id"          ,     sqlid);
@@ -359,7 +359,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_CITY_MAIN:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -386,7 +386,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BIZNIS:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 
             switch (listitem)
             {
@@ -394,51 +394,51 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 { // Bizz Info
                     new 
                         biznis = Player_InfrontBizz(playerid);
-                    if (biznis == INVALID_BIZNIS_ID) 
+                    if(biznis == INVALID_BIZNIS_ID) 
                         return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
-                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Bizz ID: %d | Bizz MySQL ID: %d", biznis, BizzInfo[biznis][bSQLID]);
-                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
+                    va_SendClientMessage(playerid, COLOR_RED, "[!] Bizz ID: %d | Bizz MySQL ID: %d", biznis, BizzInfo[biznis][bSQLID]);
+                    va_SendClientMessage(playerid, COLOR_RED, "[!] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
 
-                    if (BizzInfo[biznis][bPriceProd] == 0)
-                        return SendClientMessage(playerid, COLOR_RED, "[ ! ] Biznis nema definiranu cijenu produkata.");
+                    if(BizzInfo[biznis][bPriceProd] == 0)
+                        return SendClientMessage(playerid, COLOR_RED, "[!] Biznis nema definiranu cijenu produkata.");
 
                     va_SendClientMessage(playerid, COLOR_WHITE, "Cijena po produktu: %d", BizzInfo[biznis][bPriceProd]);
 
                     new
                         Float:prodammount = BizzInfo[biznis][bTill] / BizzInfo[biznis][bPriceProd],
                         receiving_packages = floatround(prodammount, floatround_floor);
-                    if (receiving_packages == 0)
+                    if(receiving_packages == 0)
                     {
-                        SendClientMessage(playerid, COLOR_RED, "[ ! ] Biznis nije spreman primiti nove produkte (Financijska kriza).");
+                        SendClientMessage(playerid, COLOR_RED, "[!] Biznis nije spreman primiti nove produkte (Financijska kriza).");
                     }
                     else
                     {
                         va_SendClientMessage(playerid, COLOR_WHITE, "[INFO] Biznis je spreman primiti %d paketa produkata.", receiving_packages);
                     }
-                    if (BizzInfo[biznis][bLocked])
-                        SendClientMessage(playerid, COLOR_RED, "[ ! ] Zakljucano");
+                    if(BizzInfo[biznis][bLocked])
+                        SendClientMessage(playerid, COLOR_RED, "[!] Zakljucano");
                     else
-                        SendClientMessage(playerid, COLOR_RED, "[ ! ] Otkljucano");
+                        SendClientMessage(playerid, COLOR_RED, "[!] Otkljucano");
                 }
                 case 1:
                 { // Stavljanje novca na biznis blagajnu
                     new 
                         biznis = Player_InfrontBizz(playerid);
-                    if (biznis == INVALID_BIZNIS_ID) 
+                    if(biznis == INVALID_BIZNIS_ID) 
                         return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
-                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
+                    va_SendClientMessage(playerid, COLOR_RED, "[!] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
                     ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Input", "Exit");
                 }
                 case 2:
                 { // Dizanje novca iz biznis blagajne
                     new 
                         biznis = Player_InfrontBizz(playerid);
-                    if (biznis == INVALID_BIZNIS_ID) 
+                    if(biznis == INVALID_BIZNIS_ID) 
                         return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
-                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
+                    va_SendClientMessage(playerid, COLOR_RED, "[!] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
                     ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Input", "Exit");
                 }
             }
@@ -446,17 +446,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BIZDEPOSIT:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
             new 
                 biznis = Player_InfrontBizz(playerid);
-            if (biznis == INVALID_BIZNIS_ID) 
+            if(biznis == INVALID_BIZNIS_ID) 
                 return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
             new
                 putMoney = strval(inputtext);
-            if (putMoney > 0)
+            if(putMoney > 0)
             {
-                if (AC_GetPlayerMoney(playerid) < putMoney) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+                if(AC_GetPlayerMoney(playerid) < putMoney) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 
                 PlayerToBusinessMoney(playerid, biznis, putMoney); // Novac od Mayora ide u biznis
                 SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste stavili %d$ u blagajnu biznisa %s!", putMoney, BizzInfo[biznis][bMessage]);
@@ -479,17 +479,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BIZWITHDRAW:
         { // Dizanje novca iz biznis blagajne
-            if (!response) 
+            if(!response) 
                 return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
             new 
                 biznis = Player_InfrontBizz(playerid);
-            if (biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
+            if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
             new
                 takeMoney = strval(inputtext);
-            if (takeMoney > 0)
+            if(takeMoney > 0)
             {
-                if (BizzInfo[biznis][bTill] < takeMoney) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "U blagajni biznisa nema toliko novca. Stanje blagajne: %d$", BizzInfo[biznis][bTill]);
+                if(BizzInfo[biznis][bTill] < takeMoney) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "U blagajni biznisa nema toliko novca. Stanje blagajne: %d$", BizzInfo[biznis][bTill]);
 
                 BusinessToPlayerMoney(playerid, biznis, takeMoney); // Novac iz biznisa ide u ruke Mayora
                 SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste digli %d$ iz blagajne biznisa %s!", takeMoney, BizzInfo[biznis][bMessage]);
@@ -512,7 +512,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BUDGET:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 
             switch (listitem)
             {
@@ -542,10 +542,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BUDGET_TAKE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
 
             new takeMoney = strval(inputtext);
-            if (0 <= takeMoney <= CityInfo[cBudget])
+            if(0 <= takeMoney <= CityInfo[cBudget])
             {
                 SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste %d $ iz proracuna!", takeMoney);
                 BudgetToPlayerMoney(playerid, takeMoney); // Novac od budgeta ide Mayoru
@@ -570,13 +570,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BUDGET_PUT:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
 
             new
                 takeMoney = strval(inputtext);
-            if (takeMoney > 0)
+            if(takeMoney > 0)
             {
-                if (AC_GetPlayerMoney(playerid) < takeMoney) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+                if(AC_GetPlayerMoney(playerid) < takeMoney) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 
                 PlayerToBudgetMoney(playerid, takeMoney); // Novac od Mayora ide u budget
                 SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste %d$ u proracun!", takeMoney);
@@ -600,11 +600,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             return 1;
         }
         case DIALOG_CITY_TAX: {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 
             new
                 newTax = strval(inputtext);
-            if (newTax < 1 || newTax > 100)
+            if(newTax < 1 || newTax > 100)
             {
                 SendClientMessage(playerid, COLOR_RED, "Porez moze biti od 1 do 100 posto!");
                 return 1;
@@ -619,7 +619,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_FACTIONBANK:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
                 ResetFactionListIDs(playerid);
@@ -637,7 +637,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FACTIONBANK_OPTIONS:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
                 ResetFactionListIDs(playerid);
@@ -666,7 +666,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FACTIONBANK_DEPOSIT:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
                 ResetFactionListIDs(playerid);
@@ -677,11 +677,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new fid = FactionToList[playerid][FactionListID[playerid]],
                 money = strval(inputtext);
 
-            if (money < 1) return SendClientMessage(playerid, COLOR_RED, "Svota novca ne moze biti manja od 1$");
-            if (money > AC_GetPlayerMoney(playerid)) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novaca u ruci!");
+            if(money < 1) return SendClientMessage(playerid, COLOR_RED, "Svota novca ne moze biti manja od 1$");
+            if(money > AC_GetPlayerMoney(playerid)) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novaca u ruci!");
 
             PlayerToFactionMoney(playerid, FactionInfo[fid][fType], money);
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste stavili %d$ na %s Faction Bank.", money, FactionInfo[fid][fName]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste stavili %d$ na %s Faction Bank.", money, FactionInfo[fid][fName]);
 
             // Log
             Log_Write("logfiles/faction_bank.txt", "(%s) Mayor %s (SQLID:%d) deposited %d$ in %s Faction Bank.", // Opet imas 6 varijabli a 5 ispisa
@@ -696,7 +696,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_FACTIONBANK_WITHDRAW:
         {
-            if (!response)
+            if(!response)
             {
                 ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
                 ResetFactionListIDs(playerid);
@@ -707,11 +707,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new
                 fid = FactionToList[playerid][FactionListID[playerid]],
                 money = strval(inputtext);
-            if (money < 1) return SendClientMessage(playerid, COLOR_RED, "Svota novca ne moze biti manja od 1$");
-            if (money > FactionInfo[fid][fFactionBank]) return SendClientMessage(playerid, COLOR_RED, "Ne postoji tolika svota novaca u tom Faction Banku!");
+            if(money < 1) return SendClientMessage(playerid, COLOR_RED, "Svota novca ne moze biti manja od 1$");
+            if(money > FactionInfo[fid][fFactionBank]) return SendClientMessage(playerid, COLOR_RED, "Ne postoji tolika svota novaca u tom Faction Banku!");
 
             FactionToPlayerMoney(playerid, FactionInfo[fid][fType], money);
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste digli %d$ sa %s Faction Bank.", money, FactionInfo[fid][fName]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste digli %d$ sa %s Faction Bank.", money, FactionInfo[fid][fName]);
 
             // Log
             Log_Write("logfiles/faction_bank.txt", "(%s) Mayor %s (SQLID:%d) withdrawed %d$ from %s Faction Bank.",
@@ -732,7 +732,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_LIST_TRANSACTIONS:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -752,17 +752,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_TRANSACTIONS_INPUT:
         {
-            if (!IsValidNick(inputtext)) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli pravilno ime i prezime osobe!");
+            if(!IsValidNick(inputtext)) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli pravilno ime i prezime osobe!");
 
             CheckPlayerTransactions(playerid, inputtext);
         }
         case DIALOG_GOVMDC:
         {
-            if (GovMDC[playerid] == INVALID_PLAYER_ID)
+            if(GovMDC[playerid] == INVALID_PLAYER_ID)
             {
                 return 1;
             }
-            if (response)
+            if(response)
             { // Ako pritisne Pregled transakcija
                 CheckPlayerTransactions(playerid, GetName(GovMDC[playerid], false));
                 GovMDC[playerid] = INVALID_PLAYER_ID;
@@ -789,19 +789,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:setcity(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste ovlasteni!");
+    if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste ovlasteni!");
 
     new
         pick[8],
         moneys;
 
-    if (sscanf(params, "s[8]", pick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity [budget/ibudget/tax]");
+    if(sscanf(params, "s[8]", pick)) return SendClientMessage(playerid, COLOR_RED, "[?]: : /setcity [budget/ibudget/tax]");
 
-    if (!strcmp(pick, "budget", true))
+    if(!strcmp(pick, "budget", true))
     {
-        if (sscanf(params, "s[8]i", pick, moneys))
+        if(sscanf(params, "s[8]i", pick, moneys))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity budget [money]");
+            SendClientMessage(playerid, COLOR_RED, "[?]: : /setcity budget [money]");
             va_SendClientMessage(playerid, COLOR_GREY, "[PRORACUN]: Stanje: %d$", CityInfo[cBudget]);
             return 1;
         }
@@ -810,25 +810,25 @@ CMD:setcity(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE city SET budget = '%d' WHERE 1", CityInfo[cBudget]);
         return 1;
     }
-    else if (!strcmp(pick, "tax", true))
+    else if(!strcmp(pick, "tax", true))
     {
-        if (sscanf(params, "s[8]i", pick, moneys))
+        if(sscanf(params, "s[8]i", pick, moneys))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity tax [money]");
+            SendClientMessage(playerid, COLOR_RED, "[?]: : /setcity tax [money]");
             va_SendClientMessage(playerid, COLOR_GREY, "[PRORACUN]: Stanje: %d$", CityInfo[cBudget]);
             return 1;
         }
-        if (1 > moneys > 100) return SendClientMessage(playerid, COLOR_WHITE, "Porez moze biti 1 - 100 posto");
+        if(1 > moneys > 100) return SendClientMessage(playerid, COLOR_WHITE, "Porez moze biti 1 - 100 posto");
 
         CityInfo[cTax] = moneys;
         mysql_fquery(g_SQL, "UPDATE city SET tax = '%d' WHERE 1", CityInfo[cTax]);
         return 1;
     }
-    else if (!strcmp(pick, "ibudget", true))
+    else if(!strcmp(pick, "ibudget", true))
     {
-        if (sscanf(params, "s[8]i", pick, moneys))
+        if(sscanf(params, "s[8]i", pick, moneys))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity ibudget [money]");
+            SendClientMessage(playerid, COLOR_RED, "[?]: : /setcity ibudget [money]");
             va_SendClientMessage(playerid, COLOR_GREY, "[ILEGALNI PRORACUN]: Stanje: %d$", CityInfo[cIllegalBudget]);
             return 1;
         }
@@ -841,8 +841,8 @@ CMD:setcity(playerid, params[])
 
 CMD:city(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    // if (!IsAtBank(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
+    if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    // if(!IsAtBank(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
 
     ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
     return 1;
@@ -850,13 +850,13 @@ CMD:city(playerid, params[])
 
 CMD:charity(playerid, params[])
 {
-    if (PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Samo igraci level 3+ mogu donirati!");
+    if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Samo igraci level 3+ mogu donirati!");
 
     new
         pay, string[128];
-    if (sscanf(params, "i", pay)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /charity [novci]");
-    if (pay < 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete donirati manje novca!");
-    if (pay > AC_GetPlayerMoney(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete vise donirati nego sto imate novca!");
+    if(sscanf(params, "i", pay)) return SendClientMessage(playerid, COLOR_RED, "[?]: /charity [novci]");
+    if(pay < 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete donirati manje novca!");
+    if(pay > AC_GetPlayerMoney(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete vise donirati nego sto imate novca!");
 
     PlayerToBudgetMoney(playerid, pay);
     format(string, sizeof(string), "**[GOV FINANCE/ IM] %s je izvrsio uplatu na GP u vrijednosti od %d $", GetName(playerid, true), pay);
@@ -879,32 +879,32 @@ CMD:finance(playerid, params[])
     new pick[10],
         fid = PlayerFaction[playerid][pMember];
     // TODO: fid bounds check
-    if (FactionInfo[fid][fType] != FACTION_TYPE_LEGAL) return SendClientMessage(playerid, COLOR_RED, "Niste pripadnik Los Santos Govermenta!");
-    if (sscanf(params, "s[10]", pick))
+    if(FactionInfo[fid][fType] != FACTION_TYPE_LEGAL) return SendClientMessage(playerid, COLOR_RED, "Niste pripadnik Los Santos Govermenta!");
+    if(sscanf(params, "s[10]", pick))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /finance [opcija]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] check, delete");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /finance [opcija]");
+        SendClientMessage(playerid, COLOR_RED, "[!] check, delete");
         return 1;
     }
-    if (!strcmp(pick, "check", true))
+    if(!strcmp(pick, "check", true))
     {
         ShowPlayerDialog(playerid, DIALOG_LIST_TRANSACTIONS, DIALOG_STYLE_LIST, "Odaberite koje transakcije provjeravate", "Osoba\nKuce\nBiznisi\nVozila\nKompleksi\nGaraze", "Choose", "Exit");
         return 1;
     }
-    else if (!strcmp(pick, "delete", true))
+    else if(!strcmp(pick, "delete", true))
     {
         new id;
-        if (sscanf(params, "s[10]i", pick, id))
+        if(sscanf(params, "s[10]i", pick, id))
         {
-            SendClientMessage(playerid,-1,"[ ? ]: /finance delete [ID transakcije]");
+            SendClientMessage(playerid,-1,"[?]: /finance delete [ID transakcije]");
             return 1;
         }
-        if (id < 0) return SendClientMessage(playerid, COLOR_RED, "ID transakcije ne moze biti manji od 0!");
-        if (PlayerFaction[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Mayor!");
+        if(id < 0) return SendClientMessage(playerid, COLOR_RED, "ID transakcije ne moze biti manji od 0!");
+        if(PlayerFaction[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Mayor!");
 
         mysql_fquery(g_SQL, "DELETE FROM server_transactions WHERE id = '%d'", id);
 
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali transakciju [ID: %d] iz baze podataka.", id);
+        va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali transakciju [ID: %d] iz baze podataka.", id);
         return 1;
     }
     return 1;
@@ -912,11 +912,11 @@ CMD:finance(playerid, params[])
 
 CMD:govmdc(playerid, params[])
 {
-    if (PlayerFaction[playerid][pMember] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+    if(PlayerFaction[playerid][pMember] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /govmdc [ID / Part of name]");
-    if (giveplayerid == INVALID_PLAYER_ID || !IsPlayerLogged(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /govmdc [ID / Part of name]");
+    if(giveplayerid == INVALID_PLAYER_ID || !IsPlayerLogged(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
 
     GovMDC[playerid] = giveplayerid;
     ShowGovMDC(playerid, giveplayerid);

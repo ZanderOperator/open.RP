@@ -9,20 +9,20 @@
 
 
 static 
-	PlayerText:TuningBuy[ MAX_PLAYERS ][ 14 ] = { PlayerText:INVALID_TEXT_DRAW, ... },
+	PlayerText:TuningBuy[MAX_PLAYERS][14] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	bool:ClickedTuningTD[MAX_PLAYERS] = false,
-	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
+	PlayerTuningVehicle[MAX_PLAYERS] = INVALID_VEHICLE_ID;
 
 enum vPaintjobInfo 
 {
 	vehID,
 	pNumber,
 	pPrice,
-	ppName[ 12 ]
+	ppName[12]
 };
 #define NUMBER_TYPE_PAINTJOB 	36
 static const
-	pjInfo[ NUMBER_TYPE_PAINTJOB ][ vPaintjobInfo ] = {
+	pjInfo[NUMBER_TYPE_PAINTJOB][vPaintjobInfo] = {
 	{ 483, 0, 15000, "Paintjob 1"},
 	{ 534, 0, 15000, "Paintjob 1"},
 	{ 534, 1, 15000, "Paintjob 2"},
@@ -64,7 +64,7 @@ static const
 enum ComponentsInfo 
 {
 	cID,
-	cName[ 40 ],
+	cName[40],
 	cPrice,
 	cType
 };
@@ -73,7 +73,7 @@ enum ComponentsInfo
 #define MAX_COMPONENT_SLOTS			(14)
 
 static const
-	cInfo[ MAX_COMPONENTS ][ ComponentsInfo ] = {
+	cInfo[MAX_COMPONENTS][ComponentsInfo] = {
 	{ 1000, "Pro Spoiler", 5000, CARMODTYPE_SPOILER },
 	{ 1001, "Win Spoiler", 5000, CARMODTYPE_SPOILER },
 	{ 1002, "Drag Spoiler", 5000, CARMODTYPE_SPOILER },
@@ -278,175 +278,175 @@ enum tp_Info
 	bool:tPaintjob
 };
 static 
-	TPInfo[ MAX_PLAYERS ][ tp_Info ];
+	TPInfo[MAX_PLAYERS][tp_Info];
 
 stock CreatePlayerTuningTextDraws( playerid ) 
 {
 
-	TuningBuy[ playerid ][ 0 ] = CreatePlayerTextDraw(playerid, 425.125000, 338.666687, "usebox");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 0 ], 0.000000, 8.627778);
-	PlayerTextDrawTextSize(playerid, TuningBuy[ playerid ][ 0 ], 216.125000, 0.000000);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 0 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 0 ], 0);
-	PlayerTextDrawUseBox(playerid, TuningBuy[ playerid ][ 0 ], true);
-	PlayerTextDrawBoxColor(playerid, TuningBuy[ playerid ][ 0 ], 102);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 0 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 0 ], 0);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 0 ], 0);
+	TuningBuy[playerid][0] = CreatePlayerTextDraw(playerid, 425.125000, 338.666687, "usebox");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][0], 0.000000, 8.627778);
+	PlayerTextDrawTextSize(playerid, TuningBuy[playerid][0], 216.125000, 0.000000);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][0], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][0], 0);
+	PlayerTextDrawUseBox(playerid, TuningBuy[playerid][0], true);
+	PlayerTextDrawBoxColor(playerid, TuningBuy[playerid][0], 102);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][0], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][0], 0);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][0], 0);
 
-	TuningBuy[ playerid ][ 1 ] = CreatePlayerTextDraw(playerid, 319.375000, 337.749847, "Hydraulics");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 1 ], 0.386249, 1.156664);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 1 ], 2);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 1 ], -1);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 1 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 1 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 1 ], 51 );
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 1 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 1 ], 1 );
-	PlayerTextDrawSetSelectable(playerid, TuningBuy[ playerid ][ 1 ], false );
+	TuningBuy[playerid][1] = CreatePlayerTextDraw(playerid, 319.375000, 337.749847, "Hydraulics");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][1], 0.386249, 1.156664);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][1], 2);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][1], -1);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][1], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][1], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][1], 51 );
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][1], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][1], 1 );
+	PlayerTextDrawSetSelectable(playerid, TuningBuy[playerid][1], false );
 
-	TuningBuy[ playerid ][ 2 ] = CreatePlayerTextDraw(playerid, 198.375000, 361.583282, "-");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 2 ], 18.981874, 0.514999);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 2 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 2 ], -10092289);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 2 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 2 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 2 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 2 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 2 ], 1);
+	TuningBuy[playerid][2] = CreatePlayerTextDraw(playerid, 198.375000, 361.583282, "-");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][2], 18.981874, 0.514999);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][2], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][2], -10092289);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][2], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][2], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][2], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][2], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][2], 1);
 
-	TuningBuy[ playerid ][ 3 ] = CreatePlayerTextDraw(playerid, 222.500000, 352.916656, "Left Chrome Flames Sideskirt");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 3 ], 0.244999, 1.092499);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 3 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 3 ], -1);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 3 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 3 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 3 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 3 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 3 ], 1);
+	TuningBuy[playerid][3] = CreatePlayerTextDraw(playerid, 222.500000, 352.916656, "Left Chrome Flames Sideskirt");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][3], 0.244999, 1.092499);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][3], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][3], -1);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][3], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][3], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][3], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][3], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][3], 1);
 
-	TuningBuy[ playerid ][ 4 ] = CreatePlayerTextDraw(playerid, 222.500000, 365.000000, "Cijena: ~w~10000$");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 4 ], 0.244999, 1.092499);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 4 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 4 ], -1);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 4 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 4 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 4 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 4 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 4 ], 1);
+	TuningBuy[playerid][4] = CreatePlayerTextDraw(playerid, 222.500000, 365.000000, "Cijena: ~w~10000$");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][4], 0.244999, 1.092499);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][4], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][4], -1);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][4], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][4], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][4], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][4], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][4], 1);
 
-	TuningBuy[ playerid ][ 5 ] = CreatePlayerTextDraw(playerid, 215.125000, 372.999877, "-");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 5 ], 6.743125, 0.444999);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 5 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 5 ], -10092289);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 5 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 5 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 5 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 5 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 5 ], 1);
+	TuningBuy[playerid][5] = CreatePlayerTextDraw(playerid, 215.125000, 372.999877, "-");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][5], 6.743125, 0.444999);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][5], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][5], -10092289);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][5], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][5], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][5], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][5], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][5], 1);
 
-	TuningBuy[ playerid ][ 6 ] = CreatePlayerTextDraw(playerid, 206.750000, 347.166564, "-");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 6 ], 18.981874, 0.514999);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 6 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 6 ], -10092289);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 6 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 6 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 6 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 6 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 6 ], 1);
+	TuningBuy[playerid][6] = CreatePlayerTextDraw(playerid, 206.750000, 347.166564, "-");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][6], 18.981874, 0.514999);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][6], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][6], -10092289);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][6], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][6], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][6], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][6], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][6], 1);
 
-	TuningBuy[ playerid ][ 7 ] = CreatePlayerTextDraw(playerid, 385.000000, 381.500000, "ld_beat:right");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 7 ], 0.449999, 1.600000);
-	PlayerTextDrawTextSize(playerid, TuningBuy[ playerid ][ 7 ], 27.500000, 13.416657);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 7 ], 2);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 7 ], -1);
-	PlayerTextDrawUseBox(playerid, TuningBuy[ playerid ][ 7 ], true);
-	PlayerTextDrawBoxColor(playerid, TuningBuy[ playerid ][ 7 ], 255);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 7 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 7 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 7 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 7 ], 4);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 7 ], 1);
-	PlayerTextDrawSetSelectable(playerid, TuningBuy[ playerid ][ 7 ], true);
+	TuningBuy[playerid][7] = CreatePlayerTextDraw(playerid, 385.000000, 381.500000, "ld_beat:right");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][7], 0.449999, 1.600000);
+	PlayerTextDrawTextSize(playerid, TuningBuy[playerid][7], 27.500000, 13.416657);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][7], 2);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][7], -1);
+	PlayerTextDrawUseBox(playerid, TuningBuy[playerid][7], true);
+	PlayerTextDrawBoxColor(playerid, TuningBuy[playerid][7], 255);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][7], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][7], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][7], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][7], 4);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][7], 1);
+	PlayerTextDrawSetSelectable(playerid, TuningBuy[playerid][7], true);
 
-	TuningBuy[ playerid ][ 8 ] = CreatePlayerTextDraw(playerid, 230.375000, 381.916473, "ld_beat:left");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 8 ], 0.449999, 1.600000);
-	PlayerTextDrawTextSize(playerid, TuningBuy[ playerid ][ 8 ], 27.500000, 13.416657);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 8 ], 2);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 8 ], -1);
-	PlayerTextDrawUseBox(playerid, TuningBuy[ playerid ][ 8 ], true);
-	PlayerTextDrawBoxColor(playerid, TuningBuy[ playerid ][ 8 ], 255);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 8 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 8 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 8 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 8 ], 4);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 8 ], 1);
-	PlayerTextDrawSetSelectable(playerid, TuningBuy[ playerid ][ 8 ], true);
+	TuningBuy[playerid][8] = CreatePlayerTextDraw(playerid, 230.375000, 381.916473, "ld_beat:left");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][8], 0.449999, 1.600000);
+	PlayerTextDrawTextSize(playerid, TuningBuy[playerid][8], 27.500000, 13.416657);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][8], 2);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][8], -1);
+	PlayerTextDrawUseBox(playerid, TuningBuy[playerid][8], true);
+	PlayerTextDrawBoxColor(playerid, TuningBuy[playerid][8], 255);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][8], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][8], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][8], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][8], 4);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][8], 1);
+	PlayerTextDrawSetSelectable(playerid, TuningBuy[playerid][8], true);
 
-	TuningBuy[ playerid ][ 9 ] = CreatePlayerTextDraw(playerid, 320.000000, 381.499938, "Buy");
-	PlayerTextDrawTextSize(playerid, TuningBuy[ playerid ][ 9 ], 23.000000, 13.000000 );
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 9 ], 0.421249, 1.360832 );
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 9 ], 2);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 9 ], -1);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 9 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 9 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 9 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 9 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 9 ], 1);
-	PlayerTextDrawSetSelectable(playerid, TuningBuy[ playerid ][ 9 ], true);
+	TuningBuy[playerid][9] = CreatePlayerTextDraw(playerid, 320.000000, 381.499938, "Buy");
+	PlayerTextDrawTextSize(playerid, TuningBuy[playerid][9], 23.000000, 13.000000 );
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][9], 0.421249, 1.360832 );
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][9], 2);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][9], -1);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][9], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][9], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][9], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][9], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][9], 1);
+	PlayerTextDrawSetSelectable(playerid, TuningBuy[playerid][9], true);
 
-	TuningBuy[ playerid ][ 10 ] = CreatePlayerTextDraw(playerid, 200.000000, 396.416656, "-");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 10 ], 18.981874, 0.514999);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 10 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 10 ], -10092289);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 10 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 10 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 10 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 10 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 10 ], 1);
+	TuningBuy[playerid][10] = CreatePlayerTextDraw(playerid, 200.000000, 396.416656, "-");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][10], 18.981874, 0.514999);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][10], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][10], -10092289);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][10], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][10], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][10], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][10], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][10], 1);
 
-	TuningBuy[ playerid ][ 11 ] = CreatePlayerTextDraw(playerid, 225.000000, 401.916595, "Los Santos Car Tunes");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 11 ], 0.258749, 0.987497);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 11 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 11 ], -1);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 11 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 11 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 11 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 11 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 11 ], 1);
+	TuningBuy[playerid][11] = CreatePlayerTextDraw(playerid, 225.000000, 401.916595, "Los Santos Car Tunes");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][11], 0.258749, 0.987497);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][11], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][11], -1);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][11], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][11], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][11], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][11], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][11], 1);
 
-	TuningBuy[ playerid ][ 12 ] = CreatePlayerTextDraw(playerid, 203.500000, 411.416839, "-");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 12 ], 18.981874, 0.514998);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 12 ], 1);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 12 ], -10092289);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 12 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 12 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 12 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 12 ], 2);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 12 ], 1);
+	TuningBuy[playerid][12] = CreatePlayerTextDraw(playerid, 203.500000, 411.416839, "-");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][12], 18.981874, 0.514998);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][12], 1);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][12], -10092289);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][12], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][12], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][12], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][12], 2);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][12], 1);
 
-	TuningBuy[ playerid ][ 13 ] = CreatePlayerTextDraw(playerid, 404.500000, 337.999877, "ld_beat:cross");
-	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 13 ], 0.449999, 1.600000);
-	PlayerTextDrawTextSize(playerid, TuningBuy[ playerid ][ 13 ], 17.500000, 8.749991);
-	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 13 ], 2);
-	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 13 ], -1);
-	PlayerTextDrawUseBox(playerid, TuningBuy[ playerid ][ 13 ], true);
-	PlayerTextDrawBoxColor(playerid, TuningBuy[ playerid ][ 13 ], 255);
-	PlayerTextDrawSetShadow(playerid, TuningBuy[ playerid ][ 13 ], 0);
-	PlayerTextDrawSetOutline(playerid, TuningBuy[ playerid ][ 13 ], 1);
-	PlayerTextDrawBackgroundColor(playerid, TuningBuy[ playerid ][ 13 ], 51);
-	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 13 ], 4);
-	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 13 ], 1);
-	PlayerTextDrawSetSelectable(playerid, TuningBuy[ playerid ][ 13 ], true);
+	TuningBuy[playerid][13] = CreatePlayerTextDraw(playerid, 404.500000, 337.999877, "ld_beat:cross");
+	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid][13], 0.449999, 1.600000);
+	PlayerTextDrawTextSize(playerid, TuningBuy[playerid][13], 17.500000, 8.749991);
+	PlayerTextDrawAlignment(playerid, TuningBuy[playerid][13], 2);
+	PlayerTextDrawColor(playerid, TuningBuy[playerid][13], -1);
+	PlayerTextDrawUseBox(playerid, TuningBuy[playerid][13], true);
+	PlayerTextDrawBoxColor(playerid, TuningBuy[playerid][13], 255);
+	PlayerTextDrawSetShadow(playerid, TuningBuy[playerid][13], 0);
+	PlayerTextDrawSetOutline(playerid, TuningBuy[playerid][13], 1);
+	PlayerTextDrawBackgroundColor(playerid, TuningBuy[playerid][13], 51);
+	PlayerTextDrawFont(playerid, TuningBuy[playerid][13], 4);
+	PlayerTextDrawSetProportional(playerid, TuningBuy[playerid][13], 1);
+	PlayerTextDrawSetSelectable(playerid, TuningBuy[playerid][13], true);
 }
 
 stock DeletePlayerTuningTD(playerid)
 {
 	for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++ ) 
 	{
-		PlayerTextDrawHide( playerid, TuningBuy[ playerid ][ i ]);
-		PlayerTextDrawDestroy( playerid, TuningBuy[ playerid ][ i ]);
-		TuningBuy[ playerid ][ i ] = PlayerText:INVALID_TEXT_DRAW;
+		PlayerTextDrawHide( playerid, TuningBuy[playerid][i]);
+		PlayerTextDrawDestroy( playerid, TuningBuy[playerid][i]);
+		TuningBuy[playerid][i] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	Bit1_Set( gr_PlayerInTuningMode, playerid, false );
 	ClickedTuningTD[playerid] = false;
@@ -457,7 +457,7 @@ stock DeletePlayerTuningTD(playerid)
 stock LoadVehicleTuning(vehicleid)
 {
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[ vehicleid ][ vSQLID ] ),
+		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID] ),
 	 	"OnVehicleTuningLoad", 
 	 	"ii", 
 		 vehicleid, 
@@ -469,14 +469,14 @@ stock LoadVehicleTuning(vehicleid)
 
 stock DeleteVehicleTuning(vehicleid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid ='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
+	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid ='%d'", VehicleInfo[vehicleid][vSQLID] );
 	return 1;
 }
 
 stock SaveVehicleTuning(vehicleid)
 {
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[ vehicleid ][ vSQLID ] ), 
+		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID] ), 
 		"OnVehicleTuningLoad", 
 		"ii", 
 		vehicleid, 
@@ -487,9 +487,9 @@ stock SaveVehicleTuning(vehicleid)
 
 Public:OnVehicleTuningLoad(vehicleid, bool:save)
 {
-	if( save ) 
+	if(save ) 
 	{
-		if( cache_num_rows() ) 
+		if(cache_num_rows()) 
 		{
 			mysql_fquery(g_SQL,
 			 	"UPDATE vehicle_tuning SET spoiler = '%d', hood = '%d', roof = '%d', skirt = '%d', lamps = '%d',\n\
@@ -543,7 +543,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 	} 
 	else 
 	{
-		if( !cache_num_rows() ) return 1;
+		if(!cache_num_rows()) return 1;
 		cache_get_value_name_int(0, "spoiler"	, VehicleInfo[vehicleid][vSpoiler]);
 		cache_get_value_name_int(0, "hood"		, VehicleInfo[vehicleid][vHood]);
 		cache_get_value_name_int(0, "roof"		, VehicleInfo[vehicleid][vRoof]);
@@ -569,7 +569,7 @@ stock RemoveAllVehicleTuning(vehicleid)
 	for (new i; i < 14; i++)
 	{
 		componentid = GetVehicleComponentInSlot(vehicleid, i);
-		if (componentid != 0)
+		if(componentid != 0)
 			RemoveVehicleComponent(vehicleid, componentid);
 	}
 	return 1;
@@ -577,24 +577,24 @@ stock RemoveAllVehicleTuning(vehicleid)
 
 stock SetVehicleTuning(vehicleid) 
 {
-    if( VehicleInfo[ vehicleid ][ vTuned ] ) 
+    if(VehicleInfo[vehicleid][vTuned] ) 
 	{
-	    if( VehicleInfo[ vehicleid ][ vPaintJob ] != 255 )
+	    if(VehicleInfo[vehicleid][vPaintJob] != 255 )
 		{
 			ChangeVehicleColor(vehicleid, 1, 1);
-			ChangeVehiclePaintjob( vehicleid, VehicleInfo[ vehicleid ][ vPaintJob ] );
+			ChangeVehiclePaintjob( vehicleid, VehicleInfo[vehicleid][vPaintJob] );
 		}
-		if( VehicleInfo[ vehicleid ][ vSpoiler ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vSpoiler ] );
-		if( VehicleInfo[ vehicleid ][ vHood ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vHood ] );
-		if( VehicleInfo[ vehicleid ][ vRoof ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vRoof ] );
-		if( VehicleInfo[ vehicleid ][ vSkirt ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vSkirt ] );
-		if( VehicleInfo[ vehicleid ][ vLamps ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vLamps ] );
-		if( VehicleInfo[ vehicleid ][ vNitro ] != -1 ) 
+		if(VehicleInfo[vehicleid][vSpoiler] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vSpoiler] );
+		if(VehicleInfo[vehicleid][vHood] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vHood] );
+		if(VehicleInfo[vehicleid][vRoof] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vRoof] );
+		if(VehicleInfo[vehicleid][vSkirt] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vSkirt] );
+		if(VehicleInfo[vehicleid][vLamps] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vLamps] );
+		if(VehicleInfo[vehicleid][vNitro] != -1 ) 
 		{
 			if(IsVehicleInvalidForNos(vehicleid))
 			{
@@ -602,49 +602,49 @@ stock SetVehicleTuning(vehicleid)
 				SaveVehicleTuning(vehicleid);
 			}
 		}		
-		if( VehicleInfo[ vehicleid ][ vExhaust ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vExhaust ] );
-		if( VehicleInfo[ vehicleid ][ vWheels ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vWheels ] );
-		if( VehicleInfo[ vehicleid ][ vHydraulics ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vHydraulics ] );
-		if( VehicleInfo[ vehicleid ][ vFrontBumper ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vFrontBumper ] );
-		if( VehicleInfo[ vehicleid ][ vRearBumper ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vRearBumper ] );
-		if( VehicleInfo[ vehicleid ][ vRightVent ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vRightVent ] );
-		if( VehicleInfo[ vehicleid ][ vLeftVent ] != -1 ) 
-			AddVehicleComponent( vehicleid, VehicleInfo[ vehicleid ][ vLeftVent ] );
+		if(VehicleInfo[vehicleid][vExhaust] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vExhaust] );
+		if(VehicleInfo[vehicleid][vWheels] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vWheels] );
+		if(VehicleInfo[vehicleid][vHydraulics] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vHydraulics] );
+		if(VehicleInfo[vehicleid][vFrontBumper] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vFrontBumper] );
+		if(VehicleInfo[vehicleid][vRearBumper] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vRearBumper] );
+		if(VehicleInfo[vehicleid][vRightVent] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vRightVent] );
+		if(VehicleInfo[vehicleid][vLeftVent] != -1 ) 
+			AddVehicleComponent( vehicleid, VehicleInfo[vehicleid][vLeftVent] );
     }
 	return 1;
 }
 //==============================================================================
 stock AddComponentToVehicle( vehicleid, componentid ) {
-	if( VehicleInfo[ vehicleid ][ vTuned ] ) {
-		if( GetVehicleComponentType( componentid ) == CARMODTYPE_SPOILER ) {
-		    VehicleInfo[ vehicleid ][ vSpoiler ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vSpoiler ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	if(VehicleInfo[vehicleid][vTuned] ) {
+		if(GetVehicleComponentType( componentid ) == CARMODTYPE_SPOILER ) {
+		    VehicleInfo[vehicleid][vSpoiler] = componentid;
+			if(VehicleInfo[vehicleid][vSpoiler] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_HOOD ) {
-		    VehicleInfo[ vehicleid ][ vHood ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vHood ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_HOOD ) {
+		    VehicleInfo[vehicleid][vHood] = componentid;
+			if(VehicleInfo[vehicleid][vHood] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_ROOF ) {
-		    VehicleInfo[ vehicleid ][ vRoof ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vRoof ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_ROOF ) {
+		    VehicleInfo[vehicleid][vRoof] = componentid;
+			if(VehicleInfo[vehicleid][vRoof] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_SIDESKIRT ) {
-		    VehicleInfo[ vehicleid ][ vSkirt ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vSkirt ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_SIDESKIRT ) {
+		    VehicleInfo[vehicleid][vSkirt] = componentid;
+			if(VehicleInfo[vehicleid][vSkirt] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_LAMPS ) {
-		    VehicleInfo[ vehicleid ][ vLamps ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vLamps ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_LAMPS ) {
+		    VehicleInfo[vehicleid][vLamps] = componentid;
+			if(VehicleInfo[vehicleid][vLamps] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_NITRO ) {
-		    VehicleInfo[ vehicleid ][ vNitro ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vNitro ] != -1 )
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_NITRO ) {
+		    VehicleInfo[vehicleid][vNitro] = componentid;
+			if(VehicleInfo[vehicleid][vNitro] != -1 )
 			{
 				AddVehicleComponent( vehicleid, componentid );
 				VehicleInfo[vehicleid][vNOSCap] = 100;
@@ -658,37 +658,37 @@ stock AddComponentToVehicle( vehicleid, componentid ) {
 				}
 			}
 		}
-		else if( GetVehicleComponentType( componentid ) == CARMODTYPE_HYDRAULICS ) {
-		    VehicleInfo[ vehicleid ][ vHydraulics ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vHydraulics ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+		else if(GetVehicleComponentType( componentid ) == CARMODTYPE_HYDRAULICS ) {
+		    VehicleInfo[vehicleid][vHydraulics] = componentid;
+			if(VehicleInfo[vehicleid][vHydraulics] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_EXHAUST ) {
-		    VehicleInfo[ vehicleid ][ vExhaust ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vExhaust ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_EXHAUST ) {
+		    VehicleInfo[vehicleid][vExhaust] = componentid;
+			if(VehicleInfo[vehicleid][vExhaust] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_WHEELS ) {
-		    VehicleInfo[ vehicleid ][ vWheels ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vWheels ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_WHEELS ) {
+		    VehicleInfo[vehicleid][vWheels] = componentid;
+			if(VehicleInfo[vehicleid][vWheels] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_HYDRAULICS ) {
-		    VehicleInfo[ vehicleid ][ vHydraulics ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vHydraulics ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_HYDRAULICS ) {
+		    VehicleInfo[vehicleid][vHydraulics] = componentid;
+			if(VehicleInfo[vehicleid][vHydraulics] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_FRONT_BUMPER ) {
-		    VehicleInfo[ vehicleid ][ vFrontBumper ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vFrontBumper ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_FRONT_BUMPER ) {
+		    VehicleInfo[vehicleid][vFrontBumper] = componentid;
+			if(VehicleInfo[vehicleid][vFrontBumper] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_REAR_BUMPER ) {
-		    VehicleInfo[ vehicleid ][ vRearBumper ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vRearBumper ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_REAR_BUMPER ) {
+		    VehicleInfo[vehicleid][vRearBumper] = componentid;
+			if(VehicleInfo[vehicleid][vRearBumper] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_VENT_RIGHT ) {
-		    VehicleInfo[ vehicleid ][ vRightVent ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vRightVent ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_VENT_RIGHT ) {
+		    VehicleInfo[vehicleid][vRightVent] = componentid;
+			if(VehicleInfo[vehicleid][vRightVent] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
-	    else if( GetVehicleComponentType( componentid ) == CARMODTYPE_VENT_LEFT ) {
-		    VehicleInfo[ vehicleid ][ vLeftVent ] = componentid;
-			if( VehicleInfo[ vehicleid ][ vLeftVent ] != -1 ) AddVehicleComponent( vehicleid, componentid );
+	    else if(GetVehicleComponentType( componentid ) == CARMODTYPE_VENT_LEFT ) {
+		    VehicleInfo[vehicleid][vLeftVent] = componentid;
+			if(VehicleInfo[vehicleid][vLeftVent] != -1 ) AddVehicleComponent( vehicleid, componentid );
 		}
 		SaveVehicleTuning(vehicleid);
 	}
@@ -697,7 +697,7 @@ stock AddComponentToVehicle( vehicleid, componentid ) {
 stock RemoveComponentFromVehicle(playerid, vehicleid, listitem) 
 {	
 	Bit1_Set( gr_PlayerInTuningMode, playerid, false );
-	if( VehicleInfo[ vehicleid ][ vTuned ] ) 
+	if(VehicleInfo[vehicleid][vTuned] ) 
 	{
 		if(AC_GetPlayerMoney(playerid) < REMOVE_PRICE)
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi uklonili tuniranu komponentu, potrebno Vam je %d$!", REMOVE_PRICE);
@@ -706,83 +706,83 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 		{
 			case 0:
 			{
-				if(VehicleInfo[ vehicleid ][ vPaintJob ] == 255)
+				if(VehicleInfo[vehicleid][vPaintJob] == 255)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje PaintJob!");
-				VehicleInfo[ vehicleid ][ vPaintJob ] = 255;
+				VehicleInfo[vehicleid][vPaintJob] = 255;
 				ChangeVehiclePaintjob( vehicleid, 3 );
-				ChangeVehicleColor( vehicleid, VehicleInfo[ vehicleid ][ vColor1 ], VehicleInfo[ vehicleid ][ vColor2 ] );
+				ChangeVehicleColor( vehicleid, VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2] );
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli PaintJob sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 1:
 			{
-				if(VehicleInfo[ vehicleid ][ vExhaust ] == -1)
+				if(VehicleInfo[vehicleid][vExhaust] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani auspuh!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vExhaust ]);
-				VehicleInfo[ vehicleid ][ vExhaust ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vExhaust]);
+				VehicleInfo[vehicleid][vExhaust] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli auspuh sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 2:
 			{
-				if(VehicleInfo[ vehicleid ][ vFrontBumper ] == -1)
+				if(VehicleInfo[vehicleid][vFrontBumper] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani prednji branik!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vFrontBumper ]);
-				VehicleInfo[ vehicleid ][ vFrontBumper ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vFrontBumper]);
+				VehicleInfo[vehicleid][vFrontBumper] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli prednji branik sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 3:
 			{
-				if(VehicleInfo[ vehicleid ][ vRearBumper ] == -1)
+				if(VehicleInfo[vehicleid][vRearBumper] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani straznji branik!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vRearBumper ]);
-				VehicleInfo[ vehicleid ][ vRearBumper ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vRearBumper]);
+				VehicleInfo[vehicleid][vRearBumper] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli straznji branik sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 4:
 			{
-				if(VehicleInfo[ vehicleid ][ vRoof ] == -1)
+				if(VehicleInfo[vehicleid][vRoof] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani krov!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vRoof ]);
-				VehicleInfo[ vehicleid ][ vRoof ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vRoof]);
+				VehicleInfo[vehicleid][vRoof] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli krov sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 5:
 			{
-				if(VehicleInfo[ vehicleid ][ vSpoiler ] == -1)
+				if(VehicleInfo[vehicleid][vSpoiler] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani spoiler!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vSpoiler ]);
-				VehicleInfo[ vehicleid ][ vSpoiler ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vSpoiler]);
+				VehicleInfo[vehicleid][vSpoiler] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli spoiler sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 6:
 			{
-				if(VehicleInfo[ vehicleid ][ vSkirt ] == -1)
+				if(VehicleInfo[vehicleid][vSkirt] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani bocni branik!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vSkirt ]);
-				VehicleInfo[ vehicleid ][ vSkirt ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vSkirt]);
+				VehicleInfo[vehicleid][vSkirt] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli bocne branike sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 7:
 			{
-				if(VehicleInfo[ vehicleid ][ vWheels ] == -1)
+				if(VehicleInfo[vehicleid][vWheels] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirane felge!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vWheels ]);
-				VehicleInfo[ vehicleid ][ vWheels ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vWheels]);
+				VehicleInfo[vehicleid][vWheels] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli felge sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 8:
 			{
-				if(VehicleInfo[ vehicleid ][ vHydraulics ] == -1)
+				if(VehicleInfo[vehicleid][vHydraulics] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tuniranu hidrauliku!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vHydraulics ]);
-				VehicleInfo[ vehicleid ][ vHydraulics ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vHydraulics]);
+				VehicleInfo[vehicleid][vHydraulics] = -1;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli hidrauliku sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 9:
 			{
-				if(VehicleInfo[ vehicleid ][ vNitro ] == -1)
+				if(VehicleInfo[vehicleid][vNitro] == -1)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani nitro!");
-				RemoveVehicleComponent(vehicleid, VehicleInfo[ vehicleid ][ vNitro ]);
-				VehicleInfo[ vehicleid ][ vNitro ] = -1;
+				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vNitro]);
+				VehicleInfo[vehicleid][vNitro] = -1;
 				VehicleInfo[vehicleid][vNOSCap] = 0;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli nitro sa vozila za %d$.", REMOVE_PRICE);
 				DestroyNOSTD(playerid); // maknuto
@@ -797,7 +797,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 
 stock IsComponentidCompatible( modelid, componentid ) 
 {
-    if( componentid == 1025 || componentid == 1073 || componentid == 1074 || componentid == 1075 || componentid == 1076 ||
+    if(componentid == 1025 || componentid == 1073 || componentid == 1074 || componentid == 1075 || componentid == 1076 ||
 		componentid == 1077 || componentid == 1078 || componentid == 1079 || componentid == 1080 || componentid == 1081 ||
         componentid == 1082 || componentid == 1083 || componentid == 1084 || componentid == 1085 || componentid == 1096 ||
         componentid == 1097 || componentid == 1098 || componentid == 1087 || componentid == 1086 ) 
@@ -805,83 +805,83 @@ stock IsComponentidCompatible( modelid, componentid )
 
     switch( modelid ) 
 	{
-        case 400: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 ) return componentid;
-        case 401: if( componentid == 1005 || componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 114 || componentid == 1020 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 402: if( componentid == 1009 || componentid == 1009 || componentid == 1010 ) return componentid;
-        case 404: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1002 || componentid == 1016 || componentid == 1000 || componentid == 1017 || componentid == 1007) return componentid;
-        case 405: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1014 || componentid == 1023 || componentid == 1000) return componentid;
-        case 409: if( componentid == 1009 ) return componentid;
-        case 410: if( componentid == 1019 || componentid == 1021 || componentid == 1020 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 411: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 412: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 415: if( componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 418: if( componentid == 1020 || componentid == 1021 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1016) return componentid;
-        case 419: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 420: if( componentid == 1005 || componentid == 1004 || componentid == 1021 || componentid == 1019 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1003) return componentid;
-        case 421: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1014 || componentid == 1023 || componentid == 1016 || componentid == 1000) return componentid;
-        case 422: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1017 || componentid == 1007) return componentid;
-        case 426: if( componentid == 1005 || componentid == 1004 || componentid == 1021 || componentid == 1019 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1003) return componentid;
-        case 429: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 436: if( componentid == 1020 || componentid == 1021 || componentid == 1022 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 438: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 439: if( componentid == 1003 || componentid == 1023 || componentid == 1001 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1017 || componentid == 1007 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1013) return componentid;
-        case 442: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 445: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 451: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 458: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 466: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 467: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 474: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 475: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 477: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1017 || componentid == 1007) return componentid;
-        case 478: if( componentid == 1005 || componentid == 1004 || componentid == 1012 || componentid == 1020 || componentid == 1021 || componentid == 1022 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 479: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 480: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 489: if( componentid == 1005 || componentid == 1004 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1016 || componentid == 1000) return componentid;
-        case 491: if( componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1014 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 492: if( componentid == 1005 || componentid == 1004 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1016 || componentid == 1000) return componentid;
-        case 496: if( componentid == 1006 || componentid == 1017 || componentid == 1007 || componentid == 1011 || componentid == 1019 || componentid == 1023 || componentid == 1001 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1003 || componentid == 1002 || componentid == 1142 || componentid == 1143 || componentid == 1020) return componentid;
-        case 500: if( componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 506: if( componentid == 1009) return componentid;
-        case 507: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 516: if( componentid == 1004 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1002 || componentid == 1015 || componentid == 1016 || componentid == 1000 || componentid == 1017 || componentid == 1007) return componentid;
-        case 517: if( componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1002 || componentid == 1023 || componentid == 1016 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 518: if( componentid == 1005 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1018 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 526: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 527: if( componentid == 1021 || componentid == 1020 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1014 || componentid == 1015 || componentid == 1017 || componentid == 1007) return componentid;
-        case 529: if( componentid == 1012 || componentid == 1011 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 533: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 534: if( componentid == 1126 || componentid == 1127 || componentid == 1179 || componentid == 1185 || componentid == 1100 || componentid == 1123 || componentid == 1125 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1180 || componentid == 1178 || componentid == 1101 || componentid == 1122 || componentid == 1124 || componentid == 1106) return componentid;
-        case 535: if( componentid == 1109 || componentid == 1110 || componentid == 1113 || componentid == 1114 || componentid == 1115 || componentid == 1116 || componentid == 1117 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1120 || componentid == 1118 || componentid == 1121 || componentid == 1119) return componentid;
-        case 536: if( componentid == 1104 || componentid == 1105 || componentid == 1182 || componentid == 1181 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1184 || componentid == 1183 || componentid == 1128 || componentid == 1103 || componentid == 1107 || componentid == 1108) return componentid;
-        case 540: if( componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
-        case 541: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 542: if( componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1014 || componentid == 1015) return componentid;
-        case 545: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 546: if( componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1019 || componentid == 1018 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
-        case 547: if( componentid == 1142 || componentid == 1143 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1016 || componentid == 1003 || componentid == 1000) return componentid;
-        case 549: if( componentid == 1012 || componentid == 1011 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 550: if( componentid == 1005 || componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003) return componentid;
-        case 551: if( componentid == 1005 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1023 || componentid == 1016 || componentid == 1003) return componentid;
-        case 555: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 558: if( componentid == 1092 || componentid == 1089 || componentid == 1166 || componentid == 1165 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1168 || componentid == 1167 || componentid == 1088 || componentid == 1091 || componentid == 1164 || componentid == 1163 || componentid == 1094 || componentid == 1090 || componentid == 1095 || componentid == 1093) return componentid;
-        case 559: if( componentid == 1065 || componentid == 1066 || componentid == 1160 || componentid == 1173 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1159 || componentid == 1161 || componentid == 1162 || componentid == 1158 || componentid == 1067 || componentid == 1068 || componentid == 1071 || componentid == 1069 || componentid == 1072 || componentid == 1070 || componentid == 1009) return componentid;
-        case 560: if( componentid == 1028 || componentid == 1029 || componentid == 1169 || componentid == 1170 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1141 || componentid == 1140 || componentid == 1032 || componentid == 1033 || componentid == 1138 || componentid == 1139 || componentid == 1027 || componentid == 1026 || componentid == 1030 || componentid == 1031) return componentid;
-        case 561: if( componentid == 1064 || componentid == 1059 || componentid == 1155 || componentid == 1157 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1154 || componentid == 1156 || componentid == 1055 || componentid == 1061 || componentid == 1058 || componentid == 1060 || componentid == 1062 || componentid == 1056 || componentid == 1063 || componentid == 1057) return componentid;
-        case 562: if( componentid == 1034 || componentid == 1037 || componentid == 1171 || componentid == 1172 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1149 || componentid == 1148 || componentid == 1038 || componentid == 1035 || componentid == 1147 || componentid == 1146 || componentid == 1040 || componentid == 1036 || componentid == 1041 || componentid == 1039) return componentid;
-        case 565: if( componentid == 1046 || componentid == 1045 || componentid == 1153 || componentid == 1152 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1150 || componentid == 1151 || componentid == 1054 || componentid == 1053 || componentid == 1049 || componentid == 1050 || componentid == 1051 || componentid == 1047 || componentid == 1052 || componentid == 1048) return componentid;
-        case 566: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 567: if( componentid == 1129 || componentid == 1132 || componentid == 1189 || componentid == 1188 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1187 || componentid == 1186 || componentid == 1130 || componentid == 1131 || componentid == 1102 || componentid == 1133) return componentid;
-        case 575: if( componentid == 1044 || componentid == 1043 || componentid == 1174 || componentid == 1175 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1176 || componentid == 1177 || componentid == 1099 || componentid == 1042) return componentid;
-        case 576: if( componentid == 1136 || componentid == 1135 || componentid == 1191 || componentid == 1190 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1192 || componentid == 1193 || componentid == 1137 || componentid == 1134) return componentid;
-        case 579: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 580: if( componentid == 1020 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
-        case 585: if( componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
-        case 587: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 589: if( componentid == 1005 || componentid == 1004 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1024 || componentid == 1013 || componentid == 1006 || componentid == 1016 || componentid == 1000 || componentid == 1017 || componentid == 1007) return componentid;
-        case 600: if( componentid == 1005 || componentid == 1004 || componentid == 1020 || componentid == 1022 || componentid == 1018 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1017 || componentid == 1007) return componentid;
-        case 602: if( componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
-        case 603: if( componentid == 1144 || componentid == 1145 || componentid == 1142 || componentid == 1143 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
+        case 400: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 ) return componentid;
+        case 401: if(componentid == 1005 || componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 114 || componentid == 1020 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 402: if(componentid == 1009 || componentid == 1009 || componentid == 1010 ) return componentid;
+        case 404: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1002 || componentid == 1016 || componentid == 1000 || componentid == 1017 || componentid == 1007) return componentid;
+        case 405: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1014 || componentid == 1023 || componentid == 1000) return componentid;
+        case 409: if(componentid == 1009 ) return componentid;
+        case 410: if(componentid == 1019 || componentid == 1021 || componentid == 1020 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 411: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 412: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 415: if(componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 418: if(componentid == 1020 || componentid == 1021 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1016) return componentid;
+        case 419: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 420: if(componentid == 1005 || componentid == 1004 || componentid == 1021 || componentid == 1019 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1003) return componentid;
+        case 421: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1014 || componentid == 1023 || componentid == 1016 || componentid == 1000) return componentid;
+        case 422: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1017 || componentid == 1007) return componentid;
+        case 426: if(componentid == 1005 || componentid == 1004 || componentid == 1021 || componentid == 1019 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1003) return componentid;
+        case 429: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 436: if(componentid == 1020 || componentid == 1021 || componentid == 1022 || componentid == 1019 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 438: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 439: if(componentid == 1003 || componentid == 1023 || componentid == 1001 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1017 || componentid == 1007 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1013) return componentid;
+        case 442: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 445: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 451: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 458: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 466: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 467: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 474: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 475: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 477: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1017 || componentid == 1007) return componentid;
+        case 478: if(componentid == 1005 || componentid == 1004 || componentid == 1012 || componentid == 1020 || componentid == 1021 || componentid == 1022 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 479: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 480: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 489: if(componentid == 1005 || componentid == 1004 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1016 || componentid == 1000) return componentid;
+        case 491: if(componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1014 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 492: if(componentid == 1005 || componentid == 1004 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1016 || componentid == 1000) return componentid;
+        case 496: if(componentid == 1006 || componentid == 1017 || componentid == 1007 || componentid == 1011 || componentid == 1019 || componentid == 1023 || componentid == 1001 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1003 || componentid == 1002 || componentid == 1142 || componentid == 1143 || componentid == 1020) return componentid;
+        case 500: if(componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1013 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 506: if(componentid == 1009) return componentid;
+        case 507: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 516: if(componentid == 1004 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1002 || componentid == 1015 || componentid == 1016 || componentid == 1000 || componentid == 1017 || componentid == 1007) return componentid;
+        case 517: if(componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1002 || componentid == 1023 || componentid == 1016 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 518: if(componentid == 1005 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1018 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 526: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 527: if(componentid == 1021 || componentid == 1020 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1014 || componentid == 1015 || componentid == 1017 || componentid == 1007) return componentid;
+        case 529: if(componentid == 1012 || componentid == 1011 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 533: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 534: if(componentid == 1126 || componentid == 1127 || componentid == 1179 || componentid == 1185 || componentid == 1100 || componentid == 1123 || componentid == 1125 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1180 || componentid == 1178 || componentid == 1101 || componentid == 1122 || componentid == 1124 || componentid == 1106) return componentid;
+        case 535: if(componentid == 1109 || componentid == 1110 || componentid == 1113 || componentid == 1114 || componentid == 1115 || componentid == 1116 || componentid == 1117 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1120 || componentid == 1118 || componentid == 1121 || componentid == 1119) return componentid;
+        case 536: if(componentid == 1104 || componentid == 1105 || componentid == 1182 || componentid == 1181 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1184 || componentid == 1183 || componentid == 1128 || componentid == 1103 || componentid == 1107 || componentid == 1108) return componentid;
+        case 540: if(componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
+        case 541: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 542: if(componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1014 || componentid == 1015) return componentid;
+        case 545: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 546: if(componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1019 || componentid == 1018 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
+        case 547: if(componentid == 1142 || componentid == 1143 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1016 || componentid == 1003 || componentid == 1000) return componentid;
+        case 549: if(componentid == 1012 || componentid == 1011 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 550: if(componentid == 1005 || componentid == 1004 || componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003) return componentid;
+        case 551: if(componentid == 1005 || componentid == 1020 || componentid == 1021 || componentid == 1019 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1002 || componentid == 1023 || componentid == 1016 || componentid == 1003) return componentid;
+        case 555: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 558: if(componentid == 1092 || componentid == 1089 || componentid == 1166 || componentid == 1165 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1168 || componentid == 1167 || componentid == 1088 || componentid == 1091 || componentid == 1164 || componentid == 1163 || componentid == 1094 || componentid == 1090 || componentid == 1095 || componentid == 1093) return componentid;
+        case 559: if(componentid == 1065 || componentid == 1066 || componentid == 1160 || componentid == 1173 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1159 || componentid == 1161 || componentid == 1162 || componentid == 1158 || componentid == 1067 || componentid == 1068 || componentid == 1071 || componentid == 1069 || componentid == 1072 || componentid == 1070 || componentid == 1009) return componentid;
+        case 560: if(componentid == 1028 || componentid == 1029 || componentid == 1169 || componentid == 1170 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1141 || componentid == 1140 || componentid == 1032 || componentid == 1033 || componentid == 1138 || componentid == 1139 || componentid == 1027 || componentid == 1026 || componentid == 1030 || componentid == 1031) return componentid;
+        case 561: if(componentid == 1064 || componentid == 1059 || componentid == 1155 || componentid == 1157 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1154 || componentid == 1156 || componentid == 1055 || componentid == 1061 || componentid == 1058 || componentid == 1060 || componentid == 1062 || componentid == 1056 || componentid == 1063 || componentid == 1057) return componentid;
+        case 562: if(componentid == 1034 || componentid == 1037 || componentid == 1171 || componentid == 1172 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1149 || componentid == 1148 || componentid == 1038 || componentid == 1035 || componentid == 1147 || componentid == 1146 || componentid == 1040 || componentid == 1036 || componentid == 1041 || componentid == 1039) return componentid;
+        case 565: if(componentid == 1046 || componentid == 1045 || componentid == 1153 || componentid == 1152 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1150 || componentid == 1151 || componentid == 1054 || componentid == 1053 || componentid == 1049 || componentid == 1050 || componentid == 1051 || componentid == 1047 || componentid == 1052 || componentid == 1048) return componentid;
+        case 566: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 567: if(componentid == 1129 || componentid == 1132 || componentid == 1189 || componentid == 1188 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1187 || componentid == 1186 || componentid == 1130 || componentid == 1131 || componentid == 1102 || componentid == 1133) return componentid;
+        case 575: if(componentid == 1044 || componentid == 1043 || componentid == 1174 || componentid == 1175 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1176 || componentid == 1177 || componentid == 1099 || componentid == 1042) return componentid;
+        case 576: if(componentid == 1136 || componentid == 1135 || componentid == 1191 || componentid == 1190 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1192 || componentid == 1193 || componentid == 1137 || componentid == 1134) return componentid;
+        case 579: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 580: if(componentid == 1020 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
+        case 585: if(componentid == 1142 || componentid == 1143 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1003 || componentid == 1017 || componentid == 1007) return componentid;
+        case 587: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 589: if(componentid == 1005 || componentid == 1004 || componentid == 1144 || componentid == 1145 || componentid == 1020 || componentid == 1018 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1024 || componentid == 1013 || componentid == 1006 || componentid == 1016 || componentid == 1000 || componentid == 1017 || componentid == 1007) return componentid;
+        case 600: if(componentid == 1005 || componentid == 1004 || componentid == 1020 || componentid == 1022 || componentid == 1018 || componentid == 1013 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1017 || componentid == 1007) return componentid;
+        case 602: if(componentid == 1008 || componentid == 1009 || componentid == 1010) return componentid;
+        case 603: if(componentid == 1144 || componentid == 1145 || componentid == 1142 || componentid == 1143 || componentid == 1020 || componentid == 1019 || componentid == 1018 || componentid == 1024 || componentid == 1008 || componentid == 1009 || componentid == 1010 || componentid == 1006 || componentid == 1001 || componentid == 1023 || componentid == 1017 || componentid == 1007) return componentid;
     }
     return 0;
 }
@@ -938,57 +938,57 @@ stock GetVehicleCameraPos( vehicleid, &Float:x, &Float:y, &Float:z, Float:xoff=0
 
 stock TuningTDControl( playerid, bool:show ) 
 {
-	if( show == true ) 
+	if(show == true ) 
 	{
         for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++ ) 
-			PlayerTextDrawShow( playerid, TuningBuy[ playerid ][ i ] );
+			PlayerTextDrawShow( playerid, TuningBuy[playerid][i] );
 		ClickedTuningTD[playerid] = true;
 		
 	}
-	else if( show == false ) 
+	else if(show == false ) 
 	{
 		for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++ ) 
-			PlayerTextDrawHide( playerid, TuningBuy[ playerid ][ i ]);
+			PlayerTextDrawHide( playerid, TuningBuy[playerid][i]);
 		ClickedTuningTD[playerid] = false;
 	}
 }
 
 ResetTuningInfo( playerid ) 
 {
-	TPInfo[ playerid ][ tID ] = -1;
-	TPInfo[ playerid ][ tType ] = -1;
-	TPInfo[ playerid ][ tPaintjob ] = false;
+	TPInfo[playerid][tID] = -1;
+	TPInfo[playerid][tType] = -1;
+	TPInfo[playerid][tPaintjob] = false;
 	Bit1_Set( gr_PlayerInTuningMode, playerid, false );
 	PlayerTuningVehicle[playerid] = INVALID_VEHICLE_ID;
 }
 
 stock ResetVehicleTuning(vehid) 
 {
-	if( VehicleInfo[ vehid ][ vTuned ] ) 
+	if(VehicleInfo[vehid][vTuned] ) 
 	{
-	    VehicleInfo[ vehid ][ vTuned ] = false;
-		VehicleInfo[ vehid ][ vSpoiler ] = -1;
-		VehicleInfo[ vehid ][ vHood ] = -1;
-		VehicleInfo[ vehid ][ vRoof ] = -1;
-		VehicleInfo[ vehid ][ vSkirt ] = -1;
-		VehicleInfo[ vehid ][ vLamps ] = -1;
-		VehicleInfo[ vehid ][ vNitro ] = -1;
-		VehicleInfo[ vehid ][vNOSCap] = -1;
-		VehicleInfo[ vehid ][ vExhaust ] = -1;
-		VehicleInfo[ vehid ][ vWheels ] = -1;
-		VehicleInfo[ vehid ][ vHydraulics ] = -1;
-		VehicleInfo[ vehid ][ vFrontBumper ] = -1;
-		VehicleInfo[ vehid ][ vRearBumper ] = -1;
-		VehicleInfo[ vehid ][ vRightVent ] = -1;
-		VehicleInfo[ vehid ][ vLeftVent ] = -1;
-		VehicleInfo[ vehid ][ vPaintJob ] = 255;
+	    VehicleInfo[vehid][vTuned] = false;
+		VehicleInfo[vehid][vSpoiler] = -1;
+		VehicleInfo[vehid][vHood] = -1;
+		VehicleInfo[vehid][vRoof] = -1;
+		VehicleInfo[vehid][vSkirt] = -1;
+		VehicleInfo[vehid][vLamps] = -1;
+		VehicleInfo[vehid][vNitro] = -1;
+		VehicleInfo[vehid][vNOSCap] = -1;
+		VehicleInfo[vehid][vExhaust] = -1;
+		VehicleInfo[vehid][vWheels] = -1;
+		VehicleInfo[vehid][vHydraulics] = -1;
+		VehicleInfo[vehid][vFrontBumper] = -1;
+		VehicleInfo[vehid][vRearBumper] = -1;
+		VehicleInfo[vehid][vRightVent] = -1;
+		VehicleInfo[vehid][vLeftVent] = -1;
+		VehicleInfo[vehid][vPaintJob] = 255;
 	}
 	new componentid;
 	ChangeVehiclePaintjob( vehid, 3 );
 	for( new i; i < MAX_COMPONENT_SLOTS; i++ ) 
 	{
 		componentid = GetVehicleComponentInSlot( vehid, i );
-		if( componentid != 0 )
+		if(componentid != 0 )
 			RemoveVehicleComponent( vehid, componentid );
 	}
 	return 1;
@@ -996,7 +996,7 @@ stock ResetVehicleTuning(vehid)
 
 hook OnPlayerDisconnect(playerid)
 {
-	if( Bit1_Get( gr_PlayerInTuningMode	, playerid ) )
+	if(Bit1_Get( gr_PlayerInTuningMode	, playerid ))
 		SetVehicleToRespawn(PlayerTuningVehicle[playerid]);
 
 	return 1;
@@ -1015,48 +1015,48 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	    case DIALOG_TUNING: 
 		{
 			new tuningstring[128];
-	        if( response ) 
+	        if(response ) 
 			{
-				new vehicleid = GetPlayerVehicleID( playerid ), Float:Pos[ 6 ];
-	            TPInfo[ playerid ][ tID ] = -1;
+				new vehicleid = GetPlayerVehicleID( playerid ), Float:Pos[6];
+	            TPInfo[playerid][tID] = -1;
 				switch( listitem ) 
 				{
 	                case 0: 
 					{
 						for( new i = 0; i < NUMBER_TYPE_PAINTJOB; i++ ) 
 						{
-			                if( pjInfo[ i ][ vehID ] == GetVehicleModel( vehicleid ) ) 
+			                if(pjInfo[i][vehID] == GetVehicleModel( vehicleid )) 
 							{
-				            	TPInfo[ playerid ][ tID ] = i;
+				            	TPInfo[playerid][tID] = i;
 								break;
 							}
 			           	}
-						if( TPInfo[ playerid ][ tID ] == -1 )
+						if(TPInfo[playerid][tID] == -1 )
 						{
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema kompatibilnih paintjobova za vase vozilo.");
 						}
-						new pid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tPaintjob ] = true;
+						new pid = TPInfo[playerid][tID];
+						TPInfo[playerid][tPaintjob] = true;
 						
 						TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
                         ChangeVehicleColor( vehicleid, 1, 1 );
-                        ChangeVehiclePaintjob( vehicleid, pjInfo[ pid ][ pNumber ] );
+                        ChangeVehiclePaintjob( vehicleid, pjInfo[pid][pNumber] );
 
 						format( tuningstring, sizeof( tuningstring ), "Paintjobs");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", pjInfo[ pid ][ ppName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", pjInfo[ pid ][ pPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", pjInfo[pid][ppName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", pjInfo[pid][pPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 						
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 4, 0, 5 );
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 4, 0, 5 );
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 						
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1064,41 +1064,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_EXHAUST ) 
+			                if(cInfo[i][cType] == CARMODTYPE_EXHAUST ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_EXHAUST;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_EXHAUST;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Auspuh");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], -2, -5, 0 );
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], -2, -5, 0 );
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1106,41 +1106,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_FRONT_BUMPER ) 
+			                if(cInfo[i][cType] == CARMODTYPE_FRONT_BUMPER ) 
 							{
-			                   	if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                   	if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 							   	{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-						if( TPInfo[ playerid ][ tID ] == -1 )
+						if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_FRONT_BUMPER;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_FRONT_BUMPER;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Prednji branik");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, 6, 0.5 ); // done
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, 6, 0.5 ); // done
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1148,41 +1148,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{ 
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_REAR_BUMPER ) 
+			                if(cInfo[i][cType] == CARMODTYPE_REAR_BUMPER ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-						if( TPInfo[ playerid ][ tID ] == -1 )
+						if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_REAR_BUMPER;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_REAR_BUMPER;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Straznji branik");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, -6, 0.5 ); // done
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, -6, 0.5 ); // done
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1191,42 +1191,42 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_ROOF ) 
+			                if(cInfo[i][cType] == CARMODTYPE_ROOF ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
 						
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_ROOF;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_ROOF;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Roof vent");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, 6, 2 ); // done
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, 6, 2 ); // done
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1234,41 +1234,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_SPOILER ) 
+			                if(cInfo[i][cType] == CARMODTYPE_SPOILER ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_SPOILER;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_SPOILER;
+						TPInfo[playerid][tPaintjob] = false;
 	                
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 						
 						format( tuningstring, sizeof( tuningstring ), "Spoiler");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 						
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, -6, 2 ); // done
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, -6, 2 ); // done
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 						
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 						
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1276,41 +1276,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_SIDESKIRT ) 
+			                if(cInfo[i][cType] == CARMODTYPE_SIDESKIRT ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_SIDESKIRT;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_SIDESKIRT;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Bocni branik");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 4, 0, 0.5 );
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 4, 0, 0.5 );
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 						
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1318,41 +1318,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_WHEELS )
+			                if(cInfo[i][cType] == CARMODTYPE_WHEELS )
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_WHEELS;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_WHEELS;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Felge");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 4, 0, 0.5 ); // done
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 4, 0, 0.5 ); // done
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1360,41 +1360,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_HYDRAULICS ) 
+			                if(cInfo[i][cType] == CARMODTYPE_HYDRAULICS ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_HYDRAULICS;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_HYDRAULICS;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Hidraulika");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 2, 2, 2 );
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 2, 2, 2 );
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
@@ -1402,16 +1402,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 	                    for( new i = 0; i < MAX_COMPONENTS; i++ ) 
 						{
-			                if( cInfo[ i ][ cType ] == CARMODTYPE_NITRO ) 
+			                if(cInfo[i][cType] == CARMODTYPE_NITRO ) 
 							{
-			                    if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+			                    if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 								{
-				                    TPInfo[ playerid ][ tID ] = i;
+				                    TPInfo[playerid][tID] = i;
 									break;
 								}
 			                }
 						}
-	                    if( TPInfo[ playerid ][ tID ] == -1 )
+	                    if(TPInfo[playerid][tID] == -1 )
 						{	
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
@@ -1421,33 +1421,33 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							DeletePlayerTuningTD(playerid);
 							return SendErrorMessage( playerid, "Na vase vozilo se ne moze staviti nitro!");
 						}
-						new cid = TPInfo[ playerid ][ tID ];
-						TPInfo[ playerid ][ tType ] = CARMODTYPE_NITRO;
-						TPInfo[ playerid ][ tPaintjob ] = false;
+						new cid = TPInfo[playerid][tID];
+						TPInfo[playerid][tType] = CARMODTYPE_NITRO;
+						TPInfo[playerid][tPaintjob] = false;
 
 	                    TogglePlayerControllable( playerid, false );
 	                    TuningTDControl( playerid, true );
 
 						format( tuningstring, sizeof( tuningstring ), "Nitro");
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 1 ], tuningstring );
-	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ cid ][ cName ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ cid ][ cPrice ] );
-						PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][1], tuningstring );
+	                    format( tuningstring, sizeof( tuningstring ), "%s", cInfo[cid][cName] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+						format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[cid][cPrice] );
+						PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-                        AddVehicleComponent( vehicleid, cInfo[ cid ][ cID ] );
+                        AddVehicleComponent( vehicleid, cInfo[cid][cID] );
 
-						GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, -6, 2 ); // done
-						SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+						GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, -6, 2 ); // done
+						SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-						GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-						SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+						GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+						SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 						
 						SelectTextDraw( playerid, COLOR_ORANGE );
 	                }
 	            }
 	        }
-	        else if( !response ) 
+	        else if(!response ) 
 			{
 	            SetCameraBehindPlayer( playerid );
 				DeletePlayerTuningTD(playerid);
@@ -1463,9 +1463,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else
 			{
 				new vehicleid = GetPlayerVehicleID( playerid );
-				if( !IsPlayerInAnyVehicle( playerid ) ) 
+				if(!IsPlayerInAnyVehicle( playerid )) 
 					return SendErrorMessage( playerid, "Morate biti u vozilu.");
-				if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+				if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 					return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 				RemoveComponentFromVehicle(playerid, vehicleid, listitem);
 			}
@@ -1476,213 +1476,213 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-    if( playertextid != PlayerText:INVALID_TEXT_DRAW ) 
+    if(playertextid != PlayerText:INVALID_TEXT_DRAW ) 
 	{
-        if( playertextid == TuningBuy[ playerid ][ 7 ] ) // Right
+        if(playertextid == TuningBuy[playerid][7] ) // Right
 		{
-            if( !IsPlayerInAnyVehicle( playerid ) ) 
+            if(!IsPlayerInAnyVehicle( playerid )) 
 				return SendErrorMessage( playerid, "Morate biti u vozilu.");
-	        if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+	        if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 				return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
-            if( TPInfo[ playerid ][ tPaintjob ] == false ) 
+            if(TPInfo[playerid][tPaintjob] == false ) 
 			{
 				new 
 					compid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid );
             
-	            for( new i = ( TPInfo[ playerid ][ tID ]+1 ); i < MAX_COMPONENTS; i++ ) 
+	            for( new i = ( TPInfo[playerid][tID]+1 ); i < MAX_COMPONENTS; i++ ) 
 				{
-					if( cInfo[ i ][ cType ] == TPInfo[ playerid ][ tType ] ) 
+					if(cInfo[i][cType] == TPInfo[playerid][tType] ) 
 					{
-						if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+						if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 						{
 							compid = i;
 							break;
 						}
 					}
 				}
-				if( compid == -1 ) return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
+				if(compid == -1 ) return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 				
-	            RemoveVehicleComponent( vehicleid, cInfo[ TPInfo[ playerid ][ tID ] ][ cID ] );
+	            RemoveVehicleComponent( vehicleid, cInfo[TPInfo[playerid][tID]][cID] );
 
-	            TPInfo[ playerid ][ tID ] = compid;
+	            TPInfo[playerid][tID] = compid;
 
 				new 
 					tuningstring[128];
-	            format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ compid ][ cName ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ compid ][ cPrice ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+	            format( tuningstring, sizeof( tuningstring ), "%s", cInfo[compid][cName] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[compid][cPrice] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-				AddVehicleComponent( vehicleid, cInfo[ compid ][ cID ] );
+				AddVehicleComponent( vehicleid, cInfo[compid][cID] );
 
 				SelectTextDraw( playerid, COLOR_ORANGE );
 			}
-			else if( TPInfo[ playerid ][ tPaintjob ] == true )
+			else if(TPInfo[playerid][tPaintjob] == true )
 			{
 			    new 
 					paintid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid );
 			    
-			    for( new i = ( TPInfo[ playerid ][ tID ]+1 ); i < NUMBER_TYPE_PAINTJOB; i++ ) 
+			    for( new i = ( TPInfo[playerid][tID]+1 ); i < NUMBER_TYPE_PAINTJOB; i++ ) 
 				{
-			    	if( pjInfo[ i ][ vehID ] == GetVehicleModel( vehicleid ) )
+			    	if(pjInfo[i][vehID] == GetVehicleModel( vehicleid ))
 					 {
 						paintid = i;
 						break;
 					}
 			   	}
-				if( paintid == -1 ) return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
-                TPInfo[ playerid ][ tID ] = paintid;
+				if(paintid == -1 ) return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
+                TPInfo[playerid][tID] = paintid;
                 
 				new 
 					tuningstring[128];
-                format( tuningstring, sizeof( tuningstring ), "%s", pjInfo[ paintid ][ ppName ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", pjInfo[ paintid ][ pPrice ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+                format( tuningstring, sizeof( tuningstring ), "%s", pjInfo[paintid][ppName] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", pjInfo[paintid][pPrice] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
                 
-                ChangeVehiclePaintjob( vehicleid, pjInfo[ paintid ][ pNumber ] );
+                ChangeVehiclePaintjob( vehicleid, pjInfo[paintid][pNumber] );
                 
                 SelectTextDraw( playerid, COLOR_ORANGE );
 			}
 			return 1;
         }
-        else if( playertextid == TuningBuy[ playerid ][ 8 ] ) // Left
+        else if(playertextid == TuningBuy[playerid][8] ) // Left
 		{ 
-            if( TPInfo[ playerid ][ tPaintjob ] == false ) 
+            if(TPInfo[playerid][tPaintjob] == false ) 
 			{
-	            if( !IsPlayerInAnyVehicle( playerid ) ) 
+	            if(!IsPlayerInAnyVehicle( playerid )) 
 					return SendErrorMessage( playerid, "Morate biti u vozilu.");
-				if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+				if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 					return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 	            
 				new 
 					compid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid );
 
-	            for( new i = (TPInfo[ playerid ][ tID ]-1); i > 0; i-- ) 
+	            for( new i = (TPInfo[playerid][tID]-1); i > 0; i-- ) 
 				{
-					if( cInfo[ i ][ cType ] == TPInfo[ playerid ][ tType ] ) 
+					if(cInfo[i][cType] == TPInfo[playerid][tType] ) 
 					{
-						if(cInfo[ i ][ cID ] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
+						if(cInfo[i][cID] == IsComponentidCompatible(GetVehicleModel(vehicleid), cInfo[i][cID]))
 						{
 							compid = i;
 							break;
 						}
 					}
 				}
-				if( compid == -1 ) return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
+				if(compid == -1 ) return SendErrorMessage( playerid, "Nema vise kompatibilnih komponenti za vase vozilo.");
 
-				RemoveVehicleComponent( vehicleid, cInfo[ TPInfo[ playerid ][ tID ] ][ cID ] );
+				RemoveVehicleComponent( vehicleid, cInfo[TPInfo[playerid][tID]][cID] );
 
-	            TPInfo[ playerid ][ tID ] = compid;
+	            TPInfo[playerid][tID] = compid;
 
 				new 
 					tuningstring[128];
-	            format( tuningstring, sizeof( tuningstring ), "%s", cInfo[ compid ][ cName ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[ compid ][ cPrice ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+	            format( tuningstring, sizeof( tuningstring ), "%s", cInfo[compid][cName] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", cInfo[compid][cPrice] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 
-				AddVehicleComponent( vehicleid, cInfo[ compid ][ cID ] );
+				AddVehicleComponent( vehicleid, cInfo[compid][cID] );
 
 				SelectTextDraw( playerid, COLOR_ORANGE );
 			}
-			else if( TPInfo[ playerid ][ tPaintjob ] == true )
+			else if(TPInfo[playerid][tPaintjob] == true )
 			{
 
 			    new 
 					paintid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid );
 
-			    for( new i = (TPInfo[ playerid ][ tID ]-1); i > 0; i-- ) 
+			    for( new i = (TPInfo[playerid][tID]-1); i > 0; i-- ) 
 				{
-			    	if( pjInfo[ i ][ vehID ] == GetVehicleModel( vehicleid ) ) 
+			    	if(pjInfo[i][vehID] == GetVehicleModel( vehicleid )) 
 					{
 						paintid = i;
 						break;
 					}
 			   	}
-				if( paintid == -1 ) return SendErrorMessage( playerid, "Ne postoji kompatibilni paintjob za vase vozilo.");
+				if(paintid == -1 ) return SendErrorMessage( playerid, "Ne postoji kompatibilni paintjob za vase vozilo.");
 				
-                TPInfo[ playerid ][ tID ] = paintid;
+                TPInfo[playerid][tID] = paintid;
 
 				new 
 					tuningstring[128];
-                format( tuningstring, sizeof( tuningstring ), "%s", pjInfo[ paintid ][ ppName ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 3 ], tuningstring );
-				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", pjInfo[ paintid ][ pPrice ] );
-				PlayerTextDrawSetString( playerid, TuningBuy[ playerid ][ 4 ], tuningstring );
+                format( tuningstring, sizeof( tuningstring ), "%s", pjInfo[paintid][ppName] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][3], tuningstring );
+				format( tuningstring, sizeof( tuningstring ), "Cijena: ~w~%d$", pjInfo[paintid][pPrice] );
+				PlayerTextDrawSetString( playerid, TuningBuy[playerid][4], tuningstring );
 				
-                ChangeVehiclePaintjob( vehicleid, pjInfo[ paintid ][ pNumber ] );
+                ChangeVehiclePaintjob( vehicleid, pjInfo[paintid][pNumber] );
 
                 SelectTextDraw( playerid, COLOR_ORANGE );
 			}
         }
-        if( playertextid == TuningBuy[ playerid ][ 9 ] ) // Buy
+        if(playertextid == TuningBuy[playerid][9] ) // Buy
 		{ 
-            if( !IsPlayerInAnyVehicle( playerid ) ) 
+            if(!IsPlayerInAnyVehicle( playerid )) 
 				return SendErrorMessage( playerid, "Morate biti u vozilu.");
-	        if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+	        if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 				return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
             
 			new 
-				Float:Pos[ 6 ], 
+				Float:Pos[6], 
 				vehicleid = GetPlayerVehicleID( playerid );
 
-            if( TPInfo[ playerid ][ tPaintjob ] == false ) 
+            if(TPInfo[playerid][tPaintjob] == false ) 
 			{
 				new 
-					cid = TPInfo[ playerid ][ tID ];
+					cid = TPInfo[playerid][tID];
 				if(cid == -1) return SendErrorMessage(playerid, "Dogodila se greska pri kupnji. Izadjite iz tuning menija sa ESC te pokusajte ponovno.");
 				
 				if(PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER)
-					if( AC_GetPlayerMoney( playerid ) < cInfo[ TPInfo[ playerid ][ tID ] ][ cPrice ] ) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
+					if(AC_GetPlayerMoney( playerid ) < cInfo[TPInfo[playerid][tID]][cPrice] ) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
 
-		        RemoveVehicleComponent( vehicleid, cInfo[ TPInfo[ playerid ][ tID ] ][ cID ] );
-		        VehicleInfo[ vehicleid ][ vTuned ] = true;
-		        AddComponentToVehicle( vehicleid, cInfo[ cid ][ cID ] );
+		        RemoveVehicleComponent( vehicleid, cInfo[TPInfo[playerid][tID]][cID] );
+		        VehicleInfo[vehicleid][vTuned] = true;
+		        AddComponentToVehicle( vehicleid, cInfo[cid][cID] );
 				
 				new vehname[36];
-				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]) );
+				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]));
 				if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili %s na %s.", cInfo[ cid ][ cName ], vehname);
+					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili %s na %s.", cInfo[cid][cName], vehname);
 				else
 				{
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili %s na %s za %d$.", cInfo[ cid ][ cName ], vehname, cInfo[ cid ][ cPrice ]);
-					PlayerToBudgetMoney(playerid, cInfo[ cid ][ cPrice ]); // novac ide u proracun
+					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili %s na %s za %d$.", cInfo[cid][cName], vehname, cInfo[cid][cPrice]);
+					PlayerToBudgetMoney(playerid, cInfo[cid][cPrice]); // novac ide u proracun
 				}
 			}
-			else if( TPInfo[ playerid ][ tPaintjob ] == true ) 
+			else if(TPInfo[playerid][tPaintjob] == true ) 
 			{
 				if(PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER)
-					if( AC_GetPlayerMoney( playerid ) < pjInfo[ TPInfo[ playerid ][ tID ] ][ pPrice ] ) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
+					if(AC_GetPlayerMoney( playerid ) < pjInfo[TPInfo[playerid][tID]][pPrice] ) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
 			
 			    new 
-					paintid = TPInfo[ playerid ][ tID ];
+					paintid = TPInfo[playerid][tID];
 			
-			    VehicleInfo[ vehicleid ][ vTuned ] = true;
-			    VehicleInfo[ vehicleid ][ vPaintJob ] = pjInfo[ paintid ][ pNumber ];
+			    VehicleInfo[vehicleid][vTuned] = true;
+			    VehicleInfo[vehicleid][vPaintJob] = pjInfo[paintid][pNumber];
 			    ChangeVehicleColor( vehicleid, 1, 1 );
-			    ChangeVehiclePaintjob( vehicleid, pjInfo[ paintid ][ pNumber ] );
+			    ChangeVehiclePaintjob( vehicleid, pjInfo[paintid][pNumber] );
 				
 				new vehname[36];
-				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]) );
+				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]));
 				if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili PaintJob na %s.", vehname);
 				else
 				{
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili PaintJob na %s za %d$.", vehname, pjInfo[ TPInfo[ playerid ][ tID ] ][ pPrice ]);
-					PlayerToBudgetMoney(playerid, pjInfo[ TPInfo[ playerid ][ tID ] ][ pPrice ]); // Novac ide u proracun
+					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili PaintJob na %s za %d$.", vehname, pjInfo[TPInfo[playerid][tID]][pPrice]);
+					PlayerToBudgetMoney(playerid, pjInfo[TPInfo[playerid][tID]][pPrice]); // Novac ide u proracun
 				}
 				SaveVehicleTuning(vehicleid);
 			}
-			GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, 6, 2 );
-			SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+			GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, 6, 2 );
+			SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-			GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-			SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+			GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+			SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 			
 			CancelSelectTextDraw( playerid );
 
@@ -1692,27 +1692,27 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			ShowPlayerDialog( playerid, DIALOG_TUNING, DIALOG_STYLE_LIST, D_TOP, D_TEXT, D_OK, D_CANCEL );
 			return 1;
         }
-        if( playertextid == TuningBuy[ playerid ][ 13 ] ) // Close
+        if(playertextid == TuningBuy[playerid][13] ) // Close
 		{
-            if( !IsPlayerInAnyVehicle( playerid ) ) 
+            if(!IsPlayerInAnyVehicle( playerid )) 
 				SendErrorMessage( playerid, "Morate biti u vozilu.");
-	        if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+	        if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 				return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 
 			Bit1_Set(gr_PlayerInTuningMode, playerid, false);
-            new Float:Pos[ 6 ], vehicleid = GetPlayerVehicleID( playerid );
+            new Float:Pos[6], vehicleid = GetPlayerVehicleID( playerid );
 
-			if( TPInfo[ playerid ][ tPaintjob ] == false ) 
+			if(TPInfo[playerid][tPaintjob] == false ) 
 			{
-		        RemoveVehicleComponent( vehicleid, cInfo[ TPInfo[ playerid ][ tID ] ][ cID ] );
+		        RemoveVehicleComponent( vehicleid, cInfo[TPInfo[playerid][tID]][cID] );
 				SetVehicleTuning(vehicleid);
 			}
-			else if( TPInfo[ playerid ][ tPaintjob ] == true)
+			else if(TPInfo[playerid][tPaintjob] == true)
 			 {
 				if(VehicleInfo[vehicleid][vPaintJob] == 255)
 				{
 					ChangeVehiclePaintjob( vehicleid, 3 );
-					ChangeVehicleColor( vehicleid, VehicleInfo[ vehicleid ][ vColor1 ], VehicleInfo[ vehicleid ][ vColor2 ] );
+					ChangeVehicleColor( vehicleid, VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2] );
 				}
 				else
 				{
@@ -1720,11 +1720,11 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					ChangeVehiclePaintjob( vehicleid, VehicleInfo[vehicleid][vPaintJob] );
 				}
 			}
-			GetVehicleCameraPos( vehicleid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ], 0, 6, 2 );
-			SetPlayerCameraPos( playerid, Pos[ 0 ], Pos[ 1 ], Pos[ 2 ] );
+			GetVehicleCameraPos( vehicleid, Pos[0], Pos[1], Pos[2], 0, 6, 2 );
+			SetPlayerCameraPos( playerid, Pos[0], Pos[1], Pos[2] );
 
-			GetVehiclePos( vehicleid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
-			SetPlayerCameraLookAt( playerid, Pos[ 0 ],Pos[ 1 ],Pos[ 2 ] );
+			GetVehiclePos( vehicleid, Pos[0],Pos[1],Pos[2] );
+			SetPlayerCameraLookAt( playerid, Pos[0],Pos[1],Pos[2] );
 			
 			CancelSelectTextDraw( playerid );
 
@@ -1741,26 +1741,26 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
 	if(Text:INVALID_TEXT_DRAW == clickedid && Bit1_Get(gr_PlayerInTuningMode, playerid) && ClickedTuningTD[playerid] == true)
 	{
-		if( !IsPlayerInAnyVehicle( playerid ) ) 
+		if(!IsPlayerInAnyVehicle( playerid )) 
 			return SendErrorMessage( playerid, "Morate biti u vozilu.");
-		if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+		if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 			return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 
 		Bit1_Set(gr_PlayerInTuningMode, playerid, false);
 		new vehicleid = GetPlayerVehicleID( playerid );
 
-		if( TPInfo[ playerid ][ tPaintjob ] == false ) 
+		if(TPInfo[playerid][tPaintjob] == false ) 
 		{
-			RemoveVehicleComponent( vehicleid, cInfo[ TPInfo[ playerid ][ tID ] ][ cID ] );
-			ChangeVehicleColor( vehicleid, VehicleInfo[ vehicleid ][ vColor1 ], VehicleInfo[ vehicleid ][ vColor2 ] );
+			RemoveVehicleComponent( vehicleid, cInfo[TPInfo[playerid][tID]][cID] );
+			ChangeVehicleColor( vehicleid, VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2] );
 			SetVehicleTuning(vehicleid);
 		}
-		else if( TPInfo[ playerid ][ tPaintjob ] == true) 
+		else if(TPInfo[playerid][tPaintjob] == true) 
 		{
 			if(VehicleInfo[vehicleid][vPaintJob] == 255)
 			{
 				ChangeVehiclePaintjob( vehicleid, 3 );
-				ChangeVehicleColor( vehicleid, VehicleInfo[ vehicleid ][ vColor1 ], VehicleInfo[ vehicleid ][ vColor2 ] );
+				ChangeVehicleColor( vehicleid, VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2] );
 			}
 			else
 			{
@@ -1789,19 +1789,19 @@ CMD:tuning(playerid, params[])
 {
 	new 
 		pick[10];
-	if( sscanf( params, "s[10] ", pick ) )
+	if(sscanf( params, "s[10] ", pick ))
 		 return SendClientMessage( playerid, -1, "[?]: /tuning buy | remove");
 	
-	if(!IsPlayerInRangeOfPoint(playerid, 30.0, 2321.9822, -1355.6526, 23.3999) ) 
+	if(!IsPlayerInRangeOfPoint(playerid, 30.0, 2321.9822, -1355.6526, 23.3999)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u mehanicarskoj garazi!");
 	
 	new 
 		vehicleid = GetPlayerVehicleID(playerid);
 	if(PlayerKeys[playerid][pVehicleKey] != vehicleid)
 		 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");
-	if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
+	if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) 
 		return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
-	if( Bit1_Get(gr_PlayerInTuningMode, playerid) ) 
+	if(Bit1_Get(gr_PlayerInTuningMode, playerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec namjestate tuning na svom vozilu!");
 	
 	if(!strcmp(pick, "buy", true)) 
@@ -1822,14 +1822,14 @@ CMD:tuning(playerid, params[])
 
 CMD:remove_tuning(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) 
+	if(PlayerInfo[playerid][pAdmin] < 4 ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni da koristite ovu komandu!");
 	
 	new
 		vehicleid;
-	if( sscanf( params, "i", vehicleid ) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /remove_tuning [vehicleid] (Koristite /dl)");
-	if( !vehicleid || vehicleid == INVALID_VEHICLE_ID || !IsVehicleStreamedIn(vehicleid, playerid) ) 
+	if(sscanf( params, "i", vehicleid )) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /remove_tuning [vehicleid] (Koristite /dl)");
+	if(!vehicleid || vehicleid == INVALID_VEHICLE_ID || !IsVehicleStreamedIn(vehicleid, playerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vehicleida!");
 	
 	DeleteVehicleTuning(vehicleid);

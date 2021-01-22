@@ -100,7 +100,7 @@ stock Float:GetColSphereRadius(objectmodel)
 	
     format(Query, sizeof(Query), "SELECT ColRadius FROM modelsizes WHERE modelid = %d", objectmodel);
     query = db_query(ModelSizes, Query);
-	if (db_num_rows(query) > 0)
+	if(db_num_rows(query) > 0)
 	{
  		dOut = db_get_field_assoc_float(query, "ColRadius");
         db_free_result(query);
@@ -116,7 +116,7 @@ stock GetColSphereOffset(objectmodel, &Float:x, &Float:y, &Float:z)
 
     format(Query, sizeof(Query), "SELECT ColOffsetX, ColOffsetY, ColOffsetZ FROM modelsizes WHERE modelid = %d", objectmodel);
     query = db_query(ModelSizes, Query);
-   	if (db_num_rows(query) > 0)
+   	if(db_num_rows(query) > 0)
 	{
 		x = db_get_field_assoc_float(query, "ColOffsetX");
 		y = db_get_field_assoc_float(query, "ColOffsetY");
@@ -139,7 +139,7 @@ stock GetModelBoundingBox(objectmodel, &Float:MinX, &Float:MinY, &Float:MinZ, &F
 
     format(Query, sizeof(Query), "SELECT MinX, MinY, MinZ, MaxX, MaxY, MaxZ FROM modelsizes WHERE modelid = %d", objectmodel);
     query = db_query(ModelSizes, Query);
-   	if (db_num_rows(query) > 0)
+   	if(db_num_rows(query) > 0)
 	{
 		MinX = db_get_field_assoc_float(query, "MinX");
 		MinY = db_get_field_assoc_float(query, "MinY");
@@ -168,7 +168,7 @@ stock GetModelColDimensions(objectmodel, &Float:l, &Float:w, &Float:h)
 
     format(Query, sizeof(Query), "SELECT MinX, MinY, MinZ, MaxX, MaxY, MaxZ FROM modelsizes WHERE modelid = %d", objectmodel);
     query = db_query(ModelSizes, Query);
-   	if (db_num_rows(query) > 0)
+   	if(db_num_rows(query) > 0)
 	{
 		l = floatabs(db_get_field_assoc_float(query, "MaxX") - db_get_field_assoc_float(query, "MinX"));
 		w = floatabs(db_get_field_assoc_float(query, "MaxY") - db_get_field_assoc_float(query, "MinY"));

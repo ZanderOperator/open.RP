@@ -32,7 +32,7 @@ enum E_MEAL_DATA {
 	mdPrice
 }
 static stock
-	MealInfo[][ E_MEAL_DATA ] = {
+	MealInfo[][E_MEAL_DATA] = {
 		{2218,"Buster", 0.2, 5}, // Pizza Stack
 		{2219,"Double D-Luxe", 0.4, 10},
 		{2220,"Full Rack", 0.8, 15},
@@ -78,15 +78,15 @@ new
 */
 stock static DestroyMealTextDraws(playerid)
 {
-	if( MealBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(MealBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, MealBcg[playerid]);
 		MealBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( MealTitle[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(MealTitle[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, MealTitle[playerid]);
 		MealTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( MealText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(MealText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, MealText[playerid]);
 		MealText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -137,16 +137,16 @@ stock static InitPlayerMealMenu(playerid, restoran)
 			CreateMealTextDraws(playerid);
 			new
 				mealIndex = 0,
-				tmpString[ 121 ];
+				tmpString[121];
 			format(tmpString, 121, "%s~n~Cijena: %d$~n~+%.1f hunger~n~~y~~k~~PED_SPRINT~ za kupnju~n~~r~~k~~PED_JUMPING~ za odustanak",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ],
-				MealInfo[ mealIndex ][ mdHunger ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice],
+				MealInfo[mealIndex][mdHunger]
 			);
 			PlayerTextDrawSetString(playerid, MealText[playerid], tmpString);
 			PlayerTextDrawSetString(playerid, MealTitle[playerid], "Pizza Stack");
 			
-			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[ mealIndex ][ mdModel ], 375.9601, -118.0569, 1001.6000, -24.0000, 20.0000, 73.2000);
+			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[mealIndex][mdModel], 375.9601, -118.0569, 1001.6000, -24.0000, 20.0000, 73.2000);
 			InterpolateCameraPos(playerid, 375.6654, -119.0627, 1002.0000, 375.6654, -119.0627, 1002.0000, 10000000);
 			InterpolateCameraLookAt(playerid, 375.6654, -117.9716, 1001.6000, 375.6654, -117.9716, 1001.6000, 10000000);
 			SetPlayerPos(playerid, 375.7114, -119.5164, 1001.5000);
@@ -158,16 +158,16 @@ stock static InitPlayerMealMenu(playerid, restoran)
 			CreateMealTextDraws(playerid);
 			new
 				mealIndex = 4,
-				tmpString[ 121 ];
+				tmpString[121];
 			format(tmpString, 121, "%s~n~Cijena: %d$~n~+%.1f hunger~n~~y~~k~~PED_SPRINT~ za kupnju~n~~r~~k~~PED_JUMPING~ za odustanak",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ],
-				MealInfo[ mealIndex ][ mdHunger ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice],
+				MealInfo[mealIndex][mdHunger]
 			);
 			PlayerTextDrawSetString(playerid, MealText[playerid], tmpString);
 			PlayerTextDrawSetString(playerid, MealTitle[playerid], "Burger Shoot");
 			
-			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[ mealIndex ][ mdModel ], 375.8304, -66.7443, 1001.6000, -24.0000, 16.0000, 69.0000);
+			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[mealIndex][mdModel], 375.8304, -66.7443, 1001.6000, -24.0000, 16.0000, 69.0000);
 			InterpolateCameraPos(playerid, 375.8065, -68.1410, 1002.2000, 375.8065, -68.1410, 1002.2000, 10000000);
 			InterpolateCameraLookAt(playerid, 375.9679, -66.6702, 1001.6814, 375.9679, -66.6702, 1001.6814, 10000000);
 			SetPlayerPos(playerid, 376.5536, -68.1503, 1001.5000);
@@ -179,16 +179,16 @@ stock static InitPlayerMealMenu(playerid, restoran)
 			CreateMealTextDraws(playerid);
 			new
 				mealIndex = 8,
-				tmpString[ 121 ];
+				tmpString[121];
 			format(tmpString, 121, "%s~n~Cijena: %d$~n~+%.1f hunger~n~~y~~k~~PED_SPRINT~ za kupnju~n~~r~~k~~PED_JUMPING~ za odustanak",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ],
-				MealInfo[ mealIndex ][ mdHunger ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice],
+				MealInfo[mealIndex][mdHunger]
 			);
 			PlayerTextDrawSetString(playerid, MealText[playerid], tmpString);
 			PlayerTextDrawSetString(playerid, MealTitle[playerid], "Cluckin' Bell");
 			
-			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[ mealIndex ][ mdModel ], 369.3603, -5.3709, 1002.0000, -22.0000, 16.0000, 73.2000);
+			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[mealIndex][mdModel], 369.3603, -5.3709, 1002.0000, -22.0000, 16.0000, 73.2000);
 			InterpolateCameraPos(playerid, 369.2495, -6.4070, 1002.5000, 369.2495, -6.4070, 1002.5000, 10000000);
 			InterpolateCameraLookAt(playerid, 369.3603, -5.3709, 1002.0000, 369.3603, -5.3709, 1002.0000, 10000000);
 			SetPlayerPos(playerid, 368.0232, -6.4187, 1001.9000);
@@ -207,61 +207,61 @@ stock static ChangePlayerMealPreview(playerid)
 		case REST_TYPE_PIZZA: {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid),
-				tmpString[ 121 ];
+				tmpString[121];
 			CreateMealTextDraws(playerid);
 			format(tmpString, 121, "%s~n~Cijena: %d$~n~+%.1f hunger~n~~y~~k~~PED_SPRINT~ za kupnju~n~~r~~k~~PED_JUMPING~ za odustanak",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ],
-				MealInfo[ mealIndex ][ mdHunger ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice],
+				MealInfo[mealIndex][mdHunger]
 			);
 			PlayerTextDrawSetString(playerid, MealText[playerid], tmpString);
 			PlayerTextDrawSetString(playerid, MealTitle[playerid], "Pizza Stack");
 			
-			if( IsValidPlayerObject(playerid, MealPreviewObj[playerid]) ) {
+			if(IsValidPlayerObject(playerid, MealPreviewObj[playerid])) {
 				DestroyPlayerObject(playerid,MealPreviewObj[playerid]);
 				MealPreviewObj[playerid] = INVALID_OBJECT_ID;
 			}
-			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[ mealIndex ][ mdModel ], 375.9601, -118.0569, 1001.6000, -24.0000, 20.0000, 73.2000);
+			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[mealIndex][mdModel], 375.9601, -118.0569, 1001.6000, -24.0000, 20.0000, 73.2000);
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 		}
 		case REST_TYPE_BURG: {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid),
-				tmpString[ 121 ];
+				tmpString[121];
 			CreateMealTextDraws(playerid);
 			format(tmpString, 121, "%s~n~Cijena: %d$~n~+%.1f hunger~n~~y~~k~~PED_SPRINT~ za kupnju~n~~r~~k~~PED_JUMPING~ za odustanak",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ],
-				MealInfo[ mealIndex ][ mdHunger ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice],
+				MealInfo[mealIndex][mdHunger]
 			);
 			PlayerTextDrawSetString(playerid, MealText[playerid], tmpString);
 			PlayerTextDrawSetString(playerid, MealTitle[playerid], "Burger Shoot");
 			
-			if( IsValidPlayerObject(playerid, MealPreviewObj[playerid]) ) {
+			if(IsValidPlayerObject(playerid, MealPreviewObj[playerid])) {
 				DestroyPlayerObject(playerid,MealPreviewObj[playerid]);
 				MealPreviewObj[playerid] = INVALID_OBJECT_ID;
 			}
-			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[ mealIndex ][ mdModel ], 375.8304, -66.7443, 1001.6000, -24.0000, 16.0000, 69.0000);
+			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[mealIndex][mdModel], 375.8304, -66.7443, 1001.6000, -24.0000, 16.0000, 69.0000);
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 		}
 		case REST_TYPE_CLUCK: {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid),
-				tmpString[ 121 ];
+				tmpString[121];
 			CreateMealTextDraws(playerid);
 			format(tmpString, 121, "%s~n~Cijena: %d$~n~+%.1f hunger~n~~y~~k~~PED_SPRINT~ za kupnju~n~~r~~k~~PED_JUMPING~ za odustanak",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ],
-				MealInfo[ mealIndex ][ mdHunger ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice],
+				MealInfo[mealIndex][mdHunger]
 			);
 			PlayerTextDrawSetString(playerid, MealText[playerid], tmpString);
 			PlayerTextDrawSetString(playerid, MealTitle[playerid], "Pizza Stack");
 			
-			if( IsValidPlayerObject(playerid, MealPreviewObj[playerid]) ) {
+			if(IsValidPlayerObject(playerid, MealPreviewObj[playerid])) {
 				DestroyPlayerObject(playerid,MealPreviewObj[playerid]);
 				MealPreviewObj[playerid] = INVALID_OBJECT_ID;
 			}
-			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[ mealIndex ][ mdModel ], 369.3603, -5.3709, 1002.0000, -22.0000, 16.0000, 73.2000);
+			MealPreviewObj[playerid] = CreatePlayerObject(playerid, MealInfo[mealIndex][mdModel], 369.3603, -5.3709, 1002.0000, -22.0000, 16.0000, 73.2000);
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 		}
 	}
@@ -270,11 +270,11 @@ stock static ChangePlayerMealPreview(playerid)
 
 stock static IsPlayerInRangeOfGarbage(playerid, Float:radius) 
 {
-	if( 0 <= Bit8_Get(r_MealIndex, playerid) <= 3 )
+	if(0 <= Bit8_Get(r_MealIndex, playerid) <= 3 )
 		return ( IsPlayerInRangeOfPoint(playerid, radius, 2094.0000, -1789.0000, 13.2000) || IsPlayerInRangeOfPoint(playerid, radius, 2128.1716, -1785.8097, 13.2000) || IsPlayerInRangeOfPoint(playerid, radius, 373.6988, -133.4180, 1000.4883) || IsPlayerInRangeOfPoint(playerid, radius, 371.2730, -118.9202, 1000.4883));
-	else if( 4 <= Bit8_Get(r_MealIndex, playerid) <= 7 ) // Burg
-		return ( IsPlayerInRangeOfPoint(playerid, radius, 369.8281, -70.1641, 1000.5078) || IsPlayerInRangeOfPoint(playerid, radius, 361.9844, -73.4844, 1000.5078) || IsPlayerInRangeOfPoint(playerid, radius, 379.9219, -73.7813, 1000.5078) );
-	else if( 8 <= Bit8_Get(r_MealIndex, playerid) <= 11 )
+	else if(4 <= Bit8_Get(r_MealIndex, playerid) <= 7 ) // Burg
+		return ( IsPlayerInRangeOfPoint(playerid, radius, 369.8281, -70.1641, 1000.5078) || IsPlayerInRangeOfPoint(playerid, radius, 361.9844, -73.4844, 1000.5078) || IsPlayerInRangeOfPoint(playerid, radius, 379.9219, -73.7813, 1000.5078));
+	else if(8 <= Bit8_Get(r_MealIndex, playerid) <= 11 )
 		return ( IsPlayerInRangeOfPoint(playerid, radius, 367.2500, -10.3203, 1001.4766) || IsPlayerInRangeOfPoint(playerid, radius, 363.6172, -6.0859, 1001.4766) || IsPlayerInRangeOfPoint(playerid, radius, 373.2422, -6.0703, 1001.4766)); 
 	return 0;
 }
@@ -324,15 +324,15 @@ hook OnPlayerConnect(playerid)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-	if( IsValidDynamicObject(PublicMealObject[ playerid ]) ) {
-		DestroyDynamicObject(PublicMealObject[ playerid ]);
-		PublicMealObject[ playerid ] = INVALID_OBJECT_ID;
-		MealTimestamp[ playerid ] = 0;
+	if(IsValidDynamicObject(PublicMealObject[playerid])) {
+		DestroyDynamicObject(PublicMealObject[playerid]);
+		PublicMealObject[playerid] = INVALID_OBJECT_ID;
+		MealTimestamp[playerid] = 0;
 	}
-	else if( IsValidPlayerObject(playerid, PublicMealObject[ playerid ]) ) {
-		DestroyPlayerObject(playerid, PublicMealObject[ playerid ]);
-		PublicMealObject[ playerid ] = INVALID_OBJECT_ID;
-		MealTimestamp[ playerid ] = 0;
+	else if(IsValidPlayerObject(playerid, PublicMealObject[playerid])) {
+		DestroyPlayerObject(playerid, PublicMealObject[playerid]);
+		PublicMealObject[playerid] = INVALID_OBJECT_ID;
+		MealTimestamp[playerid] = 0;
 	}
 	
 	Bit1_Set(r_CarryMeal,		playerid, false);
@@ -347,17 +347,17 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 {
 	if(response == EDIT_RESPONSE_FINAL) 
 	{
-		if(playerobject && PublicMealObject[ playerid ] == objectid) 
+		if(playerobject && PublicMealObject[playerid] == objectid) 
 		{
-		    if( Bit1_Get(r_PlayerEditMeal, playerid) )
+		    if(Bit1_Get(r_PlayerEditMeal, playerid))
 			{
-				if( IsValidPlayerObject(playerid, PublicMealObject[ playerid ]) ) {
-					DestroyPlayerObject(playerid, PublicMealObject[ playerid ]);
-					PublicMealObject[ playerid ] = INVALID_OBJECT_ID;
-					MealTimestamp[ playerid ] = 0;
+				if(IsValidPlayerObject(playerid, PublicMealObject[playerid])) {
+					DestroyPlayerObject(playerid, PublicMealObject[playerid]);
+					PublicMealObject[playerid] = INVALID_OBJECT_ID;
+					MealTimestamp[playerid] = 0;
 				}
-				PublicMealObject[ playerid ] = CreateDynamicObject(MealInfo[ Bit8_Get(r_MealIndex, playerid) ][ mdModel ], fX, fY, fZ, fRotX, fRotY, fRotZ, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, 45.0, 45.0);
-				MealTimestamp[ playerid ] = gettimestamp() + 1800;
+				PublicMealObject[playerid] = CreateDynamicObject(MealInfo[Bit8_Get(r_MealIndex, playerid)][mdModel], fX, fY, fZ, fRotX, fRotY, fRotZ, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, 45.0, 45.0);
+				MealTimestamp[playerid] = gettimestamp() + 1800;
 				Bit1_Set(r_PlayerEditMeal,	playerid, false);
 			}
 		}
@@ -367,9 +367,9 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if ((newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP)) { // Odustaje
-		if( REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
-			if( IsValidPlayerObject(playerid, MealPreviewObj[playerid]) ) {
+	if((newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP)) { // Odustaje
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+			if(IsValidPlayerObject(playerid, MealPreviewObj[playerid])) {
 				DestroyPlayerObject(playerid,MealPreviewObj[playerid]);
 				MealPreviewObj[playerid] = INVALID_OBJECT_ID;
 			}
@@ -381,31 +381,31 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			TogglePlayerControllable(playerid, true);
 		}
 	}
-	if ((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT)) { // Kupuje?
-		if( REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+	if((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT)) { // Kupuje?
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
 			va_ShowPlayerDialog(playerid, DIALOG_MEAL_BUY, DIALOG_STYLE_MSGBOX, "Restoran", "Zelite li kupiti %s za %d$?", "Buy", "Abort", 
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice]
 			);
 		}
 	}
-	if ((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT)) { // Ide naprijed sa jelom
-		if( REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+	if((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT)) { // Ide naprijed sa jelom
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if( ( mealIndex + 1 ) > ( Bit4_Get(r_PlayerRestoran, playerid) * 4 ) - 1 ) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
+			if(( mealIndex + 1 ) > ( Bit4_Get(r_PlayerRestoran, playerid) * 4 ) - 1 ) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
 			mealIndex++;
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 			ChangePlayerMealPreview(playerid);
 		}
 	}
-	if ((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT)) { // Ide unatrag sa jelom
-		if( REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+	if((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT)) { // Ide unatrag sa jelom
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if( ( mealIndex - 1 ) < ( Bit4_Get(r_PlayerRestoran, playerid) - 1 ) * 4 ) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
+			if(( mealIndex - 1 ) < ( Bit4_Get(r_PlayerRestoran, playerid) - 1 ) * 4 ) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
 			mealIndex--;
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 			ChangePlayerMealPreview(playerid);
@@ -418,14 +418,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid) {
 		case DIALOG_MEAL_BUY: {
-			if( !response ) return 1;
+			if(!response ) return 1;
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if( AC_GetPlayerMoney(playerid) < MealInfo[ mealIndex ][ mdPrice ] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu jela (%d$)!", MealInfo[ mealIndex ][ mdPrice ]);
-			PlayerToBudgetMoney(playerid, MealInfo[ mealIndex ][ mdPrice ]);
+			if(AC_GetPlayerMoney(playerid) < MealInfo[mealIndex][mdPrice] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu jela (%d$)!", MealInfo[mealIndex][mdPrice]);
+			PlayerToBudgetMoney(playerid, MealInfo[mealIndex][mdPrice]);
 			
 			// Clear
-			if( IsValidPlayerObject(playerid, MealPreviewObj[playerid]) ) {
+			if(IsValidPlayerObject(playerid, MealPreviewObj[playerid])) {
 				DestroyPlayerObject(playerid,MealPreviewObj[playerid]);
 				MealPreviewObj[playerid] = INVALID_OBJECT_ID;
 			}
@@ -436,18 +436,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SetCameraBehindPlayer(playerid);
 			
 			// Objekt
-			if( IsValidDynamicObject(PublicMealObject[ playerid ]) ) {
-				DestroyDynamicObject(PublicMealObject[ playerid ]);
-				PublicMealObject[ playerid ] = INVALID_OBJECT_ID;
-				MealTimestamp[ playerid ] = 0;
+			if(IsValidDynamicObject(PublicMealObject[playerid])) {
+				DestroyDynamicObject(PublicMealObject[playerid]);
+				PublicMealObject[playerid] = INVALID_OBJECT_ID;
+				MealTimestamp[playerid] = 0;
 			}
 			SetPlayerArmedWeapon(playerid, 0);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 			SetPlayerAttachedObject(playerid, MEAL_OBJECT_INDEX, MealInfo[mealIndex][mdModel], 5, 0.037000, 0.017999, 0.431999, 76.599922, 156.700042, 178.499969);
 			EditAttachedObject(playerid, MEAL_OBJECT_INDEX);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili %s za %d$, sada namjestite objekt za drzanje i koristite /meal za vise komandi!",
-				MealInfo[ mealIndex ][ mdName ],
-				MealInfo[ mealIndex ][ mdPrice ]
+				MealInfo[mealIndex][mdName],
+				MealInfo[mealIndex][mdPrice]
 			);
 			Bit1_Set(r_PlayerBoughtMeal, playerid, true);
 			Bit1_Set(r_CarryMeal, playerid, true);
@@ -468,8 +468,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:order(playerid, params[])
 {
-	if( Bit1_Get(r_PlayerBoughtMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste kupili jelo u restoranu (Pizza/Burg/Cluckin')! Odlozite ga sa /meal dump!");
-	if( IsPlayerInRangeOfPoint(playerid,15.0,375.3066,-118.8028,1001.4995 ) ) { // Pizza
+	if(Bit1_Get(r_PlayerBoughtMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste kupili jelo u restoranu (Pizza/Burg/Cluckin')! Odlozite ga sa /meal dump!");
+	if(IsPlayerInRangeOfPoint(playerid,15.0,375.3066,-118.8028,1001.4995 )) { // Pizza
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Za biranje jela koristite tipke NUM 4 i NUM 6.");
 		TogglePlayerControllable(playerid, false);
 		InitPlayerMealMenu(playerid, REST_TYPE_PIZZA);
@@ -489,37 +489,37 @@ CMD:order(playerid, params[])
 
 CMD:meal(playerid, params[])
 {
-	if( !Bit1_Get(r_PlayerBoughtMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kupili jelo u restoranu (Pizza/Burg/Cluckin')!");
+	if(!Bit1_Get(r_PlayerBoughtMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kupili jelo u restoranu (Pizza/Burg/Cluckin')!");
 	new
-		param[ 5 ];
-	if( sscanf( params, "s[5] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /meal [edit/put/take/dump]");
-	if( !strcmp(param, "edit", true) ) {
-		if( !Bit1_Get(r_CarryMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
+		param[5];
+	if(sscanf( params, "s[5] ", param )) return SendClientMessage(playerid, COLOR_RED, "[?]: /meal [edit/put/take/dump]");
+	if(!strcmp(param, "edit", true)) {
+		if(!Bit1_Get(r_CarryMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
 		EditAttachedObject(playerid, MEAL_OBJECT_INDEX);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Uredjujete tacnu na svome liku za pomicanje kamere koristite tipku ~k~~PED_SPRINT~!");
 	}
-	else if( !strcmp(param, "put", true) ) {
-		if( !Bit1_Get(r_CarryMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
+	else if(!strcmp(param, "put", true)) {
+		if(!Bit1_Get(r_CarryMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
 		RemovePlayerAttachedObject(playerid, MEAL_OBJECT_INDEX);
 		new
 			Float:X, Float:Y, Float:Z;
 		GetPlayerPos(playerid, X, Y, Z);
         Bit1_Set(r_PlayerEditMeal,	playerid, true);
-		PublicMealObject[ playerid ] = CreatePlayerObject(playerid, MealInfo[ Bit8_Get(r_MealIndex, playerid) ][ mdModel ], X, Y, Z, -156.500091, -158.700027, 70.200035);
-		EditPlayerObject(playerid, PublicMealObject[ playerid ]);
+		PublicMealObject[playerid] = CreatePlayerObject(playerid, MealInfo[Bit8_Get(r_MealIndex, playerid)][mdModel], X, Y, Z, -156.500091, -158.700027, 70.200035);
+		EditPlayerObject(playerid, PublicMealObject[playerid]);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 		Bit1_Set(r_CarryMeal, playerid, false);
 	}
-	else if( !strcmp(param, "take", true) ) {
-		if( Bit1_Get(r_CarryMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec nosite jelo u rukama!");
+	else if(!strcmp(param, "take", true)) {
+		if(Bit1_Get(r_CarryMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec nosite jelo u rukama!");
 		new
 			Float:X, Float:Y, Float:Z;
-		GetDynamicObjectPos(PublicMealObject[ playerid ], X, Y, Z);
-		if( !IsPlayerInRangeOfPoint(playerid, 2.5, X, Y, Z) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svojega jela!");
-		if( IsValidDynamicObject(PublicMealObject[ playerid ]) ) {
-			DestroyDynamicObject(PublicMealObject[ playerid ]);
-			PublicMealObject[ playerid ] = INVALID_OBJECT_ID;
-			MealTimestamp[ playerid ] = 0;
+		GetDynamicObjectPos(PublicMealObject[playerid], X, Y, Z);
+		if(!IsPlayerInRangeOfPoint(playerid, 2.5, X, Y, Z)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svojega jela!");
+		if(IsValidDynamicObject(PublicMealObject[playerid])) {
+			DestroyDynamicObject(PublicMealObject[playerid]);
+			PublicMealObject[playerid] = INVALID_OBJECT_ID;
+			MealTimestamp[playerid] = 0;
 		}
 		SetPlayerArmedWeapon(playerid, 0);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
@@ -528,9 +528,9 @@ CMD:meal(playerid, params[])
 		Bit1_Set(r_PlayerEditMeal,	playerid, false);
 		Bit1_Set(r_CarryMeal, playerid, true);
 	}
-	else if( !strcmp(param, "dump", true) ) {
-		if( !Bit1_Get(r_CarryMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
-		if( !IsPlayerInRangeOfGarbage(playerid, 2.5) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta za odlaganje odstataka!");
+	else if(!strcmp(param, "dump", true)) {
+		if(!Bit1_Get(r_CarryMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
+		if(!IsPlayerInRangeOfGarbage(playerid, 2.5)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta za odlaganje odstataka!");
 		SetPlayerArmedWeapon(playerid, 0);
 		RemovePlayerAttachedObject(playerid, MEAL_OBJECT_INDEX);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);

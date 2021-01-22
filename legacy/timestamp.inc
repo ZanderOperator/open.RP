@@ -73,7 +73,7 @@ stock datetime2stamp(&sec1970, year, month, day, hour, minute, second, gmh = 0, 
 }
 
 stock weekday(day, month, year) {
-    if (month <= 2) {
+    if(month <= 2) {
         month += 12;
 		--year;
 	}

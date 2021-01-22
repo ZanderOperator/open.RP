@@ -55,8 +55,8 @@ static
     bool:HasFood[MAX_PLAYERS],
     bool:FakeGunLic[MAX_PLAYERS],
     PlayerGroceries[MAX_PLAYERS],
-	bool:PlayerGlobalTaskTimer[ MAX_PLAYERS ],
-	Timer:PlayerTask[ MAX_PLAYERS ];
+	bool:PlayerGlobalTaskTimer[MAX_PLAYERS],
+	Timer:PlayerTask[MAX_PLAYERS];
 
 new
     AdoLabels[MAX_ADO_LABELS][E_ADO_LABEL_INFO];
@@ -142,8 +142,8 @@ GetName(playerid, bool:replace=true)
 	new name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid, name, sizeof(name));
 	
-	if( replace ) {
-		if (Player_UsingMask(playerid))
+	if(replace ) {
+		if(Player_UsingMask(playerid))
 			format(name, sizeof(name), "Maska_%d", PlayerInventory[playerid][pMaskID] );
 		else 
 			strreplace(name, '_', ' ');
@@ -205,7 +205,7 @@ stock ResetAdoLabelSlot(playerid, type, value)
 		    AdoLabels[value][lablpos][0] = 0;
 		    AdoLabels[value][lablpos][1] = 0;
 		    AdoLabels[value][lablpos][2] = 0;
-      		SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali prikvaceni opis.");
+      		SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali prikvaceni opis.");
 			return 1;
 		}
 		//playerid
@@ -221,7 +221,7 @@ stock ResetAdoLabelSlot(playerid, type, value)
 				    AdoLabels[i][lablpos][0] = 0;
 				    AdoLabels[i][lablpos][1] = 0;
 				    AdoLabels[i][lablpos][2] = 0;
-				    SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali prikvaceni opis.");
+				    SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali prikvaceni opis.");
 				    return 1;
 		        }
 		    }
@@ -236,7 +236,7 @@ stock LevelUp(playerid)
 	{
 		new
 			expamount = ( PlayerInfo[playerid][pLevel] + 1 ) * 4;
-		if (PlayerInfo[playerid][pRespects] < expamount) {
+		if(PlayerInfo[playerid][pRespects] < expamount) {
 			return 0;
 		}
 
@@ -340,7 +340,7 @@ PlayerMinuteTask(playerid)
 {
 	PlayerTick[playerid][ptMainTimer] = gettimestamp() + 60;
 	
-	if( (CreditInfo[playerid][cCreditType] == 5 || CreditInfo[playerid][cCreditType] == 6 || CreditInfo[playerid][cCreditType] == 7) && !CreditInfo[playerid][cUsed] && gettimestamp() >= CreditInfo[playerid][cTimestamp]) 
+	if((CreditInfo[playerid][cCreditType] == 5 || CreditInfo[playerid][cCreditType] == 6 || CreditInfo[playerid][cCreditType] == 7) && !CreditInfo[playerid][cUsed] && gettimestamp() >= CreditInfo[playerid][cTimestamp]) 
 	{
 		ResetCreditVars(playerid);
 		SavePlayerCredit(playerid);
@@ -354,26 +354,26 @@ PlayerMinuteTask(playerid)
 		PlayerJail[playerid][pJailTime] -= 1;
 	else if(PlayerJail[playerid][pJailTime] == 0 )
 	{
-		if( PlayerJail[playerid][pJailed] == 1 )
+		if(PlayerJail[playerid][pJailed] == 1 )
 		{
 			SetPlayerPosEx(playerid, 90.6552, -236.3789, 1.5781, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
-		else if( PlayerJail[playerid][pJailed] == 2 )
+		else if(PlayerJail[playerid][pJailed] == 2 )
 		{
 			SetPlayerPosEx(playerid, 1482.7426, -1740.1372, 13.7500, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Pusten si iz Fort DeMorgana, pripazi na ponasanje i server pravila!");
 		}
-		else if( PlayerJail[playerid][pJailed] == 3 )
+		else if(PlayerJail[playerid][pJailed] == 3 )
 		{
 			SetPlayerPosEx(playerid, 636.7744,-601.3240,16.3359, 0, 0, false);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
-		else if( PlayerJail[playerid][pJailed] == 5 ) // Treatment
+		else if(PlayerJail[playerid][pJailed] == 5 ) // Treatment
 		{
 			TogglePlayerControllable(playerid, 1);
 			ClearAnim(playerid);
@@ -408,13 +408,13 @@ PlayerMinuteTask(playerid)
 
 timer PlayerGlobalTask[1000](playerid)
 {
-	if ( !SafeSpawned[playerid] || !IsPlayerConnected(playerid) ) 
+	if(!SafeSpawned[playerid] || !IsPlayerConnected(playerid)) 
 		return 1;
 	
-	if( gettimestamp() >= PlayerTick[playerid][ptMainTimer] )
+	if(gettimestamp() >= PlayerTick[playerid][ptMainTimer] )
 		PlayerMinuteTask(playerid);	
 	
-	PlayerSyncs[ playerid ] = false;
+	PlayerSyncs[playerid] = false;
 	new tmphour,tmpmins,tmpsecs;
 	GetServerTime(tmphour,tmpmins,tmpsecs);
 	SetPlayerTime(playerid,tmphour,tmpmins);
@@ -452,9 +452,9 @@ timer PlayerGlobalTask[1000](playerid)
 		88                                           ,d    ""                                    
 		88                                           88                                          
 		88aaaaa 88       88 8b,dPPYba,   ,adPPYba, MM88MMM 88  ,adPPYba,  8b,dPPYba,  ,adPPYba,  
-		88""""" 88       88 88P'   `"8a a8"     ""   88    88 a8"     "8a 88P'   `"8a I8[    ""  
+		88""""" 88       88 88P'   `"8a a8"     ""   88    88 a8"     "8a 88P'   `"8a I8[   ""  
 		88      88       88 88       88 8b           88    88 8b       d8 88       88  `"Y8ba,   
-		88      "8a,   ,a88 88       88 "8a,   ,aa   88,   88 "8a,   ,a8" 88       88 aa    ]8I  
+		88      "8a,   ,a88 88       88 "8a,   ,aa   88,   88 "8a,   ,a8" 88       88 aa   ]8I  
 		88       `"YbbdP'Y8 88       88  `"Ybbd8"'   "Y888 88  `"YbbdP"'  88       88 `"YbbdP"'  
 
 */
@@ -468,18 +468,18 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	counts = cache_num_rows();
 	cache_delete(result);
 	
-	if( counts ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That nickname already exists!");
+	if(counts ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That nickname already exists!");
 	
 	new
 		oldname[MAX_PLAYER_NAME];
-	format( oldname, MAX_PLAYER_NAME, GetName(playerid, false) );
+	format( oldname, MAX_PLAYER_NAME, GetName(playerid, false));
 	
 	SendAdminMessage(COLOR_RED, "AdmWarn: [ChangeName Report] - Old Nick: %s, New Nick: %s", oldname, newname);
 	
 	#if defined MODULE_LOGS
 	Log_Write("logfiles/namechange.txt", "(%s) {%d} Old nickname: %s | New nickname: %s",
 		ReturnDate(),
-		PlayerInfo[ playerid ][ pSQLID ],
+		PlayerInfo[playerid][pSQLID],
 		oldname,
 		newname
 	);
@@ -487,36 +487,36 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	
 	mysql_fquery(g_SQL, "UPDATE accounts SET name = '%e', sex = '%d', age = '%d' WHERE sqlid = '%d'",
 		newname,
-		PlayerInfo[ playerid ][ pSex ],
-		PlayerInfo[ playerid ][ pAge ],
-		PlayerInfo[ playerid ][ pSQLID ]
+		PlayerInfo[playerid][pSex],
+		PlayerInfo[playerid][pAge],
+		PlayerInfo[playerid][pSQLID]
 	);
 	
-	PlayerJail[ playerid ][ pArrested ] = 0;
+	PlayerJail[playerid][pArrested] = 0;
 	LicenseInfo[playerid][pGunLic] 	= 0;
 	
 	if(admin_cn == (false)) {
-		if( !PlayerVIP[playerid][pDonateRank] )
+		if(!PlayerVIP[playerid][pDonateRank] )
 			PlayerToBudgetMoney( playerid, 10000);
 	}
 	if(type == 1)
 	{
 		if(PlayerInfo[playerid][pLevel] < 10)
-			PlayerInfo[ playerid ][ pChangenames ] = gettimestamp() + 172800; 
+			PlayerInfo[playerid][pChangenames] = gettimestamp() + 172800; 
 		else if(PlayerInfo[playerid][pLevel] >= 10 && PlayerInfo[playerid][pLevel] < 20)
-			PlayerInfo[ playerid ][ pChangenames ] = gettimestamp() + 86400; 
+			PlayerInfo[playerid][pChangenames] = gettimestamp() + 86400; 
 	}
 	else if(type == 2)
 		PlayerInfo[playerid][pChangeTimes]--;
 	
 	va_SendClientMessage( playerid, 
 		COLOR_RED, 
-		"[ ! ]: You sucessfully changed your nickname to %s, please relog with new nickname!", 
+		"[!]: You sucessfully changed your nickname to %s, please relog with new nickname!", 
 		newname
 	);
 	if(PlayerVIP[playerid][pDonateRank] > 0)
 	{
-		va_SendClientMessage( playerid, COLOR_RED, "[ ! ]: You have %d free changenames left.", 
+		va_SendClientMessage( playerid, COLOR_RED, "[!]: You have %d free changenames left.", 
 			PlayerInfo[playerid][pChangeTimes]
 		);
 	}
@@ -531,12 +531,12 @@ static HungerCheck(playerid)
 		
 	new 
 		Float:health;	
-	if( PlayerHealth[playerid][pHunger] < 0.0 ) {
-		if( PlayerGym[playerid][pMuscle] > 10 ) {
+	if(PlayerHealth[playerid][pHunger] < 0.0 ) {
+		if(PlayerGym[playerid][pMuscle] > 10 ) {
 			PlayerHealth[playerid][pHunger] -= 0.001;
 		} else PlayerHealth[playerid][pHunger] -= 0.006;
 		
-		if( PlayerHealth[playerid][pHunger] < -5.0 ) 
+		if(PlayerHealth[playerid][pHunger] < -5.0 ) 
 			PlayerHealth[playerid][pHunger] = -5.0;
 	}
 	else PlayerHealth[playerid][pHunger] -= 0.002;
@@ -554,7 +554,7 @@ GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance)
 	new Float:a;
 	GetPlayerPos(playerid, x, y, a);
 	GetPlayerFacingAngle(playerid, a);
-	if (GetPlayerVehicleID(playerid))
+	if(GetPlayerVehicleID(playerid))
 	{
 	    GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
 	}
@@ -575,28 +575,28 @@ IsValidName(name[])
 		Underscore;
 
 	split(name, namesplit, '_');
-    if (strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
+    if(strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
     {
         // Firstname and Lastname contains more than 1 character + it there are separated with '_' char. Continue...
     }
     else return 0; // No need to continue...
 
     FirstLetterOfFirstname = namesplit[0][0];
-	if (FirstLetterOfFirstname >= 'A' && FirstLetterOfFirstname <= 'Z')
+	if(FirstLetterOfFirstname >= 'A' && FirstLetterOfFirstname <= 'Z')
 	{
         // First letter of Firstname is capitalized. Continue...
 	}
 	else return 0; // No need to continue...
 
 	FirstLetterOfLastname = namesplit[1][0];
-    if (FirstLetterOfLastname >= 'A' && FirstLetterOfLastname <= 'Z')
+    if(FirstLetterOfLastname >= 'A' && FirstLetterOfLastname <= 'Z')
     {
 		// First letter of Lastname is capitalized. Continue...
 	}
 	else return 0; // No need to continue...
 
 	ThirdLetterOfLastname = namesplit[1][2];
-    if (ThirdLetterOfLastname >= 'A' && ThirdLetterOfLastname <= 'Z' || ThirdLetterOfLastname >= 'a' && ThirdLetterOfLastname <= 'z')
+    if(ThirdLetterOfLastname >= 'A' && ThirdLetterOfLastname <= 'Z' || ThirdLetterOfLastname >= 'a' && ThirdLetterOfLastname <= 'z')
     {
 		// Third letter of Lastname can be uppercase and lowercase (uppercase for Lastnames like McLaren). Continue...
 	}
@@ -604,7 +604,7 @@ IsValidName(name[])
 
     for(new i = 0; i < length; i++)
 	{
-		if (name[i] != FirstLetterOfFirstname && name[i] != FirstLetterOfLastname && name[i] != ThirdLetterOfLastname && name[i] != '_')
+		if(name[i] != FirstLetterOfFirstname && name[i] != FirstLetterOfLastname && name[i] != ThirdLetterOfLastname && name[i] != '_')
 		{
 			if(name[i] >= 'a' && name[i] <= 'z')
 			{
@@ -614,10 +614,10 @@ IsValidName(name[])
 		}
 
 		// This checks that '_' char can be used only one time (to prevent names like this Firstname_Lastname_Something)...
-		if (name[i] == '_')
+		if(name[i] == '_')
 		{
 			Underscore++;
-			if (Underscore > 1) return 0; // No need to continue...
+			if(Underscore > 1) return 0; // No need to continue...
 		}
 	}
 	return 1; // All check are ok, Name is valid...
@@ -630,7 +630,7 @@ PrintAccent(playerid)
 	
 	if(!isnull(PlayerAppearance[playerid][pAccent]) || PlayerAppearance[playerid][pAccent][0] == EOS)
 		format(string, 64, "");
-	else if( strcmp(PlayerAppearance[playerid][pAccent], "None", true) )
+	else if(strcmp(PlayerAppearance[playerid][pAccent], "None", true))
 		format(string, 64, "[%s] ", PlayerAppearance[playerid][pAccent]);
     return string;
 }
@@ -677,23 +677,23 @@ ProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5, bool:
 			tempposy = (oldposy -posy);
 			tempposz = (oldposz -posz);
 
-			if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
+			if(((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
 			{
 				SendClientMessage(i, col1, string);
 			}
-			else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
+			else if(((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
 			{
 				SendClientMessage(i, col2, string);
 			}
-			else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
+			else if(((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
 			{
 				SendClientMessage(i, col3, string);
 			}
-			else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
+			else if(((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
 			{
 				SendClientMessage(i, col4, string);
 			}
-			else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
+			else if(((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
 			{
 				SendClientMessage(i, col5, string);
 			}
@@ -744,23 +744,23 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 					modelid2 = GetVehicleModel(vehicleid2);
 
 					if(!IsPlayerInAnyVehicle(i) || IsACabrio(modelid2) || Bit1_Get( gr_VehicleWindows, vehicleid2 )) {
-						if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
+						if(((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
 						{
 							SendClientMessage(i, col1, string);
 						}
-						else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
+						else if(((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
 						{
 							SendClientMessage(i, col2, string);
 						}
-						else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
+						else if(((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
 						{
 							SendClientMessage(i, col3, string);
 						}
-						else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
+						else if(((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
 						{
 							SendClientMessage(i, col4, string);
 						}
-						else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
+						else if(((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
 						{
 							SendClientMessage(i, col5, string);
 						}
@@ -775,7 +775,7 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 CarProxDetector(vehicleid, playerid, const string[], color)
 {
 	foreach(new i : Player) {
-		if( IsPlayerInVehicle( i, vehicleid ) && i != playerid )
+		if(IsPlayerInVehicle( i, vehicleid ) && i != playerid )
 			SendClientMessage( playerid, color, string );
 	}
 	return 1;
@@ -785,7 +785,7 @@ ProxDetectorS(Float:radi, playerid, targetid)
 {
     if(IsPlayerConnected(playerid) && IsPlayerConnected(targetid))
 	{
-		if( ( GetPlayerVehicleID(playerid) == GetPlayerVehicleID(targetid) ) && GetPlayerVehicleID(playerid) != 0 ) 
+		if(( GetPlayerVehicleID(playerid) == GetPlayerVehicleID(targetid)) && GetPlayerVehicleID(playerid) != 0 ) 
 			return 1;
 			
 	    if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(targetid))
@@ -807,7 +807,7 @@ ProxDetectorS(Float:radi, playerid, targetid)
 			tempposy = (oldposy -posy);
 			tempposz = (oldposz -posz);
 
-			if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
+			if(((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
 				return 1;
 		}
 	}
@@ -841,23 +841,23 @@ OOCProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5)
 					tempposy = (oldposy -posy);
 					tempposz = (oldposz -posz);
 
-					if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
+					if(((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
 					{
 						SendClientMessage(i, col1, string);
 					}
-					else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
+					else if(((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
 					{
 						SendClientMessage(i, col2, string);
 					}
-					else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
+					else if(((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
 					{
 						SendClientMessage(i, col3, string);
 					}
-					else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
+					else if(((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
 					{
 						SendClientMessage(i, col4, string);
 					}
-					else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
+					else if(((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
 					{
 						SendClientMessage(i, col5, string);
 					}
@@ -869,23 +869,23 @@ OOCProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5)
 					tempposy = (oldposy -posy);
 					tempposz = (oldposz -posz);
 
-					if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
+					if(((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
 					{
 						SendClientMessage(i, col1, string);
 					}
-					else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
+					else if(((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
 					{
 						SendClientMessage(i, col2, string);
 					}
-					else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
+					else if(((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
 					{
 						SendClientMessage(i, col3, string);
 					}
-					else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
+					else if(((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
 					{
 						SendClientMessage(i, col4, string);
 					}
-					else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
+					else if(((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
 					{
 						SendClientMessage(i, col5, string);
 					}
@@ -899,8 +899,8 @@ OOCProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5)
 ShowPlayerStats(playerid, targetid)
 {
 	new
-		tmpString[ 20 ],
-		motd[ 256 ], gender[15+1];
+		tmpString[20],
+		motd[256], gender[15+1];
 
 	switch(PlayerInfo[targetid][pSex])	{
 		case 0: format(gender, sizeof(gender), "Musko"); // re-bug
@@ -988,7 +988,7 @@ ShowPlayerStats(playerid, targetid)
 		PlayerKeys[targetid][pComplexRoomKey]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
-	if( PlayerInfo[playerid][pAdmin] >= 1 )
+	if(PlayerInfo[playerid][pAdmin] >= 1 )
 	{
 
 		format(motd, sizeof(motd), ""COL_COABLUE"WEAPONS STATS:\n\n"COL_WHITE"Gun #1: [%d] | Gun #2: [%d] | Gun #3: [%d] | Gun #4: [%d] | Gun #5: [%d]\nGun #6: [%d] | Gun #7: [%d] | Gun #8: [%d] | Gun #9: [%d] | Gun #10: [%d]\n",
@@ -1141,7 +1141,7 @@ PlaySoundForPlayersInRange(soundid, Float:range, Float:x, Float:y, Float:z)
 
 hook function ResetPlayerVariables(playerid)
 {
-	PlayerGlobalTaskTimer[ playerid ] = false;
+	PlayerGlobalTaskTimer[playerid] = false;
 	PlayerDrunkLevel[playerid]	= 0;
 	PlayerFPSUnix[playerid]		= gettimestamp();
     BlockedOOC[playerid] = false;
@@ -1261,15 +1261,15 @@ hook OnPlayerUpdate(playerid)
 		PlayerTask[playerid] = repeat PlayerGlobalTask(playerid);
 	}
 		
-	if( PlayerFPSUnix[playerid] < gettimestamp() ) 
+	if(PlayerFPSUnix[playerid] < gettimestamp()) 
 	{
 		new 
 			drunkLevel = GetPlayerDrunkLevel(playerid);
-		if( drunkLevel < 100 ) 
+		if(drunkLevel < 100 ) 
 			SetPlayerDrunkLevel(playerid, 2000);
 		else 
 		{
-			if( PlayerDrunkLevel[playerid] != drunkLevel ) 
+			if(PlayerDrunkLevel[playerid] != drunkLevel ) 
 				PlayerDrunkLevel[playerid] = drunkLevel;
 		}
 		PlayerFPSUnix[playerid] = gettimestamp();
@@ -1283,7 +1283,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_RULES: 
 		{
-			if( !response ) return 1;
+			if(!response ) return 1;
 			switch(listitem) 
 			{
 				case 0: 

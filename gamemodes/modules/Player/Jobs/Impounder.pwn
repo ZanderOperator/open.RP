@@ -206,11 +206,11 @@ OPUnTowIV(playerid, veh)
 		GetVehiclePos(veh, X, Y, Z);
 		GetVehicleZAngle(veh, z_rot);
 	
-		VehicleInfo[ veh ][ vParkX ]		= X;
-		VehicleInfo[ veh ][ vParkY ]		= Y;
-		VehicleInfo[ veh ][ vParkZ ]		= Z;
-		VehicleInfo[ veh ][ vAngle ] 		= z_rot;
-		VehicleInfo[ veh ][ vImpounded ] 	= 1;
+		VehicleInfo[veh][vParkX]		= X;
+		VehicleInfo[veh][vParkY]		= Y;
+		VehicleInfo[veh][vParkZ]		= Z;
+		VehicleInfo[veh][vAngle] 		= z_rot;
+		VehicleInfo[veh][vImpounded] 	= 1;
 	
 		mysql_fquery(g_SQL,
 			"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
@@ -232,7 +232,7 @@ OPUnTowIV(playerid, veh)
 	new 
 		money = minrand(350, 450);
 		
-	va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
+	va_SendClientMessage(playerid, COLOR_GREEN, "[!] Zaradio si $%d, placa ti je sjela na racun.", money);
 	BudgetToPlayerBankMoney(playerid, money);
 	PaydayInfo[playerid][pPayDayMoney] += money;
 	

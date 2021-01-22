@@ -17,7 +17,7 @@ GetVehicleDriver(vehicleid)
 		playerid = INVALID_PLAYER_ID;
 
 	foreach(new i : Player) {
-		if( IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
+		if(IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
 			playerid = i;
 			break;
 		}
@@ -157,7 +157,7 @@ WeaponModels(weaponid)
 		353, 355, 356, 372, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366,
 		367, 368, 368, 371
     };
-    if (1 <= weaponid <= 46)
+    if(1 <= weaponid <= 46)
         return g_aWeaponModels[weaponid];
 
 	return 0;
@@ -183,7 +183,7 @@ GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
 {
     new Float:fPos[4], Float:fSize[3];
  
-    if (!Vehicle_Exists(VehicleInfo[vehicleid][vUsage], vehicleid))
+    if(!Vehicle_Exists(VehicleInfo[vehicleid][vUsage], vehicleid))
     {
         x = 0.0;
         y = 0.0;

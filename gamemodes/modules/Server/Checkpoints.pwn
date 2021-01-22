@@ -258,6 +258,6 @@ CMD:resetcp(playerid, params[])
 		Streamer_SetFloatData(STREAMER_TYPE_CP, LastCPInfo[playerid][lcpLastCP], E_STREAMER_Z, LastCPInfo[playerid][lcpPosZ]);
 		Streamer_Update(playerid);
 	}
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste resetirali svoje checkpointove!");
+	SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste resetirali svoje checkpointove!");
 	return 1;
 }

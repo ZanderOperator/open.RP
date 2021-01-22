@@ -108,7 +108,7 @@ static stock
 #define void:
 
 #if !defined TAGOF
-	#if ((__Pawn & 0x0F) >= 0x0A) || ((__Pawn & 0xF0) >= 0xA0)
+	#if((__Pawn & 0x0F) >= 0x0A) || ((__Pawn & 0xF0) >= 0xA0)
 		#define TAGOF(%0);
 		// Defer `tagof` on things with colons slightly to remove anything after
 		// it.  This lets us do `tagof (Float:i)` with no problem, since the `i`
@@ -188,7 +188,7 @@ stock Indirect_Call(func, tag, GLOBAL_TAG_TYPES:...)
 	static
 		addr = 0;
 	#pragma unused tag
-	if (!func)
+	if(!func)
 	{
 		return 0;
 	}
@@ -219,7 +219,7 @@ stock Indirect_Call(func, tag, GLOBAL_TAG_TYPES:...)
 	// Check the pointer type.  If it is in the `COD` area, jump straight to it
 	// with the tag for parameter types (if it isn't 0).  Otherwise, use the
 	// `func` from `DAT` as a pointer to a handler.
-	if (INDIRECTION_DATA >= gsCodSize)
+	if(INDIRECTION_DATA >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.pri     INDIRECTION_DATA
@@ -228,7 +228,7 @@ stock Indirect_Call(func, tag, GLOBAL_TAG_TYPES:...)
 		#emit MOVE.alt
 		#emit LOAD.I
 		#emit STOR.pri     INDIRECTION_DATA
-		if (!INDIRECTION_DATA)
+		if(!INDIRECTION_DATA)
 		{
 			// Get the function at `func - COD + 4`.
 			#emit CONST.pri    4
@@ -247,7 +247,7 @@ stock Indirect_Call(func, tag, GLOBAL_TAG_TYPES:...)
 		#emit SYSREQ.C     funcidx
 		#emit STACK        8
 		#emit STOR.pri     INDIRECTION_DATA
-		if (INDIRECTION_DATA == -1)
+		if(INDIRECTION_DATA == -1)
 		{
 			#emit PROC
 			#emit RETN
@@ -256,14 +256,14 @@ stock Indirect_Call(func, tag, GLOBAL_TAG_TYPES:...)
 		// Get the address from the index.
 		INDIRECTION_DATA = GetPublicAddressFromIndex(INDIRECTION_DATA);
 	}
-	if (INDIRECTION_TAG)
+	if(INDIRECTION_TAG)
 	{
 		static
 			i = 0,
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if (lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ; )
 		{
 			switch (lTag[i++])
 			{
@@ -293,7 +293,7 @@ stock string:Indirect_Callstring(func, tag, GLOBAL_TAG_TYPES:...)
 	static
 		addr = 0;
 	#pragma unused tag
-	if (!func)
+	if(!func)
 	{
 		// Get the offset to the secret return parameter.
 		#emit LOAD.S.pri   8
@@ -329,7 +329,7 @@ stock string:Indirect_Callstring(func, tag, GLOBAL_TAG_TYPES:...)
 	// Check the pointer type.  If it is in the `COD` area, jump straight to it
 	// with the tag for parameter types (if it isn't 0).  Otherwise, use the
 	// `func` from `DAT` as a pointer to a handler.
-	if (INDIRECTION_DATA >= gsCodSize)
+	if(INDIRECTION_DATA >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.pri     INDIRECTION_DATA
@@ -338,7 +338,7 @@ stock string:Indirect_Callstring(func, tag, GLOBAL_TAG_TYPES:...)
 		#emit MOVE.alt
 		#emit LOAD.I
 		#emit STOR.pri     INDIRECTION_DATA
-		if (!INDIRECTION_DATA)
+		if(!INDIRECTION_DATA)
 		{
 			// Get the function at `func - COD + 4`.
 			#emit CONST.pri    4
@@ -357,7 +357,7 @@ stock string:Indirect_Callstring(func, tag, GLOBAL_TAG_TYPES:...)
 		#emit SYSREQ.C     funcidx
 		#emit STACK        8
 		#emit STOR.pri     INDIRECTION_DATA
-		if (INDIRECTION_DATA == -1)
+		if(INDIRECTION_DATA == -1)
 		{
 			#emit PROC
 			#emit RETN
@@ -366,14 +366,14 @@ stock string:Indirect_Callstring(func, tag, GLOBAL_TAG_TYPES:...)
 		// Get the address from the index.
 		INDIRECTION_DATA = GetPublicAddressFromIndex(INDIRECTION_DATA);
 	}
-	if (INDIRECTION_TAG)
+	if(INDIRECTION_TAG)
 	{
 		static
 			i = 0,
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if (lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ; )
 		{
 			switch (lTag[i++])
 			{
@@ -407,7 +407,7 @@ stock void:Indirect_Callvoid(func, tag, GLOBAL_TAG_TYPES:...)
 	static
 		addr = 0;
 	#pragma unused tag
-	if (!func)
+	if(!func)
 	{
 		return;
 	}
@@ -433,7 +433,7 @@ stock void:Indirect_Callvoid(func, tag, GLOBAL_TAG_TYPES:...)
 	// Check the pointer type.  If it is in the `COD` area, jump straight to it
 	// with the tag for parameter types (if it isn't 0).  Otherwise, use the
 	// `func` from `DAT` as a pointer to a handler.
-	if (INDIRECTION_DATA >= gsCodSize)
+	if(INDIRECTION_DATA >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.pri     INDIRECTION_DATA
@@ -442,7 +442,7 @@ stock void:Indirect_Callvoid(func, tag, GLOBAL_TAG_TYPES:...)
 		#emit MOVE.alt
 		#emit LOAD.I
 		#emit STOR.pri     INDIRECTION_DATA
-		if (!INDIRECTION_DATA)
+		if(!INDIRECTION_DATA)
 		{
 			// Get the function at `func - COD + 4`.
 			#emit CONST.pri    4
@@ -461,7 +461,7 @@ stock void:Indirect_Callvoid(func, tag, GLOBAL_TAG_TYPES:...)
 		#emit SYSREQ.C     funcidx
 		#emit STACK        8
 		#emit STOR.pri     INDIRECTION_DATA
-		if (INDIRECTION_DATA == -1)
+		if(INDIRECTION_DATA == -1)
 		{
 			#emit PROC
 			#emit RETN
@@ -470,14 +470,14 @@ stock void:Indirect_Callvoid(func, tag, GLOBAL_TAG_TYPES:...)
 		// Get the address from the index.
 		INDIRECTION_DATA = GetPublicAddressFromIndex(INDIRECTION_DATA);
 	}
-	if (INDIRECTION_TAG)
+	if(INDIRECTION_TAG)
 	{
 		static
 			i = 0,
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if (lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ; )
 		{
 			switch (lTag[i++])
 			{
@@ -552,7 +552,7 @@ stock Indirect_Array(func, tag, const params[], size = sizeof (params))
 	// Check the pointer type.  If it is in the `COD` area, jump straight to it
 	// with the tag for parameter types (if it isn't 0).  Otherwise, use the
 	// `func` from `DAT` as a pointer to a handler.
-	if (INDIRECTION_DATA >= gsCodSize)
+	if(INDIRECTION_DATA >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.pri     INDIRECTION_DATA
@@ -561,7 +561,7 @@ stock Indirect_Array(func, tag, const params[], size = sizeof (params))
 		#emit MOVE.alt
 		#emit LOAD.I
 		#emit STOR.pri     INDIRECTION_DATA
-		if (!INDIRECTION_DATA)
+		if(!INDIRECTION_DATA)
 		{
 			#emit STOR.alt     INDIRECTION_DATA
 			// Get the function at `func - COD + 4`.
@@ -580,7 +580,7 @@ stock Indirect_Array(func, tag, const params[], size = sizeof (params))
 		#emit SYSREQ.C     funcidx
 		#emit STACK        8
 		#emit STOR.pri     INDIRECTION_DATA
-		if (INDIRECTION_DATA == -1)
+		if(INDIRECTION_DATA == -1)
 		{
 			// Failure.
 			#emit PROC
@@ -590,14 +590,14 @@ stock Indirect_Array(func, tag, const params[], size = sizeof (params))
 		// Get the address from the index.
 		INDIRECTION_DATA = GetPublicAddressFromIndex(INDIRECTION_DATA);
 	}
-	if (INDIRECTION_TAG)
+	if(INDIRECTION_TAG)
 	{
 		static
 			i = 0,
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if (lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ; )
 		{
 			switch (lTag[i++])
 			{
@@ -630,7 +630,7 @@ stock Indirect_Array(func, tag, const params[], size = sizeof (params))
 
 stock Indirect_GetMeta_(func)
 {
-	if (func >= gsCodSize)
+	if(func >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.S.pri   func
@@ -639,7 +639,7 @@ stock Indirect_GetMeta_(func)
 		#emit MOVE.alt
 		#emit LOAD.I
 		#emit STOR.S.pri   func
-		if (func)
+		if(func)
 		{
 			// Probably a string.
 			return 0;
@@ -663,7 +663,7 @@ stock Indirect_GetMeta_(func)
 
 stock Indirect_SetMeta_(func, data)
 {
-	if (func >= gsCodSize)
+	if(func >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.S.pri   func
@@ -672,7 +672,7 @@ stock Indirect_SetMeta_(func, data)
 		#emit MOVE.alt
 		#emit LOAD.I
 		#emit STOR.S.pri   func
-		if (func)
+		if(func)
 		{
 			// Probably a string.
 			return;
@@ -703,7 +703,7 @@ stock Indirect_SetMeta_(func, data)
 
 stock Indirect_Claim_(func)
 {
-	if (func >= gsCodSize)
+	if(func >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.S.pri   func
@@ -714,7 +714,7 @@ stock Indirect_Claim_(func)
 		#emit STOR.S.pri   func
 		//#emit JZER.rel     4
 		//#emit RETN
-		if (func)
+		if(func)
 		{
 			// Probably a string.
 			return;
@@ -747,7 +747,7 @@ stock Indirect_Claim_(func)
 
 stock Indirect_Release_(func)
 {
-	if (func >= gsCodSize)
+	if(func >= gsCodSize)
 	{
 		// Get the data at `func - COD`.
 		#emit LOAD.S.pri   func
@@ -758,7 +758,7 @@ stock Indirect_Release_(func)
 		#emit STOR.S.pri   func
 		//#emit JZER.rel     4
 		//#emit RETN
-		if (func)
+		if(func)
 		{
 			// Probably a string.
 			return;
@@ -794,7 +794,7 @@ stock Indirect_Tag(id, dest[32])
 		lTag[32];
 	GetTagNameFromID(id, lTag),
 	dest[0] = '\0';
-	if (lTag[0])
+	if(lTag[0])
 		strcat(dest, lTag[4]);
 }
 
@@ -891,7 +891,7 @@ forward Indirect_FromCallback(Func:cb<>, bool:release);
 public Indirect_FromCallback(Func:cb<>, bool:release)
 {
 	new ret = @.cb();
-	if (release)
+	if(release)
 		Indirect_Release(cb);
 	return ret;
 }
@@ -904,7 +904,7 @@ public Indirect_FromCallback(Func:cb<>, bool:release)
 
 Indirect_Init()
 {
-	if (!gsCodSize)
+	if(!gsCodSize)
 	{
 		AddressofResolve();
 		new

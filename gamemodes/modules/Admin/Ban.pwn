@@ -32,10 +32,10 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 {
 	#pragma unused anticheat
 	new
-		forumname[ MAX_PLAYER_NAME ],
-		banString[ 128 ];
+		forumname[MAX_PLAYER_NAME],
+		banString[128];
 
-	if( adminid == INVALID_PLAYER_ID ) 
+	if(adminid == INVALID_PLAYER_ID ) 
 	{
 		if(days != -3)
 		{
@@ -54,9 +54,9 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 			format( forumname, MAX_PLAYER_NAME, "AutoServerLock");
 		}
 	}
-	else if( adminid != INVALID_PLAYER_ID ) 
+	else if(adminid != INVALID_PLAYER_ID ) 
 	{
-		if( strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
+		if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
 		{
 			SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 			return 1;
@@ -73,9 +73,9 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	new
 		unban_time;
 
-	if( days == -1 )
+	if(days == -1 )
 		unban_time = -1;
-	else if( days == -3)
+	else if(days == -3)
 	    unban_time = -3;
 	else {
 		unban_time = days * 86400; //86400 je jedan dan u timestampu
@@ -89,7 +89,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE sqlid = '%d'",
 		unban_time,
 		reason,
-		PlayerInfo[ playerid ][ pSQLID ]
+		PlayerInfo[playerid][pSQLID]
 	);
 
 	mysql_fquery_ex(g_SQL, 
@@ -114,7 +114,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 
 stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const reason[], days=-1)
 {
-	if( strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
+	if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
 	{
 		SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 		return 1;
@@ -129,7 +129,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	new
 		unban_time;
 
-	if( days == -1 )
+	if(days == -1 )
 		unban_time = -1;
 	else {
 		unban_time = days * 60 * 60 * 24;
@@ -168,7 +168,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 stock UnbanPlayerName(const playername[], adminid)
 {
 	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '0', playaBanReason = '' WHERE name = '%e'", playername);
-	va_SendClientMessage(adminid, COLOR_RED, "[ ! ]: You have sucesfully unbanned account %s!", playername);
+	va_SendClientMessage(adminid, COLOR_RED, "[!]: You have sucesfully unbanned account %s!", playername);
 
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s[%s](%s) unbanned account %s.",
@@ -193,7 +193,7 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	SendRconCommand(dformat);
 	SendRconCommand(dformat);
 	
-	va_SendClientMessage( adminid, COLOR_RED, "[ ! ]: You have sucessfully unbanned IP %s", playerip);
+	va_SendClientMessage( adminid, COLOR_RED, "[!]: You have sucessfully unbanned IP %s", playerip);
 
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s(%s) unbanned IP %s",

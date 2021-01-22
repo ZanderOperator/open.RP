@@ -194,7 +194,7 @@ timer OnTaserShoot[1100](playerid)
 
 timer ClearTaserEffect[10000](playerid, bool:clearanims)
 {
-    if (clearanims)
+    if(clearanims)
     {
         TogglePlayerControllable(playerid, true);
         ClearAnimations(playerid, 1);
@@ -277,7 +277,7 @@ SendPDChannelMessage(color = COLOR_WHITE, message[], pdchannel_id)
 {
     foreach (new i : Player)
     {
-        if (SetPDChannel_ID[i] == pdchannel_id)
+        if(SetPDChannel_ID[i] == pdchannel_id)
         {
             SendClientMessage(i, color, message);
             PlayerPlaySound(i, 1058, 0.0, 0.0, 0.0);
@@ -290,7 +290,7 @@ SendFDChannelMessage(color = COLOR_WHITE, message[], fdchannel_id)
 {
     foreach (new i : Player)
     {
-        if (SetFDChannel_ID[i] == fdchannel_id)
+        if(SetFDChannel_ID[i] == fdchannel_id)
         {
             SendClientMessage(i, color, message);
             PlayerPlaySound(i, 1058, 0.0, 0.0, 0.0);
@@ -339,12 +339,12 @@ hook OnPlayerSpawn(playerid)
 hook OnPlayerDisconnect(playerid, reason)
 {
     // TODO: should be part of Taser module
-    if (Player_IsTased(playerid))
+    if(Player_IsTased(playerid))
     {
         ClearTaserEffect(playerid, false);
     }
     //
-    if (IsValidDynamic3DTextLabel(unknown_text[playerid]))
+    if(IsValidDynamic3DTextLabel(unknown_text[playerid]))
     {
         DestroyDynamic3DTextLabel(unknown_text[playerid]);
         unknown_text[playerid] = Text3D:INVALID_3DTEXT_ID;
@@ -762,20 +762,20 @@ hook OnGameModeInit()
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if (newkeys & KEY_SECONDARY_ATTACK) // LSPD INTERIORI
+    if(newkeys & KEY_SECONDARY_ATTACK) // LSPD INTERIORI
     {
-        if (IsPlayerInRangeOfPoint( playerid, 3.0, 629.6035, 1686.5359, 4503.2939)) // NA ULAZU U HQ
+        if(IsPlayerInRangeOfPoint( playerid, 3.0, 629.6035, 1686.5359, 4503.2939)) // NA ULAZU U HQ
             SetPlayerPosEx(playerid,1539.0114, 11.4043, 4001.5081,3,9,true);
-        else if (IsPlayerInRangeOfPoint( playerid, 3.0, 1539.0114, 11.4043, 4001.5081)) // IZLAZ IZ HQa
+        else if(IsPlayerInRangeOfPoint( playerid, 3.0, 1539.0114, 11.4043, 4001.5081)) // IZLAZ IZ HQa
             SetPlayerPosEx(playerid,629.6035, 1686.5359, 4503.2939,3,10,true);
     }
-    if (PRESSED(KEY_NO))
+    if(PRESSED(KEY_NO))
     { // Leo
-        if (!IsACop(playerid) && !IsASD(playerid)) return 1;
-        if (IsObjectAttached(playerid, 18641) == -1) return 1;
-        if (IsPlayerInAnyVehicle(playerid)) return 1;
+        if(!IsACop(playerid) && !IsASD(playerid)) return 1;
+        if(IsObjectAttached(playerid, 18641) == -1) return 1;
+        if(IsPlayerInAnyVehicle(playerid)) return 1;
 
-        if (flashlight_status[playerid])
+        if(flashlight_status[playerid])
         {
             // Flashlight is on - remove it
             RemovePlayerAttachedObject(playerid, FLASHLIGHT_OBJECT);
@@ -788,177 +788,177 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
         flashlight_status[playerid] = !flashlight_status[playerid]; // toggle
     }
-    if (PRESSED(KEY_YES)) // Tipka Y
+    if(PRESSED(KEY_YES)) // Tipka Y
     {
         // TODO: make a helper function and a const array of all PD door positions and distances required
         // loop through and get the required index into the array and move the required door
         // doing that will reduce all of this code duplication
-        //======================== [LSPD WILSHIRE NEW ] =========================
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, 764.66992, -1416.04749, 13.26500))
+        //======================== [LSPD WILSHIRE NEW] =========================
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, 764.66992, -1416.04749, 13.26500))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[12] == 0) {
+            if(lspd_dstatus[12] == 0) {
                 SetDynamicObjectRot(lspd_doors[12], 0.0000, 0.0000, 0.0000);
                 lspd_dstatus[12] = 1;
             }
-            else if (lspd_dstatus[12] == 1) {
+            else if(lspd_dstatus[12] == 1) {
                 SetDynamicObjectRot(lspd_doors[12], 0.0000, 89.0000, 0.0000);
                 lspd_dstatus[12] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1178.2136, -1668.0807, 896.0972))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1178.2136, -1668.0807, 896.0972))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[0] == 0) {
+            if(lspd_dstatus[0] == 0) {
                 SetDynamicObjectRot(lspd_doors[0], 0, 0,  88.6089);
                 lspd_dstatus[0] = 1;
             }
-            else if (lspd_dstatus[0] == 1) {
+            else if(lspd_dstatus[0] == 1) {
                 SetDynamicObjectRot(lspd_doors[0], 0, 0, 0.000000);
                 lspd_dstatus[0] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1202.099365, -1650.670166, 899.596374))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1202.099365, -1650.670166, 899.596374))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[1] == 0) {
+            if(lspd_dstatus[1] == 0) {
                 SetDynamicObjectRot(lspd_doors[1], 0, 0,  178.4952);
                 lspd_dstatus[1] = 1;
             }
-            else if (lspd_dstatus[1] == 1) {
+            else if(lspd_dstatus[1] == 1) {
                 SetDynamicObjectRot(lspd_doors[1], 0, 0,  87.5528);
                 lspd_dstatus[1] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1201.1813, -1644.5697, 899.5963))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1201.1813, -1644.5697, 899.5963))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[2] == 0) {
+            if(lspd_dstatus[2] == 0) {
                 SetDynamicObjectRot(lspd_doors[2], 0, 0,  95.0652);
                 lspd_dstatus[2] = 1;
             }
-            else if (lspd_dstatus[2] == 1) {
+            else if(lspd_dstatus[2] == 1) {
                 SetDynamicObjectRot(lspd_doors[2], 0, 0, 0.0);
                 lspd_dstatus[2] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1193.331298, -1644.569702, 899.596252))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1193.331298, -1644.569702, 899.596252))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[3] == 0) {
+            if(lspd_dstatus[3] == 0) {
                 SetDynamicObjectRot(lspd_doors[3], 0, 0,  88.2804);
                 lspd_dstatus[3] = 1;
             }
-            else if (lspd_dstatus[3] == 1) {
+            else if(lspd_dstatus[3] == 1) {
                 SetDynamicObjectRot(lspd_doors[3], 0, 0, 0.0);
                 lspd_dstatus[3] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1187.880859, -1647.799438, 899.596252))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1187.880859, -1647.799438, 899.596252))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[4] == 0) {
+            if(lspd_dstatus[4] == 0) {
                 SetDynamicObjectRot(lspd_doors[4], 0, 0, 184.6753);
                 lspd_dstatus[4] = 1;
             }
-            else if (lspd_dstatus[4] == 1) {
+            else if(lspd_dstatus[4] == 1) {
                 SetDynamicObjectRot(lspd_doors[4], 0.0000, 0.0000, 90.0000);
                 lspd_dstatus[4] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1171.442871, -1662.140991, 896.10723))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1171.442871, -1662.140991, 896.10723))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[5] == 0) {
+            if(lspd_dstatus[5] == 0) {
                 SetDynamicObjectRot(lspd_doors[5], 0.0000, 0.0000, 348.1025);
                 lspd_dstatus[5] = 1;
             }
-            else if (lspd_dstatus[5] == 1) {
+            else if(lspd_dstatus[5] == 1) {
                 SetDynamicObjectRot(lspd_doors[5], 0.0000, 0.0000, 90.0000);
                 lspd_dstatus[5] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1165.977783, -1657.548461, 896.127258))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1165.977783, -1657.548461, 896.127258))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[6] == 0) {
+            if(lspd_dstatus[6] == 0) {
                 SetDynamicObjectRot(lspd_doors[6], 0.0000, 0.0000, 192.1085);
                 lspd_dstatus[6] = 1;
             }
-            else if (lspd_dstatus[6] == 1) {
+            else if(lspd_dstatus[6] == 1) {
                 SetDynamicObjectRot(lspd_doors[6], 0.0000, 0.0000, 270.0000);
                 lspd_dstatus[6] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1178.615356, -1646.455932, 897.367919))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1178.615356, -1646.455932, 897.367919))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[7] == 0) {
+            if(lspd_dstatus[7] == 0) {
                 SetDynamicObjectRot(lspd_doors[7], 0.0000, 0.0000, 181.3910);
                 lspd_dstatus[7] = 1;
             }
-            else if (lspd_dstatus[7] == 1) {
+            else if(lspd_dstatus[7] == 1) {
                 SetDynamicObjectRot(lspd_doors[7], 0.0000, 0.0000, 270.0000);
                 lspd_dstatus[7] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1178.615356, -1646.455932, 897.367919))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1178.615356, -1646.455932, 897.367919))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[8] == 0) {
+            if(lspd_dstatus[8] == 0) {
                 SetDynamicObjectRot(lspd_doors[8], 0.0000, 0.0000, 6.7015);
                 lspd_dstatus[8] = 1;
             }
-            else if (lspd_dstatus[8] == 1) {
+            else if(lspd_dstatus[8] == 1) {
                 SetDynamicObjectRot(lspd_doors[8], 0.0000, 0.0000, 90.0000);
                 lspd_dstatus[8] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1192.5974, -1640.8801, 893.0573))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1192.5974, -1640.8801, 893.0573))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[9] == 0) {
+            if(lspd_dstatus[9] == 0) {
                 MoveDynamicObject(lspd_doors[9],-1194.1974, -1640.8801, 893.0573, 3);
                 lspd_dstatus[9] = 1;
             }
-            else if (lspd_dstatus[9] == 1) {
+            else if(lspd_dstatus[9] == 1) {
                 MoveDynamicObject(lspd_doors[9],-1192.8374, -1640.8801, 893.0573, 3);
                 lspd_dstatus[9] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1189.4073, -1640.8801, 893.0573))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1189.4073, -1640.8801, 893.0573))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[10] == 0) {
+            if(lspd_dstatus[10] == 0) {
                 MoveDynamicObject(lspd_doors[10],-1190.9873, -1640.8801, 893.0573, 3);
                 lspd_dstatus[10] = 1;
             }
-            else if (lspd_dstatus[10] == 1) {
+            else if(lspd_dstatus[10] == 1) {
                 MoveDynamicObject(lspd_doors[10],-1189.4073, -1640.8801, 893.0573, 3);
                 lspd_dstatus[10] = 0;
             }
         }
-        if (IsPlayerInRangeOfPoint(playerid, 2.5, -1186.1971, -1640.8801, 893.0573))
+        if(IsPlayerInRangeOfPoint(playerid, 2.5, -1186.1971, -1640.8801, 893.0573))
         {
-            if (!IsACop(playerid) && !IsASD(playerid)) return 1;
+            if(!IsACop(playerid) && !IsASD(playerid)) return 1;
 
-            if (lspd_dstatus[11] == 0) {
+            if(lspd_dstatus[11] == 0) {
                 MoveDynamicObject(lspd_doors[11],-1187.7971, -1640.8801, 893.0573, 3);
                 lspd_dstatus[11] = 1;
             }
-            else if (lspd_dstatus[11] == 1) {
+            else if(lspd_dstatus[11] == 1) {
                 MoveDynamicObject(lspd_doors[11],-1186.1971, -1640.8801, 893.0573, 3);
                 lspd_dstatus[11] = 0;
             }
@@ -973,9 +973,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_PD_BUYGUN:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
-            if (PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete koristiti ovu funkciju ako ste level 1!");
+            if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete koristiti ovu funkciju ako ste level 1!");
 
             // TODO: follow same logic as before: make a const array of weapon names in locker and their ID for GivePlayerWeapon
             // remove this switch statement branching and make a helper function doing the specific task
@@ -984,7 +984,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_DEAGLE)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_DEAGLE)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_DEAGLE);
                     AC_GivePlayerWeapon(playerid, WEAPON_DEAGLE, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Desert Eagle iz lockera.");
@@ -993,7 +993,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_SHOTGUN)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_SHOTGUN)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_SHOTGUN);
                     AC_GivePlayerWeapon(playerid, WEAPON_SHOTGUN, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Shotgun iz lockera.");
@@ -1002,7 +1002,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 2:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_MP5)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_MP5)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_MP5);
                     AC_GivePlayerWeapon(playerid, WEAPON_MP5, 150);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste MP5 iz lockera.");
@@ -1011,7 +1011,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 3:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_M4)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_M4)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_M4);
                     AC_GivePlayerWeapon(playerid, WEAPON_M4, 200);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste M4 iz lockera.");
@@ -1020,7 +1020,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 4:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_SNIPER)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_SNIPER)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_SNIPER);
                     AC_GivePlayerWeapon(playerid, WEAPON_SNIPER, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Sniper Rifle iz lockera.");
@@ -1029,7 +1029,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 5:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_KNIFE)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_KNIFE)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_KNIFE);
                     AC_GivePlayerWeapon(playerid, WEAPON_KNIFE, 1);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Knife iz lockera.");
@@ -1038,7 +1038,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 6:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_TEARGAS)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_TEARGAS)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_TEARGAS);
                     AC_GivePlayerWeapon(playerid, WEAPON_TEARGAS, 10);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Teargas iz lockera.");
@@ -1047,7 +1047,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 7:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_COLT45)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_COLT45)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_COLT45);
                     AC_GivePlayerWeapon(playerid, WEAPON_COLT45, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Colt45 iz lockera..");
@@ -1056,7 +1056,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 8:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_SILENCED)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_SILENCED)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_SILENCED);
                     AC_GivePlayerWeapon(playerid, WEAPON_SILENCED, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Silenced iz lockera.");
@@ -1065,7 +1065,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 9:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_SPRAYCAN)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_SPRAYCAN)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_SPRAYCAN);
                     AC_GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Spraycan iz lockera..");
@@ -1074,7 +1074,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 10:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_NITESTICK)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_NITESTICK)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_NITESTICK);
                     AC_GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Nitestick iz lockera.");
@@ -1083,7 +1083,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 11:
                 {
-                    if (!CheckPlayerWeapons(playerid, 25)) return 1;
+                    if(!CheckPlayerWeapons(playerid, 25)) return 1;
                     AC_GivePlayerWeapon(playerid, 25, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Bean bag shotgun iz Armoury-a.");
                     format(tmpString, sizeof(tmpString), "* %s je uzeo Bean bag shotgun iz Armoury-a.", GetName(playerid, true));
@@ -1092,7 +1092,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 12:
                 {
-                    if (!CheckPlayerWeapons(playerid, WEAPON_RIFLE)) return 1;
+                    if(!CheckPlayerWeapons(playerid, WEAPON_RIFLE)) return 1;
                     AC_ResetPlayerWeapon(playerid, WEAPON_RIFLE);
                     AC_GivePlayerWeapon(playerid, WEAPON_RIFLE, 50);
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Rifle iz lockera.");
@@ -1103,7 +1103,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_PENALCODE:
         {
-            if (!response) return 1;
+            if(!response) return 1;
             // TODO: remove this switch statement. either load from database / file or make a const array
             // of strings (newline at the end), eg. LSPD_PenalCode_array[NUM_OF_STATUTES(sections)][STR_MAX_SIZE]
             // the trick is in arranging the same number of messages per "class" (for modulo operator)
@@ -1250,7 +1250,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CODES: 
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -1328,7 +1328,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
-    if (Player_IsCuffed(playerid) &&
+    if(Player_IsCuffed(playerid) &&
         VehicleInfo[vehicleid][vLocked] && GetPlayerState(playerid) == PLAYER_STATE_PASSENGER)
     {
         new seat = GetPlayerVehicleSeat(playerid);
@@ -1341,26 +1341,26 @@ hook OnPlayerExitVehicle(playerid, vehicleid)
 // TODO: move to Taser module
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if (playerid == INVALID_PLAYER_ID)
+    if(playerid == INVALID_PLAYER_ID)
     {
         Kick(playerid);
         return 0;
     }
-    if (!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
+    if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
     {
         return 0;
     }
-    if (weaponid <= 0 || weaponid > 46)
+    if(weaponid <= 0 || weaponid > 46)
     {
         Kick(playerid);
         return 0;
     }
-    if (weaponid < 22 || weaponid > 38)
+    if(weaponid < 22 || weaponid > 38)
     {
         return 0;
     }
 
-    if (weaponid == WEAPON_SILENCED && Player_HasTaserGun(playerid) && (IsACop(playerid) || IsASD(playerid)))
+    if(weaponid == WEAPON_SILENCED && Player_HasTaserGun(playerid) && (IsACop(playerid) || IsASD(playerid)))
     {
         ApplyAnimation(playerid, "COLT45", "colt45_reload", 4.1, 0, 0, 0, 0, 0);
         defer OnTaserShoot(playerid);
@@ -1370,23 +1370,23 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 
 hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
-    if (issuerid == INVALID_PLAYER_ID)
+    if(issuerid == INVALID_PLAYER_ID)
     {
         return 0;
     }
-    if (!IsPlayerLogged(playerid))
+    if(!IsPlayerLogged(playerid))
     {
         return 1; // TODO: decide what to do for not logged in players, shall they take damage?
     }
-    if (!IsACop(issuerid) || !IsASD(issuerid))
+    if(!IsACop(issuerid) || !IsASD(issuerid))
     {
         // Player takes all other damage normally
         return 1;
     }
 
-    if (weaponid == WEAPON_SILENCED && Player_HasTaserGun(issuerid))
+    if(weaponid == WEAPON_SILENCED && Player_HasTaserGun(issuerid))
     {
-        if (Player_IsTased(playerid)) return 0;
+        if(Player_IsTased(playerid)) return 0;
 
         new
             Float:taz_x,
@@ -1398,7 +1398,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
         GetPlayerHealth(playerid, taz_h);
         SetPlayerHealth(playerid, taz_h + 1);
 
-        if (ProxDetectorS(10, playerid, issuerid))
+        if(ProxDetectorS(10, playerid, issuerid))
         {
             new damageString[87];
             format(damageString, sizeof(damageString), "* %s shoots %s with tazer and he falls down!",
@@ -1415,15 +1415,15 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
             Player_SetIsTased(playerid, true);
         }
     }
-    else if (weaponid == WEAPON_SHOTGUN && Player_BeanbagBulletsActive(issuerid))
+    else if(weaponid == WEAPON_SHOTGUN && Player_BeanbagBulletsActive(issuerid))
     {
-        if (Player_IsTased(playerid)) return 0;
+        if(Player_IsTased(playerid)) return 0;
 
         new Float:bb_h;
         GetPlayerHealth(playerid, bb_h);
         SetPlayerHealth(playerid, bb_h + 1);
 
-        if (ProxDetectorS(15, playerid, issuerid))
+        if(ProxDetectorS(15, playerid, issuerid))
         {
             new damageString[87];
             format(damageString, sizeof(damageString), "* %s shoots %s with bean bag bullet and he falls!",
@@ -1448,11 +1448,11 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 
 hook OnPlayerTargetPlayer(playerid, targetid, weaponid)
 {
-    if (targetid != INVALID_PLAYER_ID) return 0;
-    if (!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
-    if (!IsACop(playerid) || !IsASD(playerid)) return 1;
+    if(targetid != INVALID_PLAYER_ID) return 0;
+    if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
+    if(!IsACop(playerid) || !IsASD(playerid)) return 1;
 
-    if (weaponid == WEAPON_SILENCED && Player_HasTaserGun(playerid) && !ProxDetectorS(6.0, playerid, targetid))
+    if(weaponid == WEAPON_SILENCED && Player_HasTaserGun(playerid) && !ProxDetectorS(6.0, playerid, targetid))
     {
         // Reset animation
         ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 0);
@@ -1463,9 +1463,9 @@ hook OnPlayerTargetPlayer(playerid, targetid, weaponid)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT) 
+    if(oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT) 
     {
-        if (Player_PDVehLocked(playerid) && PDLockedVeh[playerid] != INVALID_VEHICLE_ID)
+        if(Player_PDVehLocked(playerid) && PDLockedVeh[playerid] != INVALID_VEHICLE_ID)
         {
             PutPlayerInVehicle(playerid, PDLockedVeh[playerid], PDLockedSeat[playerid]);
         }
@@ -1486,12 +1486,12 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 CMD:beanbag(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni");
 
-    if (AC_GetPlayerWeapon(playerid) != 25)
+    if(AC_GetPlayerWeapon(playerid) != 25)
         return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Kako bi uzeli gumene metke morate imati shotgun.");
 
-    if (!Player_BeanbagBulletsActive(playerid))
+    if(!Player_BeanbagBulletsActive(playerid))
     {
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Prebacili ste na gumene metke! Ukucajte komandu opet da vratite na regularne.");
     }
@@ -1506,13 +1506,13 @@ CMD:beanbag(playerid, params[])
 /*
 CMD:setchannel(playerid, params[]) {
     new pdchannel_id, fdchannel_id;
-    if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || IsAGov(playerid))
+    if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || IsAGov(playerid))
     {
-        if (IsACop(playerid))
+        if(IsACop(playerid))
         {
-            if (sscanf(params, "d", pdchannel_id))
+            if(sscanf(params, "d", pdchannel_id))
             {
-                SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setchannel [channel_id].");
+                SendClientMessage(playerid, COLOR_RED, "[?]: /setchannel [channel_id].");
                 SendClientMessage(playerid, COLOR_GREY,"[CH 1] LSPD DISP.");
                 SendClientMessage(playerid, COLOR_GREY,"[CH 2] L-TAC 1.");
                 SendClientMessage(playerid, COLOR_GREY,"[CH 3] L-TAC 2.");
@@ -1522,19 +1522,19 @@ CMD:setchannel(playerid, params[]) {
                 return 1;
             }
 
-            if (pdchannel_id < 1 || pdchannel_id > 6)
+            if(pdchannel_id < 1 || pdchannel_id > 6)
                 return SendErrorMessage(playerid, "Vrijednost ne moze biti manja od 1 ili veca od 6!");
 
-            if (pdchannel_id == SetPDChannel_ID[playerid])
+            if(pdchannel_id == SetPDChannel_ID[playerid])
                 return SendErrorMessage(playerid, "Vec se nalazite u tom kanalu.");
             SetPDChannel_ID[playerid] = pdchannel_id;
             SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste se spojili na channel: %s.", GetPDChannelName(pdchannel_id));
         }
-        if (IsFDMember(playerid))
+        if(IsFDMember(playerid))
         {
-            if (sscanf(params, "d", fdchannel_id))
+            if(sscanf(params, "d", fdchannel_id))
             {
-                SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setchannel [channel_id].");
+                SendClientMessage(playerid, COLOR_RED, "[?]: /setchannel [channel_id].");
                 SendClientMessage(playerid, COLOR_GREY,"[CH 1] Fire Department");
                 SendClientMessage(playerid, COLOR_GREY,"[CH 2] Medic Department");
                 SendClientMessage(playerid, COLOR_GREY,"[CH 3] Air Divison");
@@ -1542,10 +1542,10 @@ CMD:setchannel(playerid, params[]) {
                 return 1;
             }
 
-            if (fdchannel_id < 1 || fdchannel_id > 4)
+            if(fdchannel_id < 1 || fdchannel_id > 4)
                 return SendErrorMessage(playerid, "Vrijednost ne moze biti manja od 1 ili veca od 4!");
 
-            if (fdchannel_id == SetFDChannel_ID[playerid])
+            if(fdchannel_id == SetFDChannel_ID[playerid])
                 return SendErrorMessage(playerid, "Vec se nalazite u tom kanalu.");
 
             SetFDChannel_ID[playerid] = fdchannel_id;
@@ -1557,15 +1557,15 @@ CMD:setchannel(playerid, params[]) {
 
 CMD:ch(playerid, params[]) {
     new string[256], message[128];
-    if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || IsAGov(playerid))
+    if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || IsAGov(playerid))
     {
-        if (IsACop(playerid))
+        if(IsACop(playerid))
         {
-            if (SetPDChannel_ID[playerid] == 0)
+            if(SetPDChannel_ID[playerid] == 0)
             return SendErrorMessage(playerid, "Prvo se morate spojiti na neki od kanala (/setchannel).");
 
-            if (sscanf(params, "s[128]", message)) {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ch [message].");
+            if(sscanf(params, "s[128]", message)) {
+            SendClientMessage(playerid, COLOR_RED, "[?]: /ch [message].");
             return 1;
             }
 
@@ -1573,13 +1573,13 @@ CMD:ch(playerid, params[]) {
             SendPDChannelMessage(0xB5AF8FFF, string, SetPDChannel_ID[playerid]);
         }
 
-        else if (IsFDMember(playerid))
+        else if(IsFDMember(playerid))
         {
-            if (SetFDChannel_ID[playerid] == 0)
+            if(SetFDChannel_ID[playerid] == 0)
             return SendErrorMessage(playerid, "Prvo se morate spojiti na neki od kanala (/setchannel).");
 
-            if (sscanf(params, "s[128]", message)) {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ch [message].");
+            if(sscanf(params, "s[128]", message)) {
+            SendClientMessage(playerid, COLOR_RED, "[?]: /ch [message].");
             return 1;
             }
 
@@ -1594,16 +1594,16 @@ CMD:ch(playerid, params[]) {
 // TODO: move to Taser module
 CMD:tazer(playerid, params[])
 {
-    if (PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete koristiti ovu funkciju ako ste level 1!");
-    if (IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu u autu.");
+    if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete koristiti ovu funkciju ako ste level 1!");
+    if(IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu u autu.");
 
-    if (!(IsACop(playerid) || IsASD(playerid)))
+    if(!(IsACop(playerid) || IsASD(playerid)))
     {
         return 1;
     }
 
     new weapon, ammo;
-    if (!Player_HasTaserGun(playerid))
+    if(!Player_HasTaserGun(playerid))
     {
         // TODO: helper function, GivePlayerTaser(playerid)
         GetPlayerWeaponData(playerid, 2, weapon, ammo);
@@ -1622,7 +1622,7 @@ CMD:tazer(playerid, params[])
         // TODO: helper function TakePlayerTaser(playerid)
         AC_ResetPlayerWeapon(playerid, AC_GetPlayerWeapon(playerid));
 
-        if (PoliceWeapon[playerid])
+        if(PoliceWeapon[playerid])
         {
             AC_GivePlayerWeapon(playerid, PoliceWeapon[playerid], PoliceAmmo[playerid]);
         }
@@ -1635,44 +1635,44 @@ CMD:arrest(playerid, params[])
 {
     new giveplayerid, moneys, jailtime, reason[24], string[128];
 
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/USMS.");
-    if (!IsAtArrestPoint(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za uhicenje!");
-    if (sscanf(params, "uiis[24]", giveplayerid, moneys, jailtime, reason))
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/USMS.");
+    if(!IsAtArrestPoint(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za uhicenje!");
+    if(sscanf(params, "uiis[24]", giveplayerid, moneys, jailtime, reason))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /arrest [playerid][cijena][minute][reason]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /arrest [playerid][cijena][minute][reason]");
         return 1;
     }
-    if (!IsPlayerConnected(giveplayerid))    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uneseni igrac nije online!");
-    if (moneys < 1 || moneys > 100000)       return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Cijena zatvora nemoze biti manja od $1 i veca od $5000!");
-    if (jailtime < 1 || jailtime > 1000)     return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Minute pritvora nemogu biti manje od 1 i vece od 1000!");
-    if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas!");
-    //if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi uhitit!");
+    if(!IsPlayerConnected(giveplayerid))    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uneseni igrac nije online!");
+    if(moneys < 1 || moneys > 100000)       return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Cijena zatvora nemoze biti manja od $1 i veca od $5000!");
+    if(jailtime < 1 || jailtime > 1000)     return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Minute pritvora nemogu biti manje od 1 i vece od 1000!");
+    if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas!");
+    //if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi uhitit!");
 
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uhitili ste %s !", GetName(giveplayerid));
-    SendClientMessage(playerid, COLOR_RED, "[ ! ] Odvedite zatvorenika u celiju!");
+    SendClientMessage(playerid, COLOR_RED, "[!] Odvedite zatvorenika u celiju!");
 
     format(string, sizeof(string), "* [HQ] %s %s je uhitio %s. Razlog: %s; Kazna: %d$. ", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid), reason, moneys);
 
-    if (IsACop(playerid))
+    if(IsACop(playerid))
         SendRadioMessage(1, COLOR_COP, string);
-    else if (IsASD(playerid))
+    else if(IsASD(playerid))
         SendRadioMessage(3, COLOR_COP, string);
 
     va_GameTextForPlayer(giveplayerid, "Uhitio vas je %s ~n~ za $%d", 5000, 5, GetName(playerid), moneys);
-    SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
+    SendClientMessage(giveplayerid, COLOR_RED, "[!] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
 
     AC_ResetPlayerWeapons(giveplayerid);
     LicenseInfo[giveplayerid][pGunLic]    = 0; // ukidanje dozvole za oruzje
     PlayerJail[giveplayerid][pArrested] += 1; // Dodavanje arrest rekorda +1
 
-    if (IsPlayerInRangeOfPoint(playerid, 10.0, 1940.9509, 809.7464, -46.6122))
+    if(IsPlayerInRangeOfPoint(playerid, 10.0, 1940.9509, 809.7464, -46.6122))
         PutPlayerInJail(giveplayerid, jailtime, 1);
-    else if (IsPlayerInRangeOfPoint(playerid, 10.0, 1192.9391,1327.4951,-54.7172))
+    else if(IsPlayerInRangeOfPoint(playerid, 10.0, 1192.9391,1327.4951,-54.7172))
         PutPlayerInJail(giveplayerid, jailtime, 3);
 
-    if (IsACop(playerid))
+    if(IsACop(playerid))
         PlayerToFactionMoney(giveplayerid, FACTION_TYPE_LAW, moneys);
-    else if (IsASD(playerid))
+    else if(IsASD(playerid))
         PlayerToFactionMoney(giveplayerid, FACTION_TYPE_LAW2, moneys);
 
     InsertPlayerMDCCrime(playerid, giveplayerid, reason, jailtime); // spremanje u tablicu dosjee
@@ -1683,27 +1683,27 @@ CMD:editarrest(playerid, params[])
 {
     new giveplayerid, pick, ammount;
 
-    if (!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi Policajac.");
-    if (!IsAtArrestPoint(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za uhicenje!");
-    if (sscanf(params, "iii", giveplayerid, pick, ammount))
+    if(!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi Policajac.");
+    if(!IsAtArrestPoint(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za uhicenje!");
+    if(sscanf(params, "iii", giveplayerid, pick, ammount))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /editarrest [pick] [ammount] ");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /editarrest [pick][ammount] ");
         SendClientMessage(playerid, -1, "Izbor: 1 - vrijeme | 2 - sektor");
         return 1;
     }
-    if (!IsPlayerConnected(giveplayerid))    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uneseni igrac nije online!");
-    if (pick < 1 || pick > 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan izbor.");
-    if (PlayerJail[giveplayerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u zatvoru.");
+    if(!IsPlayerConnected(giveplayerid))    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uneseni igrac nije online!");
+    if(pick < 1 || pick > 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan izbor.");
+    if(PlayerJail[giveplayerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u zatvoru.");
 
-    if (pick == 1)
+    if(pick == 1)
     {
         PlayerJail[giveplayerid][pJailTime] = ammount;
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste vrijeme u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
     }
-    else if (pick == 2)
+    else if(pick == 2)
     {
         // TODO: one variable can not be set to multiple things AT ONCE, maybe logical OR is required?
-        if (ammount != 1 && ammount != 2 && ammount != 3) return SendClientMessage(playerid, -1, "SEKTOR: A | B | C");
+        if(ammount != 1 && ammount != 2 && ammount != 3) return SendClientMessage(playerid, -1, "SEKTOR: A | B | C");
         PutPlayerInSector(giveplayerid);
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste sektor u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
     }
@@ -1712,27 +1712,27 @@ CMD:editarrest(playerid, params[])
 
 CMD:unfree(playerid, params[])
 {
-    if (!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD!");
+    if(!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD!");
 
     // TODO: what if PlayerFaction[playerid][pMember] is -1 or out of bounds? Do not index into an array so HASTILY
     // Always do bounds checking when appropriate
-    if (PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rUnFree])
+    if(PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rUnFree])
         return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rUnFree]);
 
     new giveplayerid, string[128];
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unfree [playerid / Part of name]");
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /unfree [playerid / Part of name]");
 
-    if (giveplayerid == INVALID_PLAYER_ID)
+    if(giveplayerid == INVALID_PLAYER_ID)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac je offline!");
         return 1;
     }
-    if (giveplayerid == playerid)
+    if(giveplayerid == playerid)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne mozete osloboditi sami sebe!");
         return 1;
     }
-    if (PlayerJail[giveplayerid][pJailed] != 1)
+    if(PlayerJail[giveplayerid][pJailed] != 1)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije zatvoren ili je u AREI!");
         return 1;
@@ -1752,25 +1752,25 @@ CMD:unfree(playerid, params[])
 
 CMD:cuff(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerFaction[playerid][pRank] >= 2)))
+    if(!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerFaction[playerid][pRank] >= 2)))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi LSPD");
         return 1;
     }
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cuff [playerid / Part of name]");
-    if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
-    //if (Player_IsCuffed(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima lisice!");
-    if (!ProxDetectorS(2.5, playerid, giveplayerid) && IsPlayerInAnyVehicle(playerid) && IsPlayerInAnyVehicle(giveplayerid))
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /cuff [playerid / Part of name]");
+    if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
+    //if(Player_IsCuffed(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima lisice!");
+    if(!ProxDetectorS(2.5, playerid, giveplayerid) && IsPlayerInAnyVehicle(playerid) && IsPlayerInAnyVehicle(giveplayerid))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas !");
         return 1;
     }
 
-    if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi stavit lisice!");
+    if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi stavit lisice!");
 
-    va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je stavio lisice.", GetName(playerid, true));
+    va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je stavio lisice.", GetName(playerid, true));
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Stavio si lisice %s.", GetName(giveplayerid, true));
 
     // TODO: why not use va_SendClientMessage again? Stick to a standard, do not mix things.
@@ -1790,26 +1790,26 @@ CMD:cuff(playerid, params[])
 
 CMD:uncuff(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerFaction[playerid][pRank] >= 2)))
+    if(!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerFaction[playerid][pRank] >= 2)))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi LSPD");
         return 1;
     }
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cuff [playerid / Part of name]");
-    if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
-    if (!ProxDetectorS(5.0, playerid, giveplayerid))
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /cuff [playerid / Part of name]");
+    if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
+    if(!ProxDetectorS(5.0, playerid, giveplayerid))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
         return 1;
     }
-    if (giveplayerid == playerid)
+    if(giveplayerid == playerid)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne mozes skiniti lisice sam sebi!");
         return 1;
     }
-    if (!Player_IsCuffed(giveplayerid))
+    if(!Player_IsCuffed(giveplayerid))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije zavezan !");
         return 1;
@@ -1825,7 +1825,7 @@ CMD:uncuff(playerid, params[])
     GameTextForPlayer(giveplayerid, "~g~Slobodan", 2500, 3);
 
     // TODO: helper function RemovePlayerCuffs(playerid)
-    if (IsPlayerAttachedObjectSlotUsed(giveplayerid, 7)) RemovePlayerAttachedObject(giveplayerid, 7);
+    if(IsPlayerAttachedObjectSlotUsed(giveplayerid, 7)) RemovePlayerAttachedObject(giveplayerid, 7);
     SetPlayerSpecialAction(giveplayerid, SPECIAL_ACTION_NONE);
     Player_SetIsCuffed(giveplayerid, false);
     return 1;
@@ -1833,13 +1833,13 @@ CMD:uncuff(playerid, params[])
 
 CMD:pdtrunk(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) 
+    if(!IsACop(playerid) && !IsASD(playerid)) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
     new vehicleid = GetNearestVehicle(playerid);
-    if (vehicleid == INVALID_VEHICLE_ID)
+    if(vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
-    if (IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
+    if(IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
 
     // Helper function, Toggle/OpenVehicleTrunk(vehicleid), which based on the value of the variable
     // VehicleInfo[vehicleid][vTrunk] (could be turned into a getter)
@@ -1847,13 +1847,13 @@ CMD:pdtrunk(playerid, params[])
     new
         engine, lights, alarm, doors, bonnet, boot, objective;
     GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-    if (VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF)
+    if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF)
     {
         SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_ON, objective);
         VehicleInfo[vehicleid][vTrunk] = VEHICLE_PARAMS_ON;
         GameTextForPlayer(playerid, "~w~gepek otvoren", 1000, 5);
     }
-    else if (VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_ON)
+    else if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_ON)
     {
         SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_OFF, objective);
         VehicleInfo[vehicleid][vTrunk] = VEHICLE_PARAMS_OFF;
@@ -1864,19 +1864,19 @@ CMD:pdtrunk(playerid, params[])
 
 CMD:pdramp(playerid, params[])
 {
-    if (!IsPlayerInRangeOfPoint(playerid, 20, 1544.7363,-1627.0232,13.3672)) return SendClientMessage(playerid, COLOR_RED,"Niste u blizini rampe!");
-    if (PlayerFaction[playerid][pLeader] != 1 && PlayerFaction[playerid][pMember] != 1) return SendClientMessage(playerid, COLOR_RED,"Niste clan LS-PDa.");
+    if(!IsPlayerInRangeOfPoint(playerid, 20, 1544.7363,-1627.0232,13.3672)) return SendClientMessage(playerid, COLOR_RED,"Niste u blizini rampe!");
+    if(PlayerFaction[playerid][pLeader] != 1 && PlayerFaction[playerid][pMember] != 1) return SendClientMessage(playerid, COLOR_RED,"Niste clan LS-PDa.");
 
     rampstatus ^= 1; // toggle
-    if (rampstatus)
+    if(rampstatus)
     {
         MoveDynamicObject(ramp, 1544.6943359375, -1630.73046875, 13.27956199646+0.0001, 0.0002, 0, 0, 90);
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Identitet potvrdjen! Rampa se otvara...");
+        SendClientMessage(playerid, COLOR_RED, "[!] Identitet potvrdjen! Rampa se otvara...");
     }
     else
     {
         MoveDynamicObject(ramp, 1544.6943359375, -1630.73046875, 13.27956199646-0.0001, 0.0003, 0, 90, 90);
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Identitet potvrdjen! Rampa se zatvara...");
+        SendClientMessage(playerid, COLOR_RED, "[!] Identitet potvrdjen! Rampa se zatvara...");
     }
     return 1;
 }
@@ -1887,16 +1887,16 @@ CMD:law(playerid, params[])
 
     foreach(new i: Player)
     {
-        if (IsFDMember(i))
+        if(IsFDMember(i))
             fd_counter++;
 
-        if (IsASD(i))
+        if(IsASD(i))
             sd_counter++;
 
-        if (IsACop(i))
+        if(IsACop(i))
             pd_counter++;
 
-        if (IsAGov(i))
+        if(IsAGov(i))
             gov_counter++;
     }
 
@@ -1911,20 +1911,20 @@ CMD:govrepair(playerid, params[])
     // TODO: what if vehicleid is 65535 = INVALID_VEHICLE_ID?
     // Always do bounds checking before indexing an array!!!
     // TODO: consider splitting this long line (split at around 120 characters)
-    if (VehicleInfo[vehicleid][vFaction] != 1 && VehicleInfo[vehicleid][vFaction] != 2 && VehicleInfo[vehicleid][vFaction] != 3 && VehicleInfo[vehicleid][vFaction] != 4 && VehicleInfo[vehicleid][vFaction] != 5) return SendClientMessage(playerid,COLOR_RED, "Mozes popravljati samo vozila organizacije!");
-    if (!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
+    if(VehicleInfo[vehicleid][vFaction] != 1 && VehicleInfo[vehicleid][vFaction] != 2 && VehicleInfo[vehicleid][vFaction] != 3 && VehicleInfo[vehicleid][vFaction] != 4 && VehicleInfo[vehicleid][vFaction] != 5) return SendClientMessage(playerid,COLOR_RED, "Mozes popravljati samo vozila organizacije!");
+    if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
 
     // TODO: reduce level of nesting (at least by 2, maybe even 3 levels)
     new fid = PlayerFaction[playerid][pMember];
-    if (fid != 4)
+    if(fid != 4)
     {
-        if (FactionInfo[fid][fFactionBank] < 100) return SendClientMessage(playerid,COLOR_RED, "Vasa organizacija nema novaca!");
-        if (IsACop(playerid))
+        if(FactionInfo[fid][fFactionBank] < 100) return SendClientMessage(playerid,COLOR_RED, "Vasa organizacija nema novaca!");
+        if(IsACop(playerid))
         {
-            if (PlayerFaction[playerid][pMember] == 1)
+            if(PlayerFaction[playerid][pMember] == 1)
             {
                 // TODO: consider splitting this long line (split at around 120 characters)
-                if (IsPlayerInRangeOfPoint(playerid, 5.0, 1570.4080,-1632.6095,13.3828) || IsPlayerInRangeOfPoint(playerid, 10.0, 755.9906,-1431.2805,13.5234) || IsPlayerInRangeOfPoint(playerid, 10.0, 1136.7454,2286.2957,10.8203) || IsPlayerInRangeOfPoint(playerid, 10.0, 2055.0149,-2150.2551,26.1129))
+                if(IsPlayerInRangeOfPoint(playerid, 5.0, 1570.4080,-1632.6095,13.3828) || IsPlayerInRangeOfPoint(playerid, 10.0, 755.9906,-1431.2805,13.5234) || IsPlayerInRangeOfPoint(playerid, 10.0, 1136.7454,2286.2957,10.8203) || IsPlayerInRangeOfPoint(playerid, 10.0, 2055.0149,-2150.2551,26.1129))
                 {
                     AC_RepairVehicle(vehicleid);
                     AC_SetVehicleHealth(vehicleid, 1200.0);
@@ -1933,14 +1933,14 @@ CMD:govrepair(playerid, params[])
                     VehicleInfo[vehicleid][vDestroyed] = false;
                     Player_SetCanRepairGovVehicle(playerid, false);
                     FactionToBudgetMoney(FACTION_TYPE_LAW, 100); // Novac ide iz factionbank u proraeun
-                    SendClientMessage(playerid, COLOR_RED, "[ ! ] Vase vozilo je popravljeno i napunjeno gorivom.");
+                    SendClientMessage(playerid, COLOR_RED, "[!] Vase vozilo je popravljeno i napunjeno gorivom.");
                 }
                 else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
             }
         }
-        else if (IsASD(playerid))
+        else if(IsASD(playerid))
         {
-            if (IsPlayerInRangeOfPoint(playerid, 10.0, 622.9983,-601.3151,16.0462)) {
+            if(IsPlayerInRangeOfPoint(playerid, 10.0, 622.9983,-601.3151,16.0462)) {
                 AC_RepairVehicle(vehicleid);
                 AC_SetVehicleHealth(vehicleid, 1200.0);
                 VehicleInfo[vehicleid][vFuel] = 100;
@@ -1948,13 +1948,13 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vDestroyed] = false;
                 Player_SetCanRepairGovVehicle(playerid, false);
                 FactionToBudgetMoney( FACTION_TYPE_LAW2, 100); // Novac ide iz factionbank u proraeun
-                SendClientMessage(playerid, COLOR_RED, "[ ! ] Vase vozilo je popravljeno i napunjeno gorivom.");
+                SendClientMessage(playerid, COLOR_RED, "[!] Vase vozilo je popravljeno i napunjeno gorivom.");
             }
             else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
         }
-        else if (IsANews(playerid))
+        else if(IsANews(playerid))
         {
-            if (IsPlayerInRangeOfPoint(playerid, 10.0, 292.1505,-1545.1261,24.5938)) // NEWS
+            if(IsPlayerInRangeOfPoint(playerid, 10.0, 292.1505,-1545.1261,24.5938)) // NEWS
             {
                 AC_RepairVehicle(vehicleid);
                 AC_SetVehicleHealth(vehicleid, 1000.0);
@@ -1965,11 +1965,11 @@ CMD:govrepair(playerid, params[])
                 FactionToBudgetMoney( FACTION_TYPE_NEWS, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
             }
-            else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
+            else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za popravak vozila!");
         }
-        else if (IsFDMember(playerid))
+        else if(IsFDMember(playerid))
         {
-            if (IsPlayerInRangeOfPoint(playerid, 10.0, 1174.9698,-1309.0844,13.9958)) // LSFD
+            if(IsPlayerInRangeOfPoint(playerid, 10.0, 1174.9698,-1309.0844,13.9958)) // LSFD
             {
                 AC_RepairVehicle(vehicleid);
                 AC_SetVehicleHealth(vehicleid, 1000.0);
@@ -1980,15 +1980,15 @@ CMD:govrepair(playerid, params[])
                 FactionToBudgetMoney( FACTION_TYPE_FD, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
             }
-            else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
+            else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za popravak vozila!");
         }
     }
-    else if (IsAGov(playerid))
+    else if(IsAGov(playerid))
     {
-        if (IsPlayerInRangeOfPoint(playerid, 15.0, 1471.5919,-1830.6121,13.5469)) // Mayor
+        if(IsPlayerInRangeOfPoint(playerid, 15.0, 1471.5919,-1830.6121,13.5469)) // Mayor
         {
             AC_RepairVehicle(vehicleid);
-            if (VehicleInfo[vehicleid][vBodyArmor] == 1) AC_SetVehicleHealth(vehicleid, 1600.0);
+            if(VehicleInfo[vehicleid][vBodyArmor] == 1) AC_SetVehicleHealth(vehicleid, 1600.0);
             else AC_SetVehicleHealth(vehicleid, 1000.0);
             VehicleInfo[vehicleid][vFuel] = 100;
             VehicleInfo[vehicleid][vCanStart] = 1;
@@ -1996,7 +1996,7 @@ CMD:govrepair(playerid, params[])
             Player_SetCanRepairGovVehicle(playerid, false);
             SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
         }
-        else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
+        else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za popravak vozila!");
     }
     else SendClientMessage(playerid,COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
     return 1;
@@ -2004,7 +2004,7 @@ CMD:govrepair(playerid, params[])
 
 CMD:codes(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
     ShowPlayerDialog(playerid,DIALOG_CODES,DIALOG_STYLE_LIST,"Police Scanner Codes","{3C95C2}[1] - 10 Codes\n{3C95C2}[2] - Response Codes\n{3C95C2}[3] - Identity Codes\n{3C95C2}[4] - Terminology","Choose","Close");
     return 1;
@@ -2013,28 +2013,28 @@ CMD:codes(playerid, params[])
 CMD:suspend(playerid, params[])
 {
     new giveplayerid, string[128];
-    if ((PlayerFaction[playerid][pLeader] == 1 || (PlayerFaction[playerid][pRank] >= 11 && PlayerFaction[playerid][pMember] == 1)) || PlayerFaction[playerid][pLeader] == 5)
+    if((PlayerFaction[playerid][pLeader] == 1 || (PlayerFaction[playerid][pRank] >= 11 && PlayerFaction[playerid][pMember] == 1)) || PlayerFaction[playerid][pLeader] == 5)
     {
-        if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid / Part of name]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
+        if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /suspend [playerid / Part of name]");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
         PlayerFaction[giveplayerid][pRank] = 0;
         Player_SetLawDuty(giveplayerid, false);
-        format(string, sizeof(string), "[ ! ] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
+        format(string, sizeof(string), "[!] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, string);
-        format(string, sizeof(string), "[ ! ] Suspendirani ste sa duznosti! Command officer %s", GetName(playerid));
+        format(string, sizeof(string), "[!] Suspendirani ste sa duznosti! Command officer %s", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_RED, string);
     }
-    else if (PlayerFaction[playerid][pLeader] == 4)
+    else if(PlayerFaction[playerid][pLeader] == 4)
     {
-        if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid / Part of name]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
+        if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /suspend [playerid / Part of name]");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
         PlayerFaction[giveplayerid][pRank] = 0;
         Player_SetLawDuty(giveplayerid, false);
-        format(string, sizeof(string), "[ ! ] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
+        format(string, sizeof(string), "[!] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, string);
-        format(string, sizeof(string), "[ ! ] Suspendirani ste sa duznosti! Mayor %s", GetName(playerid));
+        format(string, sizeof(string), "[!] Suspendirani ste sa duznosti! Mayor %s", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_RED, string);
     }
     else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi dovoljan rank!");
@@ -2043,15 +2043,15 @@ CMD:suspend(playerid, params[])
 
 CMD:lawdoors(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste clan LSPDa/USMSa!");
-    if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste vozac!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste clan LSPDa/USMSa!");
+    if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste vozac!");
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lawdoors [dio imena/playerid]");
-    if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan unos igraca!");
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /lawdoors [dio imena/playerid]");
+    if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan unos igraca!");
 
     new string[62];
-    if (Player_PDVehLocked(giveplayerid))
+    if(Player_PDVehLocked(giveplayerid))
     {
         format(string, sizeof(string), "* %s otkljucava zadnja vrata u vozilu.", GetName(playerid));
         ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2075,24 +2075,24 @@ CMD:lawdoors(playerid, params[])
 CMD:take(playerid, params[])
 {
     new opcija[20], giveplayerid;
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac !");
-    if (PlayerFaction[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac !");
+    if(PlayerFaction[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
 
-    if (sscanf( params, "us[20] ", giveplayerid, opcija))
+    if(sscanf( params, "us[20] ", giveplayerid, opcija))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /take [playerid][opcija]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] driverslicense - flyinglicense - boatlicense - weaponlicense - weapons - toolkit");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] weaponpackage - drugs");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /take [playerid][opcija]");
+        SendClientMessage(playerid, COLOR_RED, "[!] driverslicense - flyinglicense - boatlicense - weaponlicense - weapons - toolkit");
+        SendClientMessage(playerid, COLOR_RED, "[!] weaponpackage - drugs");
         return 1;
     }
-    if (strcmp(opcija,"driverslicense",true) == 0)
+    if(strcmp(opcija,"driverslicense",true) == 0)
     {
         new dani, year, month, day;
         getdate(year, month, day);
 
-        if (sscanf(params, "us[20]i ", giveplayerid, opcija, dani)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTI: /take [ID] [izbor] [dani]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
+        if(sscanf(params, "us[20]i ", giveplayerid, opcija, dani)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTI: /take [ID][izbor][dani]");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
 
         new tmpString[120];
         format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo vozacku dozvolu %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
@@ -2107,24 +2107,24 @@ CMD:take(playerid, params[])
 
         LicenseInfo[giveplayerid][pCarLic] = 0;
     }
-    else if (strcmp(opcija,"weaponpackage",true) == 0)
+    else if(strcmp(opcija,"weaponpackage",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 
         new
             tmpString[71];
-        format(tmpString, sizeof(tmpString), "[ ! ] Oduzeli ste %s sve weapon pakete.", GetName(giveplayerid));
+        format(tmpString, sizeof(tmpString), "[!] Oduzeli ste %s sve weapon pakete.", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, tmpString);
         format(tmpString, sizeof(tmpString), "* Policajac %s vam je oduzeo weapon pakete.", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, tmpString);
 
         RemoveWeaponPackages(giveplayerid);
     }
-    else if (strcmp(opcija,"flyinglicense",true) == 0)
+    else if(strcmp(opcija,"flyinglicense",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 
         new
             tmpString[120];
@@ -2135,81 +2135,81 @@ CMD:take(playerid, params[])
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, tmpString);
         LicenseInfo[giveplayerid][pFlyLic] = 0;
     }
-    else if (strcmp(opcija,"toolkit",true) == 0)
+    else if(strcmp(opcija,"toolkit",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (ProxDetectorS(5.0, playerid, giveplayerid)) {
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(ProxDetectorS(5.0, playerid, giveplayerid)) {
             new
                 tmpString[77];
-            format(tmpString, sizeof(tmpString), "[ ! ] Oduzeli ste %s opremu za obijanje.", GetName(giveplayerid));
+            format(tmpString, sizeof(tmpString), "[!] Oduzeli ste %s opremu za obijanje.", GetName(giveplayerid));
             SendClientMessage(playerid, COLOR_RED, tmpString);
-            format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo opremu za obijanje.", GetName(playerid));
+            format(tmpString, sizeof(tmpString), "[!] Policajac %s vam je oduzeo opremu za obijanje.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
             PlayerInventory[giveplayerid][pToolkit] = 0;
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }
-    else if (strcmp(opcija,"weaponlicense",true) == 0)
+    else if(strcmp(opcija,"weaponlicense",true) == 0)
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Komanda je izbacena");
+        SendClientMessage(playerid, COLOR_RED, "[!] Komanda je izbacena");
         return 1;
     }
     /*
-    else if (strcmp(opcija,"weaponlicense",true) == 0)
+    else if(strcmp(opcija,"weaponlicense",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (ProxDetectorS(5.0, playerid, giveplayerid)) {
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(ProxDetectorS(5.0, playerid, giveplayerid)) {
             new
                 tmpString[120];
             format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo dozvolu za oruzje %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
             SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
-            format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za oruzje.", GetName(playerid));
+            format(tmpString, sizeof(tmpString), "[!] Policajac %s vam je oduzeo dozvolu za oruzje.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
             LicenseInfo[giveplayerid][pGunLic] = 0;
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }*/
-    else if (strcmp(opcija,"boatlicense",true) == 0)
+    else if(strcmp(opcija,"boatlicense",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (ProxDetectorS(5.0, playerid, giveplayerid)) {
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(ProxDetectorS(5.0, playerid, giveplayerid)) {
             new
                 tmpString[120];
             format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeoeku dozvolu za brod%s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
             SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
-            format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za brod.", GetName(playerid));
+            format(tmpString, sizeof(tmpString), "[!] Policajac %s vam je oduzeo dozvolu za brod.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
             LicenseInfo[giveplayerid][pBoatLic] = 0;
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }
-    else if (strcmp(opcija,"weapons",true) == 0)
+    else if(strcmp(opcija,"weapons",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (ProxDetectorS(5.0, playerid, giveplayerid)) {
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(ProxDetectorS(5.0, playerid, giveplayerid)) {
 
             new
                 tmpString[65];
-            format(tmpString, sizeof(tmpString), "[ ! ] Oduzeli ste %s oruzje.", GetName(giveplayerid));
+            format(tmpString, sizeof(tmpString), "[!] Oduzeli ste %s oruzje.", GetName(giveplayerid));
             SendClientMessage(playerid, COLOR_GREEN, tmpString);
-            format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo oruzje.", GetName(playerid));
+            format(tmpString, sizeof(tmpString), "[!] Policajac %s vam je oduzeo oruzje.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
             AC_ResetPlayerWeapons(giveplayerid);
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }
-    else if (strcmp(opcija,"drugs",true) == 0)
+    else if(strcmp(opcija,"drugs",true) == 0)
     {
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-        if (ProxDetectorS(5.0, playerid, giveplayerid))
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
+        if(ProxDetectorS(5.0, playerid, giveplayerid))
         {
             new
                 tmpString[65];
-            format(tmpString, sizeof(tmpString), "[ ! ] Oduzeli ste %s drogu.", GetName(giveplayerid));
+            format(tmpString, sizeof(tmpString), "[!] Oduzeli ste %s drogu.", GetName(giveplayerid));
             SendClientMessage(playerid, COLOR_GREEN, tmpString);
-            format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo drogu.", GetName(playerid));
+            format(tmpString, sizeof(tmpString), "[!] Policajac %s vam je oduzeo drogu.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
             DeletePlayerDrug(giveplayerid, -1);
         }
@@ -2222,13 +2222,13 @@ CMD:take(playerid, params[])
 CMD:checktrunk(playerid, params[])
 {
     new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
-    if (vehicleid == INVALID_VEHICLE_ID) 
+    if(vehicleid == INVALID_VEHICLE_ID) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila.");
-    if (IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) 
+    if(IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) 
         return SendClientMessage(playerid, COLOR_RED, "Ovo vozilo nema prtljaznik!");
-    if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) 
+    if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) 
         return SendClientMessage(playerid, COLOR_RED, "Morate biti na nogama da biste koristili ovu komandu.");
-    if (VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 
+    if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 
         return SendClientMessage(playerid, COLOR_RED, "Prtljaznik je zatvoren.");
    
     ShowPlayerDialog(playerid, DIALOG_VEH_CHECKTRUNK, DIALOG_STYLE_MSGBOX, "Oruzja u vozilu:", ListPlayerVehicleWeapons(playerid, vehicleid), "Exit", "");
@@ -2242,12 +2242,12 @@ CMD:checktrunk(playerid, params[])
 
 CMD:impound(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
     new
         vehicleid = GetPlayerVehicleID(playerid);
     // TODO: array bounds checking
-    if (VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Mozete zaplijeniti samo osobna vozila!");
+    if(VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Mozete zaplijeniti samo osobna vozila!");
 
     new
         Float:X, Float:Y, Float:Z,
@@ -2286,12 +2286,12 @@ CMD:impound(playerid, params[])
 
 CMD:payimpound(playerid, params[])
 {
-    if (!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti unutar vozila!");
+    if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti unutar vozila!");
 
     new
         vehicleid = GetPlayerVehicleID(playerid);
     // TODO: array bounds checking
-    if (!VehicleInfo[vehicleid][vImpounded] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti unutar zaplijenjenog vozila!");
+    if(!VehicleInfo[vehicleid][vImpounded] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti unutar zaplijenjenog vozila!");
 
     VehicleInfo[vehicleid][vImpounded]  = 0;
 
@@ -2302,8 +2302,8 @@ CMD:payimpound(playerid, params[])
 
     PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, IMPOUND_PRICE); // novac igraea ide u factionbank od PDa
 
-    SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste platili zaplijenu vozila!");
-    SendClientMessage( playerid, COLOR_RED, "[ ! ] Morate kupiti novi parking inace ce vam se vozilo spawnati u impound garazi!");
+    SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste platili zaplijenu vozila!");
+    SendClientMessage( playerid, COLOR_RED, "[!] Morate kupiti novi parking inace ce vam se vozilo spawnati u impound garazi!");
     return 1;
 }
 
@@ -2311,12 +2311,12 @@ CMD:payimpound(playerid, params[])
 // TODO: also don't hardcode positions, make a const array
 CMD:fdgarage(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+    if(!IsACop(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
     // TODO: reduce level of nesting
-    if (IsPlayerInRangeOfPoint(playerid, 15.0, 1178.1522, -1338.7764, 13.9013) && GetPlayerVirtualWorld(playerid) == 0)
+    if(IsPlayerInRangeOfPoint(playerid, 15.0, 1178.1522, -1338.7764, 13.9013) && GetPlayerVirtualWorld(playerid) == 0)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 284.8465, -1540.9485, 24.5968, 9, 0, false);
         }
@@ -2328,7 +2328,7 @@ CMD:fdgarage(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 9);
                 }
@@ -2339,9 +2339,9 @@ CMD:fdgarage(playerid, params[])
             SetVehicleZAngle(vehicleid, 160);
         }
     }
-    else if (IsPlayerInRangeOfPoint(playerid, 10.0, 284.8465, -1540.9485, 24.5968) && GetPlayerVirtualWorld(playerid) == 9)
+    else if(IsPlayerInRangeOfPoint(playerid, 10.0, 284.8465, -1540.9485, 24.5968) && GetPlayerVirtualWorld(playerid) == 9)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 1178.1522, -1338.7764, 13.9013, 0, 0, false);
         }
@@ -2354,7 +2354,7 @@ CMD:fdgarage(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 0);
                 }
@@ -2369,13 +2369,13 @@ CMD:fdgarage(playerid, params[])
 
 CMD:pdgarage(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1)
+    if(!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     // TODO: reduce level of nesting
-    if (IsPlayerInRangeOfPoint(playerid, 15.0, 755.9906,-1431.2805,13.5234) && GetPlayerVirtualWorld(playerid) == 0)
+    if(IsPlayerInRangeOfPoint(playerid, 15.0, 755.9906,-1431.2805,13.5234) && GetPlayerVirtualWorld(playerid) == 0)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 1583.6351, -1639.1971, 13.4000, 60, 0, false);
         }
@@ -2386,7 +2386,7 @@ CMD:pdgarage(playerid, params[])
             SetVehiclePos(vehicleid, 1589.5824, -1642.6031, 12.9500);
 
             foreach(new i : Player) {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 60);
                 }
@@ -2397,9 +2397,9 @@ CMD:pdgarage(playerid, params[])
             SetVehicleZAngle(vehicleid, 198.5400);
         }
     }
-    else if (IsPlayerInRangeOfPoint(playerid, 10.0, 1589.5824, -1642.6031, 12.9500) && GetPlayerVirtualWorld(playerid) == 60)
+    else if(IsPlayerInRangeOfPoint(playerid, 10.0, 1589.5824, -1642.6031, 12.9500) && GetPlayerVirtualWorld(playerid) == 60)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 756.1514, -1432.2513, 13.3890, 0, 0, false);
         }
@@ -2412,7 +2412,7 @@ CMD:pdgarage(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 0);
                 }
@@ -2427,14 +2427,14 @@ CMD:pdgarage(playerid, params[])
 
 CMD:pdgarage1(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1)
+    if(!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     // TODO: reduce level of nesting
     //MAIN HQ
-    if (IsPlayerInRangeOfPoint(playerid, 15.0, 2150.9697, -2190.0781, 13.2593) && GetPlayerVirtualWorld(playerid) == 0)
+    if(IsPlayerInRangeOfPoint(playerid, 15.0, 2150.9697, -2190.0781, 13.2593) && GetPlayerVirtualWorld(playerid) == 0)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 1148.2179, 2264.5469, 12.6698, 90, 0, false);
         }
@@ -2446,7 +2446,7 @@ CMD:pdgarage1(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 90);
                 }
@@ -2457,9 +2457,9 @@ CMD:pdgarage1(playerid, params[])
             SetVehicleZAngle(vehicleid, 1.0812);
         }
     }
-    else if (IsPlayerInRangeOfPoint(playerid, 15.0, 1148.2179, 2264.5469, 12.6698))
+    else if(IsPlayerInRangeOfPoint(playerid, 15.0, 1148.2179, 2264.5469, 12.6698))
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 2150.9697, -2190.0781, 13.2593, 0, 0, false);
         }
@@ -2471,7 +2471,7 @@ CMD:pdgarage1(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 0);
                 }
@@ -2488,14 +2488,14 @@ CMD:pdgarage1(playerid, params[])
 // TODO: no idea what SD means, but it should be part of SD module commands
 CMD:sdgarage(playerid, params[])
 {
-    if (!IsASD(playerid) && PlayerFaction[playerid][pLeader] != 1)
+    if(!IsASD(playerid) && PlayerFaction[playerid][pLeader] != 1)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     // TODO: reduce level of nesting
     //MAIN HQ
-    if (IsPlayerInRangeOfPoint(playerid, 15.0, 629.1385, -625.4520, 17.0423) && GetPlayerVirtualWorld(playerid) == 0)
+    if(IsPlayerInRangeOfPoint(playerid, 15.0, 629.1385, -625.4520, 17.0423) && GetPlayerVirtualWorld(playerid) == 0)
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, -1631.8292, 692.3904, 6.7737, 70, 0, false);
         }
@@ -2507,7 +2507,7 @@ CMD:sdgarage(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 70);
                 }
@@ -2518,9 +2518,9 @@ CMD:sdgarage(playerid, params[])
             SetVehicleZAngle(vehicleid, 358.4658);
         }
     }
-    else if (IsPlayerInRangeOfPoint(playerid, 20.0, -1631.8292, 692.3904, 6.7737))
+    else if(IsPlayerInRangeOfPoint(playerid, 20.0, -1631.8292, 692.3904, 6.7737))
     {
-        if (!IsPlayerInAnyVehicle(playerid))
+        if(!IsPlayerInAnyVehicle(playerid))
         {
             SetPlayerPosEx(playerid, 629.1385, -625.4520, 17.0423, 0, 0, false);
         }
@@ -2532,7 +2532,7 @@ CMD:sdgarage(playerid, params[])
 
             foreach(new i : Player)
             {
-                if (IsPlayerInVehicle(i, vehicleid))
+                if(IsPlayerInVehicle(i, vehicleid))
                 {
                     SetPlayerVirtualWorld(i, 0);
                 }
@@ -2548,14 +2548,14 @@ CMD:sdgarage(playerid, params[])
 
 CMD:pdunlock(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1 && !IsASD(playerid) && PlayerFaction[playerid][pLeader] != 3)
+    if(!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1 && !IsASD(playerid) && PlayerFaction[playerid][pLeader] != 3)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
-    if (!IsPlayerInRangeOfPoint(playerid, 30.0, 1985.1077, -2183.0867, 13.5469))
+    if(!IsPlayerInRangeOfPoint(playerid, 30.0, 1985.1077, -2183.0867, 13.5469))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za koristenje /pdunlock komande!");
 
     new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
-    if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
+    if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 
     // TODO: helper function ToggleVehicleLock(vehicleid)/UnlockVehicle(vehicleid)
     new
@@ -2574,13 +2574,13 @@ CMD:pdunlock(playerid, params[])
 
 CMD:cleartrunk(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1) return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
+    if(!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1) return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
-    if (PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rClrTrunk])
+    if(PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rClrTrunk])
          return va_SendClientMessage(playerid,COLOR_RED, "Niste policajac R%d+!", FactionInfo[PlayerFaction[playerid][pMember]][rClrTrunk]);
 
     new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
-    if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
+    if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 
     new
         string[48];
@@ -2592,7 +2592,7 @@ CMD:cleartrunk(playerid, params[])
     // TODO: helper function Delete/RemoveTrunkWeapon(vehicleid)
     for (new wslot = 0; wslot < MAX_WEAPON_SLOTS; wslot++)
     {
-        if (VehicleInfo[vehicleid][vWeaponSQLID][wslot] != -1)
+        if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] != -1)
         {
             mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE id = '%d'",
                 VehicleInfo[vehicleid][vWeaponSQLID][wslot]
@@ -2629,11 +2629,11 @@ CMD:cleartrunk(playerid, params[])
 CMD:undercover(playerid, params[])
 {
     // TODO: reduce level of nesting
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSPDa/USMSa!");
-    if (!IsPlayerInRangeOfPoint(playerid, 6.0, 2877.2317,-843.6631,-21.6994) && !IsPlayerInRangeOfPoint(playerid,6.0,2040.6858,1260.2460,-11.1115) && !IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) && !IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425))
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSPDa/USMSa!");
+    if(!IsPlayerInRangeOfPoint(playerid, 6.0, 2877.2317,-843.6631,-21.6994) && !IsPlayerInRangeOfPoint(playerid,6.0,2040.6858,1260.2460,-11.1115) && !IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) && !IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar LSPD/SASD armorya da bi ste mogli koristiti ovu komandu.");
 
-    if (!isnull(PlayerExName[playerid]))
+    if(!isnull(PlayerExName[playerid]))
     {
         SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj pravi nick!");
         SetPlayerName(playerid, PlayerExName[playerid]);
@@ -2641,18 +2641,18 @@ CMD:undercover(playerid, params[])
         return 1;
     }
 
-    if (!Player_ApprovedUndercover(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati odobrenje za undercover!");
+    if(!Player_ApprovedUndercover(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati odobrenje za undercover!");
 
     new
         param[8],
         item;
 
-    if (sscanf( params, "s[8] ", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /undercover [skins/name/mask]");
-    if (!strcmp(param, "skins", true))
+    if(sscanf( params, "s[8] ", param)) return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover [skins/name/mask]");
+    if(!strcmp(param, "skins", true))
     {
-        if (sscanf( params, "s[8]i", param, item)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /undercover skins [skinid]");
+        if(sscanf( params, "s[8]i", param, item)) return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover skins [skinid]");
 
-        if (1 <= item <= 299)
+        if(1 <= item <= 299)
         {
             switch (item)
             {
@@ -2669,9 +2669,9 @@ CMD:undercover(playerid, params[])
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan Skin ID!");
     }
-    if (!strcmp(param, "name", true))
+    if(!strcmp(param, "name", true))
     {
-        if (!isnull(PlayerExName[playerid]))
+        if(!isnull(PlayerExName[playerid]))
         {
             SetPlayerName(playerid, PlayerExName[playerid]);
             SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj prijasnji nick!");
@@ -2681,29 +2681,29 @@ CMD:undercover(playerid, params[])
 
         new
             newName[MAX_PLAYER_NAME];
-        if (sscanf(params, "s[7]s[24]", param, newName)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /undercover name [novi nick]");
-        if (!IsValidName(newName)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilan roleplay nick!");
+        if(sscanf(params, "s[7]s[24]", param, newName)) return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover name [novi nick]");
+        if(!IsValidName(newName)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilan roleplay nick!");
 
         format(PlayerExName[playerid], MAX_PLAYER_NAME, GetName(playerid, false));
 
         new status = SetPlayerName(playerid, newName);
-        if (status == -1)
+        if(status == -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
         }
-        else if (status == 0)
+        else if(status == 0)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete taj nick!");
         }
-        else if (status == 1)
+        else if(status == 1)
         {
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName);
             Player_SetApprovedUndercover(playerid, false);
         }
     }
-    if (!strcmp(param, "mask", true))
+    if(!strcmp(param, "mask", true))
     {
-        if (undercover_mask[playerid] == false)
+        if(undercover_mask[playerid] == false)
         {
             foreach(new i : Player)
             {
@@ -2715,7 +2715,7 @@ CMD:undercover(playerid, params[])
             new
                 undercover_Name[24];
             format(undercover_Name, sizeof(undercover_Name), "Unknown_%d", PlayerInventory[playerid][pMaskID]);
-            if (IsValidDynamic3DTextLabel(unknown_text[playerid]))
+            if(IsValidDynamic3DTextLabel(unknown_text[playerid]))
             {
                 DestroyDynamic3DTextLabel(unknown_text[playerid]);
                 unknown_text[playerid] = Text3D:INVALID_3DTEXT_ID;
@@ -2724,7 +2724,7 @@ CMD:undercover(playerid, params[])
             unknown_text[playerid] = CreateDynamic3DTextLabel(undercover_Name, 0xB2B2B2AA, 0, 0, -20, 25, playerid);
             Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, unknown_text[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);
         }
-        else if (undercover_mask[playerid] == true)
+        else if(undercover_mask[playerid] == true)
         {
             foreach(new i : Player)
             {
@@ -2734,7 +2734,7 @@ CMD:undercover(playerid, params[])
             undercover_mask[playerid] = false;
             va_SendClientMessage(playerid, COLOR_RED, "[Undercover]: Vise niste undercover, nick iznad glave vam je vracen na defualt (%s).", GetName(playerid));
 
-            if (IsValidDynamic3DTextLabel(unknown_text[playerid]))
+            if(IsValidDynamic3DTextLabel(unknown_text[playerid]))
             {
                 DestroyDynamic3DTextLabel(unknown_text[playerid]);
                 unknown_text[playerid] = Text3D:INVALID_3DTEXT_ID;
@@ -2746,8 +2746,8 @@ CMD:undercover(playerid, params[])
 
 CMD:pa(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD/LSFD!");
-    if (PanicAlarmSpamFlag[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate malo pricekati prije koristenja Panic Alarma ponovno.");
+    if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD/LSFD!");
+    if(PanicAlarmSpamFlag[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate malo pricekati prije koristenja Panic Alarma ponovno.");
 
     new tmpString[128];
     format(tmpString, sizeof(tmpString), "** %s pritisce Panic Alarm dugme na radio-prijamniku.", GetName(playerid, true));
@@ -2768,14 +2768,14 @@ CMD:pa(playerid, params[])
 
 CMD:hq(playerid, params[])
 {
-    if (strlen(params) >= 110)
+    if(strlen(params) >= 110)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tekst ne smije imati vise od 110 znakova!");
 
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD!");
 
     new
         string[144], result[110];
-    if (sscanf(params, "s[110]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /hq [text]");
+    if(sscanf(params, "s[110]", result)) return SendClientMessage(playerid, COLOR_RED, "[?]: /hq [text]");
 
     format(string, sizeof(string), "[HQ] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
     SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_SKYBLUE, string);
@@ -2784,15 +2784,15 @@ CMD:hq(playerid, params[])
 
 CMD:ramdoor(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PD/FD!");
-    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
+    if(!IsACop(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PD/FD!");
+    if(!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
 
     new
         house = Player_InfrontHouse(playerid);
-    if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se pred vratima kuce!");
-    if (!HouseInfo[house][hLock] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
+    if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se pred vratima kuce!");
+    if(!HouseInfo[house][hLock] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
 
-    if (IsCrowbarBreaking(playerid))
+    if(IsCrowbarBreaking(playerid))
     {
         CancelCrowbarBreaking(playerid);
         return 1;
@@ -2800,9 +2800,9 @@ CMD:ramdoor(playerid, params[])
 
     new
         object = IsObjectAttached(playerid, 18634);
-    if (object == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate pajser u rukama!");
+    if(object == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate pajser u rukama!");
 
-    if (5 <= PlayerObject[playerid][object][poBoneId] <= 6)
+    if(5 <= PlayerObject[playerid][object][poBoneId] <= 6)
     {
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pricekajte tipke koje morate unijeti, za prekid probijanja kucajte /ramdoor!");
         SetPlayerCrowbarBreaking(playerid);
@@ -2813,20 +2813,20 @@ CMD:ramdoor(playerid, params[])
 
 CMD:housetake(playerid, params[])
 {
-    if (!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa!");
+    if(!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa!");
 
     new
         param[8],
         house = Player_InHouse(playerid);
 
-    if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
-    if (sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /housetake [weapons]");
+    if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
+    if(sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "[?]: /housetake [weapons]");
 
-    if (!strcmp(param, "weapons", true))
+    if(!strcmp(param, "weapons", true))
     {
         // Enum
         new id = Storage_PlayerNearRack(playerid);
-        if (id == -1)
+        if(id == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini police s oruzjem!");
 
         for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
@@ -2858,21 +2858,21 @@ CMD:housetake(playerid, params[])
 
 CMD:returnduty(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
-    if (Player_OnLawDuty(playerid)) 
+    if(!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
+    if(Player_OnLawDuty(playerid)) 
         return SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
 
     new vehicleid;
-    if (IsACop(playerid))
+    if(IsACop(playerid))
         vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_LAW);
-    else if (IsFDMember(playerid))
+    else if(IsFDMember(playerid))
         vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_FD);
-    else if (IsASD(playerid))
+    else if(IsASD(playerid))
         vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_LAW2);
-    else if (IsAGov(playerid))
+    else if(IsAGov(playerid))
         vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_LEGAL);
    
-    if (vehicleid == INVALID_VEHICLE_ID)
+    if(vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu fakcijskog vozila!");
 
     Player_SetLawDuty(playerid, true);
@@ -2881,13 +2881,13 @@ CMD:returnduty(playerid, params[])
     new tmpstring[120];
     format(tmpstring, sizeof(tmpstring), "*[HQ] %s %s je ponovno na duznosti (( Crash )).", ReturnPlayerRankName(playerid), GetName(playerid,false));
 
-    if (IsACop(playerid))
+    if(IsACop(playerid))
         SendRadioMessage(1, COLOR_COP, tmpstring);
-    if (IsASD(playerid))
+    if(IsASD(playerid))
         SendRadioMessage(3, COLOR_COP, tmpstring);
-    else if (IsFDMember(playerid))
+    else if(IsFDMember(playerid))
         SendRadioMessage(2, COLOR_ALLDEPT, tmpstring);
-    else if (IsAGov(playerid))
+    else if(IsAGov(playerid))
         SendRadioMessage(4, COLOR_DARKYELLOW, tmpstring);
 
     return 1;
@@ -2895,18 +2895,18 @@ CMD:returnduty(playerid, params[])
 
 CMD:callsign(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa/SDa!");
-    if (!Player_OnLawDuty(playerid)) return SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa/SDa!");
+    if(!Player_OnLawDuty(playerid)) return SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
 
-    if (isnull(params))
-        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign [UNIT]");
+    if(isnull(params))
+        return SendClientMessage(playerid, COLOR_RED, "[?]: /callsign [UNIT]");
 
     new
         str[128];
     format(str, sizeof(str), "** HQ: %s %s je sada pod callsignom %s! **", ReturnPlayerRankName(playerid), GetName(playerid,false), params);
-    if (IsACop(playerid))
+    if(IsACop(playerid))
         SendRadioMessage(1, COLOR_COP, str);
-    if (IsASD(playerid))
+    if(IsASD(playerid))
         SendRadioMessage(3, COLOR_COP, str);
     return 1;
 }

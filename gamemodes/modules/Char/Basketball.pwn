@@ -88,7 +88,7 @@ public ObjectToPoint(Float:radi, Float:radiz, objectid, Float:x, Float:y, Float:
 		tempposx = (oldposx -x);
 		tempposy = (oldposy -y);
 		tempposz = (oldposz -z);
-		if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radiz) && (tempposz > -radiz)))
+		if(((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radiz) && (tempposz > -radiz)))
 		{
 			return 1;
 		}
@@ -583,9 +583,9 @@ stock IsPlayerFacingPlayer(playerid, targetid, Float:dOffset)
 	GetPlayerPos(playerid, X, Y, Z);
 	GetPlayerFacingAngle(playerid, pA);
 
-	if( Y > pY ) ang = (-acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
-	else if( Y < pY && X < pX ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 450.0);
-	else if( Y < pY ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
+	if(Y > pY ) ang = (-acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
+	else if(Y < pY && X < pX ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 450.0);
+	else if(Y < pY ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
 
 	if(AngleInRangeOfAngle(-ang, pA, dOffset)) return true;
 
@@ -616,9 +616,9 @@ stock IsPlayerFacingPoint(playerid, Float:dOffset, Float:pX, Float:pY, Float:pZ)
 	GetPlayerPos(playerid, X, Y, Z);
 	GetPlayerFacingAngle(playerid, pA);
 
-	if( Y > pY ) ang = (-acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
-	else if( Y < pY && X < pX ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 450.0);
-	else if( Y < pY ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
+	if(Y > pY ) ang = (-acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
+	else if(Y < pY && X < pX ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 450.0);
+	else if(Y < pY ) ang = (acos((X - pX) / floatsqroot((X - pX)*(X - pX) + (Y - pY)*(Y - pY))) - 90.0);
 
 	if(AngleInRangeOfAngle(-ang, pA, dOffset)) return true;
 
@@ -732,7 +732,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					BasketInfo[i][Players] ++;
 					Bit1_Set(PlayingBBall, playerid, true);
 					BasketID[playerid] = i;
-					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste stvorili Team pod nazivom %s!", inputtext);
+					va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste stvorili Team pod nazivom %s!", inputtext);
 					return 1;
 				}
 			}
@@ -1161,7 +1161,7 @@ CMD:playbasket(playerid, params[])
 				BasketInfo[i][Players] ++;
 				Bit1_Set(PlayingBBall, playerid, true);
 				BasketID[playerid] = i;
-				SendClientMessage(playerid,-1,""COL_RED"[ ! ] Mozete igrati "COL_ORANGE"kosarku "COL_LIGHTBLUE"1vs1!");
+				SendClientMessage(playerid,-1,""COL_RED"[!] Mozete igrati "COL_ORANGE"kosarku "COL_LIGHTBLUE"1vs1!");
 				return 1;
 			}
 		}
@@ -1196,7 +1196,7 @@ CMD:quitbasket(playerid, params[])
 
 CMD:endmatch(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 2) 
+	if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	for(new i = 0; i < MAX_BASKET; i++)
 	{

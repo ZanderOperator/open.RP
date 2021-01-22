@@ -78,7 +78,7 @@ stock ResetPlayerDrivingVars(playerid)
 */
 timer OnPlayerDrivingLesson[1000](playerid)
 {
-	if( GetPlayerVehicleSpeed(playerid) >= 110.0 ) 
+	if(GetPlayerVehicleSpeed(playerid) >= 110.0 ) 
 	{
 		SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vozili ste preko 110km/h, pali ste vozacki!");
 		
@@ -189,16 +189,16 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-	if( oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER )
+	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER )
 	{
-		if( VehicleInfo[ GetPlayerVehicleID(playerid) ][ vUsage ] == VEHICLE_USAGE_LICENSE )
+		if(VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] == VEHICLE_USAGE_LICENSE )
 		{
-			if( GetVehicleModel(GetPlayerVehicleID(playerid)) == 410 ) {
-				if( LicenseInfo[playerid][pCarLic] )	{
+			if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 410 ) {
+				if(LicenseInfo[playerid][pCarLic] )	{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete vozacku dozvolu!");
 					RemovePlayerFromVehicle(playerid);
 				}
-				else if( !Bit1_Get( gr_TookDriving, playerid ) ) {
+				else if(!Bit1_Get( gr_TookDriving, playerid )) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste uzeli papire u zgradi!");
 					RemovePlayerFromVehicle(playerid);
 				}
@@ -207,9 +207,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 					Bit1_Set( gr_DrivingStarted, playerid, true );
 				}
 			}
-			else if( GetVehicleModel(GetPlayerVehicleID(playerid)) == 446 ) 
+			else if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 446 ) 
 			{
-				if( LicenseInfo[playerid][pBoatLic] ) 
+				if(LicenseInfo[playerid][pBoatLic] ) 
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete dozvolu za brod!");
 					RemovePlayerFromVehicle(playerid);
@@ -231,9 +231,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if( Bit1_Get( gr_DrivingStarted, playerid ) )
+	if(Bit1_Get( gr_DrivingStarted, playerid ))
 	{
-		if( DrivingBoatCP[playerid] == 1 )
+		if(DrivingBoatCP[playerid] == 1 )
 		{
 			new
 				cp = DrivingCPPos[playerid];
@@ -242,7 +242,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 			SetPlayerCheckpoint(playerid, BoatDrivingCP[cp][0],BoatDrivingCP[cp][1],BoatDrivingCP[cp][2], 5.0);
 			DrivingCPPos[playerid]++;
 			
-			if( DrivingCPPos[playerid] == 8 ) 
+			if(DrivingCPPos[playerid] == 8 ) 
 			{
 				DisablePlayerCheckpoint(playerid);
 				
@@ -251,7 +251,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				
 				SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 				RemovePlayerFromVehicle(playerid);
-				SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste polozili vozacku za brod!");
+				SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste polozili vozacku za brod!");
 				LicenseInfo[playerid][pBoatLic] = 1;
 				
 				// MySQL query
@@ -265,7 +265,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 			return 1;
 		}
 
-		if( DrivingCP[playerid] == 1 )
+		if(DrivingCP[playerid] == 1 )
 		{
 			new
 				cp = DrivingCPPos[playerid];
@@ -274,7 +274,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 			SetPlayerCheckpoint(playerid, CarDrivingCP[cp][0],CarDrivingCP[cp][1],CarDrivingCP[cp][2], 5.0);
 			DrivingCPPos[playerid]++;
 			
-			if( DrivingCPPos[playerid] == 8 )
+			if(DrivingCPPos[playerid] == 8 )
 			{
 				DisablePlayerCheckpoint(playerid);
 				
@@ -283,7 +283,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				
 				SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 				RemovePlayerFromVehicle(playerid);
-				SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste polozili vozacku za automobil!");
+				SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste polozili vozacku za automobil!");
 				LicenseInfo[playerid][pCarLic] = 1;
 				
 				mysql_fquery(g_SQL, "UPDATE player_licenses SET carlic = '1' WHERE sqlid = '%d'",
@@ -301,7 +301,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
-	if( Bit1_Get( gr_DrivingStarted, playerid ) ) 
+	if(Bit1_Get( gr_DrivingStarted, playerid )) 
 	{
 		DisablePlayerCheckpoint(playerid);
 		stop DrivingTimer[playerid];
@@ -321,9 +321,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_DRIVING_QUEST1: 
 		{
-			if( !response ) 
+			if(!response ) 
 			{
-				SendClientMessage( playerid, COLOR_RED, "[ ! ] Izasli ste iz ispita za polaganje vozacke dozvole!");
+				SendClientMessage( playerid, COLOR_RED, "[!] Izasli ste iz ispita za polaganje vozacke dozvole!");
 				Bit1_Set( gr_DrivingStarted, playerid, false );
 				return 1;
 			}
@@ -350,7 +350,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_DRIVING_QUEST2: 
 		{
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
+			if(!response ) return ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
 			
 			switch( listitem )
 			{
@@ -374,7 +374,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_DRIVING_QUEST3:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Choose", "Abort");
+			if(!response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Choose", "Abort");
 			
 			switch( listitem )
 			{
@@ -398,14 +398,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_DRIVING_QUEST4: 
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Choose", "Abort");	
+			if(!response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Choose", "Abort");	
 			
 			switch( listitem )
 			{
 				case 0: 
 				{ // 130kmh
-					SendClientMessage( playerid, COLOR_RED, "[ ! ] Tocan odgovor! Upalite vozilo i krenite prema checkpointima!");					
-					SendClientMessage( playerid, COLOR_RED, "[ ! ] Nemojte voziti preko 110kmh!");
+					SendClientMessage( playerid, COLOR_RED, "[!] Tocan odgovor! Upalite vozilo i krenite prema checkpointima!");					
+					SendClientMessage( playerid, COLOR_RED, "[!] Nemojte voziti preko 110kmh!");
 										
 					DisablePlayerCheckpoint(playerid);
 					DrivingCP[playerid] = 1;
@@ -445,15 +445,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:takedriving(playerid, params[])
 {
-	if( LicenseInfo[playerid][pCarLic] ) 		
+	if(LicenseInfo[playerid][pCarLic] ) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete vozacku dozvolu!");
-	if( Bit1_Get( gr_DrivingStarted, playerid ) ) 	
+	if(Bit1_Get( gr_DrivingStarted, playerid )) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec polazete vozacki!");
-	if( AC_GetPlayerMoney(playerid) < CAR_LICENSE_PRICE ) 		
+	if(AC_GetPlayerMoney(playerid) < CAR_LICENSE_PRICE ) 		
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %s!", FormatNumber(CAR_LICENSE_PRICE));
-	if( Bit1_Get( gr_TookDriving, playerid ) ) 		
+	if(Bit1_Get( gr_TookDriving, playerid )) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste uzeli papire i krenuli s polaganjem!");
-	if( !IsPlayerInRangeOfPoint( playerid, 5.0, 1779.8975, -1721.5961, 12.5387 ) ) 
+	if(!IsPlayerInRangeOfPoint( playerid, 5.0, 1779.8975, -1721.5961, 12.5387 )) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu auto skole!");
 	
 	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "~Uzeli ste papire za polaganje.~n~Idite u vozilo iza i krenite sa ispitom!");
@@ -464,18 +464,18 @@ CMD:takedriving(playerid, params[])
 
 CMD:buylicenses(playerid, params[])
 {
-	if( !IsPlayerInRangeOfPoint(playerid, 10.0, 1472.1774, -1613.3490, -70.3896) ) 
+	if(!IsPlayerInRangeOfPoint(playerid, 10.0, 1472.1774, -1613.3490, -70.3896)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vijecnici za salterom za licence!");
 	
 	new	pick[6];
-	if( sscanf( params, "s[6]", pick ) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /buylicenses [fly/fish]");
+	if(sscanf( params, "s[6]", pick )) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /buylicenses [fly/fish]");
 	
-	if( !strcmp( pick, "fly") ) 
+	if(!strcmp( pick, "fly")) 
 	{
-		if( LicenseInfo[playerid][pFlyLic] )			
+		if(LicenseInfo[playerid][pFlyLic] )			
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za letenje!");
-		if( AC_GetPlayerMoney(playerid) < FLY_LICENSE_PRICE )
+		if(AC_GetPlayerMoney(playerid) < FLY_LICENSE_PRICE )
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FLY_LICENSE_PRICE );
 		
 		GameTextForPlayer(playerid, "~g~Kupljena dozvola za letenje!", 1500, 1);
@@ -486,11 +486,11 @@ CMD:buylicenses(playerid, params[])
 			PlayerInfo[playerid][pSQLID]
 		);		
 	}
-	else if( !strcmp( pick, "fish") )
+	else if(!strcmp( pick, "fish"))
 	 {
-		if( LicenseInfo[playerid][pFishLic] )		
+		if(LicenseInfo[playerid][pFishLic] )		
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za ribolov!");
-		if( AC_GetPlayerMoney(playerid) < FISH_LICENSE_PRICE ) 	
+		if(AC_GetPlayerMoney(playerid) < FISH_LICENSE_PRICE ) 	
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FISH_LICENSE_PRICE );
 		
 		GameTextForPlayer(playerid, "~g~Kupljena dozvola za ribolov!", 1500, 1);

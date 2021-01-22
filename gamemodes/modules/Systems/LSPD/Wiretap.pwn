@@ -121,7 +121,7 @@ stock Player_SetTracingNumber(playerid, bool:v)
 
 timer OnPlayerTracingNumber[5000](playerid, targetid, type)
 {
-    if (!Player_MobileOn(targetid))
+    if(!Player_MobileOn(targetid))
     {
         stop TracingNumberTimer[playerid];
         GangZoneDestroy(TracingNumberZone[playerid]);
@@ -145,7 +145,7 @@ timer OnPlayerTracingNumber[5000](playerid, targetid, type)
                 Float:X, Float:Y, Float:Z;
             GetPlayerPos(targetid, X, Y, Z);
             TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 250.0, 250.0);
-            GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
+            GangZoneShowForPlayer(playerid, TracingNumberZone[playerid], COLOR_YELLOW);
 
             SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
@@ -159,7 +159,7 @@ timer OnPlayerTracingNumber[5000](playerid, targetid, type)
 
             GangZoneDestroy(TracingNumberZone[playerid]);
             TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 125.0, 125.0);
-            GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
+            GangZoneShowForPlayer(playerid, TracingNumberZone[playerid], COLOR_YELLOW);
 
             SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
@@ -173,7 +173,7 @@ timer OnPlayerTracingNumber[5000](playerid, targetid, type)
 
             GangZoneDestroy(TracingNumberZone[playerid]);
             TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 60.0, 60.0);
-            GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
+            GangZoneShowForPlayer(playerid, TracingNumberZone[playerid], COLOR_YELLOW);
 
             SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
@@ -195,31 +195,31 @@ timer OnPlayerTracingNumber[5000](playerid, targetid, type)
 
 CMD:tap(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) 
+    if(!IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac rank 2+.");
 
     new
         string[80],
         param[7];
-    if (sscanf( params, "s[7] ", param))
+    if(sscanf( params, "s[7] ", param))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tap [odabir]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] buy - take - place - listen");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /tap [odabir]");
+        SendClientMessage(playerid, COLOR_RED, "[!] buy - take - place - listen");
         return 1;
     }
-    if (!strcmp(param, "buy", true))
+    if(!strcmp(param, "buy", true))
     {
-        if (!IsPlayerInRangeOfPoint(playerid, 10.0, 2037.5465,1256.3229,-11.1115)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!"); //PD LOCKER
-        if (Player_HasListeningDevice(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate uredaj za prisluskivanje!");
+        if(!IsPlayerInRangeOfPoint(playerid, 10.0, 2037.5465,1256.3229,-11.1115)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!"); //PD LOCKER
+        if(Player_HasListeningDevice(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate uredaj za prisluskivanje!");
 
         Player_SetHasListeningDevice(playerid, true);
 
         format(string, sizeof(string), "* %s uzima uredjaj s police.", GetName(playerid, true));
         ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
     }
-    else if (!strcmp(param, "place", true))
+    else if(!strcmp(param, "place", true))
     {
-        if (!Player_HasListeningDevice(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uredaj za prisluskivanje!");
+        if(!Player_HasListeningDevice(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uredaj za prisluskivanje!");
 
         GetPlayerPos(playerid, ListeningDevicePos[playerid][0], ListeningDevicePos[playerid][1], ListeningDevicePos[playerid][2]);
         Player_SetHasListeningDevice(playerid, false);
@@ -229,9 +229,9 @@ CMD:tap(playerid, params[])
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
         SendClientMessage(playerid, COLOR_PURPLE, string);
     }
-    else if (!strcmp(param, "take", true))
+    else if(!strcmp(param, "take", true))
     {
-        if (!IsPlayerInRangeOfPoint(playerid, 5.0, ListeningDevicePos[playerid][0], ListeningDevicePos[playerid][1], ListeningDevicePos[playerid][2] )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog uredaja za prisluskivanje!");
+        if(!IsPlayerInRangeOfPoint(playerid, 5.0, ListeningDevicePos[playerid][0], ListeningDevicePos[playerid][1], ListeningDevicePos[playerid][2] )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog uredaja za prisluskivanje!");
 
         ListeningDevicePos[playerid][0] = 0.0;
         ListeningDevicePos[playerid][1] = 0.0;
@@ -243,11 +243,11 @@ CMD:tap(playerid, params[])
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
         SendClientMessage(playerid, COLOR_PURPLE, string);
     }
-    else if (!strcmp(param, "listen", true))
+    else if(!strcmp(param, "listen", true))
     {
         new type;
-        if (sscanf(params, "s[7]i", param, type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tap listen [1 - samostalno/2 - zvucnik]");
-        if (1 <= type <= 2) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tap listen [1 - samostalno/2 - zvucnik]");
+        if(sscanf(params, "s[7]i", param, type)) return SendClientMessage(playerid, COLOR_RED, "[?]: /tap listen [1 - samostalno/2 - zvucnik]");
+        if(1 <= type <= 2) return SendClientMessage(playerid, COLOR_RED, "[?]: /tap listen [1 - samostalno/2 - zvucnik]");
 
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Sada cete cuti sve razgovore koji se vode oko vaseg uredaja!");
         Player_SetListeningDeviceMode(playerid, type);
@@ -258,18 +258,18 @@ CMD:tap(playerid, params[])
 CMD:wiretap(playerid, params[])
 {
     new faction = PlayerFaction[playerid][pMember];
-    if (faction == -1) return 1;
-    if (!IsACop(playerid) && PlayerFaction[playerid][pRank] < FactionInfo[faction][rLstnNumber])
+    if(faction == -1) return 1;
+    if(!IsACop(playerid) && PlayerFaction[playerid][pRank] < FactionInfo[faction][rLstnNumber])
     {
         SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac r%d+!", FactionInfo[faction][rLstnNumber]);
         return 1;
     }
 
-    if (Player_TappingCall(playerid))
+    if(Player_TappingCall(playerid))
     {
         foreach(new gplayerid : Player)
         {
-            if (Player_TappedBy(gplayerid) == playerid)
+            if(Player_TappedBy(gplayerid) == playerid)
             {
                 Player_SetTappedBy(gplayerid, INVALID_PLAYER_ID);
                 break;
@@ -280,7 +280,7 @@ CMD:wiretap(playerid, params[])
         return 1;
     }
 
-    if (!IsPlayerInRangeOfPoint(playerid, 5.0, -1194.4789,-1649.6088,900.7064) &&
+    if(!IsPlayerInRangeOfPoint(playerid, 5.0, -1194.4789,-1649.6088,900.7064) &&
         !IsPlayerInRangeOfPoint(playerid, 5.0, 2845.8594,-846.8279,-21.6994) &&
         !IsPlayerInRangeOfPoint(playerid, 5.0, 1907.0248,627.1588,-14.942))
     {
@@ -291,16 +291,16 @@ CMD:wiretap(playerid, params[])
         number,
         string[8];
 
-    if (sscanf(params, "i", number)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /listennumber [broj mobitela]");
+    if(sscanf(params, "i", number)) return SendClientMessage(playerid, COLOR_RED, "[?]: /listennumber [broj mobitela]");
 
     valstr(string, number);
-    if (strlen(string) != 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesite broj mobitela!");
+    if(strlen(string) != 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesite broj mobitela!");
 
     foreach(new gplayerid : Player)
     {
-        if (PlayerMobile[gplayerid][pMobileNumber] == number)
+        if(PlayerMobile[gplayerid][pMobileNumber] == number)
         {
-            if (Player_TappedBy(gplayerid) != INVALID_PLAYER_ID)
+            if(Player_TappedBy(gplayerid) != INVALID_PLAYER_ID)
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec prisluskuje taj broj!");
                 return 1;
@@ -318,9 +318,9 @@ CMD:wiretap(playerid, params[])
 
 CMD:tracenumber(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni.");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni.");
 
-    if (Player_TracingNumber(playerid))
+    if(Player_TracingNumber(playerid))
     {
         stop TracingNumberTimer[playerid];
         GangZoneDestroy(TracingNumberZone[playerid]);
@@ -331,7 +331,7 @@ CMD:tracenumber(playerid, params[])
     }
 
     new vehmodelid = GetVehicleModel(GetPlayerVehicleID(playerid));
-    if (GetPlayerVehicleID(playerid) == INVALID_VEHICLE_ID ||
+    if(GetPlayerVehicleID(playerid) == INVALID_VEHICLE_ID ||
         vehmodelid != 596 ||
         vehmodelid != 597 ||
         vehmodelid != 598 ||
@@ -348,13 +348,13 @@ CMD:tracenumber(playerid, params[])
     new
         number,
         string[8];
-    if (sscanf(params, "i", number)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tracenumber [broj mobitela]");
+    if(sscanf(params, "i", number)) return SendClientMessage(playerid, COLOR_RED, "[?]: /tracenumber [broj mobitela]");
     valstr(string, number);
-    if (strlen(string) != 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesite broj mobitela!");
+    if(strlen(string) != 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesite broj mobitela!");
 
     foreach(new gplayerid : Player)
     {
-        if (PlayerMobile[gplayerid][pMobileNumber] == number)
+        if(PlayerMobile[gplayerid][pMobileNumber] == number)
         {
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste s trazenjem lokacije broja %d.", number);
 
@@ -390,15 +390,15 @@ hook function ResetPlayerVariables(playerid)
     ListeningDevicePos[playerid][2] = 0.0;
 
     // Wiretap
-    if (Player_TappedBy(playerid) != INVALID_PLAYER_ID)
-        SendClientMessage(Player_TappedBy(playerid), COLOR_RED, "[ ! ]: Line is busy (( Player is offline ))!");
+    if(Player_TappedBy(playerid) != INVALID_PLAYER_ID)
+        SendClientMessage(Player_TappedBy(playerid), COLOR_RED, "[!]: Line is busy (( Player is offline ))!");
     
     Player_SetTappedBy(playerid, INVALID_PLAYER_ID);
     Player_SetTappingCall(playerid, false);
     Player_SetTappingSMS(playerid, false);
 
     // Cellphone GPS tracking
-    if (Player_TracingNumber(playerid))
+    if(Player_TracingNumber(playerid))
     {
         stop TracingNumberTimer[playerid];
         GangZoneDestroy(TracingNumberZone[playerid]);
@@ -413,17 +413,17 @@ hook OnPlayerText(playerid, text[])
     new string[144];
     foreach(new i : Player)
     {
-        if (Player_PlacedListeningDevice(i) &&
+        if(Player_PlacedListeningDevice(i) &&
             IsPlayerInRangeOfPoint(playerid, 10.0, ListeningDevicePos[i][0], ListeningDevicePos[i][1], ListeningDevicePos[i][2]))
         {
             format(string, sizeof(string), "[DEVICE] %s: %s", GetName(playerid), text);
 
             new mode = Player_ListeningDeviceMode(playerid);
-            if (mode == 1)
+            if(mode == 1)
             {
                 SendClientMessage(i, COLOR_YELLOW, string);
             }
-            else if (mode == 2)
+            else if(mode == 2)
             {
                 RealProxDetector(8.0, i, string, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW);
             }

@@ -8,11 +8,11 @@ timer SetPlayerCrash[6000](playerid)
 	
 	if(PlayerCrash[playerid][pCrashX] != 0.0 && PlayerCrash[playerid][pCrashInt] != -1)
 	{
-		if( PlayerJail[playerid][pJailed] )
+		if(PlayerJail[playerid][pJailed] )
 		{
 			mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerCrash[playerid][pCrashId]);
 			ResetPlayerCrash(playerid);
-			SafeSpawned[ playerid ] = true;
+			SafeSpawned[playerid] = true;
 			return 1;
 		}
 		//Sets
@@ -28,7 +28,7 @@ timer SetPlayerCrash[6000](playerid)
 		SetPlayerSkin(playerid, PlayerAppearance[playerid][pTmpSkin]);
 		SetPlayerArmour(playerid, PlayerCrash[playerid][pCrashArmour]);
 
-		if( 0.0 <= PlayerCrash[playerid][pCrashHealth] <= 6.0 )
+		if(0.0 <= PlayerCrash[playerid][pCrashHealth] <= 6.0 )
 			SetPlayerHealth(playerid, 100);
 		else
 			SetPlayerHealth(playerid, PlayerCrash[playerid][pCrashHealth]);
@@ -68,7 +68,7 @@ timer SetPlayerCrash[6000](playerid)
 	}
 
 	spawn_end:	
-	SafeSpawned[ playerid ] = true;
+	SafeSpawned[playerid] = true;
 
 	AC_SetPlayerWeapons(playerid);
 
@@ -118,7 +118,7 @@ public LoadingPlayerCrashes(playerid)
 
 CheckPlayerCrash(playerid, reason)
 {
-    if( (reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
+    if((reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
 	{
 		if(SafeSpawned[playerid])
 		{
@@ -157,7 +157,7 @@ CheckPlayerCrash(playerid, reason)
 			);
 			if(reason == 0)
 			{
-				new	tmpString[ 73 ];
+				new	tmpString[73];
 				format(tmpString, sizeof(tmpString), 
                     "AdmWarn: Player %s just had a Client Crash.",
                     GetName(playerid,false)

@@ -42,13 +42,13 @@ static
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if (!FlashbangShellsActive[playerid]) return 1;
+    if(!FlashbangShellsActive[playerid]) return 1;
 
-    if (weaponid != 25) return 1;
+    if(weaponid != 25) return 1;
 
     foreach(new i : Player)
     {
-        if (IsPlayerInRangeOfPoint(i, 15.0, fX, fY, fZ))
+        if(IsPlayerInRangeOfPoint(i, 15.0, fX, fY, fZ))
         {
             new Float:pX, Float:pY, Float:pZ;
 
@@ -62,7 +62,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
             defer ClearFlashEffect(i);
             defer ResetPlayerDrunkLevel(i);
 
-            SendClientMessage(i, COLOR_RED, "[ ! ] U tvojoj blizi je bacen flashbang. Probaj ga sto vjerodostojnije odRPati.");
+            SendClientMessage(i, COLOR_RED, "[!] U tvojoj blizi je bacen flashbang. Probaj ga sto vjerodostojnije odRPati.");
         }
     }
 
@@ -130,19 +130,19 @@ static stock CreateFlashTD(playerid)
 
 CMD:flashbangwep(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste LSPD.");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendClientMessage(playerid, COLOR_RED, "[!] Niste LSPD.");
 
-    if (!Player_IsSWAT(playerid))
-        return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nisi SWAT!");
+    if(!Player_IsSWAT(playerid))
+        return SendClientMessage(playerid, COLOR_RED, "[!] Nisi SWAT!");
 
-    if (AC_GetPlayerWeapon(playerid) != 25)
+    if(AC_GetPlayerWeapon(playerid) != 25)
         return SendClientMessage(playerid, COLOR_RED, "[ERROR]: Kako bi uzeli gumene metke morate imati shotgun.");
 
     FlashbangShellsActive[playerid] = !FlashbangShellsActive[playerid]; // toggle
-    if (FlashbangShellsActive[playerid])
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste flashbang metke.");
+    if(FlashbangShellsActive[playerid])
+        SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste flashbang metke.");
     else
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Iskljucili ste flashbang metke.");
+        SendClientMessage(playerid, COLOR_RED, "[!] Iskljucili ste flashbang metke.");
 
     return 1;
 }

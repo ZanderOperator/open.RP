@@ -80,7 +80,7 @@ CheckAccountsForInactivity()
 	{
 		new rows;
 		cache_get_row_count(rows);
-		if( rows == 0 ) 
+		if(rows == 0 ) 
 			return Log_Write("logfiles/inactive_players.txt", "(%s) - Accounts for property/job removal due to inactivity currently don't exist.", ReturnDate());
 			
 		new 
@@ -244,7 +244,7 @@ CheckAccountsForInactivity()
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
 					bankmoney = BizzInfo[bizzid][bBuyPrice];
-					if(BizzInfo[ bizzid ][ bTill ] > 0)
+					if(BizzInfo[bizzid][bTill] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
 					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
@@ -329,7 +329,8 @@ CheckAccountsForInactivity()
 		using inline OnInactiveAccsLoad, 
 		va_fquery(g_SQL,  
 			"SELECT sqlid, name, lastloginstamp FROM accounts WHERE lastloginstamp <= '%d'",
-			inactivetimestamp),
+			inactivetimestamp
+		),
 		""
 	);
 	
@@ -463,7 +464,7 @@ CheckAccountsForInactivity()
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
 					bankmoney = BizzInfo[bizzid][bBuyPrice];
-					if(BizzInfo[ bizzid ][ bTill ] > 0)
+					if(BizzInfo[bizzid][bTill] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
 					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);

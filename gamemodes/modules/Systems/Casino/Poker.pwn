@@ -163,7 +163,7 @@ enum E_CARD_DATA
 	E_CARD_SUITS:E_CARD_SUIT,
 	E_CARD_RANK
 };
-static const CardData[ 52 ] [E_CARD_DATA] = {
+static const CardData[52][E_CARD_DATA] = {
 	//Spades
     {"LD_CARD:cd2s", 		"Two of Spades", 		SUIT_SPADES,		0},
     {"LD_CARD:cd3s", 		"Three of Spades", 		SUIT_SPADES,		1},
@@ -1302,7 +1302,7 @@ static PokerRotateActivePlayer(tableid)
 
 		if(playerid != -1)
 		{
-			if( (CurrentBet[playerid] < PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] != 0) 
+			if((CurrentBet[playerid] < PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] != 0) 
 				|| (CurrentBet[playerid] == PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] == 0) 
 				&& Status[playerid] )
 			{
@@ -1341,7 +1341,7 @@ static PokerRotateActivePlayer(tableid)
 				PokerOptions(nextactiveid, 3);
 			else if(currentBet >= activeBet) 
 				PokerOptions(nextactiveid, 1);
-			else if (currentBet < activeBet) 
+			else if(currentBet < activeBet) 
 				PokerOptions(nextactiveid, 2);
 			else 
 				PokerOptions(nextactiveid, 0);
@@ -2139,7 +2139,7 @@ static PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, F
 	new 
 		tmpString[256];
 	format(tmpString, sizeof(tmpString), "Poker stol\n\n Buy-In Maximum/Minimum: {00FF00}$%d{FFFFFF}/{00FF00}$%d{FFFFFF}\n\n[/poker play]", PokerTable[tableid][pkrBuyInMax], PokerTable[tableid][pkrBuyInMin]);
-	if( !IsValidDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]) )
+	if(!IsValidDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]))
 		PokerTable[tableid][pkrText3DID] = CreateDynamic3DTextLabel(tmpString, COLOR_YELLOW, PokerTable[tableid][pkrX], PokerTable[tableid][pkrY], PokerTable[tableid][pkrZ], 25.0, INVALID_PLAYER_ID,INVALID_VEHICLE_ID, 0, PokerTable[tableid][pkrVW], PokerTable[tableid][pkrInt], -1);
 	else
 	{
@@ -2163,7 +2163,7 @@ static DestroyPokerTable(tableid)
 			DestroyDynamicObject(PokerTable[tableid][pkrObjectID]);
 
 		// Delete 3D Text Label
-		if( IsValidDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]) )
+		if(IsValidDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]))
 			DestroyDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]);
 
 		// Delete Misc Obj
@@ -2184,7 +2184,7 @@ static DestroyPokerTable(tableid)
 
 static RemovePokerTable(tableid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[ tableid ][ pkrSQL ]);
+	mysql_fquery(g_SQL, "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[tableid][pkrSQL]);
 	return 1;
 }
 
@@ -2255,14 +2255,14 @@ static bool:DoesHavePokerTablePerm(playerid, tableid)
 {
 	new houseid = Player_InHouse(playerid),
 		bizzid  = Player_InBusiness(playerid);
-	if (houseid != INVALID_HOUSE_ID && houseid >= 0)
+	if(houseid != INVALID_HOUSE_ID && houseid >= 0)
 	{
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID] && HouseInfo[houseid][hInt] == PokerTable[tableid][pkrInt] && HouseInfo[houseid][hVirtualWorld] == PokerTable[tableid][pkrVW])
 			return true;
 	}
-	else if (bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZES)
+	else if(bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZES)
 	{
-		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
+		if((BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
 			return true;
 	}
 	return false;
@@ -2294,7 +2294,7 @@ static GetPokerTableLimit(playerid)
 	new houseid = Player_InHouse(playerid),
 		bizzid  = Player_InBusiness(playerid);
 
-	if (houseid != INVALID_HOUSE_ID)
+	if(houseid != INVALID_HOUSE_ID)
 	{
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID])
 		{
@@ -2335,9 +2335,9 @@ static GetPokerTableLimit(playerid)
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik kuce u kojoj se nalazite!");
 	}
-	else if (bizzid != INVALID_BIZNIS_ID)
+	else if(bizzid != INVALID_BIZNIS_ID)
 	{
-		if (BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO &&
+		if(BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO &&
 			(BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]))
 		{
 			return 1;
@@ -2447,8 +2447,8 @@ static ShowCasinoGamesMenu(playerid, dialogid)
 			new tableid = PlayingTableID[playerid];
 			ActionChoice[playerid] = true;
 			
-			if( (CurrentBet[playerid] + Chips[playerid]) 
-				> (PokerTable[tableid][pkrActiveBet] + (PokerTable[tableid][pkrBlind]/2) )) 
+			if((CurrentBet[playerid] + Chips[playerid]) 
+				> (PokerTable[tableid][pkrActiveBet] + (PokerTable[tableid][pkrBlind]/2))) 
 			{
 				new szString[128];
 				format(szString, sizeof(szString), "{FFFFFF}Za koji iznos zelite dignuti ulog? ($%d-$%d):", 
@@ -2457,8 +2457,8 @@ static ShowCasinoGamesMenu(playerid, dialogid)
 				);
 				return ShowPlayerDialog(playerid, DIALOG_CGAMESRAISEPOKER, DIALOG_STYLE_INPUT, "{FFFFFF}Texas Holdem Poker - (Raise)", szString, "Raise", "Cancel");
 			} 
-			else if( (CurrentBet[playerid] + Chips[playerid]) 
-				== (PokerTable[tableid][pkrActiveBet]+ (PokerTable[tableid][pkrBlind]/2)) ) 
+			else if((CurrentBet[playerid] + Chips[playerid]) 
+				== (PokerTable[tableid][pkrActiveBet]+ (PokerTable[tableid][pkrBlind]/2))) 
 			{
 				new szString[128];
 				format(szString, sizeof(szString), "{FFFFFF}Za koji iznos zelite dignuti ulog? (All-In):", 
@@ -2582,9 +2582,9 @@ static ShowCasinoGamesMenu(playerid, dialogid)
 CMD:poker(playerid, params[])
 {
 	new pick[10];
-	if( sscanf( params, "s[10] ", pick ) ) return SendClientMessage( playerid, -1, "KORISTENJE /poker [ play / leave / table ]");
+	if(sscanf( params, "s[10] ", pick )) return SendClientMessage( playerid, -1, "KORISTENJE /poker [play / leave / table]");
 
-	if( !strcmp(pick, "play", true) )
+	if(!strcmp(pick, "play", true))
 	{
 		if(PlayingTableID[playerid] == -1)
 		{
@@ -2595,7 +2595,7 @@ CMD:poker(playerid, params[])
 					if(PokerTable[t][pkrPass][0] != EOS)
 					{
 						new password[32];
-						if( sscanf( params, "s[10]s[32]", pick, password ) )
+						if(sscanf( params, "s[10]s[32]", pick, password ))
 							return SendClientMessage( playerid, -1, "KORISTENJE /poker play [password]");
 						if(!strcmp(password, PokerTable[t][pkrPass], false, 32))
 							return JoinPokerTable(playerid, t);
@@ -2606,10 +2606,10 @@ CMD:poker(playerid, params[])
 		}
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec igrate poker za stolom! Morate koristiti /poker leave da odlazak iz trenutne igre!");
 	}
-	if( !strcmp(pick, "leave", true) )
+	if(!strcmp(pick, "leave", true))
 		return LeavePokerTable(playerid);
 
-	if( !strcmp(pick, "table", true) )
+	if(!strcmp(pick, "table", true))
 		return ShowCasinoGamesMenu(playerid, DIALOG_CGAMESSETUPPOKER);
 
 	return 1;
@@ -3019,8 +3019,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					tableid = PlayingTableID[playerid],
 					actualRaise = strval(inputtext) - CurrentBet[playerid];
 
-				if( strval(inputtext) >= (PokerTable[tableid][pkrActiveBet] + (PokerTable[tableid][pkrBlind]/2)) 
-					&& strval(inputtext) <= (CurrentBet[playerid] + Chips[playerid]) ) 
+				if(strval(inputtext) >= (PokerTable[tableid][pkrActiveBet] + (PokerTable[tableid][pkrBlind]/2)) 
+					&& strval(inputtext) <= (CurrentBet[playerid] + Chips[playerid])) 
 				{
 					PokerTable[tableid][pkrPot] += actualRaise;
 					Chips[playerid] -= actualRaise;

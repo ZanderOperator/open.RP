@@ -58,7 +58,7 @@ public OnPlayerCartonFinish(playerid, const playername[])
 	if(!rows) return SendClientMessage(playerid,COLOR_RED, "U bazi nije pronadjena trazena osoba.");
 
 	new 
-		buffer[ 2056 ],
+		buffer[2056],
 		motd[256],
 		sqlid,
 		doctor[MAX_PLAYER_NAME],
@@ -101,35 +101,35 @@ public OnPlayerCartonFinish(playerid, const playername[])
 CMD:anamnesis(playerid, params[])
 {
 	new opcija[20], patient[30], disease[128], giveplayerid, ID;
-    if( !IsFDMember(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste doktor!");
+    if(!IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste doktor!");
 	if(PlayerFaction[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
-	if( sscanf( params, "s[20] ", opcija ) )
+	if(sscanf( params, "s[20] ", opcija ))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] check - insert - delete");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /anamnesis [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[!] check - insert - delete");
 		return 1;
 	}
 	if(strcmp(opcija,"check",true) == 0) // check
 	{
-		if( sscanf( params, "s[20]s[30]", opcija, patient ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis [opcija] [Ime_Prezime]");
-		if( 1 <= strlen( patient ) <= MAX_PLAYER_NAME )
+		if(sscanf( params, "s[20]s[30]", opcija, patient )) return SendClientMessage(playerid, COLOR_RED, "[?]: /anamnesis [opcija][Ime_Prezime]");
+		if(1 <= strlen( patient ) <= MAX_PLAYER_NAME )
         {
-            if( strfind(patient, "_", true) == -1 ) 
+            if(strfind(patient, "_", true) == -1 ) 
                 return SendClientMessage(playerid, COLOR_RED, "NAPOMENA: Mora biti s znakom '_'! ");
             CheckPlayerCarton(playerid, patient);
         }
 	}
 	else if(strcmp(opcija,"insert",true) == 0) //  insert
 	{
-		if( sscanf( params, "s[20]us[100]", opcija, giveplayerid, disease ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis insert [ID/Ime_Prezime] [Opis bolesti]");
-		if (strlen(disease) >= 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Opis bolesti moze imati max 100 znakova!");
-		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
+		if(sscanf( params, "s[20]us[100]", opcija, giveplayerid, disease )) return SendClientMessage(playerid, COLOR_RED, "[?]: /anamnesis insert [ID/Ime_Prezime][Opis bolesti]");
+		if(strlen(disease) >= 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Opis bolesti moze imati max 100 znakova!");
+		if(giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
 		InsertPlayerCarton(playerid, giveplayerid, disease);
 	}
 	else if(strcmp(opcija,"delete",true) == 0) // delete
 	{
-		if( sscanf( params, "s[20]i", opcija, ID ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis delete [rbr]");
-		if( PlayerFaction[playerid][pRank] < 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo doktori sa vecom pozicijom! ((r6+))");
+		if(sscanf( params, "s[20]i", opcija, ID )) return SendClientMessage(playerid, COLOR_RED, "[?]: /anamnesis delete [rbr]");
+		if(PlayerFaction[playerid][pRank] < 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo doktori sa vecom pozicijom! ((r6+))");
 		DeletePlayerCarton(playerid, ID);
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepoznato ime za odabir!");

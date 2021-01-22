@@ -129,7 +129,7 @@ public OnPlayerReport(playerid, response)
 				if(PlayerInfo[i][pAdmin]) GameTextForPlayer(i, "~y~~h~PRIORITY REPORT", 4000, 1);
 		}
 		Player_SetReportID(playerid, id);
-		SendMessage(playerid, MESSAGE_TYPE_INFO, "[ ! ]: Your query has been sent to Game Admins.");
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "[!]: Your query has been sent to Game Admins.");
 	}
 	return 1;
 }
@@ -271,7 +271,7 @@ CMD:report(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si poslao report! Pricekaj da ti admini odgovore na isti.");
 
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /report [tekst]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /report [tekst]");
 	
 	strcpy(PlayerReport[playerid], params, 128);
 	new	
@@ -323,10 +323,10 @@ CMD:reportsx(playerid, params[])
 	{
 		if(strlen(ReportData[i][reportReason]) > 70)
 		{
-			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[ ! ] %s | {FA5656}Report ID: %i | Na cekanju: %i Minuta | Report: %.70s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
-			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[ ! ] ...%s", ReportData[i][reportReason][70]);
+			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Na cekanju: %i Minuta | Report: %.70s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
+			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] ...%s", ReportData[i][reportReason][70]);
 		}
-		else va_SendClientMessage(playerid, COLOR_SKYBLUE, "[ ! ] %s | {FA5656}Report ID: %i | Na cekanju: %i Minuta | Report: %s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
+		else va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Na cekanju: %i Minuta | Report: %s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
 	}
 
 	return 1;
@@ -340,7 +340,7 @@ CMD:acceptreport(playerid, params[])
 	new
 		reportid, str[128];
 
-	if(sscanf(params, "d", reportid))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /acceptreport [report id]");
+	if(sscanf(params, "d", reportid))return SendClientMessage(playerid, COLOR_RED, "[?]: /acceptreport [report id]");
 	if(reportid > MAX_REPORTS || !ReportData[reportid][reportExists]) return SendClientMessage(playerid, COLOR_RED, "Report pod navedenim ID-om ne postoji!");
 
 	format(str, sizeof(str), "[REPORT] %s je preuzeo report ID %d od %s", GetName(playerid, false), reportid, ReportData[reportid][reportBy]);

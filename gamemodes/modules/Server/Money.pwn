@@ -55,7 +55,7 @@ stock AC_SetPlayerMoney(playerid, amount)
 
 stock AC_GetPlayerMoney(playerid)
 {
-	if( playerid == INVALID_PLAYER_ID ) return 0;
+	if(playerid == INVALID_PLAYER_ID ) return 0;
 	return PlayerInfo[playerid][pMoney];
 }
 

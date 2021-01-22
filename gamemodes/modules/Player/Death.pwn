@@ -20,17 +20,17 @@
 enum PLAYER_DEATH_DATA
 {
 	ddOverall,
-	ddTorso[ 43 ],
-	ddGroin[ 43 ],
-	ddLArm[ 43 ],
-	ddRArm[ 43 ],
-	ddLLeg[ 43 ],
-	ddRLeg[ 43 ],
-	ddHead[ 43 ],
+	ddTorso[43],
+	ddGroin[43],
+	ddLArm[43],
+	ddRArm[43],
+	ddLLeg[43],
+	ddRLeg[43],
+	ddHead[43],
 	Text3D:dd3dText
 }
 stock
-	DeathData[ MAX_PLAYERS ][ PLAYER_DEATH_DATA ];
+	DeathData[MAX_PLAYERS][PLAYER_DEATH_DATA];
 enum DROPPED_WEAPON_DATA
 {
 	dWeaponID,
@@ -38,7 +38,7 @@ enum DROPPED_WEAPON_DATA
 	dWeaponObject,
 	Float:dPos[3]
 }
-new DroppedWeapons[ MAX_DROPPED_ITEMS ] [ DROPPED_WEAPON_DATA ];
+new DroppedWeapons[MAX_DROPPED_ITEMS][DROPPED_WEAPON_DATA];
 
 new Iterator:WeaponsDropped<MAX_DROPPED_ITEMS>;
 /*
@@ -99,7 +99,7 @@ stock GetNearDroppedWeapon(playerid)
 	{
 	    if(IsPlayerInRangeOfPoint(playerid, 4.0, DroppedWeapons[slotid][dPos][0], DroppedWeapons[slotid][dPos][1], DroppedWeapons[slotid][dPos][2]))
 		{
-			if (! CheckPlayerWeapons(playerid, DroppedWeapons[slotid][dWeaponID]) ) return 1;
+			if(! CheckPlayerWeapons(playerid, DroppedWeapons[slotid][dWeaponID])) return 1;
 			AC_GivePlayerWeapon(playerid, DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
 			#if defined MODULE_LOGS
 			Log_Write("/logfiles/pickitems.txt", "(%s) %s took %s(%d ammo) from floor.", ReturnDate(), GetName(playerid), GetWeaponNameEx(DroppedWeapons[slotid][dWeaponID]), DroppedWeapons[slotid][dWeaponAmmo]);
@@ -208,20 +208,20 @@ stock DropPlayerMoney(playerid) // Na Death Modeu
 stock ResetDeathVars(playerid)
 {
 	DestroyDeathTDs(playerid);
-	if( IsValidDynamic3DTextLabel(DeathData[ playerid ][ dd3dText ]) ) {
-		DestroyDynamic3DTextLabel( DeathData[ playerid ][ dd3dText ] );
-		DeathData[ playerid ][ dd3dText ] = Text3D:INVALID_3DTEXT_ID;
+	if(IsValidDynamic3DTextLabel(DeathData[playerid][dd3dText])) {
+		DestroyDynamic3DTextLabel( DeathData[playerid][dd3dText] );
+		DeathData[playerid][dd3dText] = Text3D:INVALID_3DTEXT_ID;
 	}
-	DeathData[ playerid ][ ddOverall ] = 0;
+	DeathData[playerid][ddOverall] = 0;
 	for(new i=0; i < 43; i++)
 	{
-		DeathData[ playerid ][ ddTorso ][ i ]	= 0;
-		DeathData[ playerid ][ ddGroin ][ i ]	= 0;
-		DeathData[ playerid ][ ddLArm ][ i ] 	= 0;
-		DeathData[ playerid ][ ddRArm ][ i ] 	= 0;
-		DeathData[ playerid ][ ddLLeg ][ i ] 	= 0;
-		DeathData[ playerid ][ ddRLeg ][ i ] 	= 0;
-		DeathData[ playerid ][ ddHead ][ i ] 	= 0;
+		DeathData[playerid][ddTorso][i]	= 0;
+		DeathData[playerid][ddGroin][i]	= 0;
+		DeathData[playerid][ddLArm][i] 	= 0;
+		DeathData[playerid][ddRArm][i] 	= 0;
+		DeathData[playerid][ddLLeg][i] 	= 0;
+		DeathData[playerid][ddRLeg][i] 	= 0;
+		DeathData[playerid][ddHead][i] 	= 0;
 	}
 	return 1;
 }
@@ -269,56 +269,56 @@ stock DestroyDeathTDs(playerid)
 
 stock DestroyDeathInfo(playerid)
 {
-	if( IsValidDynamic3DTextLabel(DeathData[ playerid ][ dd3dText ]) ) {
-		DestroyDynamic3DTextLabel( DeathData[ playerid ][ dd3dText ] );
-		DeathData[ playerid ][ dd3dText ] = Text3D:INVALID_3DTEXT_ID;
+	if(IsValidDynamic3DTextLabel(DeathData[playerid][dd3dText])) {
+		DestroyDynamic3DTextLabel( DeathData[playerid][dd3dText] );
+		DeathData[playerid][dd3dText] = Text3D:INVALID_3DTEXT_ID;
 	}	
-	DeathData[ playerid ][ ddOverall ] = 0;
+	DeathData[playerid][ddOverall] = 0;
 	
 	for( new weaponid = 22; weaponid != 34; weaponid++ ) {
-		if( DeathData[ playerid ][ ddTorso ][ weaponid ] )
-			DeathData[ playerid ][ ddTorso ][ weaponid ]	= 0;
-		if( DeathData[ playerid ][ ddGroin ][ weaponid ] )
-			DeathData[ playerid ][ ddGroin ][ weaponid ]	= 0;
-		if( DeathData[ playerid ][ ddLArm ][ weaponid ] )
-			DeathData[ playerid ][ ddLArm ][ weaponid ] 	= 0;
-		if( DeathData[ playerid ][ ddRArm ][ weaponid ] )
-			DeathData[ playerid ][ ddRArm ][ weaponid ] 	= 0;
-		if( DeathData[ playerid ][ ddLLeg ][ weaponid ] )
-			DeathData[ playerid ][ ddLLeg ][ weaponid ] 	= 0;
-		if( DeathData[ playerid ][ ddRLeg ][ weaponid ] )
-			DeathData[ playerid ][ ddRLeg ][ weaponid ] 	= 0;
-		if( DeathData[ playerid ][ ddHead ][ weaponid ] )
-			DeathData[ playerid ][ ddHead ][ weaponid ] 	= 0;
+		if(DeathData[playerid][ddTorso][weaponid] )
+			DeathData[playerid][ddTorso][weaponid]	= 0;
+		if(DeathData[playerid][ddGroin][weaponid] )
+			DeathData[playerid][ddGroin][weaponid]	= 0;
+		if(DeathData[playerid][ddLArm][weaponid] )
+			DeathData[playerid][ddLArm][weaponid] 	= 0;
+		if(DeathData[playerid][ddRArm][weaponid] )
+			DeathData[playerid][ddRArm][weaponid] 	= 0;
+		if(DeathData[playerid][ddLLeg][weaponid] )
+			DeathData[playerid][ddLLeg][weaponid] 	= 0;
+		if(DeathData[playerid][ddRLeg][weaponid] )
+			DeathData[playerid][ddRLeg][weaponid] 	= 0;
+		if(DeathData[playerid][ddHead][weaponid] )
+			DeathData[playerid][ddHead][weaponid] 	= 0;
 	}
 	return 1;
 }
 stock CreateDeathInfos(playerid, situation = 0)
 {
 	new
-		tmpString[ 85 ];
+		tmpString[85];
 
-	if( IsValidDynamic3DTextLabel(DeathData[ playerid ][ dd3dText ]) ) {
-		DestroyDynamic3DTextLabel( DeathData[ playerid ][ dd3dText ] );
+	if(IsValidDynamic3DTextLabel(DeathData[playerid][dd3dText])) {
+		DestroyDynamic3DTextLabel( DeathData[playerid][dd3dText] );
 
-		DeathData[ playerid ][ dd3dText ] = Text3D:INVALID_3DTEXT_ID;
+		DeathData[playerid][dd3dText] = Text3D:INVALID_3DTEXT_ID;
 	}
 	switch(situation)
 	{
 		case 0:
 		{
-			format(tmpString, sizeof(tmpString), "** %s je ranjen %d puta (( DeathMode | /alldamages %d )) **", GetName(playerid), DeathData[ playerid ][ ddOverall ], playerid);
-			DeathData[ playerid ][ dd3dText ] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, 0.0000, 0.0000, 0.3500, 15.0, playerid, INVALID_VEHICLE_ID, 0, -1, -1, -1, 20.0);
+			format(tmpString, sizeof(tmpString), "** %s je ranjen %d puta (( DeathMode | /alldamages %d )) **", GetName(playerid), DeathData[playerid][ddOverall], playerid);
+			DeathData[playerid][dd3dText] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, 0.0000, 0.0000, 0.3500, 15.0, playerid, INVALID_VEHICLE_ID, 0, -1, -1, -1, 20.0);
 		}
 		case 1:
 		{
-			format(tmpString, sizeof(tmpString), "** Osoba je mrtva, %d rana  (( /alldamages %d )) **", DeathData[ playerid ][ ddOverall ], playerid);
-			DeathData[ playerid ][ dd3dText ] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, 0.0000, 0.0000, 0.3500, 15.0, playerid, INVALID_VEHICLE_ID, 0, -1, -1, -1, 20.0);
+			format(tmpString, sizeof(tmpString), "** Osoba je mrtva, %d rana  (( /alldamages %d )) **", DeathData[playerid][ddOverall], playerid);
+			DeathData[playerid][dd3dText] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, 0.0000, 0.0000, 0.3500, 15.0, playerid, INVALID_VEHICLE_ID, 0, -1, -1, -1, 20.0);
 		}
 		case 2:
 		{
-			format(tmpString, sizeof(tmpString), "** %s je ranjen %d puta (( Wounded | /alldamages %d )) **", GetName(playerid), DeathData[ playerid ][ ddOverall ], playerid);
-			DeathData[ playerid ][ dd3dText ] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, 0.0000, 0.0000, 0.3500, 15.0, playerid, INVALID_VEHICLE_ID, 0, -1, -1, -1, 20.0);
+			format(tmpString, sizeof(tmpString), "** %s je ranjen %d puta (( Wounded | /alldamages %d )) **", GetName(playerid), DeathData[playerid][ddOverall], playerid);
+			DeathData[playerid][dd3dText] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, 0.0000, 0.0000, 0.3500, 15.0, playerid, INVALID_VEHICLE_ID, 0, -1, -1, -1, 20.0);
 		}
 	}
 	return 1;
@@ -368,7 +368,7 @@ hook function LoadPlayerStats(playerid)
 
 hook function ResetPlayerVariables(playerid)
 {
-	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) 
+	if(Bit1_Get( gr_DeathCountStarted, playerid )) 
 	{
 		DestroyDeathInfo(playerid);
 		stop DeathTimer[playerid];
@@ -392,15 +392,15 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	if(weaponid < 43)
 	switch( bodypart ) 
 	{
-		case BODY_PART_TORSO:			DeathData[ playerid ][ ddTorso ][ weaponid ]++;
-		case BODY_PART_GROIN:          	DeathData[ playerid ][ ddGroin ][ weaponid ]++;
-		case BODY_PART_LEFT_ARM:       	DeathData[ playerid ][ ddLArm ][ weaponid ]++;
-		case BODY_PART_RIGHT_ARM:      	DeathData[ playerid ][ ddRArm ][ weaponid ]++;
-		case BODY_PART_LEFT_LEG:       	DeathData[ playerid ][ ddLLeg ][ weaponid ]++;
-		case BODY_PART_RIGHT_LEG:      	DeathData[ playerid ][ ddRLeg ][ weaponid ]++;
-		case BODY_PART_HEAD: 			DeathData[ playerid ][ ddHead ][ weaponid ]++;
+		case BODY_PART_TORSO:			DeathData[playerid][ddTorso][weaponid]++;
+		case BODY_PART_GROIN:          	DeathData[playerid][ddGroin][weaponid]++;
+		case BODY_PART_LEFT_ARM:       	DeathData[playerid][ddLArm][weaponid]++;
+		case BODY_PART_RIGHT_ARM:      	DeathData[playerid][ddRArm][weaponid]++;
+		case BODY_PART_LEFT_LEG:       	DeathData[playerid][ddLLeg][weaponid]++;
+		case BODY_PART_RIGHT_LEG:      	DeathData[playerid][ddRLeg][weaponid]++;
+		case BODY_PART_HEAD: 			DeathData[playerid][ddHead][weaponid]++;
 	}
-	DeathData[ playerid ][ ddOverall ] ++;
+	DeathData[playerid][ddOverall] ++;
 	return 0;
 }
 
@@ -425,7 +425,7 @@ timer StartDeathCount[1000](playerid)
 		format(tmpString, sizeof(tmpString), "%d SEKUNDI", Bit8_Get(gr_DeathCountSeconds, playerid));
 		PlayerTextDrawSetString(playerid, DeathPlayerTextDraw[playerid], tmpString);
 		
-		if( !Bit8_Get(gr_DeathCountSeconds, playerid) ) 
+		if(!Bit8_Get(gr_DeathCountSeconds, playerid)) 
 		{
 			GameTextForPlayer( playerid, "~g~Nekoliko sati kasnije...", 1000, 1 );
 			
@@ -439,7 +439,7 @@ timer StartDeathCount[1000](playerid)
 			DestroyDeathTDs(playerid);
 			
 			PlayerToFactionMoneyTAX(playerid, FACTION_TYPE_FD, 500); // novac bolnici i proracunu*/
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Platio si bolnicke troskove u visini od 500$!");
+			SendClientMessage(playerid, COLOR_RED, "[!] Platio si bolnicke troskove u visini od 500$!");
 			
 			PlayerDeath[playerid][pDeathX] 	= 0.0;
 			PlayerDeath[playerid][pDeathY] 	= 0.0;
@@ -470,7 +470,7 @@ timer StartDeathCount[1000](playerid)
 CMD:pickitem(playerid, params[])
 {
 	new str[32];
-	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon]");
+	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "[?]: /pickitem [weapon]");
 	if(PlayerDeath[playerid][pKilled] > 0)
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzimat predmete sa poda dok si u death stanju.");
 	if(strcmp(str, "weapon", true) == 0)
@@ -487,26 +487,26 @@ CMD:pickitem(playerid, params[])
 		return 1;
     }
     else
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon/money]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /pickitem [weapon/money]");
 	return 1;
 }
 
 CMD:alldamages(playerid, params[])
 {
 	new
-		damageString[ 160 ],
-		damageNameString[ 30 ],
+		damageString[160],
+		damageNameString[30],
 		motd[1024],
 		gplayerid = INVALID_PLAYER_ID;
 		
-	if (sscanf(params, "u", gplayerid))
+	if(sscanf(params, "u", gplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /alldamages [PlayerID / Part of name]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /alldamages [PlayerID / Part of name]");
 		return 1;
 	}
-	if( !IsPlayerConnected(gplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");
-	if( !SafeSpawned[gplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
-	if( !PlayerDeath[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u Wounded/Death Modeu!");
+	if(!IsPlayerConnected(gplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");
+	if(!SafeSpawned[gplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
+	if(!PlayerDeath[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u Wounded/Death Modeu!");
 
 	new Float: pX, Float: pY, Float: pZ;
 	GetPlayerPos(gplayerid, pX, pY, pZ);
@@ -516,120 +516,120 @@ CMD:alldamages(playerid, params[])
 		return 1;
 	}
 	
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Glava:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddHead ][ weaponid ] )
+		if(DeathData[gplayerid][ddHead][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddHead ][ weaponid ]
+				DeathData[gplayerid][ddHead][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Torzo(trup):\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddTorso ][ weaponid ] )
+		if(DeathData[gplayerid][ddTorso][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddTorso ][ weaponid ]
+				DeathData[gplayerid][ddTorso][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Prepone:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddGroin ][ weaponid ] )
+		if(DeathData[gplayerid][ddGroin][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddGroin ][ weaponid ]
+				DeathData[gplayerid][ddGroin][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Lijeva ruka:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddLArm ][ weaponid ] )
+		if(DeathData[gplayerid][ddLArm][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddLArm ][ weaponid ]
+				DeathData[gplayerid][ddLArm][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Desna ruka:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddRArm ][ weaponid ] )
+		if(DeathData[gplayerid][ddRArm][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddRArm ][ weaponid ]
+				DeathData[gplayerid][ddRArm][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Lijeva noga:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddLLeg ][ weaponid ] )
+		if(DeathData[gplayerid][ddLLeg][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddLLeg ][ weaponid ]
+				DeathData[gplayerid][ddLLeg][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageNameString[ 0 ] = EOS;
+	damageNameString[0] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Desna noga:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
 	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
 	{
-		if( DeathData[ gplayerid ][ ddRLeg ][ weaponid ] )
+		if(DeathData[gplayerid][ddRLeg][weaponid] )
 		{
-			damageString[ 0 ] = EOS;
+			damageString[0] = EOS;
 			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
-				DeathData[ gplayerid ][ ddRLeg ][ weaponid ]
+				DeathData[gplayerid][ddRLeg][weaponid]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}

@@ -45,7 +45,7 @@ static
 
 static VehicleBlinker(playerid)
 {
-    if (!BlinkerEnabled[playerid])
+    if(!BlinkerEnabled[playerid])
     {
         return 1;
     }
@@ -53,7 +53,7 @@ static VehicleBlinker(playerid)
     static Keys, ud, lr, panels, doors, lights, tires, vehicleid;
     vehicleid = GetPlayerVehicleID(playerid);
 
-    if (!IsPlayerInAnyVehicle(playerid) || vehicleid != Player_GetLastVehicle(playerid))
+    if(!IsPlayerInAnyVehicle(playerid) || vehicleid != Player_GetLastVehicle(playerid))
     {
         vehicleid = Player_GetLastVehicle(playerid);
         GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
@@ -79,7 +79,7 @@ static VehicleBlinker(playerid)
     }
 
     FlashCounter[vehicleid]++;
-    if (FlashCounter[vehicleid] >= 5)
+    if(FlashCounter[vehicleid] >= 5)
     {
         FlashCounter[vehicleid] = 0;
     }
@@ -117,33 +117,33 @@ Public:OnPlayerSlowUpdate(playerid)
 
 public OnVehicleSirenStateChange(playerid, vehicleid, newstate)
 {
-    if (!(IsACop(playerid) || IsFDMember(playerid) || IsAGov(playerid) || IsADoC(playerid)))
+    if(!(IsACop(playerid) || IsFDMember(playerid) || IsAGov(playerid) || IsADoC(playerid)))
     {
         return 1;
     }
 
-    if (newstate)
+    if(newstate)
     {
-        if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+        if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return 1;
 
-        if (!IsInStateVehicle(playerid))
+        if(!IsInStateVehicle(playerid))
             return 1;
 
-        if (BlinkerEnabled[playerid] == false)
+        if(BlinkerEnabled[playerid] == false)
         {
             BlinkerEnabled[playerid] = true;
             FlashCounter[vehicleid] = 0;
         }
     }
 
-    if (!newstate)
+    if(!newstate)
     {
         new panels, doors, lights, tires;
         GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
         UpdateVehicleDamageStatus(vehicleid, panels, doors, 0, tires);
 
-        if (BlinkerEnabled[playerid])
+        if(BlinkerEnabled[playerid])
         {
             BlinkerEnabled[playerid] = false;
             FlashCounter[vehicleid] = 0;
@@ -155,18 +155,18 @@ public OnVehicleSirenStateChange(playerid, vehicleid, newstate)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if (newkeys & KEY_CROUCH)
+    if(newkeys & KEY_CROUCH)
     {
-        if (!(IsACop(playerid) || IsFDMember(playerid) || IsAGov(playerid) || IsADoC(playerid)))
+        if(!(IsACop(playerid) || IsFDMember(playerid) || IsAGov(playerid) || IsADoC(playerid)))
             return 1;
 
-        if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+        if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return 1;
 
-        if (!IsInStateVehicle(playerid))
+        if(!IsInStateVehicle(playerid))
             return 1;
 
-        if (BlinkerEnabled[playerid])
+        if(BlinkerEnabled[playerid])
         {
             // Turn off blinkers
             new panels, doors, lights, tires;

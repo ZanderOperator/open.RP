@@ -148,13 +148,13 @@ stock udb_UserInt(nickname[],key[]) {
 stock udb_CheckLogin(nickname[],pwd[]) {
   new fname[MAX_STRING];
   format(fname,sizeof(fname),"\\Users\\%s.ini",udb_encode(nickname));
-  if (udb_UserInt(nickname,"password_hash")==udb_hash(pwd)) return true;
+  if(udb_UserInt(nickname,"password_hash")==udb_hash(pwd)) return true;
   return false;
 }
 
 
 stock udb_Create(nickname[],pwd[]) {
-  if (udb_Exists(nickname)) return false;
+  if(udb_Exists(nickname)) return false;
   new fname[MAX_STRING];
   format(fname,sizeof(fname),"\\Users\\%s.ini",udb_encode(nickname));
   dini_Create(fname);

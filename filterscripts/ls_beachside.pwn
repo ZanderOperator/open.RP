@@ -202,7 +202,7 @@ forward Float:GetDoorsZCoordForFloor(floorid);
 public OnPlayerCommandText(playerid, cmdtext[])
 {
 	// Check command text
-	if (strcmp("/lsb", cmdtext, true, 4) == 0)
+	if(strcmp("/lsb", cmdtext, true, 4) == 0)
 	{
 	    // Set the interior
 		SetPlayerInterior(playerid, 0);
@@ -250,7 +250,7 @@ public OnFilterScriptInit()
     for (new i = 0; i < MAX_PLAYERS; i++)
     {
         // Check if the player is connected and not a NPC
-        if (IsPlayerConnected(i) && !IsPlayerNPC(i))
+        if(IsPlayerConnected(i) && !IsPlayerNPC(i))
         {
             // Remove the lamp post at the underground car park entrance
             RemoveBuildingForPlayer(i, 1226, 265.481, -1581.1, 32.9311, 5.0);
@@ -305,7 +305,7 @@ public OnObjectMoved(objectid)
 		    GetObjectPos(Obj_FloorDoors[i][0], x, y, z);
 
             // Some floor doors have shut, move the elevator to next floor in queue:
-            if (y < Y_DOOR_L_OPENED - 0.5)
+            if(y < Y_DOOR_L_OPENED - 0.5)
 		    {
 				Elevator_MoveToFloor(ElevatorQueue[0]);
 				RemoveFirstQueueFloor();
@@ -355,7 +355,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	// Check if the player is not in a vehicle and pressed the conversation yes key (Y by default)
-	if (!IsPlayerInAnyVehicle(playerid) && (newkeys & KEY_YES))
+	if(!IsPlayerInAnyVehicle(playerid) && (newkeys & KEY_YES))
 	{
 	    // Create variables and get the players current position
 	    new Float:pos[3];
@@ -365,7 +365,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	    //printf("X = %0.2f | Y = %0.2f | Z = %0.2f", pos[0], pos[1], pos[2]);
 
         // Check if the player is using the button inside the elevator
-	    if (pos[1] > (Y_ELEVATOR_POS - 1.8) && pos[1] < (Y_ELEVATOR_POS + 1.8) && pos[0] < (X_ELEVATOR_POS + 1.8) && pos[0] > (X_ELEVATOR_POS - 1.8))
+	    if(pos[1] > (Y_ELEVATOR_POS - 1.8) && pos[1] < (Y_ELEVATOR_POS + 1.8) && pos[0] < (X_ELEVATOR_POS + 1.8) && pos[0] > (X_ELEVATOR_POS - 1.8))
 	    {
 	        // The player is using the button inside the elevator
 	        // --------------------------------------------------
@@ -391,13 +391,13 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				if(i == 0 && pos[2] < GetDoorsZCoordForFloor(0) + 2.0)
 				    i = -1;
 
-				if (i <= 12)
+				if(i <= 12)
 				{
 				    // Check if the elevator is not moving (idle or waiting)
-				    if (ElevatorState != ELEVATOR_STATE_MOVING)
+				    if(ElevatorState != ELEVATOR_STATE_MOVING)
 				    {
 				        // Check if the elevator is already on the floor it was called from
-				        if (ElevatorFloor == i + 1)
+				        if(ElevatorFloor == i + 1)
 				        {
 							// Display chat text message to the player
 	                        SendClientMessage(playerid, COLOR_MESSAGE_YELLOW, "* Lift je na vasem katu... udjite i pritisnite '{FFFFFF}~k~~CONVERSATION_YES~{CCCCCC}'");
@@ -414,7 +414,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					new strTempString[100];
 					
 					// Check if the elevator is moving
-					if (ElevatorState == ELEVATOR_STATE_MOVING)
+					if(ElevatorState == ELEVATOR_STATE_MOVING)
 					{
 					    // Format chat text message
 						format(strTempString, sizeof(strTempString), "** Lift je pozvan. Trenutno je na %s.", FloorNames[ElevatorFloor]);
@@ -422,7 +422,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					else
 					{
 					    // Check if the floor is the car park
-					    if (ElevatorFloor == 0)
+					    if(ElevatorFloor == 0)
 					    {
 					    	// Format chat text message
 							format(strTempString, sizeof(strTempString), "** Lift je pozvan. Trenutno je na %s.", FloorNames[ElevatorFloor]);

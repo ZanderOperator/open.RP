@@ -589,7 +589,7 @@ stock LoadModelSelectionMenu(f_name[])
 	new File:f, str[75];
 	format(str, sizeof(str), "%s", f_name);
 	f = fopen(str, io_read);
-	if( !f ) {
+	if(!f ) {
 		printf("-mSelection- WARNING: Failed to load list: \"%s\"", f_name);
 		return mS_INVALID_LISTID;
 	}
@@ -612,8 +612,8 @@ stock LoadModelSelectionMenu(f_name[])
 		}
 		idxx = 0;
 		if(!line[0]) continue;
-		new mID = strval( mS_strtok(line,idxx) );
-		new mPrice = strval( mS_strtok(line,idxx) );
+		new mID = strval( mS_strtok(line,idxx));
+		new mPrice = strval( mS_strtok(line,idxx));
 		if(0 <= mID < 50000)
 		{
 			gItemList[tmp_ItemAmount][mS_ITEM_MODEL] 	= mID;

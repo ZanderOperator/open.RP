@@ -98,7 +98,7 @@ public OnPickupsLoad()
 	new
 		count = cache_num_rows();	
 
-	if( !count ) 
+	if(!count ) 
 		return print("MySQL Report: No pickups exist to load.");
 
  	for(new b = 0; b < count; b++) 
@@ -169,7 +169,7 @@ static CreatePickupEnter(pid)
 	if(!PickupInfo[pid][epCanEnter])
 		return 1;
 
-    if (IsValidDynamicCP(PickupInfo[pid][epEnterCP]))
+    if(IsValidDynamicCP(PickupInfo[pid][epEnterCP]))
         DestroyDynamicCP(PickupInfo[pid][epEnterCP]);
     
 	PickupInfo[pid][epEnterCP] = CreateDynamicCP(PickupInfo[pid][epEntrancex], PickupInfo[pid][epEntrancey], PickupInfo[pid][epEntrancez]-1.0, 2.0, -1, -1, -1, 5.0);
@@ -268,7 +268,7 @@ hook function LoadServerData()
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
     new pickupid = CP_GetPickupID(checkpointid);
-    if (!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
+    if(!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
         return 1;
 
 	GameTextForPlayer(playerid, PickupInfo[pickupid][epEnterDiscription], 3100, 5);
@@ -283,7 +283,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         pickupid = CP_GetBizzID(checkpointid);
     
-    if (!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
+    if(!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
         return 1;
 
     Player_SetPickupCP(playerid, -1);
@@ -311,7 +311,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(strlen(inputtext) < 2) 
 				return SendClientMessage(playerid, COLOR_WHITE, "Enter discription koje ste unijeli nije valjano! (Premalo znakova)");
 
-			format(PickupInfo[ NewPickupID[playerid] ][ epEnterDiscription ], 128, inputtext);
+			format(PickupInfo[NewPickupID[playerid]][epEnterDiscription], 128, inputtext);
 			ShowPlayerDialog(playerid, DIALOG_DYN_PDISC, DIALOG_STYLE_INPUT, "PICKUP DESCRIPTION", "Unesi pickup description:", "Input", "Abort");
 			return 1;
 		}
@@ -325,7 +325,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 
-			format(PickupInfo[ NewPickupID[playerid] ][ epDiscription ], 128, inputtext);
+			format(PickupInfo[NewPickupID[playerid]][epDiscription], 128, inputtext);
 			CreateNewPickup(playerid,NewPickupID[playerid]);
 			return 1;
 		}
@@ -350,7 +350,7 @@ CMD:createpickup(playerid, params[])
 	    viwo,org,job,interior;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje komande!");
 	if(sscanf(params, "iiifffiiii", model,type,canenter,exitx,exity,exitz, \
-	    viwo,org,job,interior)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createpickup [model][type][canenter][exitx][exity][exitz][viwo][org][job][int]");
+	    viwo,org,job,interior)) return SendClientMessage(playerid, COLOR_RED, "[?]: /createpickup [model][type][canenter][exitx][exity][exitz][viwo][org][job][int]");
     
 	NewPickupID[playerid] = GetPickupID();
 
@@ -403,7 +403,7 @@ CMD:deletepickup(playerid, params[])
 	
 	DestroyDynamicPickup(PickupInfo[pickup][epID]);
 
-	if (IsValidDynamicCP(PickupInfo[pickup][epEnterCP]))
+	if(IsValidDynamicCP(PickupInfo[pickup][epEnterCP]))
         DestroyDynamicCP(PickupInfo[pickup][epEnterCP]);
 
 	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Pickup je uspjesno unisten!");
@@ -416,7 +416,7 @@ CMD:pickupint(playerid, params[])
 	new 
 		pickup, viwo,
 		Float:X, Float:Y, Float:Z;
-    if(sscanf(params, "ifffi", pickup, X, Y, Z, viwo)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickupint [pickup][x][y][z][viwo]");
+    if(sscanf(params, "ifffi", pickup, X, Y, Z, viwo)) return SendClientMessage(playerid, COLOR_RED, "[?]: /pickupint [pickup][x][y][z][viwo]");
 	
 	PickupInfo[pickup][epExitx] = X;
 	PickupInfo[pickup][epExity] = Y;
@@ -424,7 +424,7 @@ CMD:pickupint(playerid, params[])
 	PickupInfo[pickup][epViwo] = viwo;
 	
 	new
-		bigquery[ 512 ];
+		bigquery[512];
 	format(bigquery, sizeof(bigquery), "UPDATE server_pickups SET exitx = '%f', exity = '%f', exitz = '%f', viwo = '%d' WHERE id = '%d'",
 		PickupInfo[pickup][epExitx],
 		PickupInfo[pickup][epExity],
@@ -433,6 +433,6 @@ CMD:pickupint(playerid, params[])
 		PickupInfo[pickup][epSQLID]
 	);
 
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si promjenio interier na odabranom pickupu!");
+	SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si promjenio interier na odabranom pickupu!");
 	return 1;
 }

@@ -69,7 +69,7 @@ new pTextDraws[MAX_PLAYERS][LIMIT_OF_PLAYER_TEXT_DRAWS][_:ePlayerTextDrawPropert
 
 PlayerText:pTD_GetIdx(playerid) {
 	for(new i; i < sizeof pTextDraws[]; ++i) {
-		if( ! _G(pTextDraws_Compressed[playerid][i], epTD_Active)) {
+		if(! _G(pTextDraws_Compressed[playerid][i], epTD_Active)) {
 			return PlayerText:i;
 		}
 	}

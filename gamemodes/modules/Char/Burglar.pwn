@@ -38,7 +38,7 @@ enum E_ROBBER_GOODS_DATA
 	rbSlotsGoods[5]
 }
 new
-	RobbingInfo[ MAX_PLAYERS ][ E_ROBBER_GOODS_DATA ];
+	RobbingInfo[MAX_PLAYERS][E_ROBBER_GOODS_DATA];
 	
 enum E_GOODS_POSITION
 {
@@ -51,7 +51,7 @@ enum E_GOODS_POSITION
 	Float:gRotZ
 }
 new
-	GoodPos[ ][ E_GOODS_POSITION ] = {	
+	GoodPos[][E_GOODS_POSITION] = {	
 		{ 2226, 0.083000, 	0.005000, 0.092999, 	108.999946, 179.299942, -67.700004 },
 		{ 1781, -0.267000, 	0.036999, 0.105999, 	-79.099929, 4.000000, 	105.699981 },
 		{ 2149, 0.093000, 	0.131999, 0.221999, 	-68.600036, -10.000000, 103.300033 }
@@ -67,7 +67,7 @@ enum E_SAFE_BREAKING_DATA {
 	sbTick
 }
 static stock 
-	SafeBreaking[ MAX_PLAYERS ][ E_SAFE_BREAKING_DATA ];
+	SafeBreaking[MAX_PLAYERS][E_SAFE_BREAKING_DATA];
 
 /*
 	##     ##    ###    ########   ######  
@@ -81,11 +81,11 @@ static stock
 
 // 32 bit
 static stock
-	PickPocketPlayer[ MAX_PLAYERS ],
-	PickPocketCool[ MAX_PLAYERS ],
-	PocketDialog[ MAX_PLAYERS ][ 5 ],
-	VehicleItems[ MAX_VEHICLES ][ 5 ],
-	DumpedGoods[ MAX_DUMPED_GOODS ] = { -1, ... };
+	PickPocketPlayer[MAX_PLAYERS],
+	PickPocketCool[MAX_PLAYERS],
+	PocketDialog[MAX_PLAYERS][5],
+	VehicleItems[MAX_VEHICLES][5],
+	DumpedGoods[MAX_DUMPED_GOODS] = { -1, ... };
 	
 // TDs
 static stock
@@ -125,7 +125,7 @@ new
 static GetStolenGoodName(type)
 {
 	new
-		buffer[ 64 ];
+		buffer[64];
 		
 	switch( type ) 
 	{
@@ -140,17 +140,17 @@ static GetStolenGoodName(type)
 
 static EmptyPlayerInventory(playerid)
 {
-	RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] = 0;
-	RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] = 0;
-	RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] = 0;
-	RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] = 0;
-	RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] = 0;
+	RobbingInfo[playerid][rbSlotsGoods][0] = 0;
+	RobbingInfo[playerid][rbSlotsGoods][1] = 0;
+	RobbingInfo[playerid][rbSlotsGoods][2] = 0;
+	RobbingInfo[playerid][rbSlotsGoods][3] = 0;
+	RobbingInfo[playerid][rbSlotsGoods][4] = 0;
 }
 
 static ListStolenGoods(playerid)
 {
 	new
-		buffer[ 256 ],
+		buffer[256],
 		i = 0;
 		
 	while( i < 5 ) 
@@ -158,7 +158,7 @@ static ListStolenGoods(playerid)
 		format( buffer, sizeof(buffer), "%s#%d %s\n",
 			buffer,
 			i + 1,
-			GetStolenGoodName(RobbingInfo[ playerid ][ rbSlotsGoods ][ i ])
+			GetStolenGoodName(RobbingInfo[playerid][rbSlotsGoods][i])
 		);
 		i++;
 	}
@@ -171,21 +171,21 @@ static CalculateGoodsMoney(playerid)
 		count = 0;
 	for(new i = 0; i < 5; i++) 
 	{
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_WATCH )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_WATCH )
 			count += GOOD_MONEY_WATCH;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_MOBILE )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_MOBILE )
 			count += GOOD_MONEY_MOBILE;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_CRYPTO )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_CRYPTO )
 			count += GOOD_MONEY_CRYPTO;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_MASK )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_MASK )
 			count += GOOD_MONEY_MASK;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_RADIO )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_RADIO )
 			count += GOOD_MONEY_RADIO;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_TV )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_TV )
 			count += GOOD_MONEY_TV;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_MICRO )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_MICRO )
 			count += GOOD_MONEY_MICRO;
-		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_PHONE )
+		if(RobbingInfo[playerid][rbSlotsGoods][i] == DIALOG_TYPE_PHONE )
 			count += GOOD_MONEY_PHONE;
 	}
 	return count;
@@ -197,8 +197,8 @@ static SetStolenGoodInInventory(playerid, type)
 		i = 0;
 	while( i < 5 ) 
 	{
-		if( !RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] ) {
-			RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] = type;
+		if(!RobbingInfo[playerid][rbSlotsGoods][i] ) {
+			RobbingInfo[playerid][rbSlotsGoods][i] = type;
 			Bit8_Set( gr_ActiveGoodSlot, playerid, i );
 			break;
 		}
@@ -218,7 +218,7 @@ static SetStolenGoodInInventory(playerid, type)
 
 static GetPocketDialogLists(playerid, listitem)
 {
-	if( playerid == INVALID_PLAYER_ID ) 
+	if(playerid == INVALID_PLAYER_ID ) 
 		return -1;
 	
 	new
@@ -227,9 +227,9 @@ static GetPocketDialogLists(playerid, listitem)
 	
 	while( i < 5 ) 
 	{
-		if( i == listitem ) 
+		if(i == listitem ) 
 		{
-			type = PocketDialog[ playerid ][ i ];
+			type = PocketDialog[playerid][i];
 			break;
 		}
 		i++;
@@ -239,57 +239,57 @@ static GetPocketDialogLists(playerid, listitem)
 
 static InitPlayerPocket(playerid, targetid)
 {
-	if( targetid == INVALID_PLAYER_ID ) 
+	if(targetid == INVALID_PLAYER_ID ) 
 		return 0;
 	
 	new
-		buffer[ 256 ],
+		buffer[256],
 		dialogPos = 0;
 		
-	if( AC_GetPlayerMoney(targetid) >  50 ) {
-		format( buffer, 256, "Novac (%d$)\n", AC_GetPlayerMoney(targetid) );
-		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_MONEY;
+	if(AC_GetPlayerMoney(targetid) >  50 ) {
+		format( buffer, 256, "Novac (%d$)\n", AC_GetPlayerMoney(targetid));
+		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_MONEY;
 		dialogPos++;
 	}
-	if( PlayerInfo[ targetid ][ pClock ] ) {
+	if(PlayerInfo[targetid][pClock] ) {
 		format( buffer, 256, "%sSat\n", buffer );
-		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_WATCH;
+		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_WATCH;
 		dialogPos++;
 	}
-	if( PlayerInfo[ targetid ][ pMobileNumber ] ) {
+	if(PlayerInfo[targetid][pMobileNumber] ) {
 		format( buffer, 256, "%sMobitel\n", buffer );
-		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_MOBILE;
+		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_MOBILE;
 		dialogPos++;
 	}
-	if( PlayerInfo[ targetid ][ pCryptoNumber ] ) {
+	if(PlayerInfo[targetid][pCryptoNumber] ) {
 		format( buffer, 256, "%sCrypto\n", buffer );
-		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_CRYPTO;
+		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_CRYPTO;
 		dialogPos++;
 	}
-	if( PlayerInfo[ targetid ][ pMaskID ] > 0 ) {
+	if(PlayerInfo[targetid][pMaskID] > 0 ) {
 		format( buffer, 256, "%sMaska\n", buffer );
-		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_MASK;
+		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_MASK;
 		dialogPos++;
 	}
-	if( !strlen(buffer) ) return SendClientMessage( playerid, COLOR_RED, "Odabrani gradjanin nema nista u dzepovima!");
+	if(!strlen(buffer)) return SendClientMessage( playerid, COLOR_RED, "Odabrani gradjanin nema nista u dzepovima!");
 	
 	new
-		caption[ MAX_PLAYER_NAME + 9 ];
+		caption[MAX_PLAYER_NAME + 9];
 	
 	format( caption, sizeof(caption), "DZEP OD %s", 
 		GetName(targetid, false)
 	);
 	ShowPlayerDialog(playerid, DIALOG_ROB_POCKET, DIALOG_STYLE_LIST, caption, buffer, "Choose", "Abort");
-	PickPocketPlayer[ playerid ] = targetid;
+	PickPocketPlayer[playerid] = targetid;
 	return 1;
 }
 
 static PickPocketTargetPlayer(playerid, type)
 {
-	if( PickPocketPlayer[ playerid ] == INVALID_PLAYER_ID ) return 1;
+	if(PickPocketPlayer[playerid] == INVALID_PLAYER_ID ) return 1;
 	
 	new
-		targetid = PickPocketPlayer[ playerid ];	
+		targetid = PickPocketPlayer[playerid];	
 	switch( type )
 	 {
 		case DIALOG_TYPE_MONEY:	
@@ -297,14 +297,14 @@ static PickPocketTargetPlayer(playerid, type)
 			new
 				succeed = 1 + random(5);
 				
-			if( succeed == 3 ) 
+			if(succeed == 3 ) 
 			{
 				new
 					money = 51;
 				PlayerToPlayerMoney( targetid, playerid, money);
 				
 				new
-					tmpString[ 108 ];
+					tmpString[108];
 				format(tmpString, 108, "* %s puts his hands in %s's pocket and grabs his money.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -313,10 +313,10 @@ static PickPocketTargetPlayer(playerid, type)
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz djepa!", money);
 				UpgradePlayerSkill(playerid);
 			}
-			if( succeed == 1 || succeed == 2 || succeed == 4 || succeed == 5 ) 
+			if(succeed == 1 || succeed == 2 || succeed == 4 || succeed == 5 ) 
 			{
 				new
-					tmpString[ 114 ];
+					tmpString[114];
 				format(tmpString, 114, "* %s zavlaci svoju ruku u %s djep i ne uspjeva uzeti novce iz istog.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -326,16 +326,16 @@ static PickPocketTargetPlayer(playerid, type)
 		}
 		case DIALOG_TYPE_WATCH: 
 		{
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
+			if(RobbingInfo[playerid][rbSlotsGoods][0] && RobbingInfo[playerid][rbSlotsGoods][1] && RobbingInfo[playerid][rbSlotsGoods][2] && RobbingInfo[playerid][rbSlotsGoods][3] && RobbingInfo[playerid][rbSlotsGoods][4] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
-			if( succeed == 2 || succeed == 5 ) {
+			if(succeed == 2 || succeed == 5 ) {
 				
-				PlayerInfo[ targetid ][ pClock ] = 0;
+				PlayerInfo[targetid][pClock] = 0;
 				
 				new
-					tmpString[ 108 ];
+					tmpString[108];
 				format(tmpString, 108, "* %s zavlaci svoju ruku u %s djep i stavlja sat u svoj djep.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -345,9 +345,9 @@ static PickPocketTargetPlayer(playerid, type)
 				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_WATCH);
 			}
-			if( succeed == 1 || succeed == 3 || succeed == 4 ) {
+			if(succeed == 1 || succeed == 3 || succeed == 4 ) {
 				new
-					tmpString[ 114 ];
+					tmpString[114];
 				format(tmpString, 114, "* %s zavlaci svoju ruku u %s djep i ne uspjeva uzeti sat iz istog.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -357,16 +357,16 @@ static PickPocketTargetPlayer(playerid, type)
 		}		
 		case DIALOG_TYPE_MOBILE: 
 		{
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) 
+			if(RobbingInfo[playerid][rbSlotsGoods][0] && RobbingInfo[playerid][rbSlotsGoods][1] && RobbingInfo[playerid][rbSlotsGoods][2] && RobbingInfo[playerid][rbSlotsGoods][3] && RobbingInfo[playerid][rbSlotsGoods][4] ) 
 				return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
-			if( succeed == 1 || succeed == 2 ) {
+			if(succeed == 1 || succeed == 2 ) {
 				
-				PlayerInfo[ targetid ][ pMobileNumber ]		= 0;
-				PlayerInfo[ targetid ][ pMobileModel ]		= 0;
-				PlayerInfo[ targetid ][ pMobileCost ]		= 0;
+				PlayerInfo[targetid][pMobileNumber]		= 0;
+				PlayerInfo[targetid][pMobileModel]		= 0;
+				PlayerInfo[targetid][pMobileCost]		= 0;
 				
 				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 					PlayerInfo[targetid][pSQLID]
@@ -375,7 +375,7 @@ static PickPocketTargetPlayer(playerid, type)
 				Player_SetTappedBy(playerid, INVALID_PLAYER_ID);
 				
 				new
-					tmpString[ 110 ];
+					tmpString[110];
 				format(tmpString, 110, "* %s zavlaci svoju ruku u %s djep i stavlja mobitel u svoj djep.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -385,9 +385,9 @@ static PickPocketTargetPlayer(playerid, type)
 				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_MOBILE);
 			}
-			if( succeed == 3 || succeed == 4 || succeed == 5 ) {
+			if(succeed == 3 || succeed == 4 || succeed == 5 ) {
 				new
-					tmpString[ 114 ];
+					tmpString[114];
 				format(tmpString, 114, "* %s zavlaci svoju ruku u %s djep i ne uspjeva uzeti mobitel iz istog.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -397,20 +397,20 @@ static PickPocketTargetPlayer(playerid, type)
 		}		
 		case DIALOG_TYPE_CRYPTO: 
 		{
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
+			if(RobbingInfo[playerid][rbSlotsGoods][0] && RobbingInfo[playerid][rbSlotsGoods][1] && RobbingInfo[playerid][rbSlotsGoods][2] && RobbingInfo[playerid][rbSlotsGoods][3] && RobbingInfo[playerid][rbSlotsGoods][4] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
-			if( succeed == 4 || succeed == 5 ) 
+			if(succeed == 4 || succeed == 5 ) 
 			{
-				PlayerInfo[ targetid ][ pCryptoNumber ]		= 0;
+				PlayerInfo[targetid][pCryptoNumber]		= 0;
 				
 				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 					PlayerInfo[targetid][pSQLID]
 				);
 
 				new
-					tmpString[ 110 ];
+					tmpString[110];
 				format(tmpString, 110, "* %s zavlaci svoju ruku u %s djep i stavlja crypto u svoj djep.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -420,9 +420,9 @@ static PickPocketTargetPlayer(playerid, type)
 				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_CRYPTO);
 			}
-			if( succeed == 1 || succeed == 2 || succeed == 3 ) {
+			if(succeed == 1 || succeed == 2 || succeed == 3 ) {
 				new
-					tmpString[ 114 ];
+					tmpString[114];
 				format(tmpString, 114, "* %s zavlaci svoju ruku u %s djep i ne uspjeva uzeti crypto iz istog.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -432,16 +432,16 @@ static PickPocketTargetPlayer(playerid, type)
 		}
 		case DIALOG_TYPE_MASK: 
 		{
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
+			if(RobbingInfo[playerid][rbSlotsGoods][0] && RobbingInfo[playerid][rbSlotsGoods][1] && RobbingInfo[playerid][rbSlotsGoods][2] && RobbingInfo[playerid][rbSlotsGoods][3] && RobbingInfo[playerid][rbSlotsGoods][4] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
-			if( succeed == 3 || succeed == 2 ) {
+			if(succeed == 3 || succeed == 2 ) {
 				
-				PlayerInfo[ targetid ][ pMaskID ]		= -1;		
+				PlayerInfo[targetid][pMaskID]		= -1;		
 				
 				new
-					tmpString[ 110 ];
+					tmpString[110];
 				format(tmpString, 110, "* %s zavlaci svoju ruku u %s djep i stavlja crypto u svoj djep.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -451,9 +451,9 @@ static PickPocketTargetPlayer(playerid, type)
 				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_MASK);
 			}
-			if( succeed == 1 || succeed == 4 || succeed == 5 ) {
+			if(succeed == 1 || succeed == 4 || succeed == 5 ) {
 				new
-					tmpString[ 114 ];
+					tmpString[114];
 				format(tmpString, 114, "* %s zavlaci svoju ruku u %s djep i ne uspjeva uzeti crypto iz istog.", 
 					GetName(playerid), 
 					GetName(targetid) 
@@ -462,7 +462,7 @@ static PickPocketTargetPlayer(playerid, type)
 			}
 		}
 	}
-	PickPocketCool[ playerid ] = gettimestamp() + 59;
+	PickPocketCool[playerid] = gettimestamp() + 59;
 	return 1;
 }
 /*
@@ -478,7 +478,7 @@ stock static GetDumpedGoodSlot()
 	new
 		index = -1;
 	for(new i = 0; i < sizeof(DumpedGoods); i++ ) {
-		if( DumpedGoods[ i ] == -1 ) {
+		if(DumpedGoods[i] == -1 ) {
 			index = i;
 			break;
 		}
@@ -491,21 +491,21 @@ stock static DumpStolenGood(playerid, index)
 	new Float:X, Float:Y, Float:Z,
 		model,
 		indexes = GetDumpedGoodSlot();
-	if( indexes == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise bacati stvari na pod!");
+	if(indexes == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise bacati stvari na pod!");
 	GetPlayerPos(playerid, X, Y, Z);
 	
-	switch(RobbingInfo[ playerid ][ rbSlotsGoods ][ index ]) {
+	switch(RobbingInfo[playerid][rbSlotsGoods][index]) {
 		case DIALOG_TYPE_TV: 		model = 1781;
 		case DIALOG_TYPE_RADIO:    	model = 2226;
 		case DIALOG_TYPE_MICRO: 	model = 2149;
 	}
-	if( IsObjectAttached(playerid, model) ) {
+	if(IsObjectAttached(playerid, model)) {
 		RemovePlayerAttachedObject(playerid, 9);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 	}
-	RobbingInfo[ playerid ][ rbSlotsGoods ][ Bit8_Get( gr_ActiveGoodSlot, playerid) ] = 0;
+	RobbingInfo[playerid][rbSlotsGoods][Bit8_Get( gr_ActiveGoodSlot, playerid)] = 0;
 	ApplyAnimationEx(playerid,"CARRY", "putdwn", 4.1, 0, 0, 0, 0, 0, 1, 0);
-	DumpedGoods[ indexes ] = CreateDynamicObject(model, X, Y, Z-0.85, 0.0, 0.0, 0.0, -1, -1, -1, 50.0, 50.0);
+	DumpedGoods[indexes] = CreateDynamicObject(model, X, Y, Z-0.85, 0.0, 0.0, 0.0, -1, -1, -1, 50.0, 50.0);
 	Bit8_Set( gr_ActiveGoodSlot, playerid, 9);
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste bacili stvar na pod!");
 	return 1;
@@ -517,21 +517,21 @@ stock static PickUpStolenGood(playerid)
 		type,
 		Float:X, Float:Y, Float:Z;
 	for(new indexes = 0; indexes < sizeof(DumpedGoods); indexes++ ) {
-		if( DumpedGoods[ indexes ] != -1 ) {
+		if(DumpedGoods[indexes] != -1 ) {
 		
-			Streamer_GetFloatData(STREAMER_TYPE_OBJECT, DumpedGoods[ indexes ], E_STREAMER_X, X);
-			Streamer_GetFloatData(STREAMER_TYPE_OBJECT, DumpedGoods[ indexes ], E_STREAMER_Y, Y);
-			Streamer_GetFloatData(STREAMER_TYPE_OBJECT, DumpedGoods[ indexes ], E_STREAMER_Z, Z);
+			Streamer_GetFloatData(STREAMER_TYPE_OBJECT, DumpedGoods[indexes], E_STREAMER_X, X);
+			Streamer_GetFloatData(STREAMER_TYPE_OBJECT, DumpedGoods[indexes], E_STREAMER_Y, Y);
+			Streamer_GetFloatData(STREAMER_TYPE_OBJECT, DumpedGoods[indexes], E_STREAMER_Z, Z);
 			
-			if( IsPlayerInRangeOfPoint(playerid, 1.5, X, Y, Z ) ) {
+			if(IsPlayerInRangeOfPoint(playerid, 1.5, X, Y, Z )) {
 				objectid = indexes;
 				break;
 			}
 		}
 	}
-	if( objectid == -1 ) return 0;
+	if(objectid == -1 ) return 0;
 	
-	switch(Streamer_GetIntData(STREAMER_TYPE_OBJECT, DumpedGoods[ objectid ], E_STREAMER_MODEL_ID)) {
+	switch(Streamer_GetIntData(STREAMER_TYPE_OBJECT, DumpedGoods[objectid], E_STREAMER_MODEL_ID)) {
 		case 1781: type = DIALOG_TYPE_TV;
 		case 2226: type = DIALOG_TYPE_RADIO;
 		case 2149: type = DIALOG_TYPE_MICRO;
@@ -540,35 +540,35 @@ stock static PickUpStolenGood(playerid)
 		index = type - 6;
 	switch(type) {
 		case DIALOG_TYPE_RADIO: {
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli radio! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_RADIO);
 		}
 		case DIALOG_TYPE_TV: {
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli televizor! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_TV);
 		}
 		case DIALOG_TYPE_MICRO: {
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli mikrovalnu! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_MICRO);
 		}
 	}
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 	
-	DestroyDynamicObject(DumpedGoods[ objectid ]);
-	DumpedGoods[ objectid ] = -1;
+	DestroyDynamicObject(DumpedGoods[objectid]);
+	DumpedGoods[objectid] = -1;
 	return 1;
 }
 
 stock static PickUpVehicleStolenGood(playerid, vehicleid)
 {
-	if( vehicleid == INVALID_VEHICLE_ID ) return 0;
+	if(vehicleid == INVALID_VEHICLE_ID ) return 0;
 	new
 		slot;
 	for(new i=0; i < 4; i++) {
-		if( VehicleItems[ vehicleid ][ i ] ) {
+		if(VehicleItems[vehicleid][i] ) {
 			slot = i;
 			break;
 		}
@@ -576,26 +576,26 @@ stock static PickUpVehicleStolenGood(playerid, vehicleid)
 	
 	ApplyAnimationEx(playerid,"GANGS","DEALER_DEAL", 4.0,0,0,0,0,0,1,0);
 	new
-		index = VehicleItems[ vehicleid ][ slot ] - 6;
-	switch(VehicleItems[ vehicleid ][ slot ]) {
+		index = VehicleItems[vehicleid][slot] - 6;
+	switch(VehicleItems[vehicleid][slot]) {
 		case DIALOG_TYPE_RADIO: {
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli radio! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_RADIO);
 		}
 		case DIALOG_TYPE_TV: {
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli televizor! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_TV);
 		}
 		case DIALOG_TYPE_MICRO: {
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli mikrovalnu! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_MICRO);
 		}
 	}
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-	VehicleItems[ vehicleid ][ slot ] = 0;
+	VehicleItems[vehicleid][slot] = 0;
 	return 1;
 }
 
@@ -609,41 +609,41 @@ stock static PickUpVehicleStolenGood(playerid, vehicleid)
 */
 stock static DestroySafeLockingTDs(playerid)
 {
-	if( SafeBcg1[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeBcg1[playerid]);
-		SafeBcg1[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeBcg2[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeBcg2[playerid]);
-		SafeBcg2[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeText[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeText[playerid]);
-		SafeText[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeLock1[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeLock1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeLock1[playerid]);
-		SafeLock1[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeLock1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeLock2[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeLock2[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeLock2[playerid]);
-		SafeLock2[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeLock2[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeLock3[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {	
+	if(SafeLock3[playerid] != PlayerText:INVALID_TEXT_DRAW ) {	
 		PlayerTextDrawDestroy(playerid, SafeLock3[playerid]);
-		SafeLock3[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeLock3[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeLeft[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeLeft[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeLeft[playerid]);
-		SafeLeft[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeLeft[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeRight[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeRight[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeRight[playerid]);
-		SafeRight[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeRight[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( SafeUp[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(SafeUp[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
 		PlayerTextDrawDestroy(playerid, SafeUp[playerid]);
-		SafeUp[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+		SafeUp[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
@@ -758,38 +758,38 @@ stock static StartPlayerSafeBreaking(playerid)
 	Bit1_Set( gr_SafeBreaking, playerid, true );
 	TogglePlayerControllable(playerid, false);
 	
-	SafeBreaking[ playerid ][ sbLeft ] 	= 0;
-	SafeBreaking[ playerid ][ sbRight ] = 0;
-	SafeBreaking[ playerid ][ sbJump ]    = 0;
+	SafeBreaking[playerid][sbLeft] 	= 0;
+	SafeBreaking[playerid][sbRight] = 0;
+	SafeBreaking[playerid][sbJump]    = 0;
 	
-	SafeBreaking[ playerid ][ sbLeftTop ]	= minrand(5,95);
-	SafeBreaking[ playerid ][ sbRightTop ]	= minrand(5,95);
-	SafeBreaking[ playerid ][ sbJumpTop ]	= minrand(5,95);
+	SafeBreaking[playerid][sbLeftTop]	= minrand(5,95);
+	SafeBreaking[playerid][sbRightTop]	= minrand(5,95);
+	SafeBreaking[playerid][sbJumpTop]	= minrand(5,95);
 	
 	ShowSafeLockingTDs(playerid);
 	new
-		tmpString[ 16 ];
+		tmpString[16];
 
-	format(tmpString, 16, "#1: %02d", SafeBreaking[ playerid ][ sbLeft ]);
+	format(tmpString, 16, "#1: %02d", SafeBreaking[playerid][sbLeft]);
 	PlayerTextDrawSetString(playerid, SafeLock1[playerid], tmpString);
 	
-	format(tmpString, 16, "#2: %02d", SafeBreaking[ playerid ][ sbRight ]);
+	format(tmpString, 16, "#2: %02d", SafeBreaking[playerid][sbRight]);
 	PlayerTextDrawSetString(playerid, SafeLock2[playerid], tmpString);
 	
-	format(tmpString, 16, "#3: %02d", SafeBreaking[ playerid ][ sbJump ]);
+	format(tmpString, 16, "#3: %02d", SafeBreaking[playerid][sbJump]);
 	PlayerTextDrawSetString(playerid, SafeLock3[playerid], tmpString);
 	return 1;
 }
 
 stock StopSafeBreaking(playerid)
 {
-	SafeBreaking[ playerid ][ sbLeft ] 		= 0;
-	SafeBreaking[ playerid ][ sbRight ] 	= 0;
-	SafeBreaking[ playerid ][ sbJump ]    	= 0;
+	SafeBreaking[playerid][sbLeft] 		= 0;
+	SafeBreaking[playerid][sbRight] 	= 0;
+	SafeBreaking[playerid][sbJump]    	= 0;
 	
-	SafeBreaking[ playerid ][ sbLeftTop ]	= 0;
-	SafeBreaking[ playerid ][ sbRightTop ]	= 0;
-	SafeBreaking[ playerid ][ sbJumpTop ]	= 0;
+	SafeBreaking[playerid][sbLeftTop]	= 0;
+	SafeBreaking[playerid][sbRightTop]	= 0;
+	SafeBreaking[playerid][sbJumpTop]	= 0;
 	
 	ClearAnimations(playerid);	
 	Bit1_Set( gr_SafeBreaking, playerid, false );
@@ -809,13 +809,13 @@ stock StopSafeBreaking(playerid)
 */
 hook OnPlayerConnect(playerid)
 {
-	PickPocketPlayer[ playerid ]	= INVALID_PLAYER_ID;
-	PickPocketCool[ playerid ] 		= 0;
-	PocketDialog[ playerid ][ 0 ] 	= 0;
-	PocketDialog[ playerid ][ 1 ] 	= 0;
-	PocketDialog[ playerid ][ 2 ] 	= 0;
-	PocketDialog[ playerid ][ 3 ] 	= 0;
-	PocketDialog[ playerid ][ 4 ] 	= 0;
+	PickPocketPlayer[playerid]	= INVALID_PLAYER_ID;
+	PickPocketCool[playerid] 		= 0;
+	PocketDialog[playerid][0] 	= 0;
+	PocketDialog[playerid][1] 	= 0;
+	PocketDialog[playerid][2] 	= 0;
+	PocketDialog[playerid][3] 	= 0;
+	PocketDialog[playerid][4] 	= 0;
 	
 	StopSafeBreaking(playerid);
 	return 1;
@@ -826,25 +826,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	switch( dialogid ) 
 	{
 		case DIALOG_ROB_POCKET: {
-			if( !response ) return 1;
-			if( PickPocketCool[ playerid ] > gettimestamp() ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete jos krasti (cooldown je 1 minutu)!");
-			PickPocketTargetPlayer( playerid, GetPocketDialogLists(playerid, listitem) );
+			if(!response ) return 1;
+			if(PickPocketCool[playerid] > gettimestamp()) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete jos krasti (cooldown je 1 minutu)!");
+			PickPocketTargetPlayer( playerid, GetPocketDialogLists(playerid, listitem));
 			return 1;
 		}
 		case DIALOG_ROB_SELL: {
-			if( !response ) return 1;
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) 
+			if(!response ) return 1;
+			if(RobbingInfo[playerid][rbSlotsGoods][0] == 0 && RobbingInfo[playerid][rbSlotsGoods][1] == 0 && RobbingInfo[playerid][rbSlotsGoods][2] == 0 && RobbingInfo[playerid][rbSlotsGoods][3] == 0 && RobbingInfo[playerid][rbSlotsGoods][4] == 0 ) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
 			IllegalBudgetToPlayerMoney (playerid, CalculateGoodsMoney(playerid));
-			if( Bit8_Get( gr_ActiveGoodSlot, playerid ) == 9 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u rukama!");
+			if(Bit8_Get( gr_ActiveGoodSlot, playerid ) == 9 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u rukama!");
 			new
 				model;
-			switch(RobbingInfo[ playerid ][ rbSlotsGoods ][ Bit8_Get( gr_ActiveGoodSlot, playerid ) ]) {
+			switch(RobbingInfo[playerid][rbSlotsGoods][Bit8_Get( gr_ActiveGoodSlot, playerid )]) {
 				case DIALOG_TYPE_RADIO: model = 1781;
 				case DIALOG_TYPE_TV:    model = 2226;
 				case DIALOG_TYPE_MICRO: model = 2149;
 			}
-			if( IsObjectAttached(playerid, model) ) {
+			if(IsObjectAttached(playerid, model)) {
 				RemovePlayerAttachedObject(playerid, 9);
 				SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 			}
@@ -867,8 +867,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:stolengoods(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_BURGLAR ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
-	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
+	if(PlayerJob[playerid][pJob] != JOB_BURGLAR ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
+	if(RobbingInfo[playerid][rbSlotsGoods][0] == 0 && RobbingInfo[playerid][rbSlotsGoods][1] == 0 && RobbingInfo[playerid][rbSlotsGoods][2] == 0 && RobbingInfo[playerid][rbSlotsGoods][3] == 0 && RobbingInfo[playerid][rbSlotsGoods][4] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
 	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "POPIS UKRADENE ROBE", ListStolenGoods(playerid), "OK", "");
 	return 1;
 }
@@ -877,23 +877,23 @@ CMD:pocketsteal(playerid, params[])
 {
 	new
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) 			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pocketsteal [dio imena/playerid]");
-	if( giveplayerid == INVALID_PLAYER_ID ) 			return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos playerida!");
-	if( giveplayerid == playerid ) 						return SendClientMessage( playerid, COLOR_RED, "Ne mozete pljackati samog sebe!");
-	if( !ProxDetectorS(2.0, playerid, giveplayerid) ) 	return SendClientMessage( playerid, COLOR_RED, "Niste blizu igraca!");
+	if(sscanf( params, "u", giveplayerid )) 			return SendClientMessage(playerid, COLOR_RED, "[?]: /pocketsteal [dio imena/playerid]");
+	if(giveplayerid == INVALID_PLAYER_ID ) 			return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos playerida!");
+	if(giveplayerid == playerid ) 						return SendClientMessage( playerid, COLOR_RED, "Ne mozete pljackati samog sebe!");
+	if(!ProxDetectorS(2.0, playerid, giveplayerid)) 	return SendClientMessage( playerid, COLOR_RED, "Niste blizu igraca!");
 	InitPlayerPocket(playerid, giveplayerid);
 	return 1;
 }
 
 CMD:sellgoods(playerid, params[])
 {
-	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) 
+	if(RobbingInfo[playerid][rbSlotsGoods][0] == 0 && RobbingInfo[playerid][rbSlotsGoods][1] == 0 && RobbingInfo[playerid][rbSlotsGoods][2] == 0 && RobbingInfo[playerid][rbSlotsGoods][3] == 0 && RobbingInfo[playerid][rbSlotsGoods][4] == 0 ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
-	if( !IsPlayerInRangeOfPoint(playerid, 5.0, 2562.4329, -1474.9860, 23.1000) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u East Los Santosu na mjestu gdje se prodaju ukradene stvari!");
+	if(!IsPlayerInRangeOfPoint(playerid, 5.0, 2562.4329, -1474.9860, 23.1000)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u East Los Santosu na mjestu gdje se prodaju ukradene stvari!");
 	
 	new
-		tmpString[ 55 ];
-	format(tmpString, sizeof(tmpString), ""COL_WHITE"Zelite li prodati robu za "COL_LIGHTBLUE"%d$"COL_WHITE"?", CalculateGoodsMoney(playerid) );
+		tmpString[55];
+	format(tmpString, sizeof(tmpString), ""COL_WHITE"Zelite li prodati robu za "COL_LIGHTBLUE"%d$"COL_WHITE"?", CalculateGoodsMoney(playerid));
 	ShowPlayerDialog(playerid, DIALOG_ROB_SELL, DIALOG_STYLE_MSGBOX, "PRODAJA UKRADENE ROBE", tmpString, "Sell", "Abort");
 	return 1;
 }
@@ -901,20 +901,20 @@ CMD:sellgoods(playerid, params[])
 // SKILL 2 - HOUSE
 CMD:crack_alarm(playerid, params[])
 {
-	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 2) 
+	if(( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 2) 
 		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Player_InfrontHouse(playerid);
-	if( !IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid) ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar house checkpointa!");
-	if( house == INVALID_HOUSE_ID || house == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
-	if( !HouseInfo[ house ][ hAlarm ] ) return SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kuca nema alarm!");
+	if(!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid)) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar house checkpointa!");
+	if(house == INVALID_HOUSE_ID || house == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
+	if(!HouseInfo[house][hAlarm] ) return SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kuca nema alarm!");
 
 	DestroyHouseInfoTD(playerid);
 	new
 		time,
 		words;
 		
-	switch( HouseInfo[ house ][ hAlarm ] ) {
+	switch( HouseInfo[house][hAlarm] ) {
 		case 0, 1: 	{ time = 300; words = 20; } // 5 minute
 		case 2: 	{ time = 240; words = 16; } // 4 minute
 		case 3: 	{ time = 180; words = 14; }	// 3 minute
@@ -927,16 +927,16 @@ CMD:crack_alarm(playerid, params[])
 
 CMD:stealitems(playerid, params[])
 {
-	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 2 ) 
+	if(( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 2 ) 
 		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Player_InHouse(playerid);
-	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
-	if( house == PlayerKeys[playerid][pHouseKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes svoju kucu krasti!");
+	if(house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
+	if(house == PlayerKeys[playerid][pHouseKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes svoju kucu krasti!");
 	new	
 		param;
-	if( sscanf( params, "i", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /stealitems [odabir]");
+	if(sscanf( params, "i", param )) {
+		SendClientMessage(playerid, COLOR_RED, "[?]: /stealitems [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: 1 - Radio, 2 - TV, 3 - Mikrovalna");
 		return 1;
 	}
@@ -944,9 +944,9 @@ CMD:stealitems(playerid, params[])
 		index = param - 1;
 	switch(param) {
 		case 1: {
-			if( !HouseInfo[ house ][ hRadio ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema radio!");
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
-			HouseInfo[ house ][ hRadio ] = 0;
+			if(!HouseInfo[house][hRadio] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema radio!");
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
+			HouseInfo[house][hRadio] = 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali radio! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_RADIO);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
@@ -954,9 +954,9 @@ CMD:stealitems(playerid, params[])
 			UpgradePlayerSkill(playerid);
 		}
 		case 2: {
-			if( !HouseInfo[ house ][ hTV ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema televizor!");
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
-			HouseInfo[ house ][ hTV ] = 0;
+			if(!HouseInfo[house][hTV] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema televizor!");
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
+			HouseInfo[house][hTV] = 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali televizor! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_TV);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
@@ -964,9 +964,9 @@ CMD:stealitems(playerid, params[])
 			UpgradePlayerSkill(playerid);
 		}
 		case 3: {
-			if( !HouseInfo[ house ][ hMicrowave ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema mikrovalnu!");
-			SetPlayerAttachedObject(playerid, 9, GoodPos[ index ][ gModel ], 5, GoodPos[ index ][ gPosX ], GoodPos[ index ][ gPosY ], GoodPos[ index ][ gPosZ ], GoodPos[ index ][ gRotX ], GoodPos[ index ][ gRotY ], GoodPos[ index ][ gRotZ ]);
-			HouseInfo[ house ][ hMicrowave ] = 0;
+			if(!HouseInfo[house][hMicrowave] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema mikrovalnu!");
+			SetPlayerAttachedObject(playerid, 9, GoodPos[index][gModel], 5, GoodPos[index][gPosX], GoodPos[index][gPosY], GoodPos[index][gPosZ], GoodPos[index][gRotX], GoodPos[index][gRotY], GoodPos[index][gRotZ]);
+			HouseInfo[house][hMicrowave] = 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali mikrovalnu! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_MICRO);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
@@ -979,36 +979,36 @@ CMD:stealitems(playerid, params[])
 
 CMD:dropitem(playerid, params[])
 {
-	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
+	if(RobbingInfo[playerid][rbSlotsGoods][0] == 0 && RobbingInfo[playerid][rbSlotsGoods][1] == 0 && RobbingInfo[playerid][rbSlotsGoods][2] == 0 && RobbingInfo[playerid][rbSlotsGoods][3] == 0 && RobbingInfo[playerid][rbSlotsGoods][4] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
 	new
 		slot = Bit8_Get( gr_ActiveGoodSlot, playerid);
-	if( slot == 9 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u rukama!");
-	if( !RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u tome slotu, koristite /stolengoods za vise infomracija!");
+	if(slot == 9 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u rukama!");
+	if(!RobbingInfo[playerid][rbSlotsGoods][slot] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u tome slotu, koristite /stolengoods za vise infomracija!");
 	
 	new
 		vehicleid = GetNearestVehicle(playerid);
-	if( vehicleid == INVALID_VEHICLE_ID ) {
+	if(vehicleid == INVALID_VEHICLE_ID ) {
 		 // Baci na pod
 		DumpStolenGood(playerid, slot);
 	} 
 	else { // Stavljaj u vozilo
-		if( VehicleItems[ vehicleid ][ 0 ] && VehicleItems[ vehicleid ][ 1 ] && VehicleItems[ vehicleid ][ 2 ] && VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi puni!");
+		if(VehicleItems[vehicleid][0] && VehicleItems[vehicleid][1] && VehicleItems[vehicleid][2] && VehicleItems[vehicleid][3] ) return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi puni!");
 		
-		if( !VehicleItems[ vehicleid ][ 0 ] ) {
-			VehicleItems[ vehicleid ][ 0 ] = RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ];
-			RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] = 0;
+		if(!VehicleItems[vehicleid][0] ) {
+			VehicleItems[vehicleid][0] = RobbingInfo[playerid][rbSlotsGoods][slot];
+			RobbingInfo[playerid][rbSlotsGoods][slot] = 0;
 		}
-		else if( !VehicleItems[ vehicleid ][ 1 ] ) { 
-			VehicleItems[ vehicleid ][ 1 ] = RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ];
-			RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] = 0;
+		else if(!VehicleItems[vehicleid][1] ) { 
+			VehicleItems[vehicleid][1] = RobbingInfo[playerid][rbSlotsGoods][slot];
+			RobbingInfo[playerid][rbSlotsGoods][slot] = 0;
 		}
-		else if( !VehicleItems[ vehicleid ][ 2 ] ) {
-			VehicleItems[ vehicleid ][ 2 ] = RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ];
-			RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] = 0;
+		else if(!VehicleItems[vehicleid][2] ) {
+			VehicleItems[vehicleid][2] = RobbingInfo[playerid][rbSlotsGoods][slot];
+			RobbingInfo[playerid][rbSlotsGoods][slot] = 0;
 		}		
-		else if( !VehicleItems[ vehicleid ][ 3 ] ) {
-			VehicleItems[ vehicleid ][ 3 ] = RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ];
-			RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] = 0;
+		else if(!VehicleItems[vehicleid][3] ) {
+			VehicleItems[vehicleid][3] = RobbingInfo[playerid][rbSlotsGoods][slot];
+			RobbingInfo[playerid][rbSlotsGoods][slot] = 0;
 		}
 		ApplyAnimationEx(playerid,"GANGS","DEALER_DEAL", 4.0,0,0,0,0,0,1,0);
 		RemovePlayerAttachedObject(playerid, 9);
@@ -1020,16 +1020,16 @@ CMD:dropitem(playerid, params[])
 
 CMD:takeitem(playerid, params[])
 {
-	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je pun!");
+	if(RobbingInfo[playerid][rbSlotsGoods][0] != 0 && RobbingInfo[playerid][rbSlotsGoods][1] != 0 && RobbingInfo[playerid][rbSlotsGoods][2] != 0 && RobbingInfo[playerid][rbSlotsGoods][3] != 0 && RobbingInfo[playerid][rbSlotsGoods][4] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je pun!");
 	new vehicleid = GetNearestVehicle(playerid);
-	if( vehicleid == INVALID_VEHICLE_ID ) 
+	if(vehicleid == INVALID_VEHICLE_ID ) 
 	{ // Uzmi s poda
-		if( !PickUpStolenGood(playerid) ) 
+		if(!PickUpStolenGood(playerid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu ukradene stvari!");
 	} 
 	else 
 	{ // Uzmi iz auta
-		if( !VehicleItems[ vehicleid ][ 0 ] && !VehicleItems[ vehicleid ][ 1 ] && !VehicleItems[ vehicleid ][ 2 ] && !VehicleItems[ vehicleid ][ 3 ] ) 
+		if(!VehicleItems[vehicleid][0] && !VehicleItems[vehicleid][1] && !VehicleItems[vehicleid][2] && !VehicleItems[vehicleid][3] ) 
 			return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi prazni!");
 		PickUpVehicleStolenGood(playerid, vehicleid);
 	}	
@@ -1038,24 +1038,24 @@ CMD:takeitem(playerid, params[])
 // SKILL 3 - HOUSE MONEY
 CMD:stealmoney(playerid, params[])
 {
-	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 3 ) 
+	if(( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 3 ) 
 		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
-	if( PlayerJob[playerid][pFreeWorks] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise krasti (cekajte payday)!");
+	if(PlayerJob[playerid][pFreeWorks] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise krasti (cekajte payday)!");
 	new
 		house = Player_InHouse(playerid);
-	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
-	if( !( IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY ],HouseInfo[ house ][ hExitZ ] ) && GetPlayerVirtualWorld( playerid ) == HouseInfo[ house ][ hVirtualWorld ] ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu sefa za novce!");
-	if( !HouseInfo[ house ][ hTakings ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "U sefu nema novaca!");
-	if( AntiSpamInfo[playerid][stHouseMoney] > gettimestamp() ) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_STEAL_MONEY);
+	if(house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
+	if(!( IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY],HouseInfo[house][hExitZ] ) && GetPlayerVirtualWorld( playerid ) == HouseInfo[house][hVirtualWorld] )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu sefa za novce!");
+	if(!HouseInfo[house][hTakings] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "U sefu nema novaca!");
+	if(AntiSpamInfo[playerid][stHouseMoney] > gettimestamp()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_STEAL_MONEY);
 	
 	new
 		rand,
 		stolen_money;
-	if( HouseInfo[ house ][ hMoneySafe ] )
+	if(HouseInfo[house][hMoneySafe] )
 	{
 		rand = random(50) + 1;
-		if( rand == 4 || rand == 16 || rand == 30 || rand == 42 || rand == 23 ) {
-			stolen_money = floatround(( HouseInfo[ house ][ hTakings ] ) / 3);
+		if(rand == 4 || rand == 16 || rand == 30 || rand == 42 || rand == 23 ) {
+			stolen_money = floatround(( HouseInfo[house][hTakings] ) / 3);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerJob[playerid][pFreeWorks] 	-= 7;
@@ -1076,9 +1076,9 @@ CMD:stealmoney(playerid, params[])
 	else 
 	{
 		rand = random(20) + 1;
-		if( rand == 5 || rand == 18 || rand == 12 )
+		if(rand == 5 || rand == 18 || rand == 12 )
 		{
-			stolen_money = floatround(( HouseInfo[ house ][ hTakings ] ) / 2);
+			stolen_money = floatround(( HouseInfo[house][hTakings] ) / 2);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerJob[playerid][pFreeWorks] 	-= 7;

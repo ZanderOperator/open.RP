@@ -63,7 +63,7 @@ stock Player_GetLastVehicle(playerid)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) 
+    if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) 
     {
         new vehicleid = GetPlayerVehicleID(playerid);
         Player_SetLastVehicle(playerid, vehicleid);

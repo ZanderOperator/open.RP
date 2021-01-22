@@ -21,9 +21,9 @@
 [23/03/2020] X[Sean_Sutherland] je dao Anna_Rose 100000$ putem /givemoney.
 [23/03/2020] X[Sean_Sutherland] je dao Anna_Rose 120000$ putem /givemoney.
 [23/03/2020] X[Sean_Sutherland] je dao Anna_Rose 25000$ putem /givemoney.
-[23/03/2020] [Logan_Watson] je dao Sebastian_Carrasco 6000$ putem /givemoney.
+[23/03/2020][Logan_Watson] je dao Sebastian_Carrasco 6000$ putem /givemoney.
 [23/03/2020] ´[Logan_Watson] je dao Logan_Watson 200$ putem /givemoney.
-[23/03/2020] [Logan_Watson] je dao Logan_Watson 3000$ putem /givemoney.
+[23/03/2020][Logan_Watson] je dao Logan_Watson 3000$ putem /givemoney.
 [24/03/2020] °[Logan_Watson] je dao Logan_Watson 1000$ putem /givemoney.
 [24/03/2020] °[Logan_Watson] je dao Logan_Watson 6000$ putem /givemoney.
 [24/03/2020] À[Logan_Watson] je dao Anna_McAdams 400$ putem /givemoney.
@@ -40,7 +40,7 @@
 [25/03/2020] ü[Sean_Sutherland] je dao Gwion_Goff 15000$ putem /givemoney.
 [25/03/2020] ü[Jordan_Maccagno] je dao David_Elizalde 5000$ putem /givemoney.
 [26/03/2020] Ô[Kaori_Tomoko] je dao Kaori_Tomoko 100$ putem /givemoney.
-[26/03/2020] [Kaori_Tomoko] je dao Kaori_Tomoko 180$ putem /givemoney.
+[26/03/2020][Kaori_Tomoko] je dao Kaori_Tomoko 180$ putem /givemoney.
 [26/03/2020] '¤[Lucas_Ruiz] je dao Lucas_Ruiz 2000$ putem /givemoney.
 [26/03/2020] )¤[Sean_Sutherland] je dao Daniel_Lanza 50000$ putem /givemoney.
 [26/03/2020] ¤[Sean_Sutherland] je dao Michael_Roberts 50000$ putem /givemoney.
@@ -129,7 +129,7 @@
 ¨[Sean_Sutherland] je dao Mile_Raonic 10000$ putem /givemoney.
 [28/03/2020] ¨[Lucas_Ruiz] je dao Keywon_Sutton 5000$ putem /givemoney.
 [28/03/2020] ¨[Lucas_Ruiz] je dao Pierre_Delince 1$ putem /givemoney.
-[28/03/2020] [Lucas_Ruiz] je dao Emma_Ellison 2000$ putem /givemoney.
+[28/03/2020][Lucas_Ruiz] je dao Emma_Ellison 2000$ putem /givemoney.
 [28/03/2020] ;¨[Sean_Sutherland] je dao Sean_Sutherland 999$ putem /givemoney.
 [28/03/2020] ;¨[Sean_Sutherland] je dao Sean_Sutherland 999$ putem /givemoney.
 [29/03/2020] ;¨[Sean_Sutherland] je dao Anna_McAdams 50000$ putem /givemoney.
@@ -163,8 +163,8 @@
 [30/03/2020] .Ð[Lucas_Ruiz] je dao Lucas_Ruiz 50000$ putem /givemoney.
 [30/03/2020] Ð[Jordan_Maccagno] je dao Jordan_Maccagno 25000$ putem /givemoney.
 [30/03/2020] $Ð[Sean_Sutherland] je dao Sean_Sutherland 2000$ putem /givemoney.
-[30/03/2020] [Lucas_Ruiz] je dao Lucas_Ruiz 250000$ putem /givemoney.
-[30/03/2020] [Lucas_Ruiz] je dao Lucas_Ruiz 1$ putem /givemoney.
+[30/03/2020][Lucas_Ruiz] je dao Lucas_Ruiz 250000$ putem /givemoney.
+[30/03/2020][Lucas_Ruiz] je dao Lucas_Ruiz 1$ putem /givemoney.
 [30/03/2020] 'Ð[Jeff_Fenner] je dao Louis_Bennett 1$ putem /givemoney.
 [30/03/2020] 'Ð[Jeff_Fenner] je dao Scott_Prince 1$ putem /givemoney.
 [30/03/2020] 'Ð[Jeff_Fenner] je dao Budo_Stojanovic 1$ putem /givemoney.
@@ -288,7 +288,7 @@
 [02/04/2020] Eð[Thomas_McDowell] je dao Thomas_Harper 1000$ putem /givemoney.
 [03/04/2020] D[Jordan_Maccagno] je dao Jordan_Maccagno 2500$ putem /givemoney.
 [03/04/2020] D[Jordan_Maccagno] je dao Jordan_Maccagno 5000$ putem /givemoney.
-[03/04/2020] [Fawziyya_Khawaja] je dao Fawziyya_Khawaja 1$ putem /givemoney.
+[03/04/2020][Fawziyya_Khawaja] je dao Fawziyya_Khawaja 1$ putem /givemoney.
 [03/04/2020] [Jordan_Maccagno] je dao Jordan_Maccagno 25000$ putem /givemoney.
 [03/04/2020] 	[Thomas_McDowell] je dao Gvozden_Markovic 10000$ putem /givemoney.
 [03/04/2020] [Fawziyya_Khawaja] je dao Jimmy_Harrelson 1000$ putem /givemoney.
@@ -305,7 +305,7 @@
 [04/04/2020] Ì[Victor_Merlowitz] je dao Harley_Toretto 500$ putem /givemoney.
 [04/04/2020] "Ì[Thomas_McDowell] je dao Milos_Bogdanovic 6000$ putem /givemoney.
 [04/04/2020] Ì[Fawziyya_Khawaja] je dao Diego_Contreras 10000$ putem /givemoney.
-[04/04/2020] [Ì[Julian_Holland] je dao Dakari_Mercer 40000$ putem /givemoney.
+[04/04/2020][Ì[Julian_Holland] je dao Dakari_Mercer 40000$ putem /givemoney.
 [04/04/2020] 9Ì[Thomas_McDowell] je dao Alanzo_Carpanella 2000$ putem /givemoney.
 [04/04/2020] BÌ[Fawziyya_Khawaja] je dao Fawziyya_Khawaja 5000$ putem /givemoney.
 [05/04/2020] $Ì[Julian_Holland] je dao Michael_Hoffman 20000$ putem /givemoney.
@@ -330,7 +330,7 @@
 [07/04/2020] 6[Davor_Simovic] je dao Davor_Simovic 200$ putem /givemoney.
 [07/04/2020] 6[Davor_Simovic] je dao Davor_Simovic 200$ putem /givemoney.
 [07/04/2020] [Davor_Simovic] je dao Jovica_Dudic 20000$ putem /givemoney.
-[08/04/2020] [Thomas_McDowell] je dao Luis_Bacamo 2$ putem /givemoney.
+[08/04/2020][Thomas_McDowell] je dao Luis_Bacamo 2$ putem /givemoney.
 [08/04/2020] 8[Enio_Vaske] je dao Enio_Vaske 15000$ putem /givemoney.
 [08/04/2020] 8[Enio_Vaske] je dao Darius_Palmer 5000$ putem /givemoney.
 [08/04/2020] ì[Davor_Simovic] je dao Davor_Simovic 5000$ putem /givemoney.
@@ -393,7 +393,7 @@
 [14/04/2020] ^\[Thomas_McDowell] je dao Ljubomir_Milovanovic 5000$ putem /givemoney.
 [14/04/2020] o\[Julian_Holland] je dao Jovica_Dudic 500$ putem /givemoney.
 [14/04/2020] <\[Niksa_Tadic] je dao Niksa_Tadic 1000$ putem /givemoney.
-[15/04/2020] ]\[Julian_Holland] je dao Sreten_Knezevic 4$ putem /givemoney.
+[15/04/2020]]\[Julian_Holland] je dao Sreten_Knezevic 4$ putem /givemoney.
 [15/04/2020] \[Davor_Simovic] je dao Davor_Simovic 50$ putem /givemoney.
 [15/04/2020] 0\[Davor_Simovic] je dao Davor_Simovic 500$ putem /givemoney.
 [15/04/2020] D\[Jordan_Maccagno] je dao Aaron_Schaffner 1000$ putem /givemoney.
@@ -469,7 +469,7 @@
 [17/04/2020] <h[Julian_Holland] je dao Andrew_Murphy 500$ putem /givemoney.
 [17/04/2020] <h[Julian_Holland] je dao Karen_Moore 500$ putem /givemoney.
 [17/04/2020] )\[Jordan_Maccagno] je dao William_Sherman 350$ putem /givemoney.
-[17/04/2020] [Julian_Holland] je dao Rick_Dawson 1400$ putem /givemoney.
+[17/04/2020][Julian_Holland] je dao Rick_Dawson 1400$ putem /givemoney.
 [17/04/2020] \[Davor_Simovic] je dao Davor_Simovic 8000$ putem /givemoney.
 [17/04/2020] \[Edgar_Hicks] je dao Edgar_Hicks 9800$ putem /givemoney.
 [17/04/2020] C\[Julian_Holland] je dao Carmen_Webb 1000$ putem /givemoney.
@@ -498,9 +498,9 @@
 [20/04/2020] nà[Edwin_Fitzgerald] je dao Edwin_Fitzgerald 8000$ putem /givemoney.
 [21/04/2020] à[Rene_Strauss] je dao Rene_Strauss 2000$ putem /givemoney.
 [21/04/2020] à[Rene_Strauss] je dao Rene_Strauss 1000$ putem /givemoney.
-[21/04/2020] [Kevin_Crawford] je dao Kevin_Crawford 500$ putem /givemoney.
-[21/04/2020] [Kevin_Crawford] je dao Kevin_Crawford 500$ putem /givemoney.
-[21/04/2020] ]D[Julian_Holland] je dao Julian_Holland 8000$ putem /givemoney.
+[21/04/2020][Kevin_Crawford] je dao Kevin_Crawford 500$ putem /givemoney.
+[21/04/2020][Kevin_Crawford] je dao Kevin_Crawford 500$ putem /givemoney.
+[21/04/2020]]D[Julian_Holland] je dao Julian_Holland 8000$ putem /givemoney.
 [21/04/2020] H[Edgar_Hicks] je dao Edgar_Hicks 500$ putem /givemoney.
 [21/04/2020] H[Edgar_Hicks] je dao Edgar_Hicks 500$ putem /givemoney.
 [21/04/2020] H[Julian_Holland] je dao David_Harris 5000$ putem /givemoney.
@@ -668,11 +668,11 @@
 [24/04/2020] [Rene_Strauss] je dao Rene_Strauss 50$ putem /givemoney.
 [24/04/2020] [Rene_Strauss] je dao Rene_Strauss 500$ putem /givemoney.
 [24/04/2020] [Edgar_Hicks] je dao Edgar_Hicks 5000$ putem /givemoney.
-[24/04/2020] [Edgar_Hicks] je dao Demetrius_Innes 5000$ putem /givemoney.
-[24/04/2020] [Edgar_Hicks] je dao Budo_Stojanovic 100$ putem /givemoney.
-[24/04/2020] [Edgar_Hicks] je dao Mile_Raonic 201410$ putem /givemoney.
+[24/04/2020][Edgar_Hicks] je dao Demetrius_Innes 5000$ putem /givemoney.
+[24/04/2020][Edgar_Hicks] je dao Budo_Stojanovic 100$ putem /givemoney.
+[24/04/2020][Edgar_Hicks] je dao Mile_Raonic 201410$ putem /givemoney.
 [24/04/2020] [Julian_Holland] je dao Shane_Thompson 13500$ putem /givemoney.
-[24/04/2020] [Edgar_Hicks] je dao Milos_Bogdanovic 5000$ putem /givemoney.
+[24/04/2020][Edgar_Hicks] je dao Milos_Bogdanovic 5000$ putem /givemoney.
 [24/04/2020] #[Edgar_Hicks] je dao Edgar_Hicks 1$ putem /givemoney.
 [24/04/2020] #[Edgar_Hicks] je dao Edgar_Hicks 100$ putem /givemoney.
 [24/04/2020] [Julian_Holland] je dao Daniel_Smith 80000$ putem /givemoney.
@@ -686,7 +686,7 @@
 [26/04/2020] [Julian_Holland] je dao Sebastian_Carrasco 15000$ putem /givemoney.
 [26/04/2020] [Julian_Holland] je dao Vladan_Vukasinovic 4000$ putem /givemoney.
 [26/04/2020] [Julian_Holland] je dao Sebastian_Carrasco 30000$ putem /givemoney.
-[26/04/2020] [Edgar_Hicks] je dao Edgar_Hicks 10000$ putem /givemoney.
+[26/04/2020][Edgar_Hicks] je dao Edgar_Hicks 10000$ putem /givemoney.
 [26/04/2020] ([Julian_Holland] je dao Alex_Smith 7100$ putem /givemoney.
 [26/04/2020] ([Julian_Holland] je dao Charlie_Nazarov 30000$ putem /givemoney.
 [26/04/2020] ([Julian_Holland] je dao Carmen_Webb 2000$ putem /givemoney.
@@ -696,10 +696,10 @@
 [26/04/2020] @([Julian_Holland] je dao Mile_Raonic 40000$ putem /givemoney.
 [26/04/2020] @([Julian_Holland] je dao Johny_Falcone 1000$ putem /givemoney.
 [27/04/2020] ([Edgar_Hicks] je dao Velichko_Mitevski 2000$ putem /givemoney.
-[27/04/2020] [Edgar_Hicks] je dao Declan_Adolfo 80000$ putem /givemoney.
+[27/04/2020][Edgar_Hicks] je dao Declan_Adolfo 80000$ putem /givemoney.
 [27/04/2020] ¼[Edwin_Fitzgerald] je dao Arias_Berganza 1000$ putem /givemoney.
-[27/04/2020] [Julian_Holland] je dao Carmen_Webb 5000$ putem /givemoney.
-[27/04/2020] [Julian_Holland] je dao Carmen_Webb 3000$ putem /givemoney.
+[27/04/2020][Julian_Holland] je dao Carmen_Webb 5000$ putem /givemoney.
+[27/04/2020][Julian_Holland] je dao Carmen_Webb 3000$ putem /givemoney.
 [28/04/2020] ¼[Edwin_Fitzgerald] je dao Edwin_Fitzgerald 10000$ putem /givemoney.
 [28/04/2020] \[Julian_Holland] je dao Igor_Kostic 20000$ putem /givemoney.
 [28/04/2020] k\[Julian_Holland] je dao Miljan_Causevic 5000$ putem /givemoney.
@@ -735,7 +735,7 @@
 [01/05/2020] 8[Julian_Holland] je dao Jacob_Rodgers 5000$ putem /givemoney.
 [01/05/2020] 
 8[Edwin_Fitzgerald] je dao Edwin_Fitzgerald 500$ putem /givemoney.
-[02/05/2020] [8[John_McDowell] je dao Carmen_Webb 1$ putem /givemoney.
+[02/05/2020][8[John_McDowell] je dao Carmen_Webb 1$ putem /givemoney.
 [02/05/2020] bD[Julian_Holland] je dao Nicholas_Lanzetta 200$ putem /givemoney.
 [02/05/2020] bD[Julian_Holland] je dao Rene_Strauss 200$ putem /givemoney.
 [02/05/2020] bD[Julian_Holland] je dao Milos_Damjanovic 200$ putem /givemoney.
@@ -792,8 +792,8 @@
 [03/05/2020] 8[Rene_Strauss] je dao Dania_Barton 8000$ putem /givemoney.
 [03/05/2020] 8[John_McDowell] je dao John_McDowell 20000$ putem /givemoney.
 [03/05/2020] 8[Julian_Holland] je dao William_Alessandrini 125000$ putem /givemoney.
-[03/05/2020] [Edgar_Hicks] je dao Edgar_Hicks 500$ putem /givemoney.
-[03/05/2020] [Edgar_Hicks] je dao Edgar_Hicks 1500$ putem /givemoney.
+[03/05/2020][Edgar_Hicks] je dao Edgar_Hicks 500$ putem /givemoney.
+[03/05/2020][Edgar_Hicks] je dao Edgar_Hicks 1500$ putem /givemoney.
 [03/05/2020] P[Travis_Palmer] je dao John_Mangano 90000$ putem /givemoney.
 [03/05/2020] UP[Julian_Holland] je dao Allan_Houston 1000$ putem /givemoney.
 [05/05/2020] P[Julian_Holland] je dao Julian_Holland 1000$ putem /givemoney.
@@ -916,7 +916,7 @@
 [06/05/2020] P[Rene_Strauss] je dao Sofia_Lopez 3000$ putem /givemoney.
 [06/05/2020] P[Rene_Strauss] je dao Sofia_Lopez 3000$ putem /givemoney.
 [06/05/2020] P[John_Mangano] je dao John_Mangano 4$ putem /givemoney.
-[06/05/2020] [David_Quetzalcoatl] je dao David_Quetzalcoatl 5000$ putem /givemoney.
+[06/05/2020][David_Quetzalcoatl] je dao David_Quetzalcoatl 5000$ putem /givemoney.
 [06/05/2020] ð[David_Quetzalcoatl] je dao Steven_Morrison 62000$ putem /givemoney.
 [06/05/2020] ð[David_Quetzalcoatl] je dao Steven_Morrison 62000$ putem /givemoney.
 [06/05/2020] è[Julian_Holland] je dao Jacob_Anderson 1500$ putem /givemoney.
@@ -1024,8 +1024,8 @@
 [07/05/2020] T[David_Quetzalcoatl] je dao Blazo_Ivanovic 1000$ putem /givemoney.
 [07/05/2020] T[David_Quetzalcoatl] je dao Ray_Scalfari 1000$ putem /givemoney.
 [07/05/2020] T[David_Quetzalcoatl] je dao John_Mangano 1000$ putem /givemoney.
-[08/05/2020] [Rafael_Escalante] je dao Joseph_Galante 1$ putem /givemoney.
-[08/05/2020] [Rafael_Escalante] je dao Rafael_Escalante 500$ putem /givemoney.
+[08/05/2020][Rafael_Escalante] je dao Joseph_Galante 1$ putem /givemoney.
+[08/05/2020][Rafael_Escalante] je dao Rafael_Escalante 500$ putem /givemoney.
 [08/05/2020] & [Rafael_Escalante] je dao Rafael_Escalante 500$ putem /givemoney.
 [08/05/2020]  [Logan_Watson] je dao John_Gunner 5000$ putem /givemoney.
 [08/05/2020] D0[Thomas_Day] je dao Donald_Andretta 10000$ putem /givemoney.
@@ -1041,55 +1041,55 @@
 [09/05/2020] @0[Thomas_McDowell] je dao Vasilije_Radivojevic 100$ putem /givemoney.
 [10/05/2020] `[Travis_Palmer] je dao Vasilije_Radivojevic 1000$ putem /givemoney.
 [10/05/2020] `[Logan_Watson] je dao Logan_Watson 5000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Jose_Ayala 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Westley_Korrow 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Thomas_Day 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Drake_Connel 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Julian_Covarrubias 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Leonard_Burkhart 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Aleksa_Todorovic 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao George_Turner 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Dustin_Cole 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Jimmy_Harrelson 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Owen_Buier 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Michael_Torres 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Terry_Williams 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Ben_Carington 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Aylin_Curtis 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Raymond_Washington 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Mikel_Bryant 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Boris_Ivanov 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Craig_Reynolds 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Nicholas_Houston 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Dani_Willson 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Joseph_Galante 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Natalia_Cortez 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Nikolaj_Zajcev 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Sam_Bowers 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Anabella_Parker 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Aiden_Mitchell 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao David_Quinn 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Tristan_Fulcher 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Allan_Houston 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Karen_Moore 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Sebastian_Brooks 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Richard_Kennedy 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Mikel_Lowell 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Raymond_Schulz 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Shane_Duncan 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Lamarcus_Cooper 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Kiante_Wright 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Blazo_Ivanovic 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Tony_Hawkins 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Bradshaw_Houston 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Brianna_Nickerson 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Craig_Moore 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Cody_Knapp 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Norman_Spear 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao John_Gunner 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Marty_Cooper 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Rafael_Flores 1000$ putem /givemoney.
-[10/05/2020] [Jose_Ayala] je dao Isaac_Kingsley 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Jose_Ayala 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Westley_Korrow 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Thomas_Day 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Drake_Connel 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Julian_Covarrubias 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Leonard_Burkhart 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Aleksa_Todorovic 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao George_Turner 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Dustin_Cole 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Jimmy_Harrelson 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Owen_Buier 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Michael_Torres 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Terry_Williams 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Ben_Carington 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Aylin_Curtis 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Raymond_Washington 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Mikel_Bryant 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Boris_Ivanov 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Craig_Reynolds 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Nicholas_Houston 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Dani_Willson 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Joseph_Galante 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Natalia_Cortez 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Nikolaj_Zajcev 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Sam_Bowers 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Anabella_Parker 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Aiden_Mitchell 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao David_Quinn 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Tristan_Fulcher 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Allan_Houston 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Karen_Moore 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Sebastian_Brooks 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Richard_Kennedy 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Mikel_Lowell 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Raymond_Schulz 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Shane_Duncan 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Lamarcus_Cooper 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Kiante_Wright 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Blazo_Ivanovic 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Tony_Hawkins 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Bradshaw_Houston 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Brianna_Nickerson 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Craig_Moore 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Cody_Knapp 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Norman_Spear 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao John_Gunner 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Marty_Cooper 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Rafael_Flores 1000$ putem /givemoney.
+[10/05/2020][Jose_Ayala] je dao Isaac_Kingsley 1000$ putem /givemoney.
 [11/05/2020] l[Travis_Palmer] je dao Avram_Gavric 500$ putem /givemoney.
 [11/05/2020] l[Travis_Palmer] je dao Elliott_Loyd 500$ putem /givemoney.
 [11/05/2020] l[Travis_Palmer] je dao Billy_Winchester 500$ putem /givemoney.
@@ -1202,12 +1202,12 @@
 [11/05/2020] 6`[Travis_Palmer] je dao Travis_Palmer 10000$ putem /givemoney.
 [11/05/2020] .`[John_Mangano] je dao John_Mangano 50$ putem /givemoney.
 [11/05/2020] A`[Thomas_Day] je dao Valko_Spasov 24999$ putem /givemoney.
-[13/05/2020] [Jose_Ayala] je dao Darnell_Boss 15000$ putem /givemoney.
-[13/05/2020] [Jose_Ayala] je dao Jose_Ayala 15000$ putem /givemoney.
+[13/05/2020][Jose_Ayala] je dao Darnell_Boss 15000$ putem /givemoney.
+[13/05/2020][Jose_Ayala] je dao Jose_Ayala 15000$ putem /givemoney.
 [13/05/2020] 
 ì[Thomas_Day] je dao Terry_Williams 50000$ putem /givemoney.
-[13/05/2020] [Jose_Ayala] je dao Jose_Ayala 1065$ putem /givemoney.
-[13/05/2020] [Jose_Ayala] je dao Jose_Ayala 1065$ putem /givemoney.
+[13/05/2020][Jose_Ayala] je dao Jose_Ayala 1065$ putem /givemoney.
+[13/05/2020][Jose_Ayala] je dao Jose_Ayala 1065$ putem /givemoney.
 [13/05/2020] ì[Thomas_Day] je dao Aleksander_Zaitsev 18000$ putem /givemoney.
 [13/05/2020] ì[Thomas_Day] je dao Reggie_Crawford 40000$ putem /givemoney.
 [13/05/2020] ì[Thomas_McDowell] je dao Lester_McCormick 45000$ putem /givemoney.
@@ -1405,13 +1405,13 @@
 [18/05/2020] ø[Thomas_Day] je dao Brandon_Barker 5$ putem /givemoney.
 [18/05/2020] ø[Thomas_Day] je dao Andrew_Sanderson 5$ putem /givemoney.
 [18/05/2020] ì[Jose_Ayala] je dao Jose_Ayala 500$ putem /givemoney.
-[19/05/2020] [Thomas_Day] je dao Tom_Smith 5000$ putem /givemoney.
-[19/05/2020] [Thomas_Day] je dao Bob_Winchester 5000$ putem /givemoney.
+[19/05/2020][Thomas_Day] je dao Tom_Smith 5000$ putem /givemoney.
+[19/05/2020][Thomas_Day] je dao Bob_Winchester 5000$ putem /givemoney.
 [19/05/2020] 	¤[Thomas_Day] je dao Viktor_Noukhayev 2200$ putem /givemoney.
 [20/05/2020] ¤[Thomas_Day] je dao Evgeniy_Ivanov 30000$ putem /givemoney.
-[20/05/2020] [Jose_Ayala] je dao Jose_Ayala 5000$ putem /givemoney.
-[20/05/2020] [Jose_Ayala] je dao Jose_Ayala 50000$ putem /givemoney.
-[20/05/2020] [Jose_Ayala] je dao Jose_Ayala 5000$ putem /givemoney.
+[20/05/2020][Jose_Ayala] je dao Jose_Ayala 5000$ putem /givemoney.
+[20/05/2020][Jose_Ayala] je dao Jose_Ayala 50000$ putem /givemoney.
+[20/05/2020][Jose_Ayala] je dao Jose_Ayala 5000$ putem /givemoney.
 [21/05/2020] ¤[Rene_Strauss] je dao Rene_Strauss 5000$ putem /givemoney.
 [21/05/2020] ¤[Rene_Strauss] je dao Ramon_Cox 5000$ putem /givemoney.
 [21/05/2020] ¤[Rene_Strauss] je dao Ramon_Cox 5000$ putem /givemoney.
@@ -1520,15 +1520,17 @@
 [27/05/2020] °[Thomas_Day] je dao Alisa_Wood 5000$ putem /givemoney.
 [27/05/2020] °[Thomas_Day] je dao Ashley_Bennet 5000$ putem /givemoney.
 [27/05/2020] °[Thomas_Day] je dao Zion_Linzell 5000$ putem /givemoney.
-[28/05/2020] [Jose_Ayala] je dao Pablo_Miller 30000$ putem /givemoney.
-[28/05/2020] [Jose_Ayala] je dao Jose_Ayala 26000$ putem /givemoney.
-[01/06/2020] ¼[Thomas_Day] je dao Liam_Hao 10000$ putem /givemoney.
-[01/06/2020] ¼[Thomas_Day] je dao Bob_Winchester 54000$ putem /givemoney.
+[28/05/2020][Jose_Ayala] je dao Pablo_Miller 30000$ putem /givemoney.
+[28/05/2020][Jose_Ayala] je dao Jose_Ayala 26000$ putem /givemoney.
+[01/06/2020] 
+¼[Thomas_Day] je dao Liam_Hao 10000$ putem /givemoney.
+[01/06/2020] 
+¼[Thomas_Day] je dao Bob_Winchester 54000$ putem /givemoney.
 [03/06/2020] ¼[Thomas_Day] je dao William_Nithercott 2500$ putem /givemoney.
 [04/06/2020] ¼[Thomas_Day] je dao Fawziyya_Khawaja 25000$ putem /givemoney.
-[04/06/2020] [Rene_Strauss] je dao Viktor_Noukhayev 300$ putem /givemoney.
-[04/06/2020] [Rene_Strauss] je dao Johnny_Suarez 300$ putem /givemoney.
-[04/06/2020] [Rene_Strauss] je dao Michael_Burrows 2999$ putem /givemoney.
+[04/06/2020][Rene_Strauss] je dao Viktor_Noukhayev 300$ putem /givemoney.
+[04/06/2020][Rene_Strauss] je dao Johnny_Suarez 300$ putem /givemoney.
+[04/06/2020][Rene_Strauss] je dao Michael_Burrows 2999$ putem /givemoney.
 [05/06/2020] 
 ([Thomas_Day] je dao Dustin_Cole 100$ putem /givemoney.
 [05/06/2020] 
@@ -1571,19 +1573,19 @@
 [18/06/2020] Ô[Thomas_Day] je dao Thomas_Day 30000$ putem /givemoney.
 [22/06/2020] D[Randy_Line] je dao Natalia_Cortez 900$ putem /givemoney.
 [24/06/2020] D[Thomas_Day] je dao William_Walker 150$ putem /givemoney.
-[24/06/2020] [Randy_Line] je dao William_Walker 500$ putem /givemoney.
+[24/06/2020][Randy_Line] je dao William_Walker 500$ putem /givemoney.
 [25/06/2020] ð[Thomas_Day] je dao Thomas_Day 30000$ putem /givemoney.
 [25/06/2020] ð[Thomas_Day] je dao Midhat_Spaho 30000$ putem /givemoney.
 [30/06/2020] #h[Gabriel_Hopwood] je dao Deondre_Yates 10000$ putem /givemoney.
 [01/07/2020] h[Thomas_McDowell] je dao Thomas_McDowell 25000$ putem /givemoney.
 [01/07/2020] à[Gabriel_Hopwood] je dao Edsel_Eang 1000$ putem /givemoney.
 [02/07/2020] ä[Thomas_McDowell] je dao Valentino_Lombardi 70000$ putem /givemoney.
-[07/07/2020] [Harold_Sutherland] je dao Mike_Simmons 60000$ putem /givemoney.
-[07/07/2020] [Harold_Sutherland] je dao Adam_Ramirez 8000$ putem /givemoney.
-[07/07/2020] [Harold_Sutherland] je dao Miguel_Moyano 45000$ putem /givemoney.
-[07/07/2020] [Harold_Sutherland] je dao Jack_White 12000$ putem /givemoney.
+[07/07/2020][Harold_Sutherland] je dao Mike_Simmons 60000$ putem /givemoney.
+[07/07/2020][Harold_Sutherland] je dao Adam_Ramirez 8000$ putem /givemoney.
+[07/07/2020][Harold_Sutherland] je dao Miguel_Moyano 45000$ putem /givemoney.
+[07/07/2020][Harold_Sutherland] je dao Jack_White 12000$ putem /givemoney.
 [07/07/2020] [Thomas_McDowell] je dao Hector_Romero 50000$ putem /givemoney.
-[07/07/2020] [Harold_Sutherland] je dao Robert_Doherty 90000$ putem /givemoney.
+[07/07/2020][Harold_Sutherland] je dao Robert_Doherty 90000$ putem /givemoney.
 [07/07/2020] [Thomas_McDowell] je dao Hector_Romero 50000$ putem /givemoney.
 [07/07/2020] [Thomas_McDowell] je dao Hector_Romero 30000$ putem /givemoney.
 [07/07/2020] [Harold_Sutherland] je dao Arthur_Maxwell 70000$ putem /givemoney.
@@ -1596,7 +1598,7 @@
 [10/07/2020] t[Thomas_McDowell] je dao Conor_Lyons 56000$ putem /givemoney.
 [11/07/2020] [Harold_Sutherland] je dao Deondre_Goodwin 101$ putem /givemoney.
 [11/07/2020] [Gabriel_Hopwood] je dao Sebastian_Garcia 2500$ putem /givemoney.
-[12/07/2020] [Thomas_McDowell] je dao David_Elizalde 5000$ putem /givemoney.
+[12/07/2020][Thomas_McDowell] je dao David_Elizalde 5000$ putem /givemoney.
 [13/07/2020] [Dominick_London] je dao Dominick_London 1000$ putem /givemoney.
 [16/07/2020] [Thomas_McDowell] je dao Thomas_McDowell 1500$ putem /givemoney.
 [16/07/2020] [Thomas_McDowell] je dao Arthur_Maxwell 500$ putem /givemoney.
@@ -1645,11 +1647,11 @@
 [22/07/2020] [Thomas_McDowell] je dao Bonifacie_Gambiroza 1000$ putem /givemoney.
 [24/07/2020] [Thomas_McDowell] je dao Thomas_McDowell 100000$ putem /givemoney.
 [24/07/2020] [Thomas_McDowell] je dao Thomas_McDowell 100000$ putem /givemoney.
-[25/07/2020] [Jason_Franklin] je dao Jason_Franklin 100000$ putem /givemoney.
+[25/07/2020][Jason_Franklin] je dao Jason_Franklin 100000$ putem /givemoney.
 [25/07/2020] d[Thomas_McDowell] je dao Thomas_McDowell 2$ putem /givemoney.
 [25/07/2020] d[Bonifacie_Gambiroza] je dao Bonifacie_Gambiroza 100000$ putem /givemoney.
-[25/07/2020] [Jason_Franklin] je dao Jason_Franklin 100000$ putem /givemoney.
-[26/07/2020] [Zyrell_Haynes] je dao Zyrell_Haynes 100000$ putem /givemoney.
+[25/07/2020][Jason_Franklin] je dao Jason_Franklin 100000$ putem /givemoney.
+[26/07/2020][Zyrell_Haynes] je dao Zyrell_Haynes 100000$ putem /givemoney.
 [01/08/2020] p[Jason_Logan] je dao Deondre_Goodwin 2000$ putem /givemoney.
 [01/08/2020] p[Jason_Logan] je dao Deondre_Goodwin 1000$ putem /givemoney.
 [02/08/2020] ä[Jason_Logan] je dao Deondre_Goodwin 1000$ putem /givemoney.
@@ -1740,8 +1742,10 @@
 [24/08/2020] [Evelyn_Casey] je dao Ashley_Davis 50000$ putem /givemoney.
 [24/08/2020] [Thomas_McDowell] je dao Avram_Leontyev 150$ putem /givemoney.
 [24/08/2020] [Marcel_Hovland] je dao Darko_Milic 1500$ putem /givemoney.
-[24/08/2020] [Thomas_McDowell] je dao Joel_Foreman 60000$ putem /givemoney.
-[24/08/2020] [Thomas_McDowell] je dao Joel_Foreman 2200$ putem /givemoney.
+[24/08/2020] 
+[Thomas_McDowell] je dao Joel_Foreman 60000$ putem /givemoney.
+[24/08/2020] 
+[Thomas_McDowell] je dao Joel_Foreman 2200$ putem /givemoney.
 [25/08/2020] 	[Marcel_Hovland] je dao Marcel_Hovland 1000$ putem /givemoney.
 [25/08/2020] ¨[Evelyn_Casey] je dao Victor_Grant 1000$ putem /givemoney.
 [25/08/2020] ¨[Evelyn_Casey] je dao Mark_Hewitt 1000$ putem /givemoney.
@@ -1783,8 +1787,10 @@
 [31/08/2020] [Zyrell_Haynes] je dao Shacora_Moss 10000$ putem /givemoney.
 [02/09/2020] [Jonathan_Brown] je dao Jonathan_Brown 100$ putem /givemoney.
 [04/09/2020] [Marcel_Hovland] je dao Hank_Latham 10000$ putem /givemoney.
-[06/09/2020] [Zyrell_Haynes] je dao Naser_Kelmendi 10000$ putem /givemoney.
-[06/09/2020] [Zyrell_Haynes] je dao Behram_Kelmendi 10000$ putem /givemoney.
+[06/09/2020] 
+[Zyrell_Haynes] je dao Naser_Kelmendi 10000$ putem /givemoney.
+[06/09/2020] 
+[Zyrell_Haynes] je dao Behram_Kelmendi 10000$ putem /givemoney.
 [06/09/2020] [Daniel_Landale] je dao Alberto_Sucre 8000$ putem /givemoney.
 [07/09/2020] [Zyrell_Haynes] je dao Keith_Sanders 10000$ putem /givemoney.
 [07/09/2020] [Zyrell_Haynes] je dao Oday_Perkins 5000$ putem /givemoney.
@@ -1812,12 +1818,13 @@
 [17/09/2020] ¨[Jonathan_Brown] je dao Jonathan_Brown 5000$ putem /givemoney.
 [17/09/2020] ¨[Jonathan_Brown] je dao Bill_Flores 5000$ putem /givemoney.
 [17/09/2020]  [Daniel_Landale] je dao Martin_Boucher 999$ putem /givemoney.
-[18/09/2020] [Frank_Brennan] je dao George_Cephas 20000$ putem /givemoney.
+[18/09/2020] 
+[Frank_Brennan] je dao George_Cephas 20000$ putem /givemoney.
 [18/09/2020] [Daniel_Landale] je dao Earl_Lawson 200$ putem /givemoney.
 [20/09/2020] [Frank_Brennan] je dao Vukasin_Milovanovic 25000$ putem /givemoney.
 [20/09/2020] [Daniel_Landale] je dao Richard_Rivera 4000$ putem /givemoney.
-[22/09/2020] [Fareed_Nawwaf] je dao Besart_Hasani 50000$ putem /givemoney.
-[22/09/2020] [Fareed_Nawwaf] je dao Besart_Hasani 25000$ putem /givemoney.
+[22/09/2020][Fareed_Nawwaf] je dao Besart_Hasani 50000$ putem /givemoney.
+[22/09/2020][Fareed_Nawwaf] je dao Besart_Hasani 25000$ putem /givemoney.
 [23/09/2020] 	[Fareed_Nawwaf] je dao Maximiliano_Lacasa 10000$ putem /givemoney.
 [23/09/2020] [Fareed_Nawwaf] je dao Tekashi_Oba 377000$ putem /givemoney.
 [25/09/2020] [Fareed_Nawwaf] je dao Joe_McKennedy 20000$ putem /givemoney.
@@ -1836,7 +1843,8 @@
 [05/10/2020] ¨[Yukimura_Eguichi] je dao Jim_McCormick 5000$ putem /givemoney.
 [05/10/2020] ¨[Yukimura_Eguichi] je dao Hector_Delgado 5000$ putem /givemoney.
 [05/10/2020] ¨[Yukimura_Eguichi] je dao Maria_Hernandez 5000$ putem /givemoney.
-[06/10/2020] [Jonathan_Brown] je dao Daniel_Butcher 200000$ putem /givemoney.
+[06/10/2020] 
+[Jonathan_Brown] je dao Daniel_Butcher 200000$ putem /givemoney.
 [09/10/2020] [Jonathan_Brown] je dao Sato_Kiyoshi 30000$ putem /givemoney.
 [09/10/2020] [Fareed_Nawwaf] je dao Sato_Kiyoshi 35000$ putem /givemoney.
 [15/10/2020] 

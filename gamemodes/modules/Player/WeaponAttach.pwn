@@ -67,14 +67,14 @@ static stock PlayerHasWeapon(playerid, weaponid)
     for (new i; i < 13; i++)
     {
         GetPlayerWeaponData(playerid, i, weapon, ammo);
-        if (weapon == weaponid && ammo != 0) return 1;
+        if(weapon == weaponid && ammo != 0) return 1;
     }
     return 0;
 }
 
 stock UpdatePlayerWeaponSettings(playerid)
 {
-	if (NetStats_GetConnectedTime(playerid) - WeaponTick[playerid] >= 50)
+	if(NetStats_GetConnectedTime(playerid) - WeaponTick[playerid] >= 50)
     {
         new weaponid, ammo, objectslot, count, index;
 
@@ -82,27 +82,27 @@ stock UpdatePlayerWeaponSettings(playerid)
         {
             GetPlayerWeaponData(playerid, i, weaponid, ammo);
 
-            if (weaponid && ammo && IsWeaponWearable(weaponid) && EditingWeapon[playerid] != weaponid)
+            if(weaponid && ammo && IsWeaponWearable(weaponid) && EditingWeapon[playerid] != weaponid)
             {
                 objectslot = GetWeaponObjectSlot(weaponid);
 				index = GetWeaponObjectEnum(weaponid);
 
-                if (AC_GetPlayerWeapon(playerid) != weaponid && !IsPlayerAttachedObjectSlotUsed(playerid, objectslot))
+                if(AC_GetPlayerWeapon(playerid) != weaponid && !IsPlayerAttachedObjectSlotUsed(playerid, objectslot))
                     SetPlayerAttachedObject(playerid, objectslot, GetWeaponModel(weaponid), WeaponSettings[playerid][index][Bone], WeaponSettings[playerid][index][Position][0], WeaponSettings[playerid][index][Position][1], WeaponSettings[playerid][index][Position][2], WeaponSettings[playerid][index][Position][3], WeaponSettings[playerid][index][Position][4], WeaponSettings[playerid][index][Position][5], 1.0, 1.0, 1.0);
 
-                else if (IsPlayerAttachedObjectSlotUsed(playerid, objectslot) && AC_GetPlayerWeapon(playerid) == weaponid) RemovePlayerAttachedObject(playerid, objectslot);
+                else if(IsPlayerAttachedObjectSlotUsed(playerid, objectslot) && AC_GetPlayerWeapon(playerid) == weaponid) RemovePlayerAttachedObject(playerid, objectslot);
             }
         }
         for (new l=7; l <= 8; l++)
         {
-			if (IsPlayerAttachedObjectSlotUsed(playerid, l))
+			if(IsPlayerAttachedObjectSlotUsed(playerid, l))
 			{
 				count = 0;
 
-				for (new j = 22; j <= 38; j++) if (PlayerHasWeapon(playerid, j) && GetWeaponObjectSlot(j) == l && !IsPlayerInAnyVehicle(playerid))
+				for (new j = 22; j <= 38; j++) if(PlayerHasWeapon(playerid, j) && GetWeaponObjectSlot(j) == l && !IsPlayerInAnyVehicle(playerid))
 					count++;
 
-				if (!count) RemovePlayerAttachedObject(playerid, l);
+				if(!count) RemovePlayerAttachedObject(playerid, l);
 			}
         }
         WeaponTick[playerid] = NetStats_GetConnectedTime(playerid);
@@ -214,9 +214,9 @@ hook function LoadPlayerStats(playerid)
 Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, Float:foZ, Float:frX, Float:frY, Float:frZ, Float:fsX, Float:fsY, Float:fsZ)
 {
 	new weaponid = EditingWeapon[playerid];
-    if (weaponid)
+    if(weaponid)
     {
-        if (response)
+        if(response)
         {
             new enum_index = GetWeaponObjectEnum(weaponid);
 
@@ -280,9 +280,9 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    if (dialogid == DIALOG_EDIT_BONE)
+    if(dialogid == DIALOG_EDIT_BONE)
     {
-        if (response)
+        if(response)
         {
             new 
 				weaponid = EditingWeapon[playerid], 
@@ -307,17 +307,17 @@ CMD:weapon(playerid, params[])
 	new weaponid = AC_GetPlayerWeapon(playerid),
 		option[12];
 
-	if (isnull(params))
+	if(isnull(params))
 	if(sscanf(params, "s[12] ", option))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapon [adjust/bone/hide]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /weapon [adjust/bone/hide]");
 
-	if (!strcmp(params, "adjust", true))
+	if(!strcmp(params, "adjust", true))
 	{
-		if (!weaponid)
+		if(!weaponid)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne drzite nikakvo oruzje u rukama.");
-		if (!IsWeaponWearable(weaponid) || NiteStickPD(weaponid))
+		if(!IsWeaponWearable(weaponid) || NiteStickPD(weaponid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vatrena oruzja se mogu stavljati na tijelo.");
-		if (EditingWeapon[playerid])
+		if(EditingWeapon[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec namjestate poziciju oruzja.");
 
 		EditingWeapon[playerid] = weaponid;
@@ -328,26 +328,26 @@ CMD:weapon(playerid, params[])
 		SetPlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid), GetWeaponModel(weaponid), WeaponSettings[playerid][index][Bone], WeaponSettings[playerid][index][Position][0], WeaponSettings[playerid][index][Position][1], WeaponSettings[playerid][index][Position][2], WeaponSettings[playerid][index][Position][3], WeaponSettings[playerid][index][Position][4], WeaponSettings[playerid][index][Position][5], 1.0, 1.0, 1.0);
 		EditAttachedObject(playerid, GetWeaponObjectSlot(weaponid));
 	}
-	else if (!strcmp(params, "bone", true))
+	else if(!strcmp(params, "bone", true))
 	{
-		if (!weaponid)
+		if(!weaponid)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne drzite nikakvo oruzje u rukama.");
-		if (!IsWeaponWearable(weaponid))
+		if(!IsWeaponWearable(weaponid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vatrena oruzja se mogu stavljati na tijelo.");
-		if (EditingWeapon[playerid])
+		if(EditingWeapon[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec namjestate poziciju oruzja.");
 
 		ShowPlayerDialog(playerid, DIALOG_EDIT_BONE, DIALOG_STYLE_LIST, "Bone", "Spine\nHead\nLeft upper arm\nRight upper arm\nLeft hand\nRight hand\nLeft thigh\nRight thigh\nLeft foot\nRight foot\nRight calf\nLeft calf\nLeft forearm\nRight forearm\nLeft shoulder\nRight shoulder\nNeck\nJaw", "Choose", "Cancel");
 		EditingWeapon[playerid] = weaponid;
 	}
-	else if (!strcmp(params, "hide", true))
+	else if(!strcmp(params, "hide", true))
 	{
-		if (EditingWeapon[playerid])
+		if(EditingWeapon[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sakriti oruzje kada ga editas.");
 
 		new string[150];
 
-		if (HiddenWeapon[playerid][pwWeaponId] != 0)
+		if(HiddenWeapon[playerid][pwWeaponId] != 0)
 		{
 			if(!SafeSpawned[playerid])
 				return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Pricekajte dok zavrsi spawn te da dobijete unfreeze!");
@@ -386,13 +386,13 @@ CMD:weapon(playerid, params[])
 		}
 		else
 		{
-			if (!IsWeaponHideable(weaponid))
+			if(!IsWeaponHideable(weaponid))
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sakriti primary oruzje!");
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Oruzja koja mozete sakriti: microSMG i Tec9.");
 				return 1;
 			}
-			if (IsPlayerAttachedObjectSlotUsed(playerid, GetWeaponObjectSlot(weaponid)))
+			if(IsPlayerAttachedObjectSlotUsed(playerid, GetWeaponObjectSlot(weaponid)))
 				RemovePlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid));
 
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sakrili ste svoj %s.", GetWeaponNameEx(weaponid));
@@ -417,6 +417,6 @@ CMD:weapon(playerid, params[])
 			AC_ResetPlayerWeapon(playerid, HiddenWeapon[playerid][pwWeaponId], false);
 		}
 	}
-	else SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapon [adjust/bone/hide]");
+	else SendClientMessage(playerid, COLOR_RED, "[?]: /weapon [adjust/bone/hide]");
 	return 1;
 }

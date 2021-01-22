@@ -10,9 +10,9 @@ new
     88                                                    
     88                                                    
     88aaaaa 88       88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
-    88""""" 88       88 88P'   `"8a a8"     "" I8[    ""  
+    88""""" 88       88 88P'   `"8a a8"     "" I8[   ""  
     88      88       88 88       88 8b          `"Y8ba,   
-    88      "8a,   ,a88 88       88 "8a,   ,aa aa    ]8I  
+    88      "8a,   ,a88 88       88 "8a,   ,aa aa   ]8I  
     88       `"YbbdP'Y8 88       88  `"Ybbd8"' `"YbbdP"'  
 
 */
@@ -53,9 +53,9 @@ public OnQueryError(errorid, const error[], const callback[], const query[], MyS
     88        88                         88                   
     88        88                         88                   
     88aaaaaaaa88  ,adPPYba,   ,adPPYba,  88   ,d8  ,adPPYba,  
-    88""""""""88 a8"     "8a a8"     "8a 88 ,a8"   I8[    ""  
-    88        88 8b       d8 8b       d8 8888[      `"Y8ba,   
-    88        88 "8a,   ,a8" "8a,   ,a8" 88`"Yba,  aa    ]8I  
+    88""""""""88 a8"     "8a a8"     "8a 88 ,a8"   I8[   ""  
+    88        88 8b       d8 8b       d8 8888[     `"Y8ba,   
+    88        88 "8a,   ,a8" "8a,   ,a8" 88`"Yba,  aa   ]8I  
     88        88  `"YbbdP"'   `"YbbdP"'  88   `Y8a `"YbbdP"'  
 
 */

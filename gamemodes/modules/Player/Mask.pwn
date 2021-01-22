@@ -18,7 +18,7 @@ CheckPlayerMasks(playerid)
 {
 	foreach(new i : Player) 
 	{
-		if (Player_UsingMask(i))
+		if(Player_UsingMask(i))
 			ShowPlayerNameTagForPlayer(playerid, i, 0);
 	}
 	return 1;
@@ -43,9 +43,9 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerStreamIn(playerid, forplayerid)
 {
-    if (Player_UsingMask(forplayerid))
+    if(Player_UsingMask(forplayerid))
     {
-        if (PlayerInfo[playerid][pAdmin] > 0 && Admin_OnDuty(playerid))
+        if(PlayerInfo[playerid][pAdmin] > 0 && Admin_OnDuty(playerid))
             ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
         else
             ShowPlayerNameTagForPlayer(playerid, forplayerid, false);
@@ -58,11 +58,11 @@ hook OnPlayerStreamIn(playerid, forplayerid)
 
 CMD:mask(playerid, params[])
 {
-	if( PlayerInventory[playerid][pMaskID] == -1 || PlayerInventory[playerid][pMaskID] == 0 )
+	if(PlayerInventory[playerid][pMaskID] == -1 || PlayerInventory[playerid][pMaskID] == 0 )
 		return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Ne posjedujes masku!" );
 
 	new buffer[80];
-	if (!Player_UsingMask(playerid))
+	if(!Player_UsingMask(playerid))
 	{
 		foreach(new i : Player)
 		{

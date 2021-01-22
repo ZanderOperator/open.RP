@@ -63,9 +63,9 @@ stock Player_SetIsTied(playerid, bool:v)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT)
+    if(oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT)
     {
-        if (Player_IsTied(playerid))
+        if(Player_IsTied(playerid))
             SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CUFFED);
     }
     return 1;
@@ -73,7 +73,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    if (Player_IsTied(playerid))
+    if(Player_IsTied(playerid))
     {
         TogglePlayerControllable(playerid, 1);
         SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CUFFED);
@@ -102,30 +102,30 @@ CMD:tie(playerid, params[])
 {
     new
         giveplayerid;
-    if (sscanf(params, "u", giveplayerid))
-         return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tie [Playerid / Part of name]");
+    if(sscanf(params, "u", giveplayerid))
+         return SendClientMessage(playerid, COLOR_RED, "[?]: /tie [Playerid / Part of name]");
 
-    if (!ProxDetectorS(3.0, playerid, giveplayerid))
+    if(!ProxDetectorS(3.0, playerid, giveplayerid))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
 
-    if (giveplayerid == playerid)
+    if(giveplayerid == playerid)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zavezati samog sebe!");
 
-    if (giveplayerid == INVALID_PLAYER_ID)
+    if(giveplayerid == INVALID_PLAYER_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online!");
 
-    if (GetPlayerState(giveplayerid) == PLAYER_STATE_DRIVER)
+    if(GetPlayerState(giveplayerid) == PLAYER_STATE_DRIVER)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zavezati igraca koji vozi!");
 
-    if (!PlayerInventory[playerid][pRope])
+    if(!PlayerInventory[playerid][pRope])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate konop!");
 
-    if (!Player_IsTied(giveplayerid))
+    if(!Player_IsTied(giveplayerid))
     {
         va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vas je zavezao!", GetName(playerid));
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Zavezao si %s!", GetName(giveplayerid));
 
-        if (!IsPlayerInAnyVehicle(giveplayerid))
+        if(!IsPlayerInAnyVehicle(giveplayerid))
             SetPlayerSpecialAction(giveplayerid, SPECIAL_ACTION_CUFFED);
     }
     else
@@ -133,7 +133,7 @@ CMD:tie(playerid, params[])
         va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vas je odvezao!", GetName(playerid));
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Odvezao si %s!", GetName(giveplayerid));
 
-        if (!IsPlayerInAnyVehicle(giveplayerid))
+        if(!IsPlayerInAnyVehicle(giveplayerid))
             SetPlayerSpecialAction(giveplayerid, SPECIAL_ACTION_NONE);
     }
     Player_SetIsTied(playerid, !Player_IsTied(playerid));

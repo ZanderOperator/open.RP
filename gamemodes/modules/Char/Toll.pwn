@@ -134,7 +134,7 @@ CMD:locktoll(playerid, params[])
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate pristup ovoj komandi!");
 	if(sscanf(params, "d", tollid))
 	{
-	    SendClientMessage(playerid, -1, "{AFAFAF}[ ? ]: /locktoll [Toll Booth ID]");
+	    SendClientMessage(playerid, -1, "{AFAFAF}[?]: /locktoll [Toll Booth ID]");
 	    SendClientMessage(playerid, -1, "Toll Booths: {BFC0C2}1) LS-LV Highway | 2) LS-SF Tunnel | 3) LS-SF Airport | 4) LS-LV Bridge");
 	    SendClientMessage(playerid, -1, "{BFC0C2} | 5) LS-LV Optional pass | 6) LS-SF Heavy pass | 7) LS-SF Highway | 8) Lock All | 9) Unlock All");
 	    return 1;
@@ -285,13 +285,13 @@ CMD:locktoll(playerid, params[])
 
 CMD:atoll(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1) 
+	if(PlayerInfo[playerid][pAdmin] < 1) 
 	 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		lock;
 	if(sscanf(params, "d", lock))
 	{
-	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atool [Lock ID]");
+	    SendClientMessage(playerid, COLOR_RED, "[?]: /atool [Lock ID]");
 	    SendClientMessage(playerid, -1, "Lock ID 0 - Unlock all || Lock ID 1 - Lock all");
 	    return 1;
 	}
@@ -313,7 +313,7 @@ CMD:opentoll(playerid, params[])
 {
     if(AC_GetPlayerMoney(playerid) < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca!");
 	new CmdString[128];
-	if (IsPlayerInRangeOfPoint(playerid,8.0,1686.7776,416.7574,30.6589)) 
+	if(IsPlayerInRangeOfPoint(playerid,8.0,1686.7776,416.7574,30.6589)) 
 	{ //LS-LV AUTOCESTA
 	    if(LockToll[0] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -343,7 +343,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(3);
     }
-    else if (IsPlayerInRangeOfPoint(playerid,8.0,1712.8297,408.0382,30.6583)) 
+    else if(IsPlayerInRangeOfPoint(playerid,8.0,1712.8297,408.0382,30.6583)) 
 	{ //LS-LV AUTOCESTA
 	    if(LockToll[0] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -353,7 +353,7 @@ CMD:opentoll(playerid, params[])
 		PlayerToBudgetMoney(playerid, 5);
         defer TollRampClose(4);
 	}
-	else if (IsPlayerInRangeOfPoint(playerid,8.0,110.3566,-1276.0198,14.7506)) 
+	else if(IsPlayerInRangeOfPoint(playerid,8.0,110.3566,-1276.0198,14.7506)) 
 	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -363,7 +363,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(5);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,106.1063,-1270.3074,14.7200)) 
+   	else if(IsPlayerInRangeOfPoint(playerid,8.0,106.1063,-1270.3074,14.7200)) 
 	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -373,7 +373,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(6);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,94.2225,-1257.2662,14.5936)) 
+   	else if(IsPlayerInRangeOfPoint(playerid,8.0,94.2225,-1257.2662,14.5936)) 
 	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -383,7 +383,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(7);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,89.3355,-1249.4337,14.5565)) 
+   	else if(IsPlayerInRangeOfPoint(playerid,8.0,89.3355,-1249.4337,14.5565)) 
 	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -393,7 +393,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
       	defer TollRampClose(8);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,-970.5789,-333.8476,36.4137)) 
+   	else if(IsPlayerInRangeOfPoint(playerid,8.0,-970.5789,-333.8476,36.4137)) 
 	{ //LS-SF POKRAJ SF AIRPORTA
 	    if(LockToll[2] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -403,7 +403,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(9);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,-960.5711,-331.6124,36.1348)) 
+   	else if(IsPlayerInRangeOfPoint(playerid,8.0,-960.5711,-331.6124,36.1348)) 
 	{ //LS-SF POKRAJ SF AIRPORTA
 	    if(LockToll[2] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -413,7 +413,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(10);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,517.2881,469.6673,18.9297)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,517.2881,469.6673,18.9297)) 
 	{ //LS-LV POKRAJ MOSTA
 	    if(LockToll[3] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -423,7 +423,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(11);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,523.5944,475.9694,18.9297)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,523.5944,475.9694,18.9297)) 
 	{ //LS-LV POKRAJ MOSTA
 	    if(LockToll[3] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -433,7 +433,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(12);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-183.2823,327.6223,12.0781)) { //LS-LV IZMEDJU OVIH PRIJASNJIH Toll
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,-183.2823,327.6223,12.0781)) { //LS-LV IZMEDJU OVIH PRIJASNJIH Toll
 	    if(LockToll[4] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
@@ -442,7 +442,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(13);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-174.1768,327.4136,12.0781)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,-174.1768,327.4136,12.0781)) 
 	{ //LS-LV IZMEDJU OVIH PRIJASNJIH Toll
 	    if(LockToll[4] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -452,7 +452,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(14);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-101.02379608,-928.78637695,19.78243637)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,-101.02379608,-928.78637695,19.78243637)) 
 	{ //LS-SF/prolaz za kombajn
 	    if(LockToll[5] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -462,7 +462,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(15);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-88.61416626,-935.47473145,19.78243637)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,-88.61416626,-935.47473145,19.78243637)) 
 	{ //LS-SF/prolaz za kombajn
 	    if(LockToll[5] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -472,7 +472,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(16);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,59.0846,-1540.9741,5.0938)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,59.0846,-1540.9741,5.0938)) 
 	{ //LS-SF AUTOCESTA
 	    if(LockToll[6] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
@@ -482,7 +482,7 @@ CMD:opentoll(playerid, params[])
        	PlayerToBudgetMoney(playerid, 5);
        	defer TollRampClose(17);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,55.8233,-1523.6588,5.0027)) 
+ 	else if(IsPlayerInRangeOfPoint(playerid,8.0,55.8233,-1523.6588,5.0027)) 
 	{ //LS-SF AUTOCESTA
 	    if(LockToll[6] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));

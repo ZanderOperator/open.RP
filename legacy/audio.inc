@@ -84,14 +84,14 @@ static bool:Audio_g_OPDC = false;
 
 public OnFilterScriptInit()
 {
-	if (!Audio_g_CTS)
+	if(!Audio_g_CTS)
 	{
 		Audio_g_CTS = true;
 		Audio_g_OPC = (funcidx("Audio_OnPlayerConnect") != -1);
 		Audio_g_OPDC = (funcidx("Audio_OnPlayerDisconnect") != -1);
 		Audio_CreateTCPServer(GetServerVarAsInt("port"));
 	}
-	if (funcidx("Audio_OnFilterScriptInit") != -1)
+	if(funcidx("Audio_OnFilterScriptInit") != -1)
 	{
 		return CallLocalFunction("Audio_OnFilterScriptInit", "");
 	}
@@ -109,14 +109,14 @@ forward Audio_OnFilterScriptInit();
 
 public OnGameModeInit()
 {
-	if (!Audio_g_CTS)
+	if(!Audio_g_CTS)
 	{
 		Audio_g_CTS = true;
 		Audio_g_OPC = (funcidx("Audio_OnPlayerConnect") != -1);
 		Audio_g_OPDC = (funcidx("Audio_OnPlayerDisconnect") != -1);
 		Audio_CreateTCPServer(GetServerVarAsInt("port"));
 	}
-	if (funcidx("Audio_OnGameModeInit") != -1)
+	if(funcidx("Audio_OnGameModeInit") != -1)
 	{
 		return CallLocalFunction("Audio_OnGameModeInit", "");
 	}
@@ -134,14 +134,14 @@ forward Audio_OnGameModeInit();
 
 public OnPlayerConnect(playerid)
 {
-	if (!IsPlayerNPC(playerid))
+	if(!IsPlayerNPC(playerid))
 	{
 		new ip[16], name[MAX_PLAYER_NAME];
 		ReturnPlayerIP(playerid, ip, sizeof(ip));
 		GetPlayerName(playerid, name, sizeof(name));
 		Audio_AddPlayer(playerid, ip, name);
 	}
-	if (Audio_g_OPC)
+	if(Audio_g_OPC)
 	{
 		return CallLocalFunction("Audio_OnPlayerConnect", "d", playerid);
 	}
@@ -159,11 +159,11 @@ forward Audio_OnPlayerConnect(playerid);
 
 public OnPlayerDisconnect(playerid, reason)
 {
-	if (!IsPlayerNPC(playerid))
+	if(!IsPlayerNPC(playerid))
 	{
 		Audio_RemovePlayer(playerid);
 	}
-	if (Audio_g_OPDC)
+	if(Audio_g_OPDC)
 	{
 		return CallLocalFunction("Audio_OnPlayerDisconnect", "dd", playerid, reason);
 	}
@@ -184,7 +184,7 @@ forward Audio_OnPlayerDisconnect(playerid, reason);
 stock Audio_SetPlayerName(playerid, name[])
 {
 	new value = SetPlayerName(playerid, name);
-	if (value > 0)
+	if(value > 0)
 	{
 		Audio_RenamePlayer(playerid, name);
 	}

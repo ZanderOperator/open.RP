@@ -98,7 +98,7 @@ static GetPlayerPhoneNumber(sqlid)
     cache_get_value_index_int(0, 0, number);
     cache_delete(result);
 
-    if (number == 0)
+    if(number == 0)
         format(numberstr, sizeof(numberstr), "Ne postoji");
     else
         format(numberstr, sizeof(numberstr), "%d", number);
@@ -112,7 +112,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 {
     inline OnPlayerMDCLoad()
     {
-        if (!cache_num_rows())
+        if(!cache_num_rows())
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik %s ne postoji!", playername);
 
         new
@@ -156,7 +156,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             tmpGunLic[12];
 
         ( housekey != INVALID_HOUSE_ID) && format(tmpAddress, 32, HouseInfo[housekey][hAdress]) || format(tmpAddress, 32, "N/A");
-        if (strlen(lookInfo[pLook]) > 60)
+        if(strlen(lookInfo[pLook]) > 60)
         {
             format(tmpLook, sizeof(tmpLook), "%.60s", lookInfo[pLook]);
             format(tmpLook2, sizeof(tmpLook2), "%s", lookInfo[pLook][60]);
@@ -224,7 +224,7 @@ static OnPlayerArrestDataLoad(playerid, const playername[])
     inline OnArrestLoad()
     {
         new buffer[2048];
-        if (!cache_num_rows())
+        if(!cache_num_rows())
         {
             format(buffer, sizeof(buffer), "~g~There_are_no_criminal_records!");
         }
@@ -281,7 +281,7 @@ static OnPlayerTicketsLoad(playerid, const playername[])
     inline OnTicketsLoad()
     {
         new buffer[2048];
-        if (!cache_num_rows())
+        if(!cache_num_rows())
         {
             format(buffer, sizeof(buffer), "~g~There_are_no_traffic_tickets!");
         }
@@ -345,7 +345,7 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
     inline OnCoVehicleLoad()
     {
         new buffer[2048];
-        if (!cache_num_rows())
+        if(!cache_num_rows())
         {
             format(buffer, sizeof(buffer), "~g~There_are_no_CO-Vehicles!");
         }
@@ -416,7 +416,7 @@ static OnPlayerAPBLoad(playerid, const playername[])
     inline OnAPBLoad()
     {
         new buffer[2048];
-        if (!cache_num_rows())
+        if(!cache_num_rows())
         {
             format(buffer, sizeof(buffer), "~g~Person_is_not_wanted!");
         }
@@ -474,7 +474,7 @@ static GetAPBList(playerid)
 {
     inline OnAPBListLoad()
     {
-        if (!cache_num_rows())
+        if(!cache_num_rows())
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "APB lista je prazna!");
 
         new
@@ -491,7 +491,7 @@ static GetAPBList(playerid)
         for (new i = 0; i < cache_num_rows(); i++)
         {
             lenleft = sizeof(buffer) - strlen(buffer);
-            if (lenleft < sizeof(motd))
+            if(lenleft < sizeof(motd))
                 break;
 
             cache_get_value_name_int(i, "id", aSqlId);
@@ -530,7 +530,7 @@ static GetSuspectAPB(playerid, const playername[])
 {
     inline OnAPBLoad()
     {
-        if (!cache_num_rows())
+        if(!cache_num_rows())
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesena osoba nije pronadjena u databazi.");
 
         new
@@ -547,7 +547,7 @@ static GetSuspectAPB(playerid, const playername[])
         for (new i = 0; i < cache_num_rows(); i++)
         {
             lenleft = sizeof(buffer) - strlen(buffer);
-            if (lenleft < sizeof(motd))
+            if(lenleft < sizeof(motd))
                 break;
 
             cache_get_value_name_int(i, "id", aSqlId);
@@ -591,7 +591,7 @@ static GetVehicleMDCInfo(playerid, vehicleid)
         VehOwner[MAX_PLAYER_NAME],
         tmpString[32];
 
-    if (strlen(VehicleInfo[vehicleid][vNumberPlate]) > 1)
+    if(strlen(VehicleInfo[vehicleid][vNumberPlate]) > 1)
         format(VehOwner, sizeof(VehOwner), ConvertSQLIDToName(VehicleInfo[vehicleid][vOwnerID]));
     else
         format(VehOwner, sizeof(VehOwner), "Unknown");
@@ -611,9 +611,9 @@ static GetVehicleMDCInfo(playerid, vehicleid)
     new motd[128];
     for (new i = 0; i < MAX_VEHICLE_TICKETS; i++)
     {
-        if (VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
+        if(VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
         {
-            if (i == 0)
+            if(i == 0)
             {
                 format(mdcString2, sizeof(mdcString2), " Ticket #1: %s - %d$", GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][0]), VehicleInfo[vehicleid][vTickets][0]);
                 strcat(mdcString2, motd, sizeof(mdcString2));
@@ -927,7 +927,7 @@ static CreateMDCTextDraws(playerid, skin, bool:type=false)
     PlayerTextDrawSetProportional(playerid, MDCOtherText[playerid], 1);
     PlayerTextDrawShow(playerid, MDCOtherText[playerid]);
 
-    if (!type)
+    if(!type)
     {
         MDCRecordButton[playerid] = CreatePlayerTextDraw(playerid, 195.566970, 382.118652, "CRIMINAL_RECORD");
         PlayerTextDrawLetterSize(playerid, MDCRecordButton[playerid], 0.178000, 1.139555);
@@ -1109,7 +1109,7 @@ static CreateVehMDCTextDraws(playerid, model, color1, color2, bool:type=false)
     PlayerTextDrawSetProportional(playerid, MDCOtherText[playerid], 1);
     PlayerTextDrawShow(playerid, MDCOtherText[playerid]);
 
-    if (!type)
+    if(!type)
     {
         MDCRecordButton[playerid] = CreatePlayerTextDraw(playerid, 195.566970, 382.118652, "CRIMINAL_RECORD");
         PlayerTextDrawLetterSize(playerid, MDCRecordButton[playerid], 0.178000, 1.139555);
@@ -1210,9 +1210,9 @@ static CreateVehMDCTextDraws(playerid, model, color1, color2, bool:type=false)
 
 hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-    if (clickedid == Text:INVALID_TEXT_DRAW)
+    if(clickedid == Text:INVALID_TEXT_DRAW)
     {
-        if (MDCBg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
+        if(MDCBg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
         {
             DestroyMDCTextDraws(playerid);
             CancelSelectTextDraw(playerid);
@@ -1223,14 +1223,14 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-    if (playertextid != PlayerText:INVALID_TEXT_DRAW)
+    if(playertextid != PlayerText:INVALID_TEXT_DRAW)
     {
-        if (playertextid == MDCCloseButton[playerid])
+        if(playertextid == MDCCloseButton[playerid])
         {
             DestroyMDCTextDraws(playerid);
             CancelSelectTextDraw(playerid);
         }
-        if (playertextid == MDCGeneralButton[playerid])
+        if(playertextid == MDCGeneralButton[playerid])
         {
             new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
@@ -1240,15 +1240,15 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 
             OnPlayerMDCDataLoad(playerid, TargetName[playerid], player_sqlid);
         }
-        if (playertextid == MDCTicketsButton[playerid])
+        if(playertextid == MDCTicketsButton[playerid])
         {
             OnPlayerTicketsLoad(playerid, TargetName[playerid]);
         }
-        if (playertextid == MDCAPBButton[playerid])
+        if(playertextid == MDCAPBButton[playerid])
         {
             OnPlayerAPBLoad(playerid, TargetName[playerid]);
         }
-        if (playertextid == MDCVehButton[playerid])
+        if(playertextid == MDCVehButton[playerid])
         {
             new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
@@ -1258,7 +1258,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 
             OnPlayerCoVehsLoad(playerid, player_sqlid);
         }
-        if (playertextid == MDCRecordButton[playerid])
+        if(playertextid == MDCRecordButton[playerid])
         {
             OnPlayerArrestDataLoad(playerid, TargetName[playerid]);
         }
@@ -1272,7 +1272,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_MDC_MAIN:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -1290,9 +1290,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_PHONE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 
-            if (strlen(inputtext) != 6)
+            if(strlen(inputtext) != 6)
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste krivi broj mobitela!");
                 return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
@@ -1301,7 +1301,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new mobilenumber = strval(inputtext);
             inline OnMobileNumberCheck()
             {
-                if (!cache_num_rows())
+                if(!cache_num_rows())
                     return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik sa brojem %d ne postoji!", mobilenumber);
 
                 new playersql,
@@ -1322,9 +1322,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_PLAYER:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 
-            if (strfind(inputtext, "_", true) == -1) 
+            if(strfind(inputtext, "_", true) == -1) 
                 return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
             
             new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
@@ -1339,11 +1339,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_VEHICLE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 
-            if (1 <= strval(inputtext) <= MAX_VEHICLES)
+            if(1 <= strval(inputtext) <= MAX_VEHICLES)
             {
-                if (!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, strval(inputtext))) 
+                if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, strval(inputtext))) 
                     return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Input", "Abort");
                 GetVehicleMDCInfo(playerid, strval(inputtext));
             }
@@ -1351,7 +1351,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_RECORD:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -1361,18 +1361,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 { // Brisanje
-                    if (PlayerFaction[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
+                    if(PlayerFaction[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
                     ShowPlayerDialog(playerid, DIALOG_MDC_DRECORD_ID, DIALOG_STYLE_INPUT, "MDC - PLAYER", "Unesite ID dosjea kojeg zelite obrisati:", "Input", "Abort");
                 }
             }
         }
         case DIALOG_MDC_CRECORD:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 
-            if (1 <= strlen(inputtext) <= MAX_PLAYER_NAME)
+            if(1 <= strlen(inputtext) <= MAX_PLAYER_NAME)
             {
-                if (strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
+                if(strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 
                 GetPlayerMDCRecord(playerid, inputtext);
             }
@@ -1380,21 +1380,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_DRECORD_ID:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_LIST, "MDC - PLAYER", "Provjera dosjea\nObrisi dosje", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_LIST, "MDC - PLAYER", "Provjera dosjea\nObrisi dosje", "Choose", "Abort");
 
             DeletingRecordID[playerid] = strval(inputtext);
             va_ShowPlayerDialog(playerid, DIALOG_MDC_DRECORD, DIALOG_STYLE_MSGBOX, "MDC - PLAYER", "Zelite li obrisati dosje ID %d?", "Da", "Ne", DeletingRecordID[playerid]);
         }
         case DIALOG_MDC_DRECORD:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             DeletePlayerMDCCrime(playerid, DeletingRecordID[playerid]);
         }
         //kazne
         case DIALOG_MDC_TICKET:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -1404,7 +1404,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 { // Brisanje
-                    if (PlayerFaction[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
+                    if(PlayerFaction[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
 
                     ShowPlayerDialog(playerid, DIALOG_MDC_DTICKET_ID, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ID dosjea kojeg zelite obrisati:", "Input", "Abort");
                 }
@@ -1412,11 +1412,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_CTICKET:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 
-            if (1 <= strlen(inputtext) <= MAX_PLAYER_NAME)
+            if(1 <= strlen(inputtext) <= MAX_PLAYER_NAME)
             {
-                if (strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
+                if(strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 
                 LoadPlayerTickets(playerid, inputtext);
             }
@@ -1424,20 +1424,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_MDC_DTICKET_ID:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_TICKET, DIALOG_STYLE_LIST, "MDC - TICKET", "Provjera kazni\nObrisi kaznu", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_MDC_TICKET, DIALOG_STYLE_LIST, "MDC - TICKET", "Provjera kazni\nObrisi kaznu", "Choose", "Abort");
 
             DeletingTicketID[playerid] = strval(inputtext);
             va_ShowPlayerDialog(playerid, DIALOG_MDC_DTICKET, DIALOG_STYLE_MSGBOX, "MDC - TICKET", "Zelite li obrisati ticket ID %d?", "Da", "Ne", DeletingTicketID[playerid]);
         }
         case DIALOG_MDC_DTICKET:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             DeletePlayerTicket(playerid, DeletingTicketID[playerid], true);
         }
         case DIALOG_APB_CHECK:
         {
-            if (strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_APB_CHECK, DIALOG_STYLE_INPUT, "* APB - CHECK", "Ispod unesite ime osobe kojoj zelite provjeriti APB\n[WARNING]: Ime mora biti napisano Ime_Prezime.", "Input", "Abort");
+            if(strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_APB_CHECK, DIALOG_STYLE_INPUT, "* APB - CHECK", "Ispod unesite ime osobe kojoj zelite provjeriti APB\n[WARNING]: Ime mora biti napisano Ime_Prezime.", "Input", "Abort");
 
             // TODO: use strcpy for copying strings
             format(TargetName[playerid], MAX_PLAYER_NAME, "%s", inputtext);
@@ -1461,8 +1461,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:mdc(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
-    if (!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+    if(!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
 
     ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni\nProvjera broja mobitela", "Choose", "Abort");
     return 1;
@@ -1470,31 +1470,31 @@ CMD:mdc(playerid, params[])
 
 CMD:apb(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
-    if (!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+    if(!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
 
     new
         pick[7],
         suspect[24],
         desc[57],
         type;
-    if (sscanf( params, "s[7] ", pick)) return SendClientMessage( playerid, -1, "KORISTENJE /apb [ list / add / delete / check]");
+    if(sscanf( params, "s[7] ", pick)) return SendClientMessage( playerid, -1, "KORISTENJE /apb [list / add / delete / check]");
 
-    if (!strcmp(pick, "list", true))
+    if(!strcmp(pick, "list", true))
     {
         return GetAPBList(playerid);
     }
-    if (!strcmp(pick, "add", true))
+    if(!strcmp(pick, "add", true))
     {
-        if (sscanf( params, "s[7]is[24]s[57]", pick, type, suspect, desc))
+        if(sscanf( params, "s[7]is[24]s[57]", pick, type, suspect, desc))
         {
-            SendClientMessage(playerid, COLOR_LIGHTBLUE, "KORISTI: /apb add [tip 1/2/3] [Ime_Prezime] [PenalCode-Zlocin]");
+            SendClientMessage(playerid, COLOR_LIGHTBLUE, "KORISTI: /apb add [tip 1/2/3][Ime_Prezime][PenalCode-Zlocin]");
             SendClientMessage(playerid, COLOR_WHITE, "Tip: 1. Ne naoruzan i nije opasan | 2. Srednje opasan | 3. Naoruzan i opasan");
             return 1;
         }
-        if (1 <= strlen(suspect) <= MAX_PLAYER_NAME)
+        if(1 <= strlen(suspect) <= MAX_PLAYER_NAME)
         {
-            if (strfind(suspect, "_", true) == -1) return SendClientMessage(playerid, COLOR_RED, "NAPOMENA: Mora biti s znakom '_'! ");
+            if(strfind(suspect, "_", true) == -1) return SendClientMessage(playerid, COLOR_RED, "NAPOMENA: Mora biti s znakom '_'! ");
 
             InsertAPBInfo(playerid, suspect, desc, type);
             SendClientMessage(playerid, COLOR_LIGHTBLUE, "*** APB RECORD ADDED ***");
@@ -1507,13 +1507,13 @@ CMD:apb(playerid, params[])
             SendRadioMessage(PlayerFaction[playerid][pMember], TEAM_YELLOW_COLOR, string);
         }
     }
-    else if (!strcmp(pick, "check", true))
+    else if(!strcmp(pick, "check", true))
         ShowPlayerDialog(playerid, DIALOG_APB_CHECK, DIALOG_STYLE_INPUT, "* APB - CHECK", "Ispod unesite ime osobe kojoj zelite provijeriti APB\n[WARNING]: Ime mora biti napisano Ime_Prezime.", "Input", "Abort");
-    else if (!strcmp(pick, "delete", true))
+    else if(!strcmp(pick, "delete", true))
     {
         new
             sqlid;
-        if (sscanf(params, "s[7]i", pick, sqlid)) return SendClientMessage( playerid, -1, "[ ? ]: /apb delete [id]");
+        if(sscanf(params, "s[7]i", pick, sqlid)) return SendClientMessage( playerid, -1, "[?]: /apb delete [id]");
         RemoveAPBInfo(sqlid);
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[APB] Obrisali ste APB slot %d!", sqlid);
     }

@@ -76,7 +76,7 @@ static stock GetFreeRacingCPSlot(playerid)
     new index = -1;
     for (new i = 0; i < MAX_RACING_CPS; i++)
     {
-        if (RacingInfo[playerid][rdPosX][i] == 0.0)
+        if(RacingInfo[playerid][rdPosX][i] == 0.0)
         {
             index = i;
             break;
@@ -90,7 +90,7 @@ static stock GetLastRacingCPSlot(playerid)
     new index = 0;
     for (new i = 0; i < MAX_RACING_CPS; i++)
     {
-        if (RacingInfo[playerid][rdPosX][i] != 0.0)
+        if(RacingInfo[playerid][rdPosX][i] != 0.0)
         {
             index = i;
             break;
@@ -104,7 +104,7 @@ static stock GetContestantFromPool(playerid)
     new index = -1;
     for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
     {
-        if (RacingInfo[playerid][rdContesters][i] == -1)
+        if(RacingInfo[playerid][rdContesters][i] == -1)
         {
             index = i;
             break;
@@ -118,7 +118,7 @@ static stock GetTotalContesters(playerid)
     new count = -1;
     for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
     {
-        if (RacingInfo[playerid][rdContesters][i] != -1)
+        if(RacingInfo[playerid][rdContesters][i] != -1)
         {
             count++;
         }
@@ -131,7 +131,7 @@ static stock GetRacingCpPool(playerid)
     new count = 0;
     for (new i = 0; i < MAX_RACING_CPS; i++)
     {
-        if (RacingInfo[playerid][rdPosX][i] != 0.0)
+        if(RacingInfo[playerid][rdPosX][i] != 0.0)
         {
             count++;
         }
@@ -144,7 +144,7 @@ static stock SendRacingMessage(playerid, const message[])
     for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
     {
         new racer = RacingInfo[playerid][rdContesters][i];
-        if (racer != -1 && InRace[racer])
+        if(racer != -1 && InRace[racer])
         {
             SendClientMessage(racer, COLOR_YELLOW, message);
         }
@@ -154,7 +154,7 @@ static stock SendRacingMessage(playerid, const message[])
 
 static stock CreateRacingCP(playerid, Float:x, Float:y, Float:z)
 {
-    if (!IsPlayerConnected(playerid))
+    if(!IsPlayerConnected(playerid))
     {
         return -1;
     }
@@ -168,11 +168,11 @@ static stock CreateRacingCP(playerid, Float:x, Float:y, Float:z)
 
 static stock CallRaceContestant(playerid, giveplayerid)
 {
-    if (!IsPlayerConnected(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste se spojili na server!");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pozvani igrac nije na serveru!");
+    if(!IsPlayerConnected(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste se spojili na server!");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pozvani igrac nije na serveru!");
 
     new index = GetContestantFromPool(playerid);
-    if (index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise zvati igrace na svoju utrku!");
+    if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise zvati igrace na svoju utrku!");
 
     RacingCallID[giveplayerid] = playerid;
     va_ShowPlayerDialog(giveplayerid, DIALOG_RACE_CALL, DIALOG_STYLE_MSGBOX, "RACING SYSTEM", "%s te poziva da dodjes u njegovu utrku. Zelite li uci?", "Yes", "No", GetName(playerid, false));
@@ -192,7 +192,7 @@ static stock StartPlayerRace(playerid)
     for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
     {
         new racer = RacingInfo[playerid][rdContesters][i];
-        if (racer == -1) continue;
+        if(racer == -1) continue;
 
         va_GameTextForPlayer(racer, "~y~%d", 1000, 4, RacingInfo[playerid][rdCounter]);
         PlayerPlaySound(racer, 1056, 0.0, 0.0, 0.0);
@@ -227,11 +227,11 @@ stock ResetPlayerRace(playerid, bool:reset=false)
 
     RaceCreated[playerid] = false;
 
-    if (reset)
+    if(reset)
     {
         for (new i = 0; i < MAX_RACING_CPS; i++)
         {
-            if (RacingInfo[playerid][rdPosX][i] != 0.0)
+            if(RacingInfo[playerid][rdPosX][i] != 0.0)
                 ResetPlayerRaceCP(playerid, i);
         }
     }
@@ -268,12 +268,12 @@ timer StopRacingSound[8000](playerid)
 timer RacingCounter[1000](playerid)
 {
     RacingInfo[playerid][rdCounter]--;
-    if (RacingInfo[playerid][rdCounter] != 0)
+    if(RacingInfo[playerid][rdCounter] != 0)
     {
         for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
         {
             new racer = RacingInfo[playerid][rdContesters][i];
-            if (racer == -1) continue;
+            if(racer == -1) continue;
 
             va_GameTextForPlayer(racer, "~y~%d", 1000, 4, RacingInfo[playerid][rdCounter]);
             PlayerPlaySound(racer, 1056, 0.0, 0.0, 0.0);
@@ -289,7 +289,7 @@ timer RacingCounter[1000](playerid)
         for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
         {
             new racer = RacingInfo[playerid][rdContesters][i];
-            if (racer == -1) continue;
+            if(racer == -1) continue;
 
             GameTextForPlayer(racer, "~g~GO GO GO", 2500, 4);
             PlayerPlaySound(racer, 1057, 0.0, 0.0, 0.0);
@@ -317,9 +317,9 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     InRace[playerid] = false;
 
-    if (RaceCreated[playerid])
+    if(RaceCreated[playerid])
     {
-        SendRacingMessage(playerid, "[ ! ] Trka je zavrsila!");
+        SendRacingMessage(playerid, "[!] Trka je zavrsila!");
         ResetPlayerRace(playerid, true);
         ResetRacerVars(playerid);
     }
@@ -330,7 +330,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerEnterRaceCP(playerid)
 {
-    if (!InRace[playerid])
+    if(!InRace[playerid])
     {
         return 1;
     }
@@ -339,12 +339,12 @@ hook OnPlayerEnterRaceCP(playerid)
         giveplayerid = RaceAuthor   [playerid],
         currentCP    = CurrentRaceCP[playerid];
 
-    if (currentCP != RacingInfo[giveplayerid][rdEndCP])
+    if(currentCP != RacingInfo[giveplayerid][rdEndCP])
     {
         PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 
         currentCP++;
-        if (currentCP == RacingInfo[giveplayerid][rdEndCP])
+        if(currentCP == RacingInfo[giveplayerid][rdEndCP])
         {
             SetPlayerRaceCheckpoint(playerid, 1, RacingInfo[giveplayerid][rdPosX][currentCP], RacingInfo[giveplayerid][rdPosY][currentCP], RacingInfo[giveplayerid][rdPosZ][currentCP], 0.0, 0.0, 0.0, RACING_CP_SIZE);
         }
@@ -360,38 +360,38 @@ hook OnPlayerEnterRaceCP(playerid)
 
         // TODO: try and refactor this, reduce code duplication
         new string[54];
-        if (RacingInfo[giveplayerid][rdFinished][0] == -1)
+        if(RacingInfo[giveplayerid][rdFinished][0] == -1)
         {
             RacingInfo[giveplayerid][rdFinished][0] = playerid;
 
-            format(string, sizeof(string), "[ ! ] %s je zavrsio kao prvi!", GetName(playerid, false));
+            format(string, sizeof(string), "[!] %s je zavrsio kao prvi!", GetName(playerid, false));
             SendRacingMessage(giveplayerid, string);
         }
-        else if (RacingInfo[giveplayerid][rdFinished][1] == -1)
+        else if(RacingInfo[giveplayerid][rdFinished][1] == -1)
         {
             RacingInfo[giveplayerid][rdFinished][1] = playerid;
 
-            format(string, sizeof(string), "[ ! ] %s je zavrsio kao drugi!", GetName(playerid, false));
+            format(string, sizeof(string), "[!] %s je zavrsio kao drugi!", GetName(playerid, false));
             SendRacingMessage(giveplayerid, string);
         }
-        else if (RacingInfo[giveplayerid][rdFinished][2] == -1)
+        else if(RacingInfo[giveplayerid][rdFinished][2] == -1)
         {
             RacingInfo[giveplayerid][rdFinished][2] = playerid;
 
-            format(string, sizeof(string), "[ ! ] %s je zavrsio kao treci!", GetName(playerid, false));
+            format(string, sizeof(string), "[!] %s je zavrsio kao treci!", GetName(playerid, false));
             SendRacingMessage(giveplayerid, string);
         }
-        else if (RacingInfo[giveplayerid][rdFinished][3] == -1)
+        else if(RacingInfo[giveplayerid][rdFinished][3] == -1)
         {
             RacingInfo[giveplayerid][rdFinished][3] = playerid;
 
-            format(string, sizeof(string), "[ ! ] %s je zavrsio kao cetvrti!", GetName(playerid, false));
+            format(string, sizeof(string), "[!] %s je zavrsio kao cetvrti!", GetName(playerid, false));
             SendRacingMessage(giveplayerid, string);
         }
 
-        if (++RacingInfo[giveplayerid][rdFnsdRacers] == GetTotalContesters(giveplayerid))
+        if(++RacingInfo[giveplayerid][rdFnsdRacers] == GetTotalContesters(giveplayerid))
         {
-            SendRacingMessage(giveplayerid, "[ ! ] Trka je zavrsila!");
+            SendRacingMessage(giveplayerid, "[!] Trka je zavrsila!");
             ResetPlayerRace(giveplayerid, true);
         }
 
@@ -412,7 +412,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_RACE_MAIN:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             switch (listitem)
             {
@@ -424,11 +424,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     new
                         index = GetFreeRacingCPSlot(playerid);
-                    if (index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Popunili ste vas inventory!");
+                    if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Popunili ste vas inventory!");
 
                     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dodali ste CP u slot %d!", CreateRacingCP(playerid, X, Y, Z)+1);
 
-                    if (RacingInfo[playerid][rdContesters][0] <= 0)
+                    if(RacingInfo[playerid][rdContesters][0] <= 0)
                     {
                         RaceCreated[playerid] = true;
 
@@ -452,7 +452,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     buffer[0] = EOS;
                     for (new i = 0; i < MAX_RACING_CPS; i++)
                     {
-                        if (RacingInfo[playerid][rdPosX][i] != 0.0)
+                        if(RacingInfo[playerid][rdPosX][i] != 0.0)
                         {
                             format(row, sizeof(row), "#%d | %s (%.2f, %.2f, %.2f)\n",
                                 i + 1,
@@ -469,7 +469,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_RACE_DCP:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Choose", "Abort");
 
             RacingDialogID[playerid] = listitem;
             va_ShowPlayerDialog(playerid, DIALOG_RACE_DCPS, DIALOG_STYLE_MSGBOX, "RACING SYSTEM - BRISANJE CPa", "Zelite li obrisati checkpoint u slotu %d?", "Yes", "No");
@@ -477,7 +477,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_RACE_DCPS:
         {
-            if (!response)
+            if(!response)
             {
                 new buffer[1024];
                 new row[90];
@@ -485,7 +485,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 buffer[0] = EOS;
                 for (new i = 0; i < MAX_RACING_CPS; i++)
                 {
-                    if (RacingInfo[playerid][rdPosX][i] != 0.0)
+                    if(RacingInfo[playerid][rdPosX][i] != 0.0)
                     {
                         format(row, sizeof(row), "#%d | %s (%.2f, %.2f, %.2f)\n",
                             i + 1,
@@ -503,7 +503,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Obrisali ste checkpoint u slotu #%d!", RacingDialogID[playerid]+1);
             RacingDialogID[playerid] = -1;
 
-            if (!GetRacingCpPool(playerid))
+            if(!GetRacingCpPool(playerid))
             {
                RaceCreated[playerid] = false;
             }
@@ -511,13 +511,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_RACE_CALL:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new
                 giveplayerid = RacingCallID[playerid],
                 index = GetContestantFromPool(giveplayerid);
-            if (index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Utrka je puna!");
-            if (RacingInfo[giveplayerid][rdStarted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Utrka je vec pocela!");
+            if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Utrka je puna!");
+            if(RacingInfo[giveplayerid][rdStarted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Utrka je vec pocela!");
 
             RacingInfo[giveplayerid][rdContesters][index] = playerid;
 
@@ -526,7 +526,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             CurrentRaceCP[playerid] = 0;
             InRace       [playerid] = false;
 
-            va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s je prihvatio vas poziv za utrku! Za pokretanje utrke idite /race start.", GetName(playerid, true));
+            va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s je prihvatio vas poziv za utrku! Za pokretanje utrke idite /race start.", GetName(playerid, true));
             SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Prihvatili ste poziv za trku od %s!", GetName(giveplayerid, true));
             return 1;
         }
@@ -547,37 +547,37 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:race(playerid, params[])
 {
-    if (!IsARacer(playerid) || PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rRace])
+    if(!IsARacer(playerid) || PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rRace])
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik rejsera");
         return 1;
     }
 
     new param[8];
-    if (sscanf(params, "s[8]", param))
+    if(sscanf(params, "s[8]", param))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race [menu/invite/start]");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /race [menu/invite/start]");
         return 1;
     }
 
-    if (!strcmp(param, "menu", true))
+    if(!strcmp(param, "menu", true))
     {
         ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Choose", "Abort");
     }
-    else if (!strcmp(param, "invite", true))
+    else if(!strcmp(param, "invite", true))
     {
         new giveplayerid;
-        if (sscanf(params, "s[8]i", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race invite [playerid / Part of name]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste nevaljan playerid!");
-        if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe zvati, vase je mjesto osigurano!");
+        if(sscanf(params, "s[8]i", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /race invite [playerid / Part of name]");
+        if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste nevaljan playerid!");
+        if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe zvati, vase je mjesto osigurano!");
 
         CallRaceContestant(playerid, giveplayerid);
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pozvali %s u utrku!", GetName(giveplayerid,true));
     }
-    else if (!strcmp(param, "start", true))
+    else if(!strcmp(param, "start", true))
     {
-        if (RacingInfo[playerid][rdPosX][1] == 0.0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate dodati minimalno 2 CPa da mozete pokreniti trku!");
-        if (RacingInfo[playerid][rdStarted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Utrka je vec pocela!");
+        if(RacingInfo[playerid][rdPosX][1] == 0.0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate dodati minimalno 2 CPa da mozete pokreniti trku!");
+        if(RacingInfo[playerid][rdStarted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Utrka je vec pocela!");
 
         StartPlayerRace(playerid);
     }

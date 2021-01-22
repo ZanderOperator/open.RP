@@ -140,7 +140,7 @@ hook function LoadPlayerStats(playerid)
 
 stock SavePlayerExperience(playerid)
 {
-	if( !SafeSpawned[playerid] )	
+	if(!SafeSpawned[playerid] )	
 		return 1;
 	
 	mysql_fquery(g_SQL, 
@@ -424,13 +424,13 @@ CMD:experience(playerid, params[])
 	new choice[12], playername[24], giveplayerid, bool:online=false;
 	if(sscanf(params, "s[12] ", choice)) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] check, give, buy");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /experience [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[!] check, give, buy");
 		if(PlayerInfo[playerid][pAdmin] == 1338)
-			SendClientMessage(playerid, COLOR_RED, "[ ! ](admin) reset, bestplayers, setexp");
+			SendClientMessage(playerid, COLOR_RED, "[!](admin) reset, bestplayers, setexp");
 		return 1;
 	}
-	if( !strcmp(choice, "bestplayers", true) )
+	if(!strcmp(choice, "bestplayers", true))
 	{
 		if(PlayerInfo[playerid][pAdmin] < 1338)
 		{
@@ -440,16 +440,16 @@ CMD:experience(playerid, params[])
 		ShowPlayerDialog(playerid, DIALOG_EXP_CHOOSE, DIALOG_STYLE_LIST, "Odaberite kriterij po kojem zelite vidjeti EXP:", "Trenutni EXP\nOverall EXP", "Pick", "Exit");
 		return 1;
 	}
-	if( !strcmp(choice, "reset", true) )
+	if(!strcmp(choice, "reset", true))
 	{
 		if(PlayerInfo[playerid][pAdmin] < 1338)
 		{
 			SendErrorMessage(playerid, "Niste Head Administrator!");
 			return 1;
 		}
-		if (sscanf(params, "s[12]u", choice, giveplayerid))
+		if(sscanf(params, "s[12]u", choice, giveplayerid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience reset [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /experience reset [Ime_Prezime]");
 			return 1;
 		}
 		ResetPlayerExperience(giveplayerid);
@@ -458,7 +458,7 @@ CMD:experience(playerid, params[])
 		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "Administrator %s Vam je resetirao sve EXP statse.", GetName(playerid, true));
 		return 1;
 	}	
-	if( !strcmp(choice, "setexp", true) )
+	if(!strcmp(choice, "setexp", true))
 	{
 		new exps;
 		if(PlayerInfo[playerid][pAdmin] < 1338)
@@ -466,9 +466,9 @@ CMD:experience(playerid, params[])
 			SendErrorMessage(playerid, "Niste Head Administrator!");
 			return 1;
 		}
-		if (sscanf(params, "s[12]ui", choice, giveplayerid, exps))
+		if(sscanf(params, "s[12]ui", choice, giveplayerid, exps))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience setexp [playerid] [exp]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /experience setexp [playerid][exp]");
 			return 1;
 		}
 		if(!IsPlayerConnected(giveplayerid)) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
@@ -480,16 +480,16 @@ CMD:experience(playerid, params[])
 		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "Administrator %s Vam je postavio EXP statse na %d.", GetName(playerid, true), exps);
 		return 1;
 	}
-	if( !strcmp(choice, "check", true) )
+	if(!strcmp(choice, "check", true))
 	{
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno imate %d EXP-a na trosenje. Overall: [%d EXP]", ExpInfo[playerid][ePoints], ExpInfo[playerid][eAllPoints]);
 		return 1;
 	}	
-	if( !strcmp(choice, "give", true) )
+	if(!strcmp(choice, "give", true))
 	{
-		if (sscanf(params, "s[12]s[24]", choice, playername))
+		if(sscanf(params, "s[12]s[24]", choice, playername))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience give [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /experience give [Ime_Prezime]");
 			return 1;
 		}
 		if(!CanPlayerGiveExp(playerid))
@@ -543,7 +543,7 @@ CMD:experience(playerid, params[])
 			return 1;
 		}
 	}
-	if( !strcmp(choice, "buy", true) )
+	if(!strcmp(choice, "buy", true))
 	{
 		new expbuyinfo[264];
 		format(expbuyinfo, sizeof(expbuyinfo), "{3C95C2}[%d EXP] - Level Up.\n{3C95C2}[%d EXP] - %d Furniture Premium(700 slotova).\n{3C95C2}[%d EXP] - VIP Premium Bronze.\n{3C95C2}[%d EXP] - VIP Premium Silver.\n{3C95C2}[%d EXP] - VIP Premium  Gold.", 

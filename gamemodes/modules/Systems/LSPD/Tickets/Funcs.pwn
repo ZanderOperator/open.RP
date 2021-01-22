@@ -89,7 +89,7 @@ stock GetVehicleTicketReason(ticketsql)
         Cache:result;
 
     result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT reason FROM cocars_tickets WHERE id = '%d'", ticketsql));
-    if (result == MYSQL_INVALID_CACHE)
+    if(result == MYSQL_INVALID_CACHE)
         format(reason, sizeof(reason), "None");
     else
         cache_get_value_index(0, 0, reason);
@@ -126,7 +126,7 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 {
     mysql_fquery(g_SQL, "DELETE FROM tickets WHERE id = '%d'", sqlid);
 
-    if (mdc_notification)
+    if(mdc_notification)
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);
 }
 
@@ -146,7 +146,7 @@ stock LoadVehicleTickets(vehicleid)
 
 Public:LoadingVehicleTickets(vehicleid)
 {
-    if (cache_num_rows())
+    if(cache_num_rows())
     {
         for (new i = 0; i < cache_num_rows(); i++)
         {
@@ -163,7 +163,7 @@ stock LoadPlayerTickets(playerid, const playername[])
 {
     inline OnTicketsLoad()
     {
-        if (!cache_num_rows())
+        if(!cache_num_rows())
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Entered citizen has no fines registered!");
 
         new
@@ -211,7 +211,7 @@ stock ShowVehicleTickets(playerid, vehicleid)
 
     for (new i = 0; i < MAX_VEHICLE_TICKETS; i++)
     {
-        if (VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
+        if(VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
         {
             format(motd, sizeof(motd), "ID #%d | Fine: %s | Reason: %s\n",
                 (i+1),

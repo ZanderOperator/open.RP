@@ -75,7 +75,7 @@ enum E_PLAYER_DATA
 	pVoted
 }
 new 
-	PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+	PlayerInfo[MAX_PLAYERS][E_PLAYER_DATA];
 
 enum E_P_COOLDOWN_INFO
 {
@@ -84,7 +84,7 @@ enum E_P_COOLDOWN_INFO
 	pAmmuCool
 }
 new 
-	PlayerCoolDown[ MAX_PLAYERS ][ E_P_COOLDOWN_INFO ];
+	PlayerCoolDown[MAX_PLAYERS][E_P_COOLDOWN_INFO];
 
 enum E_PLAYER_INVENTORY
 {
@@ -98,7 +98,7 @@ enum E_PLAYER_INVENTORY
 	pBoomBox
 }
 new 	
-	PlayerInventory[ MAX_PLAYERS ][ E_PLAYER_INVENTORY ];
+	PlayerInventory[MAX_PLAYERS][E_PLAYER_INVENTORY];
 
 enum E_PLAYER_APPEARANCE
 {
@@ -109,7 +109,7 @@ enum E_PLAYER_APPEARANCE
 	pLook[120]
 }
 new 
-	PlayerAppearance[ MAX_PLAYERS ][ E_PLAYER_APPEARANCE ];
+	PlayerAppearance[MAX_PLAYERS][E_PLAYER_APPEARANCE];
 
 enum E_P_KEYS_INFO
 {
@@ -124,7 +124,7 @@ enum E_P_KEYS_INFO
 	pVehicleKey
 }
 new 
-	PlayerKeys[ MAX_PLAYERS ][ E_P_KEYS_INFO ];
+	PlayerKeys[MAX_PLAYERS][E_P_KEYS_INFO];
 
 enum E_P_DEATH_INFO
 {
@@ -136,7 +136,7 @@ enum E_P_DEATH_INFO
 	pDeathVW
 }
 new 
-	PlayerDeath[ MAX_PLAYERS ][ E_P_DEATH_INFO ];
+	PlayerDeath[MAX_PLAYERS][E_P_DEATH_INFO];
 
 enum E_P_CRASH_INFO
 {
@@ -150,7 +150,7 @@ enum E_P_CRASH_INFO
 	Float:pCrashZ
 }
 new 
-	PlayerCrash[ MAX_PLAYERS ][ E_P_CRASH_INFO ];
+	PlayerCrash[MAX_PLAYERS][E_P_CRASH_INFO];
 
 enum E_P_DRUG_INFO
 {
@@ -159,7 +159,7 @@ enum E_P_DRUG_INFO
 	pDrugOrder
 }
 new 
-	PlayerDrugStatus[ MAX_PLAYERS ][ E_P_DRUG_INFO ];
+	PlayerDrugStatus[MAX_PLAYERS][E_P_DRUG_INFO];
 
 enum E_PAYDAY_INFO
 {
@@ -171,7 +171,7 @@ enum E_PAYDAY_INFO
 	pPayDayDate[32]
 }
 new 
-	PaydayInfo[ MAX_PLAYERS ][ E_PAYDAY_INFO ];
+	PaydayInfo[MAX_PLAYERS][E_PAYDAY_INFO];
 
 enum E_P_JOB_INFO
 {
@@ -180,7 +180,7 @@ enum E_P_JOB_INFO
 	pFreeWorks
 }
 new 
-	PlayerJob[ MAX_PLAYERS ][ E_P_JOB_INFO ];
+	PlayerJob[MAX_PLAYERS][E_P_JOB_INFO];
 
 enum E_P_MOBILE_INFO
 {
@@ -192,7 +192,7 @@ enum E_P_MOBILE_INFO
 	pCryptoNumber
 }
 new 
-	PlayerMobile[ MAX_PLAYERS ][ E_P_MOBILE_INFO ];
+	PlayerMobile[MAX_PLAYERS][E_P_MOBILE_INFO];
 
 enum E_VIP_INFO
 {
@@ -202,7 +202,7 @@ enum E_VIP_INFO
 	pDonatorVehPerms,
 }
 new 	
-	PlayerVIP[ MAX_PLAYERS ][ E_VIP_INFO ];
+	PlayerVIP[MAX_PLAYERS][E_VIP_INFO];
 
 enum E_LICENSES_INFO
 {
@@ -214,7 +214,7 @@ enum E_LICENSES_INFO
 	pPassport
 }
 new 
-	LicenseInfo[ MAX_PLAYERS ][ E_LICENSES_INFO ];
+	LicenseInfo[MAX_PLAYERS][E_LICENSES_INFO];
 
 enum E_P_JAIL_INFO
 {
@@ -225,7 +225,7 @@ enum E_P_JAIL_INFO
 	pJailJob
 }
 new 	
-	PlayerJail[ MAX_PLAYERS ][ E_P_JAIL_INFO ];
+	PlayerJail[MAX_PLAYERS][E_P_JAIL_INFO];
 
 enum E_SAVINGS_INFO
 {
@@ -235,7 +235,7 @@ enum E_SAVINGS_INFO
 	pSavingsMoney,
 } 
 new 
-	PlayerSavings[ MAX_PLAYERS ][ E_SAVINGS_INFO ];
+	PlayerSavings[MAX_PLAYERS][E_SAVINGS_INFO];
 
 enum E_CREDIT_INFO
 {
@@ -247,7 +247,7 @@ enum E_CREDIT_INFO
 	cTimestamp
 }
 new 
-	CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
+	CreditInfo[MAX_PLAYERS][E_CREDIT_INFO];
 
 enum E_PLAYER_FACTION_INFO
 {
@@ -256,7 +256,7 @@ enum E_PLAYER_FACTION_INFO
 	pRank
 }
 new 
-	PlayerFaction[ MAX_PLAYERS ][ E_PLAYER_FACTION_INFO ];
+	PlayerFaction[MAX_PLAYERS][E_PLAYER_FACTION_INFO];
 
 enum E_P_RADIO_INFO
 {
@@ -266,7 +266,7 @@ enum E_P_RADIO_INFO
 	pMainSlot
 }
 new 
-	PlayerRadio[ MAX_PLAYERS ][ E_P_RADIO_INFO ];
+	PlayerRadio[MAX_PLAYERS][E_P_RADIO_INFO];
 
 enum E_P_ADMIN_MSG
 {
@@ -275,7 +275,7 @@ enum E_P_ADMIN_MSG
 	bool:pAdmMsgConfirm,
 }
 new 
-	PlayerAdminMessage[ MAX_PLAYERS ][ E_P_ADMIN_MSG ];
+	PlayerAdminMessage[MAX_PLAYERS][E_P_ADMIN_MSG];
 
 enum E_PLAYER_HEALTH
 {
@@ -284,7 +284,7 @@ enum E_PLAYER_HEALTH
 	Float:pHunger
 }
 new 	
-	PlayerHealth[ MAX_PLAYERS ][ E_PLAYER_HEALTH ];
+	PlayerHealth[MAX_PLAYERS][E_PLAYER_HEALTH];
 
 enum E_PLAYER_GYM_INFO
 {
@@ -294,7 +294,7 @@ enum E_PLAYER_GYM_INFO
 	pFightStyle
 }
 new 	
-	PlayerGym[ MAX_PLAYERS ][ E_PLAYER_GYM_INFO ];
+	PlayerGym[MAX_PLAYERS][E_PLAYER_GYM_INFO];
 
 enum E_PLAYER_FISH_INFO
 {
@@ -303,7 +303,7 @@ enum E_PLAYER_FISH_INFO
 	pFishingSkill,	
 }
 new 
-	PlayerFish[ MAX_PLAYERS ][ E_PLAYER_FISH_INFO ];
+	PlayerFish[MAX_PLAYERS][E_PLAYER_FISH_INFO];
 
 enum E_EXP_INFO
 {
@@ -315,7 +315,7 @@ enum E_EXP_INFO
 	eMonthPayDays
 }
 new 
-	ExpInfo[ MAX_PLAYERS ][ E_EXP_INFO ];
+	ExpInfo[MAX_PLAYERS][E_EXP_INFO];
 
 enum E_OLDPOS_INFO
 {
@@ -355,7 +355,7 @@ enum E_PHONE_NEWS_DATA
 	npNumber
 }
 new 
-	NewsPhone[ MAX_PHONE_LINES ][ E_PHONE_NEWS_DATA ];
+	NewsPhone[MAX_PHONE_LINES][E_PHONE_NEWS_DATA];
 
 enum E_CRIME_DATA
 {
@@ -376,7 +376,7 @@ enum E_SAFE_EXIT
 	Float:giRZ
 }
 new 
-	PlayerSafeExit[ MAX_PLAYERS ][E_SAFE_EXIT];
+	PlayerSafeExit[MAX_PLAYERS][E_SAFE_EXIT];
 
 enum E_PLAYER_PACKAGES 
 {
@@ -497,7 +497,7 @@ enum E_GARAGE_DATA
 	gHouseID
 }
 new 
-	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
+	GarageInfo[MAX_GARAGES][E_GARAGE_DATA];
 
 /*
 
@@ -552,29 +552,29 @@ enum E_HOUSES_INFO
 	hRadio,
 	hTV,
 	hMicrowave,
-	hExists[ MAX_FURNITURE_SLOTS ],
+	hExists[MAX_FURNITURE_SLOTS],
 	bool:hFurLoaded,
 	hFurCounter,
 	hFurSlots,
-	hFurSQL[ MAX_FURNITURE_SLOTS ],
-	hFurModelid[ MAX_FURNITURE_SLOTS ],
-	hFurObjectid[ MAX_FURNITURE_SLOTS ],
-	hFurDoor[ MAX_FURNITURE_SLOTS ],
-	Float:hFurDoorZ[ MAX_FURNITURE_SLOTS ],
-	hFurDoorLckd[ MAX_FURNITURE_SLOTS ],
-	Float:hFurPosX[ MAX_FURNITURE_SLOTS ],
-	Float:hFurPosY[ MAX_FURNITURE_SLOTS ],
-	Float:hFurPosZ[ MAX_FURNITURE_SLOTS ],
-	Float:hFurRotX[ MAX_FURNITURE_SLOTS ],
-	Float:hFurRotY[ MAX_FURNITURE_SLOTS ],
-	Float:hFurRotZ[ MAX_FURNITURE_SLOTS ],
-	hFurTxtId[ MAX_FURNITURE_SLOT_FIELDS ],
-	hFurColId[ MAX_FURNITURE_SLOT_FIELDS ]
+	hFurSQL[MAX_FURNITURE_SLOTS],
+	hFurModelid[MAX_FURNITURE_SLOTS],
+	hFurObjectid[MAX_FURNITURE_SLOTS],
+	hFurDoor[MAX_FURNITURE_SLOTS],
+	Float:hFurDoorZ[MAX_FURNITURE_SLOTS],
+	hFurDoorLckd[MAX_FURNITURE_SLOTS],
+	Float:hFurPosX[MAX_FURNITURE_SLOTS],
+	Float:hFurPosY[MAX_FURNITURE_SLOTS],
+	Float:hFurPosZ[MAX_FURNITURE_SLOTS],
+	Float:hFurRotX[MAX_FURNITURE_SLOTS],
+	Float:hFurRotY[MAX_FURNITURE_SLOTS],
+	Float:hFurRotZ[MAX_FURNITURE_SLOTS],
+	hFurTxtId[MAX_FURNITURE_SLOT_FIELDS],
+	hFurColId[MAX_FURNITURE_SLOT_FIELDS]
 }
 new 
 	HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
 
- // Hacking the compiler to have HouseInfo[ houseid ][ hFurXXX ][ 0 ][ 0 ]
+ // Hacking the compiler to have HouseInfo[houseid][hFurXXX][0][0]
 #define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] 
 #define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)]
 
@@ -707,20 +707,20 @@ enum E_BIZNIS_INFO
 	bEnterPickup,
 	bEnterCP,	
 	bFurSlots,
-	bFurSQL[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	bFurModelid[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	bFurObjectid[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	bFurDoor[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurDoorZ[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	bFurDoorLckd[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurPosX[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurPosY[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurPosZ[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurRotX[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurRotY[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	Float:bFurRotZ[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
-	bFurTxtId[ MAX_BIZNIS_FURNITURE_SLOTS ],
-	bFurColId[ MAX_BIZNIS_FURNITURE_SLOTS ],
+	bFurSQL[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	bFurModelid[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	bFurObjectid[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	bFurDoor[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurDoorZ[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	bFurDoorLckd[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurPosX[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurPosY[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurPosZ[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurRotX[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurRotY[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	Float:bFurRotZ[BIZZ_FURNITURE_VIP_GOLD_OBJCTS],
+	bFurTxtId[MAX_BIZNIS_FURNITURE_SLOTS],
+	bFurColId[MAX_BIZNIS_FURNITURE_SLOTS],
 	bool:bFurLoaded,
     bGasPrice
 }
@@ -1018,7 +1018,7 @@ enum E_CITY_DATA
 	cTax
 }
 new 
-	CityInfo[ E_CITY_DATA ];
+	CityInfo[E_CITY_DATA];
 
 /*
 

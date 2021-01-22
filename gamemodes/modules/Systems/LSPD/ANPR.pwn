@@ -64,11 +64,11 @@ timer ANPRTimer[2000](playerid)
 
     foreach(new i : StreamedVehicle[playerid])
     {
-        if (IsPlayerInVehicle(playerid, i))
+        if(IsPlayerInVehicle(playerid, i))
             continue;
         
         GetVehiclePos(i, vX, vY, vZ);
-        if (GetPlayerDistanceFromPoint(playerid, vX, vY, vZ) <= 20.0)
+        if(GetPlayerDistanceFromPoint(playerid, vX, vY, vZ) <= 20.0)
         {
             new count = 0;
 
@@ -82,20 +82,20 @@ timer ANPRTimer[2000](playerid)
             fPX += floatmul(fVX, 5.0);
             fPY += floatmul(fVY, 5.0);
 
-            if (GetPlayerDistanceFromPoint(playerid, fPX, fPY, vZ) <= 15.0)
+            if(GetPlayerDistanceFromPoint(playerid, fPX, fPY, vZ) <= 15.0)
             {
-                if (VehicleInfo[i][vTickets][0] != 0)
+                if(VehicleInfo[i][vTickets][0] != 0)
                     count++;
-                if (VehicleInfo[i][vTickets][1] != 0)
+                if(VehicleInfo[i][vTickets][1] != 0)
                     count++;
-                if (VehicleInfo[i][vTickets][2]  != 0)
+                if(VehicleInfo[i][vTickets][2]  != 0)
                     count++;
-                if (VehicleInfo[i][vTickets][3] != 0)
+                if(VehicleInfo[i][vTickets][3] != 0)
                     count++;
-                if (VehicleInfo[i][vTickets][4] != 0)
+                if(VehicleInfo[i][vTickets][4] != 0)
                     count++;
 
-                if (VehicleInfo[i][vNumberPlate][0] != '0')
+                if(VehicleInfo[i][vNumberPlate][0] != '0')
                 {
                     format(string, sizeof(string), "~y~Registracija: ~w~%s~n~~y~Owner: ~w~%s~n~~y~Kazne: ~w~%d",
                         VehicleInfo[i][vNumberPlate],
@@ -169,19 +169,19 @@ static CreateANPRTextDraw(playerid)
 
 static DestroyANPRTextDraw(playerid)
 {
-    if (AnprBackground[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(AnprBackground[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, AnprBackground[playerid]);
         AnprBackground[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
 
-    if (AnprTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(AnprTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, AnprTitle[playerid]);
         AnprTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
 
-    if (AnprInfo[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if(AnprInfo[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
         PlayerTextDrawDestroy(playerid, AnprInfo[playerid]);
         AnprInfo[playerid] = PlayerText:INVALID_TEXT_DRAW;
@@ -215,7 +215,7 @@ stock EnableANPRForPlayer(playerid)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if (Player_HasANPRActivated(playerid))
+    if(Player_HasANPRActivated(playerid))
     {
         DisableANPRForPlayer(playerid);
     }
@@ -224,9 +224,9 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER)
+    if(newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER)
     {
-        if (Player_HasANPRActivated(playerid))
+        if(Player_HasANPRActivated(playerid))
         {
             DisableANPRForPlayer(playerid);
         }
@@ -247,11 +247,11 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 CMD:anpr(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
-    if (!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+    if(!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
 
     new string[80];
-    if (!Player_HasANPRActivated(playerid))
+    if(!Player_HasANPRActivated(playerid))
     {
         EnableANPRForPlayer(playerid);
 

@@ -8,8 +8,8 @@ enum E_PLACED_OBJECTS_DATA
 {
 	bool:poPlaced,
 	poModelid,
-	Float:poPos[ 3 ],
-	Float:poRot[ 3 ],
+	Float:poPos[3],
+	Float:poRot[3],
 	poViwo,
 	poInterior,
 	poObjectid
@@ -91,12 +91,12 @@ stock UpdateStreamerAroundPlayer(playerid)
 
 stock static CreatePlayerObjectsObject(playerid, modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	if( playerid == INVALID_PLAYER_ID ) return 0;
+	if(playerid == INVALID_PLAYER_ID ) return 0;
 	new
 		index 	= GetFreeObjectSlot(playerid);
-	if( index == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
+	if(index == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 	PlayerObjectsInfo[playerid][index][poPlaced] 		= true;
-	PlayerObjectsInfo[playerid][index][poModelid ] 	= modelid;
+	PlayerObjectsInfo[playerid][index][poModelid] 	= modelid;
 	PlayerObjectsInfo[playerid][index][poPos][0]		= x;
 	PlayerObjectsInfo[playerid][index][poPos][1]		= y;
 	PlayerObjectsInfo[playerid][index][poPos][2]		= z;
@@ -116,13 +116,13 @@ stock static CreatePlayerObjectsObject(playerid, modelid, Float:x, Float:y, Floa
 
 stock static SetPlayerObjectsObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	if( playerid == INVALID_PLAYER_ID ) 								return 0;
-	if( !IsValidPlayerObject(playerid, PlayerEditPOObject[ playerid ]) ) 	return 0;
+	if(playerid == INVALID_PLAYER_ID ) 								return 0;
+	if(!IsValidPlayerObject(playerid, PlayerEditPOObject[playerid])) 	return 0;
 
 	new
-		index = PlayerEditPOIndex[ playerid ];	
+		index = PlayerEditPOIndex[playerid];	
 	CancelEdit(playerid);
-	DestroyPlayerObject(playerid, PlayerEditPOObject[ playerid ]);
+	DestroyPlayerObject(playerid, PlayerEditPOObject[playerid]);
 	
 	PlayerObjectsInfo[playerid][index][poObjectid] = CreateDynamicObject(PlayerObjectsInfo[playerid][index][poModelid], x, y, z, rx, ry, rz, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, PO_DRAW_DIST, PO_DRAW_DIST);
 	PlayerObjectsInfo[playerid][index][poPos][0]	= x;
@@ -135,21 +135,21 @@ stock static SetPlayerObjectsObjectPos(playerid, Float:x, Float:y, Float:z, Floa
 	UpdateStreamerAroundPlayer(playerid);
 	Bit4_Set( r_PlayerObjectEditState, playerid, 0 );
 	
-	PlayerEditPOObject[ playerid ] 	= INVALID_OBJECT_ID;
-	PlayerEditPOIndex[ playerid ]		= -1;
+	PlayerEditPOObject[playerid] 	= INVALID_OBJECT_ID;
+	PlayerEditPOIndex[playerid]		= -1;
 	return 1;
 }
 
 stock static EditPOObject(playerid, index)
 {
-	if( playerid == INVALID_PLAYER_ID || index == -1 ) return 0;
+	if(playerid == INVALID_PLAYER_ID || index == -1 ) return 0;
 	
-	if( IsValidDynamicObject(PlayerObjectsInfo[ playerid ][ index ][ poObjectid ]) ) {
-		DestroyDynamicObject(PlayerObjectsInfo[ playerid ][ index ][ poObjectid ]);
-		PlayerObjectsInfo[ playerid ][ index ][ poObjectid ] = INVALID_OBJECT_ID;
-		PlayerEditPOIndex[ playerid ] = index;
+	if(IsValidDynamicObject(PlayerObjectsInfo[playerid][index][poObjectid])) {
+		DestroyDynamicObject(PlayerObjectsInfo[playerid][index][poObjectid]);
+		PlayerObjectsInfo[playerid][index][poObjectid] = INVALID_OBJECT_ID;
+		PlayerEditPOIndex[playerid] = index;
 		
-		PlayerEditPOObject[ playerid ] 	= CreatePlayerObject(
+		PlayerEditPOObject[playerid] 	= CreatePlayerObject(
 			playerid, 
 			PlayerObjectsInfo[playerid][index][poModelid], 
 			PlayerObjectsInfo[playerid][index][poPos][0], 
@@ -160,10 +160,10 @@ stock static EditPOObject(playerid, index)
 			PlayerObjectsInfo[playerid][index][poRot][2]
 		);
 		Bit4_Set(r_PlayerObjectEditState, playerid, EDIT_STATE_EDIT);
-		EditPlayerObject(playerid, PlayerEditPOObject[ playerid ]);
+		EditPlayerObject(playerid, PlayerEditPOObject[playerid]);
 	} else {
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se greska s uredjivanjem objekta!");
-		printf("[DEBUG] PLAYER OBJECT EDIT: index(%d) | objectid(%d)", index, PlayerObjectsInfo[ playerid ][ index ][ poObjectid ]);
+		printf("[DEBUG] PLAYER OBJECT EDIT: index(%d) | objectid(%d)", index, PlayerObjectsInfo[playerid][index][poObjectid]);
 	}
 	return 1;
 }
@@ -185,21 +185,21 @@ stock IsAPlayerSpawnedObject(modelid, Float:x, Float:y, Float:z)
 
 stock DeletePlayerObjectsObject( playerid, slot_id, bool:iterdel = true )
 {
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poPlaced ] = false;
+	PlayerObjectsInfo[playerid][slot_id][poPlaced] = false;
 	
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poPos ][ 0 ] = 0.0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poPos ][ 1 ] = 0.0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poPos ][ 2 ] = 0.0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poRot ][ 0 ] = 0.0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poRot ][ 1 ] = 0.0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poRot ][ 2 ] = 0.0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poViwo ] = 0;
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poInterior ] = 0;
+	PlayerObjectsInfo[playerid][slot_id][poPos][0] = 0.0;
+	PlayerObjectsInfo[playerid][slot_id][poPos][1] = 0.0;
+	PlayerObjectsInfo[playerid][slot_id][poPos][2] = 0.0;
+	PlayerObjectsInfo[playerid][slot_id][poRot][0] = 0.0;
+	PlayerObjectsInfo[playerid][slot_id][poRot][1] = 0.0;
+	PlayerObjectsInfo[playerid][slot_id][poRot][2] = 0.0;
+	PlayerObjectsInfo[playerid][slot_id][poViwo] = 0;
+	PlayerObjectsInfo[playerid][slot_id][poInterior] = 0;
 
-	if( IsValidDynamicObject( PlayerObjectsInfo[ playerid ][ slot_id ][ poObjectid ] ) ) {
-		DestroyDynamicObject( PlayerObjectsInfo[ playerid ][ slot_id ][ poObjectid ] );
+	if(IsValidDynamicObject( PlayerObjectsInfo[playerid][slot_id][poObjectid] )) {
+		DestroyDynamicObject( PlayerObjectsInfo[playerid][slot_id][poObjectid] );
 	}
-	PlayerObjectsInfo[ playerid ][ slot_id ][ poModelid ] = -1;
+	PlayerObjectsInfo[playerid][slot_id][poModelid] = -1;
 	if(iterdel)
 		Iter_Remove(PlayerCreateObjects[playerid], slot_id);
 
@@ -249,7 +249,7 @@ stock GetFreeObjectSlot( playerid )
     foreach(new i: PlayerCreateObjects[playerid])
 	{
 
-        if( !PlayerObjectsInfo[ playerid ][ i ][ poPlaced ] ) 
+        if(!PlayerObjectsInfo[playerid][i][poPlaced] ) 
 		{ 
 			return i; 
 		}
@@ -272,7 +272,7 @@ hook function ResetPlayerVariables(playerid)
 {
 	foreach(new cobjid: PlayerCreateObjects[playerid])
 	{
-		if(IsValidDynamicObject( PlayerObjectsInfo[ playerid ][ cobjid ][ poObjectid ] ) && PlayerObjectsInfo[ playerid ][ cobjid ][ poPlaced ]) 
+		if(IsValidDynamicObject( PlayerObjectsInfo[playerid][cobjid][poObjectid] ) && PlayerObjectsInfo[playerid][cobjid][poPlaced]) 
 			DeletePlayerObjectsObject(playerid, cobjid, false);
 	}
 	
@@ -364,7 +364,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 
 hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
-	switch( Bit4_Get( r_PlayerObjectEditState, playerid ) ) 
+	switch( Bit4_Get( r_PlayerObjectEditState, playerid )) 
 	{
 		case EDIT_STATE_PREVIEW: 
 		{
@@ -373,17 +373,17 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 				case EDIT_RESPONSE_FINAL: {
 					new Float:playaX, Float:playaY, Float:playaZ;
 					GetPlayerPos(playerid, playaX, playaY, playaZ);
-					if( floatabs(playaY - fY) > OBJECT_FROM_PLAYER_Y) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete u visinu stavljati objekte!");
-					CreatePlayerObjectsObject(playerid, PlayerPrwsPOModel[ playerid ], fX, fY, fZ, fRotX, fRotY, fRotZ);
+					if(floatabs(playaY - fY) > OBJECT_FROM_PLAYER_Y) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete u visinu stavljati objekte!");
+					CreatePlayerObjectsObject(playerid, PlayerPrwsPOModel[playerid], fX, fY, fZ, fRotX, fRotY, fRotZ);
 				}
 				case EDIT_RESPONSE_CANCEL: {
-					if( !IsValidPlayerObject(playerid, objectid) || playerid == INVALID_PLAYER_ID ) return 0;
+					if(!IsValidPlayerObject(playerid, objectid) || playerid == INVALID_PLAYER_ID ) return 0;
 					DestroyPlayerObject(playerid, objectid);
 					CancelEdit(playerid);
 
-					PlayerPrwsPOObject[ playerid ]	= INVALID_OBJECT_ID;
-					PlayerPrwsPOIndex[ playerid ]		= -1;
-					PlayerPrwsPOModel[ playerid ]		= 0;
+					PlayerPrwsPOObject[playerid]	= INVALID_OBJECT_ID;
+					PlayerPrwsPOIndex[playerid]		= -1;
+					PlayerPrwsPOModel[playerid]		= 0;
 					Bit4_Set( r_PlayerObjectEditState, playerid, 0 );
 				}
 			}
@@ -394,7 +394,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 			{
 				case EDIT_RESPONSE_FINAL: SetPlayerObjectsObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
 				case EDIT_RESPONSE_CANCEL: {
-					if( !IsValidPlayerObject(playerid, objectid) || playerid == INVALID_PLAYER_ID ) return 0;
+					if(!IsValidPlayerObject(playerid, objectid) || playerid == INVALID_PLAYER_ID ) return 0;
 					SetPlayerObjectsObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
 					Bit4_Set( r_PlayerObjectEditState, playerid, 0 );
 				}
@@ -449,7 +449,7 @@ CMD:findobjectowner(playerid, params[])
 	    option;
 
 	if(sscanf(params, "d", option))
-	    return SendClientMessage(playerid, -1, "KORISTI: /findobjectowner [opcija]"), SendClientMessage(playerid, COLOR_RED, "[ ! ] 0) Klikni na objekat i na�i vlasnika 1) Na�i vlasnika objekta koji se nalazi pokraj tebe");
+	    return SendClientMessage(playerid, -1, "KORISTI: /findobjectowner [opcija]"), SendClientMessage(playerid, COLOR_RED, "[!] 0) Klikni na objekat i na�i vlasnika 1) Na�i vlasnika objekta koji se nalazi pokraj tebe");
 
 	if(option > 1 || option < 0)
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Opcija mora biti ili 0 ili 1!");
@@ -473,7 +473,7 @@ CMD:findobjectowner(playerid, params[])
 		    {
 		        if(AreAllPObjectSlotsEmpty(po_ownerid))
 			    	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi su prazni!");
-				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vlasnik ovog objekta [%d] je: %s[%d] i nalazi se u slotu %d!", po_modelid, GetName(po_ownerid, false), po_ownerid, po_slotid);
+				va_SendClientMessage(playerid, COLOR_RED, "[!] Vlasnik ovog objekta [%d] je: %s[%d] i nalazi se u slotu %d!", po_modelid, GetName(po_ownerid, false), po_ownerid, po_slotid);
 		    }
 		    else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu nikojeg objekta!");
 		}
@@ -491,7 +491,7 @@ CMD:editobject(playerid, params[])
 		
 	foreach(new i: PlayerCreateObjects[playerid])
 	{
-		if( !PlayerObjectsInfo[playerid][i][poPlaced] ) continue;
+		if(!PlayerObjectsInfo[playerid][i][poPlaced] ) continue;
 		fselection_add_item(playerid, PlayerObjectsInfo[playerid][i][poModelid]);
 		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}
@@ -502,13 +502,13 @@ CMD:editobject(playerid, params[])
 
 CMD:approveobjects(playerid, params[]) 
 {
-	if (PlayerInfo[playerid][pAdmin] < 3) 
+	if(PlayerInfo[playerid][pAdmin] < 3) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		giveplayerid;	
-    if( sscanf(params, "u", giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /approveobjects [ID / Part of name]");
-    if( !IsPlayerConnected(giveplayerid) ) 
+    if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /approveobjects [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Wrong player ID input!");
 	
 	CreateObjReq[giveplayerid] = !CreateObjReq[giveplayerid];
@@ -564,7 +564,7 @@ CMD:aremoveallplayerobjects(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni sa koristenje ove komande.");
 
 	if(isnull(params))
-	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aremoveallplayerobjects [playerid]");
+	    return SendClientMessage(playerid, COLOR_RED, "[?]: /aremoveallplayerobjects [playerid]");
 	    
 	new giveplayerid = strval(params);
 	    
@@ -581,8 +581,8 @@ CMD:aremoveallplayerobjects(playerid, params[])
 	}
 	Iter_Clear(PlayerCreateObjects[giveplayerid]);
 
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbrisali sve spawnane objekte odabranom igracu!");
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ]: Game Admin %s deleted all your created objects.", GetName(playerid, false));
+	SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste izbrisali sve spawnane objekte odabranom igracu!");
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!]: Game Admin %s deleted all your created objects.", GetName(playerid, false));
 	return 1;
 }
 
@@ -597,7 +597,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 		po_name[24];
 		
 	if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkplayerobjects [playerid / Part of name]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /checkplayerobjects [playerid / Part of name]");
 
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
@@ -613,7 +613,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 
 	foreach(new i: PlayerCreateObjects[giveplayerid])
 	{
-		if( !PlayerObjectsInfo[giveplayerid][i][poPlaced] ) continue;
+		if(!PlayerObjectsInfo[giveplayerid][i][poPlaced] ) continue;
 		fselection_add_item(playerid, PlayerObjectsInfo[giveplayerid][i][poModelid]);
 		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}

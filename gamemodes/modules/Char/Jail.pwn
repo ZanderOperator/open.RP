@@ -53,19 +53,19 @@ static stock
 	prisonramp,
 	prisonrampstatus,
 	biggates,
-	LSPrisonGatesObject[ 5 ],
-	blockA[ 18 ],
-	blockB[ 18 ],
- 	blockC[ 18 ],
-	entranceLobby [ 3 ],
-	hallDoors [ 6 ],
+	LSPrisonGatesObject[5],
+	blockA[18],
+	blockB[18],
+ 	blockC[18],
+	entranceLobby [3],
+	hallDoors [6],
 	jailint,
 	movefridge[2],
 	tmpobjid,
 	arrestcell[2],
 	arrestcellC[2],
 	greygate,
-	jailcell[ 35 ],
+	jailcell[35],
 	
 	sdholding[4],
 	sdholdingStatus[4],
@@ -76,7 +76,7 @@ static stock
 	BigGatesStatus = GATES_CLOSED,
 	SmallSouthGatesStatus = GATES_CLOSED,
 	SmallEastGatesStatus = GATES_CLOSED,
-	InsideDoorsStatus[ 48 ] = { GATES_CLOSED, ... };
+	InsideDoorsStatus[48] = { GATES_CLOSED, ... };
 
 // rBits
 static stock
@@ -94,7 +94,7 @@ static stock
 //stock PutPlayerInSector(playerid, type)
 stock PutPlayerInSector(playerid)
 {
-	switch( random(18) ) {
+	switch( random(18)) {
 		case 0:  SetPlayerPosEx(playerid, 222.7028,1903.5612,1374.5774, 7, 0, true); //a1
 		case 1:  SetPlayerPosEx(playerid, 219.5443,1903.6227,1374.5774, 7, 0, true); //a2
 		case 2:  SetPlayerPosEx(playerid, 216.3411,1903.2964,1374.5774, 7, 0, true); //a3
@@ -119,7 +119,7 @@ stock PutPlayerInSector(playerid)
  	/*
 	else if(type == 2)
 	{
-		switch( random(18) ) {
+		switch( random(18)) {
 			case 0:  SetPlayerPosEx(playerid, 115.2149,1903.0586,1374.5774, 8, 0, true); //b1
 			case 1:  SetPlayerPosEx(playerid, 111.9753,1903.7701,1374.5774, 8, 0, true); //b2
 			case 2:  SetPlayerPosEx(playerid, 108.7766,1903.5815,1374.5774, 8, 0, true); //b3
@@ -142,7 +142,7 @@ stock PutPlayerInSector(playerid)
 	}
 	else if(type == 3)
 	{
-		switch( random(18) ) {
+		switch( random(18)) {
 			case 0:  SetPlayerPosEx(playerid, 339.6225,1887.5033,1374.5774, 9, 0, true); //s1
 			case 1:  SetPlayerPosEx(playerid, 339.9919,1890.7203,1374.5774, 9, 0, true); //s2
 			case 2:  SetPlayerPosEx(playerid, 340.0947,1893.8228,1374.5774, 9, 0, true); //s3
@@ -4371,42 +4371,42 @@ hook OnGameModeInit()
 	jailint = CreateDynamicObject(2921, 103.386581, 1884.136596, 1379.770507, -0.000015, 0.000002, -80.599945, 8, -1, -1, 600.00, 600.00);
 
 	//BLOCK B DOORS CELL
- 	blockB[ 0 ] = CreateDynamicObject(3089, 112.938751, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 0 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 1 ] = CreateDynamicObject(3089, 116.138809, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 1 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 2 ] = CreateDynamicObject(3089, 109.728820, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 2 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 3 ] = CreateDynamicObject(3089, 106.538726, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 3 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 4 ] = CreateDynamicObject(3089, 106.538726, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 4 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 5 ] = CreateDynamicObject(3089, 109.738739, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 5 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 6 ] = CreateDynamicObject(3089, 112.928787, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 6 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 7 ] = CreateDynamicObject(3089, 116.138732, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 7 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 8 ] = CreateDynamicObject(3089, 102.568847, 1901.256225, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 8 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 9 ] = CreateDynamicObject(3089, 102.568847, 1898.046264, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 9 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 10 ] = CreateDynamicObject(3089, 102.568847, 1894.856811, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 10 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 11 ] = CreateDynamicObject(3089, 102.568847, 1891.635864, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 11 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 12 ] = CreateDynamicObject(3089, 102.568847, 1888.425292, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 12 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 13 ] = CreateDynamicObject(3089, 102.568847, 1888.445312, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 13 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 14 ] = CreateDynamicObject(3089, 102.568847, 1891.646118, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 14 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 15 ] = CreateDynamicObject(3089, 102.568847, 1894.846679, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 15 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 16 ] = CreateDynamicObject(3089, 102.568847, 1898.047363, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 16 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
-	blockB[ 17 ] = CreateDynamicObject(3089, 102.568847, 1901.258056, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockB[ 17 ], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+ 	blockB[0] = CreateDynamicObject(3089, 112.938751, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[0], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[1] = CreateDynamicObject(3089, 116.138809, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[1], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[2] = CreateDynamicObject(3089, 109.728820, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[2], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[3] = CreateDynamicObject(3089, 106.538726, 1902.126586, 1374.677978, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[3], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[4] = CreateDynamicObject(3089, 106.538726, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[4], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[5] = CreateDynamicObject(3089, 109.738739, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[5], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[6] = CreateDynamicObject(3089, 112.928787, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[6], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[7] = CreateDynamicObject(3089, 116.138732, 1902.126586, 1378.197998, 0.000000, -0.000015, 179.999908, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[7], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[8] = CreateDynamicObject(3089, 102.568847, 1901.256225, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[8], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[9] = CreateDynamicObject(3089, 102.568847, 1898.046264, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[9], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[10] = CreateDynamicObject(3089, 102.568847, 1894.856811, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[10], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[11] = CreateDynamicObject(3089, 102.568847, 1891.635864, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[11], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[12] = CreateDynamicObject(3089, 102.568847, 1888.425292, 1378.197998, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[12], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[13] = CreateDynamicObject(3089, 102.568847, 1888.445312, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[13], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[14] = CreateDynamicObject(3089, 102.568847, 1891.646118, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[14], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[15] = CreateDynamicObject(3089, 102.568847, 1894.846679, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[15], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[16] = CreateDynamicObject(3089, 102.568847, 1898.047363, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[16], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
+	blockB[17] = CreateDynamicObject(3089, 102.568847, 1901.258056, 1374.697753, -0.000015, 0.000000, -89.999954, 8, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockB[17], 2, 9583, "bigshap_sfw", "freighterhull1", 0x00000000);
 
 	//KANTE ZA SMECE
 	jailint = CreateDynamicObject(1333, 113.226722, -248.827789, 1.390041, 0.000007, -0.000015, 90.700141, -1, -1, -1, 300.00, 300.00);
@@ -5716,42 +5716,42 @@ hook OnGameModeInit()
 	jailint = CreateDynamicObject(2921, 342.966491, 1884.136596, 1379.770507, -0.000007, 0.000001, -80.599967, 9, -1, -1, 600.00, 600.00);
 
 	//BLOCK C DOORS VRATA
-	blockC [ 0 ] = CreateDynamicObject(3089, 352.518676, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 0 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 1 ] = CreateDynamicObject(3089, 355.718750, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 1 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 2 ] = CreateDynamicObject(3089, 349.308746, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 2 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 3 ] = CreateDynamicObject(3089, 346.118652, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 3 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 4 ] = CreateDynamicObject(3089, 346.118652, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 4 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 5 ] = CreateDynamicObject(3089, 349.318664, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 5 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 6 ] = CreateDynamicObject(3089, 352.508728, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 6 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 7 ] = CreateDynamicObject(3089, 355.718658, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 7 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 8 ] = CreateDynamicObject(3089, 342.148773, 1901.256225, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 8 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 9 ] = CreateDynamicObject(3089, 342.148773, 1898.046264, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 9 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 10 ] = CreateDynamicObject(3089, 342.148773, 1894.856811, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 10 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 11 ] = CreateDynamicObject(3089, 342.148773, 1891.635864, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 11 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 12 ] = CreateDynamicObject(3089, 342.148773, 1888.425292, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 12 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 13 ] = CreateDynamicObject(3089, 342.148773, 1888.445312, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 13 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 14 ] = CreateDynamicObject(3089, 342.148773, 1891.646118, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 14 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 15 ] = CreateDynamicObject(3089, 342.148773, 1894.846679, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 15 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 16 ] = CreateDynamicObject(3089, 342.148773, 1898.047363, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 16 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
-	blockC [ 17 ] = CreateDynamicObject(3089, 342.148773, 1901.258056, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
-	SetDynamicObjectMaterial(blockC [ 17 ], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [0] = CreateDynamicObject(3089, 352.518676, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [0], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [1] = CreateDynamicObject(3089, 355.718750, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [1], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [2] = CreateDynamicObject(3089, 349.308746, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [2], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [3] = CreateDynamicObject(3089, 346.118652, 1902.126586, 1374.677978, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [3], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [4] = CreateDynamicObject(3089, 346.118652, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [4], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [5] = CreateDynamicObject(3089, 349.318664, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [5], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [6] = CreateDynamicObject(3089, 352.508728, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [6], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [7] = CreateDynamicObject(3089, 355.718658, 1902.126586, 1378.197998, 0.000000, -0.000007, 179.999954, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [7], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [8] = CreateDynamicObject(3089, 342.148773, 1901.256225, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [8], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [9] = CreateDynamicObject(3089, 342.148773, 1898.046264, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [9], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [10] = CreateDynamicObject(3089, 342.148773, 1894.856811, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [10], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [11] = CreateDynamicObject(3089, 342.148773, 1891.635864, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [11], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [12] = CreateDynamicObject(3089, 342.148773, 1888.425292, 1378.197998, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [12], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [13] = CreateDynamicObject(3089, 342.148773, 1888.445312, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [13], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [14] = CreateDynamicObject(3089, 342.148773, 1891.646118, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [14], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [15] = CreateDynamicObject(3089, 342.148773, 1894.846679, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [15], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [16] = CreateDynamicObject(3089, 342.148773, 1898.047363, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [16], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
+	blockC [17] = CreateDynamicObject(3089, 342.148773, 1901.258056, 1374.697753, -0.000007, -0.000000, -89.999977, 9, -1, -1, 600.00, 600.00);
+	SetDynamicObjectMaterial(blockC [17], 2, 1315, "dyntraffic", "trafficlight_64", 0x00000000);
 
 	//ENTRANCE
 	jailint = CreateDynamicObject(19379, 376.695373, 1593.958007, -78.629226, 0.000000, 90.000030, 0.000000, 9, -1, -1, 600.00, 600.00);
@@ -6836,11 +6836,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 
-	if( PRESSED(KEY_NO) )
+	if(PRESSED(KEY_NO))
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 2.0, 1179.748779, 1558.777099, 2092.509277))
 		{
-		    if( EasternGatesStatus == GATES_CLOSED ) {
+		    if(EasternGatesStatus == GATES_CLOSED ) {
 				MoveDynamicObject(movefridge[0], 1179.748779-1.10, 1558.777099-1.10, 2092.509277, 3);
 				EasternGatesStatus = GATES_OPENING;
 			} else {
@@ -6850,10 +6850,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 	}
 	if(PRESSED(KEY_YES)) {
-		if (IsPlayerInRangeOfPoint(playerid, 10.0, 172.49, -297.83, 4.13)) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		if(IsPlayerInRangeOfPoint(playerid, 10.0, 172.49, -297.83, 4.13)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
-			if( EasternGatesStatus == GATES_CLOSED ) {
+			if(EasternGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Prison vrata~n~~b~~h~se otvaraju!", 3000, 3);
 				MoveDynamicObject(LSPrisonGatesObject[0], 172.493026, -297.830718, -3.9, 3);
 				EasternGatesStatus = GATES_OPENING;
@@ -6866,7 +6866,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		
 		//SD Holding
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1198.929687, 1308.806274, -54.487152)) { //CELL 1
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 			if(sdholdingStatus[0] == 0) {
 				MoveDynamicObject(sdholding[0],1197.368408, 1308.926391, -54.487152, 2.5 );
 				sdholdingStatus[0] = 1;
@@ -6877,7 +6877,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1195.729125, 1308.806274, -54.487152)) { //CELL 2
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 			if(sdholdingStatus[1] == 0) {
 				MoveDynamicObject(sdholding[1],1194.138793, 1308.916381, -54.487152, 2.5 );
 				sdholdingStatus[1] = 1;
@@ -6888,7 +6888,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1192.489501, 1308.806274, -54.487152)) { //CELL 3
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 			if(sdholdingStatus[2] == 0) {
 				MoveDynamicObject(sdholding[2],1190.928222, 1308.926391, -54.487152, 2.5 );
 				sdholdingStatus[2] = 1;
@@ -6899,7 +6899,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1948.366577, 813.474853, -46.362178)) { //CELL 4
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 			if(sdholdingStatus[3] == 0) {
 				MoveDynamicObject(sdholding[3],1187.778442, 1308.916381, -54.487152, 2.5 );
 				sdholdingStatus[3] = 1;
@@ -6941,8 +6941,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				ShowPlayerDialog(playerid, DIALOG_JAILJOB, DIALOG_STYLE_MSGBOX, "{FBE204}Zatvorski posao", "Da li zelite da radite kao smecar u zatvoru?\nDobijate honorarnu platu, plus vam se smanjuje kazna.", "Yes", "No");
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 5.0, 69.644668, -227.206695, 1.308123)) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		else if(IsPlayerInRangeOfPoint(playerid, 5.0, 69.644668, -227.206695, 1.308123)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
 			if(prisonrampstatus == 0) {
 				SetDynamicObjectRot(prisonramp, 0.0000, 0.0000, 0.0000);
@@ -6953,10 +6953,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				prisonrampstatus = 0;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 10.0, 172.35, -329.10, 4.13) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		else if(IsPlayerInRangeOfPoint(playerid, 10.0, 172.35, -329.10, 4.13)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
-			if( SouthernGatesStatus == GATES_CLOSED ) {
+			if(SouthernGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Prison vrata~n~~b~~h~se otvaraju!", 3000, 3);
 				MoveDynamicObject(LSPrisonGatesObject[1], 172.352340, -329.109924, -3.9, 3);
 				SouthernGatesStatus = GATES_OPENING;
@@ -6966,10 +6966,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SouthernGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 10.0, 198.252288, -320.283996, 1.745738) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		else if(IsPlayerInRangeOfPoint(playerid, 10.0, 198.252288, -320.283996, 1.745738)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
-			if( SouthernGatesStatus == GATES_CLOSED ) {
+			if(SouthernGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Prison vrata~n~~b~~h~se otvaraju!", 3000, 3);
 				MoveDynamicObject(greygate, 198.252288, -320.283996, -3.9, 3);
 				SouthernGatesStatus = GATES_OPENING;
@@ -6979,10 +6979,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SouthernGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 10.0, 77.30, -221.57, 4.16) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		else if(IsPlayerInRangeOfPoint(playerid, 10.0, 77.30, -221.57, 4.16)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
-			if( SouthernGatesStatus == GATES_CLOSED ) {
+			if(SouthernGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Prison vrata~n~~b~~h~se otvaraju!", 3000, 3);
 				MoveDynamicObject(LSPrisonGatesObject[2], 77.302185, -221.571090, -3.9, 3);
 				SouthernGatesStatus = GATES_OPENING;
@@ -6992,10 +6992,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SouthernGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 10.0, 66.34, -248.72, 4.13) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		else if(IsPlayerInRangeOfPoint(playerid, 10.0, 66.34, -248.72, 4.13)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
-			if( SouthernGatesStatus == GATES_CLOSED ) {
+			if(SouthernGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Prison vrata~n~~b~~h~se otvaraju!", 3000, 3);
 				MoveDynamicObject(LSPrisonGatesObject[3], 66.342163, -248.721160, -3.9, 3);
 				SouthernGatesStatus = GATES_OPENING;
@@ -7005,10 +7005,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SouthernGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 10.0, 172.35, -339.93, 4.13) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+		else if(IsPlayerInRangeOfPoint(playerid, 10.0, 172.35, -339.93, 4.13)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
-			if( SouthernGatesStatus == GATES_CLOSED ) {
+			if(SouthernGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Prison vrata~n~~b~~h~se otvaraju!", 3000, 3);
 				MoveDynamicObject(LSPrisonGatesObject[4], 172.352340, -339.930145, -3.9, 3);
 				SouthernGatesStatus = GATES_OPENING;
@@ -7019,9 +7019,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		//HALLWAY DOORS WORLD 7
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 260.545715, 1802.626953, 1402.752563) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 260.545715, 1802.626953, 1402.752563)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(hallDoors [0], 0.00000, 0.00000, 180.0000);
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7031,9 +7031,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SmallEastGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 260.545715, 1800.716918, 1402.752563) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 260.545715, 1800.716918, 1402.752563)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(hallDoors [1], 0.00000, 0.00000, 0.0000);
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7044,9 +7044,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		//HALLWAY DOORS WORLD 8
-        else if( IsPlayerInRangeOfPoint(playerid, 2.5, 147.725601, 1802.626953, 1402.752563) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+        else if(IsPlayerInRangeOfPoint(playerid, 2.5, 147.725601, 1802.626953, 1402.752563)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(hallDoors [3], 0.00000, 0.00000, 180.0000);
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7056,9 +7056,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SmallEastGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 147.725601, 1800.716918, 1402.752563) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 147.725601, 1800.716918, 1402.752563)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(hallDoors [4], 0.00000, 0.00000, 0.0000);
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7069,9 +7069,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		//HALLWAY DOORS WORLD 9
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 29.935562, 1802.626953, 1402.752563) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 29.935562, 1802.626953, 1402.752563)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(hallDoors [4], 0.00000, 0.00000, 180.0000);
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7081,9 +7081,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SmallEastGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 29.935562, 1800.716918, 1402.752563) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 29.935562, 1800.716918, 1402.752563)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(hallDoors [5], 0.00000, 0.00000, 0.0000);
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7094,9 +7094,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		//Lobby Door World 7
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 243.30128, 1715.31787, -77.31326) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 243.30128, 1715.31787, -77.31326)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Lobby vrata [A] ~n~~b~~h~su otvorena!", 3000, 3);
 				MoveDynamicObject(entranceLobby [0],243.301284-1.6, 1715.317871, -77.313262, 6.0 );
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7108,9 +7108,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		//Lobby Door World 8
 
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 243.301284, 1597.487548, -77.313262) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 243.301284, 1597.487548, -77.313262)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Lobby vrata [B] ~n~~b~~h~su otvorena!", 3000, 3);
 				MoveDynamicObject(entranceLobby [1],243.301284-1.6, 1597.487548, -77.313262, 6.0 );
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7121,9 +7121,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		//Lobby Door World 9
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 380.491088, 1597.487548, -77.313262) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallEastGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 380.491088, 1597.487548, -77.313262)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallEastGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Lobby vrata [C] ~n~~b~~h~su otvorena!", 3000, 3);
 				MoveDynamicObject(entranceLobby [2],380.491088-1.6, 1597.487548, -77.313262, 6.0 );
 				SmallEastGatesStatus = GATES_OPEN;
@@ -7134,9 +7134,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 		//Block A World 7
-		else if( IsPlayerInRangeOfPoint(playerid, 2.5, 1781.1902, -1539.0604, 8.8641) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( SmallSouthGatesStatus == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1781.1902, -1539.0604, 8.8641)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(SmallSouthGatesStatus == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata 2~n~~b~~h~su otvorena!", 3000, 3);
 				SetDynamicObjectRot(smalldoors1, 0.00000, 0.00000, 357.52155);
 				SmallSouthGatesStatus = GATES_OPEN;
@@ -7146,1150 +7146,1150 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SmallSouthGatesStatus = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 220.65875, 1902.12658, 1374.67797) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus [0] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 220.65875, 1902.12658, 1374.67797)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus [0] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-    			MoveDynamicObject(blockA[ 0 ],220.658752+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 0 ] = GATES_OPEN;
+    			MoveDynamicObject(blockA[0],220.658752+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[0] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 0 ],220.658752, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 0 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[0],220.658752, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[0] = GATES_CLOSED;
 			}
 		}
 
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 223.85881, 1902.12658, 1374.67797) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 1 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 223.85881, 1902.12658, 1374.67797)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[1] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-                MoveDynamicObject(blockA[ 1 ],223.858810+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 1 ] = GATES_OPEN;
+                MoveDynamicObject(blockA[1],223.858810+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[1] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 1 ],223.858810, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 1 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[1],223.858810, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[1] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 217.44882, 1902.12658, 1374.67797) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 2 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 217.44882, 1902.12658, 1374.67797)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[2] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 2 ],217.448822+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 2 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[2],217.448822+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[2] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 2 ],217.448822, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 2 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[2],217.448822, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[2] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 214.25872, 1902.12658, 1374.67797) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 3 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 214.25872, 1902.12658, 1374.67797)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[3] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 3 ],214.258728+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 3 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[3],214.258728+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[3] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 3 ],214.258728, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 3 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[3],214.258728, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[3] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 214.25872, 1902.12658, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 4 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 214.25872, 1902.12658, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[4] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 4 ],214.258728+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 4 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[4],214.258728+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[4] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 4 ],214.258728, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 4 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[4],214.258728, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[4] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 217.45874, 1902.12658, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 5 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 217.45874, 1902.12658, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[5] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 5 ],217.458740+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 5 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[5],217.458740+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[5] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 5 ],217.458740, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 5 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[5],217.458740, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[5] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 220.64878, 1902.12658, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 6 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 220.64878, 1902.12658, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[6] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 6 ],220.648788+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 6 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[6],220.648788+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[6] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 6 ],220.648788, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 6 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[6],220.648788, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[6] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 223.85873, 1902.12658, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 7 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 223.85873, 1902.12658, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[7] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 7 ],223.858734+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 7 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[7],223.858734+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[7] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 7 ],223.858734, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 7 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[7],223.858734, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[7] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1901.25622, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 8 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1901.25622, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[8] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 8 ],210.288848+0.10, 1901.256225+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 8 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[8],210.288848+0.10, 1901.256225+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[8] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 8 ],210.288848, 1901.256225, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 8 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[8],210.288848, 1901.256225, 1378.197998, 1.0 );
+				InsideDoorsStatus[8] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1898.04626, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 9 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1898.04626, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[9] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 9 ],210.288848+0.10, 1898.046264+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 9 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[9],210.288848+0.10, 1898.046264+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[9] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 9 ],210.288848, 1898.046264, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 9 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[9],210.288848, 1898.046264, 1378.197998, 1.0 );
+				InsideDoorsStatus[9] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1894.85681, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 10 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1894.85681, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[10] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 10 ],210.288848+0.10, 1894.856811+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 10 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[10],210.288848+0.10, 1894.856811+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[10] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 10 ],210.288848, 1894.856811, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 10 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[10],210.288848, 1894.856811, 1378.197998, 1.0 );
+				InsideDoorsStatus[10] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1891.63586, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 11 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1891.63586, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[11] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 11 ],210.288848+0.10, 1891.635864+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 11 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[11],210.288848+0.10, 1891.635864+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[11] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 11 ],210.288848, 1891.635864, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 11 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[11],210.288848, 1891.635864, 1378.197998, 1.0 );
+				InsideDoorsStatus[11] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1888.42529, 1378.19799) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 12 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1888.42529, 1378.19799)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[12] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 12 ],210.288848+0.10, 1888.425292+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 12 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[12],210.288848+0.10, 1888.425292+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[12] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 12 ],210.288848, 1888.425292, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 12 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[12],210.288848, 1888.425292, 1378.197998, 1.0 );
+				InsideDoorsStatus[12] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1888.44531, 1374.69775) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 13 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1888.44531, 1374.69775)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[13] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-    			MoveDynamicObject(blockA[ 13 ],210.288848+0.10, 1888.445312+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 13 ] = GATES_OPEN;
+    			MoveDynamicObject(blockA[13],210.288848+0.10, 1888.445312+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[13] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 13 ],210.288848, 1888.445312, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 13 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[13],210.288848, 1888.445312, 1374.697753, 1.0 );
+				InsideDoorsStatus[13] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1891.64611, 1374.69775) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 14 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1891.64611, 1374.69775)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[14] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 14 ],210.288848+0.10, 1891.646118+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 14 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[14],210.288848+0.10, 1891.646118+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[14] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 14 ],210.288848, 1891.646118, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 14 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[14],210.288848, 1891.646118, 1374.697753, 1.0 );
+				InsideDoorsStatus[14] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1894.84667, 1374.69775) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 15 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1894.84667, 1374.69775)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[15] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 15 ],210.288848+0.10, 1894.846679+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 15 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[15],210.288848+0.10, 1894.846679+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[15] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 15 ],210.288848, 1894.846679, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 15 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[15],210.288848, 1894.846679, 1374.697753, 1.0 );
+				InsideDoorsStatus[15] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1898.04736, 1374.69775) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 16 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1898.04736, 1374.69775)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[16] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 16 ],210.288848+0.10, 1898.047363+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 16 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[16],210.288848+0.10, 1898.047363+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[16] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 16 ],210.288848, 1898.047363, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 16 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[16],210.288848, 1898.047363, 1374.697753, 1.0 );
+				InsideDoorsStatus[16] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1901.25805, 1374.69775) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 17 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 210.28884, 1901.25805, 1374.69775)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[17] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 17 ],210.288848+0.10, 1901.258056+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 17 ] = GATES_OPEN;
+				MoveDynamicObject(blockA[17],210.288848+0.10, 1901.258056+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[17] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockA[ 17 ],210.288848, 1901.258056, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 17 ] = GATES_CLOSED;
+				MoveDynamicObject(blockA[17],210.288848, 1901.258056, 1374.697753, 1.0 );
+				InsideDoorsStatus[17] = GATES_CLOSED;
 			}
 		}
 		//BLOCK B WORLD 8
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 112.938751, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 0 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 112.938751, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[0] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-    			MoveDynamicObject(blockB[ 0 ],112.938751+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 0 ] = GATES_OPEN;
+    			MoveDynamicObject(blockB[0],112.938751+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[0] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 0 ],112.938751, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 0 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[0],112.938751, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[0] = GATES_CLOSED;
 			}
 		}
 
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 116.138809, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 1 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 116.138809, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[1] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-                MoveDynamicObject(blockB[ 1 ],116.138809+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 1 ] = GATES_OPEN;
+                MoveDynamicObject(blockB[1],116.138809+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[1] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 1 ],116.138809, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 1 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[1],116.138809, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[1] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 109.728820, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 2 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 109.728820, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[2] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 2 ],109.728820+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 2 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[2],109.728820+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[2] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 2 ],109.728820, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 2 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[2],109.728820, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[2] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 106.538726, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 3 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 106.538726, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[3] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 3 ],106.538726+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 3 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[3],106.538726+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[3] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 3 ],106.538726, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 3 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[3],106.538726, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[3] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 106.538726, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 4 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 106.538726, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[4] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 4 ],106.538726+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 4 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[4],106.538726+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[4] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 4 ],106.538726, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 4 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[4],106.538726, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[4] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 109.738739, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 5 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 109.738739, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[5] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 5 ],109.738739+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 5 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[5],109.738739+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[5] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 5 ],109.738739, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 5 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[5],109.738739, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[5] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 112.928787, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 6 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 112.928787, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[6] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 6 ],112.928787+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 6 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[6],112.928787+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[6] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 6 ],112.928787, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 6 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[6],112.928787, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[6] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 116.138732, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 7 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 116.138732, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[7] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 7 ],116.138732+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 7 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[7],116.138732+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[7] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 7 ],116.138732, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 7 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[7],116.138732, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[7] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1901.256225, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 8 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1901.256225, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[8] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 8 ],102.568847+0.10, 1901.256225+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 8 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[8],102.568847+0.10, 1901.256225+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[8] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 8 ],102.568847, 1901.256225, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 8 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[8],102.568847, 1901.256225, 1378.197998, 1.0 );
+				InsideDoorsStatus[8] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1898.046264, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 9 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1898.046264, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[9] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 9 ],102.568847+0.10, 1898.046264+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 9 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[9],102.568847+0.10, 1898.046264+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[9] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 9 ],102.568847, 1898.046264, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 9 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[9],102.568847, 1898.046264, 1378.197998, 1.0 );
+				InsideDoorsStatus[9] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1894.856811, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 10 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1894.856811, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[10] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 10 ],102.568847+0.10, 1894.856811+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 10 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[10],102.568847+0.10, 1894.856811+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[10] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 10 ],102.568847, 1894.856811, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 10 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[10],102.568847, 1894.856811, 1378.197998, 1.0 );
+				InsideDoorsStatus[10] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1891.635864, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 11 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1891.635864, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[11] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 11 ],102.568847+0.10, 1891.635864+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 11 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[11],102.568847+0.10, 1891.635864+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[11] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 11 ],102.568847, 1891.635864, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 11 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[11],102.568847, 1891.635864, 1378.197998, 1.0 );
+				InsideDoorsStatus[11] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1888.425292, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 12 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1888.425292, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[12] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 12 ],102.568847+0.10, 1888.425292+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 12 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[12],102.568847+0.10, 1888.425292+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[12] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 12 ],102.568847, 1888.425292, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 12 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[12],102.568847, 1888.425292, 1378.197998, 1.0 );
+				InsideDoorsStatus[12] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1888.445312, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 13 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1888.445312, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[13] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-    			MoveDynamicObject(blockB[ 13 ],102.568847+0.10, 1888.445312+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 13 ] = GATES_OPEN;
+    			MoveDynamicObject(blockB[13],102.568847+0.10, 1888.445312+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[13] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 13 ],102.568847, 1888.445312, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 13 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[13],102.568847, 1888.445312, 1374.697753, 1.0 );
+				InsideDoorsStatus[13] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1891.646118, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 14 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1891.646118, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[14] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 14 ],102.568847+0.10, 1891.646118+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 14 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[14],102.568847+0.10, 1891.646118+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[14] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 14 ],102.568847, 1891.646118, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 14 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[14],102.568847, 1891.646118, 1374.697753, 1.0 );
+				InsideDoorsStatus[14] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1894.846679, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 15 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1894.846679, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[15] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 15 ],102.568847+0.10, 1894.846679+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 15 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[15],102.568847+0.10, 1894.846679+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[15] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 15 ],102.568847, 1894.846679, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 15 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[15],102.568847, 1894.846679, 1374.697753, 1.0 );
+				InsideDoorsStatus[15] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1898.047363, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 16 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1898.047363, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[16] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 16 ],102.568847+0.10, 1898.047363+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 16 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[16],102.568847+0.10, 1898.047363+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[16] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 16 ],102.568847, 1898.047363, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 16 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[16],102.568847, 1898.047363, 1374.697753, 1.0 );
+				InsideDoorsStatus[16] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1901.258056, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 17 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 102.568847, 1901.258056, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[17] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 17 ],102.568847+0.10, 1901.258056+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 17 ] = GATES_OPEN;
+				MoveDynamicObject(blockB[17],102.568847+0.10, 1901.258056+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[17] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockB[ 17 ],102.568847, 1901.258056, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 17 ] = GATES_CLOSED;
+				MoveDynamicObject(blockB[17],102.568847, 1901.258056, 1374.697753, 1.0 );
+				InsideDoorsStatus[17] = GATES_CLOSED;
 			}
 		}
 		//BLOCK C WORLD 9
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 352.518676, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 0 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 352.518676, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[0] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-    			MoveDynamicObject(blockC[ 0 ],352.518676+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 0 ] = GATES_OPEN;
+    			MoveDynamicObject(blockC[0],352.518676+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[0] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 0 ],352.518676, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 0 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[0],352.518676, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[0] = GATES_CLOSED;
 			}
 		}
 
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 355.718750, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 1 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 355.718750, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[1] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-                MoveDynamicObject(blockC[ 1 ],355.718750+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 1 ] = GATES_OPEN;
+                MoveDynamicObject(blockC[1],355.718750+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[1] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 1 ],355.718750, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 1 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[1],355.718750, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[1] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 349.308746, 1902.126586, 1374.677978) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 2 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 349.308746, 1902.126586, 1374.677978)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[2] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 2 ],349.308746+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 2 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[2],349.308746+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[2] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 2 ],349.308746, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 2 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[2],349.308746, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[2] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 346.118652, 1902.126586, 1374.6779788) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 3 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 346.118652, 1902.126586, 1374.6779788)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[3] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 3 ],346.118652+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 3 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[3],346.118652+1.5, 1902.126586-0.07, 1374.677978, 1.0 );
+				InsideDoorsStatus[3] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 3 ],346.118652, 1902.126586, 1374.677978, 1.0 );
-				InsideDoorsStatus[ 3 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[3],346.118652, 1902.126586, 1374.677978, 1.0 );
+				InsideDoorsStatus[3] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 346.118652, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 4 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 346.118652, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[4] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 4 ],346.118652+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 4 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[4],346.118652+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[4] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 4 ],346.118652, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 4 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[4],346.118652, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[4] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 349.318664, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 5 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 349.318664, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[5] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 5 ],349.318664+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 5 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[5],349.318664+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[5] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 5 ],349.318664, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 5 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[5],349.318664, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[5] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 352.508728, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 6 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 352.508728, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[6] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 6 ],352.508728+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 6 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[6],352.508728+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[6] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 6 ],352.508728, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 6 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[6],352.508728, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[6] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 355.718658, 1902.126586, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 7 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 355.718658, 1902.126586, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[7] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 7 ],355.718658+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 7 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[7],355.718658+1.5, 1902.126586-0.07, 1378.197998, 1.0 );
+				InsideDoorsStatus[7] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 7 ],355.718658, 1902.126586, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 7 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[7],355.718658, 1902.126586, 1378.197998, 1.0 );
+				InsideDoorsStatus[7] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1901.256225, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 8 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1901.256225, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[8] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 8 ],342.148773+0.10, 1901.256225+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 8 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[8],342.148773+0.10, 1901.256225+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[8] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 8 ],342.148773, 1901.256225, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 8 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[8],342.148773, 1901.256225, 1378.197998, 1.0 );
+				InsideDoorsStatus[8] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1898.046264, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 9 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1898.046264, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[9] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 9 ],342.148773+0.10, 1898.046264+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 9 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[9],342.148773+0.10, 1898.046264+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[9] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 9 ],342.148773, 1898.046264, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 9 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[9],342.148773, 1898.046264, 1378.197998, 1.0 );
+				InsideDoorsStatus[9] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1894.856811, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 10 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1894.856811, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[10] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 10 ],342.148773+0.10, 1894.856811+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 10 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[10],342.148773+0.10, 1894.856811+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[10] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 10 ],342.148773, 1894.856811, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 10 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[10],342.148773, 1894.856811, 1378.197998, 1.0 );
+				InsideDoorsStatus[10] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1891.635864, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 11 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1891.635864, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[11] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 11 ],342.148773+0.10, 1891.635864+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 11 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[11],342.148773+0.10, 1891.635864+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[11] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 11 ],342.148773, 1891.635864, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 11 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[11],342.148773, 1891.635864, 1378.197998, 1.0 );
+				InsideDoorsStatus[11] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1888.425292, 1378.197998) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 12 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1888.425292, 1378.197998)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[12] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 12 ],342.148773+0.10, 1888.425292+1.5, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 12 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[12],342.148773+0.10, 1888.425292+1.5, 1378.197998, 1.0 );
+				InsideDoorsStatus[12] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 12 ],342.148773, 1888.425292, 1378.197998, 1.0 );
-				InsideDoorsStatus[ 12 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[12],342.148773, 1888.425292, 1378.197998, 1.0 );
+				InsideDoorsStatus[12] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1888.445312, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 13 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1888.445312, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[13] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-    			MoveDynamicObject(blockC[ 13 ],342.148773+0.10, 1888.445312+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 13 ] = GATES_OPEN;
+    			MoveDynamicObject(blockC[13],342.148773+0.10, 1888.445312+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[13] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 13 ],342.148773, 1888.445312, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 13 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[13],342.148773, 1888.445312, 1374.697753, 1.0 );
+				InsideDoorsStatus[13] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1891.646118, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 14 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1891.646118, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[14] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 14 ],342.148773+0.10, 1891.646118+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 14 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[14],342.148773+0.10, 1891.646118+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[14] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 14 ],342.148773, 1891.646118, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 14 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[14],342.148773, 1891.646118, 1374.697753, 1.0 );
+				InsideDoorsStatus[14] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1894.846679, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 15 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1894.846679, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[15] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 15 ],342.148773+0.10, 1894.846679+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 15 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[15],342.148773+0.10, 1894.846679+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[15] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 15 ],342.148773, 1894.846679, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 15 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[15],342.148773, 1894.846679, 1374.697753, 1.0 );
+				InsideDoorsStatus[15] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1898.047363, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 16 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1898.047363, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[16] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 16 ],342.148773+0.10, 1898.047363+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 16 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[16],342.148773+0.10, 1898.047363+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[16] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 16 ],342.148773, 1898.047363, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 16 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[16],342.148773, 1898.047363, 1374.697753, 1.0 );
+				InsideDoorsStatus[16] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1901.258056, 1374.697753) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 17 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 342.148773, 1901.258056, 1374.697753)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[17] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su otvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 17 ],342.148773+0.10, 1901.258056+1.5, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 17 ] = GATES_OPEN;
+				MoveDynamicObject(blockC[17],342.148773+0.10, 1901.258056+1.5, 1374.697753, 1.0 );
+				InsideDoorsStatus[17] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~b~~h~Vrata ~n~~b~~h~su zatvorena!", 3000, 3);
-				MoveDynamicObject(blockC[ 17 ],342.148773, 1901.258056, 1374.697753, 1.0 );
-				InsideDoorsStatus[ 17 ] = GATES_CLOSED;
+				MoveDynamicObject(blockC[17],342.148773, 1901.258056, 1374.697753, 1.0 );
+				InsideDoorsStatus[17] = GATES_CLOSED;
 			}
 		}
 //*********************************************************cELIJE*********************************************************
 //*********************************************************SAMNICE********************************************************
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0,  1848.19641, -1524.76440, 2003.84851) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 13 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0,  1848.19641, -1524.76440, 2003.84851)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[13] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Samnica '1'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectRot(jailcell[ 0 ], 0.0000, 0.0000, 90.0);
-				InsideDoorsStatus[ 13 ] = GATES_OPEN;
+				SetDynamicObjectRot(jailcell[0], 0.0000, 0.0000, 90.0);
+				InsideDoorsStatus[13] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Samnica '1'~n~~r~~h~~h~~h~je ztvorena!", 3000, 3);
-				SetDynamicObjectRot(jailcell[ 0 ], 0.000,0.000,0.0);
-				InsideDoorsStatus[ 13 ] = GATES_CLOSED;
+				SetDynamicObjectRot(jailcell[0], 0.000,0.000,0.0);
+				InsideDoorsStatus[13] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0,  1848.19641, -1527.13269, 2003.84851) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 14 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0,  1848.19641, -1527.13269, 2003.84851)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[14] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Samnica '2'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectRot(jailcell[ 1 ], 0.0000, 0.0000, 90.0);
-				InsideDoorsStatus[ 14 ] = GATES_OPEN;
+				SetDynamicObjectRot(jailcell[1], 0.0000, 0.0000, 90.0);
+				InsideDoorsStatus[14] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Samnica '2'~n~~r~~h~~h~~h~je ztvorena!", 3000, 3);
-				SetDynamicObjectRot(jailcell[ 1 ], 0.000,0.000,0.0);
-				InsideDoorsStatus[ 14 ] = GATES_CLOSED;
+				SetDynamicObjectRot(jailcell[1], 0.000,0.000,0.0);
+				InsideDoorsStatus[14] = GATES_CLOSED;
 			}
 		}
-		else if( IsPlayerInRangeOfPoint(playerid, 2.0,  1848.19641, -1529.46545, 2003.84851) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 15 ] == GATES_CLOSED ) {
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0,  1848.19641, -1529.46545, 2003.84851)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[15] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Samnica '3'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectRot(jailcell[ 2 ], 0.0000, 0.0000, 90.0);
-				InsideDoorsStatus[ 15 ] = GATES_OPEN;
+				SetDynamicObjectRot(jailcell[2], 0.0000, 0.0000, 90.0);
+				InsideDoorsStatus[15] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Samnica '3'~n~~r~~h~~h~~h~je ztvorena!", 3000, 3);
-				SetDynamicObjectRot(jailcell[ 2 ], 0.000,0.000,0.0);
-				InsideDoorsStatus[ 15 ] = GATES_CLOSED;
+				SetDynamicObjectRot(jailcell[2], 0.000,0.000,0.0);
+				InsideDoorsStatus[15] = GATES_CLOSED;
 			}
 		}
 //*********************************************************SEKTOR A********************************************************
-/*a1*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07056, -1567.25439, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 16 ] == GATES_CLOSED ) {
+/*a1*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07056, -1567.25439, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[16] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A1'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 3 ], 1860.28223, -1566.94165, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 3 ], 0.00000, 0.00000, 21.72002);
-				InsideDoorsStatus[ 16 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[3], 1860.28223, -1566.94165, 2008.56665);
+				SetDynamicObjectRot(jailcell[3], 0.00000, 0.00000, 21.72002);
+				InsideDoorsStatus[16] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A1'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 3 ], 1861.07056, -1567.25439, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 3 ], 0.000,0.000, 90.0);
-				InsideDoorsStatus[ 16 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[3], 1861.07056, -1567.25439, 2008.56665);
+				SetDynamicObjectRot(jailcell[3], 0.000,0.000, 90.0);
+				InsideDoorsStatus[16] = GATES_CLOSED;
 			}
 		}
-/*a2*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07605, -1569.63647, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 17 ] == GATES_CLOSED ) {
+/*a2*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07605, -1569.63647, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[17] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A2'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 4 ], 1860.26843, -1569.31396, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 4 ], 0.00000, 0.00000, 21.72000);
-				InsideDoorsStatus[ 17 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[4], 1860.26843, -1569.31396, 2008.56665);
+				SetDynamicObjectRot(jailcell[4], 0.00000, 0.00000, 21.72000);
+				InsideDoorsStatus[17] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A2'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 4 ], 1861.07605, -1569.63647, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 4 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 17 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[4], 1861.07605, -1569.63647, 2008.56665);
+				SetDynamicObjectRot(jailcell[4], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[17] = GATES_CLOSED;
 			}
 		}
-/*a3*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1860.35962, -1571.99841, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 18 ] == GATES_CLOSED ) {
+/*a3*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1860.35962, -1571.99841, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[18] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A3'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 5 ], 1860.03381, -1571.19824, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 5 ], 0.00000, 0.00000, -23.58000);
-				InsideDoorsStatus[ 18 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[5], 1860.03381, -1571.19824, 2008.56665);
+				SetDynamicObjectRot(jailcell[5], 0.00000, 0.00000, -23.58000);
+				InsideDoorsStatus[18] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A3'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 5 ], 1860.35962, -1571.99841, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 5 ], 0.000,0.000, 45.00000);
-				InsideDoorsStatus[ 18 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[5], 1860.35962, -1571.99841, 2008.56665);
+				SetDynamicObjectRot(jailcell[5], 0.000,0.000, 45.00000);
+				InsideDoorsStatus[18] = GATES_CLOSED;
 			}
 		}
-/*a4*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1858.40015, -1573.10999, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 19 ] == GATES_CLOSED ) {
+/*a4*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1858.40015, -1573.10999, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[19] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A4'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 6 ], 1858.62537, -1572.37842, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 6 ], 0.00000, 0.00000, -61.31999);
-				InsideDoorsStatus[ 19 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[6], 1858.62537, -1572.37842, 2008.56665);
+				SetDynamicObjectRot(jailcell[6], 0.00000, 0.00000, -61.31999);
+				InsideDoorsStatus[19] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A4'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 6 ], 1858.40015, -1573.10999, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 6 ], 0.000,0.000, 3.36000);
-				InsideDoorsStatus[ 19 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[6], 1858.40015, -1573.10999, 2008.56665);
+				SetDynamicObjectRot(jailcell[6], 0.000,0.000, 3.36000);
+				InsideDoorsStatus[19] = GATES_CLOSED;
 			}
 		}
-/*a5*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1855.76904, -1573.10315, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 20 ] == GATES_CLOSED ) {
+/*a5*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1855.76904, -1573.10315, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[20] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A5'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 7 ], 1855.90808, -1572.40955, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 7 ], 0.00000, 0.00000, -57.48000);
-				InsideDoorsStatus[ 20 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[7], 1855.90808, -1572.40955, 2008.56665);
+				SetDynamicObjectRot(jailcell[7], 0.00000, 0.00000, -57.48000);
+				InsideDoorsStatus[20] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A5'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 7 ], 1855.76904, -1573.10315, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 7 ], 0.000,0.000, -3.00000);
-				InsideDoorsStatus[ 20 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[7], 1855.76904, -1573.10315, 2008.56665);
+				SetDynamicObjectRot(jailcell[7], 0.000,0.000, -3.00000);
+				InsideDoorsStatus[20] = GATES_CLOSED;
 			}
 		}
-/*a6*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1852.78223, -1572.92102, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 21 ] == GATES_CLOSED ) {
+/*a6*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1852.78223, -1572.92102, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[21] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A6'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 8 ], 1853.14844, -1572.10107, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 8 ], 0.00000, 0.00000, -71.52001);
-				InsideDoorsStatus[ 21 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[8], 1853.14844, -1572.10107, 2008.56665);
+				SetDynamicObjectRot(jailcell[8], 0.00000, 0.00000, -71.52001);
+				InsideDoorsStatus[21] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A6'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 8 ], 1852.78223, -1572.92102, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 8 ], 0.000,0.000, -3.00000);
-				InsideDoorsStatus[ 21 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[8], 1852.78223, -1572.92102, 2008.56665);
+				SetDynamicObjectRot(jailcell[8], 0.000,0.000, -3.00000);
+				InsideDoorsStatus[21] = GATES_CLOSED;
 			}
 		}
-/*a7*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1849.83032, -1571.93115, 2008.56665) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 22 ] == GATES_CLOSED ) {
+/*a7*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1849.83032, -1571.93115, 2008.56665)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[22] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A7'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 9 ],  1850.62341, -1571.51770, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 9 ], 0.00000, 0.00000, -109.98000);
-				InsideDoorsStatus[ 22 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[9],  1850.62341, -1571.51770, 2008.56665);
+				SetDynamicObjectRot(jailcell[9], 0.00000, 0.00000, -109.98000);
+				InsideDoorsStatus[22] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A7'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 9 ], 1849.83032, -1571.93115, 2008.56665);
-				SetDynamicObjectRot(jailcell[ 9 ], 0.000,0.000, -35.88000);
-				InsideDoorsStatus[ 22 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[9], 1849.83032, -1571.93115, 2008.56665);
+				SetDynamicObjectRot(jailcell[9], 0.000,0.000, -35.88000);
+				InsideDoorsStatus[22] = GATES_CLOSED;
 			}
 		}
-/*a8*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1849.83032, -1571.93115, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 23 ] == GATES_CLOSED ) {
+/*a8*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1849.83032, -1571.93115, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[23] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A8'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 10 ],  1850.64111, -1571.52234, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 10 ], 0.00000, 0.00000, -105.24001);
-				InsideDoorsStatus[ 23 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[10],  1850.64111, -1571.52234, 2011.96606);
+				SetDynamicObjectRot(jailcell[10], 0.00000, 0.00000, -105.24001);
+				InsideDoorsStatus[23] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A8'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 10 ], 1849.83032, -1571.93115, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 10 ], 0.000,0.000, -35.88000);
-				InsideDoorsStatus[ 23 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[10], 1849.83032, -1571.93115, 2011.96606);
+				SetDynamicObjectRot(jailcell[10], 0.000,0.000, -35.88000);
+				InsideDoorsStatus[23] = GATES_CLOSED;
 			}
 		}
-/*a9*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1847.82666, -1570.39819, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 24 ] == GATES_CLOSED ) {
+/*a9*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1847.82666, -1570.39819, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[24] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A9'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 11 ], 1848.49268, -1569.90149, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 11 ], 0.00000, 0.00000, -99.83999);
-				InsideDoorsStatus[ 24 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[11], 1848.49268, -1569.90149, 2011.96606);
+				SetDynamicObjectRot(jailcell[11], 0.00000, 0.00000, -99.83999);
+				InsideDoorsStatus[24] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A9'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 11 ], 1847.82666, -1570.39819, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 11 ], 0.000,0.000, -37.68000);
-				InsideDoorsStatus[ 24 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[11], 1847.82666, -1570.39819, 2011.96606);
+				SetDynamicObjectRot(jailcell[11], 0.000,0.000, -37.68000);
+				InsideDoorsStatus[24] = GATES_CLOSED;
 			}
 		}
-/*a10*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1852.78223, -1572.92102, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 25 ] == GATES_CLOSED ) {
+/*a10*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1852.78223, -1572.92102, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[25] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A10'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 12 ], 1853.08704, -1572.16418, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 12 ], 0.00000, 0.00000, -70.31998);
-				InsideDoorsStatus[ 25 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[12], 1853.08704, -1572.16418, 2011.96606);
+				SetDynamicObjectRot(jailcell[12], 0.00000, 0.00000, -70.31998);
+				InsideDoorsStatus[25] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A10'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 12 ], 1852.78223, -1572.92102, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 12 ], 0.000,0.000, -3.00000);
-				InsideDoorsStatus[ 25 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[12], 1852.78223, -1572.92102, 2011.96606);
+				SetDynamicObjectRot(jailcell[12], 0.000,0.000, -3.00000);
+				InsideDoorsStatus[25] = GATES_CLOSED;
 			}
 		}
-/*a11*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1855.76904, -1573.10315, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 26 ] == GATES_CLOSED ) {
+/*a11*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1855.76904, -1573.10315, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[26] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A11'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 13 ], 1856.14453, -1572.37866, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 13 ], 0.00000, 0.00000, -73.56000);
-				InsideDoorsStatus[ 26 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[13], 1856.14453, -1572.37866, 2011.96606);
+				SetDynamicObjectRot(jailcell[13], 0.00000, 0.00000, -73.56000);
+				InsideDoorsStatus[26] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A11'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 13 ], 1855.76904, -1573.10315, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 13 ], 0.000,0.000, -3.00000);
-				InsideDoorsStatus[ 26 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[13], 1855.76904, -1573.10315, 2011.96606);
+				SetDynamicObjectRot(jailcell[13], 0.000,0.000, -3.00000);
+				InsideDoorsStatus[26] = GATES_CLOSED;
 			}
 		}
-/*a12*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1858.40015, -1573.10999, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 27 ] == GATES_CLOSED ) {
+/*a12*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1858.40015, -1573.10999, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[27] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A12'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 14 ], 1858.47839, -1572.37903, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 14 ], 0.00000, 0.00000, -53.10000);
-				InsideDoorsStatus[ 27 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[14], 1858.47839, -1572.37903, 2011.96606);
+				SetDynamicObjectRot(jailcell[14], 0.00000, 0.00000, -53.10000);
+				InsideDoorsStatus[27] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A12'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 14 ], 1858.40015, -1573.10999, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 14 ], 0.000,0.000, 3.36000);
-				InsideDoorsStatus[ 27 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[14], 1858.40015, -1573.10999, 2011.96606);
+				SetDynamicObjectRot(jailcell[14], 0.000,0.000, 3.36000);
+				InsideDoorsStatus[27] = GATES_CLOSED;
 			}
 		}
-/*a13*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1860.35962, -1571.99841, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 28 ] == GATES_CLOSED ) {
+/*a13*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1860.35962, -1571.99841, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[28] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A13'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 15 ], 1860.07373, -1571.04102, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 15 ], 0.00000, 0.00000, -34.44000);
-				InsideDoorsStatus[ 28 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[15], 1860.07373, -1571.04102, 2011.96606);
+				SetDynamicObjectRot(jailcell[15], 0.00000, 0.00000, -34.44000);
+				InsideDoorsStatus[28] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A13'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 15 ], 1860.35962, -1571.99841, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 15 ], 0.000,0.000, 45.00000);
-				InsideDoorsStatus[ 28 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[15], 1860.35962, -1571.99841, 2011.96606);
+				SetDynamicObjectRot(jailcell[15], 0.000,0.000, 45.00000);
+				InsideDoorsStatus[28] = GATES_CLOSED;
 			}
 		}
-/*a14*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07605, -1569.63647, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 29 ] == GATES_CLOSED ) {
+/*a14*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07605, -1569.63647, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[29] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A14'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 16 ], 1860.19800, -1569.19275, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 16 ], 0.00000, 0.00000, 11.40000);
-				InsideDoorsStatus[ 29 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[16], 1860.19800, -1569.19275, 2011.96606);
+				SetDynamicObjectRot(jailcell[16], 0.00000, 0.00000, 11.40000);
+				InsideDoorsStatus[29] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A14'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 16 ], 1861.07605, -1569.63647, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 16 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 29 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[16], 1861.07605, -1569.63647, 2011.96606);
+				SetDynamicObjectRot(jailcell[16], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[29] = GATES_CLOSED;
 			}
 		}
-/*a15*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07056, -1567.25439, 2011.96606) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 30 ] == GATES_CLOSED ) {
+/*a15*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1861.07056, -1567.25439, 2011.96606)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[30] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A15'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 17 ], 1860.25977, -1566.76331, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 17 ], 0.00000, 0.00000, 11.39999);
-				InsideDoorsStatus[ 30 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[17], 1860.25977, -1566.76331, 2011.96606);
+				SetDynamicObjectRot(jailcell[17], 0.00000, 0.00000, 11.39999);
+				InsideDoorsStatus[30] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'A15'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 17 ], 1861.07056, -1567.25439, 2011.96606);
-				SetDynamicObjectRot(jailcell[ 17 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 30 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[17], 1861.07056, -1567.25439, 2011.96606);
+				SetDynamicObjectRot(jailcell[17], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[30] = GATES_CLOSED;
 			}
 		}
 //*********************************************************SEKTOR B********************************************************
-/*b1*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1863.32019, -1546.21948, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 31 ] == GATES_CLOSED ) {
+/*b1*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1863.32019, -1546.21948, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[31] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B1'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 18 ], 1862.48022, -1545.79626, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 18 ], 0.00000, 0.00000, 12.66000);
-				InsideDoorsStatus[ 31 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[18], 1862.48022, -1545.79626, 2008.60535);
+				SetDynamicObjectRot(jailcell[18], 0.00000, 0.00000, 12.66000);
+				InsideDoorsStatus[31] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B1'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 18 ],  1863.32019, -1546.21948, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 18 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 31 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[18],  1863.32019, -1546.21948, 2008.60535);
+				SetDynamicObjectRot(jailcell[18], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[31] = GATES_CLOSED;
 			}
 		}
-/*b2*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1863.32275, -1543.87195, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 32 ] == GATES_CLOSED ) {
+/*b2*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1863.32275, -1543.87195, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[32] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B2'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 19 ], 1862.48535, -1543.34558, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 19 ], 0.00000, 0.00000, 6.30001);
-				InsideDoorsStatus[ 32 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[19], 1862.48535, -1543.34558, 2008.60535);
+				SetDynamicObjectRot(jailcell[19], 0.00000, 0.00000, 6.30001);
+				InsideDoorsStatus[32] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B2'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 19 ], 1863.32275, -1543.87195, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 19 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 32 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[19], 1863.32275, -1543.87195, 2008.60535);
+				SetDynamicObjectRot(jailcell[19], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[32] = GATES_CLOSED;
 			}
 		}
-/*b3*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1863.31946, -1541.17932, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 33 ] == GATES_CLOSED ) {
+/*b3*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1863.31946, -1541.17932, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[33] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B3'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 20 ], 1862.49622, -1540.66858, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 20 ], 0.00000, 0.00000, 5.52001);
-				InsideDoorsStatus[ 33 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[20], 1862.49622, -1540.66858, 2008.60535);
+				SetDynamicObjectRot(jailcell[20], 0.00000, 0.00000, 5.52001);
+				InsideDoorsStatus[33] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B3'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 20 ], 1863.31946, -1541.17932, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 20 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 33 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[20], 1863.31946, -1541.17932, 2008.60535);
+				SetDynamicObjectRot(jailcell[20], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[33] = GATES_CLOSED;
 			}
 		}
-/*b4*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1862.11096, -1538.47986, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 34 ] == GATES_CLOSED ) {
+/*b4*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1862.11096, -1538.47986, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[34] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B4'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 21 ], 1861.13696, -1538.78931, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 21 ], 0.00000, 0.00000, 53.99998);
-				InsideDoorsStatus[ 34 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[21], 1861.13696, -1538.78931, 2008.60535);
+				SetDynamicObjectRot(jailcell[21], 0.00000, 0.00000, 53.99998);
+				InsideDoorsStatus[34] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B4'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 21 ], 1862.11096, -1538.47986, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 21 ], 0.000,0.000, 135.00000);
-				InsideDoorsStatus[ 34 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[21], 1862.11096, -1538.47986, 2008.60535);
+				SetDynamicObjectRot(jailcell[21], 0.000,0.000, 135.00000);
+				InsideDoorsStatus[34] = GATES_CLOSED;
 			}
 		}
-/*b5*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1860.32349, -1536.67725, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 35 ] == GATES_CLOSED ) {
+/*b5*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1860.32349, -1536.67725, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[35] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B5'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 22 ], 1859.29492, -1536.87939, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 22 ], 0.00000, 0.00000, 48.72000);
-				InsideDoorsStatus[ 35 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[22], 1859.29492, -1536.87939, 2008.60535);
+				SetDynamicObjectRot(jailcell[22], 0.00000, 0.00000, 48.72000);
+				InsideDoorsStatus[35] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B5'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 22 ], 1860.32349, -1536.67725, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 22 ], 0.000,0.000, 135.00000);
-				InsideDoorsStatus[ 35 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[22], 1860.32349, -1536.67725, 2008.60535);
+				SetDynamicObjectRot(jailcell[22], 0.000,0.000, 135.00000);
+				InsideDoorsStatus[35] = GATES_CLOSED;
 			}
 		}
-/*b6*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1857.58215, -1535.63196, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 36 ] == GATES_CLOSED ) {
+/*b6*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1857.58215, -1535.63196, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[36] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B6'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 23 ], 1857.14795, -1536.47644, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 23 ], 0.00000, 0.00000, 100.37999);
-				InsideDoorsStatus[ 36 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[23], 1857.14795, -1536.47644, 2008.60535);
+				SetDynamicObjectRot(jailcell[23], 0.00000, 0.00000, 100.37999);
+				InsideDoorsStatus[36] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B6'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 23 ], 1857.58215, -1535.63196, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 23 ], 0.000,0.000, 180.00000);
-				InsideDoorsStatus[ 36 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[23], 1857.58215, -1535.63196, 2008.60535);
+				SetDynamicObjectRot(jailcell[23], 0.000,0.000, 180.00000);
+				InsideDoorsStatus[36] = GATES_CLOSED;
 			}
 		}
-/*b7*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1855.22095, -1535.63306, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 37 ] == GATES_CLOSED ) {
+/*b7*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1855.22095, -1535.63306, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[37] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B7'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 24 ], 1854.81714, -1536.42896, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 24 ], 0.00000, 0.00000, 104.63998);
-				InsideDoorsStatus[ 37 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[24], 1854.81714, -1536.42896, 2008.60535);
+				SetDynamicObjectRot(jailcell[24], 0.00000, 0.00000, 104.63998);
+				InsideDoorsStatus[37] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B7'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 24 ], 1855.22095, -1535.63306, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 24 ], 0.000,0.000, 180.00000);
-				InsideDoorsStatus[ 37 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[24], 1855.22095, -1535.63306, 2008.60535);
+				SetDynamicObjectRot(jailcell[24], 0.000,0.000, 180.00000);
+				InsideDoorsStatus[37] = GATES_CLOSED;
 			}
 		}
-/*b8*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1852.84521, -1535.62866, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 38 ] == GATES_CLOSED ) {
+/*b8*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1852.84521, -1535.62866, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[38] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B8'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 25 ], 1852.23560, -1536.48535, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 25 ], 0.00000, 0.00000, 91.68004);
-				InsideDoorsStatus[ 38 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[25], 1852.23560, -1536.48535, 2008.60535);
+				SetDynamicObjectRot(jailcell[25], 0.00000, 0.00000, 91.68004);
+				InsideDoorsStatus[38] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B8'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 25 ], 1852.84521, -1535.62866, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 25 ], 0.000,0.000, 180.00000);
-				InsideDoorsStatus[ 38 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[25], 1852.84521, -1535.62866, 2008.60535);
+				SetDynamicObjectRot(jailcell[25], 0.000,0.000, 180.00000);
+				InsideDoorsStatus[38] = GATES_CLOSED;
 			}
 		}
-/*b9*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1850.20081, -1536.87744, 2008.60535) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 39 ] == GATES_CLOSED ) {
+/*b9*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1850.20081, -1536.87744, 2008.60535)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[39] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B9'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 26 ], 1850.43762, -1537.88391, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 26 ], 0.00000, 0.00000, 139.14003);
-				InsideDoorsStatus[ 39 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[26], 1850.43762, -1537.88391, 2008.60535);
+				SetDynamicObjectRot(jailcell[26], 0.00000, 0.00000, 139.14003);
+				InsideDoorsStatus[39] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B9'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 26 ], 1850.20081, -1536.87744, 2008.60535);
-				SetDynamicObjectRot(jailcell[ 26 ], 0.000,0.000, 227.03998);
-				InsideDoorsStatus[ 39 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[26], 1850.20081, -1536.87744, 2008.60535);
+				SetDynamicObjectRot(jailcell[26], 0.000,0.000, 227.03998);
+				InsideDoorsStatus[39] = GATES_CLOSED;
 			}
 		}
-/*b10*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1852.48181, -1535.07117, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 40 ] == GATES_CLOSED ) {
+/*b10*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1852.48181, -1535.07117, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[40] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B10'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 27 ], 1852.73926, -1535.68994, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 27 ], 0.00000, 0.00000, 227.82002);
-				InsideDoorsStatus[ 40 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[27], 1852.73926, -1535.68994, 2012.06494);
+				SetDynamicObjectRot(jailcell[27], 0.00000, 0.00000, 227.82002);
+				InsideDoorsStatus[40] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B10'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 27 ], 1852.48181, -1535.07117, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 27 ], 0.000,0.000, 180.00000);
-				InsideDoorsStatus[ 40 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[27], 1852.48181, -1535.07117, 2012.06494);
+				SetDynamicObjectRot(jailcell[27], 0.000,0.000, 180.00000);
+				InsideDoorsStatus[40] = GATES_CLOSED;
 			}
 		}
-/*b11*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1854.87280, -1535.07190, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 41 ] == GATES_CLOSED ) {
+/*b11*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1854.87280, -1535.07190, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[41] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B11'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 28 ], 1855.11304, -1535.64954, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 28 ], 0.00000, 0.00000, 224.45999);
-				InsideDoorsStatus[ 41 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[28], 1855.11304, -1535.64954, 2012.06494);
+				SetDynamicObjectRot(jailcell[28], 0.00000, 0.00000, 224.45999);
+				InsideDoorsStatus[41] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B11'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 28 ], 1854.87280, -1535.07190, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 28 ], 0.000,0.000, 180.00000);
-				InsideDoorsStatus[ 41 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[28], 1854.87280, -1535.07190, 2012.06494);
+				SetDynamicObjectRot(jailcell[28], 0.000,0.000, 180.00000);
+				InsideDoorsStatus[41] = GATES_CLOSED;
 			}
 		}
-/*b12*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1857.23193, -1535.07471, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 42 ] == GATES_CLOSED ) {
+/*b12*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1857.23193, -1535.07471, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[42] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B12'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 29 ], 1857.40222, -1535.50720, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 29 ], 0.00000, 0.00000, 215.33994);
-				InsideDoorsStatus[ 42 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[29], 1857.40222, -1535.50720, 2012.06494);
+				SetDynamicObjectRot(jailcell[29], 0.00000, 0.00000, 215.33994);
+				InsideDoorsStatus[42] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B12'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 29 ], 1857.23193, -1535.07471, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 29 ], 0.000,0.000, 180.0000);
-				InsideDoorsStatus[ 42 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[29], 1857.23193, -1535.07471, 2012.06494);
+				SetDynamicObjectRot(jailcell[29], 0.000,0.000, 180.0000);
+				InsideDoorsStatus[42] = GATES_CLOSED;
 			}
 		}
-/*b13*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0,  1859.91443, -1536.04895, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 43 ] == GATES_CLOSED ) {
+/*b13*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0,  1859.91443, -1536.04895, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[43] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B13'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 30 ], 1859.68909, -1536.60413, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 30 ], 0.00000, 0.00000, 174.89999);
-				InsideDoorsStatus[ 43 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[30], 1859.68909, -1536.60413, 2012.06494);
+				SetDynamicObjectRot(jailcell[30], 0.00000, 0.00000, 174.89999);
+				InsideDoorsStatus[43] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B13'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 30 ], 1859.91443, -1536.04895, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 30 ], 0.000,0.000, 135.12000);
-				InsideDoorsStatus[ 43 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[30], 1859.91443, -1536.04895, 2012.06494);
+				SetDynamicObjectRot(jailcell[30], 0.000,0.000, 135.12000);
+				InsideDoorsStatus[43] = GATES_CLOSED;
 			}
 		}
-/*b14*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1861.60742, -1537.74780, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 44 ] == GATES_CLOSED ) {
+/*b14*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1861.60742, -1537.74780, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[44] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B14'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 31 ], 1861.38086, -1538.32117, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 31 ], 0.00000, 0.00000, 178.73997);
-				InsideDoorsStatus[ 44 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[31], 1861.38086, -1538.32117, 2012.06494);
+				SetDynamicObjectRot(jailcell[31], 0.00000, 0.00000, 178.73997);
+				InsideDoorsStatus[44] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B14'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 31 ], 1861.60742, -1537.74780, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 31 ], 0.000,0.000, 135.12000);
-				InsideDoorsStatus[ 44 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[31], 1861.60742, -1537.74780, 2012.06494);
+				SetDynamicObjectRot(jailcell[31], 0.000,0.000, 135.12000);
+				InsideDoorsStatus[44] = GATES_CLOSED;
 			}
 		}
-/*b15*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1862.84314, -1540.43115, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 45 ] == GATES_CLOSED ) {
+/*b15*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1862.84314, -1540.43115, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[45] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B15'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 32 ],  1862.13904, -1540.71729, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 32 ], 0.00000, 0.00000, 139.24089);
-				InsideDoorsStatus[ 45 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[32],  1862.13904, -1540.71729, 2012.06494);
+				SetDynamicObjectRot(jailcell[32], 0.00000, 0.00000, 139.24089);
+				InsideDoorsStatus[45] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B15'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 32 ], 1862.84314, -1540.43115, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 32 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 45 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[32], 1862.84314, -1540.43115, 2012.06494);
+				SetDynamicObjectRot(jailcell[32], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[45] = GATES_CLOSED;
 			}
 		}
-/*b16*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1862.80994, -1542.88232, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 46 ] == GATES_CLOSED ) {
+/*b16*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1862.80994, -1542.88232, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[46] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B16'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 33 ], 1862.08203, -1543.29932, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 33 ], 0.00000, 0.00000, 148.23781);
-				InsideDoorsStatus[ 46 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[33], 1862.08203, -1543.29932, 2012.06494);
+				SetDynamicObjectRot(jailcell[33], 0.00000, 0.00000, 148.23781);
+				InsideDoorsStatus[46] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B16'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 33 ], 1862.80994, -1542.88232, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 33 ], 0.000,0.000, 90.00000);
-				InsideDoorsStatus[ 46 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[33], 1862.80994, -1542.88232, 2012.06494);
+				SetDynamicObjectRot(jailcell[33], 0.000,0.000, 90.00000);
+				InsideDoorsStatus[46] = GATES_CLOSED;
 			}
 		}
-/*b17*/	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 1862.23364, -1545.22729, 2012.06494) ) {
-			if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-			if( InsideDoorsStatus[ 47 ] == GATES_CLOSED ) {
+/*b17*/	else if(IsPlayerInRangeOfPoint(playerid, 2.0, 1862.23364, -1545.22729, 2012.06494)) {
+			if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+			if(InsideDoorsStatus[47] == GATES_CLOSED ) {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B17'~n~~r~~h~~h~~h~ je otvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 34 ], 1862.38721, -1546.12195, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 34 ], 0.00000, 0.00000, 337.45609);
-				InsideDoorsStatus[ 47 ] = GATES_OPEN;
+				SetDynamicObjectPos(jailcell[34], 1862.38721, -1546.12195, 2012.06494);
+				SetDynamicObjectRot(jailcell[34], 0.00000, 0.00000, 337.45609);
+				InsideDoorsStatus[47] = GATES_OPEN;
 			} else {
 				GameTextForPlayer(playerid, "~r~~h~~h~~h~Celija  'B17'~n~~r~~h~~h~~h~ je ztvorena!", 3000, 3);
-				SetDynamicObjectPos(jailcell[ 34 ], 1862.23364, -1545.22729, 2012.06494);
-				SetDynamicObjectRot(jailcell[ 34 ], 0.000,0.000, 45.00000);
-				InsideDoorsStatus[ 47 ] = GATES_CLOSED;
+				SetDynamicObjectPos(jailcell[34], 1862.23364, -1545.22729, 2012.06494);
+				SetDynamicObjectRot(jailcell[34], 0.000,0.000, 45.00000);
+				InsideDoorsStatus[47] = GATES_CLOSED;
 			}
 		}
 	}
 
-	if( PRESSED(KEY_SECONDARY_ATTACK) ) {
+	if(PRESSED(KEY_SECONDARY_ATTACK)) {
 		if(IsPlayerInRangeOfPoint(playerid, 1.5, 1780.8057, -1535.7936, 21.0193)) { // ULAZ SA OGRADE
 	        TogglePlayerControllable(playerid, 0);
 	        SetPlayerPosEx(playerid, 1804.9254, -1549.9565,2011.8240, 0, 7, true);
@@ -8321,11 +8321,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnDynamicObjectMoved(objectid)
 {
-	if( objectid == LSPrisonGatesObject[0] )
+	if(objectid == LSPrisonGatesObject[0] )
 		EasternGatesStatus = ( EasternGatesStatus == GATES_CLOSING ) ? GATES_CLOSED : GATES_OPEN;
-	else if( objectid == LSPrisonGatesObject[2] )
+	else if(objectid == LSPrisonGatesObject[2] )
 		SouthernGatesStatus = ( SouthernGatesStatus == GATES_CLOSING ) ? GATES_CLOSED : GATES_OPEN;
-	else if( objectid == biggates )
+	else if(objectid == biggates )
 		BigGatesStatus = ( BigGatesStatus == GATES_CLOSING ) ? GATES_CLOSED : GATES_OPEN;
 	return 1;
 }
@@ -8337,17 +8337,17 @@ stock SendMessageToPrisoners(option[], message[])
 		if(PlayerInfo[i][pJailed] == 1 || PlayerInfo[i][pJailed] == 4)
 		{
 			jInt = GetPlayerInterior(i);
-			if( !strcmp(option, "out", true) )
+			if(!strcmp(option, "out", true))
 			{
 				if(jInt == 0)
 					SendClientMessage(i, COLOR_JAIL, message);
 			}
-			else if( !strcmp(option, "in", true) )
+			else if(!strcmp(option, "in", true))
 			{
 				if(jInt == 7)
 					SendClientMessage(i, COLOR_JAIL, message);
 			}
-			else if( !strcmp(option, "all", true) )
+			else if(!strcmp(option, "all", true))
 			{
 				SendClientMessage(i, COLOR_JAIL, message);
 			}
@@ -8367,10 +8367,10 @@ hook OnPlayerDeath(playerid, killerid, reason)
 CMD:jail_alert(playerid, params[])
 {
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste autorizovani!");
-    if(!IsPlayerInRangeOfPoint(playerid, 15.0, 1849.7317,-1554.1625,2011.8259 ) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1772.4279,-1543.7100,23.0249 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu kontrolne sobe.");
+    if(!IsPlayerInRangeOfPoint(playerid, 15.0, 1849.7317,-1554.1625,2011.8259 ) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1772.4279,-1543.7100,23.0249 )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu kontrolne sobe.");
 	new
 		string[156], result[86];
-	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jail_alert [text]");
+	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[?]: /jail_alert [text]");
 	format(string, sizeof(string), "[Jail Alert] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
 	SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
 	return 1;
@@ -8570,10 +8570,10 @@ timer RunAwayTimer[120000]()
 {
 	foreach(new playerid : Player)
 	{
-		if(IsACop(playerid) || IsASD(playerid) )
+		if(IsACop(playerid) || IsASD(playerid))
 		{
 			new prisonbreak[256];
-			SendRadioMessage( 1, COLOR_LIGHTBLUE, "*________________________ [ PRISON BREAK IN PROGRESS ] ________________________*");
+			SendRadioMessage( 1, COLOR_LIGHTBLUE, "*________________________ [PRISON BREAK IN PROGRESS] ________________________*");
 			format(prisonbreak, sizeof(prisonbreak), "Last seen: %s", GetPlayerStreet(playerid));
 			SendRadioMessage(1, COLOR_WHITE, prisonbreak);
 			format(prisonbreak,sizeof(prisonbreak),"Description: ** Full description of %s ** ((SID: %d ))", GetName(playerid, false), GetPlayerSkin(playerid));

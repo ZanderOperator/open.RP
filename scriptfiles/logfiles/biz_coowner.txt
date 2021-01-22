@@ -1,10 +1,10 @@
 
-[25/03/2020] [SET-coOWNER] Vukota_Stojkovic je postavio igraca Igor_Kostic na CoOwner-a biznisa id 74(mySQL ID).
-[18/04/2020] [SET-coOWNER] Ljubomir_Milovanovic je postavio igraca Zarko_Novakovic na CoOwner-a biznisa id 187(mySQL ID).
-[18/04/2020] [SET-coOWNER] Ljubomir_Milovanovic je postavio igraca Zarko_Novakovic na CoOwner-a biznisa id 187(mySQL ID).
-[18/04/2020] [SET-coOWNER] Ljubomir_Milovanovic je postavio igraca Zarko_Novakovic na CoOwner-a biznisa id 187(mySQL ID).
-[29/04/2020] [SET-coOWNER] Velichko_Mitevski je postavio igraca Dimitar_Mitevski na CoOwner-a biznisa id 16(mySQL ID).
-[29/04/2020] [SET-coOWNER] Velichko_Mitevski je postavio igraca Dimitar_Mitevski na CoOwner-a biznisa id 16(mySQL ID).
-[01/05/2020] [SET-coOWNER] Allan_Houston je postavio igraca John_Mangano na CoOwner-a biznisa id 110(mySQL ID).
-[03/05/2020] [SET-coOWNER] Allan_Houston je postavio igraca John_Mangano na CoOwner-a biznisa id 110(mySQL ID).
-[06/05/2020] [SET-coOWNER] Jacob_Rodgers je postavio igraca Adriano_Sanchez na CoOwner-a biznisa id 139(mySQL ID).
+[25/03/2020][SET-coOWNER] Vukota_Stojkovic je postavio igraca Igor_Kostic na CoOwner-a biznisa id 74(mySQL ID).
+[18/04/2020][SET-coOWNER] Ljubomir_Milovanovic je postavio igraca Zarko_Novakovic na CoOwner-a biznisa id 187(mySQL ID).
+[18/04/2020][SET-coOWNER] Ljubomir_Milovanovic je postavio igraca Zarko_Novakovic na CoOwner-a biznisa id 187(mySQL ID).
+[18/04/2020][SET-coOWNER] Ljubomir_Milovanovic je postavio igraca Zarko_Novakovic na CoOwner-a biznisa id 187(mySQL ID).
+[29/04/2020][SET-coOWNER] Velichko_Mitevski je postavio igraca Dimitar_Mitevski na CoOwner-a biznisa id 16(mySQL ID).
+[29/04/2020][SET-coOWNER] Velichko_Mitevski je postavio igraca Dimitar_Mitevski na CoOwner-a biznisa id 16(mySQL ID).
+[01/05/2020][SET-coOWNER] Allan_Houston je postavio igraca John_Mangano na CoOwner-a biznisa id 110(mySQL ID).
+[03/05/2020][SET-coOWNER] Allan_Houston je postavio igraca John_Mangano na CoOwner-a biznisa id 110(mySQL ID).
+[06/05/2020][SET-coOWNER] Jacob_Rodgers je postavio igraca Adriano_Sanchez na CoOwner-a biznisa id 139(mySQL ID).

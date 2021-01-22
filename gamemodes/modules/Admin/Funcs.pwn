@@ -261,15 +261,15 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 		new 
 			tmpModelID,
 			tmpCarMysqlID,
-			vehName[ 32 ];
+			vehName[32];
 		
-		va_SendClientMessage(playerid, COLOR_RED, "[ %s's Vehicle List ]:", owner_name);	
+		va_SendClientMessage(playerid, COLOR_RED, "[%s's Vehicle List]:", owner_name);	
 		for( new i = 0; i < cache_num_rows(); i++) 
 		{
 			cache_get_value_name_int(i, "id", tmpCarMysqlID);
 			cache_get_value_name_int(i, "modelid", tmpModelID);
 			
-			strunpack(vehName, Model_Name(tmpModelID) );
+			strunpack(vehName, Model_Name(tmpModelID));
 			va_SendClientMessage(playerid, COLOR_WHITE,"[slot %d] %s [MySQL ID: %d].", i+1, vehName, tmpCarMysqlID);
 		}
 	}
@@ -288,7 +288,7 @@ stock ABroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pAdmin] >= level)
+		if(PlayerInfo[i][pAdmin] >= level)
 			SendClientMessage(i, color, string);
 	}
 	return 1;
@@ -298,7 +298,7 @@ va_ABroadCast(color, const string[], level, va_args<>)
 {
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pAdmin] >= level)
+		if(PlayerInfo[i][pAdmin] >= level)
 			SendClientMessage(i, color, va_return(string, va_start<3>));
 	}
 	return 1;
@@ -308,7 +308,7 @@ stock REarsBroadCast(color,const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_REars, i))
+		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_REars, i))
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -320,7 +320,7 @@ stock SendDirectiveMessage(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if( PlayerInfo[i][pAdmin] >= level)
+		if(PlayerInfo[i][pAdmin] >= level)
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -332,7 +332,7 @@ stock PmearsBroadCast(color,const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_PMears, i))
+		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_PMears, i))
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -346,7 +346,7 @@ stock BhearsBroadCast(color,const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_BHears, i))
+		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_BHears, i))
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -359,7 +359,7 @@ stock AHBroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if( ( PlayerInfo[i][pAdmin] >= level || PlayerInfo[i][pHelper] >= level || IsPlayerAdmin(i)) && Bit1_Get( a_AdminChat, i ) )
+		if(( PlayerInfo[i][pAdmin] >= level || PlayerInfo[i][pHelper] >= level || IsPlayerAdmin(i)) && Bit1_Get( a_AdminChat, i ))
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -371,7 +371,7 @@ stock HighAdminBroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if( PlayerInfo[i][pAdmin] >= level && Bit1_Get( a_AdminChat, i ) )
+		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get( a_AdminChat, i ))
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -386,7 +386,7 @@ SendAdminMessage(color, string[], va_args<>)
 	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
-		if( PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ) )
+		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ))
 			SendClientMessage(i, color, format_message);
 	}
 	return 1;
@@ -399,7 +399,7 @@ SendHelperMessage(color, string[], va_args<>)
 	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
-		if( PlayerInfo[i][pHelper] >= 1 )
+		if(PlayerInfo[i][pHelper] >= 1 )
 			SendClientMessage(i, color, format_message);
 	}
 	return 1;
@@ -409,7 +409,7 @@ stock SendAdminNotification(color, string[])
 {
 	foreach (new i : Player)
 	{
-		if( PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ) )
+		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ))
 			SendMessage(i, color, string);
 	}
 }
@@ -419,7 +419,7 @@ stock DMERSBroadCast(color, const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_DMCheck, i))
+		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_DMCheck, i))
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -464,7 +464,7 @@ stock split(const strsrc[], strdest[][], delimiter)
 	    
 	while (i <= strlen(strsrc))
 	{
-	    if (strsrc[i] == delimiter || i == strlen(strsrc))
+	    if(strsrc[i] == delimiter || i == strlen(strsrc))
 		{
 			len = strmid(strdest[aNum], strsrc, li, i, 128);
 			strdest[aNum][len] = 0;
@@ -480,7 +480,7 @@ stock split(const strsrc[], strdest[][], delimiter)
 ShowAdminVehicles(playerid) {
 	for (new i = 0; i < MAX_ADMIN_VEHICLES; i ++) {
 		if(Admin_Vehicle[playerid][i] != -1) {
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] [ADMIN-VEH (%d)]: ID %d.", i, Admin_Vehicle[playerid][i]);
+			va_SendClientMessage(playerid, COLOR_RED, "[!][ADMIN-VEH (%d)]: ID %d.", i, Admin_Vehicle[playerid][i]);
 		}
 	}
 	return (true);
@@ -593,7 +593,7 @@ Public: OnPINChecked(playerid, status)
 		);
 		#endif
 		
-		if( ++AdminLoginTry[playerid] && AdminLoginTry[playerid] >= 3 ) {
+		if(++AdminLoginTry[playerid] && AdminLoginTry[playerid] >= 3 ) {
 			SendClientMessage(playerid, COLOR_RED, "[SERVER]:  You have reached the team login try limit, you're kicked!");
 			KickMessage(playerid);
 		}
@@ -613,21 +613,21 @@ Public: OnPINChecked(playerid, status)
 
 stock DestroyReconTextDraws(playerid)
 {
-	if( ReconBcg1[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, ReconBcg1[ playerid ]);
-		ReconBcg1[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	if(ReconBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, ReconBcg1[playerid]);
+		ReconBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( ReconBack[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, ReconBack[ playerid ]);
-		ReconBack[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	if(ReconBack[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, ReconBack[playerid]);
+		ReconBack[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( ReconTitle[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, ReconTitle[ playerid ]);
-		ReconTitle[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	if(ReconTitle[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, ReconTitle[playerid]);
+		ReconTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( ReconText[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, ReconText[ playerid ]);
-		ReconText[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	if(ReconText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, ReconText[playerid]);
+		ReconText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
@@ -687,7 +687,7 @@ SetPlayerReconTarget(playerid, targetid)
 	new
 		Float:targetHealth,
 		Float:targetArmour,
-		tmpString[ 130 ];
+		tmpString[130];
 
 	GetPlayerHealth(targetid, targetHealth);
 	GetPlayerArmour(targetid, targetArmour);
@@ -739,7 +739,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ What is RolePlay ? â€˘");
+			SendClientMessage(playerid, COLOR_RED, "[!] â€˘ What is RolePlay ? â€˘");
 		  	SendClientMessage(playerid, COLOR_WHITE, " ");
 		  	SendClientMessage(playerid, COLOR_WHITE, "RolePlay is simulation of real life. ");
 		    SendClientMessage(playerid, COLOR_WHITE, "In that kind of game, it's good to know the RolePlay rules. ");
@@ -760,7 +760,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ RolePlay terminology â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ RolePlay terminology â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Since this is Hardcore RolePlay server, RolePlay rules are very important to follow!");
 	        SendClientMessage(playerid, COLOR_WHITE, "Are you familiar with some RolePlay terms?");
@@ -780,7 +780,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ In Character and Out of Character(OOC) Chat â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ In Character and Out of Character(OOC) Chat â€˘");
 			SendClientMessage(playerid, COLOR_WHITE," ");
 	   		SendClientMessage(playerid, COLOR_WHITE, "It's very important to know the difference between these two chats.");
 			SendClientMessage(playerid, COLOR_WHITE," ");
@@ -805,7 +805,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ What is MetaGaming(MG)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ What is MetaGaming(MG)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "MetaGaming is using Out of Character (OOC) informations for In Character (IC) purposes.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Example of MetaGaming is shouting person's name you saw first time InGame, just because you saw his nick.");
@@ -826,7 +826,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to PowerGaming(PG)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to PowerGaming(PG)? â€˘");
 			SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Powergaming je odradjivanje radnje koju u stvarnom zivotu ne mozete odraditi. ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Naime, radnja koju ne mozete izvrsiti ili u odredjenom momentu ili uopce ne mozete izvrsiti tu radnju. ");
@@ -847,7 +847,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to Bunnyhop(BH)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to Bunnyhop(BH)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je ucestalo skakanje prilikom Vasega kretanja.");
 			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop se koristi kako bi se ubrzali, sto nikako nije RolePlay.");
@@ -866,7 +866,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to Revenge Kill(RK)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to Revenge Kill(RK)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Revenge Kill je ubojstvo iz osvete.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Primjer Revenge Killa je kada Vas netko ubije, Vi se usredotocite na to da nabavite oruzje i ubijete natrag tu osobu.");
@@ -886,14 +886,14 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ /me i /ame /do komanda? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ /me i /ame /do komanda? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, "");
-	        SendClientMessage(playerid, COLOR_RED, "[ ! ] /me - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera koja se dogodila u trenutku. ");
+	        SendClientMessage(playerid, COLOR_RED, "[!] /me - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera koja se dogodila u trenutku. ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Naravno, /me komanda ne smije biti koristena kako bi se izvukli iz nekog RolePlaya.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Primjer: /me uzima sok sa stola te ispija gutljaj.");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] /ame - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera i koja poslje odredjenog vremena i dalje traje.");
+			SendClientMessage(playerid, COLOR_RED, "[!] /ame - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera i koja poslje odredjenog vremena i dalje traje.");
 			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /ame se osmjehuje, /ame klima glavom potvrdno, /ame se naslanja na zid.");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] /do - komanda kojom se opisuje trenutna IC situacija.");
+			SendClientMessage(playerid, COLOR_RED, "[!] /do - komanda kojom se opisuje trenutna IC situacija.");
 			SendClientMessage(playerid, COLOR_WHITE, " /do se pise u trecem licu odnosno u pogledu posmatraca, moze opisivati i okolinu.");
 			SendClientMessage(playerid, COLOR_WHITE, "Primjer: Sta bi se nalazilo ispred Johnnya na stolu? (( Patricia Vargas ))");
 		    stop LearnTimer[playerid];
@@ -910,7 +910,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to Drive By(DB)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to Drive By(DB)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je pucanje oruzjem s mjesta vozaca iz bilo kojeg mjesta u vozilu na civile, motore ili bicikle.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer je zabranjeno ubijanje propelerom helikoptera i gazenje igraca vozilom.");
@@ -930,7 +930,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-	   		SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ KRAJ TUTORIALA â€˘");
+	   		SendClientMessage(playerid, COLOR_RED, "[!] â€˘ KRAJ TUTORIALA â€˘");
 	        SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Nadamo se da ste naucili nesto iz nasega tutoriala!");
 	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer se nadamo, da vise necete krsiti RolePlay pravila.");
@@ -945,7 +945,7 @@ stock static UpdateTargetReconData(playerid, targetid)
 	new
 		Float:targetHealth,
 		Float:targetArmour,
-		tmpString[ 130 ];
+		tmpString[130];
 
 	GetPlayerHealth(targetid, targetHealth);
 	GetPlayerArmour(targetid, targetArmour);
@@ -970,12 +970,12 @@ stock static UpdateTargetReconData(playerid, targetid)
 	);
 	PlayerTextDrawSetString(playerid, ReconText[playerid], tmpString);
 
-	if( ReconingVehicle[ playerid ] != GetPlayerVehicleID(targetid) ) {
+	if(ReconingVehicle[playerid] != GetPlayerVehicleID(targetid)) {
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(targetid));
 		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH );
-		ReconingVehicle[ playerid ] = GetPlayerVehicleID(targetid);
+		ReconingVehicle[playerid] = GetPlayerVehicleID(targetid);
 	}
-	ReconingPlayer[ playerid ] = targetid;
+	ReconingPlayer[playerid] = targetid;
 	return 1;
 }
 
@@ -1154,7 +1154,7 @@ timer OnAdminCountDown[1000]()
 		PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 	}
 	cseconds--;
-	if( !cseconds ) 
+	if(!cseconds ) 
 	{
 		count_started = false;
 		GameTextForAll("~g~GO GO GO", 2500, 4);
@@ -1183,7 +1183,7 @@ public CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const rea
 	
 	mysql_fquery(g_SQL, "UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", minutes, sqlid);
 		
-	va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
+	va_SendClientMessage(playerid,COLOR_RED, "[!] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
 	return 1;
 }
 
@@ -1193,7 +1193,7 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
 	new
 		rows;
 	cache_get_row_count(rows);
-	if( !rows ) return SendClientMessage(playerid,COLOR_RED,"[MySQL]: Taj igrac nije u bazi!");
+	if(!rows ) return SendClientMessage(playerid,COLOR_RED,"[MySQL]: Taj igrac nije u bazi!");
 	
 	new
 		currentwarns;
@@ -1204,7 +1204,7 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     if(warns == 3) 
 	{
 		OfflineBanPlayer(playerid, targetname, "3. Warn", 10);
-        SendClientMessage(playerid,COLOR_RED, "[ ! ] Taj igrac je imao 3. warna te je automatski banan!");
+        SendClientMessage(playerid,COLOR_RED, "[!] Taj igrac je imao 3. warna te je automatski banan!");
         va_SendClientMessageToAll(COLOR_RED,"AdmCMD: %s [Offline] je dobio ban od admina %s, razlog: 3. Warn",targetname,GetName(playerid,false));
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
@@ -1213,7 +1213,7 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     } 
 	else 
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si warnao igraca %s, te mu je to ukupno %d warn!",targetname,warns);
+		va_SendClientMessage(playerid,COLOR_RED, "[!] Uspjesno si warnao igraca %s, te mu je to ukupno %d warn!",targetname,warns);
         mysql_fquery(g_SQL, "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
     }
 	return 1;
@@ -1306,8 +1306,8 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 	else
 	{
 	    if(GetPlayerMoney(giveplayerid) < price) return SendClientMessage(playerid, COLOR_RED, "Igrac nema dovoljno novca.");
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si premjestio parking svim vozilima igracu "COL_WHITE"%s"COL_YELLOW" - (%i$). ", GetName(giveplayerid, true), price);
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s vam je premjestio parking svih vozila(%i$).", GetName(playerid, true), price);
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si premjestio parking svim vozilima igracu "COL_WHITE"%s"COL_YELLOW" - (%i$). ", GetName(giveplayerid, true), price);
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin %s vam je premjestio parking svih vozila(%i$).", GetName(playerid, true), price);
 		PlayerToBudgetMoney(giveplayerid, price);
 	}
 	new
@@ -1348,7 +1348,7 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 forward LoadNamesFromIp(playerid, const ip[]);
 public LoadNamesFromIp(playerid, const ip[])
 {
-	if( !cache_num_rows() ) return va_SendClientMessage(playerid, COLOR_RED, "Nitko se nije logirao sa IP adresom: %s (DATABAZA)!", ip);
+	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "Nitko se nije logirao sa IP adresom: %s (DATABAZA)!", ip);
 
 	new
 		dialogString[1024];
@@ -1373,7 +1373,7 @@ public LoadNamesFromIp(playerid, const ip[])
 forward CountFactionMembers(playerid, orgid);
 public CountFactionMembers(playerid, orgid)
 {
-	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Organizacija %s broji 0 clanova (0 je online)!", FactionInfo[orgid][fName]);
+	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "[!] Organizacija %s broji 0 clanova (0 je online)!", FactionInfo[orgid][fName]);
 	
 	new activeMembers = 0;
 	foreach(new i : Player)
@@ -1382,14 +1382,14 @@ public CountFactionMembers(playerid, orgid)
 			activeMembers++;
 	}
 	
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Organizacija %s broji %d clanova (%d je online)!", FactionInfo[orgid][fName], cache_num_rows(), activeMembers);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Organizacija %s broji %d clanova (%d je online)!", FactionInfo[orgid][fName], cache_num_rows(), activeMembers);
 	return 1;
 }
 
 forward CheckPlayerData(playerid, const name[]);
 public CheckPlayerData(playerid, const name[])
 {
-	if( cache_num_rows() ) 
+	if(cache_num_rows()) 
 	{
 		new sqlid;
 		cache_get_value_name_int(0, "sqlid", sqlid);
@@ -1421,7 +1421,7 @@ public CheckLastLogin(playerid, const name[])
 	
 	if(PlayerInfo[playerid][pAdmin])
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac %s je zadnji puta bio online: %s u %s, sa IP: %s.", 
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac %s je zadnji puta bio online: %s u %s, sa IP: %s.", 
 			name,
 			date,
 			time,
@@ -1430,7 +1430,7 @@ public CheckLastLogin(playerid, const name[])
 	}
 	else
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac %s je zadnji puta bio online: %d.%d.%d - %d:%d:%d", 
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac %s je zadnji puta bio online: %d.%d.%d - %d:%d:%d", 
 			name,
 			date[2],
 			date[1],
@@ -1455,16 +1455,16 @@ public CheckLastLogin(playerid, const name[])
 
 timer OnPlayerReconing[1000](playerid, targetid)
 {
-	if( Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_VEH ) {
-		if( !IsPlayerInAnyVehicle(targetid) ) {
+	if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_VEH ) {
+		if(!IsPlayerInAnyVehicle(targetid)) {
 			SetPlayerInterior(playerid, GetPlayerInterior(targetid));
 			SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(targetid));
 			PlayerSpectatePlayer(playerid, targetid);
 			Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_PLAYER );
 		}
 	}
-	else if( Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_PLAYER ) {		
-		if( GetPlayerInterior(playerid) != GetPlayerInterior(targetid) ) {
+	else if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_PLAYER ) {		
+		if(GetPlayerInterior(playerid) != GetPlayerInterior(targetid)) {
 			SetPlayerInterior(playerid		, GetPlayerInterior(targetid));
 			SetPlayerVirtualWorld(playerid	, GetPlayerVirtualWorld(targetid));
 			PlayerSpectatePlayer(playerid, targetid);
@@ -1544,7 +1544,7 @@ hook function ResetPlayerVariables(playerid)
 	Bit1_Set(a_BlockedHChat, playerid, false);
 	Bit1_Set(a_TogReports, playerid, false);
 
-	if( IsPlayerReconing(playerid) ) 
+	if(IsPlayerReconing(playerid)) 
 	{
 		stop ReconTimer[playerid];
 		DestroyReconTextDraws(playerid);
@@ -1555,7 +1555,7 @@ hook function ResetPlayerVariables(playerid)
 
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 {
-    if (PlayerInfo[playerid][pAdmin] >= 1)
+    if(PlayerInfo[playerid][pAdmin] >= 1)
     {
         if(GetPlayerState(playerid) == 2)
         {
@@ -1564,15 +1564,15 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
             SetVehiclePos(carid,fX,fY,MapAndreas_FindZ_For2DCoord(fX,fY,fZ));
         }
         else SetPlayerPosFindZ(playerid, fX, fY, fZ);
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] S obzirom da nisam vojni analiticar, moguce je da ne bude bas precizno.");
+        SendClientMessage(playerid, COLOR_RED, "[!] S obzirom da nisam vojni analiticar, moguce je da ne bude bas precizno.");
     }
     return 1;
 }
 public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 {
-	if (PlayerInfo[playerid][pAdmin] >= 1)
+	if(PlayerInfo[playerid][pAdmin] >= 1)
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] %s (%d)", GetName(clickedplayerid,false), clickedplayerid);
+		va_SendClientMessage(playerid, COLOR_RED, "[!] %s (%d)", GetName(clickedplayerid,false), clickedplayerid);
 		va_SendClientMessage(playerid, 0xC9C9C9FF, "IC:  Novac: [%d$] - Banka: [%d$] - Mob: [%d] - Org: [%s] - Rank: [%s (%d)]",
 			PlayerInfo[clickedplayerid][pMoney],
 			PlayerInfo[clickedplayerid][pBank],
@@ -1620,11 +1620,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_JAIL_GETHERE:
 		{
-			if( !response ) return 1;
+			if(!response ) return 1;
 			new
 				Float:X, Float:Y, Float:Z;
 			GetPlayerPos(playerid, X, Y, Z);
-			if (GetPlayerState(PortedPlayer[playerid]) == 2) {
+			if(GetPlayerState(PortedPlayer[playerid]) == 2) {
 				new tmpcar = GetPlayerVehicleID(PortedPlayer[playerid]);
 				SetVehiclePos(tmpcar, X, Y+4, Z);
 			} else {

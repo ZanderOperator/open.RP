@@ -553,11 +553,11 @@ hook OnGameModeInit()
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (newstate == PLAYER_STATE_PASSENGER)
+    if(newstate == PLAYER_STATE_PASSENGER)
     {
         new vehicleid = GetPlayerVehicleID(playerid);
 
-        if (GetVehicleModel(vehicleid) == 416 && (2 <= GetPlayerVehicleSeat(playerid) <= 4))
+        if(GetVehicleModel(vehicleid) == 416 && (2 <= GetPlayerVehicleSeat(playerid) <= 4))
         {
             SetPlayerPosEx(playerid, 1557.8597, 1514.3241, -15.3713, vehicleid, 1, true);
             SetCameraBehindPlayer(playerid);
@@ -569,11 +569,11 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
+    if((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
     {
         new vehicleid = Player_AmbulanceId(playerid);
 
-        if (IsValidVehicle(vehicleid))
+        if(IsValidVehicle(vehicleid))
         {
             new 
                 Float:X, Float:Y, Float:Z;

@@ -75,7 +75,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	if(newstate == PLAYER_STATE_DRIVER && oldstate == PLAYER_STATE_ONFOOT && VehicleInfo[vehicleid][vNitro] != -1) {
 		new
 			model = GetVehicleModel(vehicleid);
-		if( IsAHelio(model) || IsAPlane(model) || IsABike(model)) return 1;
+		if(IsAHelio(model) || IsAPlane(model) || IsABike(model)) return 1;
 		CreateNosTextdraws(playerid);
 	}
 	if(newstate == PLAYER_STATE_ONFOOT && nosbars[playerid] != PlayerText:INVALID_TEXT_DRAW)
@@ -203,12 +203,12 @@ CMD:checknos(playerid, params[])
 		veh;
 	
 	if(sscanf(params, "d", veh))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checknos [vozilo id]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /checknos [vozilo id]");
 	
 	if(veh == INVALID_VEHICLE_ID)
 		return SendClientMessage(playerid,COLOR_RED, "Krivi id vozila");
 		
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo ID %d ima %d nitra.", veh, VehicleInfo[veh][vNOSCap]);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Vozilo ID %d ima %d nitra.", veh, VehicleInfo[veh][vNOSCap]);
 	return 1;
 }
 
@@ -226,7 +226,7 @@ CMD:refillnos(playerid, params[])
 	VehicleInfo[car][vNOSCap] = 100;
 	ShowNosCap(playerid);
 	
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Napunili ste nitro na vozilu id: %d!", car);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Napunili ste nitro na vozilu id: %d!", car);
 	
 	return 1;
 }

@@ -260,10 +260,10 @@ CMD:setskill(playerid, params[])
 		skillid,
 		value;
 		
-	if( sscanf( params, "uii", giveplayerid, skillid, value ) )
+	if(sscanf( params, "uii", giveplayerid, skillid, value ))
 	{
 		SendClientMessage(playerid, COLOR_RED, "WARNING: Because of the uniqueness of skill ID's, you MUST ask a player for skill ID!");
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setskill [playerid][skillid][points]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /setskill [playerid][skillid][points]");
 		return 1;
 	}
 	if((skillid < 0 || skillid > MAX_SKILLS)) 
@@ -280,7 +280,7 @@ CMD:setskill(playerid, params[])
 		GetName(giveplayerid, false)
 	);
 
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Game Admin %s adjusted your %s Skill Points to %d(Level %d)!", 
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Game Admin %s adjusted your %s Skill Points to %d(Level %d)!", 
 		GetName(playerid, false),
 		ReturnJob(PlayerSkills[giveplayerid][sJob][skillid]),
 		value,

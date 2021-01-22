@@ -141,7 +141,7 @@ forward @_psf_sysreq_(); @_psf_sysreq_() {
 
 stock IsPlayerNearVending(playerid)
 {
-    for (new i = 0; i < sizeof(g_aVendingMachines); i ++) if (IsPlayerInRangeOfPoint(playerid, 3.0, g_aVendingMachines[i][0], g_aVendingMachines[i][1], g_aVendingMachines[i][2]))
+    for (new i = 0; i < sizeof(g_aVendingMachines); i ++) if(IsPlayerInRangeOfPoint(playerid, 3.0, g_aVendingMachines[i][0], g_aVendingMachines[i][1], g_aVendingMachines[i][2]))
 		return 1;
 
 	return 0;
@@ -159,7 +159,7 @@ stock GetPlayerFPS(playerid)
 
 stock GetPlayerPausedTime(playerid)
 {
-	if (IsPlayerPaused(playerid))
+	if(IsPlayerPaused(playerid))
 	    return (g_eCallbackData[playerid][e_CB_TIME]);
 
 	return 0;
@@ -183,7 +183,7 @@ stock CB_GetVehicleDriver(vehicleid)
 {
 	for (new i = 0, l = GetMaxPlayers(); i != l; i ++)
 	{
-		if (GetPlayerState(i) == PLAYER_STATE_DRIVER && GetPlayerVehicleID(i) == vehicleid)
+		if(GetPlayerState(i) == PLAYER_STATE_DRIVER && GetPlayerVehicleID(i) == vehicleid)
 		    return i;
 	}
 	return INVALID_PLAYER_ID;
@@ -229,7 +229,7 @@ stock static CB_GetCallbackData()
 	};
 	for (new i = 0; i != sizeof(g_aCallbackNames); i ++)
 	{
-		if (funcidx(g_aCallbackNames[i][g_eCallbackName]) == -1)
+		if(funcidx(g_aCallbackNames[i][g_eCallbackName]) == -1)
 		    continue;
 
 		g_CallbackInfo |= g_aCallbackNames[i][g_eCallbackFlag];
@@ -277,15 +277,15 @@ stock ps_format(dest[], size, const str[], {Float,_}:...)
 		len
 	;
 	// Bug fix (thanks to kvann).
-	if (g_sFormatBuffer[0]) {
+	if(g_sFormatBuffer[0]) {
 			g_sFormatBuffer[0] = '\0';
 	}
-	if (idx == 3) {
-		if (ispacked(str) && !ispacked(dest)) {
+	if(idx == 3) {
+		if(ispacked(str) && !ispacked(dest)) {
 			strunpack(dest, str, size);
-		} else if ((!ispacked(str) && ispacked(dest)) || (ispacked(str) && ispacked(dest))) {
+		} else if((!ispacked(str) && ispacked(dest)) || (ispacked(str) && ispacked(dest))) {
 			strpack(dest, str, size);
-		} else if (!ispacked(str) && !ispacked(dest)) {
+		} else if(!ispacked(str) && !ispacked(dest)) {
 			strcat((dest[0] = 0, dest), str, size);
 		}
 		return 0;
@@ -293,10 +293,10 @@ stock ps_format(dest[], size, const str[], {Float,_}:...)
 	strunpack(g_sFormatBuffer, str);
 
 	while (pos--) {
-			if ((idx > 2 && g_sFormatBuffer[pos] == '%') && g_sFormatBuffer[pos + 1] && g_sFormatBuffer[pos + 1] != '%') {
+			if((idx > 2 && g_sFormatBuffer[pos] == '%') && g_sFormatBuffer[pos + 1] && g_sFormatBuffer[pos + 1] != '%') {
 				idx--;
 
-				if (g_sFormatBuffer[pos + 1] == 's' && IsPackedArgument(idx)) {
+				if(g_sFormatBuffer[pos + 1] == 's' && IsPackedArgument(idx)) {
 					// Load the address of our packed string.
 					#emit LCTRL 5
 					#emit ADD.C 12
@@ -339,7 +339,7 @@ stock ps_format(dest[], size, const str[], {Float,_}:...)
 							#emit LOAD.I
 							#emit PUSH.pri
 						   
-							if (g_sFormatBuffer[pos + 2] == '*' && g_sFormatBuffer[pos + 3] == 's') {
+							if(g_sFormatBuffer[pos + 2] == '*' && g_sFormatBuffer[pos + 3] == 's') {
 								#emit LCTRL 5
 									#emit LOAD.S.alt idx
 									#emit DEC.alt
@@ -363,7 +363,7 @@ stock ps_format(dest[], size, const str[], {Float,_}:...)
 	#emit SYSREQ.C format
 	#emit STACK 16
 
-	if (ispacked(dest)) {
+	if(ispacked(dest)) {
 		strpack(dest, g_sFormatBuffer, size);
 	} else {
 		strcat((dest[0] = 0, dest), g_sFormatBuffer, size);
@@ -383,7 +383,7 @@ stock ps_printf(const str[], {Float,_}:...)
 		args = numargs();
 
 	// Bug fix (thanks to kvann).
-	if (g_sPrintBuffer[0]) {
+	if(g_sPrintBuffer[0]) {
 			g_sPrintBuffer[0] = '\0';
 	}
    
@@ -429,7 +429,7 @@ public OnFilterScriptInit()
 {
     CB_GetCallbackData();
 
-	if (g_CallbackInfo & e_CB_OPP || g_CallbackInfo & e_CB_OPR)
+	if(g_CallbackInfo & e_CB_OPP || g_CallbackInfo & e_CB_OPR)
 		SetTimer("_CB_TabCheck", 600, true);
 
 	#if defined CB_OnFilterScriptInit
@@ -443,7 +443,7 @@ public OnGameModeInit()
 {
 	CB_GetCallbackData();
 
-	if (g_CallbackInfo & e_CB_OPP || g_CallbackInfo & e_CB_OPR)
+	if(g_CallbackInfo & e_CB_OPP || g_CallbackInfo & e_CB_OPR)
 	    SetTimer("_CB_TabCheck", 600, true);
 
 	#if defined CB_OnGameModeInit
@@ -456,13 +456,13 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 {
 	new ret;
 
-	if (!(g_CallbackInfo & e_CB_OPFF))
+	if(!(g_CallbackInfo & e_CB_OPFF))
 	    ret = 1;
 
-	if ((g_CallbackInfo & e_CB_OPFF) && (hittype == BULLET_HIT_TYPE_PLAYER && GetPlayerTeam(playerid) == GetPlayerTeam(hitid) && GetPlayerTeam(playerid) != 0 && GetPlayerTeam(playerid) != NO_TEAM))
+	if((g_CallbackInfo & e_CB_OPFF) && (hittype == BULLET_HIT_TYPE_PLAYER && GetPlayerTeam(playerid) == GetPlayerTeam(hitid) && GetPlayerTeam(playerid) != 0 && GetPlayerTeam(playerid) != NO_TEAM))
 	    ret = CallLocalFunction("OnPlayerFriendlyFire", "ddd", playerid, hitid, weaponid);
 
-	if ((g_CallbackInfo & e_CB_OPWE) && (22 <= weaponid <= 38 && GetPlayerWeaponState(playerid) == WEAPONSTATE_LAST_BULLET && GetPlayerAmmo(playerid) == 1))
+	if((g_CallbackInfo & e_CB_OPWE) && (22 <= weaponid <= 38 && GetPlayerWeaponState(playerid) == WEAPONSTATE_LAST_BULLET && GetPlayerAmmo(playerid) == 1))
   		CallLocalFunction("OnPlayerWeaponEmpty", "dd", playerid, weaponid);
 
 	#if defined CB_OnPlayerWeaponShot
@@ -473,30 +473,30 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 
 public OnPlayerUpdate(playerid)
 {
- 	if (g_CallbackInfo & e_CB_OPTP)
+ 	if(g_CallbackInfo & e_CB_OPTP)
 	{
-	    if (g_eCallbackData[playerid][e_CB_TARGET] == 0 && GetPlayerTargetPlayer(playerid) == INVALID_PLAYER_ID)
+	    if(g_eCallbackData[playerid][e_CB_TARGET] == 0 && GetPlayerTargetPlayer(playerid) == INVALID_PLAYER_ID)
 	        g_eCallbackData[playerid][e_CB_TARGET] = INVALID_PLAYER_ID;
 	
-  		else if (GetPlayerTargetPlayer(playerid) != g_eCallbackData[playerid][e_CB_TARGET])
+  		else if(GetPlayerTargetPlayer(playerid) != g_eCallbackData[playerid][e_CB_TARGET])
   		{
   		    g_eCallbackData[playerid][e_CB_TARGET] = GetPlayerTargetPlayer(playerid);
   		    CallLocalFunction("OnPlayerTargetPlayer", "ddd", playerid, g_eCallbackData[playerid][e_CB_TARGET], GetPlayerWeapon(playerid));
 		}
 	}
-	if (g_CallbackInfo & e_CB_OPFC)
+	if(g_CallbackInfo & e_CB_OPFC)
 	{
 	    static
 	        level,
 			amount;
 
-	    if ((level = GetPlayerDrunkLevel(playerid)) < 100)
+	    if((level = GetPlayerDrunkLevel(playerid)) < 100)
 	    {
 	        SetPlayerDrunkLevel(playerid, 2000);
 	    }
-	    else if (g_eCallbackData[playerid][e_CB_DRUNK] != level)
+	    else if(g_eCallbackData[playerid][e_CB_DRUNK] != level)
 	    {
-	        if ((amount = g_eCallbackData[playerid][e_CB_DRUNK] - level) && g_eCallbackData[playerid][e_CB_FPS] != amount) {
+	        if((amount = g_eCallbackData[playerid][e_CB_DRUNK] - level) && g_eCallbackData[playerid][e_CB_FPS] != amount) {
 	        	CallLocalFunction("OnPlayerFPSChange", "ddd", playerid, g_eCallbackData[playerid][e_CB_FPS], amount);
 
 				g_eCallbackData[playerid][e_CB_FPS] = amount;
@@ -504,39 +504,39 @@ public OnPlayerUpdate(playerid)
 		    g_eCallbackData[playerid][e_CB_DRUNK] = level;
 		}
 	}
-	if (g_CallbackInfo & e_CB_OPPL)
+	if(g_CallbackInfo & e_CB_OPPL)
 	{
 		static
 		    Float:packet;
 
 		packet = NetStats_PacketLossPercent(playerid);
 
-		if (floatcmp(packet, 0.0) != 0 && floatcmp(packet, g_eCallbackData[playerid][e_CB_PACKET]) != 0) {
+		if(floatcmp(packet, 0.0) != 0 && floatcmp(packet, g_eCallbackData[playerid][e_CB_PACKET]) != 0) {
 		    CallLocalFunction("OnPlayerPacketLoss", "dff", playerid, g_eCallbackData[playerid][e_CB_PACKET], packet);
 
 			g_eCallbackData[playerid][e_CB_PACKET] = packet;
 		}
 	}
-	if (GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
 	{
-        if (g_CallbackInfo & e_CB_OPUV)
+        if(g_CallbackInfo & e_CB_OPUV)
 		{
-			if (IsPlayerNearVending(playerid) && GetPlayerAnimationIndex(playerid) == 1660 && (GetTickCount() - g_eCallbackData[playerid][e_CB_VEND]) > 3500) {
+			if(IsPlayerNearVending(playerid) && GetPlayerAnimationIndex(playerid) == 1660 && (GetTickCount() - g_eCallbackData[playerid][e_CB_VEND]) > 3500) {
 				CallLocalFunction("OnPlayerUseVending", "d", playerid);
 
 				g_eCallbackData[playerid][e_CB_VEND] = GetTickCount();
 			}
 		}
-		if (g_CallbackInfo & e_CB_OPF)
+		if(g_CallbackInfo & e_CB_OPF)
 		{
-	        if (!(g_aCallbackFlags[playerid] & e_CB_INIT))
+	        if(!(g_aCallbackFlags[playerid] & e_CB_INIT))
 			{
 			    g_aCallbackFlags[playerid] |= e_CB_INIT;
 
 			    GetPlayerHealth(playerid, g_eCallbackData[playerid][e_CB_HEALTH]);
 			    GetPlayerPos(playerid, g_eCallbackData[playerid][e_CB_POS][0], g_eCallbackData[playerid][e_CB_POS][1], g_eCallbackData[playerid][e_CB_POS][2]);
 			}
-			else if (GetPlayerAnimationIndex(playerid) < 1130 || GetPlayerAnimationIndex(playerid) > 1132)
+			else if(GetPlayerAnimationIndex(playerid) < 1130 || GetPlayerAnimationIndex(playerid) > 1132)
 			{
 				static
 				    Float:health,
@@ -547,7 +547,7 @@ public OnPlayerUpdate(playerid)
 				GetPlayerPos(playerid, x, y, z);
 				GetPlayerHealth(playerid, health);
 
-				if (g_eCallbackData[playerid][e_CB_HEALTH] > health && g_eCallbackData[playerid][e_CB_POS][2] > z)
+				if(g_eCallbackData[playerid][e_CB_HEALTH] > health && g_eCallbackData[playerid][e_CB_POS][2] > z)
 					CallLocalFunction("OnPlayerFall", "dff", playerid, floatsub(g_eCallbackData[playerid][e_CB_POS][2], z), floatsub(g_eCallbackData[playerid][e_CB_HEALTH], health));
 
 				GetPlayerHealth(playerid, g_eCallbackData[playerid][e_CB_HEALTH]);
@@ -555,7 +555,7 @@ public OnPlayerUpdate(playerid)
 			}
 		}
 	}
-	else if (g_CallbackInfo & e_CB_OPCV && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+	else if(g_CallbackInfo & e_CB_OPCV && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		new
 			vehicleid = GetPlayerVehicleID(playerid),
@@ -566,11 +566,11 @@ public OnPlayerUpdate(playerid)
 		GetVehicleHealth(vehicleid, health);
 		speed = CB_GetVehicleSpeed(vehicleid);
 
-		if ((g_aVehicleHealth[vehicleid] > health && floatabs(g_aVehicleHealth[vehicleid] - health) >= POTENTIAL_CRASH_DAMAGE) && floatabs(g_aVehicleSpeed[vehicleid] - speed) >= POTENTIAL_SPEED_DROP)
+		if((g_aVehicleHealth[vehicleid] > health && floatabs(g_aVehicleHealth[vehicleid] - health) >= POTENTIAL_CRASH_DAMAGE) && floatabs(g_aVehicleSpeed[vehicleid] - speed) >= POTENTIAL_SPEED_DROP)
 		{
 			GetVehicleDamageStatus(vehicleid, damage[0], damage[1], damage[2], damage[3]);
 
-			if (g_aVehicleDamage[vehicleid]{0} != damage[0] || g_aVehicleDamage[vehicleid]{1} != damage[1] || g_aVehicleDamage[vehicleid]{2} != damage[2])
+			if(g_aVehicleDamage[vehicleid]{0} != damage[0] || g_aVehicleDamage[vehicleid]{1} != damage[1] || g_aVehicleDamage[vehicleid]{2} != damage[2])
 				CallLocalFunction("OnPlayerCrashVehicle", "ddf", playerid, vehicleid, floatsub(g_aVehicleHealth[vehicleid], health));
 
 			for (new i = 0; i < 3; i ++) {
@@ -591,18 +591,18 @@ public OnPlayerUpdate(playerid)
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-	if (g_CallbackInfo & e_CB_OPCJ)
+	if(g_CallbackInfo & e_CB_OPCJ)
 	{
-		if (newstate == PLAYER_STATE_DRIVER)
+		if(newstate == PLAYER_STATE_DRIVER)
 		{
 			g_aLastVehicle[playerid] = GetPlayerVehicleID(playerid);
 		}
-		else if (newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER) {
+		else if(newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER) {
 
 			static
 				driverid = INVALID_PLAYER_ID;
 
-			if ((driverid = CB_GetVehicleDriver(g_aLastVehicle[playerid])) != INVALID_PLAYER_ID)
+			if((driverid = CB_GetVehicleDriver(g_aLastVehicle[playerid])) != INVALID_PLAYER_ID)
 			    CallLocalFunction("OnPlayerCarJack", "ddd", driverid, playerid, g_aLastVehicle[playerid]);
 
 			g_aLastVehicle[playerid] = INVALID_VEHICLE_ID;
@@ -616,9 +616,9 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if (g_CallbackInfo & e_CB_OPHK)
+    if(g_CallbackInfo & e_CB_OPHK)
 	{
-		if (!(g_aCallbackFlags[playerid] & e_CB_HOLDING)) {
+		if(!(g_aCallbackFlags[playerid] & e_CB_HOLDING)) {
 
 	    	g_aCallbackFlags[playerid] |= e_CB_HOLDING;
 
@@ -634,7 +634,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if ((g_CallbackInfo & e_CB_OPDC) && (clickedid == Text:INVALID_TEXT_DRAW && g_eCallbackData[playerid][e_CB_SELECT]))
+	if((g_CallbackInfo & e_CB_OPDC) && (clickedid == Text:INVALID_TEXT_DRAW && g_eCallbackData[playerid][e_CB_SELECT]))
 	    CallLocalFunction("OnPlayerDisableCursor", "d", playerid);
 	    
 	#if defined CB_OnPlayerClickTextDraw
@@ -651,14 +651,14 @@ public _CB_HoldCheck(playerid, key)
 
 	GetPlayerKeys(playerid, keys[0], keys[1], keys[2]);
 
-	if (keys[0] & key) {
+	if(keys[0] & key) {
 	    g_eCallbackData[playerid][e_CB_PRESSES]++;
 
 	    CallLocalFunction("OnPlayerHoldingKey", "dd", playerid, key);
 	}
 	else
 	{
-	    if (g_CallbackInfo & e_CB_OPRK && g_eCallbackData[playerid][e_CB_PRESSES] > 0)
+	    if(g_CallbackInfo & e_CB_OPRK && g_eCallbackData[playerid][e_CB_PRESSES] > 0)
 	    	CallLocalFunction("OnPlayerReleaseKey", "ddd", playerid, keys, GetTickCount() - g_eCallbackData[playerid][e_CB_TIME]);
 
         KillTimer(g_eCallbackData[playerid][e_CB_TIMER]);
@@ -673,20 +673,20 @@ public _CB_TabCheck()
 {
 	for (new i = 0, l = GetMaxPlayers(); i != l; i ++)
 	{
-	    if (GetPlayerState(i) != PLAYER_STATE_ONFOOT && GetPlayerState(i) != PLAYER_STATE_DRIVER && GetPlayerState(i) != PLAYER_STATE_PASSENGER)
+	    if(GetPlayerState(i) != PLAYER_STATE_ONFOOT && GetPlayerState(i) != PLAYER_STATE_DRIVER && GetPlayerState(i) != PLAYER_STATE_PASSENGER)
 	        continue;
 
-		if (g_aCallbackFlags[i] & e_CB_UPDATE)
+		if(g_aCallbackFlags[i] & e_CB_UPDATE)
 		{
-		    if (g_CallbackInfo & e_CB_OPR && g_aCallbackFlags[i] & e_CB_PAUSED)
+		    if(g_CallbackInfo & e_CB_OPR && g_aCallbackFlags[i] & e_CB_PAUSED)
 		    	CallLocalFunction("OnPlayerResume", "dd", i, GetTickCount() - g_eCallbackData[i][e_CB_TIME]);
 
 		    g_aCallbackFlags[i] &= ~e_CB_UPDATE;
 		    g_aCallbackFlags[i] &= ~e_CB_PAUSED;
 		}
-		else if (g_CallbackInfo & e_CB_OPP)
+		else if(g_CallbackInfo & e_CB_OPP)
 		{
-			if (!(g_aCallbackFlags[i] & e_CB_PAUSED) && (GetTickCount() - g_eCallbackData[i][e_CB_LAST]) >= 2000) {
+			if(!(g_aCallbackFlags[i] & e_CB_PAUSED) && (GetTickCount() - g_eCallbackData[i][e_CB_LAST]) >= 2000) {
 			    g_aCallbackFlags[i] |= e_CB_PAUSED;
 
 		    	g_eCallbackData[i][e_CB_TIME] = GetTickCount();

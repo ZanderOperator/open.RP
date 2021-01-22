@@ -892,9 +892,9 @@ stock RemovePlayerBuildings(playerid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if( PRESSED(KEY_YES) ) // Tipka Y
+	if(PRESSED(KEY_YES)) // Tipka Y
 	{
-	    if( IsPlayerInRangeOfPoint(playerid, 10.0, 2163.574462, -2158.066650, 13.286876)) {
+	    if(IsPlayerInRangeOfPoint(playerid, 10.0, 2163.574462, -2158.066650, 13.286876)) {
 			if(rampastatus == 0) {
     			SetDynamicObjectRot(rampa, 0.0000, 0.0000, 0.0000);
 				rampastatus = 1;
@@ -1795,7 +1795,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 	/*}
-	if( PRESSED(KEY_SECONDARY_ATTACK) ) { // Tipka F
+	if(PRESSED(KEY_SECONDARY_ATTACK)) { // Tipka F
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 2070.0911,2185.0234,-31.4410)) { //LSSD Lift prvi sprat za drugi
 			SetPlayerPosEx(playerid, 2034.8427,2185.9893,-31.4410, 6, 20, true);
 			SetPlayerInterior(playerid, 6);

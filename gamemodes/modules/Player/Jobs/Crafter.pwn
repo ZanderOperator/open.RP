@@ -46,15 +46,15 @@ static stock
 
 // Player Vars (32bit)
 static stock
-	PlayerCraftId[ MAX_PLAYERS ],
-	CraftingPick[ MAX_PLAYERS ],
-	CraftingCP[ MAX_PLAYERS ],
-	PlayerCraftingObject[ MAX_PLAYERS ],
-	Timer:CrafingObjectMoveTimer[ MAX_PLAYERS ],
-	Timer:CraftingTimer[ MAX_PLAYERS ];
+	PlayerCraftId[MAX_PLAYERS],
+	CraftingPick[MAX_PLAYERS],
+	CraftingCP[MAX_PLAYERS],
+	PlayerCraftingObject[MAX_PLAYERS],
+	Timer:CrafingObjectMoveTimer[MAX_PLAYERS],
+	Timer:CraftingTimer[MAX_PLAYERS];
 
 static stock
-	Float:FactoryAttach[ ][ 6 ] = {
+	Float:FactoryAttach[][6] = {
 		{ 0.093000,  0.256700, 0.180000, 281.500000, 0.000000, 100.000000 },
 		{ -0.267000, 0.036999, 0.105999, -79.099929, 4.000000, 105.699981 },
 		{ -0.224000, 0.011000,-0.023000, -74.699943,-2.400000, 92.4999920 },
@@ -74,7 +74,7 @@ enum E_CRAFTING_ITEM
 	Float:ciEndZ
 }
 static stock
-	CraftInfo[ ][ E_CRAFTING_ITEM ] = {
+	CraftInfo[][E_CRAFTING_ITEM] = {
 		// Model, ciStartX, ciStartY, ciStartZ, ciEndX, ciEndY, ciEndZ
 		{ 2317, 2563.9133, -1360.3934, 1044.6000,  2559.4324, -1360.3934, 1044.6000 },
 		{ 1781, 2563.7896, -1360.1204, 1044.3450,  2559.2146, -1360.1204, 1044.3450 },
@@ -100,10 +100,10 @@ timer OnPlayerCrafting[1000](playerid, type)
 	{
 		case CRAFTING_TYPE_UNPACK: 
 		{
-			DestroyPlayerObject(playerid, PlayerCraftingObject[ playerid ]);
+			DestroyPlayerObject(playerid, PlayerCraftingObject[playerid]);
 			TogglePlayerControllable(playerid, true);
 			Bit4_Set( gr_CraftingCPId, playerid, 0 );
-			SendClientMessage( playerid, COLOR_RED, "[ ! ] Zavrsili ste s raspakiravanjem kutija. Odnesite kutije u stroj za preradu!");
+			SendClientMessage( playerid, COLOR_RED, "[!] Zavrsili ste s raspakiravanjem kutija. Odnesite kutije u stroj za preradu!");
 			SetCameraBehindPlayer(playerid);
 			ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
 			ClearAnimations(playerid);
@@ -131,11 +131,11 @@ timer OnPlayerCrafting[1000](playerid, type)
 		}
 		case CRAFTING_TYPE_TAKEBOX: 
 		{
-			SendClientMessage( playerid, COLOR_RED, "[ ! ] Pokupi kutiju iz skladista za preradu!");
+			SendClientMessage( playerid, COLOR_RED, "[!] Pokupi kutiju iz skladista za preradu!");
 			SetPlayerCheckpoint(playerid, 2582.8999, -1363.1646, 1043.1500, 2.2);
 			
-			DestroyDynamicPickup(CraftingPick[ playerid ]);
-			CraftingPick[ playerid ] 	= CreateDynamicPickup(1318, 2, 2582.8999, -1363.1646, 1044.5500, -1, -1, playerid);
+			DestroyDynamicPickup(CraftingPick[playerid]);
+			CraftingPick[playerid] 	= CreateDynamicPickup(1318, 2, 2582.8999, -1363.1646, 1044.5500, -1, -1, playerid);
 			Bit4_Set( gr_CraftingCPId, playerid, 2 );
 			Streamer_Update(playerid);
 			return 1;
@@ -146,8 +146,8 @@ timer OnPlayerCrafting[1000](playerid, type)
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 			TogglePlayerControllable(playerid, true);
 			
-			if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 0 ) {
-				CraftingTimer[ playerid ] = defer OnPlayerCrafting(playerid, CRAFTING_TYPE_TAKEBOX);
+			if(Bit4_Get( gr_CraftingGeneratorId, playerid ) == 0 ) {
+				CraftingTimer[playerid] = defer OnPlayerCrafting(playerid, CRAFTING_TYPE_TAKEBOX);
 				Bit1_Set( gr_CraftingTimer, playerid, true );
 			}
 			return 1;
@@ -159,7 +159,7 @@ timer OnPlayerCrafting[1000](playerid, type)
 			
 			new
 				money = 350 + (GetPlayerSkillLevel(playerid) * 25);
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na bankovni racun.", money);
+			va_SendClientMessage(playerid, COLOR_RED, "[!] Zaradio si $%d, placa ti je sjela na bankovni racun.", money);
 			UpgradePlayerSkill(playerid);
 			BudgetToPlayerBankMoney(playerid, money); // sjeda mu placa na bankovni racun iz proracuna
 			PaydayInfo[playerid][pPayDayMoney] += money;
@@ -179,31 +179,31 @@ timer OnPlayerCrafting[1000](playerid, type)
 timer OnCraftingObjectMove[100](playerid, type)
 {
 	if(!Bit1_Get(gr_ObjectMoveTimer, playerid)) return 0;
-	if( !IsPlayerObjectMoving( playerid, PlayerCraftingObject[ playerid ] ) ) 
+	if(!IsPlayerObjectMoving( playerid, PlayerCraftingObject[playerid] )) 
 	{
-		stop CrafingObjectMoveTimer[ playerid ];
+		stop CrafingObjectMoveTimer[playerid];
 		Bit1_Set( gr_ObjectMoveTimer, playerid, false );
 		
-		if( type == 1 ) {
-			SendClientMessage( playerid, COLOR_RED, "[ ! ] Pokupite preradjenu robu i odnesite na drugu traku za preradu!");
+		if(type == 1 ) {
+			SendClientMessage( playerid, COLOR_RED, "[!] Pokupite preradjenu robu i odnesite na drugu traku za preradu!");
 			SetPlayerCheckpoint(playerid, 2551.2642, -1354.3190, 1043.1500, 1.5);
 			Streamer_Update(playerid);
 			Bit4_Set( gr_CraftingCPId, playerid, 4 );
 		}
-		else if( type == 2 ) {
-			DestroyPlayerObject(playerid, PlayerCraftingObject[ playerid ]);
+		else if(type == 2 ) {
+			DestroyPlayerObject(playerid, PlayerCraftingObject[playerid]);
 			new
 				craftid;
-			PlayerCraftId[ playerid ] = craftid = random(5);
-			PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, CraftInfo[ craftid ][ ciModel ], CraftInfo[ craftid ][ ciStartX ], CraftInfo[ craftid ][ ciStartY ], CraftInfo[ craftid ][ ciStartZ ], 0.0, 0.0, 0.0);
-			MovePlayerObject( playerid, PlayerCraftingObject[ playerid ], CraftInfo[ craftid ][ ciEndX ], CraftInfo[ craftid ][ ciEndY ], CraftInfo[ craftid ][ ciEndZ ], CRAFT_OBJECT_MOVE );
+			PlayerCraftId[playerid] = craftid = random(5);
+			PlayerCraftingObject[playerid] = CreatePlayerObject(playerid, CraftInfo[craftid][ciModel], CraftInfo[craftid][ciStartX], CraftInfo[craftid][ciStartY], CraftInfo[craftid][ciStartZ], 0.0, 0.0, 0.0);
+			MovePlayerObject( playerid, PlayerCraftingObject[playerid], CraftInfo[craftid][ciEndX], CraftInfo[craftid][ciEndY], CraftInfo[craftid][ciEndZ], CRAFT_OBJECT_MOVE );
 			Streamer_Update(playerid);
 			
-			CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove(playerid, 3);
+			CrafingObjectMoveTimer[playerid] = repeat OnCraftingObjectMove(playerid, 3);
 			Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 		}
-		else if( type == 3 ) {
-			SendClientMessage( playerid, COLOR_RED, "[ ! ] Pokupite zavrseni produkt i stavite ga u skladiste!");
+		else if(type == 3 ) {
+			SendClientMessage( playerid, COLOR_RED, "[!] Pokupite zavrseni produkt i stavite ga u skladiste!");
 			SetPlayerCheckpoint(playerid, 2559.3394, -1361.5549, 1043.1500, CRAFTING_CP_SIZE);
 			Streamer_Update(playerid);
 			Bit4_Set( gr_CraftingCPId, playerid, 6 );
@@ -224,24 +224,24 @@ timer OnCraftingObjectMove[100](playerid, type)
 
 stock ResetFactoryVariables(playerid)
 {
-	PlayerCraftId[ playerid ]			= -1;
+	PlayerCraftId[playerid]			= -1;
 	
-	if( Bit1_Get( gr_ObjectMoveTimer, playerid ) ) {
-		stop CrafingObjectMoveTimer[ playerid ];
+	if(Bit1_Get( gr_ObjectMoveTimer, playerid )) {
+		stop CrafingObjectMoveTimer[playerid];
 		Bit1_Set( gr_ObjectMoveTimer, playerid, false );
 	}
 	
-	if( Bit1_Get( gr_CraftingTimer, playerid ) ) {
-		stop CraftingTimer[ playerid ];
+	if(Bit1_Get( gr_CraftingTimer, playerid )) {
+		stop CraftingTimer[playerid];
 		Bit1_Set( gr_CraftingTimer, playerid, false );
 	}
 	
-	DestroyDynamicPickup( CraftingPick[ playerid ] );
-	DestroyDynamicCP( CraftingCP[ playerid ] );
+	DestroyDynamicPickup( CraftingPick[playerid] );
+	DestroyDynamicCP( CraftingCP[playerid] );
 		
-	if( PlayerCraftingObject[ playerid ] != INVALID_OBJECT_ID ) {
-		DestroyPlayerObject( playerid, PlayerCraftingObject[ playerid ] );
-		PlayerCraftingObject[ playerid ] = INVALID_OBJECT_ID;
+	if(PlayerCraftingObject[playerid] != INVALID_OBJECT_ID ) {
+		DestroyPlayerObject( playerid, PlayerCraftingObject[playerid] );
+		PlayerCraftingObject[playerid] = INVALID_OBJECT_ID;
 	}
 	
 	Bit1_Set( gr_PlayerWorkCrafting		, playerid, false );
@@ -416,47 +416,47 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 1 )
+	if(Bit4_Get( gr_CraftingGeneratorId, playerid ) == 1 )
 	{
 		GameTextForPlayer( playerid, "~w~Generator #1 ~g~upaljen", 1500, 1 );
 		
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
-		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
+		CraftingTimer[playerid] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 		
 		SetPlayerCheckpoint(playerid, 2554.2424, -1348.2162, 1043.1500, CRAFTING_CP_SIZE);
 		Streamer_Update(playerid);
 		Bit4_Set( gr_CraftingGeneratorId, playerid, 2 );
 	}
-	else if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 2 ) 
+	else if(Bit4_Get( gr_CraftingGeneratorId, playerid ) == 2 ) 
 	{
 		GameTextForPlayer( playerid, "~w~Generator #2 ~g~upaljen", 1500, 1 );
 		
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
-		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
+		CraftingTimer[playerid] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 		
 		SetPlayerCheckpoint(playerid, 2548.1968, -1348.2162, 1043.1500, CRAFTING_CP_SIZE);
 		Streamer_Update(playerid);
 		Bit4_Set( gr_CraftingGeneratorId, playerid, 3 );
 	}
-	else if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 3 ) 
+	else if(Bit4_Get( gr_CraftingGeneratorId, playerid ) == 3 ) 
 	{
 		GameTextForPlayer( playerid, "~w~Generator #3 ~g~upaljen", 1500, 1 );
 		
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
 		Bit4_Set( gr_CraftingGeneratorId, playerid, 0 );
-		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
+		CraftingTimer[playerid] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
-	if( Bit4_Get( gr_CraftingCPId, playerid ) == 1 ) 
+	if(Bit4_Get( gr_CraftingCPId, playerid ) == 1 ) 
 	{
 		GameTextForPlayer( playerid, "~w~Pricekajte 1 minutu~n~da zavrsite s raspakiravanjem", 40000, 1 );
 		RemovePlayerAttachedObject(playerid, 9);
-		PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, 1271, 2575.8855, -1352.7737, 1044.4000, 0.0, 0.0, 0.0 );
+		PlayerCraftingObject[playerid] = CreatePlayerObject(playerid, 1271, 2575.8855, -1352.7737, 1044.4000, 0.0, 0.0, 0.0 );
 		
 		TogglePlayerControllable(playerid, false);
 		
@@ -468,22 +468,22 @@ hook OnPlayerEnterCheckpoint(playerid)
 		
 		InterpolateCameraPos(playerid, 2578.6558, -1351.8114, 1044.4200, 2578.6558, -1351.8114, 1044.4200, 10000000);
 		InterpolateCameraLookAt(playerid, 2575.9241, -1352.0225, 1044.4000, 2575.9241, -1352.0225, 1044.4000, 10000000);
-		CraftingTimer[ playerid ] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_UNPACK);
+		CraftingTimer[playerid] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_UNPACK);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 2 ) 
+	else if(Bit4_Get( gr_CraftingCPId, playerid ) == 2 ) 
 	{
 		DisablePlayerCheckpoint(playerid);
-		DestroyDynamicPickup(CraftingPick[ playerid ]);
+		DestroyDynamicPickup(CraftingPick[playerid]);
 	
 		GameTextForPlayer( playerid, "~w~Pricekajte 1 minutu~n~da zavrsite s uzimanjem kutije", 40000, 1 );
 
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
-		CraftingTimer[ playerid ] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_BOXING);
+		CraftingTimer[playerid] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_BOXING);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 3 ) 
+	else if(Bit4_Get( gr_CraftingCPId, playerid ) == 3 ) 
 	{
 		DisablePlayerCheckpoint(playerid);
 		RemovePlayerAttachedObject(playerid, 9);
@@ -491,15 +491,15 @@ hook OnPlayerEnterCheckpoint(playerid)
 		ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 		
-		PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, 1271, 2569.0049, -1352.6240, 1044.0699, 0.0, 0.0, 0.0 );
-		MovePlayerObject( playerid, PlayerCraftingObject[ playerid ], 2551.3921, -1352.9078, 1044.0699, 1.0 );
-		CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove[500](playerid, 1);
+		PlayerCraftingObject[playerid] = CreatePlayerObject(playerid, 1271, 2569.0049, -1352.6240, 1044.0699, 0.0, 0.0, 0.0 );
+		MovePlayerObject( playerid, PlayerCraftingObject[playerid], 2551.3921, -1352.9078, 1044.0699, 1.0 );
+		CrafingObjectMoveTimer[playerid] = repeat OnCraftingObjectMove[500](playerid, 1);
 		Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 4 ) 
+	else if(Bit4_Get( gr_CraftingCPId, playerid ) == 4 ) 
 	{
 		DisablePlayerCheckpoint(playerid);
-		DestroyPlayerObject(playerid, PlayerCraftingObject[ playerid ]);
+		DestroyPlayerObject(playerid, PlayerCraftingObject[playerid]);
 		
 		ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
@@ -512,7 +512,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		Streamer_Update(playerid);			
 		Bit4_Set( gr_CraftingCPId, playerid, 5 );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 5 ) 
+	else if(Bit4_Get( gr_CraftingCPId, playerid ) == 5 ) 
 	{
 		DisablePlayerCheckpoint(playerid);
 		RemovePlayerAttachedObject(playerid, 9);
@@ -520,37 +520,37 @@ hook OnPlayerEnterCheckpoint(playerid)
 		ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 		
-		PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, 1271, 2568.6814, -1360.4534, 1044.6899, 0.0, 0.0, 0.0 );
-		MovePlayerObject( playerid, PlayerCraftingObject[ playerid ], 2564.9280, -1360.4746, 1044.4200, CRAFT_OBJECT_MOVE );
-		CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove(playerid, 2);
+		PlayerCraftingObject[playerid] = CreatePlayerObject(playerid, 1271, 2568.6814, -1360.4534, 1044.6899, 0.0, 0.0, 0.0 );
+		MovePlayerObject( playerid, PlayerCraftingObject[playerid], 2564.9280, -1360.4746, 1044.4200, CRAFT_OBJECT_MOVE );
+		CrafingObjectMoveTimer[playerid] = repeat OnCraftingObjectMove(playerid, 2);
 		Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 		GameTextForPlayer( playerid, "~g~Resursi se preradjuju", 3000, 1 );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 6 ) 
+	else if(Bit4_Get( gr_CraftingCPId, playerid ) == 6 ) 
 	{
 		DisablePlayerCheckpoint(playerid);
-		DestroyPlayerObject(playerid, PlayerCraftingObject[ playerid ]);
+		DestroyPlayerObject(playerid, PlayerCraftingObject[playerid]);
 		
 		ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 		
 		new
-			craftid = PlayerCraftId[ playerid ];
+			craftid = PlayerCraftId[playerid];
 		
-		SetPlayerAttachedObject(playerid, 9, CraftInfo[ craftid ][ ciModel ], 5, FactoryAttach[ craftid ][ 0 ], FactoryAttach[ craftid ][ 1 ], FactoryAttach[ craftid ][ 2 ], FactoryAttach[ craftid ][ 3 ], FactoryAttach[ craftid ][ 4 ], FactoryAttach[ craftid ][ 5 ]);
+		SetPlayerAttachedObject(playerid, 9, CraftInfo[craftid][ciModel], 5, FactoryAttach[craftid][0], FactoryAttach[craftid][1], FactoryAttach[craftid][2], FactoryAttach[craftid][3], FactoryAttach[craftid][4], FactoryAttach[craftid][5]);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 		
 		SetPlayerCheckpoint(playerid, 2584.2083, -1355.1130, 1043.1500, CRAFTING_CP_SIZE);
 		Streamer_Update(playerid);
 		
-		DestroyDynamicPickup(CraftingPick[ playerid ]);
-		CraftingPick[ playerid ] 	= CreateDynamicPickup(1318, 2, 2584.2083, -1355.1130, 1044.5500, -1, -1, playerid);
+		DestroyDynamicPickup(CraftingPick[playerid]);
+		CraftingPick[playerid] 	= CreateDynamicPickup(1318, 2, 2584.2083, -1355.1130, 1044.5500, -1, -1, playerid);
 		Bit4_Set( gr_CraftingCPId, playerid, 7 );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 7 ) 
+	else if(Bit4_Get( gr_CraftingCPId, playerid ) == 7 ) 
 	{
 		DisablePlayerCheckpoint(playerid);
-		DestroyDynamicPickup(CraftingPick[ playerid ]);
+		DestroyDynamicPickup(CraftingPick[playerid]);
 		RemovePlayerAttachedObject(playerid, 9);
 		
 		TogglePlayerControllable(playerid, false);
@@ -562,7 +562,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		InterpolateCameraPos(playerid, 		2584.9199, -1358.6466, 1045.2000,  2584.9199, -1358.6466, 1045.2000,  10000000);
 		InterpolateCameraLookAt(playerid, 	2584.2083, -1355.1130, 1044.5500,  2584.2083, -1355.1130, 1044.5500,  10000000);
 		
-		CraftingTimer[ playerid ] = defer OnPlayerCrafting[1000](playerid, CRAFTING_TYPE_PAYCHECK);
+		CraftingTimer[playerid] = defer OnPlayerCrafting[1000](playerid, CRAFTING_TYPE_PAYCHECK);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
 	return 1;
@@ -579,8 +579,8 @@ hook OnPlayerEnterCheckpoint(playerid)
 */
 CMD:craft(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
-	if( Bit1_Get( gr_PlayerWorkCrafting, playerid ) ) {	
+	if(PlayerJob[playerid][pJob] != JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
+	if(Bit1_Get( gr_PlayerWorkCrafting, playerid )) {	
 		Bit4_Set( gr_CraftingCPId, 			playerid, 0 );
 		Bit4_Set( gr_CraftingGeneratorId, 	playerid, 0 );
 		TogglePlayerControllable(playerid, true);
@@ -591,11 +591,11 @@ CMD:craft(playerid, params[])
 		Player_SetIsWorkingJob(playerid, false);
 		return SendClientMessage( playerid, COLOR_RED, "Prestali ste raditi posao craftera!");
 	}
-	if( PlayerJob[playerid][pFreeWorks] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
-	if( !IsPlayerInRangeOfPoint(playerid, 150.0, 2560.1531, -1357.0905, 1043.1147) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar tvornice!");
+	if(PlayerJob[playerid][pFreeWorks] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+	if(!IsPlayerInRangeOfPoint(playerid, 150.0, 2560.1531, -1357.0905, 1043.1147)) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar tvornice!");
 	
 	
-	SendClientMessage( playerid, COLOR_RED, "[ ! ] Krenite do checkpointa i ukljucite sve generatore!");
+	SendClientMessage( playerid, COLOR_RED, "[!] Krenite do checkpointa i ukljucite sve generatore!");
 	Player_SetIsWorkingJob(playerid, true);
 	Bit1_Set( gr_PlayerWorkCrafting, playerid, true );
 	Bit4_Set( gr_CraftingGeneratorId, playerid, 1 );

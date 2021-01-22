@@ -309,7 +309,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_JOBS: 
 		{
-			if( !response ) 
+			if(!response ) 
 				return 1;
 
 			switch( listitem )
@@ -327,7 +327,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[MECHANIC] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
+					if(PlayerInfo[playerid][pLevel] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
 
 					SetPlayerJob(playerid, JOB_MECHANIC);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao mehanicar!");
@@ -342,7 +342,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 3: 
 				{
-					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti taksisti.");
+					if(PlayerInfo[playerid][pLevel] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti taksisti.");
 					if(JobData[TAXI] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
@@ -375,7 +375,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 7:
 				{
-					if( PlayerInfo[ playerid ][ pLevel ] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
+					if(PlayerInfo[playerid][pLevel] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
 					if(JobData[IMPOUNDER] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					
@@ -406,7 +406,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				case 0: 
 				{
-					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) 
+					if(PlayerInfo[playerid][pLevel] < 3 ) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti lopovi.");
 					
 					PlayerJob[playerid][pJob] = JOB_BURGLAR;
@@ -420,7 +420,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerJob[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
 					else if(PlayerVIP[playerid][pDonateRank] == 4)
 						PlayerJob[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
-					SendClientMessage( playerid, COLOR_RED, "[ ! ] Zaposlili ste se kao lopov!");
+					SendClientMessage( playerid, COLOR_RED, "[!] Zaposlili ste se kao lopov!");
 				}
 			}
 			return 1;
@@ -436,11 +436,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 CMD:takejob(playerid, params[])
 {
 	if(PlayerJob[playerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate posao, koristite /quitjob!");
-	if( IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid) || IsAGov(playerid) ) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u organizaciji!");
+	if(IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid) || IsAGov(playerid)) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u organizaciji!");
 	
-	if( IsPlayerInRangeOfPoint(playerid, 7.0, 1617.5137,-1560.1582,14.1662) )
+	if(IsPlayerInRangeOfPoint(playerid, 7.0, 1617.5137,-1560.1582,14.1662))
 		ShowPlayerDialog(playerid, DIALOG_IJOBS, DIALOG_STYLE_LIST, "ILEGALNI POSLOVI", "Lopov", "Choose", "Abort");
-	else if( IsPlayerInRangeOfPoint(playerid, 5.0, 1301.4661, 764.3820, -98.6427) )
+	else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1301.4661, 764.3820, -98.6427))
 		ShowPlayerDialog(playerid, DIALOG_JOBS, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Lista i kvote poslova", JobsList(), "Choose", "Abort");
 		
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta za uzimanje posla!");
@@ -491,8 +491,8 @@ CMD:quitjob(playerid, params[])
 
 CMD:jobduty(playerid, params[]) 
 {
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] [ Jobs - On Duty ]:");
-	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Taxi Company:");
+	SendClientMessage(playerid, COLOR_RED, "[!][Jobs - On Duty]:");
+	SendClientMessage(playerid, COLOR_RED, "[!]  Taxi Company:");
 	foreach(new i: Player) 
 	{
 		if(!Player_TaxiDuty(i)) 
@@ -506,8 +506,8 @@ CMD:jobduty(playerid, params[])
 			PlayerMobile[i][pMobileNumber]
 		);
 	}
-	SendClientMessage(playerid, COLOR_RED, "[ ! ]  ");
-	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Mechanic Company:");
+	SendClientMessage(playerid, COLOR_RED, "[!]  ");
+	SendClientMessage(playerid, COLOR_RED, "[!]  Mechanic Company:");
 	foreach(new i: Player) 
 	{
 		if(Player_MechanicDuty(playerid) == true) 

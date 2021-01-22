@@ -9,15 +9,15 @@ stock getPriceFromVehicleHealth( vehicleid ) {
 	new Float:veh_HP, price = 50;
     GetVehicleHealth( vehicleid, veh_HP );
 
-    if( veh_HP > 900 && veh_HP <= 1000 ) price = 1000;
-	else if( veh_HP > 800 && veh_HP <= 900 ) price = 1000;
-	else if( veh_HP > 700 && veh_HP <= 800 ) price = 1000;
-	else if( veh_HP > 600 && veh_HP <= 700 ) price = 1000;
-	else if( veh_HP > 500 && veh_HP <= 600 ) price = 1000;
-    else if( veh_HP > 400 && veh_HP <= 500 ) price = 1000;
-    else if( veh_HP > 300 && veh_HP <= 400 ) price = 1000;
-    else if( veh_HP > 200 && veh_HP <= 300 ) price = 1000;
-    else if( veh_HP > 0 && veh_HP <= 200 ) price = 1000;
+    if(veh_HP > 900 && veh_HP <= 1000 ) price = 1000;
+	else if(veh_HP > 800 && veh_HP <= 900 ) price = 1000;
+	else if(veh_HP > 700 && veh_HP <= 800 ) price = 1000;
+	else if(veh_HP > 600 && veh_HP <= 700 ) price = 1000;
+	else if(veh_HP > 500 && veh_HP <= 600 ) price = 1000;
+    else if(veh_HP > 400 && veh_HP <= 500 ) price = 1000;
+    else if(veh_HP > 300 && veh_HP <= 400 ) price = 1000;
+    else if(veh_HP > 200 && veh_HP <= 300 ) price = 1000;
+    else if(veh_HP > 0 && veh_HP <= 200 ) price = 1000;
 	else price = 1000;
 	
 	return price;
@@ -29,11 +29,11 @@ stock Create3DandP( text[], Float:vXU, Float:vYU, Float:vZU, vIntt, vVW, pickupi
 }
 
 hook OnGameModeInit(){
-	Create3DandP("{95A2AA}[ /enterspray ]", 1099.1404, -824.9033, 181.2554, -1, -1, 1239, 5.0 );
-	Create3DandP("{95A2AA}[ /enterspray ]", 1024.9756, -1030.7930, 32.0257, -1, -1, 1239, 5.0 );
-	Create3DandP("{95A2AA}[ /enterspray ]", 488.3819, -1733.0563, 11.1752, -1, -1, 1239, 5.0 );
-	Create3DandP("{95A2AA}[ /enterspray ]", 719.8940, -464.8272, 16.3359, -1, -1, 1239, 5.0 );
-	Create3DandP("{95A2AA}[ /enterspray ]", 2073.3811,-1831.4323,13.5469, -1, -1, 1239, 5.0 );
+	Create3DandP("{95A2AA}[/enterspray]", 1099.1404, -824.9033, 181.2554, -1, -1, 1239, 5.0 );
+	Create3DandP("{95A2AA}[/enterspray]", 1024.9756, -1030.7930, 32.0257, -1, -1, 1239, 5.0 );
+	Create3DandP("{95A2AA}[/enterspray]", 488.3819, -1733.0563, 11.1752, -1, -1, 1239, 5.0 );
+	Create3DandP("{95A2AA}[/enterspray]", 719.8940, -464.8272, 16.3359, -1, -1, 1239, 5.0 );
+	Create3DandP("{95A2AA}[/enterspray]", 2073.3811,-1831.4323,13.5469, -1, -1, 1239, 5.0 );
     return (true);
 }
 
@@ -41,7 +41,7 @@ CMD:enterspray( playerid, params[] )
 {
 	if(pns_garages == false) 
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Admini su trenutno ugasili mogucnost koristenja ove komande.");
-    if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "Morate biti na mjestu vozaca." );
+    if(GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "Morate biti na mjestu vozaca." );
     
     new 
 		vehicleid = GetPlayerVehicleID(playerid),
@@ -53,8 +53,8 @@ CMD:enterspray( playerid, params[] )
 	if(PlayerVIP[playerid][pDonateRank] != 0)
 		price = 0;
 		
-	if( AC_GetPlayerMoney( playerid ) < price ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s ).", FormatNumber(price));
-	if( IsPlayerInRangeOfPoint( playerid, 3.0, 1099.1404, -824.9033, 181.2554 ) ) {
+	if(AC_GetPlayerMoney( playerid ) < price ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s ).", FormatNumber(price));
+	if(IsPlayerInRangeOfPoint( playerid, 3.0, 1099.1404, -824.9033, 181.2554 )) {
 	
 	    // novac u proracun
 		PlayerToBudgetMoney(playerid, price);
@@ -63,7 +63,7 @@ CMD:enterspray( playerid, params[] )
 		defer SprayDone(playerid, 0, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
-	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 1024.9756, -1030.7930, 32.0257 ) ) {
+	else if(IsPlayerInRangeOfPoint( playerid, 3.0, 1024.9756, -1030.7930, 32.0257 )) {
 	
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 1024.9763, -1021.8850, 32.1016 );
@@ -71,7 +71,7 @@ CMD:enterspray( playerid, params[] )
 		defer SprayDone(playerid, 1, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
-	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 488.3819, -1733.0563, 11.1752 ) ) {
+	else if(IsPlayerInRangeOfPoint( playerid, 3.0, 488.3819, -1733.0563, 11.1752 )) {
 	
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 487.4099, -1741.4585, 11.1330 );
@@ -79,7 +79,7 @@ CMD:enterspray( playerid, params[] )
 		defer SprayDone(playerid, 2, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
-	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 719.8940, -464.8272, 16.3359 ) ) {
+	else if(IsPlayerInRangeOfPoint( playerid, 3.0, 719.8940, -464.8272, 16.3359 )) {
 	
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 720.3924, -456.0286, 16.3359 );
@@ -87,7 +87,7 @@ CMD:enterspray( playerid, params[] )
 		defer SprayDone(playerid, 3, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
-	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 2073.3811,-1831.4323,13.5469 ) ) {
+	else if(IsPlayerInRangeOfPoint( playerid, 3.0, 2073.3811,-1831.4323,13.5469 )) {
 
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 2065.9812,-1831.3459,13.5469 );
@@ -102,7 +102,7 @@ CMD:enterspray( playerid, params[] )
 timer SprayDone[5000]( playerid, sprayid, price ) 
 {
     new vehicleid = GetPlayerVehicleID( playerid );
-    if( GetPlayerState( playerid ) == PLAYER_STATE_DRIVER ) {
+    if(GetPlayerState( playerid ) == PLAYER_STATE_DRIVER ) {
 		switch( sprayid ) 
 		{
 		    case 0: {
@@ -133,7 +133,7 @@ timer SprayDone[5000]( playerid, sprayid, price )
 			AC_SetVehicleHealth(vehicleid, 1600.0);		
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste popravili vase vozilo za %s.", FormatNumber(price));
-		BizzInfo[ 110 ][ bTill ] += floatround(price / 7); 
+		BizzInfo[110][bTill] += floatround(price / 7); 
 		ChangeVehicleColor(vehicleid, pnscolor1, pnscolor2);
 		
 		/*if(aprilfools[playerid])

@@ -136,7 +136,7 @@ stock LoadFactionWarehouse(factionid)
 
 Public:OnWarehouseLoaded(factionid)
 {
-    if (!cache_num_rows()) return 0;
+    if(!cache_num_rows()) return 0;
 
     new freeslot = Iter_Free(Warehouses);
     WarehouseInfo[freeslot][whFactionSQLID] = FactionInfo[factionid][fID];
@@ -175,7 +175,7 @@ stock LoadWarehouseWeapons(factid)
 Public:OnWarehouseWeaponsLoaded(whid)
 {
     new rows = cache_num_rows();
-    if (!rows) return 0;
+    if(!rows) return 0;
 
     for (new i = 0; i < rows; i++ )
     {
@@ -286,7 +286,7 @@ stock ListWarehouseWeapons(whid)
     format(motd, sizeof(motd), "Stanje zaliha oruzja:\n");
     strcat(winfo, motd, sizeof(winfo));
 
-    if (!Iter_Count(WhWeapons[whid]))
+    if(!Iter_Count(WhWeapons[whid]))
     {
         // TODO: strcpy
         format(motd, sizeof(motd), "\tNema uskladistenog oruzja.\n");
@@ -329,27 +329,27 @@ stock ListWarehouseWeapons(whid)
             default: continue;
         }
     }
-    if (guns > 0)
+    if(guns > 0)
     {
         format(motd, sizeof(winfo), "\tPistolji: %d | ~ metaka po pistolju: %d\n", guns, (gunsammo/guns));
         strcat(winfo, motd, sizeof(winfo));
     }
-    if (shotguns > 0)
+    if(shotguns > 0)
     {
         format(motd, sizeof(motd), "\tPuske: %d | ~ metaka po puski: %d\n", shotguns, (shotgunammo/shotguns));
         strcat(winfo, motd, sizeof(winfo));
     }
-    if (smgs > 0)
+    if(smgs > 0)
     {
         format(motd, sizeof(motd), "\tSMGovi: %d | ~ metaka po SMG-u: %d\n", smgs, (smgammo/smgs));
         strcat(winfo, motd, sizeof(winfo));
     }
-    if (assualts > 0)
+    if(assualts > 0)
     {
         format(motd, sizeof(motd), "\tAutom.puske: %d | ~ metaka po puski: %d\n", assualts, (assualtammo/assualts));
         strcat(winfo, motd, sizeof(winfo));
     }
-    if (rifles > 0)
+    if(rifles > 0)
     {
         format(motd, sizeof(motd), "\tRifleovi: %d | ~ metaka po rifleu: %d", rifles, (rifleammo/rifles));
         strcat(winfo, motd, sizeof(winfo));
@@ -478,7 +478,7 @@ static stock IsAtWarehouseEntrance(playerid)
     new whid = -1;
     foreach(new wh: Warehouses)
     {
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, WarehouseInfo[wh][whEnter][0], WarehouseInfo[wh][whEnter][1], WarehouseInfo[wh][whEnter][2]))
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, WarehouseInfo[wh][whEnter][0], WarehouseInfo[wh][whEnter][1], WarehouseInfo[wh][whEnter][2]))
         {
             whid = wh;
             break;
@@ -492,9 +492,9 @@ static stock IsAtWarehouseExit(playerid)
     new whid = -1;
     foreach(new wh: Warehouses)
     {
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, WarehouseInfo[wh][whExit][0], WarehouseInfo[wh][whExit][1], WarehouseInfo[wh][whExit][2]))
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, WarehouseInfo[wh][whExit][0], WarehouseInfo[wh][whExit][1], WarehouseInfo[wh][whExit][2]))
         {
-            if (GetPlayerVirtualWorld(playerid) == WarehouseInfo[wh][whViwo])
+            if(GetPlayerVirtualWorld(playerid) == WarehouseInfo[wh][whViwo])
             {
                 whid = wh;
                 break;
@@ -509,9 +509,9 @@ static stock IsAtWarehouseVault(playerid)
     new whid = -1;
     foreach(new wh: Warehouses)
     {
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, WarehouseInfo[wh][whVault][0], WarehouseInfo[wh][whVault][1], WarehouseInfo[wh][whVault][2]))
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, WarehouseInfo[wh][whVault][0], WarehouseInfo[wh][whVault][1], WarehouseInfo[wh][whVault][2]))
         {
-            if (GetPlayerVirtualWorld(playerid) == WarehouseInfo[wh][whViwo])
+            if(GetPlayerVirtualWorld(playerid) == WarehouseInfo[wh][whViwo])
             {
                 whid = wh;
                 break;
@@ -526,7 +526,7 @@ stock CountOnlineMembers(factionid)
     new count = 0;
     foreach (new i : Player)
     {
-        if (PlayerFaction[i][pMember] == factionid)
+        if(PlayerFaction[i][pMember] == factionid)
         {
             count++;
         }
@@ -540,9 +540,9 @@ stock CountMembersInRadius(warehouseid, factionid)
     new count = 0;
     foreach (new i : Player)
     {
-        if (PlayerFaction[i][pMember] == factionid)
+        if(PlayerFaction[i][pMember] == factionid)
         {
-            if (IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]))
+            if(IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]))
                 count++;
         }
     }
@@ -557,18 +557,18 @@ stock CheckRobbersInRadius(warehouseid, factionid)
     foreach (new i : Player)
     {
         robber = Iter_Contains(Robbers, i);
-        if (!robber && PlayerFaction[i][pMember] == factionid && GetPlayerVirtualWorld(i) == WarehouseInfo[warehouseid][whViwo])
+        if(!robber && PlayerFaction[i][pMember] == factionid && GetPlayerVirtualWorld(i) == WarehouseInfo[warehouseid][whViwo])
         {
-            if (IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]))
+            if(IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]))
                 Iter_Add(Robbers, i);
         }
-        else if (robber && (!IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]) || GetPlayerVirtualWorld(i) != WarehouseInfo[warehouseid][whViwo]))
+        else if(robber && (!IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]) || GetPlayerVirtualWorld(i) != WarehouseInfo[warehouseid][whViwo]))
         {
             Iter_Remove(Robbers, i);
-            if (PlayerInfo[i][pSQLID] == RobberyInfo[whMainRobberSQL])
+            if(PlayerInfo[i][pSQLID] == RobberyInfo[whMainRobberSQL])
             {
-                SendRobbersMessage("[ ! ] Radi neuspjelog pokusaja, pljacka je obustavljena.");
-                SendClientMessage(i, COLOR_RED, "[ ! ] Radi neuspjelog pokusaja, pljacka je obustavljena.");
+                SendRobbersMessage("[!] Radi neuspjelog pokusaja, pljacka je obustavljena.");
+                SendClientMessage(i, COLOR_RED, "[!] Radi neuspjelog pokusaja, pljacka je obustavljena.");
                 StopWarehouseRobbery();
                 return 1;
             }
@@ -579,12 +579,12 @@ stock CheckRobbersInRadius(warehouseid, factionid)
 
 stock CheckAliveRobbers()
 {
-    if (Iter_Count(Robbers) == 0)
+    if(Iter_Count(Robbers) == 0)
     {
         foreach(new i: Player)
         {
-            if (PlayerInfo[i][pSQLID] == RobberyInfo[whMainRobberSQL])
-                SendClientMessage(i, COLOR_RED, "[ ! ] Radi neuspjelog pokusaja, pljacka je obustavljena.");
+            if(PlayerInfo[i][pSQLID] == RobberyInfo[whMainRobberSQL])
+                SendClientMessage(i, COLOR_RED, "[!] Radi neuspjelog pokusaja, pljacka je obustavljena.");
         }
         StopWarehouseRobbery();
     }
@@ -592,34 +592,34 @@ stock CheckAliveRobbers()
 
 task CheckWarehouseRobbery[1000]()
 {
-    if (!RobberyInfo[whActive])
+    if(!RobberyInfo[whActive])
     {
         return 1;
     }
 
-    if (RobberyInfo[whDuration] >= ROBBERY_DURATION)
+    if(RobberyInfo[whDuration] >= ROBBERY_DURATION)
         RobberyInfo[whSuceeded] = true;
 
     CheckAliveRobbers();
-    if (RobberyInfo[whSuceeded] == false)
+    if(RobberyInfo[whSuceeded] == false)
     {
         new fid = RobberyInfo[whRobberFaction],
             warehouseid = RobberyInfo[whVictimWarehouse];
 
         CheckRobbersInRadius(warehouseid, fid);
-        if (Iter_Count(Robbers) == 0)
+        if(Iter_Count(Robbers) == 0)
         {
-            SendMainRobberMessage("[ ! ] Radi neuspjelog pokusaja, pljacka je obustavljena.");
+            SendMainRobberMessage("[!] Radi neuspjelog pokusaja, pljacka je obustavljena.");
             StopWarehouseRobbery();
             return 1;
         }
         RobberyInfo[whDuration]++;
     }
-    else if (RobberyInfo[whSuceeded] == true && RobberyInfo[whExtractionArea] == -1)
+    else if(RobberyInfo[whSuceeded] == true && RobberyInfo[whExtractionArea] == -1)
     {
         new whid = RobberyInfo[whRobberWarehouse];
         RobberyInfo[whExtractionArea] = CreateDynamicCircle(WarehouseInfo[whid][whEnter][0], WarehouseInfo[whid][whEnter][1], 20.0);
-        SendRobbersMessage("[ ! ] Prva faza pljacke je uspjesna. Trk sa robom do svog Warehousea!");
+        SendRobbersMessage("[!] Prva faza pljacke je uspjesna. Trk sa robom do svog Warehousea!");
     }
     return 1;
 }
@@ -642,7 +642,7 @@ stock StartWarehouseRobbery(playerid, warehouseid)
 
     CheckRobbersInRadius(warehouseid, fid);
     new robduration = ROBBERY_DURATION / 60;
-    format(startmessage, sizeof(startmessage), "[ ! ] Pljacka %s Warehousea je zapocela. Ostanite u krugu %d minuta da bi dovrsili pljacku!", robduration);
+    format(startmessage, sizeof(startmessage), "[!] Pljacka %s Warehousea je zapocela. Ostanite u krugu %d minuta da bi dovrsili pljacku!", robduration);
     SendRobbersMessage(startmessage);
 
     vfid = RobberyInfo[whVictimFaction];
@@ -681,7 +681,7 @@ stock WarehouseRobAlarm(warehouseid, factionid)
 {
     foreach(new i: Player)
     {
-        if (PlayerKeys[i][pWarehouseKey] == WarehouseInfo[warehouseid][whFactionSQLID] || PlayerFaction[i][pLeader] == factionid)
+        if(PlayerKeys[i][pWarehouseKey] == WarehouseInfo[warehouseid][whFactionSQLID] || PlayerFaction[i][pLeader] == factionid)
         {
             SendClientMessage(i, COLOR_YELLOW, "SMS: Tihi alarm Warehousea se oglasio na znakove provale.");
         }
@@ -693,7 +693,7 @@ stock SendMainRobberMessage(const string[])
 {
     foreach(new i: Player)
     {
-        if (PlayerInfo[i][pSQLID] == RobberyInfo[whMainRobberSQL])
+        if(PlayerInfo[i][pSQLID] == RobberyInfo[whMainRobberSQL])
         {
             SendClientMessage(i, COLOR_RED, string);
             return 1;
@@ -726,7 +726,7 @@ stock TransferWarehouseGoods(rwhid, vwhid)
     format(motd, sizeof(motd), "%s Warehouse\n     Ukradene droge:\n", FactionInfo[victimfid][fName]);
     strcat(rinfo, motd, sizeof(rinfo));
 
-    if (Iter_Count(WhWeapons[vwhid]) > 0)
+    if(Iter_Count(WhWeapons[vwhid]) > 0)
     {
         mysql_fquery(g_SQL, "UPDATE warehouse_weapons SET fid='%d' WHERE fid='%d'",
             FactionInfo[robberfid][fID],
@@ -786,33 +786,33 @@ stock TransferWarehouseGoods(rwhid, vwhid)
     Iter_Clear(WhWeapons[vwhid]);
     format(motd, sizeof(motd), "   Ukradena oruzja:\n");
     strcat(rinfo, motd, sizeof(rinfo));
-    if (guns > 0)
+    if(guns > 0)
     {
         format(motd, sizeof(motd), "\tPistolji: %d | ~ metaka po pistolju: %d\n", guns, (gunsammo/guns));
         strcat(rinfo, motd, sizeof(rinfo));
     }
-    if (shotguns > 0)
+    if(shotguns > 0)
     {
         format(motd, sizeof(motd), "\tPuske: %d | ~ metaka po puski: %d\n", shotguns, (shotgunammo/shotguns));
         strcat(rinfo, motd, sizeof(rinfo));
     }
-    if (smgs > 0)
+    if(smgs > 0)
     {
         format(motd, sizeof(motd), "\tSMGovi: %d | ~ metaka po SMG-u: %d\n", smgs, (smgammo/smgs));
         strcat(rinfo, motd, sizeof(rinfo));
     }
-    if (assualts > 0)
+    if(assualts > 0)
     {
         format(motd, sizeof(motd), "\tAutom.puske: %d | ~ metaka po puski: %d\n", assualts, (assualtammo/assualts));
         strcat(rinfo, motd, sizeof(rinfo));
     }
-    if (rifles > 0)
+    if(rifles > 0)
     {
         format(motd, sizeof(motd), "\tRifleovi: %d | ~ metaka po rifleu: %d", rifles, (rifleammo/rifles));
         strcat(rinfo, motd, sizeof(rinfo));
     }
     WarehouseInfo[rwhid][whMoney] += WarehouseInfo[vwhid][whMoney];
-    if (WarehouseInfo[vwhid][whMoney] > 0)
+    if(WarehouseInfo[vwhid][whMoney] > 0)
     {
         format(motd, sizeof(motd), "\n     Ukradeno novaca: %d$", WarehouseInfo[vwhid][whMoney]);
         strcat(rinfo, motd, sizeof(rinfo));
@@ -824,7 +824,7 @@ stock TransferWarehouseGoods(rwhid, vwhid)
     foreach(new i: Robbers)
     {
         ShowPlayerDialog(i, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Plijen pljacke", rinfo, "Close", "");
-        SendClientMessage(i, COLOR_RED, "[ ! ] Sva ukradena dobra su pohranjena u skladiste vase fakcije. Cestitke na uspjesnoj pljacki!");
+        SendClientMessage(i, COLOR_RED, "[!] Sva ukradena dobra su pohranjena u skladiste vase fakcije. Cestitke na uspjesnoj pljacki!");
     }
     StopWarehouseRobbery();
     return 1;
@@ -836,7 +836,7 @@ stock DoesWarehouseExist(faction_sqlid)
     new value = false;
     foreach(new wh: Warehouses)
     {
-        if (WarehouseInfo[wh][whFactionSQLID] == faction_sqlid)
+        if(WarehouseInfo[wh][whFactionSQLID] == faction_sqlid)
         {
             value = true;
             break;
@@ -851,7 +851,7 @@ stock FetchWarehouseEnumFromFaction(factionid)
     new whid;
     foreach(new wh: Warehouses)
     {
-        if (factionid == WarehouseInfo[wh][whFactionSQLID])
+        if(factionid == WarehouseInfo[wh][whFactionSQLID])
         {
             whid = wh;
             break;
@@ -865,7 +865,7 @@ static stock IsAtValidWarehouse(playerid, whid) // Provjerava da li igrac pred w
     // TODO: bounds chcking and make a getter for Faction SQLID as FactionInfo should be private to Factions.pwn
     // TODO: also, make this function bool: if it returns true/false
     new fid = PlayerFaction[playerid][pMember];
-    if (FactionInfo[fid][fID] == WarehouseInfo[whid][whFactionSQLID])
+    if(FactionInfo[fid][fID] == WarehouseInfo[whid][whFactionSQLID])
     {
         return true;
     }
@@ -886,7 +886,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 {
     foreach(new wh: Warehouses)
     {
-        if (pickupid == WarehouseInfo[wh][whPickupID])
+        if(pickupid == WarehouseInfo[wh][whPickupID])
         {
             GameTextForPlayer( playerid, "~w~Koristite ~g~/warehouse put/take/lock", 4000, 4);
             break;
@@ -897,7 +897,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 
 hook OnPlayerEnterDynArea(playerid, areaid)
 {
-    if (areaid == RobberyInfo[whExtractionArea] && Iter_Contains(Robbers, playerid) && PlayerInfo[playerid][pSQLID] == RobberyInfo[whMainRobberSQL])
+    if(areaid == RobberyInfo[whExtractionArea] && Iter_Contains(Robbers, playerid) && PlayerInfo[playerid][pSQLID] == RobberyInfo[whMainRobberSQL])
     {
         TransferWarehouseGoods(RobberyInfo[whRobberWarehouse], RobberyInfo[whVictimWarehouse]);
     }
@@ -906,7 +906,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 
 hook OnPlayerDeath(playerid, killerid, reason)
 {
-    if (RobberyInfo[whActive] == true && Iter_Contains(Robbers, playerid))
+    if(RobberyInfo[whActive] == true && Iter_Contains(Robbers, playerid))
     {
         Iter_Remove(Robbers, playerid);
     }
@@ -921,7 +921,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case WAREHOUSE_PUT_MENU:
         {
-            if (!response)
+            if(!response)
             {
                 return 1;
             }
@@ -932,7 +932,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new weaponid = AC_GetPlayerWeapon(playerid),
                         ammo = AC_GetPlayerAmmo(playerid);
 
-                    if (weaponid == 0 || ammo == 0)
+                    if(weaponid == 0 || ammo == 0)
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nikakvo oruzje u ruci/oruzje nema municije.");
                         return 1;
@@ -948,9 +948,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case WAREHOUSE_MONEY_PUT:
         {
             new amount = strval(inputtext);
-            if (amount > AC_GetPlayerMoney(playerid))
+            if(amount > AC_GetPlayerMoney(playerid))
                 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite unesenu svotu novaca u rukama da bi je mogli pohraniti u warehouse!");
-            if (amount <= 0)
+            if(amount <= 0)
                 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kolicina novca ne moze biti manja od 1$!");
 
             new fid = PlayerFaction[playerid][pMember],
@@ -982,9 +982,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 fid = PlayerFaction[playerid][pMember],
                 warehouseid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
             // TODO: bounds checking for warehouseid
-            if (amount <= 0)
+            if(amount <= 0)
                 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kolicina novca ne moze biti manja od 1$!");
-            if ((WarehouseInfo[warehouseid][whMoney] - amount) < 0)
+            if((WarehouseInfo[warehouseid][whMoney] - amount) < 0)
                 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ta kolicina novca se ne nalazi u warehouseu!");
 
             WarehouseInfo[warehouseid][whMoney] -= amount;
@@ -1009,7 +1009,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case WAREHOUSE_TAKE_MENU:
         {
-            if (!response)
+            if(!response)
             {
                 return 1;
             }
@@ -1020,7 +1020,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new fid = PlayerFaction[playerid][pMember],
                         // TODO: bounds checking
                         whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
-                    if (!Iter_Count(WhWeapons[whid]))
+                    if(!Iter_Count(WhWeapons[whid]))
                     {
                         SendClientMessage(playerid,  COLOR_RED, "Warehouse nema pohranjeno oruzje!");
                         return 1;
@@ -1040,7 +1040,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_TAKE_WEAPON_LIST:
         {
-            if (!response)
+            if(!response)
             {
                 ResetPlayerWeaponList(playerid);
                 return 1;
@@ -1053,7 +1053,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 weaponid = WarehouseWeapons[whid][wslot][whWeaponId],
                 ammo = WarehouseWeapons[whid][wslot][whAmmo];
 
-            if (!CheckPlayerWeapons(playerid, weaponid)) return 1;
+            if(!CheckPlayerWeapons(playerid, weaponid)) return 1;
             AC_GivePlayerWeapon(playerid, weaponid, ammo);
 
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, 
@@ -1101,23 +1101,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 CMD:warehouse(playerid, params[])
 {
     new option[16];
-    if (sscanf(params, "s[16] ",option))
+    if(sscanf(params, "s[16] ",option))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warehouse [OPCIJA]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] enter - exit - info - put - take - lock - givekeys - rob");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /warehouse [OPCIJA]");
+        SendClientMessage(playerid, COLOR_RED, "[!] enter - exit - info - put - take - lock - givekeys - rob");
         return 1;
     }
 
-    if (!strcmp(option, "info", true))
+    if(!strcmp(option, "info", true))
     {
         new wh = IsAtWarehouseEntrance(playerid),
             flid = PlayerFaction[playerid][pLeader];
         // TODO: flid bounds checking
-        if (wh == -1)
+        if(wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (!IsAtValidWarehouse(playerid, wh))
+        if(!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
+        if(PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Popis inventara moze vidjeti samo Leader/osoba kojoj je leader povjerio kljuceve!");
 
         new motd[2048],
@@ -1127,10 +1127,10 @@ CMD:warehouse(playerid, params[])
         ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis inventara", motd, "Close", "");
         return 1;
     }
-    else if (!strcmp(option, "enter", true))
+    else if(!strcmp(option, "enter", true))
     {
         new wh = IsAtWarehouseEntrance(playerid);
-        if (wh == -1)
+        if(wh == -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred warehousea!");
             return 1;
@@ -1140,16 +1140,16 @@ CMD:warehouse(playerid, params[])
         return 1;
     }
     /*
-    else if (!strcmp(option, "getgun", true))
+    else if(!strcmp(option, "getgun", true))
     {
         new buffer[512],
         motd[64],
             wh = IsAtWarehouseVault(playerid);
-        if (wh == -1)
+        if(wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta(pickup-a) warehousea svoje organizacije!");
-        if (!IsAtValidWarehouse(playerid, wh))
+        if(!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta(pickup-a) warehousea svoje organizacije!");
-        if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid))
+        if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete to koristiti!");
 
         format(buffer, sizeof(buffer), "{3C95C2}Weapon\t{3C95C2}Bullet Price\n");
@@ -1160,10 +1160,10 @@ CMD:warehouse(playerid, params[])
         }
         ShowPlayerDialog(playerid, DIALOG_PACKAGE_ORDER, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "Select", "Close");
     }*/
-    else if (!strcmp(option, "exit", true))
+    else if(!strcmp(option, "exit", true))
     {
         new wh = IsAtWarehouseExit(playerid);
-        if (wh == -1)
+        if(wh == -1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred warehousea!");
             return 1;
@@ -1172,44 +1172,44 @@ CMD:warehouse(playerid, params[])
         SetPlayerPosEx( playerid, WarehouseInfo[wh][whEnter][0], WarehouseInfo[wh][whEnter][1], WarehouseInfo[wh][whEnter][2], 0, 0, false);
         return 1;
     }
-    else if (!strcmp(option, "put", true))
+    else if(!strcmp(option, "put", true))
     {
         new wh = IsAtWarehouseVault(playerid);
-        if (wh == -1)
+        if(wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (!IsAtValidWarehouse(playerid, wh))
+        if(!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (WarehouseInfo[wh][whLocked] == true)
+        if(WarehouseInfo[wh][whLocked] == true)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sef warehousea je zakljucan!");
 
         ShowPlayerDialog(playerid, WAREHOUSE_PUT_MENU, DIALOG_STYLE_LIST, "Odaberite sto zelite pohraniti u warehouse:", "Oruzje u ruci\nDroga\nNovac", "Choose", "Exit");
     }
-    else if (!strcmp(option, "take", true))
+    else if(!strcmp(option, "take", true))
     {
         new wh = IsAtWarehouseVault(playerid);
-        if (wh == -1)
+        if(wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (!IsAtValidWarehouse(playerid, wh))
+        if(!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (WarehouseInfo[wh][whLocked] == true)
+        if(WarehouseInfo[wh][whLocked] == true)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sef warehousea je zakljucan!");
 
         ShowPlayerDialog(playerid, WAREHOUSE_TAKE_MENU, DIALOG_STYLE_LIST, "Odaberite sto zelite izvaditi iz warehousea:", "Oruzje\nDroga\nNovac", "Choose", "Exit");
     }
-    else if (!strcmp(option, "lock", true))
+    else if(!strcmp(option, "lock", true))
     {
         new wh = IsAtWarehouseVault(playerid),
             flid = PlayerFaction[playerid][pLeader],
             // TODO: flid bounds checking
             string[64];
-        if (wh == -1)
+        if(wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (!IsAtValidWarehouse(playerid, wh))
+        if(!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
+        if(PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea.");
 
-        if (WarehouseInfo[wh][whLocked])
+        if(WarehouseInfo[wh][whLocked])
         {
             GameTextForPlayer( playerid, "~w~Sef ~g~otkljucan", 800, 4);
             format(string, sizeof(string), "* %s otkljucava sef skladista.", GetName(playerid, true));
@@ -1226,7 +1226,7 @@ CMD:warehouse(playerid, params[])
         WarehouseInfo[wh][whLocked] = !WarehouseInfo[wh][whLocked]; // toggle
         UpdateWarehouseLock(wh);
     }
-    else if (!strcmp(option, "givekeys", true))
+    else if(!strcmp(option, "givekeys", true))
     {
         new fid = PlayerFaction[playerid][pMember],
             flid = PlayerFaction[playerid][pLeader],
@@ -1234,39 +1234,39 @@ CMD:warehouse(playerid, params[])
             wh = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
             giveplayerid;
 
-        if (sscanf(params, "s[16]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warehouse givekeys [ID / Part of name]");
-        if (giveplayerid == playerid)
+        if(sscanf(params, "s[16]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /warehouse givekeys [ID / Part of name]");
+        if(giveplayerid == playerid)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi dati kljuceve!");
-        if (!DoesWarehouseExist(FactionInfo[fid][fID]))
+        if(!DoesWarehouseExist(FactionInfo[fid][fID]))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa fakcija ne posjeduje warehouse!");
-        if (PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
+        if(PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea / niste leader organizacije.");
-        if (!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
-        if (PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pMember])
+        if(!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
+        if(PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pMember])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije clan vase organizacije da bi mu mogli dati svoje kljuceve skladista!");
 
-        if (PlayerKeys[playerid][pWarehouseKey] != -1)
+        if(PlayerKeys[playerid][pWarehouseKey] != -1)
             PlayerKeys[playerid][pWarehouseKey] = -1;
         PlayerKeys[giveplayerid][pWarehouseKey] = WarehouseInfo[wh][whFactionSQLID];
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste dali %s kljuceve od skladista %s.", GetName(giveplayerid, true), FactionInfo[fid][fName]);
-        va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s %s vam je dao kljuceve od skladista %s.", ReturnPlayerRankName(playerid), GetName(playerid, true), FactionInfo[fid][fName]);
+        va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste dali %s kljuceve od skladista %s.", GetName(giveplayerid, true), FactionInfo[fid][fName]);
+        va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s %s vam je dao kljuceve od skladista %s.", ReturnPlayerRankName(playerid), GetName(playerid, true), FactionInfo[fid][fName]);
     }
-    else if (!strcmp(option, "rob", true))
+    else if(!strcmp(option, "rob", true))
     {
         new wh = IsAtWarehouseVault(playerid),
             fid = PlayerFaction[playerid][pMember];
         // TODO: fid bounds checking
-        if (RobberyInfo[whActive] == true)
+        if(RobberyInfo[whActive] == true)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pljacka je vec u toku. Pricekajte neko vrijeme pa pokusajte ponovno!");
-        if (!DoesWarehouseExist(FactionInfo[fid][fID]))
+        if(!DoesWarehouseExist(FactionInfo[fid][fID]))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa fakcija ne posjeduje warehouse!");
-        if (wh == -1)
+        if(wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred warehouse vaulta!");
-        if (IsAtValidWarehouse(playerid, wh))
+        if(IsAtValidWarehouse(playerid, wh))
             return SendClientMessage(playerid, COLOR_RED, "[GREKSA]: Ne mozete opljackati warehouse vlastite fakcije!");
-        if (CountOnlineMembers(WarehouseInfo[wh][whFactionSQLID]) < MIN_DEFENDERS)
+        if(CountOnlineMembers(WarehouseInfo[wh][whFactionSQLID]) < MIN_DEFENDERS)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi opljackali ovaj warehouse, minimalno %d clanova fakcije u vlasnistvu istog trebaju biti online!", MIN_DEFENDERS);
-        if (CountMembersInRadius(wh, fid) < MIN_ROBBERS)
+        if(CountMembersInRadius(wh, fid) < MIN_ROBBERS)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi pokrenuli pljacku, minimalno %d clanova vase fakcije trebaju biti u krugu 20m od warehouse sefa!", MIN_ROBBERS);
 
         StartWarehouseRobbery(playerid, wh);
@@ -1276,20 +1276,20 @@ CMD:warehouse(playerid, params[])
 
 CMD:awarehouse(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338)
+    if(PlayerInfo[playerid][pAdmin] < 1338)
     {
         SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
         return 1;
     }
     new option[16];
-    if (sscanf(params, "s[16] ", option))
+    if(sscanf(params, "s[16] ", option))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse [OPCIJA]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] list - add - remove - move - goto");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /awarehouse [OPCIJA]");
+        SendClientMessage(playerid, COLOR_RED, "[!] list - add - remove - move - goto");
         return 1;
     }
 
-    if (!strcmp(option, "list", true))
+    if(!strcmp(option, "list", true))
     {
         new buffer[4096], motd[2048];
         foreach(new wh: Warehouses)
@@ -1302,23 +1302,23 @@ CMD:awarehouse(playerid, params[])
         ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis warehouseova", buffer, "Close", "");
         return 1;
     }
-    else if (!strcmp(option, "add", true))
+    else if(!strcmp(option, "add", true))
     {
         new facID;
-        if (sscanf(params, "s[16]i", option, facID))
+        if(sscanf(params, "s[16]i", option, facID))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse add [Faction ID]");
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /awarehouse add [Faction ID]");
+            SendClientMessage(playerid, COLOR_RED, "[!] Da bi dosli do Faction ID-a, koristite /afaction list");
             return 1;
         }
         // TODO: Or just use Iter_Contains
-        if (facID < 1 || facID > MAX_FACTIONS)
+        if(facID < 1 || facID > MAX_FACTIONS)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         // ^ Needed to reindex into the array. User input is human-friendly, ranging from
         // 1..N whereas script indices should start from 0.
-        if (DoesWarehouseExist(FactionInfo[facID][fID]))
+        if(DoesWarehouseExist(FactionInfo[facID][fID]))
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d vec postoji(%s).", FactionInfo[facID][fID], FactionInfo[facID][fName]);
 
         new Float:X, Float:Y, Float:Z;
@@ -1328,43 +1328,43 @@ CMD:awarehouse(playerid, params[])
         AddWarehouse(freeslot, facID, X, Y, Z);
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s Warehouse(ID %d) je uspjesno stvoren na vasoj trenutnoj poziciji.", FactionInfo[facID][fName], FactionInfo[facID][fID]);
     }
-    else if (!strcmp(option, "remove", true))
+    else if(!strcmp(option, "remove", true))
     {
         new facID;
-        if (sscanf(params, "s[16]i", option, facID))
+        if(sscanf(params, "s[16]i", option, facID))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: awarehouse remove [Faction ID]");
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
+            SendClientMessage(playerid, COLOR_RED, "[?]: awarehouse remove [Faction ID]");
+            SendClientMessage(playerid, COLOR_RED, "[!] Da bi dosli do Faction ID-a, koristite /afaction list");
             return 1;
         }
         // TODO: Or just use Iter_Contains
-        if (facID < 1 || facID > MAX_FACTIONS)
+        if(facID < 1 || facID > MAX_FACTIONS)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
-        if (!DoesWarehouseExist(FactionInfo[facID][fID]))
+        if(!DoesWarehouseExist(FactionInfo[facID][fID]))
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d ne postoji!", FactionInfo[facID][fID]);
 
         new whid = FetchWarehouseEnumFromFaction(FactionInfo[facID][fID]);
         RemoveWarehouse(whid);
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s Warehouse(ID %d) je uspjesno izbrisan iz baze podataka.", FactionInfo[facID][fName], FactionInfo[facID][fID]);
     }
-    else if (!strcmp(option, "move", true))
+    else if(!strcmp(option, "move", true))
     {
         new facID;
-        if (sscanf(params, "s[16]i", option, facID))
+        if(sscanf(params, "s[16]i", option, facID))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse move [Faction ID]");
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /awarehouse move [Faction ID]");
+            SendClientMessage(playerid, COLOR_RED, "[!] Da bi dosli do Faction ID-a, koristite /afaction list");
             return 1;
         }
 
-        if (facID < 1 || facID > MAX_FACTIONS)
+        if(facID < 1 || facID > MAX_FACTIONS)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         new whid = FetchWarehouseEnumFromFaction(facID);
-        if (!Iter_Contains(Warehouses, whid))
+        if(!Iter_Contains(Warehouses, whid))
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Organizacija %s ne posjeduje warehouse.", FactionInfo[facID][fName]);
 
         new Float:X, Float:Y, Float:Z;
@@ -1372,21 +1372,21 @@ CMD:awarehouse(playerid, params[])
         MoveWarehouse(whid, X, Y, Z);
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ulaz u %s Warehouse je uspjesno premjesten na vasu trenutnu poziciju.", FactionInfo[facID][fName]);
     }
-    else if (!strcmp(option, "goto", true))
+    else if(!strcmp(option, "goto", true))
     {
         new facID, whid;
-        if (sscanf(params, "s[16]i", option, facID))
+        if(sscanf(params, "s[16]i", option, facID))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse goto [Faction ID]");
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
+            SendClientMessage(playerid, COLOR_RED, "[?]: /awarehouse goto [Faction ID]");
+            SendClientMessage(playerid, COLOR_RED, "[!] Da bi dosli do Faction ID-a, koristite /afaction list");
         }
 
-        if (facID < 1 || facID > MAX_FACTIONS)
+        if(facID < 1 || facID > MAX_FACTIONS)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         whid = FetchWarehouseEnumFromFaction(facID);
-        if (!DoesWarehouseExist(WarehouseInfo[whid][whFactionSQLID]))
+        if(!DoesWarehouseExist(WarehouseInfo[whid][whFactionSQLID]))
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d ne postoji!", whid);
 
         SetPlayerPosEx(playerid, WarehouseInfo[whid][whEnter][0], WarehouseInfo[whid][whEnter][1], WarehouseInfo[whid][whEnter][2], 0, 0, false);

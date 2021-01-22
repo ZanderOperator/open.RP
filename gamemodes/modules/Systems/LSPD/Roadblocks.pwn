@@ -77,9 +77,9 @@ stock DeleteAllRoadblocks(playerid)
 {
     foreach(new i: Roadblocks)
     {
-        if (IsPlayerInRangeOfPoint(playerid, 100.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
+        if(IsPlayerInRangeOfPoint(playerid, 100.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
         {
-            if (Roadblocks[i][sCreated] == 1)
+            if(Roadblocks[i][sCreated] == 1)
             {
                 Roadblocks[i][sCreated] = 0;
                 Roadblocks[i][sX] = 0;
@@ -98,9 +98,9 @@ stock DeleteClosestRoadblock(playerid)
     new drb = -1;
     foreach(new i: Roadblocks)
     {
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
+        if(IsPlayerInRangeOfPoint(playerid, 5.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
         {
-            if (Roadblocks[i][sCreated] == 1)
+            if(Roadblocks[i][sCreated] == 1)
             {
                 Roadblocks[i][sCreated] = 0;
                 Roadblocks[i][sX] = 0;
@@ -112,7 +112,7 @@ stock DeleteClosestRoadblock(playerid)
             }
         }
     }
-    if (drb != -1)
+    if(drb != -1)
         Iter_Remove(Roadblocks, drb);
     return 1;
 }
@@ -134,12 +134,12 @@ CMD:rb(playerid, params[])
         Float:plocx, Float:plocy, Float:plocz, Float:ploca,
         rb;
 
-    if (!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac/SD/FD!");
-    if (PlayerFaction[playerid][pRank] >= 2)
+    if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac/SD/FD!");
+    if(PlayerFaction[playerid][pRank] >= 2)
     {
-        if (sscanf(params, "i", rb))
+        if(sscanf(params, "i", rb))
         {
-            SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /roadblock(/rb) [Roadblock ID]");
+            SendClientMessage(playerid, COLOR_WHITE, "[?]: /roadblock(/rb) [Roadblock ID]");
             SendClientMessage(playerid, COLOR_LIGHTBLUE, "Dostupne blokade:");
             SendClientMessage(playerid, COLOR_GRAD1, " 1: Mala blokada | 2: Velika blokada | 3: Cunj | 4: Znak usmjeravanja");
             SendClientMessage(playerid, COLOR_GRAD1, " 5: Znak upozorenja| 6: Blokada usmjeravanja | 7: Veliki cunj | 8: Duga ograda");
@@ -157,7 +157,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(1459,plocx,plocy,plocz,ploca))
+                if(CreateRoadblock(1459,plocx,plocy,plocz,ploca))
                     GameTextForPlayer(playerid,"~w~Mala blokada ~b~postavljena!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -167,7 +167,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(978,plocx,plocy,plocz+0.6,ploca))
+                if(CreateRoadblock(978,plocx,plocy,plocz+0.6,ploca))
                     GameTextForPlayer(playerid,"~w~Velika blokada ~b~postavljena!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -177,7 +177,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(1238,plocx,plocy,plocz+0.2,ploca))
+                if(CreateRoadblock(1238,plocx,plocy,plocz+0.2,ploca))
                     GameTextForPlayer(playerid,"~w~Cunj ~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -187,7 +187,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(1425,plocx,plocy,plocz+0.6,ploca))
+                if(CreateRoadblock(1425,plocx,plocy,plocz+0.6,ploca))
                     GameTextForPlayer(playerid,"~w~Znak usmjeravanja ~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -197,7 +197,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(3265,plocx,plocy,plocz-0.5,ploca))
+                if(CreateRoadblock(3265,plocx,plocy,plocz-0.5,ploca))
                     GameTextForPlayer(playerid,"~w~Znak upozorenja ~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -207,7 +207,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(3091,plocx,plocy,plocz+0.5,ploca+180))
+                if(CreateRoadblock(3091,plocx,plocy,plocz+0.5,ploca+180))
                     GameTextForPlayer(playerid,"~w~Blokada usmjeravanja ~g~postavljena!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -217,7 +217,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(1237,plocx,plocy,plocz,ploca))
+                if(CreateRoadblock(1237,plocx,plocy,plocz,ploca))
                     GameTextForPlayer(playerid,"~w~Veliki Cunj ~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -227,7 +227,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(19313,plocx,plocy,plocz,ploca))
+                if(CreateRoadblock(19313,plocx,plocy,plocz,ploca))
                     GameTextForPlayer(playerid,"~w~Ograda ~g~postavljena!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -237,7 +237,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(1352,plocx,plocy,plocz-1,ploca))
+                if(CreateRoadblock(1352,plocx,plocy,plocz-1,ploca))
                     GameTextForPlayer(playerid,"~w~Semafor ~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -247,7 +247,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(19966,plocx,plocy,plocz-1,ploca))
+                if(CreateRoadblock(19966,plocx,plocy,plocz-1,ploca))
                     GameTextForPlayer(playerid,"~w~Znak STOP~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -257,7 +257,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(19967,plocx,plocy,plocz-1,ploca))
+                if(CreateRoadblock(19967,plocx,plocy,plocz-1,ploca))
                     GameTextForPlayer(playerid,"~w~Znak jednosmjera~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -267,7 +267,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(19972,plocx,plocy,plocz-1,ploca))
+                if(CreateRoadblock(19972,plocx,plocy,plocz-1,ploca))
                     GameTextForPlayer(playerid,"~w~Znak road closed~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -277,7 +277,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(19975,plocx,plocy,plocz-1,ploca))
+                if(CreateRoadblock(19975,plocx,plocy,plocz-1,ploca))
                     GameTextForPlayer(playerid,"~w~Znak work zone~g~postavljen!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -287,7 +287,7 @@ CMD:rb(playerid, params[])
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 GetPlayerPos(playerid, plocx, plocy, plocz);
                 GetPlayerFacingAngle(playerid,ploca);
-                if (CreateRoadblock(19834,plocx,plocy,plocz+0.8,ploca))
+                if(CreateRoadblock(19834,plocx,plocy,plocz+0.8,ploca))
                     GameTextForPlayer(playerid,"~w~Traka~g~postavljena!",3000,1);
                 else
                     GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
@@ -301,9 +301,9 @@ CMD:rb(playerid, params[])
 CMD:rrb(playerid, params[])
 {
     // TODO: reduce level of nesting
-    if (IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid))
+    if(IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid))
     {
-        if (PlayerFaction[playerid][pRank] >= 2)
+        if(PlayerFaction[playerid][pRank] >= 2)
         {
             DeleteClosestRoadblock(playerid);
             GameTextForPlayer(playerid,"~w~Roadblock ~r~Removed!",3000,1);
@@ -316,11 +316,11 @@ CMD:rrb(playerid, params[])
 CMD:removeall(playerid, params[])
 {
     // TODO: reduce level of nesting
-    if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || PlayerInfo[playerid][pAdmin] >= 2)
+    if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || PlayerInfo[playerid][pAdmin] >= 2)
     {
-        if (PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
+        if(PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
         {
-            if (PlayerFaction[playerid][pMember] == 1 && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
+            if(PlayerFaction[playerid][pMember] == 1 && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
 
             DeleteAllRoadblocks(playerid);
 

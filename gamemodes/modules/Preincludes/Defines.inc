@@ -82,7 +82,7 @@
 #define MAX_COLOR_TEXT_SLOTS					(5)
 
 // House Interior Furniture
-#define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
+#define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id][house_id]
 #define FURNITURE_VIP_GOLD_OBJCTS				(500)
 #define FURNITURE_VIP_SILVER_OBJCTS				(400)
 #define FURNITURE_VIP_BRONZE_OBJCTS				(300)

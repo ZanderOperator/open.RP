@@ -67,7 +67,7 @@ public OnGameModeInit()
 {
     zcmd_g_HasOPCS = funcidx("OnPlayerCommandReceived") != -1;
     zcmd_g_HasOPCE = funcidx("OnPlayerCommandPerformed") != -1;
-    if (funcidx("zcmd_OnGameModeInit") != -1)
+    if(funcidx("zcmd_OnGameModeInit") != -1)
     {
         return CallLocalFunction("zcmd_OnGameModeInit", "");
     }
@@ -86,12 +86,12 @@ forward zcmd_OnGameModeInit();
 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-    if (isnull(cmdtext))
+    if(isnull(cmdtext))
     {
         // You can add other crash detect/warning code here.
         return 0;
     }
-    if (zcmd_g_HasOPCS && !CallLocalFunction("OnPlayerCommandReceived", "is", playerid, cmdtext))
+    if(zcmd_g_HasOPCS && !CallLocalFunction("OnPlayerCommandReceived", "is", playerid, cmdtext))
     {
         return 1;
     }
@@ -100,7 +100,7 @@ public OnPlayerCommandText(playerid, cmdtext[])
         funcname[MAX_FUNC_NAME];
     while (cmdtext[++pos] > ' ')
     {
-        if (pos > MAX_FUNC_NAME)
+        if(pos > MAX_FUNC_NAME)
         {
             break;
         }
@@ -111,15 +111,15 @@ public OnPlayerCommandText(playerid, cmdtext[])
     }
     format(funcname, sizeof(funcname), "cmd_%s", funcname);
     while (cmdtext[pos] == ' ') pos++;
-    if (!cmdtext[pos])
+    if(!cmdtext[pos])
     {
-        if (zcmd_g_HasOPCE)
+        if(zcmd_g_HasOPCE)
         {
             return CallLocalFunction("OnPlayerCommandPerformed", "isi", playerid, cmdtext, CallLocalFunction(funcname, "is", playerid, "\1"));
         }
         return CallLocalFunction(funcname, "is", playerid, "\1");
     }
-    if (zcmd_g_HasOPCE)
+    if(zcmd_g_HasOPCE)
     {
         return CallLocalFunction("OnPlayerCommandPerformed", "isi", playerid, cmdtext, CallLocalFunction(funcname, "is", playerid, cmdtext[pos]));
     }

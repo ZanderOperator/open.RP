@@ -451,7 +451,7 @@ public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_
 			if(!IsPlayerConnected(i)) continue;
 			if(IsPlayerInRangeOfPoint(i, 4.0, new_x, new_y, new_z))
 			{
-				if (i != playerid)
+				if(i != playerid)
 				{
 					if(ActTempState != PLAYER_STATE_ONFOOT) GetVehiclePos(ActTempCar, TempFloatX, TempFloatY, TempFloatZ);
 					SetPlayerHealth(playerid, 0.0);
@@ -881,35 +881,35 @@ static stock ACT_memset(aArray[], iValue, iSize = sizeof(aArray)) {
 	// Loop until there is nothing more to fill
 	while (iSize > 0) {
 		// I have to do this because the FILL instruction doesn't accept a dynamic number.
-		if (iSize >= 4096) {
+		if(iSize >= 4096) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 4096
 		
 			iSize	-= 4096;
 			iAddress += 4096;
-		} else if (iSize >= 1024) {
+		} else if(iSize >= 1024) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 1024
 
 			iSize	-= 1024;
 			iAddress += 1024;
-		} else if (iSize >= 256) {
+		} else if(iSize >= 256) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 256
 
 			iSize	-= 256;
 			iAddress += 256;
-		} else if (iSize >= 64) {
+		} else if(iSize >= 64) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 64
 
 			iSize	-= 64;
 			iAddress += 64;
-		} else if (iSize >= 16) {
+		} else if(iSize >= 16) {
 			#emit LOAD.S.alt iAddress
 			#emit LOAD.S.pri iValue
 			#emit FILL 16

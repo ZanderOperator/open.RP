@@ -108,7 +108,7 @@ hook function ResetPlayerVariables(playerid)
 
 CMD:radio(playerid, params[])
 {
-	if (!PlayerRadio[playerid][pHasRadio])
+	if(!PlayerRadio[playerid][pHasRadio])
 		return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
 
 	if(!Bit1_Get(gr_PlayerRadio, playerid))
@@ -118,7 +118,7 @@ CMD:radio(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
 
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
 
 	new 
 		string[144],
@@ -128,7 +128,7 @@ CMD:radio(playerid, params[])
 	{
 		for (new s = 1 ; s < 3 ; s ++)
 		{
-			if (PlayerRadio[i][pRadio][s] == radioChan && PlayerRadio[i][pHasRadio] && Bit1_Get(gr_PlayerRadio, i))
+			if(PlayerRadio[i][pRadio][s] == radioChan && PlayerRadio[i][pHasRadio] && Bit1_Get(gr_PlayerRadio, i))
 			{
 				format(string, 144, "**[CH: %d, S: %d] %s kaze: %s", 
 					PlayerRadio[i][pRadio][s], 
@@ -136,7 +136,7 @@ CMD:radio(playerid, params[])
 					GetName(playerid, true), 
 					params
 				);
-				if (s != PlayerRadio[i][pMainSlot])
+				if(s != PlayerRadio[i][pMainSlot])
 					SendClientMessage(i, COLOR_RADIOEX, string);
 				else 
 					SendClientMessage(i, COLOR_RADIO, string);
@@ -167,7 +167,7 @@ CMD:radio(playerid, params[])
 
 CMD:radiolow(playerid, params[])
 {
-	if (!PlayerRadio[playerid][pHasRadio])
+	if(!PlayerRadio[playerid][pHasRadio])
 		return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
 
 	if(!Bit1_Get(gr_PlayerRadio, playerid))
@@ -177,7 +177,7 @@ CMD:radiolow(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
 
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
 
 	new string[144], radioChan = PlayerRadio[playerid][pRadio][PlayerRadio[playerid][pMainSlot]];
 
@@ -185,7 +185,7 @@ CMD:radiolow(playerid, params[])
 	{
 		for (new s = 1 ; s < 3 ; s ++)
 		{
-			if (PlayerRadio[i][pRadio][s] == radioChan && PlayerRadio[i][pHasRadio] && Bit1_Get(gr_PlayerRadio, i))
+			if(PlayerRadio[i][pRadio][s] == radioChan && PlayerRadio[i][pHasRadio] && Bit1_Get(gr_PlayerRadio, i))
 			{
 				format (string, 144, "**[CH: %d, S: %d] %s kaze: %s", 
 					PlayerRadio[i][pRadio][s], 
@@ -193,7 +193,7 @@ CMD:radiolow(playerid, params[])
 					GetName(playerid, true), 
 					params
 				);
-				if (s != PlayerRadio[i][pMainSlot])
+				if(s != PlayerRadio[i][pMainSlot])
 					SendClientMessage(i, COLOR_RADIOEX, string);
 				else
 					SendClientMessage(i, COLOR_RADIO, string);
@@ -221,7 +221,7 @@ CMD:radiolow(playerid, params[])
 
 CMD:r2(playerid, params[])
 {
-	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return SendErrorMessage(playerid, "Niste ulogirani!");
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return SendErrorMessage(playerid, "Niste ulogirani!");
 
 	new string[128];
 
@@ -231,7 +231,7 @@ CMD:r2(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Iskljucen vam je radio! Koristite /togradio.");
 
 	if(!PlayerRadio[playerid][pRadio][2])return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
-	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /r2 [radio text]");
+	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "[?]: /r2 [radio text]");
 
 	new chan;
 	chan = PlayerRadio[playerid][pRadio][2];
@@ -276,7 +276,7 @@ CMD:r2(playerid, params[])
 
 CMD:r3(playerid, params[])
 {
-	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return SendErrorMessage(playerid, "Niste ulogirani!");
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return SendErrorMessage(playerid, "Niste ulogirani!");
 
 	new string[128];
 
@@ -286,7 +286,7 @@ CMD:r3(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Iskljucen vam je radio! Koristite /togradio.");
 
 	if(!PlayerRadio[playerid][pRadio][3])return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
-	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /r3 [radio text]");
+	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "[?]: /r3 [radio text]");
 
 	new chan;
 	chan = PlayerRadio[playerid][pRadio][3];
@@ -333,36 +333,36 @@ CMD:togradio(playerid, params[])
 	#pragma unused params
 
  	if(!PlayerRadio[playerid][pHasRadio])return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
-	if( !Bit1_Get(gr_PlayerRadio, playerid))
+	if(!Bit1_Get(gr_PlayerRadio, playerid))
 	{
 		Bit1_Set(gr_PlayerRadio, playerid, true);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste radio!");
+		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste radio!");
 	} else {
 		Bit1_Set(gr_PlayerRadio, playerid, false);
-  		SendClientMessage(playerid, COLOR_RED, "[ ! ] Iskljucili ste radio!");
+  		SendClientMessage(playerid, COLOR_RED, "[!] Iskljucili ste radio!");
 	}
     return 1;
 }
 
 CMD:channel(playerid, params[])
 {
-	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) 
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) 
 		return SendErrorMessage(playerid, "Niste ulogirani!");
 	new 
 		choice[16];
 	if(sscanf(params, "s[16] ", choice)) 
 	{
-		SendClientMessage(playerid, -1, "[ ? ]: /channel [opcija]");
-		SendClientMessage(playerid, -1, "[ ? ] OPCIJE: setslot, leave, set, playerfreq, checkfreq");
+		SendClientMessage(playerid, -1, "[?]: /channel [opcija]");
+		SendClientMessage(playerid, -1, "[?] OPCIJE: setslot, leave, set, playerfreq, checkfreq");
 		return 1;
 	}
-	if( !strcmp( choice, "setslot", true ) ) 
+	if(!strcmp( choice, "setslot", true )) 
 	{
 		new string[128], slotid;
 		if(!PlayerRadio[playerid][pHasRadio])
 			return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
 		if(sscanf(params, "s[16]i", choice, slotid))
-			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /channel setslot [slotid]");
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /channel setslot [slotid]");
 		if(slotid < 1 || slotid > 3)
 			return SendClientMessage(playerid, COLOR_RED, "Slotovi moraju biti izmedju 1-3.");
 
@@ -372,7 +372,7 @@ CMD:channel(playerid, params[])
 		PlayerRadio[playerid][pMainSlot] = slotid;
         SavePlayerRadio(playerid);
 	}
-	if( !strcmp( choice, "leave", true ) ) 
+	if(!strcmp( choice, "leave", true )) 
 	{
 		new string[128], slotid;
 		if(!PlayerRadio[playerid][pHasRadio]) 
@@ -380,7 +380,7 @@ CMD:channel(playerid, params[])
 		if(!Bit1_Get(gr_PlayerRadio, playerid))
 			return SendClientMessage(playerid, COLOR_RED, "Iskljucen vam je radio! Koristite /togradio.");
 		if(sscanf(params, "s[16]i", choice, slotid)) 
-			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /channel leave [slotid]");
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /channel leave [slotid]");
 		if(slotid < 1 || slotid > 3) 
 			return SendClientMessage(playerid, COLOR_RED, "Slotovi moraju biti izmedju 1-5.");
 
@@ -391,19 +391,19 @@ CMD:channel(playerid, params[])
 		format(string, sizeof(string), "Napustili ste radio na slotu %d.", slotid);
 		SendClientMessage(playerid, COLOR_RED, string);
 	}
-	if( !strcmp( choice, "set", true ) ) 
+	if(!strcmp( choice, "set", true )) 
 	{
 		new channel, slotid;
 		if(!PlayerRadio[playerid][pHasRadio]) 
 			return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
 		if(sscanf(params, "s[16]ii", choice, channel, slotid))
-			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /channel set [frekvencija][slot]");
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /channel set [frekvencija][slot]");
 		if(channel < 1 || channel > 100000)
 			return SendClientMessage(playerid, COLOR_RED, "Samo kanali izmedju 1 - 100000 su podrzani.");
 		if(slotid < 1 || slotid > 3)
 			return SendClientMessage(playerid, COLOR_RED, "Slotovi moraju biti izmedju 1-3.");
 		if(PlayerRadio[playerid][pRadio][1] == channel || PlayerRadio[playerid][pRadio][2] == channel || PlayerRadio[playerid][pRadio][3] == channel)  
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Jedan od vasih slotova vec je na tom kanalu.");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Jedan od vasih slotova vec je na tom kanalu.");
 		if(!IsACop(playerid) && (channel == 911 || channel == 9030 || channel == 9040))
 			return SendClientMessage(playerid, COLOR_RED, "Kanal nije za javnost");
 		if(!IsASD(playerid) && (channel == 999 || channel == 9930 || channel == 9940))
@@ -421,35 +421,35 @@ CMD:channel(playerid, params[])
 		PlayerRadio[playerid][pRadioSlot][slotid] = slotid;
         SavePlayerRadio(playerid);
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Sada cete slusati kanal broj %d pod slotom %d.", channel, slotid);
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Sada cete slusati kanal broj %d pod slotom %d.", channel, slotid);
 	}
-	if( !strcmp( choice, "playerfreq", true ) ) 
+	if(!strcmp( choice, "playerfreq", true )) 
 	{
 		new giveplayerid;
-		if (PlayerInfo[playerid][pAdmin] < 3) 
+		if(PlayerInfo[playerid][pAdmin] < 3) 
 			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(A3+)!");
 		if(sscanf(params, "s[16]u", choice, giveplayerid))
-			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /channel playerfreq [playerid]");
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /channel playerfreq [playerid]");
 
 		if(giveplayerid == INVALID_PLAYER_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi ID igraca!");
 		if(!SafeSpawned[giveplayerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac %s se nalazi na frekvencijama %d, %d, %d.",
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac %s se nalazi na frekvencijama %d, %d, %d.",
 			GetName(giveplayerid, false),
 			PlayerRadio[giveplayerid][pRadio][1],
 			PlayerRadio[giveplayerid][pRadio][2],
 			PlayerRadio[giveplayerid][pRadio][3]
 		);
 	}
-	if( !strcmp( choice, "checkfreq", true ) ) 
+	if(!strcmp( choice, "checkfreq", true )) 
 	{
 		new channel;
-		if (PlayerInfo[playerid][pAdmin] < 3) 
+		if(PlayerInfo[playerid][pAdmin] < 3) 
 			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(A3+)!");
 		if(sscanf(params, "s[16]i", choice, channel))
-			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /channel checkfreq [frequency]");
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /channel checkfreq [frequency]");
 		
 		if(channel < 1 || channel > 100000)return SendClientMessage(playerid, COLOR_RED, "Pogresna frekvencija.");
 

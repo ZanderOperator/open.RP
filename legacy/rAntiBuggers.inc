@@ -90,7 +90,7 @@ public OnPlayerConnect(playerid)
 		ReturnPlayerIP(playerid, rAB_PIP, sizeof(rAB_PIP));
 		new rAB_ServerIP[17];
 		GetSVarString("bind", rAB_ServerIP, sizeof(rAB_ServerIP));
-		if (!!strcmp(rAB_PIP, rAB_ServerIP))
+		if(!!strcmp(rAB_PIP, rAB_ServerIP))
 		{
 			#if defined OnPlayerBugAttempt
 				OnPlayerBugAttempt(playerid, 1);

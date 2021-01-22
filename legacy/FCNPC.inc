@@ -372,23 +372,23 @@ native FCNPC_HideInTabListForPlayer(npcid, forplayerid);
 	forward FCNPC_OnRequestResponse(index, response_code, const data[]);
 	public FCNPC_OnRequestResponse(index, response_code, const data[])
 	{
-		if (index == 0 && response_code == 200) {
+		if(index == 0 && response_code == 200) {
 			new length = strlen(data);
-			if (length == 0 || length > 10) {
+			if(length == 0 || length > 10) {
 				return;
 			}
 
 			new version[16];
 			strmid(version, data, 1, length);
 
-			if (!('0' <= version[0] <= '9')) {
+			if(!('0' <= version[0] <= '9')) {
 				return;
 			}
 
 			new plugin_version[16];
 			FCNPC_GetPluginVersion(plugin_version);
 
-			if (strcmp(version, plugin_version) != 0) {
+			if(strcmp(version, plugin_version) != 0) {
 				printf("\n*** [FCNPC] Info: A newer version (v%s) is available at https://github.com/ziggi/FCNPC/releases ***\n", version);
 			}
 		}
@@ -414,7 +414,7 @@ native FCNPC_HideInTabListForPlayer(npcid, forplayerid);
 			Iter_Clear(FCNPC);
 
 			for (new i = 0; i != MAX_PLAYERS; ++i) {
-				if (FCNPC_IsValid(i)) {
+				if(FCNPC_IsValid(i)) {
 					Iter_Add(FCNPC, i);
 				}
 			}
@@ -444,7 +444,7 @@ native FCNPC_HideInTabListForPlayer(npcid, forplayerid);
 			Iter_Clear(FCNPC);
 
 			for (new i = 0; i != MAX_PLAYERS; ++i) {
-				if (FCNPC_IsValid(i)) {
+				if(FCNPC_IsValid(i)) {
 					Iter_Add(FCNPC, i);
 				}
 			}

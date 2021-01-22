@@ -201,7 +201,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
     static vehicleid;
     vehicleid = GetPlayerVehicleID(playerid);
 
-    if (newstate == PLAYER_STATE_PASSENGER && GetVehicleModel(vehicleid) == 427 &&
+    if(newstate == PLAYER_STATE_PASSENGER && GetVehicleModel(vehicleid) == 427 &&
        (2 <= GetPlayerVehicleSeat(playerid) <= 4))
     {
         SetPlayerVirtualWorld(playerid, 12);
@@ -215,9 +215,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
+    if((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
     {
-        if (MobileCommandVehicle[playerid] != INVALID_VEHICLE_ID)
+        if(MobileCommandVehicle[playerid] != INVALID_VEHICLE_ID)
         {
             new
                 Float:X, Float:Y, Float:Z;

@@ -52,9 +52,9 @@ GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE)
 		prefix[21];
 	switch(MESSAGE_TYPE) 
 	{
-		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[ ! ]";
-		case MESSAGE_TYPE_INFO: prefix = "~y~[ ! ]";
-		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[ ! ]";
+		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[!]";
+		case MESSAGE_TYPE_INFO: prefix = "~y~[!]";
+		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[!]";
 	}
 	return prefix;
 }

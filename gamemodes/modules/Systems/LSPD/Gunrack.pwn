@@ -50,11 +50,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_GUNRACK:
         {
             new vehicleid = GetPlayerVehicleID(playerid);
-            if (vehicleid == INVALID_VEHICLE_ID) return 1;
+            if(vehicleid == INVALID_VEHICLE_ID) return 1;
 
             GunrackInUse[vehicleid] = false;
 
-            if (!response)
+            if(!response)
             {
                 return 1;
             }
@@ -69,14 +69,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0: //Slot 1
                 {
                     // TODO: why such complex logic and nesting? surely this can be simplified
-                    if (GunrackWeapon[vehicleid][0] == 0 && weaponid == 0)
+                    if(GunrackWeapon[vehicleid][0] == 0 && weaponid == 0)
                     {
                         SendClientMessage(playerid, COLOR_RED, "Nemate oruzje u rukama niti imate oruzja u gunracku.");
                         return 1;
                     }
-                    else if (GunrackWeapon[vehicleid][0] != 0 && weaponid == 0)
+                    else if(GunrackWeapon[vehicleid][0] != 0 && weaponid == 0)
                     {
-                        if (!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][0]))
+                        if(!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][0]))
                             return 1;
 
                         AC_GivePlayerWeapon(playerid, GunrackWeapon[vehicleid][0], GunrackAmmo[vehicleid][0]);
@@ -87,7 +87,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         SendClientMessage(playerid, COLOR_PURPLE, string);
                         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
                     }
-                    else if (GunrackWeapon[vehicleid][0] == 0 && weaponid != 0)
+                    else if(GunrackWeapon[vehicleid][0] == 0 && weaponid != 0)
                     {
                         GunrackWeapon[vehicleid][0] = weaponid;
                         GunrackAmmo[vehicleid][0] = ammo;
@@ -98,9 +98,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         SendClientMessage(playerid, COLOR_PURPLE, string);
                         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
                     }
-                    else if (GunrackWeapon[vehicleid][0] != 0 && weaponid != 0)
+                    else if(GunrackWeapon[vehicleid][0] != 0 && weaponid != 0)
                     {
-                        if (!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][0]))
+                        if(!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][0]))
                             return 1;
 
                         AC_ResetPlayerWeapon(playerid, weaponid);
@@ -108,19 +108,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         GunrackWeapon[vehicleid][0] = weaponid;
                         GunrackAmmo[vehicleid][0] = ammo;
 
-                        SendClientMessage(playerid, COLOR_RED, "[ ! ] Zamijenili ste oruzje u gunracku.");
+                        SendClientMessage(playerid, COLOR_RED, "[!] Zamijenili ste oruzje u gunracku.");
                     }
                 }
                 case 1: //Slot 2
                 {
-                    if (GunrackWeapon[vehicleid][1] == 0 && weaponid == 0)
+                    if(GunrackWeapon[vehicleid][1] == 0 && weaponid == 0)
                     {
                         SendClientMessage(playerid, COLOR_RED, "Nemate oruzje u rukama niti imate oruzja u gunracuku.");
                         return 1;
                     }
-                    else if (GunrackWeapon[vehicleid][1] != 0 && weaponid == 0)
+                    else if(GunrackWeapon[vehicleid][1] != 0 && weaponid == 0)
                     {
-                        if (!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][1]))
+                        if(!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][1]))
                             return 1;
 
                         AC_GivePlayerWeapon(playerid, GunrackWeapon[vehicleid][1], GunrackAmmo[vehicleid][1]);
@@ -131,7 +131,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         SendClientMessage(playerid, COLOR_PURPLE, string);
                         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
                     }
-                    else if (GunrackWeapon[vehicleid][1] == 0 && weaponid != 0)
+                    else if(GunrackWeapon[vehicleid][1] == 0 && weaponid != 0)
                     {
                         GunrackWeapon[vehicleid][1] = weaponid;
                         GunrackAmmo[vehicleid][1] = ammo;
@@ -142,9 +142,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         SendClientMessage(playerid, COLOR_PURPLE, string);
                         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
                     }
-                    else if (GunrackWeapon[vehicleid][1] != 0 && weaponid != 0)
+                    else if(GunrackWeapon[vehicleid][1] != 0 && weaponid != 0)
                     {
-                        if (!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][1]))
+                        if(!CheckPlayerWeapons(playerid, GunrackWeapon[vehicleid][1]))
                             return 1;
 
                         AC_ResetPlayerWeapon(playerid, weaponid);
@@ -152,7 +152,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         GunrackWeapon[vehicleid][1] = weaponid;
                         GunrackAmmo[vehicleid][1] = ammo;
 
-                        SendClientMessage(playerid, COLOR_RED, "[ ! ] Zamijenili ste oruzje u gunracku.");
+                        SendClientMessage(playerid, COLOR_RED, "[!] Zamijenili ste oruzje u gunracku.");
                     }
                 }
             }
@@ -176,14 +176,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:gunrack(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
+    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 
     new vehicleid = GetPlayerVehicleID(playerid);
-    if (vehicleid == INVALID_VEHICLE_ID) return 1;
+    if(vehicleid == INVALID_VEHICLE_ID) return 1;
 
-    if (VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_FACTION && (VehicleInfo[vehicleid][vFaction] == 1 || VehicleInfo[vehicleid][vFaction] == 3))
+    if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_FACTION && (VehicleInfo[vehicleid][vFaction] == 1 || VehicleInfo[vehicleid][vFaction] == 3))
     {
-        if (GunrackInUse[vehicleid]) return SendClientMessage(playerid, COLOR_RED, "Pokusaj kasnije.");
+        if(GunrackInUse[vehicleid]) return SendClientMessage(playerid, COLOR_RED, "Pokusaj kasnije.");
         GunrackInUse[vehicleid] = true;
 
         new 
@@ -217,7 +217,7 @@ bool:IsBulletWeapon(weaponid)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (newstate == PLAYER_STATE_PASSENGER)
+    if(newstate == PLAYER_STATE_PASSENGER)
     {
         CurrentWeaponID[playerid] = GetPlayerWeapon(playerid);
     }
@@ -226,14 +226,14 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if (GetPlayerState(playerid) != PLAYER_STATE_PASSENGER &&
+    if(GetPlayerState(playerid) != PLAYER_STATE_PASSENGER &&
         IsBulletWeapon(CurrentWeaponID[playerid]) == false &&
         GetPlayerCameraMode(playerid) == 55)
     {
         return 1;
     }
 
-    if (newkeys & KEY_LOOK_RIGHT)
+    if(newkeys & KEY_LOOK_RIGHT)
     {
         new
             curWeap = CurrentWeaponID[playerid],
@@ -243,7 +243,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         for (new i = weapSlot + 1; i <= 7; i++)
         {
             GetPlayerWeaponData(playerid, i, weapID, weapAmmo);
-            if (IsBulletWeapon(weapID) && weapID != curWeap)
+            if(IsBulletWeapon(weapID) && weapID != curWeap)
             {
                 SetPlayerArmedWeaponEx(playerid, weapID);
                 break;
@@ -251,7 +251,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
     }
 
-    if (newkeys & KEY_LOOK_LEFT)
+    if(newkeys & KEY_LOOK_LEFT)
     {
         new
             curWeap = CurrentWeaponID[playerid],
@@ -261,7 +261,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         for (new i = weapSlot - 1; i >= 2; i--)
         {
             GetPlayerWeaponData(playerid, i, weapID, weapAmmo);
-            if (IsBulletWeapon(weapID) && weapID != curWeap)
+            if(IsBulletWeapon(weapID) && weapID != curWeap)
             {
                 SetPlayerArmedWeaponEx(playerid, weapID);
                 break;

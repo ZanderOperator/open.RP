@@ -808,7 +808,7 @@ CMD:buywhistle(playerid, params[])
 	
 	PlayerToBudgetMoney(playerid, 50); // novac od kupljene zvizdaljke ide u proracun
 	Whistle[playerid] = 1;
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupio si zvizdaljku za 20$.");
+	SendClientMessage(playerid, COLOR_RED, "[!] Kupio si zvizdaljku za 20$.");
 	
 	return 1;
 }
@@ -818,10 +818,10 @@ CMD:usewhistle(playerid, params[])
     if(!Whistle[playerid])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "NemaS zviZdaljku za jelene!");
 
-    if (WhistleTime[playerid] > gettimestamp())
+    if(WhistleTime[playerid] > gettimestamp())
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pri�ekajte nekoliko sekundi prije ponovnog koriStenja zviZdaljke!");
 
-    if (IsPlayerInAnyVehicle(playerid))
+    if(IsPlayerInAnyVehicle(playerid))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne moZete koristiti zviZdaljku dok ste u vozilu!");
 
     GetDynamicObjectPos(DeerInfo[id], DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ]);

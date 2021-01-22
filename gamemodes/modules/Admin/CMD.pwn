@@ -28,7 +28,7 @@ CMD:ahelp(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] == 0)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    if (PlayerInfo[playerid][pAdmin] >= 1)
+    if(PlayerInfo[playerid][pAdmin] >= 1)
 	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /alogin, /forumname, /lastdriver, /toga, /bhears, /a, /houseo, /bizo, /complexo, /checknetstats.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
@@ -41,7 +41,7 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /house_id, /biznis_id, /complex_id, /afurniture, /atoll, /adminmsg\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pAdmin] >= 2) 
+	if(PlayerInfo[playerid][pAdmin] >= 2) 
 	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /getcar, /gotomark, /mark, /getip, /iptoname, /prisonex, /warnex, /ban, /unprison, /prison.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
@@ -50,21 +50,21 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /gethere, /unban, /warn, /pmears, /rtcacar(radius), /cnn, /givebullet, /rears, /checkfreq, /banip.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
     }
-	if (PlayerInfo[playerid][pAdmin] >= 3) 
+	if(PlayerInfo[playerid][pAdmin] >= 3) 
 	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 3]: /skin, /sethp, /pns, /blockreport, /fpm, /fpmed, /entercar, /checkcostats.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog, sizeof(f_dialog), "\n{FF9933}[A 3]: /check_gunrack, /check_hdrugs, /putplayerincar, /refillnos, /flipcar\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pAdmin] >= 4) 
+	if(PlayerInfo[playerid][pAdmin] >= 4) 
 	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /aname, /rac, /setarmour, /veh, /veh_spawned, /undie, /unfreezearound, /freezearound, /setarmouraround.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /sethparound, /fixveh, /aunlock, /atake, /mutearound, /togreport, /fire, /deletevehicle, /bizinfo, /hidestatus.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pAdmin] >= 1337) {
+	if(PlayerInfo[playerid][pAdmin] >= 1337) {
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fakekick, /timeout, /givemoney, /address, /edit(biz/house), /asellbiz, /asellhouse, /asellcomplex, /asellcomplexroom, /fuelcars.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fuelcar, /factionmembers, /weather, /setstat, /fstyle, /givelicense, /givegun, /ac, /healcar, /create_garage, /garage.");
@@ -72,7 +72,7 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /item_give/drop/reload, /checkinv, /lts, /dakar, /quad.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pAdmin] >= 1338) {
+	if(PlayerInfo[playerid][pAdmin] >= 1338) {
 		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /makehelper, /makeadmin, /playercars, /makeadmin, /happyhours, /removewarn, /crash, /givepremium, /achangename, /giveallmoney.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /customhouseint, /createpickup, /bizint, /city, /setcity, /agps.");
@@ -93,19 +93,19 @@ CMD:hhelp(playerid, params[])
 
 	if(PlayerInfo[playerid][pHelper] == 0 && PlayerInfo[playerid][pAdmin] < 1338)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    if (PlayerInfo[playerid][pHelper] >= 1 || PlayerInfo[playerid][pAdmin] == 1338) {
+    if(PlayerInfo[playerid][pHelper] >= 1 || PlayerInfo[playerid][pAdmin] == 1338) {
 		format(f_dialog,sizeof(f_dialog), "\n[H 1]: /learn /apm /hon /hoff /hm /a /h /ach /forumname /kick /disconnect /slap /goto /checkoffline.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pHelper] >= 2 || PlayerInfo[playerid][pAdmin] == 1338) {
+	if(PlayerInfo[playerid][pHelper] >= 2 || PlayerInfo[playerid][pAdmin] == 1338) {
 		format(f_dialog,sizeof(f_dialog), "\n[H 2]: /port /recon /rtc /rtcinradius /setint /setviwo.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
     }
-	if (PlayerInfo[playerid][pHelper] >= 3 || PlayerInfo[playerid][pAdmin] == 1338) {
+	if(PlayerInfo[playerid][pHelper] >= 3 || PlayerInfo[playerid][pAdmin] == 1338) {
 		format(f_dialog,sizeof(f_dialog), "\n[H 3]: /gethere /freeze /unfreeze.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pHelper] >= 4 || PlayerInfo[playerid][pAdmin] == 1338) {
+	if(PlayerInfo[playerid][pHelper] >= 4 || PlayerInfo[playerid][pAdmin] == 1338) {
 		format(f_dialog,sizeof(f_dialog), "\n[H 4]: /mark /gotomark /check.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
@@ -122,7 +122,7 @@ CMD:alogin(playerid, params[])
 
 	new	pin[16];
 	if(sscanf(params, "s[16]", pin)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /alogin [PIN]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /alogin [PIN]");
 	
 	bcrypt_check(pin, PlayerInfo[playerid][pTeamPIN], "OnPINChecked", "d", playerid);
 	return 1;
@@ -131,11 +131,11 @@ CMD:alogin(playerid, params[])
 // Administrator Level RCON
 CMD:makehelper(playerid, params[])
 {
-	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	
 	new 
 		giveplayerid, level, teamPIN[12];
-	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makehelper [Playerid / Part of name] [level(1-4)]");
+	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[?]: /makehelper [Playerid / Part of name][level(1-4)]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
 	if(!level) 
@@ -148,12 +148,12 @@ CMD:makehelper(playerid, params[])
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
 		PlayerInfo[giveplayerid][pHelper] 		= 0;
 		PlayerInfo[giveplayerid][pTeamPIN][0]	= EOS;
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Skinuli ste %s Game Helpera!", GetName(giveplayerid, false));
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Skinut vam je Game Helper od strane %s!", GetName(playerid, false));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Skinuli ste %s Game Helpera!", GetName(giveplayerid, false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Skinut vam je Game Helper od strane %s!", GetName(playerid, false));
 		return 1;
 	}
 	
-	if( !strlen(PlayerInfo[giveplayerid][pTeamPIN]) ) 
+	if(!strlen(PlayerInfo[giveplayerid][pTeamPIN])) 
 	{		
 		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Helper PIN kod", "Congrats on your Game Helper position!\nTeam PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\nDo not give your Team PIN to anyone and remember it well/write it down!\nYour Team PIN is:"COL_COMPADMIN"%s\n"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", "Okay", "", teamPIN);
 		bcrypt_hash(teamPIN, BCRYPT_COST, "OnHelperPINHashed", "dd", giveplayerid, level);
@@ -171,8 +171,8 @@ CMD:makehelper(playerid, params[])
 	#endif
 	
 	PlayerInfo[giveplayerid][pHelper] = PlayerInfo[giveplayerid][pTempRank][1] = level;
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljeni ste za Game Helper od Administratora %s", GetName(playerid,false));
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Postavili ste %s za Game Helper.", GetName(giveplayerid,false));
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Postavljeni ste za Game Helper od Administratora %s", GetName(playerid,false));
+	va_SendClientMessage(playerid, COLOR_RED, "[!]  Postavili ste %s za Game Helper.", GetName(giveplayerid,false));
 	return 1;
 }
 
@@ -185,15 +185,15 @@ CMD:inactivity(playerid, params[])
 		
 	if(sscanf(params, "s[12] ", choice)) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /inactivity [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "OPCIJE: add, remove, check, list");
 		return 1;
 	}
-	if( !strcmp(choice, "check", true) )
+	if(!strcmp(choice, "check", true))
 	{
-		if (sscanf(params, "s[12]s[24]", choice, playername))
+		if(sscanf(params, "s[12]s[24]", choice, playername))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /inactivity check [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity check [Ime_Prezime]");
 			return 1;
 		}
 		new sqlid = ConvertNameToSQLID(playername);
@@ -206,15 +206,15 @@ CMD:inactivity(playerid, params[])
 		CheckInactivePlayer(playerid, sqlid);
 	}		
 		
-	if( !strcmp(choice, "list", true) )
+	if(!strcmp(choice, "list", true))
 		ListInactivePlayers(playerid);
 		
-	if( !strcmp(choice, "add", true) )
+	if(!strcmp(choice, "add", true))
 	{
 		new startstamp, endstamp;
-		if (sscanf(params, "s[12]s[24]is[64]", choice, playername, days, reason))
+		if(sscanf(params, "s[12]s[24]is[64]", choice, playername, days, reason))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /inactivity add [Ime_Prezime][broj dana][reason]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity add [Ime_Prezime][broj dana][reason]");
 			return 1;
 		}
 		if(days < 1 || days > 45)
@@ -272,11 +272,11 @@ CMD:inactivity(playerid, params[])
 		}
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Uspjesno ste registrirali neaktivnost %s[SQLID: %d] na %d dana. Razlog: %s", playername, sqlid, days, reason);
 	}
-	if( !strcmp(choice, "remove", true) )
+	if(!strcmp(choice, "remove", true))
 	{
-		if (sscanf(params, "s[12]s[24]", choice, playername))
+		if(sscanf(params, "s[12]s[24]", choice, playername))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /inactivity remove [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity remove [Ime_Prezime]");
 			return 1;
 		}
 		new sqlid = ConvertNameToSQLID(playername);
@@ -326,7 +326,7 @@ CMD:hon(playerid, params[])
 		return SendClientMessage(playerid,COLOR_RED, "Vec ste na Helper duznosti!");
     if(PlayerInfo[playerid][pHelper] >= 1)
 	{
-		SendClientMessage(playerid,COLOR_RED, "[ ! ] Sada si na Helper duznosti!");
+		SendClientMessage(playerid,COLOR_RED, "[!] Sada si na Helper duznosti!");
 		Helper_SetOnDuty(playerid, true);
         SetPlayerColor(playerid, COLOR_HELPER);
 		SetPlayerHealth(playerid, 100);
@@ -344,7 +344,7 @@ CMD:hoff(playerid, params[])
 		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
     if(PlayerInfo[playerid][pHelper] >= 1)
 	{
-		SendClientMessage(playerid,COLOR_RED, "[ ! ] Vise nisi na Helper duznosti!");
+		SendClientMessage(playerid,COLOR_RED, "[!] Vise nisi na Helper duznosti!");
 		Helper_SetOnDuty(playerid, false);
         SetPlayerColor(playerid,TEAM_HIT_COLOR);
 		SetPlayerArmour(playerid, 0);
@@ -360,11 +360,11 @@ CMD:hm(playerid, params[])
 {
 	if(!Helper_OnDuty(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
-	if (Player_UsingMask(playerid))
+	if(Player_UsingMask(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Skinite masku prije nego sto koristite /hm!");
 	if(PlayerInfo[playerid][pHelper] >= 1)
 	{
-	    if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /hm [poruka]");
+	    if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[?]: /hm [poruka]");
 		new motd[180];
 		format(motd, sizeof(motd), "(( HELPER %s:  %s ))", GetName(playerid, true), params);
 		SendClientMessageToAll(COLOR_HELPER, motd);
@@ -383,13 +383,13 @@ CMD:ach(playerid, params[])
 	if(!Helper_OnDuty(playerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not on Helper Duty!");
 	if(sscanf(params, "d", targetid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ach [target_id].");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /ach [target_id].");
 	if(!Player_NeedsHelp(targetid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR,"That player didn't request help.");
 	
 	SendFormatMessage(targetid, MESSAGE_TYPE_INFO, "Helper %s accepted your help request.", GetName(playerid));
 	SendHelperMessage(COLOR_RED, 
-		"[ ! ]: Helper %s accepted help request from %s.",
+		"[!]: Helper %s accepted help request from %s.",
 		GetName(playerid, true), 
 		GetName(targetid, true)
 	);
@@ -404,8 +404,8 @@ CMD:playercars(playerid, params[])
 		player_sqlid,
 		player_nick[MAX_PLAYER_NAME];
 		
-	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /playercars [Ime_Prezime].");
+	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /playercars [Ime_Prezime].");
 	
 	mysql_search = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", player_nick));
 	cache_get_value_name_int(0, "sqlid"	, player_sqlid);
@@ -424,7 +424,7 @@ CMD:teampin(playerid, params[])
 		teampin[12];
 		
 	if(sscanf(params, "us[12] ", giveplayerid, teampin)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /teampin [Playerid / Part of name] [Novi Team PIN za /alogin]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /teampin [Playerid / Part of name][Novi Team PIN za /alogin]");
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online!");
 	if(!SafeSpawned[giveplayerid])
@@ -445,11 +445,11 @@ CMD:teampin(playerid, params[])
 
 CMD:makeadmin(playerid, params[])
 {
-	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	
 	new 
 		giveplayerid, level, teamPIN[12];
-	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadmin [Playerid / Part of name] [level(1-1338)] [Team PIN for /alogin]");
+	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[?]: /makeadmin [Playerid / Part of name][level(1-1338)][Team PIN for /alogin]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
 	
@@ -463,12 +463,12 @@ CMD:makeadmin(playerid, params[])
 		PlayerInfo[giveplayerid][pAdmin] 		= 0;
 		PlayerInfo[giveplayerid][pTeamPIN][0]	= EOS;
 		
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Skinuli ste %s Game Admina!", GetName(giveplayerid, false));
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Skinut vam je Game Admin od strane %s!", GetName(playerid, false));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Skinuli ste %s Game Admina!", GetName(giveplayerid, false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Skinut vam je Game Admin od strane %s!", GetName(playerid, false));
 		return 1;
 	}
 	
-	if( !strlen(PlayerInfo[giveplayerid][pTeamPIN]) ) 
+	if(!strlen(PlayerInfo[giveplayerid][pTeamPIN])) 
 	{
 		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Admin PIN kod", "Congrats on your Game Admin position!\nTeam PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\nDo not give your Team PIN to anyone and remember it well/write it down!\nYour Team PIN is:"COL_COMPADMIN"%s\n"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", "Okay", "", teamPIN);
 		bcrypt_hash(teamPIN, BCRYPT_COST, "OnAdminPINHashed", "dd", giveplayerid, level);
@@ -487,19 +487,19 @@ CMD:makeadmin(playerid, params[])
 	);
 	#endif
 	
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljeni ste za Game Admina level %d od Administratora %s", level, GetName(playerid,false));
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Postavili ste %s za Game Admina.", GetName(giveplayerid,false));
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Postavljeni ste za Game Admina level %d od Administratora %s", level, GetName(playerid,false));
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Postavili ste %s za Game Admina.", GetName(giveplayerid,false));
 	return 1;
 }
 
 CMD:makeadminex(playerid, params[])
 {
-	if( IsPlayerAdmin(playerid) || PlayerInfo[playerid][pAdmin] == 1338 ) 
+	if(IsPlayerAdmin(playerid) || PlayerInfo[playerid][pAdmin] == 1338 ) 
 	{
 		new
 			level,
 			gplayername[MAX_PLAYER_NAME];
-		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadminex [Ime_Prezime] [Level(1-1338)] [Team PIN for /alogin]");
+		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[?]: /makeadminex [Ime_Prezime][Level(1-1338)][Team PIN for /alogin]");
 		
 		mysql_fquery(g_SQL, "UPDATE accounts SET adminLvl = '%d' WHERE name = '%e' LIMIT 1", level, gplayername);
 	}
@@ -510,17 +510,17 @@ CMD:makeadminex(playerid, params[])
 // Administrator Level 1338
 CMD:happyhours(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		happy;
-	if( sscanf( params, "i ", happy ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /happyhours [0-makni/1-stavi]");
-	if( 0 <= happy <= 1 ) {
+	if(sscanf( params, "i ", happy )) return SendClientMessage(playerid, COLOR_RED, "[?]: /happyhours [0-makni/1-stavi]");
+	if(0 <= happy <= 1 ) {
 		new
 			gstring[64];
-		if( happy ) {
+		if(happy ) {
 			new
 				level;
-			if( sscanf( params, "ii", happy, level ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /happyhours 1-stavi [level]");
+			if(sscanf( params, "ii", happy, level )) return SendClientMessage(playerid, COLOR_RED, "[?]: /happyhours 1-stavi [level]");
 			format(gstring, sizeof(gstring), "hostname %s [Happy Hours do %d level]", 
 				SERVER_NAME,
 				level);
@@ -537,13 +537,13 @@ CMD:happyhours(playerid, params[])
 }
 CMD:removewarn(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) 
+    if(PlayerInfo[playerid][pAdmin] < 1338) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1338+!");
 	new 
 		giveplayerid;
     if(sscanf(params, "u", giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /removewarn [ID/Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /removewarn [ID/Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
     
 	PlayerInfo[giveplayerid][pWarns] -= 1;
@@ -568,9 +568,9 @@ CMD:removewarn(playerid, params[])
 CMD:explode(playerid, params[])
 {
 	new giveplayerid;
- 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda /explode ne postoji!");
-  	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, 0xFFFFFFFF, "[ ? ]: [ID / Part of name]");
-  	if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac� nije online!");
+ 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda /explode ne postoji!");
+  	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, 0xFFFFFFFF, "[?]: [ID / Part of name]");
+  	if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac� nije online!");
 
     new Float:SLX, Float:SLY, Float:SLZ;
     GetPlayerPos(giveplayerid, SLX, SLY,SLZ);
@@ -581,19 +581,19 @@ CMD:explode(playerid, params[])
 
 CMD:fakekick(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda '/fakekick' ne postoji!");
+	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda '/fakekick' ne postoji!");
 	new giveplayerid;
-	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fakekick [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /fakekick [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	SendClientMessage(giveplayerid, 0xA9C4E4AA, "Server closed the connection.");
 	return 1;
 }
 CMD:crash(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Komanda '/crash' ne postoji!");
+	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Komanda '/crash' ne postoji!");
 	new giveplayerid;
-	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /crash [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac� nije online!");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /crash [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac� nije online!");
 	GameTextForPlayer(giveplayerid, "??!$$%&'()*+,-./01~!@#$^&*()_-+={[}]:;'<,>.?/", 1000, 0);
 	GameTextForPlayer(giveplayerid, "??!$$%&'()*+,-./01~!@#$^&*()_-+={[}]:;'<,>.?/", 2000, 1);
 	GameTextForPlayer(giveplayerid, "??!$$%&'()*+,-./01~!@#$^&*()_-+={[}]:;'<,>.?/", 3000, 2);
@@ -608,13 +608,13 @@ CMD:crash(playerid, params[])
 
 CMD:givepremium(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		giveplayerid,
 		dLevel[10];
 
-    if(sscanf(params, "us[10] ", giveplayerid, dLevel)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /givepremium [ID / Part of name][Bronze/Silver/Gold/Platinum]");
-    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
+    if(sscanf(params, "us[10] ", giveplayerid, dLevel)) return SendClientMessage(playerid, COLOR_RED, "[?]: /givepremium [ID / Part of name][Bronze/Silver/Gold/Platinum]");
+    if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
 
 	if(strcmp(dLevel,"bronze",true) == 0)
 	{
@@ -629,9 +629,9 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 		
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Bronze VIP Account od admina %s.", GetName(playerid,false));
-		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Bronze VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Dobili ste Bronze VIP Account od admina %s.", GetName(playerid,false));
+		SendClientMessage(giveplayerid, COLOR_RED, "[!] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Dali ste %s Bronze VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
     }
     else if(strcmp(dLevel,"silver",true) == 0)
 	{
@@ -646,9 +646,9 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Silver VIP Account od admina %s", GetName(playerid,false));
-		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Silver VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Dobili ste Silver VIP Account od admina %s", GetName(playerid,false));
+		SendClientMessage(giveplayerid, COLOR_RED, "[!] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Dali ste %s Silver VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
     }
     else if(strcmp(dLevel,"gold",true) == 0)
 	{
@@ -663,9 +663,9 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 		
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Gold VIP Account od admina %s", GetName(playerid,false));
-		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Gold VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Dobili ste Gold VIP Account od admina %s", GetName(playerid,false));
+		SendClientMessage(giveplayerid, COLOR_RED, "[!] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Dali ste %s Gold VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
 
     }
 	else if(strcmp(dLevel,"platinum",true) == 0)
@@ -681,31 +681,31 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 		
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Platinum VIP Account od admina %s", GetName(playerid,false));
-		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za 45 dana, zahvaljujemo na vasoj donaciji!");
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Platinum VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Dobili ste Platinum VIP Account od admina %s", GetName(playerid,false));
+		SendClientMessage(giveplayerid, COLOR_RED, "[!] Vas VIP paket istice za 45 dana, zahvaljujemo na vasoj donaciji!");
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Dali ste %s Platinum VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
 
     }
-	else SendClientMessage(playerid, COLOR_RED, "[ ? ]: /givepremium [ID / Part of name] [Bronze/Silver/Gold/Platinum]");
+	else SendClientMessage(playerid, COLOR_RED, "[?]: /givepremium [ID / Part of name][Bronze/Silver/Gold/Platinum]");
 	return 1;
 }
 
 CMD:achangename(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		giveplayerid,
 	    novoime[MAX_PLAYER_NAME+1],
 		oldnick[MAX_PLAYER_NAME+1],
 		name[MAX_PLAYER_NAME+1];
 		
-    if(sscanf(params, "us[24]", giveplayerid, novoime)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /achangename [ID / Part of name] [Ime_Prezime]");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+    if(sscanf(params, "us[24]", giveplayerid, novoime)) return SendClientMessage(playerid, COLOR_RED, "[?]: /achangename [ID / Part of name][Ime_Prezime]");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	GetPlayerName(giveplayerid, oldnick, sizeof(oldnick));
 	GetPlayerName(playerid, name, sizeof(name));
 	if(!IsValidName(novoime)) return SendClientMessage(playerid, COLOR_RED, "Nepravilan Role Play format imena.");
-    format(globalstring, sizeof(globalstring), "[ ! ] Administrator %s je promjenio tvoj nick u %s!", name, novoime);
+    format(globalstring, sizeof(globalstring), "[!] Administrator %s je promjenio tvoj nick u %s!", name, novoime);
     SendClientMessage(giveplayerid, COLOR_RED, globalstring);
 	ChangePlayerName(giveplayerid, novoime, 1, (true));
 	return 1;
@@ -713,7 +713,7 @@ CMD:achangename(playerid, params[])
 
 CMD:aname(playerid, params[]) 
 {
-	if( !isnull(PlayerExName[playerid]) ) 
+	if(!isnull(PlayerExName[playerid])) 
 	{
 		SetPlayerName(playerid, PlayerExName[playerid]);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj prijasnji nick!");
@@ -721,17 +721,17 @@ CMD:aname(playerid, params[])
 		return 1;
 	}
 	new 
-		newName[ MAX_PLAYER_NAME ];
-	if( sscanf(params, "s[24]", newName) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aname [novi nick].");
-	if( !IsValidName(newName) ) 
+		newName[MAX_PLAYER_NAME];
+	if(sscanf(params, "s[24]", newName)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /aname [novi nick].");
+	if(!IsValidName(newName)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilan roleplay nick!");
-	if (PlayerInfo[playerid][pAdmin] < 2) 
+	if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	
 	strcpy(PlayerExName[playerid], GetName(playerid, false), MAX_PLAYER_NAME);
 		
-	switch( SetPlayerName(playerid, newName) ) 
+	switch( SetPlayerName(playerid, newName)) 
 	{
 		case -1: 
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
@@ -745,14 +745,14 @@ CMD:aname(playerid, params[])
 
 CMD:givemoney(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) 
+    if(PlayerInfo[playerid][pAdmin] < 1337) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1337+!");
     new 
 		giveplayerid, 
 		amount;
-   	if (sscanf(params, "ui", giveplayerid, amount)) 
-	   	return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /givemoney [ID/Part of name] [Amount]");
-    if (!IsPlayerConnected(giveplayerid)) 
+   	if(sscanf(params, "ui", giveplayerid, amount)) 
+	   	return SendClientMessage(playerid, COLOR_RED, "[?]: /givemoney [ID/Part of name][Amount]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
     
 	BudgetToPlayerMoney(giveplayerid, amount); 
@@ -777,16 +777,16 @@ CMD:givemoney(playerid, params[])
 
 CMD:giveallmoney(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) 
+    if(PlayerInfo[playerid][pAdmin] < 1338) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1338+!");
     new 
 		amount;
-   	if (sscanf(params, "i", amount)) 
-	   	return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveallmoney [Amount]");
+   	if(sscanf(params, "i", amount)) 
+	   	return SendClientMessage(playerid, COLOR_RED, "[?]: /giveallmoney [Amount]");
 	
 	foreach(new giveplayerid : Player)
 	{
-		if (!SafeSpawned[giveplayerid]) 
+		if(!SafeSpawned[giveplayerid]) 
 			continue;
 
 		BudgetToPlayerMoney(giveplayerid, amount); 		
@@ -815,14 +815,14 @@ CMD:address(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni !");
 	new id, address[32];
-	if( sscanf(params, "is[32] ", id, address) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /address [houseid] [adresa]");
-	if( strlen(address) > 32 ) return SendClientMessage( playerid, COLOR_RED, "Maksimalna velicina adrese je 11 znakova!");
-	if( !House_Exists(id) ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan ID kuce!");
-	if( !IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[ id ][ hEnterX ], HouseInfo[ id ][ hEnterY ], HouseInfo[ id ][ hEnterZ ] ) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti blizu kuce!");
+	if(sscanf(params, "is[32] ", id, address)) return SendClientMessage(playerid, COLOR_RED, "[?]: /address [houseid][adresa]");
+	if(strlen(address) > 32 ) return SendClientMessage( playerid, COLOR_RED, "Maksimalna velicina adrese je 11 znakova!");
+	if(!House_Exists(id)) return SendClientMessage(playerid, COLOR_RED, "Nevaljan ID kuce!");
+	if(!IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[id][hEnterX], HouseInfo[id][hEnterY], HouseInfo[id][hEnterZ] )) return SendClientMessage( playerid, COLOR_RED, "Morate biti blizu kuce!");
 	
 	format(HouseInfo[id][hAdress], 32, address);
 	mysql_fquery(g_SQL, "UPDATE houses SET adress = '%e' WHERE id = '%d'", address, HouseInfo[id][hSQLID]);
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Promjenili ste adresu kuce u %s", address);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Promjenili ste adresu kuce u %s", address);
 	return 1;
 }
 
@@ -832,12 +832,12 @@ CMD:edit(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
 
 	new i, x_job[32], proplev, proptype = 0, propid = -1;
-	if (sscanf(params, "s[32]i", x_job, proplev)) 
+	if(sscanf(params, "s[32]i", x_job, proplev)) 
 	{
 		SendClientMessage(playerid, COLOR_RED, "|___________ Edit Houses/Business ___________|");
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /edit [option] [value]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Level, Price, Funds, Locked, BizViwo");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] DoorLevel, LockLevel, AlarmLevel, hviwo");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /edit [option][value]");
+		SendClientMessage(playerid, COLOR_RED, "[!] Level, Price, Funds, Locked, BizViwo");
+		SendClientMessage(playerid, COLOR_RED, "[!] DoorLevel, LockLevel, AlarmLevel, hviwo");
 		SendClientMessage(playerid, COLOR_RED, "|____________________________________________|");
 		return 1;
 	}
@@ -885,13 +885,13 @@ CMD:edit(playerid, params[])
 			{
 				proptype = 2;
 				propid = i;
-				if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ]: Type range is 0-14!");
+				if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[!]: Type range is 0-14!");
 				BizzInfo[i][bType] = proplev;
 				mysql_fquery(g_SQL, "UPDATE bizzes SET type = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 		}
 		if(proptype != 0 && propid != -1)
-			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
+			return va_SendClientMessage(playerid, COLOR_RED, "[!]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
 	}
     i = Player_InfrontHouse(playerid);
 	if(i != INVALID_HOUSE_ID)
@@ -949,7 +949,7 @@ CMD:edit(playerid, params[])
 			}
 		}
 		if(proptype != 0 && propid != -1)
-			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on House ID %d[SQLID: %d][Adress: %s] on value %d.", x_job, propid, HouseInfo[propid][hSQLID], HouseInfo[propid][hAdress], proplev);
+			return va_SendClientMessage(playerid, COLOR_RED, "[!]: You just adjusted %s on House ID %d[SQLID: %d][Adress: %s] on value %d.", x_job, propid, HouseInfo[propid][hSQLID], HouseInfo[propid][hAdress], proplev);
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unfortunately, house/business for editing wasn't found in your proximity.");
 	return 1;
@@ -964,14 +964,14 @@ CMD:asellbiz(playerid, params[])
 		biz, 
 		bool:foundonline = false;
     if(sscanf(params, "i", biz)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellbiz [bizid]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /asellbiz [bizid]");
 
 	foreach(new i : Player)
 	{
 		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
 		{
 			PlayerKeys[i][pBizzKey] = INVALID_BIZNIS_ID;
-			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
+			va_SendClientMessage(i, COLOR_RED, "[!]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
 			BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
 			foundonline = true;
 		}
@@ -1011,7 +1011,7 @@ CMD:asellbiz(playerid, params[])
 
 	va_SendClientMessage(playerid, 
 		COLOR_RED, 
-		"[ ! ]: You sold Business %s with admin command, buy price was returned to the previous owner!", 
+		"[!]: You sold Business %s with admin command, buy price was returned to the previous owner!", 
 		BizzInfo[biz][bMessage]
 	);
 	SendAdminMessage(COLOR_LIGHTBLUE, 
@@ -1043,7 +1043,7 @@ CMD:asellgarage(playerid, params[])
 		garage,
 		bool:foundonline = false;
     if(sscanf(params, "i", garage)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellgarage [garageid]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /asellgarage [garageid]");
 	if(!Garage_Exists(garage)) 
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
 		
@@ -1052,7 +1052,7 @@ CMD:asellgarage(playerid, params[])
 		if(SafeSpawned[playerid] && PlayerKeys[i][pGarageKey] == garage)
 		{
 			PlayerKeys[i][pGarageKey] = -1;
-			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
+			va_SendClientMessage(i, COLOR_RED, "[!]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
 			foundonline = true;
 			break;
 		}				
@@ -1125,7 +1125,7 @@ CMD:asellhouse(playerid, params[])
 		house, 
 		bool:foundonline = false;
     if(sscanf(params, "i", house)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellhouse [houseid]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /asellhouse [houseid]");
    
 	foreach(new i : Player)
 	{
@@ -1135,7 +1135,7 @@ CMD:asellhouse(playerid, params[])
 
 			va_SendClientMessage(i, 
 				COLOR_RED, 
-				"[ ! ]: Your house has been moved out by Game Admin %s, you got \n\
+				"[!]: Your house has been moved out by Game Admin %s, you got \n\
 					refunded buy price (%s) in return.", 
 				GetName(playerid, false),
 				FormatNumber(HouseInfo[house][hValue])
@@ -1187,7 +1187,7 @@ CMD:asellhouse(playerid, params[])
 	
 	va_SendClientMessage(playerid, 
 		COLOR_RED, 
-		"[ ! ]: You sold a house on adress %s, buy price was returned to the previous owner!", 
+		"[!]: You sold a house on adress %s, buy price was returned to the previous owner!", 
 		HouseInfo[house][hAdress]
 	);
 	SendAdminMessage(COLOR_LIGHTBLUE, 
@@ -1220,7 +1220,7 @@ CMD:asellcomplex(playerid, params[])
 		complex, 
 		bool:foundonline = false;
     if(sscanf(params, "i", complex)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellcomplex [complexid]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /asellcomplex [complexid]");
    
 	foreach(new i : Player)
 	{
@@ -1228,7 +1228,7 @@ CMD:asellcomplex(playerid, params[])
 		{
 			PlayerKeys[i][pComplexKey] = INVALID_COMPLEX_ID;
 			va_SendClientMessage(i, COLOR_RED, 
-				"[ ! ]: Your Complex has been moved out by Game Admin %s, \n\
+				"[!]: Your Complex has been moved out by Game Admin %s, \n\
 					you got refunded buy price (%s) of it!", 	
 				GetName(playerid, false),
 				FormatNumber(ComplexInfo[complex][cPrice])
@@ -1271,7 +1271,7 @@ CMD:asellcomplex(playerid, params[])
 	
 	va_SendClientMessage(playerid, 
 		COLOR_RED, 
-		"[ ! ]: You sold Complex %s with admin command, the owner got buy price of Complex in return!", 
+		"[!]: You sold Complex %s with admin command, the owner got buy price of Complex in return!", 
 		ComplexInfo[complex][cName]
 	);
 	SendAdminMessage(COLOR_LIGHTBLUE, 
@@ -1303,7 +1303,7 @@ CMD:asellcomplexroom(playerid, params[])
 	new 
 		complex;
     if(sscanf(params, "i", complex)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellcomplexroom [complex_room_id]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /asellcomplexroom [complex_room_id]");
 		
 	foreach(new i : Player)
 	{
@@ -1313,7 +1313,7 @@ CMD:asellcomplexroom(playerid, params[])
 
 			va_SendClientMessage(i, 
 				COLOR_RED, 
-				"[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", 
+				"[!]: You got moved out of Complex Room on adress %s by Game Admin %s!", 
 				ComplexRoomInfo[complex][cAdress], 
 				GetName(playerid, false)
 			);
@@ -1336,7 +1336,7 @@ CMD:asellcomplexroom(playerid, params[])
 	);
 
 	va_SendClientMessage(playerid, COLOR_RED, 
-		"[ ! ] You moved out Complex Room on adress %s!",
+		"[!] You moved out Complex Room on adress %s!",
 		ComplexRoomInfo[complex][cAdress]
 	);
 	SendAdminMessage(COLOR_LIGHTBLUE, 
@@ -1366,26 +1366,26 @@ CMD:forumname(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 		
 	if(isnull(params))
-	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /forumname [nick]");
+	    return SendClientMessage(playerid, COLOR_RED, "[?]: /forumname [nick]");
 	else if(isnull(PlayerInfo[playerid][pForumName]))
 		strcpy(PlayerInfo[playerid][pForumName], params, 24);
 	else
-		return strdel(PlayerInfo[playerid][pForumName], 0, 24), SendClientMessage(playerid, COLOR_RED, "[ ! ] Obrisao si svoj forum nick!");
+		return strdel(PlayerInfo[playerid][pForumName], 0, 24), SendClientMessage(playerid, COLOR_RED, "[!] Obrisao si svoj forum nick!");
 		
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si postavio forum ime!");
+	SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si postavio forum ime!");
 	return 1;
 }
 
 CMD:healcar(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 1337) 
+    if(PlayerInfo[playerid][pAdmin] < 1337) 
 		return SendClientMessage(playerid, COLOR_RED, "You are not Game Admin 1337+!");
     new 
 		health,
 		vehicleid = INVALID_VEHICLE_ID;
-	if (sscanf(params, "i", health)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /healcar [amount]");
+	if(sscanf(params, "i", health)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /healcar [amount]");
 	
 	vehicleid = GetPlayerVehicleID(playerid);
 	if(vehicleid == INVALID_VEHICLE_ID)
@@ -1412,7 +1412,7 @@ CMD:healcar(playerid, params[])
 
 CMD:fuelcars(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337)
+	if(PlayerInfo[playerid][pAdmin] < 1337)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	
 	RefillVehicles();
@@ -1422,16 +1422,16 @@ CMD:fuelcars(playerid, params[])
 
 CMD:fuelcar(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		fuel, 
 		vehicleid;
-	if( sscanf( params, "ii", vehicleid, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /fuelcar [vehicleid][kolicina]");
-	if( vehicleid == INVALID_VEHICLE_ID || !IsValidVehicle(vehicleid) ) return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos vehicleida!");
-	if( 1 <= fuel <= 100 ) 
+	if(sscanf( params, "ii", vehicleid, fuel )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /fuelcar [vehicleid][kolicina]");
+	if(vehicleid == INVALID_VEHICLE_ID || !IsValidVehicle(vehicleid)) return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos vehicleida!");
+	if(1 <= fuel <= 100 ) 
 	{
-		VehicleInfo[ vehicleid ][ vFuel ] = fuel;
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo %d je napunjeno %d posto goriva!", vehicleid, fuel);
+		VehicleInfo[vehicleid][vFuel] = fuel;
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Vozilo %d je napunjeno %d posto goriva!", vehicleid, fuel);
 	} 
 	else SendClientMessage( playerid, COLOR_RED, "Kolicina mora biti izmedju 1 i 100!");
 	return 1;
@@ -1440,10 +1440,10 @@ CMD:fuelcar(playerid, params[])
 CMD:factionmembers(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new orgid;
-	if (sscanf(params, "i", orgid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /factionmembers [Orgid]");
-	if (orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
+	if(sscanf(params, "i", orgid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /factionmembers [Orgid]");
+	if(orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
 	
     mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE facMemId = '%d'", orgid), 
@@ -1457,13 +1457,13 @@ CMD:factionmembers(playerid, params[])
 
 CMD:weather(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) 
+    if(PlayerInfo[playerid][pAdmin] < 1337) 
 		return SendClientMessage(playerid, COLOR_RED, "You are not Game Admin 1337+!");
 	new
 		weather;
-	if (sscanf(params, "i", weather)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weather [Weatherid]");
-	if (weather < 0 || weather > 45) 
+	if(sscanf(params, "i", weather)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /weather [Weatherid]");
+	if(weather < 0 || weather > 45) 
 		return SendClientMessage(playerid, COLOR_RED, "Weather ID can't go below 0 or above 45!");
 	
 	SetPlayerWeather(playerid, weather);
@@ -1478,13 +1478,13 @@ CMD:weather(playerid, params[])
 
 CMD:setstat(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) 
+    if(PlayerInfo[playerid][pAdmin] < 1337) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 
     new giveplayerid, stat, amount;
-    if (sscanf(params, "uii", giveplayerid, stat, amount))
+    if(sscanf(params, "uii", giveplayerid, stat, amount))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setstat [ID/Nickname] [Statcode] [Amount]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /setstat [ID/Nickname][Statcode][Amount]");
 		SendClientMessage(playerid, COLOR_GREY, "(1 - Level), (2 - Age), (3 - PhoneNumber)");
 		SendClientMessage(playerid, COLOR_GREY, "(4 - RespectPoints), (5 - Playing Hours), (6 - Sex) ");
 		SendClientMessage(playerid, COLOR_GREY, " (7 - Players Job), (8 - PlayerContractTime), (9 - Minutes Till PayDay)");
@@ -1747,11 +1747,11 @@ CMD:setstat(playerid, params[])
 CMD:skin(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid, skin;
-	if (sscanf(params, "ui", giveplayerid, skin)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /skin [ID / Part of name] [Skin id]");
-	if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-	//if (skin > 320 || skin < 0) return SendClientMessage(playerid, COLOR_RED, "Ne idite ispod 0 i preko 320!");
+	if(sscanf(params, "ui", giveplayerid, skin)) return SendClientMessage(playerid, COLOR_RED, "[?]: /skin [ID / Part of name][Skin id]");
+	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	//if(skin > 320 || skin < 0) return SendClientMessage(playerid, COLOR_RED, "Ne idite ispod 0 i preko 320!");
 	
 	SetPlayerSkin(giveplayerid, skin);
 	PlayerAppearance[giveplayerid][pTmpSkin] = skin;
@@ -1766,15 +1766,15 @@ CMD:skin(playerid, params[])
 
 CMD:fstyle(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid, item, string[64];
-	if (sscanf(params, "ui", giveplayerid, item))
+	if(sscanf(params, "ui", giveplayerid, item))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fstyle [ID / Part of name] [Opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /fstyle [ID / Part of name][Opcija]");
 		SendClientMessage(playerid, COLOR_GREY, "(1 - Normal), (2 - Boxing), (3 - Kung Fu), (4 - Kneehead), (5 - Grabback) (6 - Elbow)");
 		return 1;
 	}
-	if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	switch(item)
  	{
   		case 1:
@@ -1840,7 +1840,7 @@ CMD:fstyle(playerid, params[])
 // Administrator Level 4
 CMD:rac(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 4) 
+	if(PlayerInfo[playerid][pAdmin] < 4) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	
 	RespawnVehicles();
@@ -1857,7 +1857,7 @@ CMD:timeout(playerid, params[])
 	    user;
 		
 	if(sscanf(params, "u", user))
-	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /timeout [DioImena/PlayerID]");
+	    return SendClientMessage(playerid, COLOR_RED, "[?]: /timeout [DioImena/PlayerID]");
 
 	new str[35];
 
@@ -1884,16 +1884,16 @@ timer TimeoutPlayer[2000](playerid)
 
 CMD:sethp(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 3)
+    if(PlayerInfo[playerid][pAdmin] < 3)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 
 	new
 	    giveplayerid,
 	    Float:health;
 
-	if (sscanf(params, "uf", giveplayerid, health)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /sethp [ID / Part of name] [Health]");
-	if (health > 100) return SendClientMessage(playerid, COLOR_RED, "Ne mozete vise od 100hp-a nekome dati.");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(sscanf(params, "uf", giveplayerid, health)) return SendClientMessage(playerid, COLOR_RED, "[?]: /sethp [ID / Part of name][Health]");
+	if(health > 100) return SendClientMessage(playerid, COLOR_RED, "Ne mozete vise od 100hp-a nekome dati.");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	SetPlayerHealth(giveplayerid, health);
 	return 1;
 }
@@ -1901,25 +1901,25 @@ CMD:sethp(playerid, params[])
 CMD:setarmour(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayerid,
 	    Float:armour;
-	if (sscanf(params, "uf", giveplayerid, armour)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setarmour [ID / Part of name] [Armor]");
-	if (armour < 0.0 || armour > 99.9) return SendClientMessage(playerid, COLOR_RED, "Minimalan unos je 0, a maksimalan 99.9!");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(sscanf(params, "uf", giveplayerid, armour)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setarmour [ID / Part of name][Armor]");
+	if(armour < 0.0 || armour > 99.9) return SendClientMessage(playerid, COLOR_RED, "Minimalan unos je 0, a maksimalan 99.9!");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	SetPlayerArmour(giveplayerid, armour);
 	return 1;
 }
 
 CMD:veh(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new car, color1, color2, engine, lights, alarm, doors, bonnet, boot, objective;
-	if (sscanf(params, "iii", car, color1, color2)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /veh [Model] [Color(1)] [Color(2)]");
-	if (car < 400 || car > 611) return SendClientMessage(playerid, COLOR_RED, "Broj auta ne moze ici ispod 400 ili iznad 611!");
-	if (color1 < 0 || color1 > 255) return SendClientMessage(playerid, COLOR_RED, "Broj boje ne moze ici ispod 0 ili iznad 255!");
-	if (color2 < 0 || color2 > 255) return SendClientMessage(playerid, COLOR_RED, "Broj boje ne moze ici ispod 0 ili iznad 255!");
+	if(sscanf(params, "iii", car, color1, color2)) return SendClientMessage(playerid, COLOR_RED, "[?]: /veh [Model][Color(1)][Color(2)]");
+	if(car < 400 || car > 611) return SendClientMessage(playerid, COLOR_RED, "Broj auta ne moze ici ispod 400 ili iznad 611!");
+	if(color1 < 0 || color1 > 255) return SendClientMessage(playerid, COLOR_RED, "Broj boje ne moze ici ispod 0 ili iznad 255!");
+	if(color2 < 0 || color2 > 255) return SendClientMessage(playerid, COLOR_RED, "Broj boje ne moze ici ispod 0 ili iznad 255!");
 	if(Admin_vCounter[playerid] == 5)
 		return SendErrorMessage(playerid, "Vec imate maximalno vozila spawnovano (5).");
 	
@@ -1930,18 +1930,18 @@ CMD:veh(playerid, params[])
 	GetPlayerFacingAngle(playerid, ang);
 	new carid = AC_CreateVehicle(car, X, Y+4, Z+3, ang, color1, color2, 60000,0);
 
-	VehicleInfo[ carid ][ vModel ] 		= car;
-	VehicleInfo[ carid ][ vColor1 ] 	= color1;
-	VehicleInfo[ carid ][ vColor2 ] 	= color2;
-	VehicleInfo[ carid ][ vParkX ]		= X;
-	VehicleInfo[ carid ][ vParkY ]      = Y;
-	VehicleInfo[ carid ][ vParkZ ]      = Z;
-	VehicleInfo[ carid ][ vAngle ]      = 0.0;
-	VehicleInfo[ carid ][ vHealth ]		= 1000.0;
-	VehicleInfo[ carid ][ vType ]		= VEHICLE_TYPE_CAR;
-	VehicleInfo[ carid ][ vUsage ] 		= VEHICLE_USAGE_NORMAL;
-	VehicleInfo[ carid ][ vInt ]		= GetPlayerInterior(playerid);
-	VehicleInfo[ carid ][ vViwo ]		= GetPlayerVirtualWorld(playerid);
+	VehicleInfo[carid][vModel] 		= car;
+	VehicleInfo[carid][vColor1] 	= color1;
+	VehicleInfo[carid][vColor2] 	= color2;
+	VehicleInfo[carid][vParkX]		= X;
+	VehicleInfo[carid][vParkY]      = Y;
+	VehicleInfo[carid][vParkZ]      = Z;
+	VehicleInfo[carid][vAngle]      = 0.0;
+	VehicleInfo[carid][vHealth]		= 1000.0;
+	VehicleInfo[carid][vType]		= VEHICLE_TYPE_CAR;
+	VehicleInfo[carid][vUsage] 		= VEHICLE_USAGE_NORMAL;
+	VehicleInfo[carid][vInt]		= GetPlayerInterior(playerid);
+	VehicleInfo[carid][vViwo]		= GetPlayerVirtualWorld(playerid);
 	
 	GetVehicleParamsEx(carid,engine,lights,alarm,doors,bonnet,boot,objective);
 	SetVehicleParamsEx(carid,VEHICLE_PARAMS_ON,lights,alarm,doors,bonnet,boot,objective);
@@ -1949,7 +1949,7 @@ CMD:veh(playerid, params[])
 	Vehicle_Add(VEHICLE_USAGE_NORMAL, carid);
 	CreateAdminVehicles(playerid, carid);
 	
-	format(globalstring, sizeof(globalstring), "[ ! ] Spawnali ste vozilo ID %d, Model: %d. (/veh)", carid, car);
+	format(globalstring, sizeof(globalstring), "[!] Spawnali ste vozilo ID %d, Model: %d. (/veh)", carid, car);
 	SendClientMessage(playerid, COLOR_RED, globalstring);
 	SetVehicleVirtualWorld(carid, GetPlayerVirtualWorld(playerid));
 	LinkVehicleToInterior(carid, GetPlayerInterior(playerid));
@@ -1964,8 +1964,8 @@ CMD:deletevehicle(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 	if(sscanf(params, "i", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /deletevehicle [odabir]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Vehicle (/veh), 2 - Car Ownership, 3 - Faction/Job");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /deletevehicle [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[!] 1 - Vehicle (/veh), 2 - Car Ownership, 3 - Faction/Job");
 		return 1;
 	}
 	switch(pick) 
@@ -2012,22 +2012,22 @@ CMD:deletevehicle(playerid, params[])
 }
 
 CMD:veh_spawned(playerid, params[]) {
-	if (PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(1337+)!");
+	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(1337+)!");
 	ShowAdminVehicles(playerid);
 	return (true);
 }
 
 CMD:givelicense(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(1337+)!");
+    if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(1337+)!");
 	new giveplayerid, item, string[64];
-	if (sscanf(params, "ui", giveplayerid, item))
+	if(sscanf(params, "ui", giveplayerid, item))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /givelicense [ID / Part of name] [Vrsta]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /givelicense [ID / Part of name][Vrsta]");
 		SendClientMessage(playerid, COLOR_GREY, "(1 - Drivinglicense), (2 - Gunlicense), (3- Flyinglicense), (4 - Boatlicense), (5 - Fishlicense)");
 		return 1;
 	}
-	if (IsPlayerConnected(giveplayerid))
+	if(IsPlayerConnected(giveplayerid))
 	{
 	    switch(item)
 	    {
@@ -2042,9 +2042,9 @@ CMD:givelicense(playerid, params[])
 	        case 2:
 	        {
 				//new vrsta;
-				if (sscanf(params, "uii", giveplayerid, item))
+				if(sscanf(params, "uii", giveplayerid, item))
 				{
-					SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /givelicense [Playerid / Part of name] [odabir] ");
+					SendClientMessage(playerid, COLOR_WHITE, "[?]: /givelicense [Playerid / Part of name][odabir] ");
 					//SendClientMessage(playerid, COLOR_GREEN, "Tipovi: 1 - Concealed Carry Weapon(CCW),  2 - Open Carry Weapons + CC (OCW)");
 					return 1;
 				}
@@ -2089,13 +2089,13 @@ CMD:givelicense(playerid, params[])
 #if defined MODULE_DEATH
 CMD:undie(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) 
+    if(PlayerInfo[playerid][pAdmin] < 4) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 2+");
  	new
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /undie [Part of name/playerid]");
-	if( giveplayerid == INVALID_PLAYER_ID ) 
+	if(sscanf( params, "u", giveplayerid )) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /undie [Part of name/playerid]");
+	if(giveplayerid == INVALID_PLAYER_ID ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, " You have entered invalid player ID!");
 	
 	DestroyDeathInfo(giveplayerid);
@@ -2105,14 +2105,14 @@ CMD:undie(playerid, params[])
 	DeathCountStarted_Set(giveplayerid, false);
 	DeathCountSeconds_Set(giveplayerid, 0);
 	
-    DeathData[ giveplayerid ][ ddOverall ] = 0;
+    DeathData[giveplayerid][ddOverall] = 0;
 
-	PlayerInfo[ giveplayerid ][ pDeath ][ 0 ] 	= 0.0;
-	PlayerInfo[ giveplayerid ][ pDeath ][ 1 ] 	= 0.0;
-	PlayerInfo[ giveplayerid ][ pDeath ][ 2 ] 	= 0.0;
-	PlayerInfo[ giveplayerid ][ pDeathInt ] 	= 0;
-	PlayerInfo[ giveplayerid ][ pDeathVW ] 		= 0;
-	PlayerInfo[ giveplayerid ][ pKilled ] 	 	= 0;
+	PlayerInfo[giveplayerid][pDeath][0] 	= 0.0;
+	PlayerInfo[giveplayerid][pDeath][1] 	= 0.0;
+	PlayerInfo[giveplayerid][pDeath][2] 	= 0.0;
+	PlayerInfo[giveplayerid][pDeathInt] 	= 0;
+	PlayerInfo[giveplayerid][pDeathVW] 		= 0;
+	PlayerInfo[giveplayerid][pKilled] 	 	= 0;
 
 	ResetPlayerWounded(giveplayerid);
 
@@ -2131,7 +2131,7 @@ CMD:undie(playerid, params[])
 	);
 	va_SendClientMessage(giveplayerid, 
 		COLOR_RED, 
-		"[ ! ]: Game Admin %s disabled your RPDeath state, you can continue your gameplay!", 
+		"[!]: Game Admin %s disabled your RPDeath state, you can continue your gameplay!", 
 		GetName(playerid,false)
 	);
 	return 1;
@@ -2140,15 +2140,15 @@ CMD:undie(playerid, params[])
 
 CMD:unfreezearound(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
 	foreach (new i : Player)
 	{
-        if (IsPlayerConnected(i))
+        if(IsPlayerConnected(i))
 	    {
-    	    if (IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) TogglePlayerControllable(i, 1); Frozen[i] = false;
+    	    if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) TogglePlayerControllable(i, 1); Frozen[i] = false;
 		}
 	}
 	return 1;
@@ -2156,13 +2156,13 @@ CMD:unfreezearound(playerid, params[])
 
 CMD:freezearound(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
 	foreach (new i : Player)
 	{
-        if (IsPlayerConnected(i))
+        if(IsPlayerConnected(i))
 	    {
     	    if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) TogglePlayerControllable(i, 0); Frozen[i] = true;
 	    }
@@ -2173,18 +2173,18 @@ CMD:freezearound(playerid, params[])
 CMD:setarmoraround(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new Float:amount;
-   	if (sscanf(params, "f", amount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setarmoraround [Iznos]");
-    if (amount < 0 || amount > 99.9) return SendClientMessage(playerid, COLOR_RED, "Iznos mora biti izmedju 0 i 99.9!");
+   	if(sscanf(params, "f", amount)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setarmoraround [Iznos]");
+    if(amount < 0 || amount > 99.9) return SendClientMessage(playerid, COLOR_RED, "Iznos mora biti izmedju 0 i 99.9!");
     new
 		Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
     foreach (new i : Player)
 	{
-	    if (SafeSpawned[i])
+	    if(SafeSpawned[i])
 	    {
-	        if (IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) 
+	        if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) 
 				SetPlayerArmour(i, amount); 
 	    }
 	}
@@ -2193,18 +2193,18 @@ CMD:setarmoraround(playerid, params[])
 
 CMD:sethparound(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new Float:amount;
-   	if (sscanf(params, "f", amount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /sethparound [Iznos]");
-    if (amount < 0 || amount > 100) return SendClientMessage(playerid, COLOR_RED, "Iznos mora biti izmedju 0 i 100!");
+   	if(sscanf(params, "f", amount)) return SendClientMessage(playerid, COLOR_RED, "[?]: /sethparound [Iznos]");
+    if(amount < 0 || amount > 100) return SendClientMessage(playerid, COLOR_RED, "Iznos mora biti izmedju 0 i 100!");
 	new
 		Float:X, Float:Y, Float:Z;
     GetPlayerPos(playerid, X, Y, Z);
     foreach (new i : Player)
 	{
-	    if (IsPlayerConnected(i))
+	    if(IsPlayerConnected(i))
 	    {
-	        if (IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) SetPlayerHealth(i, amount);
+	        if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) SetPlayerHealth(i, amount);
 	    }
 	}
     return 1;
@@ -2213,8 +2213,8 @@ CMD:sethparound(playerid, params[])
 
 CMD:fixveh(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (IsPlayerInAnyVehicle(playerid))
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(IsPlayerInAnyVehicle(playerid))
 	{
 	    RepairVehicle(GetPlayerVehicleID(playerid));
 		if(VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor] == 1) 
@@ -2229,19 +2229,19 @@ CMD:fixveh(playerid, params[])
 			vTireHP[GetPlayerVehicleID(playerid)][2] = 100;
 			vTireHP[GetPlayerVehicleID(playerid)][3] = 100;
 		}
-		VehicleInfo[ GetPlayerVehicleID(playerid) ][ vCanStart ] = 1;
-		VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroyed ] = false;
+		VehicleInfo[GetPlayerVehicleID(playerid)][vCanStart] = 1;
+		VehicleInfo[GetPlayerVehicleID(playerid)][vDestroyed] = false;
 	    TogglePlayerControllable(playerid, 1);
-	    SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si popravio vozilo. (/fixveh)");
+	    SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si popravio vozilo. (/fixveh)");
 	}
 	return 1;
 }
 
 CMD:fixaveh(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new car;
-    if (sscanf(params, "i", car)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fixaveh [VehID]");
+    if(sscanf(params, "i", car)) return SendClientMessage(playerid, COLOR_RED, "[?]: /fixaveh [VehID]");
     
     RepairVehicle(car);
 	if(VehicleInfo[car][vBodyArmor] == 1)
@@ -2256,18 +2256,18 @@ CMD:fixaveh(playerid, params[])
 		vTireHP[car][2] = 100;
 		vTireHP[car][3] = 100;
 	}
-	VehicleInfo[ car ][ vCanStart ] = 1;
-	VehicleInfo[ car ][ vDestroyed ] = false;
+	VehicleInfo[car][vCanStart] = 1;
+	VehicleInfo[car][vDestroyed] = false;
     TogglePlayerControllable(playerid, 1);
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si popravio vozilo ID: %d.", car);
+    va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si popravio vozilo ID: %d.", car);
 	return 1;
 }
 
 CMD:aunlock(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new car;
-    if (sscanf(params, "i", car)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aunlock [CarID]");
+    if(sscanf(params, "i", car)) return SendClientMessage(playerid, COLOR_RED, "[?]: /aunlock [CarID]");
 	UnLockCar(car);
 	format(globalstring, sizeof(globalstring), "Automobil ID: %d je otkljucan samo za vas.", car);
 	SendClientMessage(playerid, -1, globalstring);
@@ -2277,75 +2277,75 @@ CMD:aunlock(playerid, params[])
 CMD:atake(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
 	    x_nr[24],
 	    giveplayerid;
-    if (sscanf(params, "s[24]u", x_nr, giveplayerid))
+    if(sscanf(params, "s[24]u", x_nr, giveplayerid))
 	{
  		SendClientMessage(playerid, COLOR_SKYBLUE, "|___________________Oduzmite predmet____________________|");
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atake [Predmet] [ID / Part of name]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /atake [Predmet][ID / Part of name]");
 		SendClientMessage(playerid, -1, "Predmeti: Driverslicense, Flyinglicense, Boatlicense, Fishinglicense, Weaponlicense, Weapons, Drugs, Materials");
 		SendClientMessage(playerid, COLOR_SKYBLUE, "|___________________________________________________|");
 		return 1;
 	}
-	if (strcmp(x_nr, "driverslicense", true) == 0)
+	if(strcmp(x_nr, "driverslicense", true) == 0)
 	{
-		if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 		format(globalstring, sizeof(globalstring), "* Oduzeli ste %s vozacku dozvolu.", GetName(giveplayerid,false));
   		SendClientMessage(playerid, -1, globalstring);
     	format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo vozacku dozvolu.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
 	    LicenseInfo[giveplayerid][pCarLic] = false;
 	}
-	else if (strcmp(x_nr, "flyinglicense", true) == 0)
+	else if(strcmp(x_nr, "flyinglicense", true) == 0)
 	{
-		if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
   		format(globalstring, sizeof(globalstring), "* Oduzeli ste %s dozvolu za avione.", GetName(giveplayerid,false));
     	SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za avione.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
 	    LicenseInfo[giveplayerid][pFlyLic] = false;
 	}
-	else if (strcmp(x_nr, "boatlicense", true) == 0)
+	else if(strcmp(x_nr, "boatlicense", true) == 0)
 	{
-	    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
  	    format(globalstring, sizeof(globalstring), "* Oduzeli ste %s dozvolu za brodove.", GetName(giveplayerid,false));
 	    SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za brodove.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
 	    LicenseInfo[giveplayerid][pBoatLic] = false;
 	}
-	else if (strcmp(x_nr, "fishinglicense", true) == 0)
+	else if(strcmp(x_nr, "fishinglicense", true) == 0)
 	{
-	    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 		format(globalstring, sizeof(globalstring), "* Oduzeli ste %s dozvolu za ribolov.", GetName(giveplayerid,false));
 		SendClientMessage(playerid, -1, globalstring);
 		format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za ribolov.", GetName(playerid,false));
 		SendClientMessage(giveplayerid, -1, globalstring);
 		LicenseInfo[giveplayerid][pFishLic] = false;
 	}
-	else if (strcmp(x_nr, "weaponlicense", true) == 0)
+	else if(strcmp(x_nr, "weaponlicense", true) == 0)
 	{
-		if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
   		format(globalstring, sizeof(globalstring), "* Oduzeli ste %s dozvolu za oruzje.", GetName(giveplayerid,false));
 	    SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za oruzje.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
 	    LicenseInfo[giveplayerid][pGunLic] = 0;
 	}
-	else if (strcmp(x_nr, "weapons", true) == 0)
+	else if(strcmp(x_nr, "weapons", true) == 0)
 	{
-		if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 		format(globalstring, sizeof(globalstring), "* Oduzeli ste %s oruzje.", GetName(giveplayerid,false));
 	    SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo oruzje.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
 	    AC_ResetPlayerWeapons(giveplayerid);
 	}
-	else if (strcmp(x_nr, "drugs", true) == 0)
+	else if(strcmp(x_nr, "drugs", true) == 0)
 	{
-		if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 		format(globalstring, sizeof(globalstring), "* Oduzeli ste %s drogu.", GetName(giveplayerid,false));
 	    SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo drogu.", GetName(playerid,false));
@@ -2357,17 +2357,17 @@ CMD:atake(playerid, params[])
 
 CMD:mutearound(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
 	foreach (new i : Player)
 	{
-		if (IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid)
+		if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid)
 		{
-			if (PlayerInfo[i][pMuted]) 
+			if(PlayerInfo[i][pMuted]) 
 				PlayerInfo[i][pMuted] = false;
-			else if (!PlayerInfo[i][pMuted]) 
+			else if(!PlayerInfo[i][pMuted]) 
 				PlayerInfo[i][pMuted] = true;
 		}
 	}
@@ -2376,7 +2376,7 @@ CMD:mutearound(playerid, params[])
 
 // Administrator Level 3
 CMD:pns(playerid, params[]) {
-	if (PlayerInfo[playerid][pAdmin] < 3) 
+	if(PlayerInfo[playerid][pAdmin] < 3) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	if(pns_garages == false) {
 		pns_garages = true;
@@ -2391,13 +2391,13 @@ CMD:pns(playerid, params[]) {
 
 CMD:blockreport(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 3) 
+    if(PlayerInfo[playerid][pAdmin] < 3) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 3+!");
 	new 
 		giveplayerid;
-	if (sscanf(params, "u", giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /blockreport [ID / Part of name]");
-	if( !IsPlayerConnected(giveplayerid) ) 
+	if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /blockreport [ID / Part of name]");
+	if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 
 	new
@@ -2412,7 +2412,7 @@ CMD:blockreport(playerid, params[])
 	);
 	va_SendClientMessage(giveplayerid, 
 		COLOR_RED, 
-		"[ ! ]: Game Admin %s %s your report sending.", 
+		"[!]: Game Admin %s %s your report sending.", 
 		GetName(playerid,false),
 		(report_status) ? ("allowed") : ("blocked")
 	);
@@ -2421,15 +2421,15 @@ CMD:blockreport(playerid, params[])
 
 CMD:fpm(playerid, params[])
 {
-    if( PlayerInfo[playerid][pAdmin] < 3 ) 
+    if(PlayerInfo[playerid][pAdmin] < 3 ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 3+");
     new 
 		giveplayerid;
-    if( sscanf(params, "u", giveplayerid) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fpm [ID / Part of name]");
-    if( !IsPlayerConnected(giveplayerid) ) 
+    if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /fpm [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d isn't online!", giveplayerid);
-    if( PlayerInfo[giveplayerid][pAdmin] >= 1 || PlayerInfo[giveplayerid][pHelper] >= 1 )
+    if(PlayerInfo[giveplayerid][pAdmin] >= 1 || PlayerInfo[giveplayerid][pHelper] >= 1 )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't forbid PM's to Team Staff!"); 
 	
 	new 
@@ -2444,7 +2444,7 @@ CMD:fpm(playerid, params[])
 	);
 	va_SendClientMessage(giveplayerid, 
 		COLOR_RED,
-		"[ ! ]: Game Admin %s has %s to send PM's.",
+		"[!]: Game Admin %s has %s to send PM's.",
 		(pm_status) ? ("allowed") : ("forbidden"), 
 		GetName(playerid,false)
 	);
@@ -2453,13 +2453,13 @@ CMD:fpm(playerid, params[])
 
 CMD:fpmed(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	SendClientMessage(playerid, COLOR_GREY, "Igraci kojima je zabranje slanje PMova:");
 	foreach (new i : Player)
 	{
-		if (IsPlayerConnected(i))
+		if(IsPlayerConnected(i))
 		{
- 			if (Player_ForbiddenPM(i))
+ 			if(Player_ForbiddenPM(i))
 			{
 				format(globalstring, sizeof(globalstring), "[%d] %s", i, GetName(i));
 				SendClientMessage(playerid, -1, globalstring);
@@ -2471,9 +2471,9 @@ CMD:fpmed(playerid, params[])
 
 CMD:getcar(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new plo;
-	if (sscanf(params, "i", plo)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /getcar [CarID]");
+	if(sscanf(params, "i", plo)) return SendClientMessage(playerid, COLOR_RED, "[?]: /getcar [CarID]");
 	
 	new
 		Float:X, Float:Y, Float:Z;
@@ -2487,9 +2487,9 @@ CMD:getcar(playerid, params[])
 CMD:entercar(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new testcar, seat;
-    if (sscanf(params, "ii", testcar, seat)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /entercar [CarID] [seat]");
+    if(sscanf(params, "ii", testcar, seat)) return SendClientMessage(playerid, COLOR_RED, "[?]: /entercar [CarID][seat]");
 	PutPlayerInVehicle(playerid, testcar, seat);
 	return 1;
 }
@@ -2497,9 +2497,9 @@ CMD:entercar(playerid, params[])
 CMD:putplayerincar(playerid, params[])
 {
 
-    if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid, testcar, seat;
-    if (sscanf(params, "uii", giveplayerid, testcar, seat)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /putplayerincar [playerid] [carID] [seat]");
+    if(sscanf(params, "uii", giveplayerid, testcar, seat)) return SendClientMessage(playerid, COLOR_RED, "[?]: /putplayerincar [playerid][carID][seat]");
 	PutPlayerInVehicle(giveplayerid, testcar, seat);
 	return 1;
 }
@@ -2507,14 +2507,14 @@ CMD:putplayerincar(playerid, params[])
 CMD:gotomark(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 2 && PlayerInfo[playerid][pHelper] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2 && PlayerInfo[playerid][pHelper] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new id;
 	
-    if (sscanf(params, "i", id)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gotomark [1-5]");
-	if (id > 5 || id < 1) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 5!");
-	if (id == 1)
+    if(sscanf(params, "i", id)) return SendClientMessage(playerid, COLOR_RED, "[?]: /gotomark [1-5]");
+	if(id > 5 || id < 1) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 5!");
+	if(id == 1)
 	{
-		if (GetPlayerState(playerid) == 2)
+		if(GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
 			SetVehiclePos(tmpcar, AdminMark1[playerid][0],AdminMark1[playerid][1],AdminMark1[playerid][2]);
@@ -2527,9 +2527,9 @@ CMD:gotomark(playerid, params[])
 		}
 		SendClientMessage(playerid, -1, "Teleportirani ste na oznaku 1");
 	}
-	else if (id == 2)
+	else if(id == 2)
 	{
-		if (GetPlayerState(playerid) == 2)
+		if(GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
 			SetVehiclePos(tmpcar, AdminMark2[playerid][0],AdminMark2[playerid][1],AdminMark2[playerid][2]);
@@ -2542,9 +2542,9 @@ CMD:gotomark(playerid, params[])
 		}
 		SendClientMessage(playerid, -1, "Teleportirani ste na oznaku 2");
 	}
-	else if (id == 3)
+	else if(id == 3)
 	{
-		if (GetPlayerState(playerid) == 2)
+		if(GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
 			SetVehiclePos(tmpcar, AdminMark3[playerid][0],AdminMark3[playerid][1],AdminMark3[playerid][2]);
@@ -2557,9 +2557,9 @@ CMD:gotomark(playerid, params[])
 		}
 		SendClientMessage(playerid, -1, "Teleportirani ste na oznaku 3");
 	}
-	else if (id == 4)
+	else if(id == 4)
 	{
-		if (GetPlayerState(playerid) == 2)
+		if(GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
 			SetVehiclePos(tmpcar, AdminMark4[playerid][0], AdminMark4[playerid][1], AdminMark4[playerid][2]);
@@ -2572,9 +2572,9 @@ CMD:gotomark(playerid, params[])
 		}
 		SendClientMessage(playerid, -1, "Teleportirani ste na oznaku 4");
 	}
-	else if (id == 5)
+	else if(id == 5)
 	{
-		if (GetPlayerState(playerid) == 2)
+		if(GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
 			SetVehiclePos(tmpcar, AdminMark5[playerid][0], AdminMark5[playerid][1], AdminMark5[playerid][2]);
@@ -2593,32 +2593,32 @@ CMD:gotomark(playerid, params[])
 CMD:mark(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 2 && PlayerInfo[playerid][pHelper] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2 && PlayerInfo[playerid][pHelper] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new id;
 	
-	if (sscanf(params, "i", id)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /mark [1-5]");
-	if (id > 5 || id < 1) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 5!");
-	if (id == 1)
+	if(sscanf(params, "i", id)) return SendClientMessage(playerid, COLOR_RED, "[?]: /mark [1-5]");
+	if(id > 5 || id < 1) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 5!");
+	if(id == 1)
 	{
 		GetPlayerPos(playerid, AdminMark1[playerid][0], AdminMark1[playerid][1], AdminMark1[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 1.");
 	}
-	else if (id == 2)
+	else if(id == 2)
 	{
 		GetPlayerPos(playerid, AdminMark2[playerid][0], AdminMark2[playerid][1], AdminMark2[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 2.");
 	}
-	else if (id == 3)
+	else if(id == 3)
 	{
 		GetPlayerPos(playerid, AdminMark3[playerid][0], AdminMark3[playerid][1], AdminMark3[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 3.");
 	}
-	else if (id == 4)
+	else if(id == 4)
 	{
 		GetPlayerPos(playerid, AdminMark4[playerid][0], AdminMark4[playerid][1], AdminMark4[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 4.");
 	}
-	else if (id == 5)
+	else if(id == 5)
 	{
 		GetPlayerPos(playerid, AdminMark5[playerid][0],AdminMark5[playerid][1], AdminMark5[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 5.");
@@ -2640,7 +2640,7 @@ CMD:buyparkall(playerid, params[])
 {
 	new giveplayerid;
 	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /buyparkall [playerid / Part of name]");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /buyparkall [playerid / Part of name]");
 	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	
 	mysql_tquery(g_SQL, 
@@ -2657,11 +2657,11 @@ CMD:getip(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new	
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /getip [playerid / Part of name]");
+	if(sscanf( params, "u", giveplayerid )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /getip [playerid / Part of name]");
 
 	va_SendClientMessage(playerid, 
 		COLOR_RED, 
-		"[ ! ] Playerov IP: %s", 
+		"[!] Playerov IP: %s", 
 		ReturnPlayerIP(giveplayerid)
 	);
 	return 1;
@@ -2670,8 +2670,8 @@ CMD:iptoname(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
-		ip[ MAX_PLAYER_IP ];
-	if(sscanf(params, "s[24]", ip)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /iptoname [IP adresa]");
+		ip[MAX_PLAYER_IP];
+	if(sscanf(params, "s[24]", ip)) return SendClientMessage(playerid, COLOR_RED, "[?]: /iptoname [IP adresa]");
 	if(strcount(ip, ".") < 3) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli valjnu IP adresu!");
 
 	mysql_tquery(g_SQL,
@@ -2690,22 +2690,22 @@ CMD:lastdriver(playerid, params[])
 {
 	new vpick, tmpString[128];
 	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (sscanf(params,"d", vpick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lastdriver [VehicleID]");
+	if(sscanf(params,"d", vpick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /lastdriver [VehicleID]");
 	if(!strlen(LastDriver[vpick])) return SendClientMessage(playerid, COLOR_RED, "Vozilo ne postoji ili nije vozeno!");
-	format(tmpString, sizeof(tmpString), "[ ! ] Vozilo ID %d je zadnji vozio %s", vpick, LastDriver[vpick]);
+	format(tmpString, sizeof(tmpString), "[!] Vozilo ID %d je zadnji vozio %s", vpick, LastDriver[vpick]);
 	SendClientMessage(playerid, COLOR_RED, tmpString);
 	return 1;
 }
 
 CMD:prisonex(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    targetname[MAX_PLAYER_NAME],
 	    sati,
 		reason[20];
-    if (sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prisonex [Ime] [minute] [reason]");
-    if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
+    if(sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /prisonex [Ime][minute][reason]");
+    if(strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
 	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
@@ -2727,12 +2727,12 @@ CMD:prisonex(playerid, params[])
 CMD:warnex(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    targetname[MAX_PLAYER_NAME],
 	    reason[20];
-    if (sscanf(params,"s[24]s[20]", targetname, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warnex [Ime] [reason]");
-	if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
+    if(sscanf(params,"s[24]s[20]", targetname, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /warnex [Ime][reason]");
+	if(strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
    	
     mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT playaWarns FROM accounts WHERE name = '%e'", targetname), 
@@ -2753,8 +2753,8 @@ CMD:warnex(playerid, params[])
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 	
 	new
-		forumname[ MAX_PLAYER_NAME ],
-		tmp_reason[ 32 ];
+		forumname[MAX_PLAYER_NAME],
+		tmp_reason[32];
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
@@ -2770,18 +2770,18 @@ CMD:warnex(playerid, params[])
 
 CMD:ban(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 2+!");
 	new
 	    giveplayerid, 
 		reason[21],  
 		days;
 		
-    if (sscanf(params,"us[21]i", giveplayerid, reason, days))
+    if(sscanf(params,"us[21]i", giveplayerid, reason, days))
 	{
 		SendClientMessage(playerid, 
 			COLOR_RED, 
-			"[ ? ]: /ban [ID/Part of name] [Reason] [Days (-1 is 4life)]"
+			"[?]: /ban [ID/Part of name][Reason][Days (-1 is 4life)]"
 		);
 		return 1;
 	}
@@ -2805,13 +2805,13 @@ CMD:ban(playerid, params[])
 
 CMD:unprison(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 2+!");
 	new 
 		giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unprison [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) 
+    if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /unprison [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
     
 	SendAdminMessage(COLOR_RED, 
@@ -2848,10 +2848,10 @@ CMD:unprison(playerid, params[])
 
 CMD:prison(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid, ptime, reason[80];
-	if (sscanf(params, "uis[80]", giveplayerid, ptime, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prison [ID / Part of name] [Vrijeme(minute)] [reason]");
-    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
+	if(sscanf(params, "uis[80]", giveplayerid, ptime, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /prison [ID / Part of name][Vrijeme(minute)][reason]");
+    if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
 	new string[350];
     format(string, sizeof(string), "PRISON: Admin: %s je zatvorio %s u F.DeMorgan na %d minuta. Razlog: %s", PlayerInfo[playerid][pForumName], GetName(giveplayerid,false), ptime, reason);
 	SendClientMessageToAll(COLOR_RED, string);
@@ -2866,7 +2866,7 @@ CMD:prison(playerid, params[])
 	ExpInfo[giveplayerid][ePoints] -= 5;
 	ExpInfo[giveplayerid][eAllPoints] -= 5;
 	SavePlayerExperience(giveplayerid);
-	SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Radi Admin prisona, izgubili ste 5 trenutnih i 5 Overall EXP-ova.");
+	SendClientMessage(giveplayerid, COLOR_RED, "[!] Radi Admin prisona, izgubili ste 5 trenutnih i 5 Overall EXP-ova.");
 
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_prison.txt", "(%s)[IP: %s] Game Admin %s prisoned %s in F.DeMorgan.", 
@@ -2881,10 +2881,10 @@ CMD:prison(playerid, params[])
 
 CMD:tod(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new time;
-	if (sscanf(params, "i", time)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tod [vrijeme]");
-	if (time < 0 || time > 24) return SendClientMessage(playerid,COLOR_RED, "Vrijeme moze biti od 0-24!");
+	if(sscanf(params, "i", time)) return SendClientMessage(playerid, COLOR_RED, "[?]: /tod [vrijeme]");
+	if(time < 0 || time > 24) return SendClientMessage(playerid,COLOR_RED, "Vrijeme moze biti od 0-24!");
 	SetWorldTime(time);
 	return 1;
 }
@@ -2893,7 +2893,7 @@ CMD:charge(playerid, params[])
 {
     if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid, money, result[64];
-    if(sscanf(params, "uis[64]", giveplayerid, money, result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /charge [ID / Part of name] [Iznos] [reason]");
+    if(sscanf(params, "uis[64]", giveplayerid, money, result)) return SendClientMessage(playerid, COLOR_RED, "[?]: /charge [ID / Part of name][Iznos][reason]");
     if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
  	if(money < 1) return SendClientMessage(playerid, COLOR_RED, "Cijena kazne nemoze biti manja od $1!");
 	format(globalstring, sizeof(globalstring), "AdmCMD: %s je novcano kaznio igraca %s sa $%d, razlog: %s", PlayerInfo[playerid][pForumName], GetName(giveplayerid,false), money, result);
@@ -2906,8 +2906,8 @@ CMD:charge(playerid, params[])
 
 
 	new
-		forumname[ MAX_PLAYER_NAME ],
-		playername[ MAX_PLAYER_NAME ];
+		forumname[MAX_PLAYER_NAME],
+		playername[MAX_PLAYER_NAME];
 
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
@@ -2930,13 +2930,13 @@ CMD:charge(playerid, params[])
 
 CMD:gotocar(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new testcar;
-	if (sscanf(params, "i", testcar)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gotocar [Carid]");
+	if(sscanf(params, "i", testcar)) return SendClientMessage(playerid, COLOR_RED, "[?]: /gotocar [Carid]");
 	new
 		Float:X, Float:Y, Float:Z;
 	GetVehiclePos(testcar, X, Y, Z);
-	if (GetPlayerState(playerid) == 2) {
+	if(GetPlayerState(playerid) == 2) {
 		new tmpcar = GetPlayerVehicleID(playerid);
 		SetVehiclePos(tmpcar, X, Y, Z);
 	}
@@ -2946,17 +2946,17 @@ CMD:gotocar(playerid, params[])
 
 CMD:unbanip(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 2+!");
     new 
 		playersip[16];
-	if (sscanf(params, "s[16]", playersip)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unbanip [Player IP]");
-	if( strlen(playersip) > 15 || strlen(playersip) < 1) 
+	if(sscanf(params, "s[16]", playersip)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /unbanip [Player IP]");
+	if(strlen(playersip) > 15 || strlen(playersip) < 1) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "IP should be between 1 and 15 chars long!");
 	
 	new
-		unbanString[ 25 ];
+		unbanString[25];
 	format(unbanString, sizeof(unbanString), "unbanip %s", playersip);
 	SendRconCommand(unbanString);
 	SendRconCommand("reloadbans");
@@ -2971,9 +2971,9 @@ CMD:unbanip(playerid, params[])
 
 CMD:rtcinradius(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2 && PlayerInfo[playerid][pHelper] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2 && PlayerInfo[playerid][pHelper] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new Float: radius;
-	if( sscanf( params, "f", radius)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rtcinradius [radius]");
+	if(sscanf( params, "f", radius)) return SendClientMessage(playerid, COLOR_RED, "[?]: /rtcinradius [radius]");
 	if(radius < 1.0 || radius > 300.0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Minimalni radius je 1.0, a maksimalni 300.0!");
 	new
 		engine, lights, alarm, doors, bonnet, boot, objective;
@@ -2982,9 +2982,9 @@ CMD:rtcinradius(playerid, params[])
 	{
 		if(IsPlayerInRangeOfVehicle(playerid, c, radius))
 		{
-			if( !IsPlayerInVehicle(playerid, c) ) 
+			if(!IsPlayerInVehicle(playerid, c)) 
 			{
-				if( VehicleInfo[ c ][ vUsage ] == VEHICLE_USAGE_EVENT ) 
+				if(VehicleInfo[c][vUsage] == VEHICLE_USAGE_EVENT ) 
 				{
 					GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
 					SetVehicleParamsEx(c, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
@@ -3007,13 +3007,13 @@ CMD:rtcinradius(playerid, params[])
 
 CMD:weatherall(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 2+!");
 	new 
 		weather;
-	if (sscanf(params, "i", weather)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weatherall [Weatherid]");
-	if (weather < 0 || weather > 50) 	
+	if(sscanf(params, "i", weather)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /weatherall [Weatherid]");
+	if(weather < 0 || weather > 50) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Weather ID can be below 0 or above 50!");
 	
 	WeatherSys = weather;
@@ -3035,15 +3035,15 @@ CMD:prisoned(playerid, params[])
 {
 	#pragma unused params
     
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
 	    type[12];
     SendClientMessage(playerid, COLOR_SKYBLUE, "*___________________________ Online igraci u bolnici/zatvoru/arei ___________________________*");
 	foreach (new i : Player)
 	{
-		if (PlayerJail[i][pJailed] >= 1)
+		if(PlayerJail[i][pJailed] >= 1)
 		{
-			if (PlayerJail[i][pJailed] == 1) 		
+			if(PlayerJail[i][pJailed] == 1) 		
 			{ 
 				type = "Jail"; 
 			}
@@ -3063,11 +3063,11 @@ CMD:prisoned(playerid, params[])
 
 CMD:newbies(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     SendClientMessage(playerid, COLOR_SKYBLUE, "*___________________________ Online igraci sa levelom 1 ___________________________*");
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pLevel] == 1)
+		if(PlayerInfo[i][pLevel] == 1)
 		{
 			va_SendClientMessage(playerid, COLOR_GREY, "%s[%d]", GetName(i), i);
 		}
@@ -3077,14 +3077,14 @@ CMD:newbies(playerid, params[])
 
 CMD:banex(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    targetname[MAX_PLAYER_NAME],
 	    reason[24], days;
 		
-    if (sscanf(params,"s[24]s[24]i", targetname, reason, days)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /banex [Ime][reason][Dana (-1 za 4life)]");
-	if( strlen(targetname) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
-    if (strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
+    if(sscanf(params,"s[24]s[24]i", targetname, reason, days)) return SendClientMessage(playerid, COLOR_RED, "[?]: /banex [Ime][reason][Dana (-1 za 4life)]");
+	if(strlen(targetname) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
+    if(strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
 	
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT lastip FROM accounts WHERE name = '%e'", targetname), 
@@ -3096,20 +3096,20 @@ CMD:banex(playerid, params[])
 		days
 	);
 
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste banali igraca %s!", targetname);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste banali igraca %s!", targetname);
 	return 1;
 }
 
 CMD:jailex(playerid, params[])
 {
 	new LoopName[MAX_PLAYER_NAME];
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayername[24],
 	    time;
-	if (sscanf(params, "s[24]i", giveplayername, time)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jailex [Ime] [Time(minutes)]");
-	if( strlen(giveplayername) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
-	if (time < 1) return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!");
+	if(sscanf(params, "s[24]i", giveplayername, time)) return SendClientMessage(playerid, COLOR_RED, "[?]: /jailex [Ime][Time(minutes)]");
+	if(strlen(giveplayername) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
+	if(time < 1) return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!");
 	
 	foreach (new i : Player)
 	{
@@ -3125,24 +3125,24 @@ CMD:jailex(playerid, params[])
 		time
 	);
 
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste zatvorili igraca %s!", giveplayername);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste zatvorili igraca %s!", giveplayername);
 	return 1;
 }
 
 CMD:jail(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayerid,
 	    time;
-	if (sscanf(params, "ui", giveplayerid, time)) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jail [ID / Part of name][Time(minutes)]");
+	if(sscanf(params, "ui", giveplayerid, time)) {
+		SendClientMessage(playerid, COLOR_RED, "[?]: /jail [ID / Part of name][Time(minutes)]");
 		return 1;
 	}
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-	if (time < 1) return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!"); 
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stavio si %s u zatvor.", GetName(giveplayerid,false));
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Stavljeni ste u zatvor od strane administratora %s.", PlayerInfo[playerid][pForumName]);
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(time < 1) return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!"); 
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Stavio si %s u zatvor.", GetName(giveplayerid,false));
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Stavljeni ste u zatvor od strane administratora %s.", PlayerInfo[playerid][pForumName]);
 	
 	PlayerJail[giveplayerid][pArrested] 	+= 1;
 	PutPlayerInJail(giveplayerid, time, 1); // County Jail je 1
@@ -3150,7 +3150,7 @@ CMD:jail(playerid, params[])
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ADMIN JAIL] Pritvoreni ste na %d minuta. Jamcevina: Nedostupna", time);
 	
 	if(LicenseInfo[giveplayerid][pGunLic] != 0) {
-		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
+		SendClientMessage(giveplayerid, COLOR_RED, "[!] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
 		LicenseInfo[giveplayerid][pGunLic] = 0;
 	}
 	#if defined MODULE_LOGS
@@ -3167,12 +3167,12 @@ CMD:jail(playerid, params[])
 
 CMD:unjail(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unjail [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-	if (PlayerJail[giveplayerid][pJailed] == 0) return SendClientMessage(playerid, COLOR_RED, "Igrac nije u jailu!");
-	if (PlayerJail[giveplayerid][pJailed] == 1)
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /unjail [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(PlayerJail[giveplayerid][pJailed] == 0) return SendClientMessage(playerid, COLOR_RED, "Igrac nije u jailu!");
+	if(PlayerJail[giveplayerid][pJailed] == 1)
 	{
 		format(globalstring, sizeof(globalstring), "* Oslobodili ste %s.", GetName(giveplayerid,false));
 		SendClientMessage(playerid, COLOR_RED, globalstring);
@@ -3205,10 +3205,10 @@ CMD:toga(playerid, params[])
     
 	if(PlayerInfo[playerid][pAdmin] || IsPlayerAdmin(playerid))
 	{
-		if( !Bit1_Get(a_AdminChat, playerid))
+		if(!Bit1_Get(a_AdminChat, playerid))
 		{
 			Bit1_Set(a_AdminChat, playerid, true);
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste vidljivost Admin chat-a!");
+			SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost Admin chat-a!");
 		} else {
 			Bit1_Set(a_AdminChat, playerid, false);
 			SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost Admin chat-a!");
@@ -3224,27 +3224,27 @@ CMD:togreport(playerid, params[])
 {
 	#pragma unused params
 	
-	if( PlayerInfo[playerid][pAdmin] < 4 ) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni!" );
-	if( !Bit1_Get( a_TogReports, playerid ) ) {
-		SendClientMessage( playerid, COLOR_RED, "[ ! ] Iskljucili ste reportove!");
+	if(PlayerInfo[playerid][pAdmin] < 4 ) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni!" );
+	if(!Bit1_Get( a_TogReports, playerid )) {
+		SendClientMessage( playerid, COLOR_RED, "[!] Iskljucili ste reportove!");
 		Bit1_Set( a_TogReports, playerid, true );
 	} else {
 		Bit1_Set( a_TogReports, playerid, false );
-		SendClientMessage( playerid, COLOR_RED, "[ ! ] Ukljucili ste reportove!");
+		SendClientMessage( playerid, COLOR_RED, "[!] Ukljucili ste reportove!");
 	}
 	return 1;
 }
 
 CMD:gethere(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] >= 2 || PlayerInfo[playerid][pHelper] >= 3)
+	if(PlayerInfo[playerid][pAdmin] >= 2 || PlayerInfo[playerid][pHelper] >= 3)
 	{
 		new giveplayerid;
 		
-		if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gethere [ID / Part of name]");
-		if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-		if (PlayerInfo[giveplayerid][pAdmin] > 1337) return SendClientMessage(playerid, COLOR_RED, "Pitajte Administratora da se teleportira do Vas.");
-		if (PlayerJail[giveplayerid][pJailed] > 0) {
+		if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /gethere [ID / Part of name]");
+		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+		if(PlayerInfo[giveplayerid][pAdmin] > 1337) return SendClientMessage(playerid, COLOR_RED, "Pitajte Administratora da se teleportira do Vas.");
+		if(PlayerJail[giveplayerid][pJailed] > 0) {
 			ShowPlayerDialog(playerid, DIALOG_JAIL_GETHERE, DIALOG_STYLE_MSGBOX, "Warning", "Igrac kojeg zelite portati je u zatvoru.", "Port", "Exit");
 			PortedPlayer[playerid] = giveplayerid;
 			return 1;
@@ -3252,7 +3252,7 @@ CMD:gethere(playerid, params[])
 		new
 			Float:X, Float:Y, Float:Z;
 		GetPlayerPos(playerid, X, Y, Z);
-		if (GetPlayerState(giveplayerid) == 2) {
+		if(GetPlayerState(giveplayerid) == 2) {
 			new tmpcar = GetPlayerVehicleID(giveplayerid);
 			SetVehiclePos(tmpcar, X, Y+4, Z);
 		} else {
@@ -3267,15 +3267,15 @@ CMD:gethere(playerid, params[])
 			bizzid    = Player_InBusiness(playerid),
 			pickupid  = Player_InPickup(playerid);
 
-		if (bizzid != INVALID_BIZNIS_ID)
+		if(bizzid != INVALID_BIZNIS_ID)
 			Player_SetInBusiness(giveplayerid, bizzid);
-		if (houseid != INVALID_HOUSE_ID)
+		if(houseid != INVALID_HOUSE_ID)
 			Player_SetInHouse(giveplayerid, houseid);
-		if (complexid != INVALID_COMPLEX_ID)
+		if(complexid != INVALID_COMPLEX_ID)
 			Player_SetInApartmentComplex(giveplayerid, complexid);
-		if (roomid != INVALID_COMPLEX_ID)
+		if(roomid != INVALID_COMPLEX_ID)
 			Player_SetInApartmentRoom(giveplayerid, roomid);
-		if (pickupid != -1)
+		if(pickupid != -1)
 			Player_SetInPickup(giveplayerid, pickupid);
 
 		va_SendClientMessage(giveplayerid, COLOR_WHITE, "Teleportiran si od strane admina %s", GetName(playerid, false));
@@ -3288,9 +3288,9 @@ CMD:gethere(playerid, params[])
 CMD:unban(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new targetname[MAX_PLAYER_NAME];
-	if(sscanf(params, "s[24]", targetname )) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unban [Igracev Nick]");
+	if(sscanf(params, "s[24]", targetname )) return SendClientMessage(playerid, COLOR_RED, "[?]: /unban [Igracev Nick]");
 	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
 		SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
@@ -3304,7 +3304,7 @@ CMD:unban(playerid, params[])
 CMD:warn(playerid, params[])
 {
 
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
         giveplayerid,
 		reason[24],
@@ -3312,9 +3312,9 @@ CMD:warn(playerid, params[])
 		year,
 		month,
 		day;
-    if (sscanf(params, "us[24]", giveplayerid, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warn [ID / Part of name] [reason]");
-	if (strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
-    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
+    if(sscanf(params, "us[24]", giveplayerid, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /warn [ID / Part of name][reason]");
+	if(strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
+    if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
 	
 	new
 	    hour,
@@ -3337,7 +3337,7 @@ CMD:warn(playerid, params[])
 	ExpInfo[giveplayerid][eAllPoints] -= 10;
 	SavePlayerExperience(giveplayerid);
 
-    if (PlayerInfo[giveplayerid][pWarns] >= MAX_WARNS)
+    if(PlayerInfo[giveplayerid][pWarns] >= MAX_WARNS)
 	{
 		PlayerInfo[giveplayerid][pWarns] = 0;
 		#if defined MODULE_BANS
@@ -3348,11 +3348,11 @@ CMD:warn(playerid, params[])
 	}
 	va_SendClientMessage(playerid, COLOR_RED, "AdmCMD: Upozorili ste Igraca %s, razlog: %s", GetName(giveplayerid,false), reason);
 	va_SendClientMessage(giveplayerid, COLOR_RED, "AdmCMD: Upozorio vas je Admin %s, razlog: %s", PlayerInfo[playerid][pForumName], reason);
-	SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Radi Admin Warna, izgubili ste 10 trenutnih i Overall EXP-ova.");
+	SendClientMessage(giveplayerid, COLOR_RED, "[!] Radi Admin Warna, izgubili ste 10 trenutnih i Overall EXP-ova.");
 
 	new
-		forumname[ MAX_PLAYER_NAME ],
-		playername[ MAX_PLAYER_NAME ];
+		forumname[MAX_PLAYER_NAME],
+		playername[MAX_PLAYER_NAME];
 
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
@@ -3372,10 +3372,10 @@ CMD:pmears(playerid, params[])
 {
 	#pragma unused params
     
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (!Bit1_Get(a_PMears, playerid)) {
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!Bit1_Get(a_PMears, playerid)) {
 		Bit1_Set(a_PMears, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste vidljivost svih PM-ova!");
+ 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost svih PM-ova!");
 	} else {
 		Bit1_Set(a_PMears, playerid, false);
   		SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost svih PM-ova!");
@@ -3387,13 +3387,13 @@ CMD:togadnot(playerid, params[])
 {
 	#pragma unused params
 
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (!Bit1_Get(a_AdNot, playerid)) {
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!Bit1_Get(a_AdNot, playerid)) {
 		Bit1_Set(a_AdNot, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste vidljivost oglas reporta!");
+ 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost oglas reporta!");
 	} else {
 		Bit1_Set(a_AdNot, playerid, false);
-  		SendClientMessage(playerid, COLOR_RED, "[ ! ] Iskljucili ste vidljivost oglas reporta!");
+  		SendClientMessage(playerid, COLOR_RED, "[!] Iskljucili ste vidljivost oglas reporta!");
 	}
 	return 1;
 }
@@ -3402,10 +3402,10 @@ CMD:rears(playerid, params[])
 {
 	#pragma unused params
 
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (!Bit1_Get(a_REars, playerid)) {
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!Bit1_Get(a_REars, playerid)) {
 		Bit1_Set(a_REars, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste vidljivost svih radio komunikacija!");
+ 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost svih radio komunikacija!");
 	} else {
 		Bit1_Set(a_REars, playerid, false);
   		SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost svih radio komunikacija!");
@@ -3417,10 +3417,10 @@ CMD:bhears(playerid, params[])
 {
 	#pragma unused params
     
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (!Bit1_Get(a_BHears, playerid)) {
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!Bit1_Get(a_BHears, playerid)) {
 		Bit1_Set(a_BHears, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste vidljivost svih BH-ova!");
+ 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost svih BH-ova!");
 	} else {
 		Bit1_Set(a_BHears, playerid, false);
   		SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost svih BH-ova!");
@@ -3432,24 +3432,24 @@ CMD:bhears(playerid, params[])
 CMD:a(playerid, params[])
 {
 	new result[256];
-    if (isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: (/a)dmin [Admin chat]");
+    if(isnull(params))
+		return SendClientMessage(playerid, COLOR_RED, "[?]: (/a)dmin [Admin chat]");
 
-	if( PlayerInfo[playerid][pAdmin] == 1338 ) {
+	if(PlayerInfo[playerid][pAdmin] == 1338 ) {
 		format(result, sizeof(result), "{FA5555}A[%d] {819BC6}%s: %s", PlayerInfo[playerid][pAdmin], GetName(playerid, false), params);
 		AHBroadCast(0x819BC6FF, result, 1);
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_adminchat.txt", result);
 		#endif
 	}
-	else if( PlayerInfo[playerid][pAdmin] >= 1 ) {
+	else if(PlayerInfo[playerid][pAdmin] >= 1 ) {
 		format(result, sizeof(result), "{FF9933}A[%d] {819BC6}%s: %s", PlayerInfo[playerid][pAdmin], GetName(playerid,false), params);
 		AHBroadCast(0x819BC6FF, result, 1);
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_adminchat.txt", result);
 		#endif
 	}
-	else if( PlayerInfo[playerid][pHelper] >= 1 ) {
+	else if(PlayerInfo[playerid][pHelper] >= 1 ) {
 		format(result, sizeof(result), "{91FABB}H[%d] {819BC6}%s: %s", PlayerInfo[playerid][pHelper], GetName(playerid,false), params);
 		AHBroadCast(0x819BC6FF, result, 1);
 		#if defined MODULE_LOGS
@@ -3463,10 +3463,10 @@ CMD:a(playerid, params[])
 CMD:ac(playerid, params[])
 {
 	new result[256];
-    if (isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: (/ac)dmin [Admin chat]");
+    if(isnull(params))
+		return SendClientMessage(playerid, COLOR_RED, "[?]: (/ac)dmin [Admin chat]");
 
-	if( PlayerInfo[playerid][pAdmin] >= 1337 ) {
+	if(PlayerInfo[playerid][pAdmin] >= 1337 ) {
 		format(result, sizeof(result), "AC[%d] %s(%s): %s", PlayerInfo[playerid][pAdmin], GetName(playerid, false), PlayerInfo[playerid][pForumName], params);
 		HighAdminBroadCast(0x4C3A8CFF, result, 1337);
 	}
@@ -3477,10 +3477,10 @@ CMD:ac(playerid, params[])
 CMD:aa(playerid, params[])
 {
 	new result[256];
-    if (isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aa [TEXT]");
+    if(isnull(params))
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /aa [TEXT]");
 
-	if( PlayerInfo[playerid][pAdmin] >= 1338 ) {
+	if(PlayerInfo[playerid][pAdmin] >= 1338 ) {
 		format(result, sizeof(result), "[!] A[%d] %s(%s): %s", PlayerInfo[playerid][pAdmin], GetName(playerid, false), PlayerInfo[playerid][pForumName], params);
 		SendDirectiveMessage(COLOR_RED, result, 1);
 	}
@@ -3491,52 +3491,52 @@ CMD:aa(playerid, params[])
 
 CMD:houseo(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		house;
-	if( sscanf( params, "i", house ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /houseo [houseid]" );
+	if(sscanf( params, "i", house )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /houseo [houseid]" );
 	
 	if(!House_Exists(house))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /houseo [houseid]" );
+		return SendClientMessage(playerid, COLOR_RED, "[?]:  /houseo [houseid]" );
 	
-	if(HouseInfo[ house ][ hEnterX ] == 0.0)
+	if(HouseInfo[house][hEnterX] == 0.0)
 		return SendClientMessage(playerid, COLOR_RED, "Taj kuca ne postoji!");
 
-	SetPlayerPosEx(playerid, HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY ], HouseInfo[ house ][ hEnterZ ], 0, 0, true);
+	SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, true);
 	return 1;
 }
 
 CMD:bizo(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		biznis;
 		
-	if( sscanf( params, "i", biznis ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bizo [biznisid]" );
+	if(sscanf( params, "i", biznis )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /bizo [biznisid]" );
 	
 	if(!Bizz_Exists(biznis))
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Business ID %d doesn't exist!", biznis);
 	
-	SetPlayerPosEx(playerid, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ], 0, 0, true);
+	SetPlayerPosEx(playerid, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ], 0, 0, true);
 	
 	return 1;
 }
 
 CMD:complexo(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		complex;
-	if( sscanf( params, "i", complex ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /complexo [complexid]" );
-	if( 0 <= complex || complex <= MAX_COMPLEX-1 ) 
+	if(sscanf( params, "i", complex )) return SendClientMessage(playerid, COLOR_RED, "[?]:  /complexo [complexid]" );
+	if(0 <= complex || complex <= MAX_COMPLEX-1 ) 
 	{
-		if( ComplexInfo[ complex ][ cEnterX ] == 0.0)
+		if(ComplexInfo[complex][cEnterX] == 0.0)
 			return SendClientMessage(playerid, COLOR_RED, "Taj complex ne postoji!");
 			
-		SetPlayerPosEx(playerid, ComplexInfo[ complex ][ cEnterX ], ComplexInfo[ complex ][ cEnterY ], ComplexInfo[ complex ][ cEnterZ ], 0, 0, true);
+		SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ], 0, 0, true);
 	} 
 	else 
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /complexo [complexid]" );
+		SendClientMessage(playerid, COLOR_RED, "[?]:  /complexo [complexid]" );
 	
 	return 1;
 }
@@ -3544,19 +3544,19 @@ CMD:complexo(playerid, params[])
 CMD:checknetstats(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayerid,
 		number;
-	if (sscanf(params, "ui", giveplayerid, number))
+	if(sscanf(params, "ui", giveplayerid, number))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checknetstats [ID / Part of name] [0-1]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] 0 - Player Connection 1 - Player Network Stats");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /checknetstats [ID / Part of name][0-1]");
+		SendClientMessage(playerid, COLOR_RED, "[!] 0 - Player Connection 1 - Player Network Stats");
 		return 1;
 	}
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-	if (number < 0 || number > 1) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 1!");
-	if (number == 0)
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(number < 0 || number > 1) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 1!");
+	if(number == 0)
 	{
         new
 		    stats[400+1],
@@ -3575,7 +3575,7 @@ CMD:checknetstats(playerid, params[])
         format(string, sizeof(string), "%s Connection Stats", GetName(giveplayerid,false));
 	    ShowPlayerDialog(playerid, DIALOG_NETWORK_STATS, DIALOG_STYLE_MSGBOX, string, stats, "Okay", "");
 	}
-	else if (number == 1)
+	else if(number == 1)
 	{
 	    new
 		    stats[400+1],
@@ -3590,9 +3590,9 @@ CMD:checknetstats(playerid, params[])
 CMD:rtc(playerid, params[])
 {
 	#pragma unused params
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[ playerid ][ pHelper ] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    if( !IsPlayerInAnyVehicle(playerid) ) 
+    if(!IsPlayerInAnyVehicle(playerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must be inside vehicle to respawn it!");
 	new 
 		vehicleid = GetPlayerVehicleID(playerid);
@@ -3616,10 +3616,10 @@ CMD:rtc(playerid, params[])
 
 CMD:rtcacar(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		vehicleid;
-	if( sscanf( params, "i", vehicleid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rtcacar [vehicleid]");
+	if(sscanf( params, "i", vehicleid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /rtcacar [vehicleid]");
 	
 	if(!IsValidVehicle(vehicleid))
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ID %d ne postoji na serveru!", vehicleid);
@@ -3645,25 +3645,25 @@ CMD:rtcacar(playerid, params[])
 
 CMD:gotopos(playerid, params[])
 {
-	if( PlayerInfo[playerid][pAdmin] < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	
 	new
 		Float:tmpPos[3], tmpInt, tmpViWo;
-	if( sscanf( params, "fffii", tmpPos[0], tmpPos[1], tmpPos[2], tmpInt, tmpViWo ) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /gotopos [X][Y][Z][Interior ID][Virtual World ID]");
+	if(sscanf( params, "fffii", tmpPos[0], tmpPos[1], tmpPos[2], tmpInt, tmpViWo )) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]:  /gotopos [X][Y][Z][Interior ID][Virtual World ID]");
 	SetPlayerPosEx(playerid, tmpPos[0], tmpPos[1], tmpPos[2], tmpViWo, tmpInt);
 	return 1;
 }
 
 CMD:goto(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] >= 1 || PlayerInfo[playerid][pHelper] >= 1)
+	if(PlayerInfo[playerid][pAdmin] >= 1 || PlayerInfo[playerid][pHelper] >= 1)
 	{
 		new giveplayerid;
-		if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /goto [ID / Part of name]");
-		if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
-		if( IsPlayerReconing(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Morate iskljuciti reconing!");
-		if( IsPlayerReconing(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Igrac recona drugog igraca!");
+		if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /goto [ID / Part of name]");
+		if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
+		if(IsPlayerReconing(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate iskljuciti reconing!");
+		if(IsPlayerReconing(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac recona drugog igraca!");
 
 		new
 			Float:plocx,
@@ -3671,7 +3671,7 @@ CMD:goto(playerid, params[])
 			Float:plocz;
 		GetPlayerPos(giveplayerid, plocx, plocy, plocz);
 
-		if (GetPlayerState(playerid) == 2)
+		if(GetPlayerState(playerid) == 2)
 		{
 			AC_SetVehiclePos(GetPlayerVehicleID(playerid), plocx, plocy+2, plocz);
 			SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), GetPlayerVirtualWorld(giveplayerid));
@@ -3690,15 +3690,15 @@ CMD:goto(playerid, params[])
 				bizzid    = Player_InBusiness(giveplayerid),
 				pickupid  = Player_InPickup(giveplayerid);
 			
-			if (bizzid != INVALID_BIZNIS_ID)
+			if(bizzid != INVALID_BIZNIS_ID)
 				Player_SetInBusiness(playerid, bizzid);
-			if (houseid != INVALID_HOUSE_ID)
+			if(houseid != INVALID_HOUSE_ID)
 				Player_SetInHouse(playerid, houseid);
-			if (complexid != INVALID_COMPLEX_ID)
+			if(complexid != INVALID_COMPLEX_ID)
 				Player_SetInApartmentComplex(playerid, complexid);
-			if (roomid != INVALID_COMPLEX_ID)
+			if(roomid != INVALID_COMPLEX_ID)
 				Player_SetInApartmentRoom(playerid, roomid);
-			if (pickupid != -1)
+			if(pickupid != -1)
 				Player_SetInPickup(playerid, pickupid);
 
 			va_SendClientMessage(playerid, COLOR_GREY, "Teleportiran si do %s, ID %d", GetName(giveplayerid, false), giveplayerid);
@@ -3712,8 +3712,8 @@ CMD:checklastlogin(playerid, params[])
 {
 	//if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!"); Da vratimo na staro da igraci mogu gledat kad je tko bio online zadnji put radi kuca i biznisa..
 	new targetname[MAX_PLAYER_NAME];
-	if (sscanf(params, "s[24]", targetname)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checklastlogin [Ime_Prezime]");
+	if(sscanf(params, "s[24]", targetname)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /checklastlogin [Ime_Prezime]");
 	
     mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname), 
@@ -3729,7 +3729,7 @@ CMD:ninja(playerid, params[])
 {
 	#pragma unused params
     
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
 	    Float:px,
         Float:py,
@@ -3743,7 +3743,7 @@ CMD:ninja(playerid, params[])
 CMD:fly(playerid,params[])
 {
 	#pragma unused params
-    if (PlayerInfo[playerid][pAdmin] < 1) 
+    if(PlayerInfo[playerid][pAdmin] < 1) 
 		return SendClientMessage(playerid, COLOR_RED, "Niste autorizovani. [MAYDAY]");
 
 	if(!AdminFly[playerid])
@@ -3765,7 +3765,7 @@ CMD:lt(playerid, params[])
 {
 	#pragma unused params
     
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
 	    Float:slx,
 		Float:sly,
@@ -3779,7 +3779,7 @@ CMD:rt(playerid, params[])
 {
 	#pragma unused params
     
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
 	    Float:slx,
 	    Float:sly,
@@ -3791,12 +3791,12 @@ CMD:rt(playerid, params[])
 
 CMD:checkoffline(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1)
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorised for this command!");
 
 	new targetname[MAX_PLAYER_NAME];
-	if (sscanf(params, "s[24]", targetname)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [nickname]");
+	if(sscanf(params, "s[24]", targetname)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /checkoffline [nickname]");
     
 	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
@@ -3828,11 +3828,11 @@ CMD:count(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1+!");
 	new
 	    seconds;	
-	if (sscanf(params, "i", seconds)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /count [seconds].");
-	if (seconds < 1 || seconds > 60) 
+	if(sscanf(params, "i", seconds)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /count [seconds].");
+	if(seconds < 1 || seconds > 60) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Seconds can't go below 1 or above 20!");
-	if (count_started == true) 
+	if(count_started == true) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Timer/Counter has already started.");
 
 	SendAdminMessage(COLOR_RED, 
@@ -3853,13 +3853,13 @@ CMD:count(playerid, params[])
 }
 CMD:respawn(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pAdmin ] < 1 ) 
+	if(PlayerInfo[playerid][pAdmin] < 1 ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1+");
 	new 
 		giveplayerid;
-	if( sscanf(params, "u", giveplayerid) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /respawn [ID / Part of name]");
-    if( !IsPlayerConnected(giveplayerid) ) 
+	if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /respawn [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 
 	SendAdminMessage(COLOR_RED, 
@@ -3887,9 +3887,9 @@ CMD:kill(playerid, params[])
 {
 	new 
 		result[64];
-	if( sscanf( params, "s[64]", result ) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /kill [reason]");
-	if( PlayerTick[playerid][ptKill] < gettimestamp() ) 
+	if(sscanf( params, "s[64]", result )) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /kill [reason]");
+	if(PlayerTick[playerid][ptKill] < gettimestamp()) 
 	{ 
 		SendMessage(playerid, 
 			MESSAGE_TYPE_ERROR, 
@@ -3898,7 +3898,7 @@ CMD:kill(playerid, params[])
 		return 1;
 	}
 	new
-		tmpString[ 146 ];
+		tmpString[146];
 	format(tmpString, sizeof(tmpString), "AdmWarn: %s (%d) sent a kill request, reason: %s.",
 		GetName(playerid, false), 
 		playerid, 
@@ -3914,15 +3914,15 @@ CMD:kill(playerid, params[])
 
 CMD:akill(playerid, params[])
 {
-    if( PlayerInfo[ playerid ][ pAdmin ] < 1 ) 
+    if(PlayerInfo[playerid][pAdmin] < 1 ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1+");
 	new 
 		giveplayerid;
-	if( sscanf(params, "u", giveplayerid) ) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /akill [ID / Part of name]");
-    if( !IsPlayerConnected(giveplayerid) ) 
+	if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /akill [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-	if( !KillRequest[giveplayerid] ) 
+	if(!KillRequest[giveplayerid] ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player didn't request kill!");
 	
 	AC_ResetPlayerWeapons(giveplayerid);
@@ -3939,15 +3939,15 @@ CMD:akill(playerid, params[])
 
 CMD:freeze(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 3) 
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 3) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		giveplayerid;
-	if (sscanf(params, "u", giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /freeze [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) 
+	if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /freeze [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online");
-	if (PlayerInfo[giveplayerid][pAdmin] > 0 || PlayerInfo[playerid][pHelper] > 0) 
+	if(PlayerInfo[giveplayerid][pAdmin] > 0 || PlayerInfo[playerid][pHelper] > 0) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Team Staff can't be frozen");
 
 	TogglePlayerControllable(giveplayerid, 0);
@@ -3963,13 +3963,13 @@ CMD:freeze(playerid, params[])
 
 CMD:unfreeze(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 3) 
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 3) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		giveplayerid;
-	if (sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unfreeze [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) 
+	if(sscanf(params, "u", giveplayerid))
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /unfreeze [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
 
 	TogglePlayerControllable(giveplayerid, 1);
@@ -3986,8 +3986,8 @@ CMD:unfreeze(playerid, params[])
 CMD:learn(playerid, params[])
 {
     new giveplayerid;
-	if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /learn [Playerid / Part of name]");
-	if (PlayerInfo[playerid][pAdmin] >= 1 || PlayerInfo[playerid][pHelper] >= 1)
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /learn [Playerid / Part of name]");
+	if(PlayerInfo[playerid][pAdmin] >= 1 || PlayerInfo[playerid][pHelper] >= 1)
 	{
 		if(IsPlayerConnected(giveplayerid))
 		{
@@ -4011,13 +4011,13 @@ CMD:learn(playerid, params[])
 
 CMD:slap(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1) 
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new 
 		giveplayerid;
-   	if (sscanf(params, "u", giveplayerid)) 
-	   	return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /slap [ID / Part of name]");
-   	if (!IsPlayerConnected(giveplayerid)) 
+   	if(sscanf(params, "u", giveplayerid)) 
+	   	return SendClientMessage(playerid, COLOR_RED, "[?]: /slap [ID / Part of name]");
+   	if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online");
 	new
 	    Float:shealth,
@@ -4043,7 +4043,7 @@ CMD:clearchat(playerid, params[])
 {
 	#pragma unused params
     
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     for (new a = 1; a <= 20; a++)
     {
         SendClientMessageToAll(-1, "\n");
@@ -4061,29 +4061,29 @@ CMD:clearchat(playerid, params[])
 CMD:dmers(playerid, params[])
 {
 
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    if (!Bit1_Get(a_DMCheck, playerid))
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(!Bit1_Get(a_DMCheck, playerid))
 	{
 		Bit1_Set(a_DMCheck, playerid, true);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Sad cete dobivati dojave o ubojstvima igraca!");
+		SendClientMessage(playerid, COLOR_RED, "[!] Sad cete dobivati dojave o ubojstvima igraca!");
 		
 	}
 	else
 	{
   		Bit1_Set(a_DMCheck, playerid, false);
-   		SendClientMessage(playerid, COLOR_RED, "[ ! ] Vise necete dobivati dojave o ubojstvima igraca!");
+   		SendClientMessage(playerid, COLOR_RED, "[!] Vise necete dobivati dojave o ubojstvima igraca!");
 	}
     return 1;
 }
 
 CMD:masked(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 
 	SendClientMessage(playerid, COLOR_SKYBLUE, "Igraci s maskama:");
 	foreach (new i : Player)
 	{
-		if (!Player_UsingMask(i)) continue;
+		if(!Player_UsingMask(i)) continue;
 
 		va_SendClientMessage(playerid, 
 			-1, 
@@ -4099,13 +4099,13 @@ CMD:masked(playerid, params[])
 CMD:setviwo(playerid, params[])
 {
     
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
 	    viwoid,
 	    string[32],
 		giveplayerid;
-    if (sscanf(params, "ui", giveplayerid, viwoid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setviwo [ID / Part of name] [VirtualWorld]");
-    if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+    if(sscanf(params, "ui", giveplayerid, viwoid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setviwo [ID / Part of name][VirtualWorld]");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	SetPlayerVirtualWorld(giveplayerid, viwoid);
 	format(string, sizeof(string), "   Virtual World %d", viwoid);
 	SendClientMessage(giveplayerid, COLOR_GREY, string);
@@ -4118,7 +4118,7 @@ CMD:onrecon(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	foreach (new h : Player) 
 	{
-		if( IsPlayerReconing(h) ) 		
+		if(IsPlayerReconing(h)) 		
 			va_SendClientMessage(playerid, 0x7A93BCFF, "RECON: Admin %s [%s] -> %s", GetName(h,false), PlayerInfo[h][pForumName] ,GetName(ReconingPlayer[h],false));
 	}
 	return 1;
@@ -4126,29 +4126,29 @@ CMD:onrecon(playerid, params[])
 
 CMD:recon(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		giveplayerid;
-	if( sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /recon [ID / Part of name]");
-    if( !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
-    if( PlayerInfo[giveplayerid][pAdmin] >= 3 && PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid,COLOR_RED, "Ne mozes reconati admina level3+.");
-	if( IsPlayerReconing(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Igrac vec recona nekoga!");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /recon [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+    if(PlayerInfo[giveplayerid][pAdmin] >= 3 && PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid,COLOR_RED, "Ne mozes reconati admina level3+.");
+	if(IsPlayerReconing(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac vec recona nekoga!");
 
-	oldskin[ playerid ] = GetPlayerSkin(playerid);
+	oldskin[playerid] = GetPlayerSkin(playerid);
 
-	if( IsPlayerReconing(playerid) ) 
+	if(IsPlayerReconing(playerid)) 
 	{
 		stop ReconTimer[playerid];
 		DestroyReconTextDraws(playerid);
 		Bit4_Set(gr_SpecateId, playerid, 0);
 	}
 	
-	ReconingPlayer[ playerid ] = giveplayerid;
+	ReconingPlayer[playerid] = giveplayerid;
 	
 	SetPlayerInterior(playerid, 	GetPlayerInterior(giveplayerid));
 	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(giveplayerid));
 	
-	if( IsPlayerInAnyVehicle(giveplayerid) ) {
+	if(IsPlayerInAnyVehicle(giveplayerid)) {
 		TogglePlayerSpectating(playerid, 1);
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(giveplayerid));
 		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH);
@@ -4163,29 +4163,29 @@ CMD:recon(playerid, params[])
 
 CMD:reconoff(playerid, params[])
 {
-	if( !IsPlayerReconing(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Ne reconate nikoga!");	
+	if(!IsPlayerReconing(playerid)) return SendClientMessage(playerid, COLOR_RED, "Ne reconate nikoga!");	
 	
 	stop ReconTimer[playerid];
 	DestroyReconTextDraws(playerid);
 	Bit4_Set(gr_SpecateId, playerid, 0);
 	TogglePlayerSpectating(playerid, 0);
 	
-	ReconingPlayer[ playerid ] = -1;
+	ReconingPlayer[playerid] = -1;
 	
 	new
 		tmpMoney = PlayerInfo[playerid][pMoney];
 	AC_GivePlayerMoney(playerid, -tmpMoney);
 	AC_GivePlayerMoney(playerid, tmpMoney);
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Koristite /return za vracanje svojih oruzja i objekata prije recona!");
+	SendClientMessage(playerid, COLOR_RED, "[!] Koristite /return za vracanje svojih oruzja i objekata prije recona!");
 	return 1;
 }
 
 CMD:return(playerid, params[])
 {
 	#pragma unused params
-    if( PlayerInfo[playerid][pAdmin] < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if( !Bit1_Get( a_PlayerReconed, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "Ovu komandu mozete koristiti samo jednom!");
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste vratili oruzja i objekte koje ste imali.");
+    if(PlayerInfo[playerid][pAdmin] < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!Bit1_Get( a_PlayerReconed, playerid )) return SendClientMessage(playerid, COLOR_RED, "Ovu komandu mozete koristiti samo jednom!");
+	SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste vratili oruzja i objekte koje ste imali.");
 	SetPlayerObjects(playerid);
 	AC_SetPlayerWeapons(playerid);
 	SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
@@ -4196,8 +4196,8 @@ CMD:return(playerid, params[])
 
 CMD:aon(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (!Admin_OnDuty(playerid))
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(!Admin_OnDuty(playerid))
 	{
 	    SetPlayerColor(playerid, COLOR_ORANGE);
 		SetPlayerHealth(playerid, 100, true);
@@ -4230,10 +4230,10 @@ CMD:aon(playerid, params[])
 
 CMD:pweapons(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid;
-	if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pweapons [ID / Part of name]");
-	if( !IsPlayerLogged(giveplayerid) || !IsPlayerConnected(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije ulogiran!");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /pweapons [ID / Part of name]");
+	if(!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(playerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije ulogiran!");
 	
 	new
 	    weapon[13],
@@ -4253,8 +4253,8 @@ CMD:pweapons(playerid, params[])
 
 CMD:am(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /am [Poruka]");
+    if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[?]: /am [Poruka]");
 	format(globalstring, sizeof(globalstring), "(( ADMIN %s: %s ))", PlayerInfo[playerid][pForumName], params);
 	SendClientMessageToAll(COLOR_YELLOW2, globalstring);
 	#if defined MODULE_LOGS
@@ -4265,24 +4265,24 @@ CMD:am(playerid, params[])
 
 CMD:cnn(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    if (isnull(params))
+    if(isnull(params))
 	{
 		SendClientMessage(playerid, 
 			COLOR_RED, 
-			"[ ? ]: /cnn [Cnn textformat ~n~=Newline ~r~=Red \n\
+			"[?]: /cnn [Cnn textformat ~n~=Newline ~r~=Red \n\
 				~g~=Green ~b~=Blue ~w~=White ~y~=Yellow]"
 		);
 		return 1;
 	}
-    if (strlen(params) < 0 || strlen(params) > 50) 
+    if(strlen(params) < 0 || strlen(params) > 50) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't input below 0 or above 50 chars!");
 	
 	format(globalstring, sizeof(globalstring), "~b~%s: ~w~%s", GetName(playerid,false), params);
 	foreach (new i : Player)
 	{
-		if (IsPlayerConnected(i)) 
+		if(IsPlayerConnected(i)) 
 			GameTextForPlayer(i, globalstring, 5000, 6);
 	}
 	return 1;
@@ -4290,13 +4290,13 @@ CMD:cnn(playerid, params[])
 
 CMD:mute(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1) 
+    if(PlayerInfo[playerid][pAdmin] < 1) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		giveplayerid;
-	if (sscanf(params, "u", giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /mute [ID / Part of name]");
-    if (!IsPlayerConnected(giveplayerid)) 
+	if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /mute [ID / Part of name]");
+    if(!IsPlayerConnected(giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	
 	PlayerInfo[giveplayerid][pMuted] = !PlayerInfo[giveplayerid][pMuted];
@@ -4312,13 +4312,13 @@ CMD:mute(playerid, params[])
 
 CMD:setint(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		intid, giveplayerid;
-	if (sscanf(params, "ui", giveplayerid, intid)) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setint [ID / Part of name] [Interiorid]");
-	if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	if(sscanf(params, "ui", giveplayerid, intid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /setint [ID / Part of name][Interiorid]");
+	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	SetPlayerInterior(giveplayerid, intid);
 	format(globalstring, sizeof(globalstring), "Interior %d.", intid);
 	SendClientMessage(giveplayerid, -1, globalstring);
@@ -4327,27 +4327,27 @@ CMD:setint(playerid, params[])
 
 CMD:check(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /check [ID / Part of name]");
-	if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+    if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /check [ID / Part of name]");
+	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
     ShowPlayerStats(playerid, giveplayerid);
 	return 1;
 }
 
 CMD:checkcostats(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid;
-	if (sscanf(params, "u", giveplayerid))
+	if(sscanf(params, "u", giveplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkcostats [playerid/PartOfName]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /checkcostats [playerid/PartOfName]");
 		return 1;
 	}
 	if(PlayerKeys[giveplayerid][pVehicleKey] == -1) return SendClientMessage(playerid, COLOR_RED, "Igrac nema spawnano vozilo.");
 	
-	new name[ 36 ];
-	strunpack( name, Model_Name(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vModel]) );
+	new name[36];
+	strunpack( name, Model_Name(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vModel]));
 	format(globalstring, sizeof(globalstring), "Vozilo: %s [Model ID: %d] | Vlasnik: %s", name, VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vModel], GetName(giveplayerid, true));
 
 	SendClientMessage(playerid, COLOR_SKYBLUE, globalstring);
@@ -4397,12 +4397,12 @@ CMD:checkcostats(playerid, params[])
 
 CMD:kick(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayerid,
 	    reason[21];
-    if( sscanf(params, "us[21]", giveplayerid, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /kick [ID / Part of name] [reason].");
-    if( strlen(reason) < 0 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
+    if(sscanf(params, "us[21]", giveplayerid, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /kick [ID / Part of name][reason].");
+    if(strlen(reason) < 0 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 	if(giveplayerid == INVALID_PLAYER_ID || !IsPlayerConnected(giveplayerid))
 		return SendClientMessage(playerid, COLOR_RED, "Krivi ID igraca!");
 	
@@ -4421,18 +4421,18 @@ CMD:kick(playerid, params[])
 CMD:apm(playerid, params[])
 {
 	new
-		name[ MAX_PLAYER_NAME ];
+		name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid, name, MAX_PLAYER_NAME);
 	if(!IsValidNick(name)) return Ban(playerid);
-	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return SendErrorMessage(playerid, "Igrac nije ulogiran/connectan!");
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return SendErrorMessage(playerid, "Igrac nije ulogiran/connectan!");
 	new 
-		result[160], pmString[ 256 ],
+		result[160], pmString[256],
 		giveplayerid;
-    if( sscanf( params, "us[160]", giveplayerid, result ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /apm [ID / Part of name][text]" );
-	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "Krivi unos playerida/imena!" );
-	if( giveplayerid == playerid ) return SendClientMessage(playerid, COLOR_RED, "A ti i na viberu sam sebi pi�e�?" );
-	if( strlen(result) > 160 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina unosa je 90!" );
-	if( PlayerInfo[playerid][pAdmin] ) {
+    if(sscanf( params, "us[160]", giveplayerid, result )) return SendClientMessage(playerid, COLOR_RED, "[?]: /apm [ID / Part of name][text]" );
+	if(giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "Krivi unos playerida/imena!" );
+	if(giveplayerid == playerid ) return SendClientMessage(playerid, COLOR_RED, "A ti i na viberu sam sebi pi�e�?" );
+	if(strlen(result) > 160 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina unosa je 90!" );
+	if(PlayerInfo[playerid][pAdmin] ) {
 	
 		va_SendClientMessage(giveplayerid, 0x70B9FFFF, "[PM] Admin %s: %s", 
 			GetName(playerid, false), 
@@ -4508,27 +4508,27 @@ CMD:apm(playerid, params[])
 CMD:givegun(playerid, params[])
 {
     
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayerid,
 	    gun,
 		ammo;
-	if (sscanf(params, "uii", giveplayerid, gun, ammo))
+	if(sscanf(params, "uii", giveplayerid, gun, ammo))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /givegun [ID / Part of name] [Weaponid(eg. 46 = Parachute)] [Ammo]");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /givegun [ID / Part of name][Weaponid(eg. 46 = Parachute)][Ammo]");
 		SendClientMessage(playerid, COLOR_GREY, "Hladna: 1(Brass Knuckles) 2(Golf Club) 3(Nite Stick) 4(Knife) 5(Baseball Bat) 6(Shovel) 7(Pool Cue)");
 		SendClientMessage(playerid, COLOR_GREY, "	8(Katana) 10-13(Dildo) 14(Flowers) 15(Cane)");
 		SendClientMessage(playerid, COLOR_GREY, "Vatrena: 24(Deagle) 25(Shot Gun) 27(Combat Shot) 28(Micro Uzi) 29(MP5) 30(AK47) 31(M4) 32(Tec9)");
 		SendClientMessage(playerid, COLOR_GREY, "	33(C. Rifle) 34(Sniper) 41(Spray Can) 42(Fire Ext.) 43(Camera) 46(Parachute)");
 		return 1;
     }
-	if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
-    if (PlayerInfo[giveplayerid][pLevel] < 2) return SendClientMessage(playerid, COLOR_RED, "Igrac nije level 2!");
-	if (gun < 1 || gun > 46 || gun == 35 || gun == 16 ||gun == 26 || gun == 44 || gun == 45)
+	if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
+    if(PlayerInfo[giveplayerid][pLevel] < 2) return SendClientMessage(playerid, COLOR_RED, "Igrac nije level 2!");
+	if(gun < 1 || gun > 46 || gun == 35 || gun == 16 ||gun == 26 || gun == 44 || gun == 45)
 	{ SendClientMessage(playerid, COLOR_RED, "Pogresan WeaponID!"); return 1; }
-	if (ForbiddenWeapons(gun)) return SendClientMessage(playerid, COLOR_RED, "To oruzje je zabranjeno!");
-	if (ammo < 1 || ammo > 9999) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 9999! (Ammo)");
-	if (! CheckPlayerWeapons(giveplayerid, gun) ) return 1;
+	if(ForbiddenWeapons(gun)) return SendClientMessage(playerid, COLOR_RED, "To oruzje je zabranjeno!");
+	if(ammo < 1 || ammo > 9999) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 9999! (Ammo)");
+	if(! CheckPlayerWeapons(giveplayerid, gun)) return 1;
 	AC_GivePlayerWeapon(giveplayerid, gun, ammo);
 	
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa %d metaka.", GetName(giveplayerid, false), GetWeaponNameEx(gun), ammo);
@@ -4551,26 +4551,26 @@ CMD:givegun(playerid, params[])
 CMD:givebullet(playerid, params[])
 {
     
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayerid,
 	    gun; 
 		
-	if (sscanf(params, "ui", giveplayerid, gun))
+	if(sscanf(params, "ui", giveplayerid, gun))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /givebullet [ID / Part of name] [Weaponid(eg. 46 = Parachute)] ");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /givebullet [ID / Part of name][Weaponid(eg. 46 = Parachute)] ");
 		SendClientMessage(playerid, COLOR_GREY, "Hladna: 1(Brass Knuckles) 2(Golf Club) 3(Nite Stick) 4(Knife) 5(Baseball Bat) 6(Shovel) 7(Pool Cue)");
 		SendClientMessage(playerid, COLOR_GREY, "	8(Katana) 10-13(Dildo) 14(Flowers) 15(Cane)");
 		SendClientMessage(playerid, COLOR_GREY, "Vatrena: 24(Deagle) 25(Shot Gun) 27(Combat Shot) 28(Micro Uzi) 29(MP5) 30(AK47) 31(M4) 32(Tec9)");
 		SendClientMessage(playerid, COLOR_GREY, "	33(C. Rifle) 34(Sniper) 41(Spray Can) 42(Fire Ext.) 43(Camera) 46(Parachute)");
 		return 1;
     }
-	if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
-    if (PlayerInfo[giveplayerid][pLevel] < 2) return SendClientMessage(playerid, COLOR_RED, "Igrac nije level 2!");
-	if (gun < 1 || gun > 46 || gun == 35 || gun == 16 ||gun == 26 || gun == 44 || gun == 45)
+	if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
+    if(PlayerInfo[giveplayerid][pLevel] < 2) return SendClientMessage(playerid, COLOR_RED, "Igrac nije level 2!");
+	if(gun < 1 || gun > 46 || gun == 35 || gun == 16 ||gun == 26 || gun == 44 || gun == 45)
 	{ SendClientMessage(playerid, COLOR_RED, "Pogresan WeaponID!"); return 1; }
-	if (ForbiddenWeapons(gun)) return SendClientMessage(playerid, COLOR_RED, "To oruzje je zabranjeno!");
-	if (! CheckPlayerWeapons(giveplayerid, gun) ) return 1;
+	if(ForbiddenWeapons(gun)) return SendClientMessage(playerid, COLOR_RED, "To oruzje je zabranjeno!");
+	if(! CheckPlayerWeapons(giveplayerid, gun)) return 1;
 	AC_GivePlayerWeapon(giveplayerid, gun, 1);
 	
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa jednim metkom.", GetName(giveplayerid, false), GetWeaponNameEx(gun));
@@ -4595,7 +4595,7 @@ CMD:house_id(playerid, params[])
 	if(houseid == INVALID_HOUSE_ID)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in front of any house!");
 	
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: House ID: %d", houseid);
+	va_SendClientMessage(playerid, COLOR_RED, "[!]: House ID: %d", houseid);
 	return 1;
 }
 
@@ -4607,7 +4607,7 @@ CMD:biznis_id(playerid, params[])
 	if(bizzid == INVALID_BIZNIS_ID)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in front of any business!");
 		
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: Business ID: %d", bizzid);
+	va_SendClientMessage(playerid, COLOR_RED, "[!]: Business ID: %d", bizzid);
 	return 1;
 }
 
@@ -4619,18 +4619,18 @@ CMD:complex_id(playerid, params[])
 	if(complexid == INVALID_COMPLEX_ID)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in front of any complex!");
 	
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Complex ID: %d", complexid);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Complex ID: %d", complexid);
 	return 1;
 }
 
 CMD:adminmsg(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 
 	new playerb[25], n_reason[128];
 
-	if (sscanf(params, "s[25]s[128]", playerb, n_reason))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /adminmsg [character name] [message]");
+	if(sscanf(params, "s[25]s[128]", playerb, n_reason))
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /adminmsg [character name][message]");
 
     mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT sqlid, online FROM accounts WHERE name = '%e'", playerb), 
@@ -4661,12 +4661,12 @@ CMD:kickall(playerid, params[])
 CMD:banip(playerid,params[]) 
 {
 	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED,"[ ? ]: /banip [ip]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED,"[?]: /banip [ip]");
 	new string[128];
 	format(string,sizeof string,"banip %s",params);
 	SendRconCommand(string);
 	SendRconCommand("reloadbans");
-	format(string,sizeof string,"[ ! ] Uspjesno ste banovali IP.");
+	format(string,sizeof string,"[!] Uspjesno ste banovali IP.");
 	return SendClientMessage(playerid,-1,string);
 }
 
@@ -4676,14 +4676,14 @@ CMD:ptp(playerid, params[])
     new
 		Float:X, Float:Y, Float:Z;
 	new giveplayerid, targetid;
-    if(sscanf(params, "uu", giveplayerid, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ptp [giveplayerid] [targetid]");
+    if(sscanf(params, "uu", giveplayerid, targetid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /ptp [giveplayerid][targetid]");
 	
 	GetPlayerPos(targetid, X, Y, Z);
 	SetPlayerPos(giveplayerid, X, Y, Z);
 	
-	va_SendClientMessage(targetid, COLOR_RED, "[ ! ] Admin je teleportova igraca %s do vas.", GetName(giveplayerid));
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin vas je teleportovao do igraca %s", GetName(targetid));
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspje�no ste teleportovali %s do %s", GetName(giveplayerid), GetName(targetid));
+	va_SendClientMessage(targetid, COLOR_RED, "[!] Admin je teleportova igraca %s do vas.", GetName(giveplayerid));
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin vas je teleportovao do igraca %s", GetName(targetid));
+    va_SendClientMessage(playerid, COLOR_RED, "[!] Uspje�no ste teleportovali %s do %s", GetName(giveplayerid), GetName(targetid));
 	return 1;
 }
 
@@ -4694,13 +4694,13 @@ CMD:forceduty(playerid, params[])
  	new
  		giveplayerid;
 	if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /forceduty [playerid / Part of name]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /forceduty [playerid / Part of name]");
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	if(!PlayerInfo[giveplayerid][pAdmin])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't Game Admin!");
 
-	if (!Admin_OnDuty(giveplayerid))
+	if(!Admin_OnDuty(giveplayerid))
 	{
 		Admin_SetOnDuty(giveplayerid, true);
 
@@ -4758,11 +4758,11 @@ CMD:setservertime(playerid, params[])
 
 	new tmphour;
 	if(sscanf(params, "i", tmphour))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setservertime [time]");
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /setservertime [time]");
 		
 	foreach (new i : Player)
 	{
-	    if (IsPlayerConnected(i))
+	    if(IsPlayerConnected(i))
 	    {
 	        SetPlayerTime(i,tmphour,0);
 	    }

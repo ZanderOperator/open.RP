@@ -162,7 +162,7 @@ LoadPlayerDrugStats(playerid)
 			mysql_fquery_ex(g_SQL, 
 				"INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder) \n\
 					VALUES ('%d', '0', '0', '0')",
-				PlayerInfo[ playerid ][ pSQLID ]
+				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;
 		}
@@ -361,17 +361,17 @@ CMD:drug(playerid, params[])
 	{
 		if(sscanf(params, "s[8]udf", item, giveplayerid, slot, damnt)) 
 		{
-			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug give [playerid] [slot] [kolicina]");
+			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug give [playerid][slot][kolicina]");
 			return 1;
 		}
 		if(!IsPlayerConnected(giveplayerid) && !Bit1_Get(gr_PlayerLoggedIn, giveplayerid))
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nepravilan ID igraca!");
 
-		if( !ProxDetectorS(5.0, playerid, giveplayerid) )
+		if(!ProxDetectorS(5.0, playerid, giveplayerid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
 
 		if(slot > 5 || slot < 1)
-			return va_SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug give playerid [1 - 5] [0 - %d]", MAX_DRUG_AMOUNT);
+			return va_SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug give playerid [1 - 5][0 - %d]", MAX_DRUG_AMOUNT);
 			
 		if(giveplayerid == playerid)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozes dati drogu samome sebi!");
@@ -432,7 +432,7 @@ CMD:drug(playerid, params[])
 	{
 		if(sscanf(params, "s[8]df", item, slot, damnt)) 
 		{
-			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug put [slot] [kolicina]");
+			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug put [slot][kolicina]");
 			return 1;
 		}
 		
@@ -446,7 +446,7 @@ CMD:drug(playerid, params[])
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Vozilo nije CO vozilo!");
 
 		if(slot > 5 || slot < 1)
-			return va_SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug put [1 - 5] [0 - %d]", MAX_DRUG_AMOUNT);
+			return va_SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug put [1 - 5][0 - %d]", MAX_DRUG_AMOUNT);
 			
 		--slot;
 			
@@ -500,7 +500,7 @@ CMD:drug(playerid, params[])
 	{
 		if(sscanf(params, "s[8]df", item, slot, damnt)) 
 		{
-			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug take [slot] [kolicina]");
+			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug take [slot][kolicina]");
 			return 1;
 		}
 		
@@ -514,7 +514,7 @@ CMD:drug(playerid, params[])
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Vozilo nije CO vozilo!");
 			
 		if(slot > MAX_VEHICLE_DRUGS || slot < 1)
-			return va_SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug take [1 - %d] [0 - %d]", MAX_VEHICLE_DRUGS, MAX_DRUG_AMOUNT);
+			return va_SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug take [1 - %d][0 - %d]", MAX_VEHICLE_DRUGS, MAX_DRUG_AMOUNT);
 			
 		--slot;
 			
@@ -599,11 +599,11 @@ CMD:drug(playerid, params[])
         
 		if(sscanf(params, "s[8]if", item, slot, damnt)) 
 		{
-			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug use [slot] [kolicina]");
+			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug use [slot][kolicina]");
 			return 1;
 		}
 		if(slot > 5 || slot < 1)
-			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug use [1 - 5] [kolicina]");
+			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug use [1 - 5][kolicina]");
 			
 		--slot;
 		
@@ -750,7 +750,7 @@ CMD:drug(playerid, params[])
 	{
 		if(sscanf(params, "s[8]ddf", item, slot, slot2, damnt)) 
 		{
-			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug combine [slot] [sa slotom] [kolicina]");
+			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug combine [slot][sa slotom][kolicina]");
 			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Kombiniranjem droge mjenjate kvalitetu iste sa drogom koju dodajete.");
 			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Prvi slot vam je slot iz kojeg cete prebaciti drogu.");
 			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Nakon prebacivanja koristi /drug taste kako bi vidio kvalitetu droge!");
@@ -758,10 +758,10 @@ CMD:drug(playerid, params[])
 			return 1;
 		}
 		if((slot > 5 || slot < 1) || (slot2 > 5 || slot2 < 1))
-			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug combine [1 - 5] [1 - 5] [kolicina]");
+			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug combine [1 - 5][1 - 5][kolicina]");
 			
 		if(slot == slot2)
-			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug combine [1 - 5] [1 - 5] [kolicina]");
+			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug combine [1 - 5][1 - 5][kolicina]");
 			
 		--slot;
 		--slot2;
@@ -859,12 +859,12 @@ CMD:drug(playerid, params[])
 	{
 		if(sscanf(params, "s[8]if", item, slot, damnt)) 
 		{
-			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug drop [slot] [kolicina]");
+			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug drop [slot][kolicina]");
 			return 1;
 		}
 		
 		if(slot > 5 || slot < 1)
-			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug use [1 - 5] [kolicina]");
+			return SendClientMessage(playerid, COLOR_RED, "KORISTI: /drug use [1 - 5][kolicina]");
 		
 		--slot;
 		
@@ -1179,7 +1179,7 @@ CMD:agivedrug(playerid, params[])
 			format(dline, sizeof(dline), "%d) %s ", i, drugs[i][dName]);
 			strcat(drugsall, dline, sizeof(drugsall));
 		}
-		SendClientMessage(playerid, COLOR_GREY, "KORISTI: /agivedrug [id/ime igraca] [id droge] [kolicina 0.1-x] [kvaliteta]");
+		SendClientMessage(playerid, COLOR_GREY, "KORISTI: /agivedrug [id/ime igraca][id droge][kolicina 0.1-x][kvaliteta]");
 		va_SendClientMessage(playerid, COLOR_GREY, "DROGE: %s", drugsall);
 		SendClientMessage(playerid, COLOR_GREY, "KVALITETA: 1.0 - 9.0 VRLO LOSA, 10.0 - 19.0 LOSA, 20.0 - 29.0 DOBRA, 30.0 - 39.0 VRLO DOBRA, 40.0 - 50.0 ODLICNA");
 		return 1;

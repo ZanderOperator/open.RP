@@ -107,7 +107,7 @@ forward GPS_Loaded();
 public GPS_Loaded()
 {
     new rows = cache_num_rows();
-    if (!rows) 
+    if(!rows) 
         return print("MySQL Report: There are no GPS Locations in database to load!");
 
     for (new i = 0; i < rows; i++)
@@ -171,7 +171,7 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
 forward GPS_Created(gps_id);
 public GPS_Created(gps_id)
 {
-    if (gps_id == -1 || !GPS_data[gps_id][gpsExists])
+    if(gps_id == -1 || !GPS_data[gps_id][gpsExists])
         return 1;
 
     GPS_data[gps_id][gpsID] = cache_insert_id();
@@ -185,7 +185,7 @@ static GPS_Delete(gpsid)
 {
     foreach(new i : Player)
     {
-        if (GPS_data[gpsid][gpsMapIcon] != -1)
+        if(GPS_data[gpsid][gpsMapIcon] != -1)
             RemovePlayerMapIcon(gpsid, GPS_data[i][gpsMapIcon]);
     }
 
@@ -201,7 +201,7 @@ static GPS_Delete(gpsid)
 
 static GPS_Disable(playerid)
 {
-    if (Player_GpsActivated(playerid))
+    if(Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
         GPS_DistanceTD(playerid, bool:false);
@@ -209,7 +209,7 @@ static GPS_Disable(playerid)
 
         foreach(new i : GPS_location)
         {
-            if (GPS_data[i][gpsMapIcon] != -1)
+            if(GPS_data[i][gpsMapIcon] != -1)
                 RemovePlayerMapIcon(playerid, GPS_data[i][gpsMapIcon]);
             GPS_ResetList(playerid);
         }
@@ -228,7 +228,7 @@ static GPS_ResetList(playerid)
 
 static GPS_DistanceTD(playerid, bool:show)
 {
-    if (show)
+    if(show)
     {
         gps_Meters[playerid] = CreatePlayerTextDraw(playerid, 321.333984, 410.838531, "");
         PlayerTextDrawLetterSize(playerid, gps_Meters[playerid], 0.123666, 1.110517);
@@ -252,7 +252,7 @@ static GPS_DistanceTD(playerid, bool:show)
 
 static GPS_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
 {
-    if (!Player_GpsActivated(playerid))
+    if(!Player_GpsActivated(playerid))
         GPS_DistanceTD(playerid, false);
     
     new 
@@ -291,7 +291,7 @@ GPS_DialogShow(playerid, bool:admin = false)
 
     foreach(new i : GPS_location)
     {
-        if (i == 0)
+        if(i == 0)
             format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
         else
             format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
@@ -353,7 +353,7 @@ hook OnPlayerSpawn(playerid)
 {
     foreach(new i : GPS_location)
     {
-        if (GPS_data[i][gpsMapIcon] != -1)
+        if(GPS_data[i][gpsMapIcon] != -1)
         {
             SetPlayerMapIcon(playerid, 
                 GPS_data[i][gpsID],     
@@ -371,7 +371,7 @@ hook OnPlayerSpawn(playerid)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-    if (Player_GpsActivated(playerid))
+    if(Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
         GPS_DistanceTD(playerid, false);
@@ -383,14 +383,14 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    if (!response)
+    if(!response)
         return 1;
 
     switch (dialogid)
     {
         case DIALOG_CREATEGPS:
         {
-            if (strlen(inputtext) < 3 || strlen(inputtext) > 32)
+            if(strlen(inputtext) < 3 || strlen(inputtext) > 32)
             {
                 ShowPlayerDialog(playerid, 
                     DIALOG_CREATEGPS, 
@@ -414,7 +414,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             GetPlayerPos(playerid, X, Y, Z);
             strcpy(gpsname, inputtext);
             free_id = GPS_Create(gpsname, X, Y, Z);
-            if (free_id == -1)
+            if(free_id == -1)
             {
                 SendFormatMessage(playerid, 
                     MESSAGE_TYPE_ERROR, 
@@ -441,7 +441,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new 
                 gpsid = strval(inputtext);
-            if (!Iter_Contains(GPS_location, gpsid))
+            if(!Iter_Contains(GPS_location, gpsid))
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");
                 return 1;
@@ -494,10 +494,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(portedid == INVALID_PLAYER_ID)
                 portedid = playerid;
             
-            if (!IsPlayerInAnyVehicle(portedid))
+            if(!IsPlayerInAnyVehicle(portedid))
                 SetPlayerPosEx(portedid, GPS_data[listitem][gpsPosX], GPS_data[listitem][gpsPosY], GPS_data[listitem][gpsPosZ]);
             
-            if (GetPlayerState(portedid) == PLAYER_STATE_DRIVER)
+            if(GetPlayerState(portedid) == PLAYER_STATE_DRIVER)
                 AC_SetVehiclePos(GetPlayerVehicleID(portedid), GPS_data[listitem][gpsPosX], GPS_data[listitem][gpsPosY], GPS_data[listitem][gpsPosZ]);
                         
             if(portedid != playerid)
@@ -521,7 +521,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new 
                 gpsid, 
                 mapicon;
-            if (sscanf(inputtext, "ii", gpsid, mapicon))
+            if(sscanf(inputtext, "ii", gpsid, mapicon))
             {
                 ShowPlayerDialog(playerid, 
                     DIALOG_GPSMAPICON, 
@@ -535,7 +535,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 );
                 return 1;
             }
-            if (!Iter_Contains(GPS_location, gpsid))
+            if(!Iter_Contains(GPS_location, gpsid))
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");
                 return 1;
@@ -544,7 +544,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             GPS_data[gpsid][gpsMapIcon] = mapicon;
             GPS_Save(gpsid);
 
-            if (mapicon != -1)
+            if(mapicon != -1)
             {
                 foreach(new i: Player)
                     SetPlayerMapIcon(i, GPS_data[gpsid][gpsID], GPS_data[gpsid][gpsPosX], GPS_data[gpsid][gpsPosY], GPS_data[gpsid][gpsPosZ], GPS_data[gpsid][gpsMapIcon], 0, MAPICON_LOCAL);
@@ -573,7 +573,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_MOVEGPS:
         {
             new gpsid = strval(inputtext);
-            if (!Iter_Contains(GPS_location, gpsid))
+            if(!Iter_Contains(GPS_location, gpsid))
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");            
                 return 1;
@@ -613,12 +613,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:gps(playerid, params[])
 {
-    if (Player_IsWorkingJob(playerid))
+    if(Player_IsWorkingJob(playerid))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't use GPS while you work!");
         return 1;
     }
-    if (Player_GpsActivated(playerid))
+    if(Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
         GPS_DistanceTD(playerid, bool:false);
@@ -638,7 +638,7 @@ CMD:portplayer(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 1) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1+!");
 	if(sscanf(params, "u", giveplayerid))
-	 	return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /portplayer [playerid / Part of name]");
+	 	return SendClientMessage(playerid, COLOR_RED, "[?]: /portplayer [playerid / Part of name]");
 	if(IsPlayerConnected(playerid))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't connected!");
     
@@ -655,7 +655,7 @@ CMD:portplayer(playerid, params[])
 
 CMD:port(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2)
+    if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
         return 1;
@@ -667,20 +667,20 @@ CMD:port(playerid, params[])
 
 CMD:agps(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337)
+    if(PlayerInfo[playerid][pAdmin] < 1337)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
         return 1;
     }
     new 
         action[15];
-    if (sscanf(params, "s[15] ", action))
+    if(sscanf(params, "s[15] ", action))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] /agps [option].");
+        SendClientMessage(playerid, COLOR_RED, "[!] /agps [option].");
         SendClientMessage(playerid, -1, "OPTS: create, delete, setadmin, mapicon, goto, move, rename.");
         return 1;
     }
-    if (!strcmp(action, "create", true))
+    if(!strcmp(action, "create", true))
     {
         ShowPlayerDialog(playerid, 
             DIALOG_CREATEGPS, 
@@ -692,7 +692,7 @@ CMD:agps(playerid, params[])
             "Close"
         );
     }
-    if (!strcmp(action, "move", true))
+    if(!strcmp(action, "move", true))
     {
         ShowPlayerDialog(playerid, 
             DIALOG_MOVEGPS, 
@@ -705,28 +705,28 @@ CMD:agps(playerid, params[])
         );
         return 1;
     }
-    if (!strcmp(action, "goto", true))
+    if(!strcmp(action, "goto", true))
     {
         GPS_PortPlayer[playerid] = INVALID_PLAYER_ID;
         GPS_DialogShow(playerid, true);
         return 1;
     }
-    if (!strcmp(action, "setadmin", true))
+    if(!strcmp(action, "setadmin", true))
     {
         new gpsid, adminloc;
-        if (sscanf(params, "s[15]ii", action, gpsid, adminloc))
+        if(sscanf(params, "s[15]ii", action, gpsid, adminloc))
         {
             SendClientMessage(playerid, 
                 COLOR_RED, 
-                "[ ! ] /agps setadmin [gpsid] \n\
+                "[!] /agps setadmin [gpsid] \n\
                     [0 = for all players | 1 = only for Team Staff]"
                 );
             return 1;
         }
-        if (!Iter_Contains(GPS_location, gpsid))
+        if(!Iter_Contains(GPS_location, gpsid))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");
 
-        if (adminloc < 0 || adminloc > 1)
+        if(adminloc < 0 || adminloc > 1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Location status can be only 1 or 0!");
 
         GPS_data[gpsid][gpsAdmin] = adminloc;
@@ -740,7 +740,7 @@ CMD:agps(playerid, params[])
             (!adminloc) ? ("for everyone") : ("for Team Staff only")
         );
     }
-    if (!strcmp(action, "mapicon", true))
+    if(!strcmp(action, "mapicon", true))
     {
        ShowPlayerDialog(playerid, 
             DIALOG_GPSMAPICON, 
@@ -753,7 +753,7 @@ CMD:agps(playerid, params[])
             "Close"
         );
     }
-    if (!strcmp(action, "delete", true))
+    if(!strcmp(action, "delete", true))
     {
         ShowPlayerDialog(playerid, 
             DIALOG_DELETEGPS, 

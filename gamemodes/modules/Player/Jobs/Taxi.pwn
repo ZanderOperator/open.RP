@@ -32,7 +32,7 @@ enum E_P_TAXI_INFO
 	pTaxiVoted
 }
 static 	
-	TaxiInfo[ MAX_PLAYERS ][ E_P_TAXI_INFO ];
+	TaxiInfo[MAX_PLAYERS][E_P_TAXI_INFO];
 
 static	
 	PlayerText:Taximeter[MAX_PLAYERS][10];
@@ -131,7 +131,7 @@ Player_TaxiVoted(playerid)
 
 IsATaxi(model)
 {
-    if( model == 420 || model == 438 )
+    if(model == 420 || model == 438 )
 		return (true);
 	return (false);
 }
@@ -293,7 +293,7 @@ ResetTaxiVariables(playerid)
 
 Public:_TaximeterCount(playerid) {
 	new 
-		Float: Distance = GetPlayerDistanceFromPoint(playerid,TaxiData[playerid][eTaxiStartPos][ 0 ], TaxiData[playerid][eTaxiStartPos][ 1 ], TaxiData[playerid][eTaxiStartPos][ 2 ] / TaxiData[playerid][eTaxiMetersFare]),
+		Float: Distance = GetPlayerDistanceFromPoint(playerid,TaxiData[playerid][eTaxiStartPos][0], TaxiData[playerid][eTaxiStartPos][1], TaxiData[playerid][eTaxiStartPos][2] / TaxiData[playerid][eTaxiMetersFare]),
 		next_payment = TaxiData[playerid][eTaxiMetersFare],
 		checker, traveled = floatround(Distance),
 		buffer[32];
@@ -344,9 +344,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) 
 	{
-		if(IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid))) ) 
+		if(IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid)))) 
 		{
-			if( PlayerJob[playerid][pJob] == JOB_TAXI ) 
+			if(PlayerJob[playerid][pJob] == JOB_TAXI ) 
 			{
 				if(TaxiData[playerid][eTaxiDuty] == true)
 					return CreateTaximeter(playerid, true);
@@ -438,10 +438,10 @@ CMD:taxi(playerid, params[])
 	new action[18],
 		string[128];
 		
-	if (sscanf(params, "s[18] ", action)) 
+	if(sscanf(params, "s[18] ", action)) 
 	{
 		SendClientMessage(playerid, COLOR_WHITE, "[KORISTI]: /taxi [opcija].");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] start, stop, duty, setfare, myrating.");
+		SendClientMessage(playerid, COLOR_RED, "[!] start, stop, duty, setfare, myrating.");
 		return (true);
     }
 	
@@ -469,7 +469,7 @@ CMD:taxi(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u taksiju!");
 		
 		if(sscanf( params, "s[18]is[32]", action, passanger_id, destination)) 
-			return SendClientMessage( playerid, -1, "[KORISTI]: /taxi start [targetid] [destination].");
+			return SendClientMessage( playerid, -1, "[KORISTI]: /taxi start [targetid][destination].");
 		
 		if(passanger_id == INVALID_PLAYER_ID) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste pogresan id.");
@@ -549,14 +549,14 @@ CMD:taxi(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u taksiju!");
 		
 		if(sscanf( params, "s[14]ii", action, fare, meters)) 
-			return SendClientMessage( playerid, -1, "[KORISTI]: /taxi setfare [fare] [meters]."), SendClientMessage(playerid, 0xAFAFAFAA, "=> Fare je koliko cete zaraditi dolara svakih '?' metara."), 
+			return SendClientMessage( playerid, -1, "[KORISTI]: /taxi setfare [fare][meters]."), SendClientMessage(playerid, 0xAFAFAFAA, "=> Fare je koliko cete zaraditi dolara svakih '?' metara."), 
 				SendClientMessage(playerid, 0xAFAFAFAA, "=> 'Meters' je na koliko odvozenih metara ce te dobiti novac.");
 		
-		if( fare < DEFAULT_TAXI_FARE ) 
+		if(fare < DEFAULT_TAXI_FARE ) 
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Fare ne smije biti manji od defualt postavljenog (%s = defualt).", DEFAULT_TAXI_FARE);		
-		if( meters < 500 ) 
+		if(meters < 500 ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Meters ne smije biti manji od 500(m).");	
-		if( fare > 10 ) 
+		if(fare > 10 ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Fare ne smije biti veci od 10$.");	
 				
 		TaxiData[playerid][eTaxiFare] = fare;
@@ -572,7 +572,7 @@ CMD:taxi(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u taksiju!");
 			
   		if(TaxiData[playerid][eTaxiDuty] == false) {
-			if( PlayerJob[playerid][pFreeWorks] < 1 ) 
+			if(PlayerJob[playerid][pFreeWorks] < 1 ) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
 			// Vars

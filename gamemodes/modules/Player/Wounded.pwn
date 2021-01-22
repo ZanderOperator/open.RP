@@ -51,7 +51,7 @@ new
 	
 // 32bit
 static stock
-	Timer:PlayerBleedTimer[ MAX_PLAYERS ];
+	Timer:PlayerBleedTimer[MAX_PLAYERS];
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
@@ -127,8 +127,8 @@ stock ApplyWoundedAnimation(playerid, bodypart)
 
 stock ResetPlayerWounded(playerid)
 {
-	if( Bit8_Get( r_PlayerWounded, playerid ) != 0 ) 
-		stop PlayerBleedTimer[ playerid ];
+	if(Bit8_Get( r_PlayerWounded, playerid ) != 0 ) 
+		stop PlayerBleedTimer[playerid];
 	
 	DestroyPlayerWoundedTDs(playerid);
 	Bit8_Set(r_PlayerWounded, playerid, 0);
@@ -140,10 +140,10 @@ stock ResetPlayerWounded(playerid)
 	SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 	999);
 	SetPlayerDrunkLevel(playerid, 0);
 	
-	PlayerWounded[ playerid ] 	= false;
-	PlayerWoundedAnim[ playerid ] = false;
-	PlayerWoundedSeconds[ playerid ] = 0;
-	PlayerWTripTime[ playerid ] = 0;
+	PlayerWounded[playerid] 	= false;
+	PlayerWoundedAnim[playerid] = false;
+	PlayerWoundedSeconds[playerid] = 0;
+	PlayerWTripTime[playerid] = 0;
 	return 1;
 }
 
@@ -168,8 +168,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 
 	mysql_fquery(g_SQL, "INSERT INTO server_deaths (killer_id, death_id, weaponid, date) \n\
 		VALUES ('%d','%d','%d','%d')",
-		PlayerInfo[ KilledBy[playerid] ][ pSQLID ],
-		PlayerInfo[ playerid ][ pSQLID ],
+		PlayerInfo[KilledBy[playerid]][pSQLID],
+		PlayerInfo[playerid][pSQLID],
 		KilledReason[playerid],
 		gettimestamp()
 	);
@@ -199,7 +199,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
 
 	// FIRST DEATH
-	if( DeathData[ playerid ][ ddOverall ] > 0)
+	if(DeathData[playerid][ddOverall] > 0)
 	{
 		DeathTime[playerid] = gettimestamp() + 60;
 		//DropPlayerMoney(playerid); // Gubitak novca
@@ -276,7 +276,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 			else
 			{
 				ApplyWoundedAnimation(playerid, bodypart);
-				SendClientMessage(playerid, COLOR_RED, "[ ! ] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
+				SendClientMessage(playerid, COLOR_RED, "[!] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
 				SendClientMessage(playerid, COLOR_DEATH, "* Tek nakon 30 sec mozete ulaziti u kola kao vozac/suvozac.");
 				GameTextForPlayer(playerid, "~b~TESKO RANJEN", 5000, 3);
 				SetPlayerHealth(playerid, 25.0);
@@ -316,7 +316,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				PlayerDeath[playerid][pDeathZ] 	= Z;
 				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
 				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
-				if( DeathData[ playerid ][ ddOverall ] > 0)
+				if(DeathData[playerid][ddOverall] > 0)
 				{
 					DeathTime[playerid] = gettimestamp() + 60;
 					//DropPlayerMoney(playerid); // Gubitak novca
@@ -395,9 +395,9 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				WoundedBy[playerid] = issuerid;
 				
 				ApplyWoundedAnimation(playerid, bodypart);
-				SendClientMessage(playerid, COLOR_RED, "[ ! ] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
+				SendClientMessage(playerid, COLOR_RED, "[!] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
 				SendClientMessage(playerid, COLOR_DEATH, "* Tek nakon 30 sec mozete ulaziti u kola kao vozac/suvozac.");
-				SendClientMessage(playerid, COLOR_RED, "[ ! ] Da prihvatite smrt kucajte /acceptdeath");
+				SendClientMessage(playerid, COLOR_RED, "[!] Da prihvatite smrt kucajte /acceptdeath");
 				SetPlayerHealth(playerid, 25.0);
 				AC_ResetPlayerWeapons(playerid);
 				new
@@ -434,7 +434,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				PlayerDeath[playerid][pDeathZ] 	= Z;
 				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
 				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
-				if( DeathData[ playerid ][ ddOverall ] > 0)
+				if(DeathData[playerid][ddOverall] > 0)
 				{
 					DeathTime[playerid] = gettimestamp() + 60;
 					//DropPlayerMoney(playerid); // Gubitak novca
@@ -465,13 +465,13 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 
 stock static DestroyPlayerWoundedTDs(playerid)
 {
-	if( WndedBcg[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, WndedBcg[ playerid ]);
-		WndedBcg[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	if(WndedBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, WndedBcg[playerid]);
+		WndedBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( WndedText[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, WndedText[ playerid ]);
-		WndedText[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	if(WndedText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, WndedText[playerid]);
+		WndedText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
@@ -513,7 +513,7 @@ stock static CreatePlayerWoundedTDs(playerid)
 */
 stock static SetPlayerBleeding(playerid, type)
 {
-	if( playerid == INVALID_PLAYER_ID ) return 0;
+	if(playerid == INVALID_PLAYER_ID ) return 0;
 	new
 		Float:health;
 	GetPlayerHealth(playerid, health);
@@ -523,15 +523,15 @@ stock static SetPlayerBleeding(playerid, type)
 		}
 		case PLAYER_WOUNDED_ARMS: {
 			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT );
-			PlayerBleedTimer[ playerid ] = repeat OnPlayerBleed[3500](playerid);
+			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[3500](playerid);
 		}
 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {
 			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
-			PlayerBleedTimer[ playerid ] = repeat OnPlayerBleed[2200](playerid);
+			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[2200](playerid);
 		}
 		 case PLAYER_WOUNDED_HEAD: {
 			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT );
-			PlayerBleedTimer[ playerid ] = repeat OnPlayerBleed[1500](playerid);
+			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[1500](playerid);
 		}
 	}
 	return 1;
@@ -582,9 +582,9 @@ timer OnPlayerBleed[500](playerid)
 	{
 		case PLAYER_WOUNDED_ARMS: 
 		{
-			if( ( health - WOUND_ARMS_AMOUNT ) <= 10.0 ) 
+			if(( health - WOUND_ARMS_AMOUNT ) <= 10.0 ) 
 			{
-				stop PlayerBleedTimer[ playerid ];
+				stop PlayerBleedTimer[playerid];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				
 				SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,				999);
@@ -598,9 +598,9 @@ timer OnPlayerBleed[500](playerid)
 		}
 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: 
 		{			
-			if( ( health - WOUND_BODY_AMOUNT ) <= 10.0 ) 
+			if(( health - WOUND_BODY_AMOUNT ) <= 10.0 ) 
 			{
-				stop PlayerBleedTimer[ playerid ];
+				stop PlayerBleedTimer[playerid];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				return 1;
 			}
@@ -608,9 +608,9 @@ timer OnPlayerBleed[500](playerid)
 		}
 		case PLAYER_WOUNDED_HEAD: 
 		{
-			if( ( health - WOUND_HEAD_AMOUNT ) <= 10.0 ) 
+			if(( health - WOUND_HEAD_AMOUNT ) <= 10.0 ) 
 			{
-				stop PlayerBleedTimer[ playerid ];
+				stop PlayerBleedTimer[playerid];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				return 1;
 			}
@@ -658,7 +658,7 @@ hook OnPlayerDeath(playerid, killerid, reason)
 /* LOGAN DAMAGE SYSTEM
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 {
-	if( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return 0;
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
 	
     new Float:health, Float:armour, Float:rnd;
 	
@@ -685,7 +685,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	        }
 	        case 22, 23: //Colt, silencer
 	        {
-	            if (!Player_HasTaserGun(issuerid))
+	            if(!Player_HasTaserGun(issuerid))
 	            {
 	            	rnd = 25/(fDistance+4)*9.0;
 	            	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -700,7 +700,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 25,27: //Shootgun
 			{
-			    if (!Player_BeanbagBulletsActive(issuerid))
+			    if(!Player_BeanbagBulletsActive(issuerid))
 			    {
    					rnd = 25/(fDistance)*8.8;
 			    	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -749,7 +749,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	        }
 	        case 22, 23: //Colt, silencer
 	        {
-	            if (!Player_HasTaserGun(issuerid))
+	            if(!Player_HasTaserGun(issuerid))
 	            {
 	            	rnd = 25/(fDistance+4)*9.0;
 	            	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -764,7 +764,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 25,27: //Shootgun
 			{
-			    if (!Player_BeanbagBulletsActive(issuerid))
+			    if(!Player_BeanbagBulletsActive(issuerid))
 			    {
    					rnd = 25/(fDistance)*8.8;
 			    	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -811,7 +811,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 22, 23: //Colt, silencer
 			{
-				if (!Player_HasTaserGun(issuerid))
+				if(!Player_HasTaserGun(issuerid))
 				{
 					rnd = 25/(fDistance+4)*9.0;
 					DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -826,7 +826,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 25,27: //Shootgun
 			{
-				if (!Player_BeanbagBulletsActive(issuerid))
+				if(!Player_BeanbagBulletsActive(issuerid))
 				{
 					rnd = 25/(fDistance)*8.8;
 					DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -868,7 +868,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 // Fixano sve za update V18 by Khawaja
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 {
-	if( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return 0;
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
 	
     new Float:health, Float:armour, Float:damage,
 		Float:dX, Float:dY, Float: dZ;
@@ -881,7 +881,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	{
 		case WEAPON_COLT45 .. WEAPON_SNIPER, WEAPON_MINIGUN, WEAPON_SPRAYCAN, WEAPON_FIREEXTINGUISHER: 
 		{
-			if(ProxDetectorS(0.7, issuerid, playerid) ) 
+			if(ProxDetectorS(0.7, issuerid, playerid)) 
 				return 1;
 		}
 	}
@@ -918,7 +918,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
-	            if (!Player_HasTaserGun(issuerid)) {
+	            if(!Player_HasTaserGun(issuerid)) {
 	            	damage = 35;
 	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -930,10 +930,10 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 			}
 			case 25,27: {
-			    if (!Player_BeanbagBulletsActive(issuerid)) {
-   					if(ProxDetectorS(5.0, issuerid, playerid) )
+			    if(!Player_BeanbagBulletsActive(issuerid)) {
+   					if(ProxDetectorS(5.0, issuerid, playerid))
 						damage = 80;
-					if(!ProxDetectorS(5.0, issuerid, playerid) )
+					if(!ProxDetectorS(5.0, issuerid, playerid))
 						damage = 40;
 			    	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -995,7 +995,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
-	            if (!Player_HasTaserGun(issuerid)) {
+	            if(!Player_HasTaserGun(issuerid)) {
 	            	damage = 25;
 	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -1007,10 +1007,10 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 			}
 			case 25,27: {
-			    if (!Player_BeanbagBulletsActive(issuerid)) {
-   					if(ProxDetectorS(5.0, issuerid, playerid) )
+			    if(!Player_BeanbagBulletsActive(issuerid)) {
+   					if(ProxDetectorS(5.0, issuerid, playerid))
 						damage = 80;
-					if(!ProxDetectorS(5.0, issuerid, playerid) )
+					if(!ProxDetectorS(5.0, issuerid, playerid))
 						damage = 40;
 			    	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -1072,7 +1072,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
-	            if (!Player_HasTaserGun(issuerid)) {
+	            if(!Player_HasTaserGun(issuerid)) {
 	            	damage = 15;
 	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -1084,10 +1084,10 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 			}
 			case 25,27: {
-			    if (!Player_BeanbagBulletsActive(issuerid)) {
-   					if(ProxDetectorS(5.0, issuerid, playerid) )
+			    if(!Player_BeanbagBulletsActive(issuerid)) {
+   					if(ProxDetectorS(5.0, issuerid, playerid))
 						damage = 80;
-					if(!ProxDetectorS(5.0, issuerid, playerid) )
+					if(!ProxDetectorS(5.0, issuerid, playerid))
 						damage = 40;
 			    	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}

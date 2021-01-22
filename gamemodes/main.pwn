@@ -185,21 +185,21 @@ new
 // Players 32 bit
 new
 	Float:PlayerTrunkPos[MAX_PLAYERS][3],
-	GlobalSellingPlayerID[ MAX_PLAYERS ] = { 0, ... },
-	GlobalSellingPrice[ MAX_PLAYERS ] = { 0, ... },
-	PlayerExName[ MAX_PLAYERS ][ MAX_PLAYER_NAME ],
-	VehicleEquipment[ MAX_PLAYERS ],
-	VehicleTrunk[ MAX_PLAYERS ],
-	bool:BoomBoxPlanted[ MAX_PLAYERS ],
-	BoomBoxObject[ MAX_PLAYERS ],
+	GlobalSellingPlayerID[MAX_PLAYERS] = { 0, ... },
+	GlobalSellingPrice[MAX_PLAYERS] = { 0, ... },
+	PlayerExName[MAX_PLAYERS][MAX_PLAYER_NAME],
+	VehicleEquipment[MAX_PLAYERS],
+	VehicleTrunk[MAX_PLAYERS],
+	bool:BoomBoxPlanted[MAX_PLAYERS],
+	BoomBoxObject[MAX_PLAYERS],
 	PlayerAction[MAX_PLAYERS],
-	bool:PlayerWounded[ MAX_PLAYERS ],
-	PlayerWoundedSeconds[ MAX_PLAYERS ],
-	PlayerWTripTime[ MAX_PLAYERS ],
-	bool:SafeSpawned[ MAX_PLAYERS ],
-	bool:PlayerCrashed[ MAX_PLAYERS ],
-	bool:PlayerSyncs[ MAX_PLAYERS ],
-	bool:Frozen[ MAX_PLAYERS ],
+	bool:PlayerWounded[MAX_PLAYERS],
+	PlayerWoundedSeconds[MAX_PLAYERS],
+	PlayerWTripTime[MAX_PLAYERS],
+	bool:SafeSpawned[MAX_PLAYERS],
+	bool:PlayerCrashed[MAX_PLAYERS],
+	bool:PlayerSyncs[MAX_PLAYERS],
+	bool:Frozen[MAX_PLAYERS],
 	bool:PlayerBlocked[MAX_PLAYERS],
 	bool:PlayerWoundedAnim[MAX_PLAYERS],
 	bool:rob_started[MAX_PLAYERS] = false,
@@ -208,7 +208,7 @@ new
 	KilledReason[MAX_PLAYERS],
 	gStartedWork[MAX_PLAYERS],
 	InjectPlayer[MAX_PLAYERS],
-	CallingId[ MAX_PLAYERS ] = { 999, ... };
+	CallingId[MAX_PLAYERS] = { 999, ... };
 
 
 //Players Vars
@@ -350,7 +350,7 @@ Public:SaveAll()
 	{
 		foreach (new i : Player) 
 		{
-			if (Bit1_Get(gr_PlayerLoggedIn, i) != 0)
+			if(Bit1_Get(gr_PlayerLoggedIn, i) != 0)
 				Kick(i);
 		}
 	}
@@ -362,7 +362,7 @@ Public:GlobalServerTimer()
 		tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 
-	if( (tmphour > ghour) || (tmphour == 0 && ghour == 23) )
+	if((tmphour > ghour) || (tmphour == 0 && ghour == 23))
 	{
 		SetWorldTime(tmphour);
 		ghour = tmphour;
@@ -380,7 +380,7 @@ Public:GlobalServerTimer()
 
 Public:DynamicWeather()
 {
-	if( gettimestamp() >= WeatherTimer )
+	if(gettimestamp() >= WeatherTimer )
 	{
 		WeatherTimer = gettimestamp() + 6000;
 		new tmphour,
@@ -608,10 +608,10 @@ hook OnGameModeExit()
 {
     for (new i; i < MAX_OBJECTS; i++)
     {
-        if (IsValidDynamicObject(i))
+        if(IsValidDynamicObject(i))
             DestroyDynamicObject(i);
 
-        if (IsValidObject(i))
+        if(IsValidObject(i))
             DestroyObject(i);
     }
     return 1;
@@ -619,13 +619,13 @@ hook OnGameModeExit()
 
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    if (ispassenger)
+    if(ispassenger)
     {
-        if (VehicleInfo[vehicleid][vLocked])
+        if(VehicleInfo[vehicleid][vLocked])
         {
             RemovePlayerFromVehicle(playerid);
 
-            if (GetPlayerAnimationIndex(playerid))
+            if(GetPlayerAnimationIndex(playerid))
             {
                 new
                     animlib[32],
@@ -634,7 +634,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
                 GetAnimationName(GetPlayerAnimationIndex(playerid), animlib,
                                  sizeof(animlib), animname, sizeof(animname));
 
-                if (strfind(animname, "fall", true) != -1)
+                if(strfind(animname, "fall", true) != -1)
                     return 1;
             }
 
@@ -652,7 +652,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-    if (!cmdtext[0])
+    if(!cmdtext[0])
     {
         Kick(playerid); // because it's impossible to send valid NULL command
         return 0;
@@ -760,12 +760,12 @@ public OnPlayerRequestClass(playerid, classid)
 		KickMessage(playerid);
 		return 1;
 	}
-	if (!IsPlayerLogged(playerid) || IsPlayerConnected(playerid))
+	if(!IsPlayerLogged(playerid) || IsPlayerConnected(playerid))
 	{
 		//Resets
 		ResetPlayerVariables(playerid);
 
-		if( IsPlayerNPC(playerid) ) {
+		if(IsPlayerNPC(playerid)) {
 			SpawnPlayer(playerid);
 			return 1;
 		}
@@ -857,7 +857,7 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
-    if (weaponid == WEAPON_FIREEXTINGUISHER)
+    if(weaponid == WEAPON_FIREEXTINGUISHER)
     {
         new Float: oldHealth;
         GetPlayerHealth(playerid, oldHealth);
@@ -877,7 +877,7 @@ hook OnPlayerDeath(playerid, killerid, reason)
 	if(KilledBy[playerid] == INVALID_PLAYER_ID && killerid == INVALID_PLAYER_ID || playerid == INVALID_PLAYER_ID || !SafeSpawned[playerid])
 		return 1;
 
-	if( !SafeSpawned[ KilledBy[playerid] ] ) 
+	if(!SafeSpawned[KilledBy[playerid]] ) 
 		return SendClientMessage(KilledBy[playerid], COLOR_RED, "[ANTI-CHEAT]: You are not safely spawned, therefore, banned!"), BanMessage(KilledBy[playerid]), 0;
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -903,7 +903,7 @@ hook OnPlayerText(playerid, text[])
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while being muted!");
 		return 0;
 	}
-	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) )
+	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
 		return 0;
 
 	if(!SafeSpawned[playerid] || Player_SecurityBreach(playerid))
@@ -918,7 +918,7 @@ hook OnPlayerText(playerid, text[])
 	if(CallingId[playerid] == 999 && PlayerCallPlayer[playerid] == INVALID_PLAYER_ID) // Igrac nije u pozivu
 	{
 		
-		if( IsPlayerInAnyVehicle(playerid) ) {
+		if(IsPlayerInAnyVehicle(playerid)) {
 			format(tmpString, sizeof(tmpString), "%s says%s(vehicle): %s", GetName(playerid), PrintAccent(playerid), text);
 			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 		}
@@ -1007,15 +1007,15 @@ hook function ResetPlayerVariables(playerid)
 	
 
 	// Anti Spam
-	AntiSpamInfo[ playerid ][ asPrivateMsg ] 	= 0;
-	AntiSpamInfo[ playerid ][ asCreditPay ] 	= 0;
-	AntiSpamInfo[ playerid ][ asCarTrunk ] 		= 0;
-	AntiSpamInfo[ playerid ][ asHouseWeapon ] 	= 0;
-	AntiSpamInfo[ playerid ][ asBuying ] 		= 0;
-	AntiSpamInfo[ playerid ][ asDoorShout ] 	= 0;
+	AntiSpamInfo[playerid][asPrivateMsg] 	= 0;
+	AntiSpamInfo[playerid][asCreditPay] 	= 0;
+	AntiSpamInfo[playerid][asCarTrunk] 		= 0;
+	AntiSpamInfo[playerid][asHouseWeapon] 	= 0;
+	AntiSpamInfo[playerid][asBuying] 		= 0;
+	AntiSpamInfo[playerid][asDoorShout] 	= 0;
 
 	// Tut
-	if( Bit1_Get( gr_PlayerOnTutorial, playerid ) ) 
+	if(Bit1_Get( gr_PlayerOnTutorial, playerid )) 
 	{
 		Bit1_Set(gr_PlayerOnTutorial, playerid, false);
 		stop TutTimer[playerid];
@@ -1038,9 +1038,9 @@ hook function ResetPlayerVariables(playerid)
 	ResetPlayerPreviousInfo(playerid);
 
 	// 32bit
-	PlayerExName[ playerid ][ 0 ] 	= '\0';
-	VehicleEquipment[ playerid ]	= INVALID_VEHICLE_ID;
-	InjectPlayer[ playerid ]     	= INVALID_PLAYER_ID;
+	PlayerExName[playerid][0] 	= '\0';
+	VehicleEquipment[playerid]	= INVALID_VEHICLE_ID;
+	InjectPlayer[playerid]     	= INVALID_PLAYER_ID;
 	ServicePrice[playerid]			= 0;
 	KilledBy[playerid]				= INVALID_PLAYER_ID;
 	WoundedBy[playerid]				= INVALID_PLAYER_ID;
@@ -1049,10 +1049,10 @@ hook function ResetPlayerVariables(playerid)
 	PlayerAction[playerid]			= 0;
 
 	// Bools
-	PlayerCrashed[ playerid ] 	= false;
-	SafeSpawned[ playerid ] 	= false;
-	PlayerSyncs[ playerid ] 	= false;
-	PlayerBlocked[ playerid ] 	= false;
+	PlayerCrashed[playerid] 	= false;
+	SafeSpawned[playerid] 	= false;
+	PlayerSyncs[playerid] 	= false;
+	PlayerBlocked[playerid] 	= false;
 
 	return continue(playerid);
 }
@@ -1071,14 +1071,14 @@ public OnPlayerActionChange(playerid, oldaction, newaction) // Callbacks.inc by 
 
 hook OnPlayerUpdate(playerid)
 {
-	if( IsPlayerAlive(playerid) )
+	if(IsPlayerAlive(playerid))
 	{
 		if(PlayerTick[playerid][ptMoney] < gettimestamp()) 
 		{
 			PlayerTick[playerid][ptMoney] = gettimestamp();
 			AC_MoneyDetect(playerid);
-			if( !PlayerSyncs[ playerid ] ) {
-				PlayerSyncs[ playerid ] = true;
+			if(!PlayerSyncs[playerid] ) {
+				PlayerSyncs[playerid] = true;
 			}
 			return 1;
 		}

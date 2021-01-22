@@ -83,7 +83,7 @@ public OnPlayerConnect(playerid)
     gIsPlayerWeaponZoomedIn[playerid] = false;
     gAOWeaponZoomEnabled[playerid] = true;
     gRemoveNormAOWeaponZoom[playerid] = false;
-    if (funcidx("AOXhook_OnPlayerConnect") != -1) {
+    if(funcidx("AOXhook_OnPlayerConnect") != -1) {
         return CallLocalFunction("AOXhook_OnPlayerConnect", "d", playerid);
     }
     return 1;
@@ -98,11 +98,11 @@ forward AOXhook_OnPlayerConnect(playerid);
  
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if (gAOWeaponZoomEnabled[playerid]) {
-        if (((newkeys & (KEY_HANDBRAKE)) == (KEY_HANDBRAKE)) && ((oldkeys & (KEY_HANDBRAKE)) != (KEY_HANDBRAKE)) && !IsPlayerInAnyVehicle(playerid)) {
-            if (GetPlayerWeapon(playerid) == WEAPON_SNIPER || GetPlayerWeapon(playerid) == WEAPON_ROCKETLAUNCHER || GetPlayerWeapon(playerid) == WEAPON_HEATSEEKER || GetPlayerWeapon(playerid) == WEAPON_CAMERA) {
-                if (!gIsPlayerWeaponZoomedIn[playerid]) {
-                    if (GetAttachedObjectCount(playerid) > 0) {
+    if(gAOWeaponZoomEnabled[playerid]) {
+        if(((newkeys & (KEY_HANDBRAKE)) == (KEY_HANDBRAKE)) && ((oldkeys & (KEY_HANDBRAKE)) != (KEY_HANDBRAKE)) && !IsPlayerInAnyVehicle(playerid)) {
+            if(GetPlayerWeapon(playerid) == WEAPON_SNIPER || GetPlayerWeapon(playerid) == WEAPON_ROCKETLAUNCHER || GetPlayerWeapon(playerid) == WEAPON_HEATSEEKER || GetPlayerWeapon(playerid) == WEAPON_CAMERA) {
+                if(!gIsPlayerWeaponZoomedIn[playerid]) {
+                    if(GetAttachedObjectCount(playerid) > 0) {
                         gIsPlayerWeaponZoomedIn[playerid] = true;
                         RemoveAllTempAttachedObjects(playerid);
                         gTimerWeaponZoom[playerid] = SetTimerEx("_AOX_CheckWeaponZoom", 500, true, "d", playerid);
@@ -133,7 +133,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             }
         }
     }
-    if (funcidx("AOXhook_OnPlayerKeyStateChange") != -1) {
+    if(funcidx("AOXhook_OnPlayerKeyStateChange") != -1) {
         return CallLocalFunction("AOXhook_OnPlayerKeyStateChange", "ddd", playerid, newkeys, oldkeys);
     }
     return 1;
@@ -151,15 +151,15 @@ forward AOXhook_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 // FUNC HOOK
 stock _AOX_SetPlayerAttachedObject(playerid, index, modelid, bone, Float:fOffsetX = 0.0, Float:fOffsetY = 0.0, Float:fOffsetZ = 0.0, Float:fRotX = 0.0, Float:fRotY = 0.0, Float:fRotZ = 0.0, Float:fScaleX = 1.0, Float:fScaleY = 1.0, Float:fScaleZ = 1.0, materialcolor1 = 0, materialcolor2 = 0)
 {
-    if (index < 0 || index >= MAX_PLAYER_ATTACHED_OBJECTS) return 0; // prevent array index out of bounds exception
+    if(index < 0 || index >= MAX_PLAYER_ATTACHED_OBJECTS) return 0; // prevent array index out of bounds exception
     
     new
         bool:replace = false;
         
-    if (IsPlayerAttachedObjectSlotUsed(playerid, index)) replace = true;
+    if(IsPlayerAttachedObjectSlotUsed(playerid, index)) replace = true;
     
-    if (SetPlayerAttachedObject(playerid, index, modelid, bone, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ, materialcolor1, materialcolor2) != 0) {
-        if (!replace && !gPlayerAO[playerid][index][eAO_tempRemoved]) gPlayerAO[playerid][index][eAO_id]++;
+    if(SetPlayerAttachedObject(playerid, index, modelid, bone, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ, materialcolor1, materialcolor2) != 0) {
+        if(!replace && !gPlayerAO[playerid][index][eAO_tempRemoved]) gPlayerAO[playerid][index][eAO_id]++;
         gPlayerAO[playerid][index][eAO_modelid] = modelid;
         gPlayerAO[playerid][index][eAO_bone] = bone;
         gPlayerAO[playerid][index][eAO_fOffsetX] = fOffsetX;
@@ -188,10 +188,10 @@ stock _AOX_SetPlayerAttachedObject(playerid, index, modelid, bone, Float:fOffset
  
 stock _AOX_RemovePlayerAttachedObject(playerid, index)
 {
-    if (index < 0 || index >= MAX_PLAYER_ATTACHED_OBJECTS) return 0; // prevent array index out of bounds exception
+    if(index < 0 || index >= MAX_PLAYER_ATTACHED_OBJECTS) return 0; // prevent array index out of bounds exception
 
-    if (!gPlayerAO[playerid][index][eAO_tempRemoved]) {
-        if (gPlayerAO[playerid][index][eAO_tempBirth] != 0) {
+    if(!gPlayerAO[playerid][index][eAO_tempRemoved]) {
+        if(gPlayerAO[playerid][index][eAO_tempBirth] != 0) {
             gTempAttachedObjectCount[playerid]--;
         }
        
@@ -243,7 +243,7 @@ stock IsPlayerAttachedObjectTemp(playerid, index)
 stock GetFreePlayerAttachedObjectSlot(playerid)
 {
     for (new i = 0; i < MAX_PLAYER_ATTACHED_OBJECTS; i++) {
-        if (!IsPlayerAttachedObjectSlotUsed(playerid, i))
+        if(!IsPlayerAttachedObjectSlotUsed(playerid, i))
             return i;
     }
     return -1;
@@ -258,7 +258,7 @@ stock GetAttachedObjectCount(playerid)
 {
     new count;
     for (new i = 0; i < MAX_PLAYER_ATTACHED_OBJECTS; i++) {
-        if (IsPlayerAttachedObjectSlotUsed(playerid, i))
+        if(IsPlayerAttachedObjectSlotUsed(playerid, i))
             count++;
     }
     return count;
@@ -266,21 +266,21 @@ stock GetAttachedObjectCount(playerid)
  
 stock GetPlayerAttachedObjectID(playerid, index)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
         return -1;
     return (gPlayerAO[playerid][index][eAO_tempBirth] != 0) ? gPlayerAO[playerid][index][eAO_id] : -1;
 }
  
 stock GetPlayerAttachedObjectBone(playerid, index)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
         return 0;
     return gPlayerAO[playerid][index][eAO_bone];
 }
 
 stock SetPlayerAttachedObjectBone(playerid, index, bone)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index))
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index))
         return 0;
         
     gPlayerAO[playerid][index][bone] = bone;
@@ -296,14 +296,14 @@ stock SetPlayerAttachedObjectBone(playerid, index, bone)
 
 stock GetPlayerAttachedObjectModel(playerid, index)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
         return INVALID_OBJECT_ID;
     return gPlayerAO[playerid][index][eAO_modelid];
 }
 
 stock SetPlayerAttachedObjectModel(playerid, index, modelid)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index))
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index))
         return 0;
         
     gPlayerAO[playerid][index][eAO_modelid] = modelid;
@@ -319,7 +319,7 @@ stock SetPlayerAttachedObjectModel(playerid, index, modelid)
  
 stock GetPlayerAttachedObjectOffset(playerid, index, &Float:fOffsetX, &Float:fOffsetY, &Float:fOffsetZ)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
         return 0;
    
     fOffsetX = gPlayerAO[playerid][index][eAO_fOffsetX];
@@ -330,7 +330,7 @@ stock GetPlayerAttachedObjectOffset(playerid, index, &Float:fOffsetX, &Float:fOf
 
 stock SetPlayerAttachedObjectOffset(playerid, index, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) || gPlayerAO[playerid][index][eAO_isMoving])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) || gPlayerAO[playerid][index][eAO_isMoving])
         return 0;
         
     gPlayerAO[playerid][index][eAO_fOffsetX] = fOffsetX;
@@ -348,7 +348,7 @@ stock SetPlayerAttachedObjectOffset(playerid, index, Float:fOffsetX, Float:fOffs
  
 stock GetPlayerAttachedObjectRot(playerid, index, &Float:fRotX, &Float:fRotY, &Float:fRotZ)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
         return 0;
 
     fRotX = gPlayerAO[playerid][index][eAO_fRotX];
@@ -359,7 +359,7 @@ stock GetPlayerAttachedObjectRot(playerid, index, &Float:fRotX, &Float:fRotY, &F
 
 stock SetPlayerAttachedObjectRot(playerid, index, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) || gPlayerAO[playerid][index][eAO_isMoving])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) || gPlayerAO[playerid][index][eAO_isMoving])
         return 0;
         
     gPlayerAO[playerid][index][eAO_fRotX] = fRotX;
@@ -377,7 +377,7 @@ stock SetPlayerAttachedObjectRot(playerid, index, Float:fRotX, Float:fRotY, Floa
  
 stock GetPlayerAttachedObjectScale(playerid, index, &Float:fScaleX, &Float:fScaleY, &Float:fScaleZ)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved])
         return 0;
    
     fScaleX = gPlayerAO[playerid][index][eAO_fScaleX];
@@ -388,7 +388,7 @@ stock GetPlayerAttachedObjectScale(playerid, index, &Float:fScaleX, &Float:fScal
 
 stock SetPlayerAttachedObjectScale(playerid, index, Float:fScaleX, Float:fScaleY, Float:fScaleZ)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index))
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index))
         return 0;
         
     gPlayerAO[playerid][index][eAO_fScaleX] = fScaleX;
@@ -406,7 +406,7 @@ stock SetPlayerAttachedObjectScale(playerid, index, Float:fScaleX, Float:fScaleY
  
 stock GetPlayerAttachedObjectColor(playerid, index, &materialcolor1, &materialcolor2)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved]) return 0;
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) && !gPlayerAO[playerid][index][eAO_tempRemoved]) return 0;
    
     materialcolor1 = gPlayerAO[playerid][index][eAO_materialcolor1];
     materialcolor2 = gPlayerAO[playerid][index][eAO_materialcolor2];
@@ -415,7 +415,7 @@ stock GetPlayerAttachedObjectColor(playerid, index, &materialcolor1, &materialco
 
 stock SetPlayerAttachedObjectColor(playerid, index, materialcolor1, materialcolor2)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index))
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index))
         return 0;
         
     gPlayerAO[playerid][index][eAO_materialcolor1] = materialcolor1;
@@ -437,8 +437,8 @@ stock GetOldestTempAttachedObject(playerid)
         oldestTime = -1;
 
     for (new i = 0; i < MAX_PLAYER_ATTACHED_OBJECTS; i++) {
-        if (!gPlayerAO[playerid][i][eAO_tempBirth]) continue;
-        if (gPlayerAO[playerid][i][eAO_tempBirth] < oldestTime || oldestTime == -1) {
+        if(!gPlayerAO[playerid][i][eAO_tempBirth]) continue;
+        if(gPlayerAO[playerid][i][eAO_tempBirth] < oldestTime || oldestTime == -1) {
             oldestAO = i;
             oldestTime = gPlayerAO[playerid][i][eAO_tempBirth];
         }
@@ -454,8 +454,8 @@ stock GetNewestTempAttachedObject(playerid)
         newestTime = -1;
 
     for (new i = 0; i < MAX_PLAYER_ATTACHED_OBJECTS; i++) {
-        if (!gPlayerAO[playerid][i][eAO_tempBirth]) continue;
-        if (gPlayerAO[playerid][i][eAO_tempBirth] > newestAO || newestTime == -1) {
+        if(!gPlayerAO[playerid][i][eAO_tempBirth]) continue;
+        if(gPlayerAO[playerid][i][eAO_tempBirth] > newestAO || newestTime == -1) {
             newestAO = i;
             newestTime = gPlayerAO[playerid][i][eAO_tempBirth];
         }
@@ -490,12 +490,12 @@ stock SetPlayerTempAttachedObject
     new
         index = GetFreePlayerAttachedObjectSlot(playerid);
    
-    if (index == -1) {
+    if(index == -1) {
         // All slots used
         new
             oldestTemp = GetOldestTempAttachedObject(playerid);
                    
-        if (oldestTemp == -1) return -1;
+        if(oldestTemp == -1) return -1;
         index = oldestTemp;
         RemovePlayerAttachedObject(playerid, index); // no need for count decrement; hook handles it
     } else {
@@ -506,7 +506,7 @@ stock SetPlayerTempAttachedObject
    
     SetPlayerAttachedObject(playerid, index, modelid, bone, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ, materialcolor1, materialcolor2);
    
-    if (time != -1) {
+    if(time != -1) {
         gPlayerAO[playerid][index][eAO_tempTime] = time;
         SetTimerEx("RemovePlayerTempAttachedObject", time, false, "ddd", playerid, index, gPlayerAO[playerid][index][eAO_id]);
     }
@@ -515,10 +515,10 @@ stock SetPlayerTempAttachedObject
  
 stock RemoveAllTempAttachedObjects(playerid)
 {
-    if (!gIsPlayerWeaponZoomedIn[playerid]) return 0;
+    if(!gIsPlayerWeaponZoomedIn[playerid]) return 0;
     for (new i = 0; i < MAX_PLAYER_ATTACHED_OBJECTS; i++) {
-        if (!IsPlayerAttachedObjectSlotUsed(playerid, i)) continue;
-        if (gPlayerAO[playerid][i][eAO_tempBirth] != 0 || gRemoveNormAOWeaponZoom[playerid]) {
+        if(!IsPlayerAttachedObjectSlotUsed(playerid, i)) continue;
+        if(gPlayerAO[playerid][i][eAO_tempBirth] != 0 || gRemoveNormAOWeaponZoom[playerid]) {
             gPlayerAO[playerid][i][eAO_tempRemoved] = true;
             RemovePlayerAttachedObject(playerid, i);
         }
@@ -528,9 +528,9 @@ stock RemoveAllTempAttachedObjects(playerid)
  
 stock RestoreAllTempAttachedObjects(playerid)
 {
-    if (!gIsPlayerWeaponZoomedIn[playerid]) return 0;
+    if(!gIsPlayerWeaponZoomedIn[playerid]) return 0;
     for (new i = 0; i < MAX_PLAYER_ATTACHED_OBJECTS; i++) {
-        if ((gPlayerAO[playerid][i][eAO_tempBirth] != 0 || gRemoveNormAOWeaponZoom[playerid]) && gPlayerAO[playerid][i][eAO_tempRemoved]) {
+        if((gPlayerAO[playerid][i][eAO_tempBirth] != 0 || gRemoveNormAOWeaponZoom[playerid]) && gPlayerAO[playerid][i][eAO_tempRemoved]) {
             SetPlayerAttachedObject(playerid, i, gPlayerAO[playerid][i][eAO_modelid], gPlayerAO[playerid][i][eAO_bone],
                 gPlayerAO[playerid][i][eAO_fOffsetX], gPlayerAO[playerid][i][eAO_fOffsetY], gPlayerAO[playerid][i][eAO_fOffsetZ],
                 gPlayerAO[playerid][i][eAO_fRotX], gPlayerAO[playerid][i][eAO_fRotY], gPlayerAO[playerid][i][eAO_fRotZ],
@@ -544,10 +544,10 @@ stock RestoreAllTempAttachedObjects(playerid)
  
 public _AOX_CheckWeaponZoom(playerid)
 {
-    if (!gIsPlayerWeaponZoomedIn[playerid]) return 0;
+    if(!gIsPlayerWeaponZoomedIn[playerid]) return 0;
     new camMode = GetPlayerCameraMode(playerid);
 
-    if (camMode != 7 && camMode != 8 && camMode != 16 && camMode != 46 && camMode != 51) {
+    if(camMode != 7 && camMode != 8 && camMode != 16 && camMode != 46 && camMode != 51) {
         RestoreAllTempAttachedObjects(playerid);
         gIsPlayerWeaponZoomedIn[playerid] = false;
         KillTimer(gTimerWeaponZoom[playerid]);
@@ -557,23 +557,23 @@ public _AOX_CheckWeaponZoom(playerid)
  
 public RemovePlayerTempAttachedObject(playerid, index, aoid)
 {
-    if (aoid == -1) aoid = GetPlayerAttachedObjectID(playerid, index);
+    if(aoid == -1) aoid = GetPlayerAttachedObjectID(playerid, index);
 
     // Avoid conflicts
-    if (aoid != gPlayerAO[playerid][index][eAO_id] || !IsPlayerConnected(playerid)) return 0;
+    if(aoid != gPlayerAO[playerid][index][eAO_id] || !IsPlayerConnected(playerid)) return 0;
     
     new
         bool:setRemove = true;
 
-    if (funcidx("OnTempAttachedObjectDestroy") != -1) {
-        if (CallLocalFunction("OnTempAttachedObjectDestroy", "dd", playerid, index) == 0 && gPlayerAO[playerid][index][eAO_tempTime] != 0) {
+    if(funcidx("OnTempAttachedObjectDestroy") != -1) {
+        if(CallLocalFunction("OnTempAttachedObjectDestroy", "dd", playerid, index) == 0 && gPlayerAO[playerid][index][eAO_tempTime] != 0) {
             // Don't remove if callback returns 0 and temp AO has expiry time
             setRemove = false;
         }
     }
     gPlayerAO[playerid][index][eAO_tempRemoved] = false;
     
-    if (setRemove) {
+    if(setRemove) {
         RemovePlayerAttachedObject(playerid, index);
     } else {
         SetTimerEx("RemovePlayerTempAttachedObject", gPlayerAO[playerid][index][eAO_tempTime], false, "ddd", playerid, index, gPlayerAO[playerid][index][eAO_id]);
@@ -585,7 +585,7 @@ public RemovePlayerTempAttachedObject(playerid, index, aoid)
 
 stock MovePlayerAttachedObject(playerid, index, Float:OffsetX, Float:OffsetY, Float:OffsetZ, Float:Speed)
 {
-    if (!IsPlayerAttachedObjectSlotUsed(playerid, index) || gPlayerAO[playerid][index][eAO_isMoving] || floatcmp(Speed, 0.0) == 0) return 0;
+    if(!IsPlayerAttachedObjectSlotUsed(playerid, index) || gPlayerAO[playerid][index][eAO_isMoving] || floatcmp(Speed, 0.0) == 0) return 0;
 
     gPlayerAO[playerid][index][eAO_isMoving] = true;
     
@@ -600,13 +600,13 @@ stock MovePlayerAttachedObject(playerid, index, Float:OffsetX, Float:OffsetY, Fl
 public MovePlayerAttachedObject_Timer(playerid, index, aoid, Float:OffsetX1, Float:OffsetY1, Float:OffsetZ1, Float:OffsetX2, Float:OffsetY2, Float:OffsetZ2, Float:Speed, Float:pfactor)
 {
     // Avoid conflicts
-    if (!IsPlayerConnected(playerid) || !IsPlayerAttachedObjectSlotUsed(playerid, index) || aoid != gPlayerAO[playerid][index][eAO_id] || !gPlayerAO[playerid][index][eAO_isMoving])
+    if(!IsPlayerConnected(playerid) || !IsPlayerAttachedObjectSlotUsed(playerid, index) || aoid != gPlayerAO[playerid][index][eAO_id] || !gPlayerAO[playerid][index][eAO_isMoving])
         return 0;
     
     new
         Float:newPFact = floatadd(pfactor, floatdiv(Speed, floatdiv(1000, gAOX_Tickrate)));
         
-    if (floatcmp(newPFact, 1.0) == 1 || floatcmp(newPFact, 1.0) == 0) {
+    if(floatcmp(newPFact, 1.0) == 1 || floatcmp(newPFact, 1.0) == 0) {
         // AO has reached its offset destination
         gPlayerAO[playerid][index][eAO_isMoving] = false;
         SetPlayerAttachedObject(playerid, index,

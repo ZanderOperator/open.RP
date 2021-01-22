@@ -88,10 +88,10 @@ static SirenObject[MAX_VEHICLES] = { INVALID_OBJECT_ID, ... };
 
 DestroyVehicleSiren(vehicleid)
 {
-	if( SirenObject[ vehicleid ] != INVALID_OBJECT_ID ) 
+	if(SirenObject[vehicleid] != INVALID_OBJECT_ID ) 
     {
-		DestroyDynamicObject(SirenObject[ vehicleid ]);
-		SirenObject[ vehicleid ] = INVALID_OBJECT_ID;
+		DestroyDynamicObject(SirenObject[vehicleid]);
+		SirenObject[vehicleid] = INVALID_OBJECT_ID;
 	}
 	return 1;
 }
@@ -115,7 +115,7 @@ hook function ResetVehicleInfo(vehicleid)
 
 CMD:siren(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid) && !IsAGov(playerid))
+    if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid) && !IsAGov(playerid))
     {
         SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni.");
         return 1;
@@ -125,32 +125,32 @@ CMD:siren(playerid, params[])
         type[7],
         vehicleid = GetPlayerVehicleID(playerid);
 
-    if (sscanf(params, "s[7]", type))
+    if(sscanf(params, "s[7]", type))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /siren [opcija]");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] front, rear, above, off");
+        SendClientMessage(playerid, COLOR_RED, "[?]: /siren [opcija]");
+        SendClientMessage(playerid, COLOR_RED, "[!] front, rear, above, off");
         return 1;
     }
 
-    if (vehicleid == INVALID_VEHICLE_ID)
+    if(vehicleid == INVALID_VEHICLE_ID)
     {
         SendClientMessage(playerid, COLOR_RED, "Niste u vozilu.");
         return 1;
     }
 
     // TODO: YSI YHash instead of strcmp
-    if (strcmp(type, "front", true) == 0)
+    if(strcmp(type, "front", true) == 0)
     {
-        if (SirenObject[vehicleid] != INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Na ovom vozilu je vec postavljena sirena!");
+        if(SirenObject[vehicleid] != INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Na ovom vozilu je vec postavljena sirena!");
 
         // TODO: helper function, AttachSirenToVehicle(vehicleid, siren_type)
         SirenObject[vehicleid] = CreateDynamicObject(18646, 10.0, 10.0, 10.0, 0, 0, 0, -1, -1, -1, 50.0);
         AttachDynamicObjectToVehicle(SirenObject[vehicleid], vehicleid, 0.0, 0.75, 0.275, 0.0, 0.1, 0.0);
         GameTextForPlayer(playerid, "~g~SIRENA JE UKLJUCENA", 3000, 4);
     }
-    if (strcmp(type, "rear", true) == 0)
+    if(strcmp(type, "rear", true) == 0)
     {
-        if (SirenObject[vehicleid] != INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Na ovom vozilu je vec postavljena sirena!");
+        if(SirenObject[vehicleid] != INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Na ovom vozilu je vec postavljena sirena!");
 
         // TODO: helper function, AttachSirenToVehicle(vehicleid, siren_type)
         new
@@ -158,20 +158,20 @@ CMD:siren(playerid, params[])
             preset = -1;
         for (new i = 0; i < sizeof(g_SirenPresets); i++)
         {
-            if (model == g_SirenPresets[i][SirenForModel])
+            if(model == g_SirenPresets[i][SirenForModel])
             {
                 preset = i;
             }
         }
-        if (preset == -1) return SendClientMessage(playerid, COLOR_RED, "SERVER: Sirene nisu kompatibilne sa vozilom!");
+        if(preset == -1) return SendClientMessage(playerid, COLOR_RED, "SERVER: Sirene nisu kompatibilne sa vozilom!");
 
         SirenObject[vehicleid] = CreateDynamicObject(18646, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 20.0);
         AttachDynamicObjectToVehicle(SirenObject[vehicleid], vehicleid, g_SirenPresets[preset][SPosX], g_SirenPresets[preset][SPosY], g_SirenPresets[preset][SPosZ], 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, "~g~SIRENA JE UKLJUCENA", 3000, 4);
     }
-    if (strcmp(type, "above", true) == 0)
+    if(strcmp(type, "above", true) == 0)
     {
-        if (SirenObject[vehicleid] != INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Na ovom vozilu je vec postavljena sirena!");
+        if(SirenObject[vehicleid] != INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Na ovom vozilu je vec postavljena sirena!");
 
         // TODO: helper function, AttachSirenToVehicle(vehicleid, siren_type)
         new
@@ -179,20 +179,20 @@ CMD:siren(playerid, params[])
             preset = -1;
         for (new i = 0; i < sizeof(g_AbovePresets); i++)
         {
-            if (model == g_AbovePresets[i][SirenForAbove])
+            if(model == g_AbovePresets[i][SirenForAbove])
             {
                 preset = i;
             }
         }
-        if (preset == -1) return SendClientMessage(playerid, COLOR_RED, "SERVER: Sirene nisu kompatibilne sa vozilom!");
+        if(preset == -1) return SendClientMessage(playerid, COLOR_RED, "SERVER: Sirene nisu kompatibilne sa vozilom!");
 
         SirenObject[vehicleid] = CreateDynamicObject(18646, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 20.0);
         AttachDynamicObjectToVehicle(SirenObject[vehicleid], vehicleid, g_AbovePresets[preset][APosX], g_AbovePresets[preset][APosY], g_AbovePresets[preset][APosZ], 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, "~g~SIRENA JE UKLJUCENA", 3000, 4);
     }
-    if (strcmp(type, "off", true) == 0)
+    if(strcmp(type, "off", true) == 0)
     {
-        if (SirenObject[vehicleid] == INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nema ugradjene sirene u ovom vozilu!");
+        if(SirenObject[vehicleid] == INVALID_OBJECT_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nema ugradjene sirene u ovom vozilu!");
 
         // TODO: helper function, DestroyVehicleSiren(vehicleid)
         DestroyDynamicObject(SirenObject[vehicleid]);

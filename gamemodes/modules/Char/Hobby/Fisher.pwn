@@ -92,7 +92,7 @@ hook OnPlayerEnterCheckpoint(playerid)
     {
         DisablePlayerCheckpoint(playerid);
         SellingFish[playerid] = false;
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Stigli ste na destinaciju. Kucajte /sellfish [kolicina] da prodate ribu.");
+        SendClientMessage(playerid, COLOR_RED, "[!] Stigli ste na destinaciju. Kucajte /sellfish [kolicina] da prodate ribu.");
     }
     return 1;
 }
@@ -319,9 +319,9 @@ DockFishing(playerid)
 			}
 			else SendClientMessage(playerid, COLOR_GRAD2, "  Morate cekati dvije sekunde prije iduceg lovljenja!");
 		}
-		else return  SendClientMessage(playerid, COLOR_RED, "[ ! ] Dostigli ste maksimalnu kolicinu ulova. Otidjite, i prodajte ga.");
+		else return  SendClientMessage(playerid, COLOR_RED, "[!] Dostigli ste maksimalnu kolicinu ulova. Otidjite, i prodajte ga.");
 	}
-	else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemate stap za pecanje, morate ga iznajmiti!");
+	else return SendClientMessage(playerid, COLOR_RED, "[!] Nemate stap za pecanje, morate ga iznajmiti!");
 	return 1;
 }
 
@@ -811,11 +811,11 @@ BoatFishing(playerid)
 					}
 				}
 			}
-			else SendClientMessage(playerid, COLOR_RED, " [ ! ] Morate cekati dvije sekunde prije iduceg lovljenja!");
+			else SendClientMessage(playerid, COLOR_RED, " [!] Morate cekati dvije sekunde prije iduceg lovljenja!");
 		}
-		else return  SendClientMessage(playerid, COLOR_RED, "[ ! ] Dostigli ste maksimalnu kolicinu ulova. Otidjite, i prodajte ga.");
+		else return  SendClientMessage(playerid, COLOR_RED, "[!] Dostigli ste maksimalnu kolicinu ulova. Otidjite, i prodajte ga.");
 	}
-	else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ribu mo�ete loviti samo na teritoriji Santa Maria Beacha");
+	else return SendClientMessage(playerid, COLOR_RED, "[!] Ribu mo�ete loviti samo na teritoriji Santa Maria Beacha");
 	return 1;
 }
 
@@ -841,25 +841,25 @@ CMD:fishingskills(playerid, params[])
 
 CMD:fish(playerid, params[])
 {
-    if(IsAtFishPlace(playerid) )
+    if(IsAtFishPlace(playerid))
 	{
  		if(GotRod[playerid])
 		{
         	DockFishing(playerid);
 		}
-		else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemate stap za pecanje, morate ga iznajmiti.");
+		else return SendClientMessage(playerid, COLOR_RED, "[!] Nemate stap za pecanje, morate ga iznajmiti.");
 	}
    	else if(IsAFBoat(GetPlayerVehicleID(playerid)))
 	{
         BoatFishing(playerid);
     }
-    else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za pecanje ribe");
+    else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za pecanje ribe");
 	return 1;
 }
 
 CMD:myfish(playerid, params[]) {
     new fstring[512];
-	format(fstring, sizeof(fstring), "[ ! ] Kolicina ribe: %d kg.", PlayerFish[playerid][pFishWeight]);
+	format(fstring, sizeof(fstring), "[!] Kolicina ribe: %d kg.", PlayerFish[playerid][pFishWeight]);
 	SendClientMessage(playerid, COLOR_RED, fstring);
 	return 1;
 }
@@ -876,25 +876,25 @@ CMD:sellfish(playerid, params[])
         {
         	if(sscanf(params, "d", amount))
 			{
-				SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /sellfish [amount]");
-				format(fstring, sizeof fstring, "[ ! ] Kolicina ribe: %d kg.", PlayerFish[playerid][pFishWeight]);
+				SendClientMessage(playerid, COLOR_GREY, "[?]: /sellfish [amount]");
+				format(fstring, sizeof fstring, "[!] Kolicina ribe: %d kg.", PlayerFish[playerid][pFishWeight]);
 				return SendClientMessage(playerid, COLOR_RED, fstring);
 			}
 
-            if(amount < 20) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Morate imati minimalno 20, kako bi ih mogli prodati.");
+            if(amount < 20) return SendClientMessage(playerid, COLOR_RED, "[!] Morate imati minimalno 20, kako bi ih mogli prodati.");
         	if(PlayerFish[playerid][pFishWeight] >= amount && PlayerFish[playerid][pFishWeight] != 0)
        		{
           		new paycheck = amount * randomEx(1,3);
 
                 PlayerFish[playerid][pFishWeight] -= amount;
-				format(fstring, sizeof(fstring), "[ ! ] Prodao si %d kg mesa za %d$.", amount, paycheck);
+				format(fstring, sizeof(fstring), "[!] Prodao si %d kg mesa za %d$.", amount, paycheck);
 				BudgetToPlayerMoney(playerid, paycheck);
 
 				SendClientMessage(playerid, COLOR_RED, fstring);
 
 				FishSellStamp[playerid] = gettimestamp() + 300;
 			}
-			else return SendClientMessage(playerid, COLOR_RED, " [ ! ] Nemate toliku kolicu ribe!");
+			else return SendClientMessage(playerid, COLOR_RED, " [!] Nemate toliku kolicu ribe!");
 		}
 		else
 		{
@@ -903,10 +903,10 @@ CMD:sellfish(playerid, params[])
 		    GameTextForPlayer(playerid, "~b~WAYPOINT SET", 5000, 4);
             SellingFish[playerid] = true;
 		    SetPlayerCheckpoint(playerid, 2623.5898,-2470.8184,3.0000, 10.0);
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Uputite se ka mjestu za prodaju ribe");
+			return SendClientMessage(playerid, COLOR_RED, "[!] Uputite se ka mjestu za prodaju ribe");
 		}
     }
-    else SendClientMessage(playerid, COLOR_RED, "[ ! ]Morate sacekati pet minuta do sljedece prodaje ribe.");
+    else SendClientMessage(playerid, COLOR_RED, "[!]Morate sacekati pet minuta do sljedece prodaje ribe.");
 	return 1;
 }
 
@@ -915,11 +915,11 @@ CMD:rentarod(playerid, params[])
     if(IsPlayerInRangeOfPoint(playerid, 15.0, 375.0699,-2069.2192,7.8359))
 	{
         PlayerToBudgetMoney(playerid, 150);
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Iznajmili ste stap za pecanje. (150$)");
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Upamtite da ce log out obrisati ovu funkciju.");
+        SendClientMessage(playerid, COLOR_RED, "[!] Iznajmili ste stap za pecanje. (150$)");
+        SendClientMessage(playerid, COLOR_RED, "[!] Upamtite da ce log out obrisati ovu funkciju.");
         GotRod[playerid] = true;
 	}
-    else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za iznajmljivanje stapa za pecanje.");
+    else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za iznajmljivanje stapa za pecanje.");
 	return 1;
 }
 

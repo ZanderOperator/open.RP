@@ -149,7 +149,7 @@ stock bool:IsQuadVehicle(carid)
 {
     for (new i = 0; i < sizeof(quad_vehicle); i++)
     {
-        if (carid >= quad_vehicle[0] && carid <= quad_vehicle[sizeof(quad_vehicle) - 1])
+        if(carid >= quad_vehicle[0] && carid <= quad_vehicle[sizeof(quad_vehicle) - 1])
             return true;
     }
     return false;
@@ -183,9 +183,9 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (newstate == PLAYER_STATE_DRIVER)
+    if(newstate == PLAYER_STATE_DRIVER)
     {
-        if (GetVehicleModel(GetPlayerVehicleID(playerid)) == 471 && !QuadPlayer[playerid])
+        if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 471 && !QuadPlayer[playerid])
         {
             RemovePlayerFromVehicle(playerid);
             SendClientMessage(playerid, COLOR_RED, "Niste prijavljeni za Quad event!");
@@ -196,7 +196,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
-    if (GetVehicleModel(vehicleid) == 471 && QuadPlayer[playerid])
+    if(GetVehicleModel(vehicleid) == 471 && QuadPlayer[playerid])
     {
         RepairVehicle(vehicleid);
         SetVehicleToRespawn(vehicleid);
@@ -210,7 +210,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid)
 
 hook OnVehicleDeath(vehicleid, killerid)
 {
-    if (GetVehicleModel(vehicleid) == 471 && QuadPlayer[killerid])
+    if(GetVehicleModel(vehicleid) == 471 && QuadPlayer[killerid])
     {
         RepairVehicle(vehicleid);
         SetVehicleToRespawn(vehicleid);
@@ -271,7 +271,7 @@ hook OnPlayerEnterRaceCP(playerid)
             QuadPlayerCP[playerid] = 0;
             Player_SetOnEvent(playerid, false);
 
-            if (FirstQuadWinner == INVALID_PLAYER_ID)
+            if(FirstQuadWinner == INVALID_PLAYER_ID)
             {
                 FirstQuadWinner = playerid;
                 foreach(new i : Player)
@@ -281,7 +281,7 @@ hook OnPlayerEnterRaceCP(playerid)
                     );
                 }
             }
-            else if (SecondQuadWinner == INVALID_PLAYER_ID)
+            else if(SecondQuadWinner == INVALID_PLAYER_ID)
             {
                 SecondQuadWinner = playerid;
                 foreach(new i : Player)
@@ -291,7 +291,7 @@ hook OnPlayerEnterRaceCP(playerid)
                     );
                 }
             }
-            else if (ThirdQuadWinner == INVALID_PLAYER_ID)
+            else if(ThirdQuadWinner == INVALID_PLAYER_ID)
             {
                 ThirdQuadWinner = playerid;
                 foreach(new i : Player)
@@ -300,7 +300,7 @@ hook OnPlayerEnterRaceCP(playerid)
                         GetName(ThirdQuadWinner, true)
                     );
 
-                    if (QuadPlayer[i])
+                    if(QuadPlayer[i])
                     {
                         SendClientMessage(i, COLOR_ORANGE, "[QUAD EVENT]: Utrka je zavrsila.");
                         DisablePlayerRaceCheckpoint(i);
@@ -328,17 +328,17 @@ hook OnPlayerEnterRaceCP(playerid)
 
 timer OnQuadCountDown[1000]()
 {
-    if (!QuadStarted)
+    if(!QuadStarted)
     {
         stop QuadCountTimer;
     }
 
     QuadCountdown--;
-    if (QuadCountdown != 0)
+    if(QuadCountdown != 0)
     {
         foreach(new i : Player)
         {
-            if (!QuadPlayer[i]) continue;
+            if(!QuadPlayer[i]) continue;
 
             va_GameTextForPlayer(i, "~g~QUAD - START~n~~w~%d", 1000, 4, QuadCountdown - 1);
             PlayerPlaySound(i, 1056, 0.0, 0.0, 0.0);
@@ -353,7 +353,7 @@ timer OnQuadCountDown[1000]()
 
         foreach(new i : Player)
         {
-            if (!QuadPlayer[i]) continue;
+            if(!QuadPlayer[i]) continue;
 
             new cp = QuadPlayerCP[i];
             SetPlayerRaceCheckpoint(i, 0,
@@ -387,17 +387,17 @@ CMD:quad(playerid, params[])
 {
     new action[25];
 
-    if (sscanf(params, "s[25]", action))
+    if(sscanf(params, "s[25]", action))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] /quad [option].");
+        SendClientMessage(playerid, COLOR_RED, "[!] /quad [option].");
         SendClientMessage(playerid, 0xAFAFAFAA, "(options): join, quit");
         SendClientMessage(playerid, 0xAFAFAFAA, "(admin): create, vehdestroy, vehspawn, startrace, stoprace, goto");
         return 1;
     }
 
-    if (!strcmp(action, "vehdestroy", true))
+    if(!strcmp(action, "vehdestroy", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         for (new i = 0; i < sizeof(quad_vehicle); i++)
         {
@@ -405,16 +405,16 @@ CMD:quad(playerid, params[])
         }
         return 1;
     }
-    else if (!strcmp(action, "vehspawn", true))
+    else if(!strcmp(action, "vehspawn", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         CreateQuadVehicles();
         return 1;
     }
-    else if (!strcmp(action, "create", true))
+    else if(!strcmp(action, "create", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         SendClientMessageToAll(COLOR_ORANGE, "[QUAD EVENT]: Administrator je pokrenuo quad event, da ucestvujete koristite (/quad join).");
 
@@ -422,18 +422,18 @@ CMD:quad(playerid, params[])
         CreateQuadVehicles();
         return 1;
     }
-    else if (!strcmp(action, "join", true))
+    else if(!strcmp(action, "join", true))
     {
-        if (QuadCreated == false)
+        if(QuadCreated == false)
             return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao quad.");
 
-        if (QuadStarted)
+        if(QuadStarted)
             return SendClientMessage(playerid, COLOR_RED, "Quad je vec pokrenut, trebate ga prije toga zaustaviti (/quad stoprace).");
 
-        if (QuadPlayers == MAX_PLAYERS_ON_QEVENT)
+        if(QuadPlayers == MAX_PLAYERS_ON_QEVENT)
             return SendErrorMessage(playerid, "[ERROR]: Event je popunjen, nema vise mjesta.");
 
-        if (QuadPlayer[playerid])
+        if(QuadPlayer[playerid])
             return SendClientMessage(playerid, COLOR_RED, "Vec ste se joinali na Quad.");
 
         QuadPlayer  [playerid] = 1;
@@ -453,15 +453,15 @@ CMD:quad(playerid, params[])
         Player_SetOnEvent(playerid, true);
         return 1;
     }
-    else if (!strcmp(action, "startrace", true))
+    else if(!strcmp(action, "startrace", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 2)
+        if(PlayerInfo[playerid][pAdmin] < 2)
             return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
 
-        if (QuadStarted)
+        if(QuadStarted)
             return SendClientMessage(playerid, COLOR_RED, "Quad je vec pokrenut, trebate ga prije toga zaustaviti (/quad stoprace).");
 
-        if (QuadCreated == false)
+        if(QuadCreated == false)
             return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao quad.");
 
         QuadStarted    = true;
@@ -470,20 +470,20 @@ CMD:quad(playerid, params[])
         SendClientMessage(playerid, COLOR_WHITE, "[QUAD EVENT]: Zapoceli ste Quad utrku.");
         return 1;
     }
-    else if (!strcmp(action, "stoprace", true))
+    else if(!strcmp(action, "stoprace", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337)
+        if(PlayerInfo[playerid][pAdmin] < 1337)
             return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         SendClientMessage(playerid, COLOR_WHITE, "[SERVER] Zaustavili ste Quad utrku.");
 
         foreach(new i : Player)
         {
-            if (!QuadPlayer[i]) continue;
+            if(!QuadPlayer[i]) continue;
 
             for (new v = quad_vehicle[0]; v <= quad_vehicle[sizeof(quad_vehicle)-1]; v++)
             {
-                if (GetPlayerVehicleID(i) == v)
+                if(GetPlayerVehicleID(i) == v)
                 {
                     SetVehicleVelocity(v, 0.0, 0.0, 0.0);
                     RemovePlayerFromVehicle(i);
@@ -506,22 +506,22 @@ CMD:quad(playerid, params[])
         MoveDynamicObject(quad_fence, -305.29999, 1507.5, 75, 50.000);
         for (new i = 0; i < sizeof(quad_vehicle); i++)
         {
-            if (IsValidVehicle(quad_vehicle[i]))
+            if(IsValidVehicle(quad_vehicle[i]))
                 DestroyVehicle(quad_vehicle[i]);
         }
         return 1;
     }
-    else if (!strcmp(action, "goto", true))
+    else if(!strcmp(action, "goto", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 2)
+        if(PlayerInfo[playerid][pAdmin] < 2)
             return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 2+).");
 
         SetPlayerPos(playerid, QuadSpawn[0], QuadSpawn[1], QuadSpawn[2]);
         return 1;
     }
-    else if (!strcmp(action, "quit", true))
+    else if(!strcmp(action, "quit", true))
     {
-        if (QuadPlayer[playerid] != 1)
+        if(QuadPlayer[playerid] != 1)
         {
             SendClientMessage(playerid, COLOR_RED, "[SERVER] Niste prijavljeni za Quad utrku!");
             return 1;

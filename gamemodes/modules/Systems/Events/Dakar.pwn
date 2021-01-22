@@ -138,7 +138,7 @@ stock bool:IsDakarVehicle(carid)
 {
     for (new i = 0; i < sizeof(dakar_vehicle); i++)
     {
-        if (carid >= dakar_vehicle[0] && carid <= dakar_vehicle[sizeof(dakar_vehicle) - 1])
+        if(carid >= dakar_vehicle[0] && carid <= dakar_vehicle[sizeof(dakar_vehicle) - 1])
             return true;
     }
     return false;
@@ -204,7 +204,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
             DakarPlayerCP[playerid] = 0;
             Player_SetOnEvent(playerid, false);
 
-            if (FirstDakarWinner == INVALID_PLAYER_ID)
+            if(FirstDakarWinner == INVALID_PLAYER_ID)
             {
                 FirstDakarWinner = playerid;
                 foreach(new i : Player)
@@ -214,7 +214,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                     );
                 }
             }
-            else if (SecondDakarWinner == INVALID_PLAYER_ID)
+            else if(SecondDakarWinner == INVALID_PLAYER_ID)
             {
                 SecondDakarWinner = playerid;
                 foreach(new i : Player)
@@ -224,7 +224,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                     );
                 }
             }
-            else if (ThirdDakarWinner == INVALID_PLAYER_ID)
+            else if(ThirdDakarWinner == INVALID_PLAYER_ID)
             {
                 ThirdDakarWinner = playerid;
                 foreach(new i : Player)
@@ -233,7 +233,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                         GetName(ThirdDakarWinner, true)
                     );
 
-                    if (DakarPlayer[i])
+                    if(DakarPlayer[i])
                     {
                         SendClientMessage(i, COLOR_ORANGE, "[DAKAR EVENT]: Utrka je zavrsila.");
                         DisablePlayerRaceCheckpoint(i);
@@ -265,9 +265,9 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (newstate == PLAYER_STATE_DRIVER)
+    if(newstate == PLAYER_STATE_DRIVER)
     {
-        if (GetVehicleModel(GetPlayerVehicleID(playerid)) == 495 && !DakarPlayer[playerid])
+        if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 495 && !DakarPlayer[playerid])
         {
             RemovePlayerFromVehicle(playerid);
             SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Kako bi koristili ovo vozilo, morate biti na Dakar event-u.");
@@ -278,7 +278,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
-    if (GetVehicleModel(vehicleid) == 495 && DakarPlayer[playerid])
+    if(GetVehicleModel(vehicleid) == 495 && DakarPlayer[playerid])
     {
         RepairVehicle(vehicleid);
         SetVehicleToRespawn(vehicleid);
@@ -292,7 +292,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid)
 
 hook OnVehicleDeath(vehicleid, killerid)
 {
-    if (GetVehicleModel(vehicleid) == 495 && DakarPlayer[killerid])
+    if(GetVehicleModel(vehicleid) == 495 && DakarPlayer[killerid])
     {
         RepairVehicle(vehicleid);
         SetVehicleToRespawn(vehicleid);
@@ -317,17 +317,17 @@ hook OnVehicleDeath(vehicleid, killerid)
 
 timer OnDakarCountDown[1000]()
 {
-    if (!DakarStarted)
+    if(!DakarStarted)
     {
         stop DakarCountTimer;
     }
 
     DakarCountdown--;
-    if (DakarCountdown != 0)
+    if(DakarCountdown != 0)
     {
         foreach(new i : Player)
         {
-            if (!DakarPlayer[i]) continue;
+            if(!DakarPlayer[i]) continue;
 
             va_GameTextForPlayer(i, "~g~DAKAR - START~n~~w~%d", 1000, 4, DakarCountdown - 1);
             PlayerPlaySound(i, 1056, 0.0, 0.0, 0.0);
@@ -343,7 +343,7 @@ timer OnDakarCountDown[1000]()
 
         foreach(new i : Player)
         {
-            if (!DakarPlayer[i]) continue;
+            if(!DakarPlayer[i]) continue;
 
             new cp = DakarPlayerCP[i];
             SetPlayerRaceCheckpoint(i, 0,
@@ -381,17 +381,17 @@ timer StopFinishSound[7000](playerid)
 CMD:dakar(playerid, params[])
 {
     new action[25];
-    if (sscanf(params, "s[25] ", action))
+    if(sscanf(params, "s[25] ", action))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] /dakar [option].");
+        SendClientMessage(playerid, COLOR_RED, "[!] /dakar [option].");
         SendClientMessage(playerid, 0xAFAFAFAA, "(options): join, quit");
         SendClientMessage(playerid, 0xAFAFAFAA, "(admin): create, vehspawn, vehdestroy, startrace, stoprace, goto");
         return 1;
     }
 
-    if (!strcmp(action, "vehdestroy", true))
+    if(!strcmp(action, "vehdestroy", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         for (new i = 0; i < sizeof(dakar_vehicle); i++)
         {
@@ -399,33 +399,33 @@ CMD:dakar(playerid, params[])
         }
         return 1;
     }
-    else if (!strcmp(action, "vehspawn", true))
+    else if(!strcmp(action, "vehspawn", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         CreateDakarVehicles();
     }
-    else if (!strcmp(action, "create", true))
+    else if(!strcmp(action, "create", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         SendClientMessageToAll(COLOR_ORANGE, "[DAKAR]: Administrator je pokrenuo dakar, da ucestvujete koristite (/dakar join).");
 
         DakarCreated = true;
         CreateDakarVehicles();
     }
-    else if (!strcmp(action, "join", true))
+    else if(!strcmp(action, "join", true))
     {
-        if (DakarCreated == false)
+        if(DakarCreated == false)
             return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao Dakar.");
 
-        if (DakarStarted)
+        if(DakarStarted)
             return SendClientMessage(playerid, COLOR_RED, "[SERVER] Dakar utrka je vec zapocela!");
 
-        if (DakarPlayers == MAX_PLAYERS_ON_DEVENT)
+        if(DakarPlayers == MAX_PLAYERS_ON_DEVENT)
             return SendErrorMessage(playerid, "[ERROR]: Event je popunjen, nema vise mjesta.");
 
-        if (DakarPlayer[playerid])
+        if(DakarPlayer[playerid])
             return SendClientMessage(playerid, COLOR_RED, "Vec ste se joinali na Dakar.");
 
         DakarPlayer  [playerid] = 1;
@@ -449,15 +449,15 @@ CMD:dakar(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "[DAKAR]: Ukoliko zelite odustati, tipkajte /dakar quit.");
         Player_SetOnEvent(playerid, true);
     }
-    else if (!strcmp(action, "startrace", true))
+    else if(!strcmp(action, "startrace", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337)
+        if(PlayerInfo[playerid][pAdmin] < 1337)
             return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
-        if (DakarStarted)
+        if(DakarStarted)
             return SendClientMessage(playerid, COLOR_RED, "[SERVER] Dakar je vec pokrenut, trebate ga prije toga zaustaviti (/dakar stoprace).");
 
-        if (DakarCreated == false)
+        if(DakarCreated == false)
             return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao Dakar.");
 
         DakarStarted    = true;
@@ -465,19 +465,19 @@ CMD:dakar(playerid, params[])
         DakarCountTimer = repeat OnDakarCountDown();
         SendClientMessage(playerid, COLOR_WHITE, "[SERVER] Zapoceli ste Dakar utrku.");
     }
-    else if (!strcmp(action, "stoprace", true))
+    else if(!strcmp(action, "stoprace", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+        if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
         SendClientMessage(playerid, COLOR_WHITE, "[SERVER] Zaustavili ste Dakar utrku.");
 
         foreach(new i : Player)
         {
-            if (!DakarPlayer[i]) continue;
+            if(!DakarPlayer[i]) continue;
 
             for (new v = dakar_vehicle[0]; v <= dakar_vehicle[sizeof(dakar_vehicle)-1]; v++)
             {
-                if (GetPlayerVehicleID(i) == v)
+                if(GetPlayerVehicleID(i) == v)
                 {
                     SetVehicleVelocity(v, 0.0, 0.0, 0.0);
                     RemovePlayerFromVehicle(i);
@@ -500,24 +500,24 @@ CMD:dakar(playerid, params[])
 
         for (new i = 0; i < sizeof(dakar_vehicle); i++)
         {
-            if (IsValidVehicle(dakar_vehicle[i]))
+            if(IsValidVehicle(dakar_vehicle[i]))
                 DestroyVehicle(dakar_vehicle[i]);
         }
         MoveDynamicObject(dakar_fence[0], 378.345764, 2489.771484, 16.167931, 50.000);
         MoveDynamicObject(dakar_fence[1], 378.744781, 2515.375977, 16.184555, 50.000);
         return 1;
     }
-    else if (!strcmp(action, "goto", true))
+    else if(!strcmp(action, "goto", true))
     {
-        if (PlayerInfo[playerid][pAdmin] < 2)
+        if(PlayerInfo[playerid][pAdmin] < 2)
             return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 2+).");
 
         SetPlayerPos(playerid, DakarSpawn[0], DakarSpawn[1], DakarSpawn[2]);
         return 1;
     }
-    else if (!strcmp(action, "quit", true))
+    else if(!strcmp(action, "quit", true))
     {
-        if (DakarPlayer[playerid] != 1)
+        if(DakarPlayer[playerid] != 1)
         {
             SendClientMessage(playerid, COLOR_RED, "[SERVER] Niste prijavljeni za Dakar utrku!");
         }

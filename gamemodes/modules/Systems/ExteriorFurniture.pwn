@@ -221,9 +221,9 @@ stock ReloadHouseExterior(houseid)
 {
     foreach(new index: HouseFurExt[houseid])
     {
-        if (ExteriorInfo[houseid][heSQLID][index] != -1)
+        if(ExteriorInfo[houseid][heSQLID][index] != -1)
         {
-            if (IsValidDynamicObject(ExteriorInfo[houseid][heObjectId][index]))
+            if(IsValidDynamicObject(ExteriorInfo[houseid][heObjectId][index]))
             {
                 DestroyDynamicObject(ExteriorInfo[houseid][heObjectId][index]);
                 ExteriorInfo[houseid][heObjectId][index] = INVALID_OBJECT_ID;
@@ -245,7 +245,7 @@ stock ReloadHouseExterior(houseid)
 
 static stock CreatePreviewObject(playerid)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
+    if(playerid == INVALID_PLAYER_ID) return 0;
 
     new Float:X, Float:Y, Float:Z;
     GetPlayerPos(playerid, X, Y, Z);
@@ -275,13 +275,13 @@ static ExteriorFur_FreeSlot(houseid)
 
 static CreateExteriorObject(playerid)
 {
-    if (ExteriorEditType[playerid] != EXT_EDIT_TYPE_BUY) return 0;
+    if(ExteriorEditType[playerid] != EXT_EDIT_TYPE_BUY) return 0;
 
     new
         houseid = PlayerKeys[playerid][pHouseKey],
         index = ExteriorFur_FreeSlot(houseid);
 
-    if (index == -1)
+    if(index == -1)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova, razmislite da uplatite VIP za vise slotova!");
         return 1;
@@ -366,12 +366,12 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
 
 static stock EditExteriorObject(playerid, index)
 {
-    if (playerid == INVALID_PLAYER_ID || index == -1) return 0;
+    if(playerid == INVALID_PLAYER_ID || index == -1) return 0;
 
     new houseid = PlayerKeys[playerid][pHouseKey];
-    if (houseid == INVALID_HOUSE_ID) return 0;
+    if(houseid == INVALID_HOUSE_ID) return 0;
 
-    if (IsValidDynamicObject(ExteriorInfo[houseid][heObjectId][index]))
+    if(IsValidDynamicObject(ExteriorInfo[houseid][heObjectId][index]))
     {
         DestroyDynamicObject(ExteriorInfo[houseid][heObjectId][index]);
         ExteriorInfo[houseid][heObjectId][index] = INVALID_OBJECT_ID;
@@ -404,10 +404,10 @@ static stock EditExteriorObject(playerid, index)
 
 static stock ResetExteriorObject(playerid, index)
 {
-    if (playerid == INVALID_PLAYER_ID || index == -1) return 0;
+    if(playerid == INVALID_PLAYER_ID || index == -1) return 0;
 
     new houseid = PlayerKeys[playerid][pHouseKey];
-    if (houseid == INVALID_HOUSE_ID) return 0;
+    if(houseid == INVALID_HOUSE_ID) return 0;
 
     ExteriorInfo[houseid][heObjectId][index] = CreateDynamicObject(
                                                    PlayerExteriorInfo[playerid][peModelId],
@@ -430,9 +430,9 @@ static stock ResetExteriorObject(playerid, index)
 
 static stock DeleteExteriorObject(houseid, index, bool:iter_clear = false)
 {
-    if (houseid == INVALID_HOUSE_ID) return 0;
+    if(houseid == INVALID_HOUSE_ID) return 0;
 
-    if (IsValidDynamicObject(ExteriorInfo[houseid][heObjectId][index]))
+    if(IsValidDynamicObject(ExteriorInfo[houseid][heObjectId][index]))
     {
         DestroyDynamicObject(ExteriorInfo[houseid][heObjectId][index]);
         ExteriorInfo[houseid][heObjectId][index] = INVALID_OBJECT_ID;
@@ -450,7 +450,7 @@ static stock DeleteExteriorObject(houseid, index, bool:iter_clear = false)
     ExteriorInfo[houseid][heRotY][index]        = 0.0;
     ExteriorInfo[houseid][heRotZ][index]        = 0.0;
 
-    if (!iter_clear)
+    if(!iter_clear)
     {
         Iter_Remove(HouseFurExt[houseid], index);
     }
@@ -459,7 +459,7 @@ static stock DeleteExteriorObject(houseid, index, bool:iter_clear = false)
 
 static stock ResetPlayerExteriorVars(playerid)
 {
-    if (IsValidPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]))
+    if(IsValidPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]))
     {
         DestroyPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]);
         PlayerExteriorInfo[playerid][peObjectId] = INVALID_OBJECT_ID;
@@ -491,7 +491,7 @@ static stock FindExteriorObjectId(playerid, Float:radius)
 
     foreach(new i: HouseFurExt[houseid])
     {
-        if (IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[houseid][hePosX][i], ExteriorInfo[houseid][hePosY][i], ExteriorInfo[houseid][hePosZ][i]))
+        if(IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[houseid][hePosX][i], ExteriorInfo[houseid][hePosY][i], ExteriorInfo[houseid][hePosZ][i]))
         {
             objid = i;
             break;
@@ -503,7 +503,7 @@ static stock FindExteriorObjectId(playerid, Float:radius)
 Public:OnHouseExteriorLoad(houseid)
 {
     new rows = cache_num_rows();
-    if (!rows) return 0;
+    if(!rows) return 0;
 
     for (new i = 0; i < rows; i++)
     {
@@ -566,7 +566,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
     GetObjectPos(objectid, oldX, oldY, oldZ);
     GetObjectRot(objectid, oldRotX, oldRotY, oldRotZ);
 
-    if (!IsValidPlayerObject(playerid, objectid)) return;
+    if(!IsValidPlayerObject(playerid, objectid)) return;
 
     switch (ExteriorEditType[playerid])
     {
@@ -577,7 +577,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 case EDIT_RESPONSE_FINAL:
                 {
                     new houseid = PlayerKeys[playerid][pHouseKey];
-                    if (!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
+                    if(!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
                     {
                         SetExteriorObjectPos(playerid, oldX, oldY, oldZ, oldRotX, oldRotY, oldRotZ);
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje kuce! Susjedima je ZABRANJENO mapati eksterijer!");
@@ -594,7 +594,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                     PlayerExteriorInfo[playerid][peRotZ] = fRotZ;
 
                     // Delete previous object
-                    if (IsValidPlayerObject(playerid, objectid))
+                    if(IsValidPlayerObject(playerid, objectid))
                     {
                         DestroyPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]);
                         PlayerExteriorInfo[playerid][peObjectId] = INVALID_OBJECT_ID;
@@ -605,7 +605,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 case EDIT_RESPONSE_CANCEL:
                 {
                     // Delete previous object
-                    if (IsValidPlayerObject(playerid, objectid))
+                    if(IsValidPlayerObject(playerid, objectid))
                     {
                         DestroyPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]);
                         PlayerExteriorInfo[playerid][peObjectId] = INVALID_OBJECT_ID;
@@ -622,13 +622,13 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 case EDIT_RESPONSE_FINAL:
                 {
                     new houseid = PlayerKeys[playerid][pHouseKey];
-                    if (!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
+                    if(!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje kuce! Susjedima je ZABRANJENO mapati eksterijer!");
                         return;
                     }
                     // Delete previous object
-                    if (IsValidPlayerObject(playerid, objectid))
+                    if(IsValidPlayerObject(playerid, objectid))
                     {
                         DestroyPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]);
                         PlayerExteriorInfo[playerid][peObjectId] = INVALID_OBJECT_ID;
@@ -652,7 +652,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
     {
         case DIALOG_EXTERIOR_BUY:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 
             new index = Player_ModelToIndex(playerid, modelid);
             // TODO: bounds checking
@@ -687,14 +687,14 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
         }
         case DIALOG_EXTERIOR_EDIT:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
 
             new index = Player_ModelToIndex(playerid, modelid);
             EditExteriorObject(playerid, index);
         }
         case DIALOG_EXTERIOR_DELETE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
 
             new index = Player_ModelToIndex(playerid, modelid);
             DeleteExteriorObject(PlayerKeys[playerid][pHouseKey], index);
@@ -710,19 +710,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case DIALOG_EXTERIOR_MENU:
         {
-            if (!response) return 1;
+            if(!response) return 1;
 
             new houseid = PlayerKeys[playerid][pHouseKey];
             switch (listitem)
             {
                 case 0:     // Kupovina
                 {
-                    if (PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
+                    if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
                     {
                         SendErrorMessage(playerid, "Niste vlasnik kuce!");
                         return 1;
                     }
-                    if (ExteriorFur_FreeSlot(PlayerKeys[playerid][pHouseKey]) == -1)
+                    if(ExteriorFur_FreeSlot(PlayerKeys[playerid][pHouseKey]) == -1)
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova, razmislite da uplatite VIP za vise slotova!");
                         return 1;
@@ -732,7 +732,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:     // Uredivanje
                 {
-                    if (PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
+                    if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
                     {
                         SendErrorMessage(playerid, "Niste vlasnik kuce!");
                         return 1;
@@ -747,7 +747,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 2:     // Brisanje objekta
                 {
-                    if (PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
+                    if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
                     {
                         SendErrorMessage(playerid, "Niste vlasnik kuce!");
                         return 1;
@@ -762,7 +762,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 3:     // Brisanje svih objekata
                 {
-                    if (PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
+                    if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
                     {
                         SendErrorMessage(playerid, "Niste vlasnik kuce!");
                         return 1;
@@ -770,7 +770,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     foreach(new i: HouseFurExt[houseid])
                     {
-                        if (ExteriorInfo[houseid][heModelId][i] != 0)
+                        if(ExteriorInfo[houseid][heModelId][i] != 0)
                             DeleteExteriorObject(PlayerKeys[playerid][pHouseKey], i, true);
                     }
                     Iter_Clear(HouseFurExt[houseid]);
@@ -781,7 +781,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_EXTERIOR_BUY_TYPE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
             // TODO: refactor in to a helper function, no need for branching
             switch (listitem)
             {
@@ -789,7 +789,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     for (new i = 0; i < sizeof(ExteriorPlants); i++)
                     {
-                        if (ExteriorPlants[i][epModelid] != 0)
+                        if(ExteriorPlants[i][epModelid] != 0)
                         {
                             Player_ModelToIndexSet(playerid, i, ExteriorPlants[i][epModelid]);
                             fselection_add_item(playerid, ExteriorPlants[i][epModelid]);
@@ -800,7 +800,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     for (new i = 0; i < sizeof(ExteriorFurniture); i++)
                     {
-                        if (ExteriorFurniture[i][efModelid] != 0)
+                        if(ExteriorFurniture[i][efModelid] != 0)
                         {
                             Player_ModelToIndexSet(playerid, i, ExteriorFurniture[i][efModelid]);
                             fselection_add_item(playerid, ExteriorFurniture[i][efModelid]);
@@ -811,7 +811,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     for (new i = 0; i < sizeof(ExteriorMisc); i++)
                     {
-                        if (ExteriorMisc[i][emModelid] != 0)
+                        if(ExteriorMisc[i][emModelid] != 0)
                         {
                             Player_ModelToIndexSet(playerid, i, ExteriorMisc[i][emModelid]);
                             fselection_add_item(playerid, ExteriorMisc[i][emModelid]);
@@ -825,7 +825,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_EXTERIOR_SURE:
         {
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 
             // TODO: refactor, no need for three cases or branching.
             new
@@ -835,7 +835,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 { // Biljke
-                    if (AC_GetPlayerMoney(playerid) < ExteriorPlants[index][epPrice])
+                    if(AC_GetPlayerMoney(playerid) < ExteriorPlants[index][epPrice])
                         return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorPlants[index][epPrice]);
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorPlants[index][epModelid];
@@ -846,7 +846,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 { // Furniture
-                    if (AC_GetPlayerMoney(playerid) < ExteriorFurniture[index][efPrice])
+                    if(AC_GetPlayerMoney(playerid) < ExteriorFurniture[index][efPrice])
                         return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorFurniture[index][efPrice]);
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorFurniture[index][efModelid];
@@ -857,7 +857,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 2:
                 { // Misc
-                    if (AC_GetPlayerMoney(playerid) < ExteriorMisc[index][emPrice])
+                    if(AC_GetPlayerMoney(playerid) < ExteriorMisc[index][emPrice])
                         return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorMisc[index][emPrice]);
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorMisc[index][emModelid];
@@ -887,9 +887,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 CMD:exterior(playerid, params[])
 {
     new houseid = PlayerKeys[playerid][pHouseKey];
-    if (houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
+    if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 
-    if (!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
+    if(!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje kuce! Susjedima je ZABRANJENO mapati eksterijer!");
         return 1;
@@ -901,13 +901,13 @@ CMD:exterior(playerid, params[])
 
 CMD:deleteext(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) 
+    if(PlayerInfo[playerid][pAdmin] < 2) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
     new 
         index = FindExteriorObjectId(playerid, 5.0);
-    if (index == INVALID_HOUSE_ID)
+    if(index == INVALID_HOUSE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini kuce!");
-    if (index == -1) 
+    if(index == -1) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu eksterijer objekta!");
 
     DeleteExteriorObject(Player_HouseArea(playerid), index);

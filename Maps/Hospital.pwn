@@ -6253,7 +6253,7 @@ hook OnPlayerConnect(playerid) {
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {	
-	if( PRESSED(KEY_YES) ) 
+	if(PRESSED(KEY_YES)) 
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1172.663330, -1321.117065, -53.440048)) {
 			if(lsfd_dstatus[0] == 0) {
