@@ -11,7 +11,7 @@ forward bool:Player_OnLawDuty(playerid);
 forward Player_SetLawDuty(playerid, bool:v);
 
 // LSPD
-#include "modules/Systems\LSPD/Header.inc"
+#include "modules/Systems/Factions\LSPD/Header.inc"
 
 // Bizz
 forward bool: Bizz_Exists(bizzid);
