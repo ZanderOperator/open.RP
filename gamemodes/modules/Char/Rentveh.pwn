@@ -13,7 +13,6 @@
 #define MAX_RENTS       				(10)
 #define RENT_POS                        1079.2101, -1386.8029, 12.8189
 #define MAX_RENT_LIST					(16)
-#define MODEL_SELECTION_RENTCARS		(314)
 /*
 	##     ##    ###    ########   ######  
 	##     ##   ## ##   ##     ## ##    ## 

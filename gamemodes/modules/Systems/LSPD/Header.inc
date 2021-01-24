@@ -58,4 +58,11 @@ forward bool:Player_TracingNumber(playerid);
 forward Player_SetTracingNumber(playerid, bool:v);
 
 // Tickets
-#include "modules/Systems/LSPD\Tickets/Header.inc"
+forward bool:IsVehicleImpoundable(vehicleid);
+forward InsertPlayerTicket(playerid, giveplayerid, money, const reason[]);
+forward CheckVehicleTickets(playerid, vehicleid);
+forward GetVehicleTicketReason(ticketsql);
+forward DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false);
+forward LoadPlayerTickets(playerid, const playername[]);
+forward LoadVehicleTickets(vehicleid);
+forward ShowVehicleTickets(playerid, vehicleid);

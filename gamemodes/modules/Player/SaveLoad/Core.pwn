@@ -75,7 +75,6 @@ timer SafeHealPlayer[250](playerid)
 }
 
 
-forward CheckPlayerInBase(playerid);
 forward LoadPlayerData(playerid);
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
@@ -153,76 +152,140 @@ Public: OnPasswordChecked(playerid)
 	return 1;
 }
 
-public CheckPlayerInBase(playerid)
+public OnPlayerRequestSpawn(playerid)
 {
-	if(cache_num_rows()) 
-	{
-		TogglePlayerControllable(playerid, false);
-		SetCameraBehindPlayer(playerid);
-		RandomPlayerCameraView(playerid);
+	return 0;
+}
 
-		format(dialogtext, 
-			sizeof(dialogtext), 
-			""COL_WHITE"Greetings "COL_LIGHTBLUE"%s!\n\n\
-				"COL_WHITE"It's nice to see you again on our server.\n\
-				Please enter your account's password and log in.\n\
-				You have "COL_LIGHTBLUE"%d"COL_WHITE" seconds to\n\
-				sign in, otherwise you'll be kicked out.\n\n\
-				Thank you and we hope you'll enjoy your gameplay\n\
-				on %s!",
-			GetName(playerid),
-			MAX_LOGIN_TIME
-		);					
-		
-		ShowPlayerDialog(playerid, 
-			DIALOG_LOGIN, 
-			DIALOG_STYLE_PASSWORD, 
-			""COL_WHITE"Login", 
-			dialogtext, 
-			"Proceed", 
-			"Abort"
-		);
-		
-		Bit8_Set(gr_LoginInputs, playerid, 0);
-		SigningIn[playerid] = true;
-		LoginCheckTimer[playerid] = defer LoginCheck(playerid);
-	} 
-	else 
+public OnPlayerRequestClass(playerid, classid)
+{
+	if(IsPlayerLogged(playerid) || SafeSpawned[playerid])
+		return 1;
+
+	if(GMX == 1) 
 	{
-		if(regenabled)
-		{				
-			#if defined COA_UCP
-				va_SendClientMessage(playerid, COLOR_RED, "You haven't registered your account on %s!",
-					WEB_URL
-				);
-				KickMessage(playerid);
-			#else
+		va_SendClientMessage(playerid,
+			COLOR_RED, 
+			"%s is currently in data storing pre-restart process. You have been automatically kicked.",
+			SERVER_NAME
+		);
+		KickMessage(playerid);
+		return 1;
+	}
+	if(!IsPlayerLogged(playerid) || IsPlayerConnected(playerid))
+	{
+		ResetPlayerVariables(playerid);
+
+		if(IsPlayerNPC(playerid)) 
+		{
+			SpawnPlayer(playerid);
+			return 1;
+		}
+        ClearPlayerChat(playerid);
+		
+		new
+			tmpname[24];
+		GetPlayerName(playerid, tmpname, MAX_PLAYER_NAME);
+		if(!IsValidNick(tmpname))
+		 {
+			SendClientMessage(playerid, COLOR_SAMP_GREEN, "ERROR: Invalid RolePlay nickname, please visit "WEB_URL" for more info!");
+			KickMessage(playerid);
+			return 0;
+		}
+		new
+			hour, minute;
+		GetServerTime(hour, minute);
+		SetPlayerTime(playerid,hour,minute);
+		SetPlayerColor(playerid, 	COLOR_PLAYER);
+		SetPlayerWeather(playerid, 	WeatherSys);
+		TogglePlayerSpectating(playerid, true);
+		SetPlayerVirtualWorld(playerid, playerid);
+		SetPlayerInterior(playerid, 0);
+		TogglePlayerControllable(playerid, false);
+		GetPlayerIp(playerid, PlayerInfo[playerid][pIP], 24);
+
+		inline CheckPlayerInBase()
+		{
+			if(cache_num_rows()) 
+			{
+				TogglePlayerControllable(playerid, false);
+				SetCameraBehindPlayer(playerid);
+				RandomPlayerCameraView(playerid);
+
 				format(dialogtext, 
 					sizeof(dialogtext), 
-					""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
-						"COL_WHITE"Your account isn't registered on our server.\n\
-						If you want to Sign Up, please press \"Register\".\n\
-						Otherwise, you'll be kicked out of the server!",GetName(playerid)
-				);
+					""COL_WHITE"Greetings "COL_LIGHTBLUE"%s!\n\n\
+						"COL_WHITE"It's nice to see you again on our server.\n\
+						Please enter your account's password and log in.\n\
+						You have "COL_LIGHTBLUE"%d"COL_WHITE" seconds to\n\
+						sign in, otherwise you'll be kicked out.\n\n\
+						Thank you and we hope you'll enjoy your gameplay\n\
+						on %s!",
+					GetName(playerid),
+					MAX_LOGIN_TIME
+				);					
+				
 				ShowPlayerDialog(playerid, 
-					DIALOG_REGISTER, 
-					DIALOG_STYLE_MSGBOX, 
-					""COL_WHITE"Sign Up (1/6)", 
+					DIALOG_LOGIN, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Login", 
 					dialogtext, 
-					"Register", 
+					"Proceed", 
 					"Abort"
 				);
-			#endif
+				
+				Bit8_Set(gr_LoginInputs, playerid, 0);
+				SigningIn[playerid] = true;
+				LoginCheckTimer[playerid] = defer LoginCheck(playerid);
+			} 
+			else 
+			{
+				if(regenabled)
+				{				
+					#if defined COA_UCP
+						va_SendClientMessage(playerid, COLOR_RED, "You haven't registered your account on %s!",
+							WEB_URL
+						);
+						KickMessage(playerid);
+					#else
+						format(dialogtext, 
+							sizeof(dialogtext), 
+							""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
+								"COL_WHITE"Your account isn't registered on our server.\n\
+								If you want to Sign Up, please press \"Register\".\n\
+								Otherwise, you'll be kicked out of the server!",GetName(playerid)
+						);
+						ShowPlayerDialog(playerid, 
+							DIALOG_REGISTER, 
+							DIALOG_STYLE_MSGBOX, 
+							""COL_WHITE"Sign Up (1/6)", 
+							dialogtext, 
+							"Register", 
+							"Abort"
+						);
+					#endif
+				}
+				else
+				{
+					SendClientMessage(playerid, COLOR_RED, 
+						"Administrator currently disabled registration on server. Please try again later.");
+					KickMessage(playerid);
+				}
+			}
+			return 1;
 		}
-		else
-		{
-			SendClientMessage(playerid, COLOR_RED, 
-				"Administrator currently disabled registration on server. Please try again later.");
-			KickMessage(playerid);
-		}
+
+		MySQL_PQueryInline(g_SQL,  
+			using inline CheckPlayerInBase,
+			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e'", tmpname), 
+			"i",
+			playerid
+		);
 	}
 	return 1;
 }
+
+
 
 public LoadPlayerData(playerid)
 {

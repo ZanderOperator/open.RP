@@ -248,6 +248,13 @@ SetProstituteAnim(prostitute_id, anim_id) {
 /*
 	- hooks
 */
+
+hook OnGameModeInit()
+{
+	Iter_Init(PROSTITUTE);
+	return 1;
+}
+
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if(PRESSED(KEY_YES)) {
 		foreach(new i : PROSTITUTE) {

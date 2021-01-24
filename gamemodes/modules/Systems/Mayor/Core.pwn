@@ -1,12 +1,3 @@
-#if defined _core_included
-    #undef _core_included
-#endif
-
-#if defined MODULE_MAYOR_CORE
-    #endinput
-#endif
-#define MODULE_MAYOR_CORE
-
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       
@@ -30,6 +21,12 @@
        ###    ##     ## ##     ##  ######
 */
 
+static govskins_gov[] =
+{
+    20700, 20701, 20702, 20703, 20704, 20705, 20706, 20707, 20708, 20709, 20710, 20711, 20712, 20713, 
+    20714, 20715, 20716, 20717, 20718
+};
+
 static
     gov_doors[11],
     gov_status[11];
@@ -44,6 +41,134 @@ static
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
+{
+    if(!response)
+    {
+        return 1;
+    }
+    new index = Player_ModelToIndex(playerid, modelid);
+    switch (fselectid)
+    {
+        case MODEL_SELECTION_GOVSKIN:
+        {
+            SetPlayerSkin(playerid, govskins_gov[index]);
+            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", govskins_gov[index]);
+        }
+    }
+    return 1;
+}
+
+hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
+{
+    switch(dialogid)
+    {
+        case DIALOG_GOV_EQUIP:
+        {
+            if(!response)
+            {
+                if(VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
+                {
+                    new
+                        engine, lights, alarm, doors, bonnet, boot, objective;
+                    GetVehicleParamsEx(VehicleEquipment[playerid], engine, lights, alarm, doors, bonnet, boot, objective);
+                    SetVehicleParamsEx(VehicleEquipment[playerid], engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_OFF, objective);
+                }
+                return 1;
+            }
+            switch (listitem)
+            {
+                case 0:
+                { // Skins
+                    for(new i = 0; i < sizeof(govskins_gov); i++)
+                    {
+                        if(govskins_gov[i] != 0)
+                        {
+                            fselection_add_item(playerid, govskins_gov[i]);
+                            Player_ModelToIndexSet(playerid, i, govskins_gov[i]);
+                        }
+                    }
+                    fselection_show(playerid, MODEL_SELECTION_GOVSKIN, "Government Clothes");                
+                }
+                case 1:
+                { // Duty
+                    ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Choose", "Abort");
+                }
+                case 2:
+                { // Heal
+                    new
+                        Float:tempheal;
+                    GetPlayerHealth(playerid,tempheal);
+
+                    if(tempheal < 100.0)
+                        SetPlayerHealth(playerid,99.9);
+
+                    PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
+                    SetPlayerArmour(playerid, 50);
+
+                    new string[144];
+                    format(string, sizeof(string), "* %s oblaci pancirku.", GetName(playerid, true));
+                    ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+                }
+            }
+        }
+        case DIALOG_GOV_EQUIP_DUTY:
+        {
+            if(!response)
+            {
+                ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
+                return 1;
+            }
+            switch (listitem)
+            {
+                case 0:
+                {   // On Duty
+                    if(Player_OnLawDuty(playerid))
+                    {
+                        SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
+                        return 1;
+                    }
+                    PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
+                    Player_SetLawDuty(playerid, true);
+
+                    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit FD komande.");
+                    
+                    new string[144];
+                    format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_DARKYELLOW, string);
+
+                    format(string, sizeof(string), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
+                    ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+                }
+                case 1:
+                {   // Off Duty
+                    if(!Player_OnLawDuty(playerid))
+                    {
+                        SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
+                        return 1;
+                    }
+
+                    PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
+                    SetPlayerArmour(playerid, 0.0);
+                    SetPlayerHealth(playerid, 99.9);
+                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
+                    Player_SetLawDuty(playerid, false);
+
+                    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
+                    new string[144];
+                    format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_DARKYELLOW, string);
+
+                    format(string, sizeof(string), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
+                    ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+                }
+            }
+            ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Choose", "Abort");
+        }
+    }
+    return 0;
+}
 
 hook OnGameModeInit()
 {

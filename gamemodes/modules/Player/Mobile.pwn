@@ -157,19 +157,19 @@ new
 	Bit8: 	gr_RingingTime			<MAX_PLAYERS>	= { Bit8: 0, ... },
 	Bit8:	gr_MobileContactSlot 	<MAX_PLAYERS> 	= { Bit8: 0, ... };
 
-new
+static
 	Float:SelfieAngle[MAX_PLAYERS],
 	Float:SelfieHeight[MAX_PLAYERS],
 	Timer:PlayerMobileRingTimer[MAX_PLAYERS],
 	StartCallTimestamp[MAX_PLAYERS] = { 0, ... },
 	PlayerCallPlayer[MAX_PLAYERS],
+	CallingId[MAX_PLAYERS],
 	bool:SpeakerPhone[MAX_PLAYERS],
 	DialogInputNumber[MAX_PLAYERS][11],
 	PhoneTDAction[MAX_PLAYERS],
 	TDPhoneDial[PHONE_TEXTDRAWS],
-	PlayerTextDrawCreated[MAX_PLAYERS][PHONE_TEXTDRAWS];
-
-stock static
+	PlayerTextDrawCreated[MAX_PLAYERS][PHONE_TEXTDRAWS],
+	PlayerText:PhoneTD[MAX_PLAYERS][PHONE_TEXTDRAWS],
 	PhoneStatus[MAX_PLAYERS],
 	PhoneLine[MAX_PLAYERS],
 	TowerEditingObj[MAX_PLAYERS],
@@ -177,9 +177,8 @@ stock static
 	PhoneUpdateTick[MAX_PLAYERS],
 	TowerEditingNetwork[MAX_PLAYERS][24];
 
-stock static PlayerText:PhoneTD[MAX_PLAYERS][PHONE_TEXTDRAWS];
-
-new Iterator: MobileContacts[MAX_PLAYERS]<MAX_MOBILE_CONTACTS>;
+static 
+	Iterator: MobileContacts[MAX_PLAYERS]<MAX_MOBILE_CONTACTS>;
 
 
 /*
@@ -191,6 +190,11 @@ new Iterator: MobileContacts[MAX_PLAYERS]<MAX_MOBILE_CONTACTS>;
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
 	 ######     ##     #######   ######  ##    ##  ######
 */
+
+bool:Player_MobileSpeaking(playerid)
+{
+	return (CallingId[playerid] != 999 || PlayerCallPlayer[playerid] != INVALID_PLAYER_ID);
+}
 
 stock Player_PhoneStatus(playerid)
 {

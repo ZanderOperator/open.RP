@@ -52,7 +52,11 @@ Player_ModelToIndexSet(playerid, i, value)
 
 LoadServerSkins(f_name[])
 {
-    new File:f, str[75];
+	Iter_Init(Skin);
+
+    new 
+		File:f, 
+		str[75];
 	format(str, sizeof(str), "%s", f_name);
 	f = fopen(str, io_read);
 	if(!f) 
@@ -78,16 +82,6 @@ LoadServerSkins(f_name[])
     }
 	printf("[scriptfiles/skins.txt]: Sucessfully Loaded Server Skins. [%d/%d]", idx, MAX_SERVER_SKINS);
     return 1;
-}
-
-hook function ResetIterators()
-{
-	Iter_Clear(Skin);
-	for(new i = 0; i < MAX_PLAYERS; i++)
-	{
-		Iter_Clear(SelectionModel[i]);
-	}
-	return continue();
 }
 
 hook function ResetPlayerVariables(playerid)

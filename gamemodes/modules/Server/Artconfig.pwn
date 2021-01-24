@@ -9,7 +9,7 @@ LSN				20800 - 20899
 SHERIFF'S 		20900 - 20999
 */
 
-Public:LoadCustomModels()
+static LoadCustomModels()
 {
 	// Female skins
     AddCharModel(308, 20001, "skins/Female/coa_girl1.dff", "skins/Female/coa_girl1.txd");
@@ -510,5 +510,12 @@ Public:LoadCustomModels()
 	AddSimpleModel(-1, 19920, -2166, "attachments/fd_pancir.dff", "attachments/fd_pancir.txd");
 	AddSimpleModel(-1, 19916, -2167, "attachments/fd_znacka.dff", "attachments/fd_znacka.txd");
 	
+	print("Report: Custom Models Loaded.");
+	return 1;
+}
+
+hook OnGameModeInit()
+{
+	LoadCustomModels();
 	return 1;
 }

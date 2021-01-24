@@ -4,7 +4,7 @@
 #include "modules/Char/Hobby/Fisher.pwn"
 #include "modules/Char/Hobby/Hunter.pwn"
 
-#include "modules/Char/ActorSystem.pwn"
+#include "modules/Char/Animations.pwn"
 #include "modules/Char/Hotel.pwn"
 #include "modules/Char/Bombs.pwn"
 #include "modules/Char/BoomBox.pwn"

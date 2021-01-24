@@ -101,6 +101,7 @@ forward OnBizzFurnitureObjectCreate(biznisid, index);
     ##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
      ######     ##     #######   ######  ##    ##  ######
 */
+
 /////////////////////////////////////////////////////////////
 /*
     d888888b d8b   db d888888b d88888b d8888b. d888888b  .d88b.  d8888b.
@@ -277,11 +278,14 @@ static stock ExitBlankInteriorPreview(playerid)
 */
 public OnBizzFurnitureObjectsLoad(biznisid)
 {
-    new objectCount = cache_num_rows();
-    if(!objectCount) return 1;
+    new 
+        objectCount = cache_num_rows();
+    if(!objectCount) 
+        return 1;
     if(objectCount > BIZZ_FURNITURE_VIP_GOLD_OBJCTS)
         objectCount = BIZZ_FURNITURE_VIP_GOLD_OBJCTS;
-
+    
+    Iter_Init(BizzFurniture[biznisid]);
     for (new i = 0; i < objectCount; i++)
     {
         cache_get_value_name_int(i,     "sqlid"         , BizzInfo[biznisid][bFurSQL][i]);
@@ -373,7 +377,8 @@ public OnBizzFurnitureObjectCreate(biznisid, index)
 // Stocks
 stock LoadBiznisFurnitureObjects(biznisid)
 {
-    if(biznisid == INVALID_BIZNIS_ID) return 1;
+    if(!Bizz_Exists(biznisid)) 
+        return 1;
 
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]), 
@@ -1222,15 +1227,6 @@ stock ReloadBizzFurniture(biznisid)
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
-
-hook function ResetIterators()
-{
-    for(new i = 0; i < MAX_BIZZES; i++)
-    {
-        Iter_Clear(BizzFurniture[i]);
-    }
-    return continue();
-}
 
 hook OnGameModeInit()
 {

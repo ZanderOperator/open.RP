@@ -31,11 +31,6 @@
 // DEFINES za cijene /recover -a
 #define RECOVERY_PRICE 500
 
-#define MODEL_SELECTION_FDSKIN 939
-#define MODEL_SELECTION_GOVSKIN 968
-#define MODEL_SELECTION_LAWSKIN 969
-#define MODEL_SELECTION_SDSKIN 989
-
 /*
     ##     ##    ###    ########   ######  
     ##     ##   ## ##   ##     ## ##    ## 
@@ -51,32 +46,9 @@ static
     bool:bUsingStretcher  [MAX_PLAYERS] = {false, ...},
     bool:bStretcherSpawned[MAX_PLAYERS] = {false, ...};
 
-// PD skins
-static lawskins_police[] =
-{
-    265, 267, 280, 281, 284, 306, 307, 20500, 20501, 20502, 20503, 20504, 20505, 20506, 20507, 20508, 20509, 20510, 20511,
-    20512, 20513, 20514, 20515, 20516, 20517, 20518, 20519, 20520, 20521, 20522, 20523, 20524, 20525, 20526, 20527, 20528,
-    20529, 20530, 20531, 20532, 20533, 20534, 20535, 20536, 20537, 20538, 20539, 20540, 20541, 20542, 20543, 20544, 20545,
-    20546, 20547, 20548, 20549, 20550, 20551, 20552, 20553, 20554, 20555, 20556, 20557, 20558, 20559, 20560, 20561, 20562,
-    20563, 20564, 20565, 20566, 20567, 20568, 20569, 20570, 20571, 20572
-};
-
-static lawskins_sheriff[] =
-{
-    20903, 20904, 20905, 20906, 20907, 20908, 20909, 20910, 20911, 20912, 20913, 20914, 20915, 20916,
-    20917, 20918, 20919, 20920, 20921, 20922, 20923, 20924, 20925, 20926, 20927, 20928, 20929, 20930, 20931, 20932, 20933,
-    20934, 20935, 20936
-};
-
 static fdskins_selection[] =
 {
     20600, 20601, 20602, 20603, 20604, 20605, 20606, 20607, 20608, 20609, 20610, 20611, 20612, 20613, 20614, 20615
-};
-
-static govskins_gov[] =
-{
-    20700, 20701, 20702, 20703, 20704, 20705, 20706, 20707, 20708, 20709, 20710, 20711, 20712, 20713, 20714, 20715, 20716,
-    20717, 20718
 };
 
 /*
@@ -168,21 +140,6 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
             SetPlayerSkin(playerid, fdskins_selection[index]);
             va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", fdskins_selection[index]);
         }
-        case MODEL_SELECTION_LAWSKIN:
-        {
-            SetPlayerSkin(playerid, lawskins_police[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", lawskins_police[index]);
-        }
-        case MODEL_SELECTION_GOVSKIN:
-        {
-            SetPlayerSkin(playerid, govskins_gov[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", govskins_gov[index]);
-        }
-        case MODEL_SELECTION_SDSKIN:
-        {
-            SetPlayerSkin(playerid, lawskins_sheriff[index]);
-            va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", lawskins_sheriff[index]);
-        }
     }
     return 1;
 }
@@ -193,106 +150,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
     switch (dialogid)
     {
-        case DIALOG_GOV_EQUIP:
-        {
-            if(!response)
-            {
-                if(VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
-                {
-                    new
-                        engine, lights, alarm, doors, bonnet, boot, objective;
-                    GetVehicleParamsEx(VehicleEquipment[playerid], engine, lights, alarm, doors, bonnet, boot, objective);
-                    SetVehicleParamsEx(VehicleEquipment[playerid], engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_OFF, objective);
-                }
-                return 1;
-            }
-            switch (listitem)
-            {
-                case 0:
-                { // Skins
-                    for(new i = 0; i < sizeof(govskins_gov); i++)
-                    {
-                        if(govskins_gov[i] != 0)
-                        {
-                            fselection_add_item(playerid, govskins_gov[i]);
-                            Player_ModelToIndexSet(playerid, i, govskins_gov[i]);
-                        }
-                    }
-                    fselection_show(playerid, MODEL_SELECTION_GOVSKIN, "Government Clothes");                
-                }
-                case 1:
-                { // Duty
-                    ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Choose", "Abort");
-                }
-                case 2:
-                { // Heal
-                    new
-                        Float:tempheal;
-                    GetPlayerHealth(playerid,tempheal);
-
-                    if(tempheal < 100.0)
-                        SetPlayerHealth(playerid,99.9);
-
-                    PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
-                    SetPlayerArmour(playerid, 50);
-
-                    format(string, sizeof(string), "* %s oblaci pancirku.", GetName(playerid, true));
-                    ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-                }
-            }
-            return 1;
-        }
-        case DIALOG_GOV_EQUIP_DUTY:
-        {
-            if(!response)
-            {
-                ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
-                return 1;
-            }
-            switch (listitem)
-            {
-                case 0:
-                {   // On Duty
-                    if(Player_OnLawDuty(playerid))
-                    {
-                        SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
-                        return 1;
-                    }
-                    PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-                    Player_SetLawDuty(playerid, true);
-
-                    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit FD komande.");
-                    format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_DARKYELLOW, string);
-
-                    format(string, sizeof(string), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
-                    ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-                }
-                case 1:
-                {   // Off Duty
-                    if(!Player_OnLawDuty(playerid))
-                    {
-                        SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
-                        return 1;
-                    }
-
-                    PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-                    SetPlayerArmour(playerid, 0.0);
-                    SetPlayerHealth(playerid, 99.9);
-                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
-                    Player_SetLawDuty(playerid, false);
-
-                    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
-                    format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_DARKYELLOW, string);
-
-                    format(string, sizeof(string), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
-                    ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-                }
-            }
-            ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Choose", "Abort");
-            return 1;
-        }
         case DIALOG_FD_EQUIP:
         {
             if(!response)
@@ -515,142 +372,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
             PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-            return 1;
-        }
-        case DIALOG_PD_EQUIP:
-        {
-            if(!response)
-            {
-                if(VehicleEquipment[playerid] != INVALID_VEHICLE_ID)
-                {
-                    new
-                        engine, lights, alarm, doors, bonnet, boot, objective;
-                    GetVehicleParamsEx(VehicleEquipment[playerid], engine, lights, alarm, doors, bonnet, boot, objective);
-                    SetVehicleParamsEx(VehicleEquipment[playerid], engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_OFF, objective);
-                }
-                return 1;
-            }
-            switch (listitem)
-            {
-                case 0:
-                {   // Skins
-                    //ShowPlayerDialog(playerid, DIALOG_PD_SKIN, DIALOG_STYLE_LIST, "ODABIR SKINA", "71\n93\n211\n217\n265\n267\n280\n281\n282\n283\n284\n288\nCivilni skin", "Choose", "Abort");
-                    if(IsACop(playerid))
-                    {
-                        for(new i = 0; i < sizeof(lawskins_police); i++)
-                        {
-                            if(lawskins_police[i] != 0)
-                            {
-                                fselection_add_item(playerid, lawskins_police[i]);
-                                Player_ModelToIndexSet(playerid, i, lawskins_police[i]);
-                            }
-                        }
-                        fselection_show(playerid, MODEL_SELECTION_LAWSKIN, "Police Clothes"); 
-                    }
-                    else if(IsASD(playerid))
-                    {
-                        for(new i = 0; i < sizeof(lawskins_sheriff); i++)
-                        {
-                            if(lawskins_sheriff[i] != 0)
-                            {
-                                fselection_add_item(playerid, lawskins_sheriff[i]);
-                                Player_ModelToIndexSet(playerid, i, lawskins_sheriff[i]);
-                            }
-                        }
-                        fselection_show(playerid, MODEL_SELECTION_SDSKIN, "Sheriff Clothes"); 
-                    }
-                }
-                case 1:
-                { // Duty
-                    ShowPlayerDialog(playerid, DIALOG_PD_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Choose", "Abort");
-                }
-                case 2:
-                { // Heal
-                    new
-                        Float:tempheal;
-                    GetPlayerHealth(playerid,tempheal);
-                    if(tempheal < 100.0)
-                        SetPlayerHealth(playerid,99.9);
-
-                    PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
-                    SetPlayerArmour(playerid, 99);
-
-                    format(string, sizeof(string), "* %s oblaci pancirku.", GetName(playerid, true));
-                    ProxDetector(30.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-                }
-                case 3:
-                { // Buygun
-                    if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
-                    if(IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
-                    ShowPlayerDialog(playerid,DIALOG_PD_BUYGUN,DIALOG_STYLE_LIST,"POLICE ARMOURY","Desert Eagle - 50 metaka\nShotgun - 50 metaka\nMP5 - 150 metaka\nM4 - 200 metaka\nSniper Rifle - 50 metaka\nKnife\nTeargas - 10\nColt45 - 50\nSilenced - 50 metaka\nSpraycan\nNitestick\nBean Bag - 50 metaka\nRifle - 50 komanda","Choose","Exit");
-                }
-            }
-            return 1;
-        }
-        case DIALOG_PD_EQUIP_DUTY:
-        {
-            if(!response)
-            {
-                ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
-                return 1;
-            }
-            switch (listitem)
-            {
-                case 0:
-                {   // Onduty
-                    if(Player_OnLawDuty(playerid))
-                    {
-                        SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
-                        return 1;
-                    }
-
-                    if(!CheckPlayerWeapons(playerid, 24))
-                        return 1;
-
-                    AC_ResetPlayerWeapons(playerid); 
-
-                    Player_SetHasTaserGun(playerid, false);
-                    Player_SetOnPoliceDuty(playerid, true);
-                    Player_SetLawDuty(playerid, true);
-
-                    AC_GivePlayerWeapon(playerid, 3, 1);
-                    AC_GivePlayerWeapon(playerid, 24, 50);
-                    AC_GivePlayerWeapon(playerid, 41, 1000);
-                    AC_GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 500);
-                    PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-
-                    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit PD komande.");
-                    format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
-
-                    format(string, sizeof(string), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
-                    ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-                }
-                case 1:
-                {   // Off Duty
-                    if(!Player_OnLawDuty(playerid))
-                    {
-                        SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
-                        return 1;
-                    }
-
-                    AC_ResetPlayerWeapons(playerid);
-                    Player_SetOnPoliceDuty(playerid, false);
-                    PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-                    SetPlayerArmour(playerid, 0.0);
-                    SetPlayerHealth(playerid, 99.9);
-                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
-                    Player_SetLawDuty(playerid, false);
-
-                    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit PD komande.");
-                    format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
-
-                    format(string, sizeof(string), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
-                    ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-                }
-            }
-            ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
             return 1;
         }
     }

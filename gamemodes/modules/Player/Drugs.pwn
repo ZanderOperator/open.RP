@@ -68,6 +68,12 @@ hook function ResetPlayerVariables(playerid)
 	return continue(playerid);
 }
 
+hook function ResetPrivateVehicleInfo(vehicleid)
+{
+	ResetVehicleDrugs(vehicleid);
+	return continue(vehicleid);
+}
+
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if(DrugPackage[playerid][pcDrug] != 0)

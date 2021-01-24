@@ -39,6 +39,10 @@
 */
 ///////////////////////////////////////////////////////////////////
 
+static
+	Iterator:VehWeapon[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
+	Iterator:VehWeaponObject[MAX_VEHICLES]<MAX_WEAPON_SLOTS>;
+
 enum 
 {
 	HOT_BATTERY		= 10,
@@ -287,13 +291,18 @@ new const VehicleColoursTableRGB[256][] = {
 	"561A28", "4E0E27", "706C67", "3B3E42", "2E2D33", "7B7E7D", "4A4442", "28344E"
 };
 
-//Timers
 static stock
 	Timer:PlayerTestTimer[MAX_PLAYERS],
 	Timer:PlayerTestBackTimer[MAX_PLAYERS],
 	EditingTrunkWeaponModel[MAX_PLAYERS],
 	EditingTrunkWeaponObject[MAX_PLAYERS];
-	//TrailRespawnTimer = 0;
+
+static
+	Timer:VehicleAlarmTimer[MAX_VEHICLES],
+	bool:VehicleAlarmStarted[MAX_VEHICLES],
+	Timer:VehicleLightsTimer[MAX_VEHICLES],
+	VehicleLightsBlinker[MAX_VEHICLES],
+	bool:VehicleBlinking[MAX_VEHICLES];
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######
@@ -422,9 +431,6 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	mysql_pquery(g_SQL, "COMMIT");
 
 	SetVehicleNumberPlate(cCar, "");
-	
-	ResetVehicleTrunkWeapons(cCar);
-	ResetVehiclePackages(cCar);
 
 	new engine, lights, alarm, doors, bonnet, boot, objective;
 	GetVehicleParamsEx(cCar, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -710,11 +716,59 @@ stock ResetVehicleAlarm(vehicleid)
 	return 1;
 }
 
-stock DeleteWeaponObject(vehicleid, slotid)
+static DeleteWeaponObject(vehicleid, slotid)
 {
 	mysql_fquery(g_SQL, "DELETE FROM cocars_wobjects WHERE weaponsql = '%d'", 
 		VehicleInfo[vehicleid][vWeaponSQLID][slotid]
 	);
+	return 1;
+}
+
+static ClearWeaponObject(vehicleid, slot) 
+{
+	if(VehicleInfo[vehicleid][vWeaponId][slot] != 0)
+	{
+		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][slot]))
+		{
+			DestroyObject(VehicleInfo[vehicleid][vWeaponObjectID][slot]);
+			VehicleInfo[vehicleid][vWeaponObjectID][slot] = INVALID_OBJECT_ID;
+		}
+		VehicleInfo[vehicleid][vOffsetx][slot]      		= 0;
+		VehicleInfo[vehicleid][vOffsety][slot]      		= 0;
+		VehicleInfo[vehicleid][vOffsetz][slot]      		= 0;
+		VehicleInfo[vehicleid][vOffsetxR][slot]     		= 0;
+		VehicleInfo[vehicleid][vOffsetyR][slot]      		= 0;
+		VehicleInfo[vehicleid][vOffsetzR][slot]      		= 0;
+	}
+	Iter_Remove(VehWeaponObject[vehicleid], slot);
+	return 1;
+}
+
+DeleteVehicleWeapons(vehicleid)
+{
+	if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid))
+		return 1;
+
+	foreach(new wslot: VehWeapon[vehicleid])
+		DeleteVehicleWeapon(vehicleid, wslot);
+	
+	return 1;
+}
+
+static DeleteVehicleWeapon(vehicleid, slot)
+{
+	ClearWeaponObject(vehicleid, slot);
+	DeleteWeaponObject(vehicleid, slot);
+
+	VehicleInfo[vehicleid][vWeaponSQLID][slot] = -1;
+	VehicleInfo[vehicleid][vWeaponId][slot] 	= 0;
+	VehicleInfo[vehicleid][vWeaponAmmo][slot] 	= 0;
+
+	mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE id = '%d'",
+		VehicleInfo[vehicleid][vWeaponSQLID][slot]
+	);
+	
+	Iter_Remove(VehWeapon[vehicleid], slot);
 	return 1;
 }
 
@@ -810,11 +864,6 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	new	puzavac = IsCrounching(playerid);
 	SetAnimationForWeapon(playerid, VehicleInfo[vehicleid][vWeaponId][slot], puzavac);
 	
-	// Query			
-	mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE id = '%d'",
-		VehicleInfo[vehicleid][vWeaponSQLID][slot]
-	);
-	
 	#if defined MODULE_LOGS
 	Log_Write("logfiles/weapon_trunktake.txt", "(%s) %s [Vehicle SQLID:%d] took %s with %d bullets from %s(Slot %d).", 
 		ReturnDate(), 
@@ -833,37 +882,10 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel])
 	);
 
-	DeleteWeaponObject(vehicleid, slot);
-	ClearWeaponObject(vehicleid, slot);
+	DeleteVehicleWeapon(vehicleid, slot);
 	
-	// Enum
-	VehicleInfo[vehicleid][vWeaponSQLID][slot] = -1;
-	VehicleInfo[vehicleid][vWeaponId][slot] 	= 0;
-	VehicleInfo[vehicleid][vWeaponAmmo][slot] 	= 0;
-	
-	Iter_Remove(VehWeapon[vehicleid], slot);
 	ResetPlayerWeaponList(playerid);
 	AntiSpamInfo[playerid][asCarTrunk] = gettimestamp() + ANTI_SPAM_CAR_WEAPON;
-	return 1;
-}
-
-stock ClearWeaponObject(vehicleid, slot) 
-{
-	if(VehicleInfo[vehicleid][vWeaponId][slot] != 0)
-	{
-		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][slot]))
-		{
-			DestroyObject(VehicleInfo[vehicleid][vWeaponObjectID][slot]);
-			VehicleInfo[vehicleid][vWeaponObjectID][slot] = INVALID_OBJECT_ID;
-		}
-		VehicleInfo[vehicleid][vOffsetx][slot]      		= 0;
-		VehicleInfo[vehicleid][vOffsety][slot]      		= 0;
-		VehicleInfo[vehicleid][vOffsetz][slot]      		= 0;
-		VehicleInfo[vehicleid][vOffsetxR][slot]     		= 0;
-		VehicleInfo[vehicleid][vOffsetyR][slot]      		= 0;
-		VehicleInfo[vehicleid][vOffsetzR][slot]      		= 0;
-	}
-	Iter_Remove(VehWeaponObject[vehicleid], slot);
 	return 1;
 }
 
@@ -3452,8 +3474,6 @@ hook function AC_DestroyVehicle(vehicleid)
 hook function ResetPrivateVehicleInfo(vehicleid)
 {
 	ResetVehicleTrunkWeapons(vehicleid);
-	ResetVehiclePackages(vehicleid);
-	ResetVehicleDrugs(vehicleid);
 	ResetVehicleAlarm(vehicleid);
 	DestroyDoorHealth3DText(vehicleid);
 	DestroyTrunkHealth3DText(vehicleid);

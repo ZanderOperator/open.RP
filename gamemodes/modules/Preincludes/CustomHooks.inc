@@ -13,12 +13,6 @@ Y8,        88 88        Y8,        ,8P 88      `8b  d8""""""""8b   88
 
 */
 
-forward ResetIterators();
-public ResetIterators()
-{
-    return 1;
-}
-
 forward LoadServerData();
 public LoadServerData()
 {

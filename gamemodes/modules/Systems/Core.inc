@@ -1,3 +1,9 @@
+// Vehicles
+#include "modules/Systems\Vehicles/Core.pwn"
+#include "modules/Systems\Vehicles/PrivateVehicle.pwn"
+#include "modules/Systems\Vehicles/Tuning.pwn"
+#include "modules/Systems\Vehicles/NOS.pwn"
+
 #include "modules/Systems/Pickups.pwn"
 
 // House
@@ -40,10 +46,7 @@
 #include "modules/Systems/LSPD/Roadblocks.pwn"
 #include "modules/Systems/LSPD/MDC.pwn"
 #include "modules/Systems/LSPD/Flashbang.pwn"
-
-// Tickets
-#include "modules/Systems/LSPD\Tickets/Core.inc"
-
+#include "modules/Systems/LSPD/Tickets.pwn"
 #include "modules/Systems/LSPD/Spikes.pwn"
 #include "modules/Systems/LSPD/Gunrack.pwn"
 #include "modules/Systems/LSPD/MobileCommand.pwn"

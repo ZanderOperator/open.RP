@@ -16,15 +16,18 @@
 #define MAX_ADS							(60)
 #define PRICE_PER_CHAR					(4)
 
-new Iterator:Ads<MAX_ADS>;
-// Tip oglasa
-enum {
+static 
+	Iterator:Ad<MAX_ADS>;
+
+enum 
+{
 	AD_STYLE_SELL = 0,		// Prodaja
 	AD_STYLE_BUY,			// Kupovina
 	AD_STYLE_CMRC			// Reklama
 }
 
-enum E_ADS_DATA {
+enum E_ADS_DATA 
+{
 	adSenderId,
 	adStyle,
 	adPrice,
@@ -32,19 +35,20 @@ enum E_ADS_DATA {
 	adTimes,
 	adTimeStamp
 }
-static stock
+static
 	AdsInfo[MAX_ADS][E_ADS_DATA];
 	
-enum E_PLAYER_ADS_DATA {
+enum E_PLAYER_ADS_DATA 
+{
 	padStyle,
 	padPrice,
 	padText[MAX_AD_TEXT],
 	padTimes
 }
-static stock
+static
 	PlayerAdsInfo[MAX_PLAYERS][E_PLAYER_ADS_DATA];
 	
-static stock
+static
 	LastAdsListIndex[MAX_PLAYERS],
 	lastAdId	= -1,
 	lastAdShown = -1,
@@ -59,7 +63,8 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
-stock static GetAdStyleString(styleid)
+
+static GetAdStyleString(styleid)
 {
 	new
 		buffer[10];
@@ -72,10 +77,10 @@ stock static GetAdStyleString(styleid)
 	return buffer;
 }
 
-stock static PlayerGotAd(playerid)
+static PlayerGotAd(playerid)
 {
 
-	foreach(new i: Ads)
+	foreach(new i: Ad)
 	{
 		if(AdsInfo[i][adSenderId] == PlayerInfo[playerid][pSQLID])
 		{
@@ -84,13 +89,13 @@ stock static PlayerGotAd(playerid)
 	}
 	return 0;
 }
-stock static ShowPlayerAdsList()
+static ShowPlayerAdsList()
 {
 	new
 		buffer[4096],
 		motd[200];
 	format(buffer, 4096, "Tip\tKontakt\tTekst\tCijena\n");
-	foreach(new i: Ads)
+	foreach(new i: Ad)
 	{
 	    if(AdsInfo[i][adSenderId] != 0)
 		{
@@ -106,7 +111,7 @@ stock static ShowPlayerAdsList()
 	return buffer;
 }
 
-stock static GetPlayerAdsInput(playerid)
+static GetPlayerAdsInput(playerid)
 {
 	new
 		buffer[1024];
@@ -136,7 +141,7 @@ stock static GetPlayerAdsInput(playerid)
 	return buffer;
 }
 
-stock static SendAdMessage(index)
+static SendAdMessage(index)
 {
 	new
 		buffer[1024];
@@ -167,10 +172,12 @@ stock static SendAdMessage(index)
 	return buffer;
 }
 
-stock static CreateAdForPlayer(playerid)
+static CreateAdForPlayer(playerid)
 {			
-	new index = Iter_Free(Ads);
-	if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi za oglase su popunjeni!");
+	new 
+		index = Iter_Free(Ad);
+	if(index == -1) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi za oglase su popunjeni!");
 	
 	AdsInfo[index][adSenderId]				= PlayerInfo[playerid][pSQLID];
 	AdsInfo[index][adStyle] 				= PlayerAdsInfo[playerid][padStyle];
@@ -178,7 +185,7 @@ stock static CreateAdForPlayer(playerid)
 	format(AdsInfo[index][adText], MAX_AD_TEXT, PlayerAdsInfo[playerid][padText]);
 	AdsInfo[index][adTimes]					= PlayerAdsInfo[playerid][padTimes];
 	AdsInfo[index][adTimeStamp] 			= gettimestamp();
-	Iter_Add(Ads, index);
+	Iter_Add(Ad, index);
 	
 	new price = floatround(strlen(AdsInfo[index][adText]) * PRICE_PER_CHAR) * AdsInfo[index][adTimes];
 	if(PlayerVIP[playerid][pDonateRank] > 0)
@@ -206,7 +213,7 @@ stock static CreateAdForPlayer(playerid)
 task SendAutomaticAdMessage[1000]()
 {
 	new delad = -1;
-	foreach(new i: Ads)
+	foreach(new i: Ad)
 	{
 		if(AdsInfo[i][adSenderId] != 0 && AdsInfo[i][adTimes] >= 1 && gettimestamp() >= AdsInfo[i][adTimeStamp] && gettimestamp() > (lastAdStamp + ADS_TIME_DELAY) && i > lastAdShown) 
 		{
@@ -235,7 +242,7 @@ task SendAutomaticAdMessage[1000]()
 		}
 	}
 	if(delad != -1)
-		Iter_Remove(Ads, delad);
+		Iter_Remove(Ad, delad);
 		
 	return 1;
 }
@@ -249,6 +256,22 @@ task SendAutomaticAdMessage[1000]()
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
 */
+
+hook OnGameModeInit()
+{
+	Iter_Init(Ad);
+	return 1;
+}
+
+hook function ResetPrivateVehicleInfo(vehicleid)
+{
+	if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)
+	{
+		DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vVehicleAdId]);
+		VehicleInfo[vehicleid][vVehicleAdId] = Text3D:INVALID_3DTEXT_ID;
+	}
+	return continue(vehicleid);
+}
 
 hook OnPlayerDisconnect(playerid, reason)
 {

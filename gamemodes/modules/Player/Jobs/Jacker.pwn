@@ -303,25 +303,26 @@ static GetVehiclesForIllegalGarages(garage)
 	new 
 		vehid, 
 		carid;
-	for( new i = 0; i < 6; i++) 
-	{
-		CARID_GET:
-		vehid = Vehicle_Random(VEHICLE_USAGE_PRIVATE),
-		carid = GetVehicleByModel(GetVehicleModel(vehid));	
-		if(carid == -1) 
-			goto CARID_GET;
-		if(IsABike(GetVehicleModel(vehid)) 
-			|| IsABoat(GetVehicleModel(vehid)) 
-			|| IsAMotorBike(GetVehicleModel(vehid)) 
-			|| IsAPlane(GetVehicleModel(vehid)) 
-			|| IsAHelio(GetVehicleModel(vehid))) 
-			goto CARID_GET;
-		if(!IsVehicleJackable(carid))
-			goto CARID_GET;
-		if(IsVehicleOnList(garage, carid)) 
-			goto CARID_GET;
-		IllegalGarage[garage][igVehicleIds][i] = carid;
-	}
+
+	for( new i = 0; i < 6; i++ ) 
+    {
+        do 
+		{
+            vehid = Vehicle_Random(VEHICLE_USAGE_PRIVATE),
+            carid = GetVehicleByModel(GetVehicleModel(vehid));    
+        }
+        while(
+            carid == -1 ||
+            IsABike(GetVehicleModel(vehid)) || 
+            IsABoat(GetVehicleModel(vehid)) || 
+            IsAMotorBike(GetVehicleModel(vehid)) ||
+            IsAPlane(GetVehicleModel(vehid)) ||
+            IsAHelio(GetVehicleModel(vehid)) ||
+            !IsVehicleJackable(carid) ||
+            IsVehicleOnList(garage, carid)
+        );
+        IllegalGarage[ garage ][ igVehicleIds ][ i ] = carid;
+    }
 	return 1;
 }
 
@@ -588,13 +589,11 @@ static SendPoliceAlertMessage(vehicleid, garage)
 {
 	if(IllegalGarage[garage][igWantedLevel] < 2) 
 	{
-		switch( random(5))  
-		{
-			case 0,2,4: return 1;
-			case 1,3: goto end_mark; // 20% chance of Police Alert
+		switch(random(5))
+		{  
+			case 0,2,4: return 1; // 20% risk of police being alerted
 		}
 	} 
-	end_mark: // Wanted Level 2+
 	foreach(new playerid : Player) 
 	{
 		if(!IsACop(playerid)) 
@@ -801,10 +800,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_JACKER_BRIBE: 
 		{
-			if(!response) return 1;
-			IllegalGarage[PlayerKeys[playerid][pIllegalGarageKey]][igWantedLevel]	= 0;
-			IllegalGarage[PlayerKeys[playerid][pIllegalGarageKey]][igCarsJacked]	= 0;
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully dropped heat with police to 0!");
+			if(!response) 
+				return 1;
+			new 
+				garage = PlayerKeys[playerid][pIllegalGarageKey];
+			if(garage == -1)
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't own Illegal Garage!");
+
+			IllegalGarage[garage][igWantedLevel] = 0;
+			IllegalGarage[garage][igCarsJacked] = 0;
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"You have sucessfully dropped Wanted Level in %s to 0!",
+				IllegalGarage[garage][igName]
+			);
 			PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, PlayerBribeMoney[playerid]);
 			PlayerBribeMoney[playerid] = 0;
 		}

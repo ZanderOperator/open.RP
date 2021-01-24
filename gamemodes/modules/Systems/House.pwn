@@ -378,6 +378,7 @@ stock DestroyHouseInfoTD(playerid)
 
 stock LoadHouses()
 {
+    Iter_Init(House);
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM houses WHERE 1"), 
         "OnServerHousesLoad", 
@@ -779,12 +780,11 @@ stock ResetHouseInfo(houseid)
     return 1;
 }
 
-Public:ResetHouseEnumerator()
+static ResetHouseEnumerator()
 {
     for (new i=0; i<MAX_HOUSES; i++)
-    {
         ResetHouseInfo(i);
-    }
+
     return 1;
 }
 
@@ -1323,10 +1323,10 @@ timer DestroyGlobalMapIcon[480000]()
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook function ResetIterators()
+hook OnGameModeInit()
 {
-    Iter_Clear(House);
-    return continue();
+    ResetHouseEnumerator();
+    return 1;
 }
 
 hook function LoadServerData()
@@ -1875,7 +1875,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             #endif
             return 1;
         }
-        case DIALOG_HOUSE_GUNSEF:
+        case DIALOG_HOUSE_SAFE:
         {
             new house = PlayerKeys[playerid][pHouseKey];
             // TODO: bounds check
@@ -1914,7 +1914,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 house = PlayerKeys[playerid][pHouseKey],
                 pass = strval(inputtext);
 
-            if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_SAFE,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
             if(house == INVALID_HOUSE_ID || HouseInfo[house][hOwnerID] != PlayerInfo[playerid][pSQLID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vlasnik moze mijenjati sifru sefa!");
             if(!IsPlayerInRangeOfPoint(playerid, 20.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Predaleko ste od kuce!");
             if(!HouseInfo[house][hSafe]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate sef!");
@@ -1939,7 +1939,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 house = PlayerKeys[playerid][pHouseKey],
                 pass = strval(inputtext);
 
-            if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_SAFE,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
             if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kucu!");
             if(!IsPlayerInRangeOfPoint(playerid, 20.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Predaleko ste od kuce !");
             if(!HouseInfo[house][hSafe]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete sef!");

@@ -280,7 +280,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    if(dialogid == DIALOG_EDIT_BONE)
+    if(dialogid == DIALOG_WEAPON_BONE)
     {
         if(response)
         {
@@ -337,7 +337,7 @@ CMD:weapon(playerid, params[])
 		if(EditingWeapon[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec namjestate poziciju oruzja.");
 
-		ShowPlayerDialog(playerid, DIALOG_EDIT_BONE, DIALOG_STYLE_LIST, "Bone", "Spine\nHead\nLeft upper arm\nRight upper arm\nLeft hand\nRight hand\nLeft thigh\nRight thigh\nLeft foot\nRight foot\nRight calf\nLeft calf\nLeft forearm\nRight forearm\nLeft shoulder\nRight shoulder\nNeck\nJaw", "Choose", "Cancel");
+		ShowPlayerDialog(playerid, DIALOG_WEAPON_BONE, DIALOG_STYLE_LIST, "Bone", "Spine\nHead\nLeft upper arm\nRight upper arm\nLeft hand\nRight hand\nLeft thigh\nRight thigh\nLeft foot\nRight foot\nRight calf\nLeft calf\nLeft forearm\nRight forearm\nLeft shoulder\nRight shoulder\nNeck\nJaw", "Choose", "Cancel");
 		EditingWeapon[playerid] = weaponid;
 	}
 	else if(!strcmp(params, "hide", true))

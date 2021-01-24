@@ -10,7 +10,6 @@ forward bool:IsVehicleJackable(carid);
 forward bool:Player_SecurityBreach(playerid);
 forward Player_SetSecurityBreach(playerid, bool:v);
 
-
 // Bank
 forward Player_SetBuyPrice(playerid, amount);
 
@@ -62,6 +61,8 @@ forward bool:Player_IsTied(playerid);
 forward Player_SetIsTied(playerid, bool:v);
 
 // Mobile Phone
+forward bool:Player_MobileSpeaking(playerid);
+
 forward Player_PhoneStatus(playerid);
 forward Player_SetPhoneStatus(playerid, status);
 

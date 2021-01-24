@@ -290,6 +290,7 @@ stock IsAt247(playerid)
 
 stock LoadBizzes()
 {
+    Iter_Init(Business);
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM bizzes WHERE 1"), 
         "OnServerBizzesLoad", 
@@ -966,12 +967,11 @@ stock ResetBizzInfo(bizz, bool:server_startup = false)
     return 1;
 }
 
-Public:ResetBizzEnumerator()
+static ResetBizzEnumerator()
 {
     for (new i = 0; i < MAX_BIZZES; i++)
-    {
         ResetBizzInfo(i, true);
-    }
+
     return 1;
 }
 
@@ -1106,12 +1106,6 @@ Public:ResetBuySkin(playerid)
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook function ResetIterators()
-{
-    Iter_Clear(Business);
-    return continue();
-}
-
 hook function LoadServerData()
 {
     LoadBizzes();
@@ -1197,6 +1191,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 
 hook OnGameModeInit()
 {
+    ResetBizzEnumerator();
     LoadServerSkins("skins.txt");
     VeronaSkinRectangle = CreateDynamicRectangle(1092.39172, -1431.54944, 1101.95300, -1449.16431);
     return 1;

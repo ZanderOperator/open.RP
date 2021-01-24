@@ -172,6 +172,7 @@ stock DestroyCompInfoTD(playerid)
 
 stock LoadComplexes()
 {
+    Iter_Init(Complex);
     mysql_pquery(g_SQL,
         va_fquery(g_SQL, "SELECT * FROM server_complex WHERE 1"), 
         "OnServerComplexLoad",
@@ -182,6 +183,7 @@ stock LoadComplexes()
 
 stock LoadComplexRooms()
 {
+    Iter_Init(ComplexRoom);
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL,"SELECT * FROM server_complex_rooms WHERE 1"), 
         "OnComplexRoomsLoad",
@@ -545,13 +547,6 @@ public OnServerComplexLoad()
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
-
-hook function ResetIterators()
-{
-    Iter_Clear(Complex);
-    Iter_Clear(ComplexRoom);
-    return continue();
-}
 
 hook function LoadServerData()
 {

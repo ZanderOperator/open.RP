@@ -1,5 +1,8 @@
 // Player folder modules represents ONLY database storing features.
 
+#include "modules/Player/KeyInput.pwn"
+#include "modules/Player/Money.pwn"
+#include "modules/Player/Economy.pwn"
 #include "modules/Player/AccountCheck.pwn"
 #include "modules/Player/Updates.pwn"
 #include "modules/Player/Mask.pwn"

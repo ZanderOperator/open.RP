@@ -207,8 +207,7 @@ new
 	WoundedBy[MAX_PLAYERS],
 	KilledReason[MAX_PLAYERS],
 	gStartedWork[MAX_PLAYERS],
-	InjectPlayer[MAX_PLAYERS],
-	CallingId[MAX_PLAYERS] = { 999, ... };
+	InjectPlayer[MAX_PLAYERS];
 
 
 //Players Vars
@@ -334,14 +333,6 @@ StartGMX()
 	return 1;
 }
 #endif
-
-stock ResetPlayerEnumerator()
-{
-	for(new p=0; p<MAX_PLAYERS; p++)
-		ResetPlayerVariables(p);
-
-	return 1;
-}
 
 Public:SaveAll()
 {
@@ -506,18 +497,7 @@ main()
 
 public OnGameModeInit()
 {
-	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads
-
-	ResetIterators();
-	ResetVehicleEnumerator();
-	ResetHouseEnumerator();
-	ResetBizzEnumerator();
-	ResetPlayerEnumerator();
-	print("Report: Iterators And Enumerators Cleared.");
-
-	 // Loading of custom models derives from artconfig.pwn module(artconfig.txt alternative)
-	LoadCustomModels();
-	print("Report: Custom Models Loaded.");
+	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads	
 
 	MapAndreas_Init(MAP_ANDREAS_MODE_FULL, "scriptfiles/SAfull.hmap");
 	print("Report: MapAndreas Initialised.");
@@ -749,74 +729,6 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	return COMMAND_OK;
 }
 
-public OnPlayerRequestClass(playerid, classid)
-{
-	if(IsPlayerLogged(playerid) || SafeSpawned[playerid])
-		return 1;
-
-	if(GMX == 1) 
-	{
-		SendClientMessage(playerid,COLOR_RED, "ERROR: Server is currently in data storing pre-restart process. You have been automatically kicked.");
-		KickMessage(playerid);
-		return 1;
-	}
-	if(!IsPlayerLogged(playerid) || IsPlayerConnected(playerid))
-	{
-		//Resets
-		ResetPlayerVariables(playerid);
-
-		if(IsPlayerNPC(playerid)) {
-			SpawnPlayer(playerid);
-			return 1;
-		}
-        ClearPlayerChat(playerid);
-
-		//Invalid name?
-		
-		new
-			tmpname[24];
-
-		GetPlayerName(playerid, tmpname, MAX_PLAYER_NAME);
-		if(!IsValidNick(tmpname)) {
-			SendClientMessage(playerid, COLOR_SAMP_GREEN, "ERROR: Invalid RolePlay nickname, please visit "WEB_URL" for more info!");
-			KickMessage(playerid);
-			return 0;
-		}
-
-		//PlayerSets
-		SetPlayerColor(playerid, 	COLOR_PLAYER);
-		SetPlayerWeather(playerid, 	WeatherSys);
-
-		new
-			hour, minute;
-		GetServerTime(hour, minute);
-		SetPlayerTime(playerid,hour,minute);
-
-		// Player login
-		TogglePlayerSpectating(playerid, true);
-		SetPlayerVirtualWorld(playerid, playerid);
-		SetPlayerInterior(playerid, 0);
-
-		// Player Camera
-		TogglePlayerControllable(playerid, false);
-
-		GetPlayerIp(playerid, PlayerInfo[playerid][pIP], 24);
-
-		mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e'", tmpname), 
-			"CheckPlayerInBase", 
-			"i", 
-			playerid
-		);
-	}
-	return 1;
-}
-
-public OnPlayerRequestSpawn(playerid)
-{
-	return 0;
-}
-
 // TODO: should be a part of 0.3DL Download module
 public OnPlayerRequestDownload(playerid, type, crc)
 {
@@ -915,7 +827,7 @@ hook OnPlayerText(playerid, text[])
 	new tmpString[180];
 	text[0] = toupper(text[0]);
 	
-	if(CallingId[playerid] == 999 && PlayerCallPlayer[playerid] == INVALID_PLAYER_ID) // Igrac nije u pozivu
+	if(!Player_MobileSpeaking(playerid))
 	{
 		
 		if(IsPlayerInAnyVehicle(playerid)) {

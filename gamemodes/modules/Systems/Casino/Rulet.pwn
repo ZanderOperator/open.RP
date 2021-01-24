@@ -1113,8 +1113,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0: ShowPlayerDialog( playerid, DIALOG_CASINO_RNUMBERS, DIALOG_STYLE_LIST, "ODABIR BROJEVA ZA RULET", "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36", "Choose", "Abort");
 				case 1: ShowPlayerDialog( playerid, DIALOG_CASINO_RCOLOR, DIALOG_STYLE_LIST, "ODABIR BROJEVA ZA RULET", "Crvena\nCrna", "Choose", "Abort");
 				case 2: ShowPlayerDialog( playerid, DIALOG_CASINO_R12, DIALOG_STYLE_LIST, "ODABIR TUCETA ZA RULET", "Prvi\nDrugi\nTreci", "Choose", "Abort");
-				case 3: ShowPlayerDialog( playerid, DIALOG_CASINO_STUPAC, DIALOG_STYLE_LIST, "ODABIR STUPCA ZA RULET", "Prvi\nDrugi\nTreci", "Choose", "Abort");
-				case 4: ShowPlayerDialog( playerid, DIALOG_CASINO_PARNEPAR, DIALOG_STYLE_LIST, "ODABIR PAR/NEPAR ZA RULET", "Parni brojevi\nNeparni brojevi", "Choose", "Abort");
+				case 3: ShowPlayerDialog( playerid, DIALOG_CASINO_COLUMN, DIALOG_STYLE_LIST, "ODABIR STUPCA ZA RULET", "Prvi\nDrugi\nTreci", "Choose", "Abort");
+				case 4: ShowPlayerDialog( playerid, DIALOG_CASINO_PAIR, DIALOG_STYLE_LIST, "ODABIR PAR/NEPAR ZA RULET", "Parni brojevi\nNeparni brojevi", "Choose", "Abort");
 				case 5: {
 					RouletteType[playerid][RoulettSlot[playerid]] = ROULETTE_TYPE_18;
 					SendClientMessage( playerid, COLOR_RED, "[!] Odabrali ste prvih 18 brojeva kao vasu okladu!");
@@ -1172,7 +1172,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ShowPlayerDialog( playerid, DIALOG_CASINO_RBET, DIALOG_STYLE_INPUT, "UNOS NOVCA ZA RULET", ruletString, "Input", "");
 			return 1;
 		}
-		case DIALOG_CASINO_PARNEPAR:
+		case DIALOG_CASINO_PAIR:
 		{
 			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			
@@ -1207,7 +1207,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ShowPlayerDialog( playerid, DIALOG_CASINO_RBET, DIALOG_STYLE_INPUT, "UNOS NOVCA ZA RULET", ruletString, "Input", "");
 			return 1;
 		}
-		case DIALOG_CASINO_STUPAC:
+		case DIALOG_CASINO_COLUMN:
 		{
 			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			

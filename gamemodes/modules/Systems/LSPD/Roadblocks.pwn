@@ -1,300 +1,221 @@
-#if defined MODULE_ROADBLOCKS
-    #endinput
-#endif
-#define MODULE_ROADBLOCKS
-
 /*
-    #### ##    ##  ######  ##       ##     ## ########  ######## 
-     ##  ###   ## ##    ## ##       ##     ## ##     ## ##       
-     ##  ####  ## ##       ##       ##     ## ##     ## ##       
-     ##  ## ## ## ##       ##       ##     ## ##     ## ######   
-     ##  ##  #### ##       ##       ##     ## ##     ## ##       
-     ##  ##   ### ##    ## ##       ##     ## ##     ## ##       
-    #### ##    ##  ######  ########  #######  ########  ######## 
+                                                                                            
+88 888b      88   ,ad8888ba,  88         88        88 88888888ba,   88888888888 ad88888ba   
+88 8888b     88  d8"'    `"8b 88         88        88 88      `"8b  88         d8"     "8b  
+88 88 `8b    88 d8'           88         88        88 88        `8b 88         Y8,          
+88 88  `8b   88 88            88         88        88 88         88 88aaaaa    `Y8aaaaa,    
+88 88   `8b  88 88            88         88        88 88         88 88"""""      `"""""8b,  
+88 88    `8b 88 Y8,           88         88        88 88         8P 88                 `8b  
+88 88     `8888  Y8a.    .a8P 88         Y8a.    .a8P 88      .a8P  88         Y8a     a8P  
+88 88      `888   `"Y8888Y"'  88888888888 `"Y8888Y"'  88888888Y"'   88888888888 "Y88888P"   
+                                                                                            
 */
 
 #include <YSI_Coding\y_hooks>
 
-
 /*
-    ########  ######## ######## #### ##    ## ######## 
-    ##     ## ##       ##        ##  ###   ## ##       
-    ##     ## ##       ##        ##  ####  ## ##       
-    ##     ## ######   ######    ##  ## ## ## ######   
-    ##     ## ##       ##        ##  ##  #### ##       
-    ##     ## ##       ##        ##  ##   ### ##       
-    ########  ######## ##       #### ##    ## ######## 
+
+  ,ad8888ba,   ,ad8888ba,   888b      88  ad88888ba 888888888888 ad88888ba   
+ d8"'    `"8b d8"'    `"8b  8888b     88 d8"     "8b     88     d8"     "8b  
+d8'          d8'        `8b 88 `8b    88 Y8,             88     Y8,          
+88           88          88 88  `8b   88 `Y8aaaaa,       88     `Y8aaaaa,    
+88           88          88 88   `8b  88   `"""""8b,     88       `"""""8b,  
+Y8,          Y8,        ,8P 88    `8b 88         `8b     88             `8b  
+ Y8a.    .a8P Y8a.    .a8P  88     `8888 Y8a     a8P     88     Y8a     a8P  
+  `"Y8888Y"'   `"Y8888Y"'   88      `888  "Y88888P"      88      "Y88888P"   
+
 */
 
-#define MAX_ROADBLOCKS                (50)
 
+const MAX_ROADBLOCKS        = 50;
+const MAX_ROADBLOCK_TYPES   = 14;
+const DIALOG_ROADBLOCK_SELECT = 342342;
 
 /*
-    ##     ##    ###    ########   ######
-    ##     ##   ## ##   ##     ## ##    ##
-    ##     ##  ##   ##  ##     ## ##
-    ##     ## ##     ## ########   ######
-     ##   ##  ######### ##   ##         ##
-      ## ##   ##     ## ##    ##  ##    ##
-       ###    ##     ## ##     ##  ######
+
+                                                    
+8b           d8  db        88888888ba   ad88888ba   
+`8b         d8' d88b       88      "8b d8"     "8b  
+ `8b       d8' d8'`8b      88      ,8P Y8,          
+  `8b     d8' d8'  `8b     88aaaaaa8P' `Y8aaaaa,    
+   `8b   d8' d8YaaaaY8b    88""""88'     `"""""8b,  
+    `8b d8' d8""""""""8b   88    `8b           `8b  
+     `888' d8'        `8b  88     `8b  Y8a     a8P  
+      `8' d8'          `8b 88      `8b  "Y88888P"   
+
 */
+
+enum E_ROADBLOCK_LIST
+{
+    rName[20],
+    rObjectID
+}
+static RoadblockList[MAX_ROADBLOCK_TYPES][E_ROADBLOCK_LIST] = {
+    {"Small blockade",      1459},
+    {"Big blockade",        1052},
+    {"Signaling cone",      1238},
+    {"Direction sign",      1425},
+    {"Warning sign",        3625},
+    {"Routing block",       3091},
+    {"Big signaling cone",  1237},
+    {"Traffic railing",     19313},
+    {"Semaphore",           1352},
+    {"STOP sign",           19966},
+    {"One direction sign",  19967},
+    {"Road closed sign",    19972},
+    {"Work zone sign",      19975},
+    {"Traffic tape",        19834}
+};
 
 enum E_ROADBLOCK_DATA
 {
-    sCreated,
     Float:sX,
     Float:sY,
     Float:sZ,
-    sObject
+    sObject,
+    sListID
 }
 
 static
-    Iterator:Roadblocks<MAX_ROADBLOCKS>,
-    Roadblocks[MAX_ROADBLOCKS][E_ROADBLOCK_DATA];
+    Iterator:Roadblock<MAX_ROADBLOCKS>,
+    Roadblocks[MAX_ROADBLOCKS][E_ROADBLOCK_DATA],
+    EditingRoadblock[MAX_PLAYERS];
 
 /*
-    ######## ##     ## ##    ##  ######   ######  
-    ##       ##     ## ###   ## ##    ## ##    ## 
-    ##       ##     ## ####  ## ##       ##       
-    ######   ##     ## ## ## ## ##        ######  
-    ##       ##     ## ##  #### ##             ## 
-    ##       ##     ## ##   ### ##    ## ##    ## 
-    ##        #######  ##    ##  ######   ######  
-*/
+                                                                 
+88888888888 88        88 888b      88   ,ad8888ba,   ad88888ba   
+88          88        88 8888b     88  d8"'    `"8b d8"     "8b  
+88          88        88 88 `8b    88 d8'           Y8,          
+88aaaaa     88        88 88  `8b   88 88            `Y8aaaaa,    
+88"""""     88        88 88   `8b  88 88              `"""""8b,  
+88          88        88 88    `8b 88 Y8,                   `8b  
+88          Y8a.    .a8P 88     `8888  Y8a.    .a8P Y8a     a8P  
+88           `"Y8888Y"'  88      `888   `"Y8888Y"'   "Y88888P"   
 
-stock CreateRoadblock(Object, Float:x, Float:y, Float:z, Float:Angle)
+*/   
+
+static DeleteRoadblock(r_id)
 {
-    new i = Iter_Free(Roadblocks);
-    Roadblocks[i][sCreated] = 1;
+    Roadblocks[r_id][sX] = 0.0;
+    Roadblocks[r_id][sY] = 0.0;
+    Roadblocks[r_id][sZ] = 0.0;
+    if(IsValidDynamicObject(Roadblocks[r_id][sObject]))
+        DestroyDynamicObject(Roadblocks[r_id][sObject]);
+    Roadblocks[r_id][sListID] = -1;
+    
+    return 1;
+}
+
+static CreateRoadblock(playerid, id)
+{
+
+    new 
+        i = Iter_Free(Roadblock),
+        Float:x,
+        Float:y,
+        Float:z,
+        Float:Angle;
+    
+    GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid, Angle);
+
     Roadblocks[i][sX] = x;
     Roadblocks[i][sY] = y;
     Roadblocks[i][sZ] = z-0.7;
-    Roadblocks[i][sObject] = CreateDynamicObject(Object, x, y, z-0.9, 0, 0, Angle);
+    Roadblocks[i][sObject] = CreateDynamicObject(RoadblockList[id][rObjectID], x, y, z+2.0, 0, 0, Angle);
+    Roadblocks[i][sListID] = id;
+
+    EditDynamicObject(playerid, Roadblocks[i][sObject]);
+
+    SendFormatMessage(playerid, 
+        MESSAGE_TYPE_INFO, 
+        "%s has been created. Please adjust its position and save it!",
+        RoadblockList[id][rName]
+    );
+    PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
     return 1;
 }
 
-stock DeleteAllRoadblocks(playerid)
+static DeleteAllRoadblocks(playerid)
 {
-    foreach(new i: Roadblocks)
+    foreach(new i: Roadblock)
     {
         if(IsPlayerInRangeOfPoint(playerid, 100.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
-        {
-            if(Roadblocks[i][sCreated] == 1)
-            {
-                Roadblocks[i][sCreated] = 0;
-                Roadblocks[i][sX] = 0;
-                Roadblocks[i][sY] = 0;
-                Roadblocks[i][sZ] = 0;
-                DestroyDynamicObject(Roadblocks[i][sObject]);
-            }
-        }
+            DeleteRoadblock(i);
     }
-    Iter_Clear(Roadblocks);
+    Iter_Clear(Roadblock);
     return 1;
 }
 
-stock DeleteClosestRoadblock(playerid)
+static DeleteClosestRoadblock(playerid)
 {
-    new drb = -1;
-    foreach(new i: Roadblocks)
+    foreach(new i: Roadblock)
     {
         if(IsPlayerInRangeOfPoint(playerid, 5.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
         {
-            if(Roadblocks[i][sCreated] == 1)
-            {
-                Roadblocks[i][sCreated] = 0;
-                Roadblocks[i][sX] = 0;
-                Roadblocks[i][sY] = 0;
-                Roadblocks[i][sZ] = 0;
-                DestroyDynamicObject(Roadblocks[i][sObject]);
-                drb = i;
-                return 1;
-            }
+            DeleteRoadblock(i);
+            new 
+                next;
+            Iter_SafeRemove(Roadblock, i, next);
+            return 1;
         }
     }
-    if(drb != -1)
-        Iter_Remove(Roadblocks, drb);
     return 1;
 }
 
-
 /*
-     ######  ##     ## ########  
-    ##    ## ###   ### ##     ## 
-    ##       #### #### ##     ## 
-    ##       ## ### ## ##     ## 
-    ##       ##     ## ##     ## 
-    ##    ## ##     ## ##     ## 
-     ######  ##     ## ########  
+                                               
+  ,ad8888ba,  88b           d88 88888888ba,    
+ d8"'    `"8b 888b         d888 88      `"8b   
+d8'           88`8b       d8'88 88        `8b  
+88            88 `8b     d8' 88 88         88  
+88            88  `8b   d8'  88 88         88  
+Y8,           88   `8b d8'   88 88         8P  
+ Y8a.    .a8P 88    `888'    88 88      .a8P   
+  `"Y8888Y"'  88     `8'     88 88888888Y"'  
+    
 */
 
 CMD:rb(playerid, params[])
 {
-    new
-        Float:plocx, Float:plocy, Float:plocz, Float:ploca,
-        rb;
-
-    if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac/SD/FD!");
-    if(PlayerFaction[playerid][pRank] >= 2)
+    if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, " You are not PD/SD/FD!");
+    if(PlayerFaction[playerid][pRank] < 2)
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You should be Rank 2+ for this action!");
+    if(Iter_Free(Roadblock) == -1)
     {
-        if(sscanf(params, "i", rb))
-        {
-            SendClientMessage(playerid, COLOR_WHITE, "[?]: /roadblock(/rb) [Roadblock ID]");
-            SendClientMessage(playerid, COLOR_LIGHTBLUE, "Dostupne blokade:");
-            SendClientMessage(playerid, COLOR_GRAD1, " 1: Mala blokada | 2: Velika blokada | 3: Cunj | 4: Znak usmjeravanja");
-            SendClientMessage(playerid, COLOR_GRAD1, " 5: Znak upozorenja| 6: Blokada usmjeravanja | 7: Veliki cunj | 8: Duga ograda");
-            SendClientMessage(playerid, COLOR_GRAD1, " 9: Semafor | 10: STOP | 11: Jednosmjer | 12: Road Closed | 13: Work Zone | 14: Pol. Traka");
-            return 1;
-        }
-
-        // TODO: make a helper function to reduce code duplication and to eliminate the switch statement
-        // you can make an array of player position offsets for each type of roadblock
-        // and an array of messages (gametext) to send
-        switch (rb)
-        {
-            case 1:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(1459,plocx,plocy,plocz,ploca))
-                    GameTextForPlayer(playerid,"~w~Mala blokada ~b~postavljena!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 2:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(978,plocx,plocy,plocz+0.6,ploca))
-                    GameTextForPlayer(playerid,"~w~Velika blokada ~b~postavljena!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 3:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(1238,plocx,plocy,plocz+0.2,ploca))
-                    GameTextForPlayer(playerid,"~w~Cunj ~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 4:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(1425,plocx,plocy,plocz+0.6,ploca))
-                    GameTextForPlayer(playerid,"~w~Znak usmjeravanja ~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 5:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(3265,plocx,plocy,plocz-0.5,ploca))
-                    GameTextForPlayer(playerid,"~w~Znak upozorenja ~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 6:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(3091,plocx,plocy,plocz+0.5,ploca+180))
-                    GameTextForPlayer(playerid,"~w~Blokada usmjeravanja ~g~postavljena!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 7:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(1237,plocx,plocy,plocz,ploca))
-                    GameTextForPlayer(playerid,"~w~Veliki Cunj ~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 8:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(19313,plocx,plocy,plocz,ploca))
-                    GameTextForPlayer(playerid,"~w~Ograda ~g~postavljena!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 9:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(1352,plocx,plocy,plocz-1,ploca))
-                    GameTextForPlayer(playerid,"~w~Semafor ~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 10:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(19966,plocx,plocy,plocz-1,ploca))
-                    GameTextForPlayer(playerid,"~w~Znak STOP~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 11:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(19967,plocx,plocy,plocz-1,ploca))
-                    GameTextForPlayer(playerid,"~w~Znak jednosmjera~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 12:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(19972,plocx,plocy,plocz-1,ploca))
-                    GameTextForPlayer(playerid,"~w~Znak road closed~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 13:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(19975,plocx,plocy,plocz-1,ploca))
-                    GameTextForPlayer(playerid,"~w~Znak work zone~g~postavljen!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-            case 14:
-            {
-                PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                GetPlayerPos(playerid, plocx, plocy, plocz);
-                GetPlayerFacingAngle(playerid,ploca);
-                if(CreateRoadblock(19834,plocx,plocy,plocz+0.8,ploca))
-                    GameTextForPlayer(playerid,"~w~Traka~g~postavljena!",3000,1);
-                else
-                    GameTextForPlayer(playerid,"~w~Limit je dosegnut!",3000,1);
-            }
-        }
+        SendFormatMessage(playerid, 
+            MESSAGE_TYPE_ERROR, 
+            "Max. limit of roadblocks has been reached! (%d)",
+            MAX_ROADBLOCKS
+        );
+        return 1;
     }
-    else SendClientMessage(playerid, COLOR_WHITE, "Nisi Rank 2!");
+
+    new 
+        motd[24],
+        buffer[MAX_ROADBLOCK_TYPES * 24],
+        bool:broken = false;
+
+    for(new i = 0; i < MAX_ROADBLOCK_TYPES; i++)
+    {
+        format(motd, 
+            24, 
+            "%s%s", 
+            (!broken) ? ("") : ("\n"),
+            RoadblockList[i][rName]  
+        );
+        strcat(buffer, motd);
+        broken = true;
+    }
+    ShowPlayerDialog(playerid, 
+        DIALOG_ROADBLOCK_SELECT, 
+        DIALOG_STYLE_LIST, 
+        "Choose roadblock type", 
+        buffer, 
+        "Choose", 
+        "Close"
+    );
     return 1;
 }
 
@@ -320,16 +241,96 @@ CMD:removeall(playerid, params[])
     {
         if(PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
         {
-            if(PlayerFaction[playerid][pMember] == 1 && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
+            if(PlayerFaction[playerid][pMember] == 1 && PlayerFaction[playerid][pRank] < 1) 
+                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are currentyl suspended!");
 
             DeleteAllRoadblocks(playerid);
 
             new
-                string[84];
-            format(string, sizeof(string),"[HQ]: Officer %s je maknuo sve blokade u ovom podrucju, over.", GetName(playerid));
+                string[100];
+            format(string, 
+                sizeof(string),
+                "[HQ]: %s %s removed all the roadblocks currently placed, over.", 
+                (PlayerInfo[playerid][pAdmin] > 0) ? ("Game Admin") :
+                    ReturnRankName(PlayerFaction[playerid][pRank], playerid),
+                GetName(playerid)
+            );
             SendRadioMessage(1, COLOR_LIGHTBLUE, string);
             GameTextForPlayer(playerid,"~b~All ~w~Roadblocks ~r~Removed!",3000,1);
         }
     }
     return 1;
+}
+
+/*
+
+88        88   ,ad8888ba,     ,ad8888ba,   88      a8P  ad88888ba   
+88        88  d8"'    `"8b   d8"'    `"8b  88    ,88'  d8"     "8b  
+88        88 d8'        `8b d8'        `8b 88  ,88"    Y8,          
+88aaaaaaaa88 88          88 88          88 88,d88'     `Y8aaaaa,    
+88""""""""88 88          88 88          88 8888"88,      `"""""8b,  
+88        88 Y8,        ,8P Y8,        ,8P 88P   Y8b           `8b  
+88        88  Y8a.    .a8P   Y8a.    .a8P  88     "88, Y8a     a8P  
+88        88   `"Y8888Y"'     `"Y8888Y"'   88       Y8b "Y88888P"   
+
+*/
+
+hook OnGameModeInit()
+{
+    Iter_Init(Roadblock);
+    return 1;
+}
+
+hook OnPlayerDisconnect(playerid, reason)
+{
+    EditingRoadblock[playerid] = -1;
+    return 1;
+}
+
+hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
+{
+    if(dialogid == DIALOG_ROADBLOCK_SELECT)
+    {
+        if(!response)
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have aborted roadblock selection.");
+        
+        CreateRoadblock(playerid, listitem);
+    }
+    return 1;
+}
+
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
+{
+	if(EditingRoadblock[playerid] != -1)
+	{
+        new 
+			r_id = EditingRoadblock[playerid],
+            list_id = Roadblocks[r_id][sListID];
+
+		SetDynamicObjectPos(objectid, x, y, z);
+		SetDynamicObjectRot(objectid, rx, ry, rz);
+
+		if(response == EDIT_RESPONSE_FINAL)
+		{
+			Roadblocks[r_id][sX] = x;
+            Roadblocks[r_id][sY] = y;
+            Roadblocks[r_id][sZ] = z;
+		
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"You have sucessfully placed %s.", 
+				RoadblockList[list_id][rName]
+			);
+
+			EditingRoadblock[playerid] = -1;
+            Iter_Add(Roadblock, r_id);
+		}
+		else if(response == EDIT_RESPONSE_CANCEL)
+		{
+            DeleteRoadblock(r_id);
+			EditingRoadblock[playerid] = -1;
+			SendMessage(playerid, MESSAGE_TYPE_INFO, "You have aborted roadblock placement.");
+		}
+	}
+	return 1;
 }

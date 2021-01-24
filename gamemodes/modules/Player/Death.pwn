@@ -40,7 +40,7 @@ enum DROPPED_WEAPON_DATA
 }
 new DroppedWeapons[MAX_DROPPED_ITEMS][DROPPED_WEAPON_DATA];
 
-new Iterator:WeaponsDropped<MAX_DROPPED_ITEMS>;
+static Iterator:WeaponsDropped<MAX_DROPPED_ITEMS>;
 /*
 
 	##     ##    ###    ########   ######  
@@ -359,6 +359,11 @@ public LoadingPlayerDeaths(playerid)
 	##     ## ##     ## ##     ## ##   ##  
 	##     ##  #######   #######  ##    ## 
 */
+
+hook OnGameModeInit()
+{
+	Iter_Init(WeaponsDropped);
+}
 
 hook function LoadPlayerStats(playerid)
 {

@@ -107,6 +107,18 @@ Public: LoadingPlayerPackages(playerid)
 	return (true);
 }
 
+hook OnGameModeInit()
+{
+	Iter_Init(PACKAGES);
+	return 1;
+}
+
+hook function ResetPrivateVehicleInfo(vehicleid)
+{
+	ResetVehiclePackages(vehicleid);
+	return continue(vehicleid);
+}
+
 hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerPackage(playerid);

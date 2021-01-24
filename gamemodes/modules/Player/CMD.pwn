@@ -503,11 +503,7 @@ CMD:taxcalculator(playerid, params[])
 	}
 	return 1;
 }
-CMD:rphelp(playerid, params[])
-{
-    ShowPlayerDialog(playerid, DIALOG_RULES , DIALOG_STYLE_LIST, "ROLEPLAY POJMOVI", "MetaGaming(MG)\nPowerGaming (PG)\nRP2WIN\nRevenge Kill(RK)\nDeathmatch(DM)\n/me komanda\n/ame komanda\n/do komanda", "Choose", "Exit");
-    return 1;
-}
+
 CMD:toganimchat(playerid, params[])
 {
     if(	Bit1_Get( gr_animchat, playerid))
@@ -723,7 +719,7 @@ CMD:admins(playerid, params[])
 		);
 		strcat(buffer, motd, 768);
 	}
-	ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tADMINS ONLINE", buffer, "Close","");
+	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "\tADMINS ONLINE", buffer, "Close","");
 	return 1;
 }
 
@@ -746,7 +742,7 @@ CMD:helpers(playerid, params[])
 		);
 		strcat(buffer, motd, 768);
 	}
-	ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", buffer, "Close","");
+	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", buffer, "Close","");
 	return 1;
 }
 
