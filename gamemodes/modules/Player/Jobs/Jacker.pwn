@@ -181,7 +181,7 @@ static LoadIllegalGarages()
 		if(!cache_num_rows()) 
 			return print("MySQL Report: No Illegal Garages exist to load.");
 		
-		for( new row = 0; row < cache_num_rows(); row++) 
+		for(new row = 0; row < cache_num_rows(); row++) 
 		{
 			cache_get_value_name_int(row, 		"id"		, IllegalGarage[row][igSQLID]);
 			cache_get_value_name_int(row, 		"owner"		, IllegalGarage[row][igOwner]);
@@ -270,7 +270,7 @@ static bool:IsVehicleOnList(garage, index)
 	
 	new
 		bool:value = false;
-	for( new i=0; i < 6; i++) 
+	for(new i = 0; i < 6; i++) 
 	{
 		if(IllegalGarage[garage][igVehicleIds][i] == index) 
 		{
@@ -304,7 +304,7 @@ static GetVehiclesForIllegalGarages(garage)
 		vehid, 
 		carid;
 
-	for( new i = 0; i < 6; i++ ) 
+	for(new i = 0; i < 6; i++) 
     {
         do 
 		{
@@ -321,7 +321,7 @@ static GetVehiclesForIllegalGarages(garage)
             !IsVehicleJackable(carid) ||
             IsVehicleOnList(garage, carid)
         );
-        IllegalGarage[ garage ][ igVehicleIds ][ i ] = carid;
+        IllegalGarage[garage][igVehicleIds][i] = carid;
     }
 	return 1;
 }
@@ -329,7 +329,7 @@ static GetVehiclesForIllegalGarages(garage)
 static UpdateIllegalGarage(garage)
 {
 	for(new i = 0; i < 6; i++)
-		IllegalGarage[garage][igVehicleIds][i] = 0;
+		IllegalGarage[garage][igVehicleIds][i] = -1;
 	
 	if(!GetVehiclesForIllegalGarages(garage))
 		return 1;
@@ -478,8 +478,10 @@ static ResetCarJackerVariables(playerid)
 }
 
 static IsVehicleMission(playerid, modelid)
-	return ( LandVehicles[PlayerJackingCar[playerid]][viModelid] == modelid ? 1 : 0);
-	
+{
+	return (LandVehicles[PlayerJackingCar[playerid]][viModelid] == modelid ? 1 : 0);
+}
+
 timer DestroyingCar[1000](playerid, vehicleid)
 {
 	if(!IsPlayerInRangeOfVehicle(playerid, vehicleid, 18.0)) 
@@ -517,6 +519,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 			value = ( ( LandVehicles[PlayerJackingCar[playerid]][viCarJackerPrice] + skillmoney)  - ( decrease * 15));
 		
 		IllegalGarage[garage][igCarsJacked]++;
+		
 		mysql_fquery(g_SQL, "UPDATE illegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
 			IllegalGarage[garage][igCarsJacked], 
 			IllegalGarage[garage][igSQLID]
@@ -847,6 +850,8 @@ CMD:jacker(playerid, params[])
 		JackerIllegalGarage[playerid] = GetJackerIllegalGarage(playerid);
 		if(JackerIllegalGarage[playerid] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any illegal garage!");
+		if(IllegalGarage[JackerIllegalGarage[playerid]][igVehicleIds][0] == -1)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "There are no jobs at the moment!");
 		if(PlayerCoolDown[playerid][pJackerCool] <= gettimestamp()) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "60 minutes from last Jacking Mission finishing must pass!");
 		if(PlayerJackingCar[playerid] != -1) 
@@ -1116,7 +1121,7 @@ CMD:igarage(playerid, params[])
 		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near Illegal Garage / you don't own it!");
 		if(sscanf( params, "s[8]s[8]i", param, pick, money)) 
-			return SendClientMessage(playerid, COLOR_RED, "[?]: /igarage money [take/put][anizbt]");
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /igarage money [take/put][amount]");
 		if(!strcmp(pick, "take", true)) 
 		{
 			if(money >  IllegalGarage[garage][igMoney] || money < 1) 

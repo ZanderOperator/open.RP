@@ -1,26 +1,54 @@
 #include <YSI_Coding\y_hooks>
 
+/*
+
+                                               ,d     
+                                               88     
+ ,adPPYba,  ,adPPYba,  8b,dPPYba,  ,adPPYba, MM88MMM  
+a8"     "" a8"     "8a 88P'   `"8a I8[    ""   88     
+8b         8b       d8 88       88  `"Y8ba,    88     
+"8a,   ,aa "8a,   ,a8" 88       88 aa    ]8I   88,    
+ `"Ybbd8"'  `"YbbdP"'  88       88 `"YbbdP"'   "Y888  
+
+*/
+
 const MAX_SKILLS 	= (MAX_JOBS - 1); // Because first Job ID in enumerator starts with 1, not 0.
 
+/*
+
+8b           d8                                
+`8b         d8'                                
+ `8b       d8'                                 
+  `8b     d8' ,adPPYYba, 8b,dPPYba, ,adPPYba,  
+   `8b   d8'  ""     `Y8 88P'   "Y8 I8[    ""  
+    `8b d8'   ,adPPPPP88 88          `"Y8ba,   
+     `888'    88,    ,88 88         aa    ]8I  
+      `8'     `"8bbdP"Y8 88         `"YbbdP"'  
+                                               
+*/
 enum E_SKILLS_INFO
 {
 	sSQLID,
 	sJob,
 	sSkill
 }
-new PlayerSkills[MAX_PLAYERS][E_SKILLS_INFO][MAX_SKILLS];
+static
+	PlayerSkills[MAX_PLAYERS][E_SKILLS_INFO][MAX_SKILLS];
 
 /*
-	 ######  ########  #######   ######  ##    ##  ######  
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
-	##          ##    ##     ## ##       ##  ##   ##       
-	 ######     ##    ##     ## ##       #####     ######  
-		  ##    ##    ##     ## ##       ##  ##         ## 
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
-	 ######     ##     #######   ######  ##    ##  ######  
+
+88888888888                                           
+88                                                    
+88                                                    
+88aaaaa 88       88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
+88""""" 88       88 88P'   `"8a a8"     "" I8[    ""  
+88      88       88 88       88 8b          `"Y8ba,   
+88      "8a,   ,a88 88       88 "8a,   ,aa aa    ]8I  
+88       `"YbbdP'Y8 88       88  `"Ybbd8"' `"YbbdP"'  
+
 */
 
-stock ResetPlayerSkills(playerid)
+static ResetPlayerSkills(playerid)
 {
 	for(new i = 0; i < MAX_SKILLS; i++)
 	{
@@ -31,18 +59,31 @@ stock ResetPlayerSkills(playerid)
 	return 1;
 }
 
-stock LoadPlayerSkills(playerid)
+static LoadPlayerSkills(playerid)
 {
-	mysql_tquery(g_SQL, 
+	inline OnPlayerSkillsLoad()
+	{
+		if(cache_num_rows())
+			return 1;
+
+		for(new i = 0; i < MAX_SKILLS; i++)
+		{
+			cache_get_value_name_int(i, "id"	, PlayerSkills[playerid][sSQLID][i]);
+			cache_get_value_name_int(i, "job"	, PlayerSkills[playerid][sJob][i]);
+			cache_get_value_name_int(i, "skill"	, PlayerSkills[playerid][sSkill][i]);
+		}
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,
+		using inline OnPlayerSkillsLoad,
 		va_fquery(g_SQL, "SELECT * FROM skill WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
-		"OnPlayerSkillsLoad", 
 		"i", 
 		playerid
 	);
 	return 1;
 }
 
-static stock ReturnSkillID(playerid)
+static ReturnSkillID(playerid)
 {
 	new 
 		value = -1;
@@ -57,7 +98,7 @@ static stock ReturnSkillID(playerid)
 	return value;
 }
 
-static stock CreatePlayerSkill(playerid)
+static CreatePlayerSkill(playerid)
 {
 	new value;
 	for(new i = 0; i < MAX_SKILLS; i++)
@@ -72,7 +113,41 @@ static stock CreatePlayerSkill(playerid)
 	return value;
 }
 
-stock UpgradePlayerSkill(playerid, points = 1)
+static SavePlayerSkill(playerid, skillid)
+{
+	if(PlayerSkills[playerid][sSQLID][skillid] != -1)
+	{
+		mysql_fquery(g_SQL,
+			"UPDATE skill SET skill = '%d', jobid = '%d' WHERE id = '%d",
+			PlayerSkills[playerid][sJob][skillid],
+			PlayerSkills[playerid][sSkill][skillid],
+			PlayerSkills[playerid][sSQLID][skillid]
+		);
+	}
+	else
+	{
+		PlayerSkills[playerid][sJob][skillid] = PlayerJob[playerid][pJob];
+
+		inline OnPlayerSkillInsert()
+		{
+			PlayerSkills[playerid][sSQLID][skillid] = cache_insert_id();
+			return 1;
+		}
+		MySQL_PQueryInline(g_SQL,
+			using inline OnPlayerSkillInsert,
+			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
+			PlayerInfo[playerid][pSQLID],
+			PlayerSkills[playerid][sJob][skillid],
+			PlayerSkills[playerid][sSkill][skillid],
+			"ii",
+			playerid,
+			skillid
+		);
+	}
+	return 1;
+}
+
+UpgradePlayerSkill(playerid)
 {
 	new 
 		skillid = ReturnSkillID(playerid);
@@ -91,10 +166,10 @@ stock UpgradePlayerSkill(playerid, points = 1)
 		skill = 4;
 	else if(PlayerSkills[playerid][sSkill][skillid] == 249)
 		skill = 5;
-	if(skill > 0) {
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Your job skill level increased. Now it's %d, congratz!", skill);
-	}
-	PlayerSkills[playerid][sSkill][skillid] += points;
+	
+	if(skill > 0) 
+		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Your job skill level increased. Now it's %d, congrats!", skill);
+	PlayerSkills[playerid][sSkill][skillid]++;
 	if(PlayerSkills[playerid][sSkill][skillid] >= 250) 
 		PlayerSkills[playerid][sSkill][skillid] = 250;
 	
@@ -104,13 +179,7 @@ stock UpgradePlayerSkill(playerid, points = 1)
 	return 1;
 }
 
-Public: OnPlayerSkillInsert(playerid, skillid)
-{
-	PlayerSkills[playerid][sSQLID][skillid] = cache_insert_id();
-	return 1;
-}
-
-stock GetPlayerSkillLevel(playerid)
+GetPlayerSkillLevel(playerid)
 {
 	new 
 		skillid = ReturnSkillID(playerid);
@@ -126,78 +195,18 @@ stock GetPlayerSkillLevel(playerid)
 	return skilllevel;
 }
 
-static stock CreatePlayerSkills(playerid)
-{
-	for(new i = 0; i < MAX_SKILLS; i++)
-	{
-		mysql_tquery(g_SQL,
-			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
-			PlayerInfo[playerid][pSQLID],
-			PlayerSkills[playerid][sJob][i],
-			PlayerSkills[playerid][sSkill][i],
-			"OnPlayerSkillInsert",
-			"ii",
-			playerid,
-			i
-		);
-	}
-	return 1;
-}
-
-static stock SavePlayerSkill(playerid, skillid)
-{
-	if(PlayerSkills[playerid][sSQLID][skillid] != -1)
-	{
-		mysql_fquery(g_SQL,
-			"UPDATE skill SET skill = '%d', jobid = '%d' WHERE id = '%d",
-			PlayerSkills[playerid][sJob][skillid],
-			PlayerSkills[playerid][sSkill][skillid],
-			PlayerSkills[playerid][sSQLID][skillid]
-		);
-	}
-	else
-	{
-		PlayerSkills[playerid][sJob][skillid] = PlayerJob[playerid][pJob];
-		mysql_tquery(g_SQL,
-			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
-			PlayerInfo[playerid][pSQLID],
-			PlayerSkills[playerid][sJob][skillid],
-			PlayerSkills[playerid][sSkill][skillid],
-			"OnPlayerSkillInsert",
-			"ii",
-			playerid,
-			skillid
-		);
-	}
-	return 1;
-}
-
 /*
-	 ######     ###    ##       ##       ########     ###     ######  ##    ##  ######  
-	##    ##   ## ##   ##       ##       ##     ##   ## ##   ##    ## ##   ##  ##    ## 
-	##        ##   ##  ##       ##       ##     ##  ##   ##  ##       ##  ##   ##       
-	##       ##     ## ##       ##       ########  ##     ## ##       #####     ######  
-	##       ######### ##       ##       ##     ## ######### ##       ##  ##         ## 
-	##    ## ##     ## ##       ##       ##     ## ##     ## ##    ## ##   ##  ##    ## 
-	 ######  ##     ## ######## ######## ########  ##     ##  ######  ##    ##  ######  
-*/
 
-forward OnPlayerSkillsLoad(playerid);
-public OnPlayerSkillsLoad(playerid)
-{
-	new rows = cache_num_rows();
-	if(rows) 
-	{
-		for(new i = 0; i < MAX_SKILLS; i++)
-		{
-			cache_get_value_name_int(i, "id"	, PlayerSkills[playerid][sSQLID][i]);
-			cache_get_value_name_int(i, "job"	, PlayerSkills[playerid][sJob][i]);
-			cache_get_value_name_int(i, "skill"	, PlayerSkills[playerid][sSkill][i]);
-		}
-	}
-	else return CreatePlayerSkills(playerid);
-	return 1;
-}
+88        88                         88                   
+88        88                         88                   
+88        88                         88                   
+88aaaaaaaa88  ,adPPYba,   ,adPPYba,  88   ,d8  ,adPPYba,  
+88""""""""88 a8"     "8a a8"     "8a 88 ,a8"   I8[    ""  
+88        88 8b       d8 8b       d8 8888[      `"Y8ba,   
+88        88 "8a,   ,a8" "8a,   ,a8" 88`"Yba,  aa    ]8I  
+88        88  `"YbbdP"'   `"YbbdP"'  88   `Y8a `"YbbdP"'  
+                                                          
+*/
 
 hook function LoadPlayerStats(playerid)
 {
@@ -212,13 +221,16 @@ hook function ResetPlayerVariables(playerid)
 }
 
 /*
-	 ######  ##     ## ########   ######  
-	##    ## ###   ### ##     ## ##    ## 
-	##       #### #### ##     ## ##       
-	##       ## ### ## ##     ##  ######  
-	##       ##     ## ##     ##       ## 
-	##    ## ##     ## ##     ## ##    ## 
-	 ######  ##     ## ########   ######  
+
+  ,ad8888ba,  88b           d88 88888888ba,    ad88888ba   
+ d8"'    `"8b 888b         d888 88      `"8b  d8"     "8b  
+d8'           88`8b       d8'88 88        `8b Y8,          
+88            88 `8b     d8' 88 88         88 `Y8aaaaa,    
+88            88  `8b   d8'  88 88         88   `"""""8b,  
+Y8,           88   `8b d8'   88 88         8P         `8b  
+ Y8a.    .a8P 88    `888'    88 88      .a8P  Y8a     a8P  
+  `"Y8888Y"'  88     `8'     88 88888888Y"'    "Y88888P"  
+
 */
 
 CMD:skills(playerid, params[])

@@ -165,7 +165,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-	if((fselectid == MODEL_SELECTION_RENTCARS && response)) 
+	if((fselectid == ms_RENTCARS && response)) 
 	{
 		new 
 			index = Player_ModelToIndex(playerid, modelid),
@@ -275,7 +275,7 @@ CMD:rentveh(playerid, params[])
 			fselection_add_item(playerid, RentVehInfo[i][rvModel]);
 			Player_ModelToIndexSet(playerid, i, RentVehInfo[i][rvModel]);
 		}
-		fselection_show(playerid, MODEL_SELECTION_RENTCARS, "Rent Vehicle");
+		fselection_show(playerid, ms_RENTCARS, "Rent Vehicle");
 	}
 	else if(!strcmp(param, "locate", true))
 	{

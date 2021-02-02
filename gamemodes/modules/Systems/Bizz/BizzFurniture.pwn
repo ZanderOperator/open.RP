@@ -1635,7 +1635,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         Player_ModelToIndexSet(playerid, i, BizzInfo[biznisid][bFurModelid][i]);
                         fselection_add_item(playerid, BizzInfo[biznisid][bFurModelid][i]);
                     }
-                    fselection_show(playerid, DIALOG_BIZZ_FURN_EDIT, "Furniture Edit");
+                    fselection_show(playerid, ms_BIZFUR_EDIT, "Furniture Edit");
                 }
             }
             return 1;
@@ -2521,7 +2521,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
     switch (fselectid)
     {
-        case DIALOG_BIZZ_FURN_EDIT:
+        case ms_BIZFUR_EDIT:
         {
             if(!response)
                 return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
@@ -2530,7 +2530,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
             va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
             ResetModelShuntVar(playerid);
         }
-        case DIALOG_BIZZ_FURN_OBJS_BUY:
+        case ms_BIZFUR_BUY:
         {
             new index = Player_ModelToIndex(playerid, modelid);
             new bool:moneycheck = (AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index));

@@ -26,8 +26,8 @@
 #define IMPOUND_PRICE                       (1000)
 #define FLASHLIGHT_OBJECT                   (9)
 
-// #define MODEL_SELECTION_LAWSKIN (969) // pd
-//#define MODEL_SELECTION_GOVSKIN (968) // gov
+// #define ms_LAWSKIN (969) // pd
+//#define ms_GOVSKIN (968) // gov
 
 
 /*
@@ -395,12 +395,12 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
     new index = Player_ModelToIndex(playerid, modelid);
     switch (fselectid)
     {
-        case MODEL_SELECTION_LAWSKIN:
+        case ms_LAWSKIN:
         {
             SetPlayerSkin(playerid, lawskins_police[index]);
             va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", lawskins_police[index]);
         }
-        case MODEL_SELECTION_SDSKIN:
+        case ms_SDSKIN:
         {
             SetPlayerSkin(playerid, lawskins_sheriff[index]);
             va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", lawskins_sheriff[index]);
@@ -1033,7 +1033,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 Player_ModelToIndexSet(playerid, i, lawskins_police[i]);
                             }
                         }
-                        fselection_show(playerid, MODEL_SELECTION_LAWSKIN, "Police Clothes"); 
+                        fselection_show(playerid, ms_LAWSKIN, "Police Clothes"); 
                     }
                     else if(IsASD(playerid))
                     {
@@ -1045,7 +1045,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 Player_ModelToIndexSet(playerid, i, lawskins_sheriff[i]);
                             }
                         }
-                        fselection_show(playerid, MODEL_SELECTION_SDSKIN, "Sheriff Clothes"); 
+                        fselection_show(playerid, ms_SDSKIN, "Sheriff Clothes"); 
                     }
                 }
                 case 1:

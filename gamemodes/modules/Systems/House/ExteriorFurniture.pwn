@@ -611,7 +611,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                         PlayerExteriorInfo[playerid][peObjectId] = INVALID_OBJECT_ID;
                     }
                     ResetPlayerExteriorVars(playerid);
-                    ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+                    ShowPlayerDialog(playerid, DIALOG_HFUR_EXT_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
                 }
             }
         }
@@ -650,9 +650,9 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
     switch (fselectid)
     {
-        case DIALOG_EXTERIOR_BUY:
+        case ms_HFUR_EXT_BUY:
         {
-            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_HFUR_EXT_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 
             new index = Player_ModelToIndex(playerid, modelid);
             // TODO: bounds checking
@@ -685,14 +685,14 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                 }
             }
         }
-        case DIALOG_EXTERIOR_EDIT:
+        case ms_HFUR_EXT_EDIT:
         {
             if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
 
             new index = Player_ModelToIndex(playerid, modelid);
             EditExteriorObject(playerid, index);
         }
-        case DIALOG_EXTERIOR_DELETE:
+        case DIALOG_HFUR_EXT_DELETE:
         {
             if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
 
@@ -728,7 +728,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         return 1;
                     }
 
-                    ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+                    ShowPlayerDialog(playerid, DIALOG_HFUR_EXT_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
                 }
                 case 1:     // Uredivanje
                 {
@@ -743,7 +743,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
                         fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
                     }
-                    fselection_show(playerid, DIALOG_EXTERIOR_EDIT, "Exterior Edit");
+                    fselection_show(playerid, ms_HFUR_EXT_EDIT, "Exterior Edit");
                 }
                 case 2:     // Brisanje objekta
                 {
@@ -758,7 +758,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
                         fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
                     }
-                    fselection_show(playerid, DIALOG_EXTERIOR_DELETE, "Exterior Delete");
+                    fselection_show(playerid, DIALOG_HFUR_EXT_DELETE, "Exterior Delete");
                 }
                 case 3:     // Brisanje svih objekata
                 {
@@ -779,7 +779,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
             return 1;
         }
-        case DIALOG_EXTERIOR_BUY_TYPE:
+        case DIALOG_HFUR_EXT_BUY_TYPE:
         {
             if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
             // TODO: refactor in to a helper function, no need for branching
@@ -819,13 +819,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                 }
             }
-            fselection_show(playerid, DIALOG_EXTERIOR_BUY, "Exterior Buy");
+            fselection_show(playerid, ms_HFUR_EXT_BUY, "Exterior Buy");
             ExteriorBuyType[playerid] = listitem;
             return 1;
         }
         case DIALOG_EXTERIOR_SURE:
         {
-            if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+            if(!response) return ShowPlayerDialog(playerid, DIALOG_HFUR_EXT_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 
             // TODO: refactor, no need for three cases or branching.
             new

@@ -310,7 +310,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
 	switch(fselectid)
 	{
-		case DIALOG_CREATE_COBJECT:
+		case ms_CREATE_COBJECT:
 		{
 			if(!response)
 				return 1;
@@ -323,7 +323,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 			GetXYInFrontOfPlayer(playerid, x, y, 3.0);
 			CreatePlayerObjectsObject(playerid, modelid, x, y, z, 0.0, 0.0, 0.0);
 		}
-		case DIALOG_ADMIN_DEL_COBJECT:
+		case ms_ADMIN_DEL_COBJECT:
 		{
 			if(response && chosenpID[playerid] != -1)
 			{
@@ -344,7 +344,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 				chosenpID[playerid] = -1;
 			}
 		}
-		case DIALOG_DELETE_COBJECT:
+		case ms_DEL_COBJECT:
 		{
 			if(!response)
 				return 1;
@@ -352,7 +352,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 			DeletePlayerObjectsObject(playerid, Player_ModelToIndex(playerid, modelid));
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Obrisali ste izabrani objekat.");
 		}
-		case DIALOG_EDIT_COBJECT:
+		case ms_EDIT_COBJECT:
 		{	  
 			new index = Player_ModelToIndex(playerid, modelid);
 			if(IsValidDynamicObject(PlayerObjectsInfo[playerid][index][poObjectid]) && response)
@@ -495,7 +495,7 @@ CMD:editobject(playerid, params[])
 		fselection_add_item(playerid, PlayerObjectsInfo[playerid][i][poModelid]);
 		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}
-	fselection_show(playerid, DIALOG_EDIT_COBJECT, "Edit object:");
+	fselection_show(playerid, ms_EDIT_COBJECT, "Edit object:");
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Odaberi objekat koji zelis editati!");
 	return 1;
 }
@@ -541,7 +541,7 @@ CMD:createobject(playerid, params[])
 		{
 			fselection_add_item(playerid, objects[i]);
 		}
-		fselection_show(playerid, DIALOG_CREATE_COBJECT, "Create object:");
+		fselection_show(playerid, ms_CREATE_COBJECT, "Create object:");
 	}
 	else
 	{
@@ -617,7 +617,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 		fselection_add_item(playerid, PlayerObjectsInfo[giveplayerid][i][poModelid]);
 		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}
-	fselection_show(playerid, DIALOG_ADMIN_DEL_COBJECT, "Delete object:");
+	fselection_show(playerid, ms_ADMIN_DEL_COBJECT, "Delete object:");
 	return 1;
 }
 
@@ -632,6 +632,6 @@ CMD:deleteobject( playerid, params[])
 		fselection_add_item(playerid, PlayerObjectsInfo[playerid][i][poModelid]);
 		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}
-	fselection_show(playerid, DIALOG_DELETE_COBJECT, "Delete object:");
+	fselection_show(playerid, ms_DEL_COBJECT, "Delete object:");
 	return 1;
 }

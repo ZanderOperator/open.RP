@@ -24,7 +24,7 @@ stock ShowSkinModelDialog(playerid)
 		fselection_add_item(playerid, ServerSkins[sSkinID][i]);
 		Player_ModelToIndexSet(playerid, i, ServerSkins[sSkinID][i]);
     }
-	fselection_show(playerid, MODEL_LIST_SKINS, "Clothes");
+	fselection_show(playerid, ms_SKINS, "Clothes");
     return 1;
 }
 

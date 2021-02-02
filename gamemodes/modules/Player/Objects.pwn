@@ -1007,7 +1007,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
 	switch(fselectid)
 	{
-		case DIALOG_CLOTHING_BUY: 
+		case ms_CLOTHES: 
 		{
 			if(!response) return 1;
 			HandlePlayerObjectSelection(playerid, Player_ModelToIndex(playerid, modelid));
@@ -1251,7 +1251,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				Bit1_Set( gr_MallPreviewActive, playerid, true);
 			}
-			fselection_show(playerid, DIALOG_CLOTHING_BUY, "Clothing");
+			fselection_show(playerid, ms_CLOTHES, "Clothing");
 			return 1;
 		}
 		case DIALOG_DELETECLOTHING: {

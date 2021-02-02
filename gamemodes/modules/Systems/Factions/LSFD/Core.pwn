@@ -135,7 +135,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
     new index = Player_ModelToIndex(playerid, modelid);
     switch (fselectid)
     {
-        case MODEL_SELECTION_FDSKIN:
+        case ms_FDSKIN:
         {
             SetPlayerSkin(playerid, fdskins_selection[index]);
             va_SendClientMessage(playerid, COLOR_RED, "[!]  Uzeli ste skin ID %d.", fdskins_selection[index]);
@@ -182,7 +182,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             Player_ModelToIndexSet(playerid, i, fdskins_selection[i]);
                         }
                     }
-                    fselection_show(playerid, MODEL_SELECTION_FDSKIN, "FD Clothes");                 
+                    fselection_show(playerid, ms_FDSKIN, "FD Clothes");                 
                 }
                 case 2:
                 { // Dodaci

@@ -9,7 +9,6 @@
 	##     ## ##       ##        ##  ##   ### ##       ##    ##
 	########  ######## ##       #### ##    ## ########  ######
 */
-///////////////////////////////////////////////////////////////////
 
 // How much seconds can test car be driven
 #define CAR_TEST_SEC			(300) 		// 5 min = 300 sec!
@@ -21,7 +20,7 @@
 //Vijek trajanja
 #define ENGINE_LIFE_STOCK		(130000)
 
-//Car tow
+//	Car Tow
 #define VEHICLE_TOW_TIME 			(480) // 8 minuta za normalnog igraca
 #define BRONZE_VEHICLE_TOW_TIME		(360) // 6 minuta za Donator Bronze
 #define SILVER_VEHICLE_TOW_TIME		(240) // 4 minute za Donator Silver
@@ -37,7 +36,6 @@
 	##       ##   ### ##     ## ##     ## ##    ##
 	######## ##    ##  #######  ##     ##  ######
 */
-///////////////////////////////////////////////////////////////////
 
 static
 	Iterator:VehWeapon[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
@@ -85,7 +83,7 @@ enum E_VEHICLE_DEALERSHIP
 
 static
 	DealerInfo[3][E_VEHICLE_DEALERSHIP] = {
-		{"Wang Cars\nCar dealership", 			543.3019, -1292.3534, 16.9408},
+		{"Wang Cars\nCar dealership", 			543.3019, 	-1292.3534, 16.9408},
 		{"Spotties Boats\nBoat dealership", 	87.9080, 	-1812.1689, 0.2989},
 		{"Berkley's Planes\nPlane dealership", 	2112.7898, 	-2413.7971, 12.5295}
 };
@@ -99,25 +97,25 @@ static
 	  ## ##   ##     ## ##    ##  ##    ##
 	   ###    ##     ## ##     ##  ######
 */
-///////////////////////////////////////////////////////////////////
-//Pozicija automobila prilikom kupovine
-static stock
+
+// Position of Preview Vehicle in Dealerships
+static 
 	Float:PreviewPos[][5] = {
-		{-1949.2162, 263.9120, 42.1694, 186.6725}, 		// Automobili
-		{97.3713, 	-1804.4332, 	0.2928, 	0.00000}, 		// Brodovi
-		{2108.9519, -2442.6082, 	15.5000, 	61.6200} 		// Avioni
+		{-1949.2162, 263.9120, 		42.1694, 	186.6725}, 		// Car Dealership
+		{97.3713, 	-1804.4332, 	0.2928, 	0.00000}, 		// Boat Dealership
+		{2108.9519, -2442.6082, 	15.5000, 	61.6200} 		// Planes Dealership
 
 };
 
-//Pozicija kamera
-static stock
+// Position of Preview Camera in Dealerships
+static 
 	Float:CarCamera[][3] = {
 		{-1943.2965, 254.7310, 43.4619},
 		{-1954.3184, 254.7566, 43.5870},
 		{-1958.1102, 269.5474, 43.5870}
 };
 
-static stock
+static
 	Float:BoatCamera[3][3] = {
 		{98.0562, 	-1773.3486, 13.2786},
 		{80.5686, 	-1812.5903, 12.0000},
@@ -131,27 +129,27 @@ static stock
 		{2111.9265, -2458.9102, 22.0000}
 };
 
-//Pozicije za testiranje vozila
+// Position of vehicle for testing in Dealerships
 static stock
 	Float:TestPositions[][5] = {
-		{563.5918, -1289.4908, 17.5516,	2.8243}, 		// Automobili
-		{13.4737, 	-1899.6497, -0.0158, 93.5000}, 		// Brodovi
-		{2024.8286, -2493.9761, 15.5000, 90.5000} 		// Avioni
+		{563.5918, -1289.4908, 17.5516,	2.8243}, 		// Car Dealership
+		{13.4737, 	-1899.6497, -0.0158, 93.5000}, 		// Boat Dealership
+		{2024.8286, -2493.9761, 15.5000, 90.5000} 		// Plane Dealership
 };
 
 static stock
 	Float:GiveBackPos[][3] = {
-		{563.5918, -1289.4908, 17.5516}, 		// Automobili
-		{13.4737, 	-1899.6497, -0.0158}, 		// Brodovi
-		{2024.8286, -2493.9761, 15.5000} 		// Avioni
+		{563.5918, -1289.4908, 17.5516}, 				// Car Dealership
+		{13.4737, 	-1899.6497, -0.0158}, 				// Boat Dealership
+		{2024.8286, -2493.9761, 15.5000} 				// Plane Dealership
 };
 
-//Pozicije za spawn vozila nakon kupnje
+// Position of vehicle after buy in Dealerships
 static stock
 	Float:VehicleBuyPos[][5] = {
-		{563.5918, -1289.4908, 17.5516,	2.8243},	// Automobili
-		{42.7703, 	-1940.5421, -0.0158,	0.0000},	// Brodovi
-		{1963.5498, -2445.6072, 15.5000,	90.5000}	// Avioni
+		{563.5918, -1289.4908, 17.5516,		2.8243},	// Car Dealership
+		{42.7703, 	-1940.5421, -0.0158,	0.0000},	// Boat Dealership
+		{1963.5498, -2445.6072, 15.5000,	90.5000}	// Plane Dealership
 };
 
 //TextDraws
@@ -193,14 +191,12 @@ static stock
 	PlayerText:HotWireInfo[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ...};
 
 // Player vars
-new
+static
 	VehicleInfoSQLID[MAX_PLAYERS][MAX_PLAYER_CARS],
 	VehicleInfoModel[MAX_PLAYERS][MAX_PLAYER_CARS],
 	Float:VehicleInfoParkX[MAX_PLAYERS][MAX_PLAYER_CARS],
 	Float:VehicleInfoParkY[MAX_PLAYERS][MAX_PLAYER_CARS],
-	Float:VehicleInfoParkZ[MAX_PLAYERS][MAX_PLAYER_CARS];
-
-new
+	Float:VehicleInfoParkZ[MAX_PLAYERS][MAX_PLAYER_CARS],
 	TestCar				[MAX_PLAYERS],
 	PlayerDealer		[MAX_PLAYERS],
 	PreviewColor1		[MAX_PLAYERS],
@@ -208,33 +204,33 @@ new
 	PreviewType			[MAX_PLAYERS],
 	CameraPos			[MAX_PLAYERS],
 	PlayerParkLocation	[MAX_PLAYERS],
-	PlayerGiveBackCP	[MAX_PLAYERS];	// Global CP
+	PlayerGiveBackCP	[MAX_PLAYERS],
+	PreviewModel		[MAX_PLAYERS],
+	PreviewCar			[MAX_PLAYERS],
+	PlayerTowTimer		[MAX_PLAYERS],
+	bool:PlayerCarTow	[MAX_PLAYERS],
+	CopStreamVeh		[MAX_PLAYERS],
+	PlayerInputHotWire	[MAX_PLAYERS][3],
+	PlayerHotWire		[MAX_PLAYERS][5],
+	Timer:HotWiringTimer[MAX_PLAYERS],
+	HotWiringSeconds	[MAX_PLAYERS],
+	PlayerHotWiringVeh	[MAX_PLAYERS],
+	PlayerHotWireType	[MAX_PLAYERS],
+	PlayerSellingPrice	[MAX_PLAYERS],
+	PlayerCarSeller		[MAX_PLAYERS],
+	PlayerModel			[MAX_PLAYERS],
+	PlayerEngine		[MAX_PLAYERS],
+	EditingTrunkWeaponModel[MAX_PLAYERS],
+	EditingTrunkWeaponObject[MAX_PLAYERS],
+	CarnisterLiters		[MAX_PLAYERS],
+	CarnisterType		[MAX_PLAYERS];
 
+// Vehicle Vars
 static
-		LastVehicleDriver[MAX_VEHICLES],
-		Text3D:DoorHealth3DText[MAX_VEHICLES],
-		Text3D:TrunkHealth3DText[MAX_VEHICLES],
-		PreviewModel		[MAX_PLAYERS],
-		PreviewCar			[MAX_PLAYERS],
-		PlayerTowTimer		[MAX_PLAYERS],
-		bool:PlayerCarTow	[MAX_PLAYERS],
-		CopStreamVeh		[MAX_PLAYERS],
-		PlayerInputHotWire	[MAX_PLAYERS][3],
-		PlayerHotWire		[MAX_PLAYERS][5],
-		Timer:HotWiringTimer[MAX_PLAYERS],
-		HotWiringSeconds	[MAX_PLAYERS],
-		PlayerHotWiringVeh	[MAX_PLAYERS],
-		PlayerHotWireType	[MAX_PLAYERS],
-		PlayerSellingPrice	[MAX_PLAYERS],
-		PlayerCarSeller		[MAX_PLAYERS],
-		PlayerModel			[MAX_PLAYERS],
-		PlayerEngine		[MAX_PLAYERS],
-		CarnisterLiters		[MAX_PLAYERS],
-		CarnisterType		[MAX_PLAYERS];
-
-// Vehicle vars
-new
-	Float:vOldPos			[MAX_VEHICLES][3];
+	LastVehicleDriver[MAX_VEHICLES],
+	Text3D:DoorHealth3DText[MAX_VEHICLES],
+	Text3D:TrunkHealth3DText[MAX_VEHICLES],
+	Float:vOldPos[MAX_VEHICLES][3];
 
 //rBits
 static stock
@@ -291,12 +287,12 @@ new const VehicleColoursTableRGB[256][] = {
 	"561A28", "4E0E27", "706C67", "3B3E42", "2E2D33", "7B7E7D", "4A4442", "28344E"
 };
 
-static stock
+// Player Timer vars
+static
 	Timer:PlayerTestTimer[MAX_PLAYERS],
-	Timer:PlayerTestBackTimer[MAX_PLAYERS],
-	EditingTrunkWeaponModel[MAX_PLAYERS],
-	EditingTrunkWeaponObject[MAX_PLAYERS];
+	Timer:PlayerTestBackTimer[MAX_PLAYERS];
 
+// Vehicle Timer vars
 static
 	Timer:VehicleAlarmTimer[MAX_VEHICLES],
 	bool:VehicleAlarmStarted[MAX_VEHICLES],
@@ -315,7 +311,7 @@ static
 */
 ///////////////////////////////////////////////////////////////////
 
-stock BuyVehicle(playerid, bool:credit_activated = false)
+BuyVehicle(playerid, bool:credit_activated = false)
 {
 	//Car
 	AC_DestroyVehicle(PreviewCar[playerid]);
@@ -360,18 +356,74 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	if(credit_activated)
 		price -= CreditInfo[playerid][cAmount];
 	new
-		cCar = AC_CreateVehicle(modelid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2],VehicleBuyPos[PlayerDealer[playerid]][3], PreviewColor1[playerid], PreviewColor2[playerid], -1, 0);
+		vehicleid = AC_CreateVehicle(modelid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2],VehicleBuyPos[PlayerDealer[playerid]][3], PreviewColor1[playerid], PreviewColor2[playerid], -1, 0);
 
-	PlayerKeys[playerid][pVehicleKey] 	= cCar;
-	PlayerModel[playerid]				= modelid;
-	PlayerEngine[playerid] 				= engineType;
-	VehicleInfo[cCar][vInt] 			= 0;
-	VehicleInfo[cCar][vViwo] 			= 0;
+	PlayerKeys[playerid][pVehicleKey] 		= vehicleid;
+	PlayerModel[playerid]					= modelid;
+	PlayerEngine[playerid] 					= engineType;
+	VehicleInfo[vehicleid][vInt] 			= 0;
+	VehicleInfo[vehicleid][vViwo] 			= 0;
 
-	//SQL
-	mysql_pquery(g_SQL, "BEGIN");
+	inline OnVehicleBuy()
+	{
+		VehicleInfo[vehicleid][vSQLID]				= cache_insert_id();
+		VehicleInfo[vehicleid][vModel]				= PlayerModel[playerid];
+		VehicleInfo[vehicleid][vColor1]				= PreviewColor1[playerid];
+		VehicleInfo[vehicleid][vColor2]				= PreviewColor2[playerid];
+		VehicleInfo[vehicleid][vOwnerID] 			= PlayerInfo[playerid][pSQLID];
+		strcpy(VehicleInfo[vehicleid][vNumberPlate], "");
+		VehicleInfo[vehicleid][vParkX]				= VehicleBuyPos[PlayerDealer[playerid]][0];
+		VehicleInfo[vehicleid][vParkY]				= VehicleBuyPos[PlayerDealer[playerid]][1];
+		VehicleInfo[vehicleid][vParkZ]				= VehicleBuyPos[PlayerDealer[playerid]][2];
+		VehicleInfo[vehicleid][vAngle]				= VehicleBuyPos[PlayerDealer[playerid]][3];
+		VehicleInfo[vehicleid][vEngineType]			= PlayerEngine[playerid];
+		VehicleInfo[vehicleid][vEngineLife]			= ENGINE_LIFE_STOCK;
+		VehicleInfo[vehicleid][vEngineScrewed]		= 0;
+		VehicleInfo[vehicleid][vHeat]				= 0.0;
+		VehicleInfo[vehicleid][vOverHeated]			= 0;
+		VehicleInfo[vehicleid][vFuel]				= 100;
+		VehicleInfo[vehicleid][vBatteryType]		= BATTERY_TYPE_STOCK;
+		VehicleInfo[vehicleid][vBatteryLife]		= BATTERY_LIFE_STOCK;
+		VehicleInfo[vehicleid][vInsurance]			= 0;
+		VehicleInfo[vehicleid][vPanels]				= 0;
+		VehicleInfo[vehicleid][vDoors]				= 0;
+		VehicleInfo[vehicleid][vTires]				= 0;
+		VehicleInfo[vehicleid][vLights]				= 0;
+		VehicleInfo[vehicleid][vTravel]				= 0.0;
+		
+		for(new wslot = 0; wslot < MAX_WEAPON_SLOTS; wslot++)
+		{
+			VehicleInfo[vehicleid][vWeaponSQLID][wslot] 		= -1;
+			VehicleInfo[vehicleid][vWeaponId][wslot]			= 0;
+			VehicleInfo[vehicleid][vWeaponAmmo][wslot]			= 0;
+			VehicleInfo[vehicleid][vWeaponObjectID][wslot]		= INVALID_OBJECT_ID;
+			VehicleInfo[vehicleid][vOffsetx][wslot]      		= 0;
+			VehicleInfo[vehicleid][vOffsety][wslot]      		= 0;
+			VehicleInfo[vehicleid][vOffsetz][wslot]      		= 0;
+			VehicleInfo[vehicleid][vOffsetxR][wslot]     		= 0;
+			VehicleInfo[vehicleid][vOffsetyR][wslot]      		= 0;
+			VehicleInfo[vehicleid][vOffsetzR][wslot]      		= 0;
+		}
+		
+		VehicleInfo[vehicleid][vSpareKey1]     		= -1;
+		VehicleInfo[vehicleid][vSpareKey2]     		= -1;
+		VehicleInfo[vehicleid][vUsage] 				= VEHICLE_USAGE_PRIVATE;
+		VehicleInfo[vehicleid][vLock]				= 1;
+		VehicleInfo[vehicleid][vLocked]				= 0;
+		VehicleInfo[vehicleid][vAlarm]				= 1;
+		VehicleInfo[vehicleid][vImmob]				= 1;
+		VehicleInfo[vehicleid][vAudio]				= 0;
+		VehicleInfo[vehicleid][vCanStart]       	= 1;
+		VehicleInfo[vehicleid][vParts]          	= 0;
+		VehicleInfo[vehicleid][vDestroys]			= 0;
+		VehicleInfo[vehicleid][vImpounded]			= 0;
+
+		Vehicle_Add(VEHICLE_USAGE_PRIVATE, vehicleid);
+		return 1;
+	}
 	
-	mysql_pquery(g_SQL, 
+	MySQL_PQueryInline(g_SQL,
+		using inline OnVehicleBuy, 
 		va_fquery(g_SQL, 
 			"INSERT INTO cocars(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,\n\
 				interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,\n\
@@ -421,45 +473,41 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 			-1,
 			0.0,
 			0.0,
-			0), 
-		"OnVehicleBuy", 
+			0
+		), 
 		"ii", 
-		playerid, 
-		cCar
+		playerid,
+		vehicleid
 	);
 	
-	mysql_pquery(g_SQL, "COMMIT");
-
-	SetVehicleNumberPlate(cCar, "");
+	SetVehicleNumberPlate(vehicleid, "");
 
 	new engine, lights, alarm, doors, bonnet, boot, objective;
-	GetVehicleParamsEx(cCar, engine, lights, alarm, doors, bonnet, boot, objective);
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-	if(IsABike(modelid) || IsAPlane(modelid)) {
-		SetVehicleParamsEx(cCar,VEHICLE_PARAMS_ON,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
-		VehicleInfo[cCar][vEngineRunning] = 1;
-	} else {
-		SetVehicleParamsEx(cCar,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
-		VehicleInfo[cCar][vEngineRunning] = 0;
+	if(IsABike(modelid) || IsAPlane(modelid)) 
+	{
+		SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_ON,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
+		VehicleInfo[vehicleid][vEngineRunning] = 1;
+	} 
+	else 
+	{
+		SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
+		VehicleInfo[vehicleid][vEngineRunning] = 0;
 	}
 
-	// Money
-	PlayerToBudgetMoney(playerid, price); // Novac dolazi u proracun od kupljenog vozila
+	PlayerToBudgetMoney(playerid, price); 
 
-	// Get data
 	GetPlayerVehicleList(playerid);
 
-	//Pos
 	TogglePlayerControllable(playerid, true);
 	SetPlayerVirtualWorld(playerid, 0);
 	SetPlayerPos(playerid, DealerInfo[PlayerDealer[playerid]][flPosX], DealerInfo[PlayerDealer[playerid]][flPosY], DealerInfo[PlayerDealer[playerid]][flPosZ]+1.0);
 	SetCameraBehindPlayer(playerid);
 	Bit1_Set(gr_PreviewCar, playerid, false);
 
-	//Koristi li dealera?
 	Bit8_Set(gr_UsingDealer, PlayerDealer[playerid], 0);
 
-	// Donator vozilo
 	if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerVIP[playerid][pDonateRank] != 0)
 	{
 		PlayerVIP[playerid][pDonatorVehicle] = modelid;
@@ -487,15 +535,18 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 		GetName(playerid,false),
 		PlayerInfo[playerid][pSQLID],
 		ReturnVehicleName(modelid),
-		VehicleInfo[cCar][vSQLID],
+		VehicleInfo[vehicleid][vSQLID],
 		price
 	);
 	#endif
 	
-	// Message
-	va_SendClientMessage(playerid, COLOR_GREEN, "[!]: Uspjesno ste kupili %s.", ReturnVehicleName(modelid));
+	va_SendClientMessage(playerid, 
+		COLOR_GREEN, 
+		"[!]: Uspjesno ste kupili %s za %s.", 
+		ReturnVehicleName(modelid),
+		FormatNumber(price)
+	);
 
-	//Preview Vars
 	PreviewColor1[playerid] = 0;
 	PreviewColor2[playerid] = 0;
 	PreviewType[playerid]	= 0;
@@ -605,35 +656,93 @@ stock RespawnTrunkObjects(vehicleid)
 
 stock GetPlayerVehicleList(playerid)
 {
-	mysql_tquery(g_SQL, 
+	inline LoadingPlayerVehicle()
+	{
+		if(cache_num_rows()) 
+		{
+			for(new i = 0; i < cache_num_rows(); i++) 
+			{
+				cache_get_value_name_int(i, 	"id"		, VehicleInfoSQLID[playerid][i]);
+				cache_get_value_name_int(i, 	"modelid"	, VehicleInfoModel[playerid][i]);
+				cache_get_value_name_float(i,  	"parkX"		, VehicleInfoParkX[playerid][i]);
+				cache_get_value_name_float(i,  	"parkY"		, VehicleInfoParkY[playerid][i]);
+				cache_get_value_name_float(i,  	"parkZ"		, VehicleInfoParkZ[playerid][i]);
+			}
+		}
+		return 1;
+	}
+	MySQL_TQueryInline(g_SQL,
+		using inline LoadingPlayerVehicle,
 		va_fquery(g_SQL, 
 			"SELECT id, modelid, parkX, parkY, parkZ FROM cocars WHERE ownerid = '%d' LIMIT %d",
 			PlayerInfo[playerid][pSQLID],
 			MAX_PLAYER_CARS
 		), 
-		"LoadingPlayerVehicle", 
 		"i", 
 		playerid
 	);
 	return 1;
 }
 
-stock CheckVehicleInsurance(vehicleid)
+static CalculateFuelPrice(playerid, type, amount, price)
+{
+	new
+		moneys;
+
+	switch( type) 
+	{
+		case 0:  
+		{ 	// Gasoline
+			moneys = (amount * price);
+			switch( PlayerVIP[playerid][pDonateRank]) 
+			{
+				case PREMIUM_BRONZE:
+					moneys /= 4;
+				case PREMIUM_SILVER:
+					moneys /= 2;
+				case PREMIUM_GOLD, PREMIUM_PLATINUM:
+					moneys = 0;
+			}
+		}
+		case 1:  
+		{	// Diesel
+			moneys = (amount * price);
+			switch( PlayerVIP[playerid][pDonateRank]) 
+			{
+				case PREMIUM_BRONZE:
+					moneys /= 4;
+				case PREMIUM_SILVER:
+					moneys /= 2;
+				case PREMIUM_GOLD, PREMIUM_PLATINUM:
+					moneys = 0;
+			}
+		}
+	}
+	moneys = floatround(moneys);
+	return moneys;
+}
+
+static CheckVehicleInsurance(vehicleid)
 {
 	new Float:vehHealth = VehicleInfo[vehicleid][vHealth];
-	switch(VehicleInfo[vehicleid][vInsurance]) {
-		case 0: {
+	switch(VehicleInfo[vehicleid][vInsurance]) 
+	{
+		case 0: 
+		{
 		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
 			{
-				if(vehHealth < 1400.0) AC_SetVehicleHealth(vehicleid, 1400.0);
+				if(vehHealth < 1400.0) 
+					AC_SetVehicleHealth(vehicleid, 1400.0);
 			}
 			else
 			{
-				if(vehHealth < 900.0) AC_SetVehicleHealth(vehicleid, 390.0);
+				if(vehHealth < 900.0) 
+					AC_SetVehicleHealth(vehicleid, 390.0);
 			}
 			UpdateVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 		}
-		case 1: {
+		case 1: 
+		{
 			UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
 			VehicleInfo[vehicleid][vPanels]		= 0;
@@ -643,14 +752,17 @@ stock CheckVehicleInsurance(vehicleid)
 
 		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
 			{
-				if(vehHealth < 1600.0) AC_SetVehicleHealth(vehicleid, 1600.0);
+				if(vehHealth < 1600.0) 	
+					AC_SetVehicleHealth(vehicleid, 1600.0);
 			}
 			else
 			{
-				if(vehHealth < 1000.0) AC_SetVehicleHealth(vehicleid, 1000.0);
+				if(vehHealth < 1000.0) 
+					AC_SetVehicleHealth(vehicleid, 1000.0);
 			}
 		}
-		case 2: {
+		case 2: 
+		{
 			UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
 			VehicleInfo[vehicleid][vDestroyed]	= false;
@@ -661,14 +773,17 @@ stock CheckVehicleInsurance(vehicleid)
 
 		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
 			{
-				if(vehHealth < 1600.0) AC_SetVehicleHealth(vehicleid, 1600.0);
+				if(vehHealth < 1600.0) 
+					AC_SetVehicleHealth(vehicleid, 1600.0);
 			}
 			else
 			{
-				if(vehHealth < 1000.0) AC_SetVehicleHealth(vehicleid, 1000.0);
+				if(vehHealth < 1000.0) 
+					AC_SetVehicleHealth(vehicleid, 1000.0);
 			}
 		}
-		case 3: {
+		case 3: 
+		{
 			UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
 			VehicleInfo[vehicleid][vDestroyed]	= false;
@@ -679,11 +794,13 @@ stock CheckVehicleInsurance(vehicleid)
 
 		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
 			{
-				if(vehHealth < 1600.0) AC_SetVehicleHealth(vehicleid, 1600.0);
+				if(vehHealth < 1600.0) 
+					AC_SetVehicleHealth(vehicleid, 1600.0);
 			}
 			else
 			{
-				if(vehHealth < 1000.0) AC_SetVehicleHealth(vehicleid, 1000.0);
+				if(vehHealth < 1000.0) 
+					AC_SetVehicleHealth(vehicleid, 1000.0);
 			}
 		}
 	}
@@ -826,14 +943,18 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 	VehicleInfo[vehicleid][vWeaponAmmo][slot] 	+= ammo;
 	AC_ResetPlayerWeapon(playerid, weaponid);
 	
-	// Query
-	mysql_tquery(g_SQL,
+	inline OnVehicleWeaponInsert()
+	{
+		VehicleInfo[vehicleid][vWeaponSQLID][slot] = cache_insert_id();
+		return 1;
+	}
+   	MySQL_TQueryInline(g_SQL,
+		using inline OnVehicleWeaponInsert,
 		va_fquery(g_SQL, "INSERT INTO cocars_weapons(vehicle_id, weapon_id, ammo) VALUES ('%d','%d','%d')",
 			VehicleInfo[vehicleid][vSQLID],
 			VehicleInfo[vehicleid][vWeaponId][slot],
 			VehicleInfo[vehicleid][vWeaponAmmo][slot]
 		), 
-		"OnVehicleWeaponInsert", 
 		"ii", 
 		vehicleid, 
 		slot
@@ -1034,12 +1155,28 @@ stock ResetPlayerWeaponList(playerid)
 
 stock LoadVehicleWeapons(vehicleid)
 {
-	mysql_tquery(g_SQL, 
+	inline LoadingVehicleWeapons()
+	{
+		if(cache_num_rows()) 
+		{
+			for(new i = 0; i < cache_num_rows(); i++) 
+			{	
+				cache_get_value_name_int(i, "id"		, VehicleInfo[vehicleid][vWeaponSQLID][i]);
+				cache_get_value_name_int(i, "weapon_id"	, VehicleInfo[vehicleid][vWeaponId][i]);
+				cache_get_value_name_int(i, "ammo"		, VehicleInfo[vehicleid][vWeaponAmmo][i]);
+				
+				Iter_Add(VehWeapon[vehicleid], i);
+			}
+		}
+		LoadVehicleWeaponPos(vehicleid);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL, 
+		using inline LoadingVehicleWeapons,
 		va_fquery(g_SQL, 
 			"SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7", 
 			VehicleInfo[vehicleid][vSQLID]
 		), 
-		"LoadingVehicleWeapons", 
 		"i", 
 		vehicleid
 	);
@@ -1048,48 +1185,46 @@ stock LoadVehicleWeapons(vehicleid)
 
 stock LoadVehicleWeaponPos(vehicleid)
 { 
-	mysql_tquery(g_SQL, 
+	inline LoadingVehicleWeaponPos()
+	{
+		if(cache_num_rows()) 
+		{
+			new tmpSQL;
+			for(new i = 0; i < cache_num_rows(); i++) 
+			{	
+				cache_get_value_name_int(i,    "weaponsql"	, tmpSQL);
+				foreach(new wslot: VehWeapon[vehicleid])
+				{
+					if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] == tmpSQL)
+					{
+						cache_get_value_name_float(i,  "offsetx"	, VehicleInfo[vehicleid][vOffsetx][wslot]);
+						cache_get_value_name_float(i,  "offsety"	, VehicleInfo[vehicleid][vOffsety][wslot]);
+						cache_get_value_name_float(i,  "offsetz"	, VehicleInfo[vehicleid][vOffsetz][wslot]);
+						cache_get_value_name_float(i,  "offsetrx"	, VehicleInfo[vehicleid][vOffsetxR][wslot]);
+						cache_get_value_name_float(i,  "offsetry"	, VehicleInfo[vehicleid][vOffsetyR][wslot]);
+						cache_get_value_name_float(i,  "offsetrz"	, VehicleInfo[vehicleid][vOffsetzR][wslot]);	
+					
+						if(VehicleInfo[vehicleid][vOffsetx][wslot] == 0 && VehicleInfo[vehicleid][vOffsety][wslot] == 0 && VehicleInfo[vehicleid][vOffsetz][wslot] == 0)
+							continue;
+					
+						VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), 0.0, 0.0, 0.0, 0, 0, 0, 0);	
+						AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
+						Iter_Add(VehWeaponObject[vehicleid], wslot);
+					}
+				}
+			}
+		}
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL, 
+		using inline LoadingVehicleWeaponPos,
 		va_fquery(g_SQL, 
 			"SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d' LIMIT 0,7", 
 			VehicleInfo[vehicleid][vSQLID]
 		),
-		"LoadingVehicleWeaponPos", 
 		"i", 
 		vehicleid
 	);
-	return 1;
-}
-
-Public:LoadingPlayerVehicle(playerid)
-{
-	if(cache_num_rows()) 
-	{
-	    for(new i = 0; i < cache_num_rows(); i++) 
-		{
-			cache_get_value_name_int(i, 	"id"		, VehicleInfoSQLID[playerid][i]);
-			cache_get_value_name_int(i, 	"modelid"	, VehicleInfoModel[playerid][i]);
-			cache_get_value_name_float(i,  	"parkX"		, VehicleInfoParkX[playerid][i]);
-			cache_get_value_name_float(i,  	"parkY"		, VehicleInfoParkY[playerid][i]);
-			cache_get_value_name_float(i,  	"parkZ"		, VehicleInfoParkZ[playerid][i]);
-		}
-	}
-	return 1;
-}
-
-Public:LoadingVehicleWeapons(vehicleid)
-{
-	if(cache_num_rows()) 
-	{
-	    for(new i = 0; i < cache_num_rows(); i++) 
-		{	
-			cache_get_value_name_int(i, "id"		, VehicleInfo[vehicleid][vWeaponSQLID][i]);
-			cache_get_value_name_int(i, "weapon_id"	, VehicleInfo[vehicleid][vWeaponId][i]);
-			cache_get_value_name_int(i, "ammo"		, VehicleInfo[vehicleid][vWeaponAmmo][i]);
-			
-			Iter_Add(VehWeapon[vehicleid], i);
-		}
-	}
-	LoadVehicleWeaponPos(vehicleid);
 	return 1;
 }
 
@@ -1114,107 +1249,6 @@ stock ListPlayerVehicleWeapons(playerid, vehicleid)
 		broken = true;
 	}
 	return buffer;
-}
-
-forward LoadingVehicleWeaponPos(vehicleid);
-public LoadingVehicleWeaponPos(vehicleid)
-{
-	if(cache_num_rows()) 
-	{
-		new tmpSQL;
-	    for(new i = 0; i < cache_num_rows(); i++) 
-		{	
-			cache_get_value_name_int(i,    "weaponsql"	, tmpSQL);
-			foreach(new wslot: VehWeapon[vehicleid])
-			{
-				if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] == tmpSQL)
-				{
-					cache_get_value_name_float(i,  "offsetx"	, VehicleInfo[vehicleid][vOffsetx][wslot]);
-					cache_get_value_name_float(i,  "offsety"	, VehicleInfo[vehicleid][vOffsety][wslot]);
-					cache_get_value_name_float(i,  "offsetz"	, VehicleInfo[vehicleid][vOffsetz][wslot]);
-					cache_get_value_name_float(i,  "offsetrx"	, VehicleInfo[vehicleid][vOffsetxR][wslot]);
-					cache_get_value_name_float(i,  "offsetry"	, VehicleInfo[vehicleid][vOffsetyR][wslot]);
-					cache_get_value_name_float(i,  "offsetrz"	, VehicleInfo[vehicleid][vOffsetzR][wslot]);	
-				
-					if(VehicleInfo[vehicleid][vOffsetx][wslot] == 0 && VehicleInfo[vehicleid][vOffsety][wslot] == 0 && VehicleInfo[vehicleid][vOffsetz][wslot] == 0)
-						continue;
-				
-					VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), 0.0, 0.0, 0.0, 0, 0, 0, 0);	
-					AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
-					Iter_Add(VehWeaponObject[vehicleid], wslot);
-				}
-			}
-		}
-	}
-	return 1;
-}	
-
-forward OnVehicleBuy(playerid, vehicleid);
-public OnVehicleBuy(playerid, vehicleid)
-{
-
-	// VehicleInfo enum
-	VehicleInfo[vehicleid][vSQLID]				= cache_insert_id();
-	VehicleInfo[vehicleid][vModel]				= PlayerModel[playerid];
-	VehicleInfo[vehicleid][vColor1]				= PreviewColor1[playerid];
-	VehicleInfo[vehicleid][vColor2]				= PreviewColor2[playerid];
-	VehicleInfo[vehicleid][vOwnerID] 			= PlayerInfo[playerid][pSQLID];
-	format(VehicleInfo[vehicleid][vNumberPlate], 8, "");
-	VehicleInfo[vehicleid][vParkX]				= VehicleBuyPos[PlayerDealer[playerid]][0];
-	VehicleInfo[vehicleid][vParkY]				= VehicleBuyPos[PlayerDealer[playerid]][1];
-	VehicleInfo[vehicleid][vParkZ]				= VehicleBuyPos[PlayerDealer[playerid]][2];
-	VehicleInfo[vehicleid][vAngle]				= VehicleBuyPos[PlayerDealer[playerid]][3];
-	VehicleInfo[vehicleid][vEngineType]			= PlayerEngine[playerid];
-	VehicleInfo[vehicleid][vEngineLife]			= ENGINE_LIFE_STOCK;
-	VehicleInfo[vehicleid][vEngineScrewed]		= 0;
-	VehicleInfo[vehicleid][vHeat]				= 0.0;
-	VehicleInfo[vehicleid][vOverHeated]			= 0;
-	VehicleInfo[vehicleid][vFuel]				= 100;
-	VehicleInfo[vehicleid][vBatteryType]		= BATTERY_TYPE_STOCK;
-	VehicleInfo[vehicleid][vBatteryLife]		= BATTERY_LIFE_STOCK;
-	VehicleInfo[vehicleid][vInsurance]			= 0;
-	VehicleInfo[vehicleid][vPanels]				= 0;
-	VehicleInfo[vehicleid][vDoors]				= 0;
-	VehicleInfo[vehicleid][vTires]				= 0;
-	VehicleInfo[vehicleid][vLights]				= 0;
-	VehicleInfo[vehicleid][vTravel]				= 0.0;
-	
-	for(new wslot = 0; wslot < MAX_WEAPON_SLOTS; wslot++)
-	{
-		VehicleInfo[vehicleid][vWeaponSQLID][wslot] 		= -1;
-		VehicleInfo[vehicleid][vWeaponId][wslot]			= 0;
-		VehicleInfo[vehicleid][vWeaponAmmo][wslot]			= 0;
-		VehicleInfo[vehicleid][vWeaponObjectID][wslot]		= INVALID_OBJECT_ID;
-		VehicleInfo[vehicleid][vOffsetx][wslot]      		= 0;
-		VehicleInfo[vehicleid][vOffsety][wslot]      		= 0;
-		VehicleInfo[vehicleid][vOffsetz][wslot]      		= 0;
-		VehicleInfo[vehicleid][vOffsetxR][wslot]     		= 0;
-		VehicleInfo[vehicleid][vOffsetyR][wslot]      		= 0;
-		VehicleInfo[vehicleid][vOffsetzR][wslot]      		= 0;
-	}
-	
-	VehicleInfo[vehicleid][vSpareKey1]     		= -1;
-	VehicleInfo[vehicleid][vSpareKey2]     		= -1;
-	VehicleInfo[vehicleid][vUsage] 				= VEHICLE_USAGE_PRIVATE;
-	VehicleInfo[vehicleid][vLock]				= 1;
-	VehicleInfo[vehicleid][vLocked]				= 0;
-	VehicleInfo[vehicleid][vAlarm]				= 1;
-	VehicleInfo[vehicleid][vImmob]				= 1;
-	VehicleInfo[vehicleid][vAudio]				= 0;
-	VehicleInfo[vehicleid][vCanStart]       	= 1;
-	VehicleInfo[vehicleid][vParts]          	= 0;
-	VehicleInfo[vehicleid][vDestroys]			= 0;
-	VehicleInfo[vehicleid][vImpounded]			= 0;
-
-	Vehicle_Add(VEHICLE_USAGE_PRIVATE, vehicleid);
-	return 1;
-}
-
-forward OnVehicleWeaponInsert(vehicleid, slot);
-public OnVehicleWeaponInsert(vehicleid, slot)
-{
-	VehicleInfo[vehicleid][vWeaponSQLID][slot] = cache_insert_id();
-	return 1;
 }
 
 /*
@@ -2010,7 +2044,8 @@ stock CheckVehicleEngine(vehicleid)
 {
 	new playerid = GetVehicleDriver(vehicleid);
 	VehicleInfo[vehicleid][vEngineLife] -= ENGINE_DEDUCATION;
-	if(VehicleInfo[vehicleid][vEngineLife] == 0) {		// Ako je motor zaribao
+	if(VehicleInfo[vehicleid][vEngineLife] == 0) 
+	{		// Ako je motor zaribao
 		VehicleInfo[vehicleid][vEngineScrewed]	= 1;
 
 		new engine, lights, alarm, doors, bonnet, boot, objective;
@@ -2021,14 +2056,14 @@ stock CheckVehicleEngine(vehicleid)
 		VehicleInfo[vehicleid][vEngineRunning] 	= 0;
 		return 1;
 	}
-	if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000) { // Ako motor ulazi u onu kriticnu dob
+	if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000) 
+	{ // Ako motor ulazi u onu kriticnu dob
 		VehicleInfo[vehicleid][vHeat] += 40.0;
 		switch(random(40))
 		{
-			case 0 .. 10:  {	// Curenje goriva
-				VehicleInfo[vehicleid][vFuel] -= 1;
-			}
-			case 11 .. 20: {	// Pregirajvanje motora
+			case 0 .. 10: VehicleInfo[vehicleid][vFuel] -= 1; // Vehicle tank leak
+			case 11 .. 20: 
+			{	// Pregirajvanje motora
 				VehicleInfo[vehicleid][vHeat] += 50.0;
 
 				new engine, lights, alarm, doors, bonnet, boot, objective;
@@ -2038,8 +2073,10 @@ stock CheckVehicleEngine(vehicleid)
 				VehicleInfo[vehicleid][vEngineRunning] 	= 0;
 				GameTextForPlayer(playerid, "~r~Vozilo je ugaseno radi pregrijanog motora", 3000, 6);
 			}
-			case 21 .. 30: {	// Iskljucivanje motora
-				new engine, lights, alarm, doors, bonnet, boot, objective;
+			case 21 .. 30: 
+			{	// Iskljucivanje motora
+				new 
+					engine, lights, alarm, doors, bonnet, boot, objective;
 				GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 				SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
 
@@ -2058,10 +2095,12 @@ stock CheckEngineHeat(vehicleid)
 	if(VehicleInfo[vehicleid][vEngineRunning])
 	{
 		new playerid = GetVehicleDriver(vehicleid);
-		if(VehicleInfo[vehicleid][vOverHeated]) return 1;
+		if(VehicleInfo[vehicleid][vOverHeated]) 
+			return 1;
 
 		VehicleInfo[vehicleid][vHeat] += 0.05;
-		if(VehicleInfo[vehicleid][vHeat] == 100.0) {
+		if(VehicleInfo[vehicleid][vHeat] == 100.0) 
+		{
 
 			VehicleInfo[vehicleid][vEngineLife] -= (VehicleInfo[vehicleid][vEngineLife] / 125.0);
 			VehicleInfo[vehicleid][vBatteryLife] -= (VehicleInfo[vehicleid][vBatteryLife] / 150.0);
@@ -2074,7 +2113,8 @@ stock CheckEngineHeat(vehicleid)
 			GameTextForPlayer(playerid, "~r~Vozilo je ugaseno radi pregrijanog motora", 3000, 6);
 			VehicleInfo[vehicleid][vOverHeated] = true;
 		}
-		if(75.0 <= VehicleInfo[vehicleid][vHeat] <= 99.9) {
+		else if(75.0 <= VehicleInfo[vehicleid][vHeat] <= 99.9) 
+		{
 			new engine, lights, alarm, doors, bonnet, boot, objective;
 			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 			SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
@@ -2083,11 +2123,16 @@ stock CheckEngineHeat(vehicleid)
 			GameTextForPlayer(playerid, "~r~Vozilo je ugaseno radi pregrijanog motora", 3000, 6);
 		}
 	}
-	else { //Ne radi motor
-		if(VehicleInfo[vehicleid][vHeat] > 5.0) {
+	else 
+	{ 
+		if(VehicleInfo[vehicleid][vHeat] > 5.0) 
+		{
 			VehicleInfo[vehicleid][vHeat] -= 5.0;
 			if(0.0 <= VehicleInfo[vehicleid][vHeat] <= 50.0)
-				if(VehicleInfo[vehicleid][vOverHeated]) VehicleInfo[vehicleid][vOverHeated] = false;
+			{
+				if(VehicleInfo[vehicleid][vOverHeated]) 
+					VehicleInfo[vehicleid][vOverHeated] = false;
+			}
 		}
 	}
 	return 1;
@@ -2095,30 +2140,39 @@ stock CheckEngineHeat(vehicleid)
 
 stock GetEngineLifeString(vehicleid)
 {
-	new engineString[16];
-	if(VehicleInfo[vehicleid][vEngineScrewed]) 					format(engineString, 16, "{CD1414}Zariban");
-	else if(VehicleInfo[vehicleid][vEngineLife] > 10000) 		format(engineString, 16, "{339933}Odlican");
-	else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000) 	format(engineString, 16, "{CC3300}Los");
+	new 
+		engineString[16];
+	if(VehicleInfo[vehicleid][vEngineScrewed]) 					
+		format(engineString, 16, "{CD1414}Zariban");
+	else if(VehicleInfo[vehicleid][vEngineLife] > 10000) 		
+		format(engineString, 16, "{339933}Odlican");
+	else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000) 	
+		format(engineString, 16, "{CC3300}Los");
 	return engineString;
 }
 
 stock GetEngineLifeStringTD(vehicleid)
 {
-	new engineString[16];
-	if(VehicleInfo[vehicleid][vEngineScrewed]) 					format(engineString, 16, "~r~Zariban~w~");
-	else if(VehicleInfo[vehicleid][vEngineLife] > 10000) 		format(engineString, 16, "~g~Odlican~w~");
-	else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000) 	format(engineString, 16, "~y~Los~w~");
+	new 
+		engineString[16];
+	if(VehicleInfo[vehicleid][vEngineScrewed]) 					
+		format(engineString, 16, "~r~Zariban~w~");
+	else if(VehicleInfo[vehicleid][vEngineLife] > 10000) 		
+		format(engineString, 16, "~g~Odlican~w~");
+	else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000) 	
+		format(engineString, 16, "~y~Los~w~");
 	return engineString;
 }
 
 stock GetEngineTypeString(type)
 {
-	new engineString[9];
+	new 
+		engineString[9];
 	switch(type)
 	{
-		case ENGINE_TYPE_NONE:		format(engineString, 9, "Nista");
-		case ENGINE_TYPE_DIESEL: 	format(engineString, 9, "Dizelas");
-		case ENGINE_TYPE_PETROL: 	format(engineString, 9, "Benzinac");
+		case ENGINE_TYPE_NONE:		format(engineString, 9, "None");
+		case ENGINE_TYPE_DIESEL: 	format(engineString, 9, "Diesel");
+		case ENGINE_TYPE_PETROL: 	format(engineString, 9, "Gasoline");
 	}
 	return engineString;
 }
@@ -2134,11 +2188,11 @@ stock GetEngineTypeString(type)
 
 stock GetBatteryTypeString(type)
 {
-	new batteryString[16];
-
+	new 
+		batteryString[16];
 	switch(type)
 	{
-		case BATTERY_TYPE_STOCK:	format(batteryString, 16, "Tvornicki");
+		case BATTERY_TYPE_STOCK:	format(batteryString, 16, "Factory");
 		case BATTERY_TYPE_CYCLONE:	format(batteryString, 16, "Cyclone");
 		case BATTERY_TYPE_VARTIO:	format(batteryString, 16, "Vartio Original");
 		case BATTERY_TYPE_BOCHE: 	format(batteryString, 16, "Boche");
@@ -2148,17 +2202,23 @@ stock GetBatteryTypeString(type)
 
 stock GetBatteryLifeString(vehicleid)
 {
-	new batteryString[16];
-	if(VehicleInfo[vehicleid][vBatteryLife] > 5000.0)				format(batteryString, 16, "{339933}Odlican");
-	if(0.001 <= VehicleInfo[vehicleid][vBatteryLife] <= 5000.0)	format(batteryString, 16, "{CC3300}Los");
+	new 
+		batteryString[16];
+	if(VehicleInfo[vehicleid][vBatteryLife] > 5000.0)				
+		format(batteryString, 16, "{339933}Odlican");
+	if(0.001 <= VehicleInfo[vehicleid][vBatteryLife] <= 5000.0)	
+		format(batteryString, 16, "{CC3300}Los");
 	return batteryString;
 }
 
 stock GetBatteryLifeStringTD(vehicleid)
 {
-	new batteryString[16];
-	if(VehicleInfo[vehicleid][vBatteryLife] > 5000.0)				format(batteryString, 16, "~g~Odlican~w~");
-	if(0.001 <= VehicleInfo[vehicleid][vBatteryLife] <= 5000.0)	format(batteryString, 16, "~r~Los~w~");
+	new 
+		batteryString[16];
+	if(VehicleInfo[vehicleid][vBatteryLife] > 5000.0)				
+		format(batteryString, 16, "~g~Odlican~w~");
+	if(0.001 <= VehicleInfo[vehicleid][vBatteryLife] <= 5000.0)	
+		format(batteryString, 16, "~r~Los~w~");
 	return batteryString;
 }
 
@@ -2176,22 +2236,21 @@ stock CalculateVehiclePrice(vehicleid, type = 1)
 	new price,
 		modelid = GetVehicleByModel(GetVehicleModel(vehicleid));
 	
-	if(type == 1) 	// Auti
+	if(type == 1) 	// Cars
 	{
-		if(!IsABike(GetVehicleModel(vehicleid))) price = LandVehicles[modelid][viPrice] / 2;
-		else price = floatround(LandVehicles[modelid][viPrice] * 0.5);
+		price = LandVehicles[modelid][viPrice] / 2;
 		
 		if(price > LandVehicles[modelid][viPrice])
 			return 0;
 	}
-	else if(type == 2) // Brodovi
+	else if(type == 2) // Boats
 	{
 		price = SeaVehicles[modelid][viPrice] / 2;
 		
 		if(price > SeaVehicles[modelid][viPrice])
 			return 0;
 	}
-	else if(type == 3) // Avioni
+	else if(type == 3) // Planes
 	{
 		price = AirVehicles[modelid][viPrice] / 2;
 		
@@ -2212,8 +2271,8 @@ stock CalculateVehiclePrice(vehicleid, type = 1)
 
 stock ParkVehicleInfo(vehicleid)
 {
-	// Uzimanje Trenutnog Stanja CO-a
-	new Float:vehHealth;
+	new 
+		Float:vehHealth;
 	GetVehicleHealth(vehicleid, vehHealth);
 	GetVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 
@@ -2284,7 +2343,7 @@ stock SpawnVehicleInfo(playerid, pick)
 			vehicleid = AC_CreateVehicle(modelid, Pos[0], Pos[1], Pos[2], Pos[3], color[0], color[1], -1, 0);
 			
 			LinkVehicleToInterior(vehicleid, interior);
-			SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid)); //viwo??
+			SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid));
 
 			cache_get_value_name_int(0,  "id", VehicleInfo[vehicleid][vSQLID]);
 			VehicleInfo[vehicleid][vModel] 		= 	modelid;
@@ -2370,10 +2429,13 @@ stock SpawnVehicleInfo(playerid, pick)
 				engine,lights,alarm,doors,bonnet,boot,objective;
 
 			GetVehicleParamsEx(vehicleid,engine,lights,alarm,doors,bonnet,boot,objective);
-			if(IsABike(modelid) || IsAPlane(modelid) || IsABike(modelid)) {
+			if(IsABike(modelid) || IsAPlane(modelid) || IsABike(modelid)) 
+			{
 				SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_ON,VEHICLE_PARAMS_OFF,alarm,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
 				VehicleInfo[vehicleid][vEngineRunning] = 1;
-			} else {
+			} 
+			else 
+			{
 				SetVehicleParamsEx(vehicleid,engine,lights,alarm,VEHICLE_PARAMS_ON,bonnet,boot,objective);
 				VehicleInfo[vehicleid][vEngineRunning] = 0;
 			}
@@ -3165,44 +3227,6 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 	return 1;
 }
 
-static CalculateFuelPrice(playerid, type, amount, price)
-{
-	new
-		moneys;
-
-	switch( type) 
-	{
-		case 0:  
-		{ 	// Gasoline
-			moneys = (amount * price);
-			switch( PlayerVIP[playerid][pDonateRank]) 
-			{
-				case PREMIUM_BRONZE:
-					moneys /= 4;
-				case PREMIUM_SILVER:
-					moneys /= 2;
-				case PREMIUM_GOLD, PREMIUM_PLATINUM:
-					moneys = 0;
-			}
-		}
-		case 1:  
-		{	// Diesel
-			moneys = (amount * price);
-			switch( PlayerVIP[playerid][pDonateRank]) 
-			{
-				case PREMIUM_BRONZE:
-					moneys /= 4;
-				case PREMIUM_SILVER:
-					moneys /= 2;
-				case PREMIUM_GOLD, PREMIUM_PLATINUM:
-					moneys = 0;
-			}
-		}
-	}
-	moneys = floatround(moneys);
-	return moneys;
-}
-
 /*
 	######## #### ##     ## ######## ########   ######
 	   ##     ##  ###   ### ##       ##     ## ##    ##
@@ -3330,9 +3354,6 @@ timer ParkPlayerVehicle[5000](playerid, vehicleid)
 hook function ResetPlayerVariables(playerid)
 {
 	ResetCarOwnershipVariables(playerid);
-	CarnisterLiters[playerid] = 0;
-	CarnisterType[playerid] = -1;
-
 	if(Bit1_Get(gr_PlayerBreakingTrunk, playerid)) 
 	{
 		BreakTrunkVehicleID[playerid] 	= INVALID_VEHICLE_ID;
@@ -3345,6 +3366,8 @@ hook function ResetPlayerVariables(playerid)
 		BreakLockKickTick[playerid]		= gettimestamp();
 		Bit2_Set(gr_PlayerLockBreaking, playerid, 0);
 	}
+	CarnisterLiters[playerid] = 0;
+	CarnisterType[playerid] = -1;
 
 	EditingTrunkWeaponObject[playerid] = 0;
 	EditingTrunkWeaponModel[playerid] = 0;
@@ -3842,14 +3865,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_VEH_GET:
 		{
-			if(!response) return 1;
+			if(!response) 
+				return 1;
 			if(VehicleInfoSQLID[playerid][listitem] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate automobil pohranjen u tome slotu!");
 			SpawnVehicleInfo(playerid, VehicleInfoSQLID[playerid][listitem]);
 			new model = GetVehicleByModel(VehicleInfoModel[playerid][listitem]);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", LandVehicles[model][viName]);
 			return 1;
 		}
-		case DIALOG_VEH_UPGRADE: {
+		case DIALOG_VEH_UPGRADE:
+		{
 			if(!response) return 1;
 			switch(listitem)
 			{
@@ -4232,16 +4257,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(!response) return 1;
 			new vehicleid = GetPlayerVehicleID(playerid),
-				moneys = CalculateVehiclePrice(vehicleid, 1);
+				moneys = 0;
 			
-			if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vase vozilo nije CO!");
-			if(PlayerKeys[playerid][pVehicleKey] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");
+			if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vase vozilo nije CO!");
+			if(PlayerKeys[playerid][pVehicleKey] != vehicleid)
+				 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");
 
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[1][flPosX], DealerInfo[1][flPosY], DealerInfo[1][flPosZ])) moneys = CalculateVehiclePrice(vehicleid, 2);
-			else if(IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[2][flPosX], DealerInfo[2][flPosY], DealerInfo[2][flPosZ])) moneys = CalculateVehiclePrice(vehicleid, 3);
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[0][flPosX], DealerInfo[0][flPosY], DealerInfo[0][flPosZ])) 
+				moneys = CalculateVehiclePrice(vehicleid, 1);
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[1][flPosX], DealerInfo[1][flPosY], DealerInfo[1][flPosZ])) 
+				moneys = CalculateVehiclePrice(vehicleid, 2);
+			else if(IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[2][flPosX], DealerInfo[2][flPosY], DealerInfo[2][flPosZ])) 
+				moneys = CalculateVehiclePrice(vehicleid, 3);
+
+			if(moneys == 0)
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be in apropriate Vehicle Dealership!");
 			
-			// Give Money
-			BudgetToPlayerMoney(playerid, moneys); // Igrac dobiva novac iz budgeta za vozilo
+			BudgetToPlayerMoney(playerid, moneys); 
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste prodali svoje vozilo za %d$!", moneys);
 						
 			#if defined MODULE_LOGS
@@ -4696,13 +4729,22 @@ CMD:car(playerid, params[])
 	}
 	else if(!strcmp(pick, "upgrade", true))
 	{
-		if(GetPlayerVehicleID(playerid) != PlayerKeys[playerid][pVehicleKey]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti u svome CO vozilu!");
-		if(IsABoat(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel])) {
-			if(!IsPlayerInRangeOfPoint(playerid, 9.0, 114.3532, -1937.9978, 0.2384)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispod dizalice za upgrade brodova.");
-		} else if(IsAPlane(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]) || IsAHelio(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel])) {
-			if(!IsPlayerInRangeOfPoint(playerid, 10.0, 1922.2289, -2242.9053, 12.5353)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod hangara za upgrade aviona.");
-		} else {
-			if(!IsPlayerInRangeOfPoint(playerid, 20.0, 2321.9822, -1355.6526, 23.3999)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u garazi za upgrade automobila.");
+		if(GetPlayerVehicleID(playerid) != PlayerKeys[playerid][pVehicleKey]) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti u svome CO vozilu!");
+		if(IsABoat(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel])) 
+		{
+			if(!IsPlayerInRangeOfPoint(playerid, 9.0, 114.3532, -1937.9978, 0.2384)) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispod dizalice za upgrade brodova.");
+		} 
+		else if(IsAPlane(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]) || IsAHelio(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel])) 
+		{
+			if(!IsPlayerInRangeOfPoint(playerid, 10.0, 1922.2289, -2242.9053, 12.5353)) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod hangara za upgrade aviona.");
+		} 
+		else 
+		{
+			if(!IsPlayerInRangeOfPoint(playerid, 20.0, 2321.9822, -1355.6526, 23.3999)) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u garazi za upgrade automobila.");
 		}
 		ShowPlayerDialog(playerid, DIALOG_VEH_UPGRADE, DIALOG_STYLE_LIST, "UPGRADE PRIVATNIH VOZILA", "Osiguranje\nAkumulator\nBrava\nImmobilizator\nAudio (1.000$)\nAlarm\nPromjena brave", "Choose", "Abort");
 	}
@@ -4726,8 +4768,9 @@ CMD:car(playerid, params[])
 		}
 		if(PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER)
 		{
-			if(AC_GetPlayerMoney(playerid) < 1000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za naknadu za vucu od 1000$!");
-			PlayerToFactionMoneyTAX(playerid, 1, 1000); // Novac ide PDu uz porez koji ide drzavi
+			if(AC_GetPlayerMoney(playerid) < 1000) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za naknadu za vucu od 1000$!");
+			PlayerToBudgetMoney(playerid, 1000); 
 		}
 		// Timer
 		PlayerCarTow[playerid] = true;
@@ -4963,8 +5006,7 @@ CMD:car(playerid, params[])
 		if(IsHaveNoNumberPlate(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete staviti registraciju na to vozilo!");
 		if(AC_GetPlayerMoney(playerid) < 1000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 1.000$!");
 
-		PlayerToFactionMoneyTAX(playerid, 1, 1000); // Novac ide u PD, dok oporezivi dio ide drZavi
-
+		PlayerToBudgetMoney(playerid, 1000); 
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 
 		new
@@ -5033,19 +5075,22 @@ CMD:car(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi za vozila su popunjeni igracu!");
 
 		PlayerCarSeller[giveplayerid] 		= playerid;
-		PlayerSellingPrice[giveplayerid] 		= vehiclePrice;
+		PlayerSellingPrice[giveplayerid] 	= vehiclePrice;
 
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Ponudili ste %s vase vozilo za %d$", GetName(giveplayerid), vehiclePrice);
 
-		new
-			tmpString[128], vehicleName[MAX_VEHICLE_NAME];
-		GetVehicleNameById(PlayerKeys[playerid][pVehicleKey], vehicleName, MAX_VEHICLE_NAME);
-		format(tmpString, sizeof(tmpString), ""COL_WHITE"Zelite li kupiti vozilo marke "COL_LIGHTBLUE"%s"COL_WHITE"od "COL_LIGHTBLUE"%s"COL_WHITE"za "COL_LIGHTBLUE"%d"COL_WHITE"$?",
-			vehicleName,
+		va_ShowPlayerDialog(giveplayerid, 
+			DIALOG_VEH_SELLING, 
+			DIALOG_STYLE_MSGBOX, 
+			"VEHICLE BUY", 
+			""COL_WHITE"Zelite li kupiti vozilo marke "COL_LIGHTBLUE"%s"COL_WHITE"od \n\
+				"COL_LIGHTBLUE"%s"COL_WHITE"za "COL_LIGHTBLUE"%s?",
+			"Buy", 
+			"Abort",
+			ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
 			GetName(playerid),
-			vehiclePrice
+			FormatNumber(vehiclePrice)
 		);
-		ShowPlayerDialog(giveplayerid, DIALOG_VEH_SELLING, DIALOG_STYLE_MSGBOX, "KUPOVINA VOZILA", tmpString, "Buy", "Abort");
 	}
 	else if(!strcmp(pick, "junksell", true))
 	{
@@ -5170,6 +5215,80 @@ CMD:trunk(playerid, params[])
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Udarajte po vozilu dok mu ne skinete health! Ne udaljavajte se od automobila!");
 		Bit1_Set(gr_PlayerBreakingTrunk, playerid, true);
 	}
+	return 1;
+}
+
+CMD:get(playerid, params[])
+{
+	new
+		param[6];
+	if(sscanf( params, "s[6] ", param)) 
+	{
+		SendClientMessage(playerid, COLOR_RED, "[?]: /get [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[!] fuel");
+	}
+	if(!strcmp( param, "fuel", true))
+	{
+		new
+			type, fuel;
+			
+		if(sscanf( params, "s[6]ii", param, type, fuel)) 
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /get fuel [0 - Gasoline, 1 - Diesel][kolicina]");
+		
+		new bizzid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
+		if(bizzid == INVALID_BIZNIS_ID) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
+
+		if((CarnisterLiters[playerid] + fuel) > 25) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
+		if(type > 1 || type < 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
+		if(1 <= fuel <= 25) 
+		{
+			new 
+				moneys = CalculateFuelPrice(playerid, type, fuel, BizzInfo[bizzid][bGasPrice]);
+			if(AC_GetPlayerMoney(playerid) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+			new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
+			if(bizid == INVALID_BIZNIS_ID) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
+			
+			PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
+			
+			mysql_fquery(g_SQL, "UPDATE bizzes SET  till = '%d' WHERE id = '%d'", 
+				BizzInfo[bizid][bTill],
+				BizzInfo[bizid][bSQLID]
+			);
+
+			CarnisterLiters[playerid] 	+= fuel;
+			CarnisterType[playerid] 	= type;
+			va_SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste napunili kanister s %d litara. Mozete koristiti /fillcar unutar zeljena vozila!", fuel);
+		} 
+		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti izmedju 1 i 25 litara!");
+	}
+	return 1;
+}
+
+CMD:fillcar(playerid, params[])
+{
+	if(!CarnisterLiters[playerid] || CarnisterType[playerid] == -1) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste usipali nista u svoj kanister!");
+	new
+		vehicleid = GetPlayerVehicleID(playerid);
+	if(( vehicleid == 0 || vehicleid == INVALID_VEHICLE_ID) || IsABike( GetVehicleModel( vehicleid))) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Nepravilno vozilo!");
+	if(VehicleInfo[vehicleid][vFuel] >= 75) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vase vozilo moze voziti!");
+	
+	if(CarnisterType[playerid] == ENGINE_TYPE_PETROL) 
+	{
+		if(VehicleInfo[vehicleid][vEngineType] == ENGINE_TYPE_DIESEL)
+			VehicleInfo[vehicleid][vEngineLife] -= 25.0;
+	}
+	else if(CarnisterType[playerid] == ENGINE_TYPE_DIESEL) 
+	{
+		if(VehicleInfo[vehicleid][vEngineType] == ENGINE_TYPE_PETROL)
+			VehicleInfo[vehicleid][vEngineLife] -= 25.0;
+	}
+	VehicleInfo[vehicleid][vFuel] += CarnisterLiters[playerid];
+	CarnisterLiters[playerid] 	= 0;
+	CarnisterType[playerid] 	= -1;
 	return 1;
 }
 
@@ -5365,460 +5484,6 @@ CMD:setcostats(playerid, params[])
 	} else {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /setcostats [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: destroys - alarm - immob - lock - insurance");
-	}
-	return 1;
-}
-
-static
-	enginet[MAX_PLAYERS];
-
-CMD:engine(playerid, params[])
-{
-	#pragma unused params
-		
-	new
-		engine, lights, alarm, doors, bonnet, boot, objective,
-		vehicleid = GetPlayerVehicleID( playerid),
-		vstring[81],
-		Float:vhp;
-		
-	GetVehicleHealth(vehicleid, vhp);
-		
-	if((enginet[playerid] > gettime()) && VehicleInfo[vehicleid][vDestroyed])
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte prije ponovnog paljenja vozila!");
-	
-	if(PlayerWoundedAnim[playerid]) 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ranjeni ste, trenutno niste u stanju upravljati vozilom!");
-	if(IsABike(GetVehicleModel(vehicleid))) 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilno vozilo!");
-	if(!IsPlayerInVehicle(playerid, vehicleid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
-	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste vozac auta!");
-	if(VehicleInfo[vehicleid][vEngineScrewed]) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete upaliti motor jer je zaribao!");
-	if(VehicleInfo[vehicleid][vOverHeated])		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete upaliti motor, svjecice su dotrajale.");
-	if(VehicleInfo[vehicleid][vDestroyed] && vhp >= 255.0 && !VehicleInfo[vehicleid][vEngineRunning])
-	{
-		switch(random(99))
-		{
-			case 0 .. 15:
-				format(vstring, sizeof(vstring), "* %s okrece kljuc te pali unisteno vozilo.", GetName(playerid, true));
-			case 16 .. 99:
-			{
-				format(vstring, sizeof(vstring), "* %s pokusava upaliti unisteno vozilo ali ne uspijeva.", GetName(playerid, true));
-				enginet[playerid] = gettime() + 2;
-				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi uspio upaliti motor! Koristi /engine kako bi pokusao ponovno.");
-			}
-		}
-		SetPlayerChatBubble(playerid, vstring, COLOR_PURPLE, 20, 2000);
-	}
-	else if(VehicleInfo[vehicleid][vDestroyed] && vhp < 255.0)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo se ne moze upaliti jer je motor unisten.");
-		
-	if(VehicleInfo[vehicleid][vEngineRunning]) {
-		GameTextForPlayer(playerid, "~r~Motor iskljucen", 3000, 4);
-
-		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-		SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, doors, bonnet, boot, objective);
-		VehicleInfo[vehicleid][vEngineRunning] = 0;
-	} 
-	else 
-	{
-		if(!VehicleInfo[vehicleid][vFuel]) 	
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je ostalo bez goriva!");
-		if(!VehicleInfo[vehicleid][vCanStart] 
-			&& VehicleInfo[vehicleid][vGPS] 
-			&& PlayerJob[playerid][pJob] != JOB_JACKER) 
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je unisteno! Zovite mehanicara na /call 555!");
-		if(VehicleInfo[vehicleid][vImpounded]) 
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je zaplijenjeno od strane policije!");
-
-		#if defined MODULE_BOMBS
-		foreach(new i : Player) {
-			if(BombInfo[i][bVehicleid] == vehicleid) {
-				if(BombInfo[i][bPlanted]) {
-					DetonateBomb(i);
-					return 1;
-				}
-			}
-		}
-		#endif
-
-		if(PlayerKeys[playerid][pVehicleKey] == vehicleid || VehicleInfo[vehicleid][vSpareKey1] == PlayerInfo[playerid][pSQLID] || VehicleInfo[vehicleid][vSpareKey2] == PlayerInfo[playerid][pSQLID]) {
-			if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE) {
-
-				VehicleInfo[vehicleid][vBatteryLife] 	-= 0.001;
-				if(0.001 <= VehicleInfo[vehicleid][vBatteryLife] <= 5000.0) {
-					switch(random(50))
-					{
-						case 0 .. 25: 
-						{ 
-							GameTextForPlayer(playerid, "~r~Motor nije upalio radi slabog akumulatora", 3000, 1);
-							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-							SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, lights, alarm, doors, bonnet, boot, objective);
-							VehicleInfo[vehicleid][vEngineRunning] = 0;
-						}
-						case 26 .. 50: 
-						{ 
-							GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-							SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-							VehicleInfo[vehicleid][vEngineRunning] = 1;
-						}
-					}
-				} 
-				else 
-				{
-					if(VehicleInfo[vehicleid][vEngineLife] > 10000) 
-					{
-						GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-						SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-						VehicleInfo[vehicleid][vEngineRunning] = 1;
-					}
-					else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000)
-					{
-						switch(random(50)) 
-						{
-							case 0 .. 25: 
-							{
-								GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-								GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-								SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-								VehicleInfo[vehicleid][vEngineRunning] = 1;
-							}
-							case 26 .. 50: 
-							{
-								GameTextForPlayer(playerid, "~r~Motor nije upalio radi loseg motora", 3000, 1);
-								GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-								SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, lights, alarm, doors, bonnet, boot, objective);
-								VehicleInfo[vehicleid][vEngineRunning] = 0;
-							}
-						}
-					}
-				}
-			}
-		}
-		else 
-		{
-			switch( VehicleInfo[vehicleid][vUsage])
-			{
-				case VEHICLE_USAGE_PRIVATE:
-					StartHotWiring( playerid, vehicleid);
-				case VEHICLE_USAGE_NORMAL, VEHICLE_USAGE_FACTION, VEHICLE_USAGE_JOB, VEHICLE_USAGE_LICENSE: 
-				{
-         			GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-					VehicleInfo[vehicleid][vEngineRunning] = 1;
-				}
-				case VEHICLE_USAGE_RENT: 
-				{
-					if(Player_RentVehicle(playerid) != vehicleid)
-						return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-
-					GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-					VehicleInfo[vehicleid][vEngineRunning] = 1;
-				}
-			}
-		}
-	}
-	return 1;
-}
-
-CMD:lock(playerid, params[])
-{
-	new vehicleid = GetNearestVehicle(playerid);
-	if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
-	new
-		engine, lights, alarm, doors, bonnet, boot, objective,
-		string[47];
-	GetVehicleParamsEx( vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-
-	switch( VehicleInfo[vehicleid][vUsage])
-	{
-		case VEHICLE_USAGE_PRIVATE: 
-		{
-			if(PlayerKeys[playerid][pVehicleKey] != vehicleid && VehicleInfo[vehicleid][vSpareKey1] != PlayerInfo[playerid][pSQLID] && VehicleInfo[vehicleid][vSpareKey2] != PlayerInfo[playerid][pSQLID]) 
-				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovoga vozila!");
-			
-			if(!VehicleInfo[vehicleid][vLocked]) 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = true;
-
-				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			
-			} 
-			else 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = false;
-
-				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			}
-		}
-		case VEHICLE_USAGE_JOB:
-		 {
-			if(VehicleInfo[vehicleid][vJob] != PlayerJob[playerid][pJob]) 
-				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-			
-			if(!VehicleInfo[vehicleid][vLocked]) 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = true;
-
-				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			} 
-			else 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = false;
-
-				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			}
-		}
-		case VEHICLE_USAGE_FACTION: {
-			if(VehicleInfo[vehicleid][vFaction] != 
-				( !PlayerFaction[playerid][pLeader] ? PlayerFaction[playerid][pMember] : PlayerFaction[playerid][pLeader])) 
-				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-			
-			if(!VehicleInfo[vehicleid][vLocked]) 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = true;
-
-				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			} 
-			else 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = false;
-
-				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			}
-		}
-		case VEHICLE_USAGE_RENT: 
-		{
-			if(Player_RentVehicle(playerid) != vehicleid) 
-				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-			
-			if(!VehicleInfo[vehicleid][vLocked]) 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = true;
-
-				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			} 
-			else 
-			{
-				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4);
-				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective);
-				VehicleInfo[vehicleid][vLocked] = false;
-
-				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true));
-				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			}
-		}
-	}
-	return 1;
-}
-CMD:createvehicle(playerid, params[])
-{
-    if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
-	new
-		model, color1, color2, respawndelay, usage, type, faction, job, Float:health,
-		vehCarId, registracija[32],sirenon,
-		Float:X, Float:Y, Float:Z, Float:Angle;
-
-	new engine,lights,alarm,doors,bonnet,boot,objective;
-	if(sscanf(params, "iiiiiiiifi", model, color1, color2, respawndelay, usage, type, faction, job, health, sirenon)) return SendClientMessage(playerid, COLOR_RED, "[?]: /createvehicle [model][color1][color2][respawndelay][usage][type][faction][job][health][siren]");
-	GetPlayerPos(playerid, X, Y, Z);
-	GetPlayerFacingAngle(playerid, Angle);
-
-	vehCarId = AC_CreateVehicle(model, X, Y, Z, floatround(Angle), color1, color2, respawndelay, sirenon);
-
-	VehicleInfo[vehCarId][vModel]		= model;
-	VehicleInfo[vehCarId][vParkX] 		= X;
-	VehicleInfo[vehCarId][vParkY] 		= Y;
-	VehicleInfo[vehCarId][vParkZ] 		= Z;
-	VehicleInfo[vehCarId][vAngle] 		= floatround(Angle);
-	VehicleInfo[vehCarId][vInt]			= GetPlayerInterior(playerid);
-	VehicleInfo[vehCarId][vViwo]		= GetPlayerVirtualWorld(playerid);
-	VehicleInfo[vehCarId][vFuel] 		= 100;
-	VehicleInfo[vehCarId][vHealth] 		= health;
-
-	SetVehicleVirtualWorld(vehCarId, GetPlayerVirtualWorld(playerid));
-	LinkVehicleToInterior(vehCarId, GetPlayerInterior(playerid));
-	SetVehicleHealth(vehCarId, health);
-	PutPlayerInVehicle(playerid, vehCarId, 0);
-
-	GetVehicleParamsEx(vehCarId,engine,lights,alarm,doors,bonnet,boot,objective);
-	SetVehicleParamsEx(vehCarId, IsABike(model) ? VEHICLE_PARAMS_ON : VEHICLE_PARAMS_OFF,lights,alarm,doors,bonnet,boot,objective);
-
-	VehicleInfo[vehCarId][vUsage] = usage;
-	VehicleInfo[vehCarId][vColor1] = color1;
-	VehicleInfo[vehCarId][vColor2] = color2;
-	VehicleInfo[vehCarId][vPaintJob] = 0;
-	VehicleInfo[vehCarId][vBodyArmor] = 0;
-	VehicleInfo[vehCarId][vTireArmor] = 0;
-
-	ChangeVehiclePaintjob(vehCarId, 3);
-	ChangeVehicleColor(vehCarId, color1, color2);
-
-	new rand = 100000 + random(8999999);
-	format(registracija, sizeof(registracija), "%d", rand);
-	format(VehicleInfo[vehCarId][vNumberPlate], 8, "%s",registracija);
-   	SetVehicleNumberPlate(vehCarId, registracija);
-
-	VehicleInfo[vehCarId][vModel] 			= model;
-	VehicleInfo[vehCarId][vType] 			= type;
-	VehicleInfo[vehCarId][vAngle] 			= floatround(Angle);
-	VehicleInfo[vehCarId][vRespawn] 		= respawndelay;
-	VehicleInfo[vehCarId][vSirenon] 		= sirenon;
-	VehicleInfo[vehCarId][vFaction] 		= faction;
-	VehicleInfo[vehCarId][vJob] 			= job;
-	VehicleInfo[vehCarId][vLocked] 			= 1;
-	VehicleInfo[vehCarId][vInt] 			= GetPlayerInterior(playerid);
-	VehicleInfo[vehCarId][vViwo] 			= GetPlayerVirtualWorld(playerid);
-	VehicleInfo[vehCarId][vImpounded] 		= 0;
-	VehicleInfo[vehCarId][vTravel] 			= 0;
-	VehicleInfo[vehCarId][vEngineRunning]   = 0;
-	VehicleInfo[vehCarId][vCanStart]        = 1;
-
-	CreateNewVehicle(playerid, vehCarId);
-	return 1;
-}
-
-CMD:cl(playerid, params[])
-{
-	new
-		engine, lights, alarm, doors, bonnet, boot, objective,
-		vehicle = GetPlayerVehicleID(playerid),
-		modelid = GetVehicleModel(vehicle);
-
-	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage(playerid, COLOR_RED, "Morate biti vozac da bi ste mogli koristit ovu komandu.");
-	if(IsABike(modelid) || IsAPlane(modelid) || IsABoat(modelid)) return SendClientMessage(playerid, COLOR_RED, "Nepoznata akcija.");
-
-	if(!VehicleInfo[vehicle][vLights]) {
-	    VehicleInfo[vehicle][vLights] = 1;
-		GetVehicleParamsEx(vehicle,engine,lights,alarm,doors,bonnet,boot,objective);
-		SetVehicleParamsEx(vehicle,engine,VEHICLE_PARAMS_ON,alarm,doors,bonnet,boot,objective);
-		if(IsTrailerAttachedToVehicle( vehicle)) {
-			GetVehicleParamsEx( GetVehicleTrailer( vehicle),engine,lights,alarm,doors,bonnet,boot,objective);
-			SetVehicleParamsEx( GetVehicleTrailer( vehicle),engine,VEHICLE_PARAMS_ON,alarm,doors,bonnet,boot,objective);
-		}
-	} else {
-		VehicleInfo[vehicle][vLights] = 0;
-		GetVehicleParamsEx(vehicle,engine,lights,alarm,doors,bonnet,boot,objective);
-		SetVehicleParamsEx(vehicle,engine,VEHICLE_PARAMS_OFF,alarm,doors,bonnet,boot,objective);
-		if(IsTrailerAttachedToVehicle( vehicle)) {
-			GetVehicleParamsEx( GetVehicleTrailer( vehicle),engine,lights,alarm,doors,bonnet,boot,objective);
-			SetVehicleParamsEx( GetVehicleTrailer( vehicle),engine,VEHICLE_PARAMS_OFF,alarm,doors,bonnet,boot,objective);
-		}
-	}
-	return 1;
-}
-
-CMD:bonnet(playerid, params[])
-{
-    new engine,lights,alarm,doors,bonnet,boot,objective,vehicle = GetPlayerVehicleID(playerid),modelid = GetVehicleModel(vehicle);
-	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage(playerid, COLOR_RED, "Morate biti vozac da bi ste mogli koristit ovu komandu.");
-	if(IsABike(modelid) || IsAPlane(modelid) || IsABoat(modelid)) return SendClientMessage(playerid, COLOR_RED, "Nepoznata akcija.");
-	if(VehicleInfo[vehicle][vBonnets] == 0) {
-	    VehicleInfo[vehicle][vBonnets] = 1;
-		GetVehicleParamsEx(vehicle,engine,lights,alarm,doors,bonnet,boot,objective);
-		SetVehicleParamsEx(vehicle,engine,lights,alarm,doors,VEHICLE_PARAMS_ON,boot,objective);
-	} else {
-		VehicleInfo[vehicle][vBonnets] = 0;
-		GetVehicleParamsEx(vehicle,engine,lights,alarm,doors,bonnet,boot,objective);
-		SetVehicleParamsEx(vehicle,engine,lights,alarm,doors,VEHICLE_PARAMS_OFF,boot,objective);
-	}
-	return 1;
-}
-
-CMD:fillcar(playerid, params[])
-{
-	if(!CarnisterLiters[playerid] || CarnisterType[playerid] == -1) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste usipali nista u svoj kanister!");
-	new
-		vehicleid = GetPlayerVehicleID(playerid);
-	if(( vehicleid == 0 || vehicleid == INVALID_VEHICLE_ID) || IsABike( GetVehicleModel( vehicleid))) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Nepravilno vozilo!");
-	if(VehicleInfo[vehicleid][vFuel] >= 75) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vase vozilo moze voziti!");
-	
-	if(CarnisterType[playerid] == ENGINE_TYPE_PETROL) 
-	{
-		if(VehicleInfo[vehicleid][vEngineType] == ENGINE_TYPE_DIESEL)
-			VehicleInfo[vehicleid][vEngineLife] -= 25.0;
-	}
-	else if(CarnisterType[playerid] == ENGINE_TYPE_DIESEL) 
-	{
-		if(VehicleInfo[vehicleid][vEngineType] == ENGINE_TYPE_PETROL)
-			VehicleInfo[vehicleid][vEngineLife] -= 25.0;
-	}
-	VehicleInfo[vehicleid][vFuel] += CarnisterLiters[playerid];
-	CarnisterLiters[playerid] 	= 0;
-	CarnisterType[playerid] 	= -1;
-	return 1;
-}
-
-CMD:get(playerid, params[])
-{
-	new
-		param[6];
-	if(sscanf( params, "s[6] ", param)) 
-	{
-		SendClientMessage(playerid, COLOR_RED, "[?]: /get [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[!] fuel");
-	}
-	if(!strcmp( param, "fuel", true))
-	{
-		new
-			type, fuel;
-			
-		if(sscanf( params, "s[6]ii", param, type, fuel)) 
-			return SendClientMessage(playerid, COLOR_RED, "[?]: /get fuel [0 - Gasoline, 1 - Diesel][kolicina]");
-		
-		new bizzid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
-		if(bizzid == INVALID_BIZNIS_ID) 
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
-
-		if((CarnisterLiters[playerid] + fuel) > 25) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
-		if(type > 1 || type < 0) 
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
-		if(1 <= fuel <= 25) 
-		{
-			new 
-				moneys = CalculateFuelPrice(playerid, type, fuel, BizzInfo[bizzid][bGasPrice]);
-			if(AC_GetPlayerMoney(playerid) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
-			new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
-			if(bizid == INVALID_BIZNIS_ID) 
-				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
-			
-			PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
-			
-			mysql_fquery(g_SQL, "UPDATE bizzes SET  till = '%d' WHERE id = '%d'", 
-				BizzInfo[bizid][bTill],
-				BizzInfo[bizid][bSQLID]
-			);
-
-			CarnisterLiters[playerid] 	+= fuel;
-			CarnisterType[playerid] 	= type;
-			va_SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste napunili kanister s %d litara. Mozete koristiti /fillcar unutar zeljena vozila!", fuel);
-		} 
-		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti izmedju 1 i 25 litara!");
 	}
 	return 1;
 }

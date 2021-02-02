@@ -1166,8 +1166,9 @@ enum
 
 	// House Exterior Furniture
 	DIALOG_EXTERIOR_MENU,
-	DIALOG_EXTERIOR_BUY_TYPE,
 	DIALOG_EXTERIOR_SURE,
+	DIALOG_HFUR_EXT_BUY_TYPE,
+	DIALOG_HFUR_EXT_DELETE,
 
 	// Grafiti
 	DIALOG_GRAF_COLOR,
@@ -1518,41 +1519,53 @@ enum
 	DIALOG_UPDATE_LIST
 };
 
+/*
+
+88b           d88                      88            88     ad88888ba             88      
+888b         d888                      88            88    d8"     "8b            88      
+88`8b       d8'88                      88            88    Y8,                    88      
+88 `8b     d8' 88  ,adPPYba,   ,adPPYb,88  ,adPPYba, 88    `Y8aaaaa,    ,adPPYba, 88      
+88  `8b   d8'  88 a8"     "8a a8"    `Y88 a8P_____88 88      `"""""8b, a8P_____88 88      
+88   `8b d8'   88 8b       d8 8b       88 8PP""""""" 88            `8b 8PP""""""" 88      
+88    `888'    88 "8a,   ,a8" "8a,   ,d88 "8b,   ,aa 88    Y8a     a8P "8b,   ,aa 88 888  
+88     `8'     88  `"YbbdP"'   `"8bbdP"Y8  `"Ybbd8"' 88     "Y88888P"   `"Ybbd8"' 88 888  
+
+*/
 enum
 {
 	// Faction Skins
-	MODEL_SELECTION_FDSKIN 		= 5001,
-	MODEL_SELECTION_GOVSKIN, 
-	MODEL_SELECTION_LAWSKIN,
-	MODEL_SELECTION_SDSKIN,
+	ms_FDSKIN 		= 5001,
+	ms_GOVSKIN, 
+	ms_LAWSKIN,
+	ms_SDSKIN,
 	
 	// CreateObjects
-	DIALOG_EDIT_COBJECT,
-	DIALOG_CREATE_COBJECT,
-	DIALOG_ADMIN_DEL_COBJECT,
-	DIALOG_DELETE_COBJECT,
+	ms_EDIT_COBJECT,
+	ms_CREATE_COBJECT,
+	ms_ADMIN_DEL_COBJECT,
+	ms_DEL_COBJECT,
 
 	// Rentveh
-	MODEL_SELECTION_RENTCARS,
+	ms_RENTCARS,
 
 	// Objects
-	DIALOG_CLOTHING_BUY,
+	ms_CLOTHES,
 
 	// Bizz
-	MODEL_LIST_SKINS,
+	ms_SKINS,
 
 	// BizzFurniture
-	DIALOG_BIZZ_FURN_OBJS_BUY,
-	DIALOG_BIZZ_FURN_EDIT,
-
-	// Exterior Furniture
-	DIALOG_EXTERIOR_BUY,
-	DIALOG_EXTERIOR_EDIT,
-	DIALOG_EXTERIOR_DELETE,
+	ms_BIZFUR_BUY,
+	ms_BIZFUR_EDIT,
 
 	// House Furniture
-	DIALOG_FURNITURE_OBJS_BUY,
-	DIALOG_FURNITURE_EDIT
+	ms_HFUR_BUY,
+	ms_HFUR_EDIT,
+
+	// House Exterior Furniture
+	ms_HFUR_EXT_BUY,
+	ms_HFUR_EXT_EDIT,
+	ms_HFUR_EXT_DELETE,
 };
 
 /*

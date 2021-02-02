@@ -1165,7 +1165,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 
 hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-    if(fselectid == MODEL_LIST_SKINS)
+    if(fselectid == ms_SKINS)
     {
         if(!response)
             return SetPlayerPosFinish(playerid);
