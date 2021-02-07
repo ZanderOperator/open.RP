@@ -50,7 +50,8 @@
 #define SERVER_UNLOCK_TIME						(60)
 
 // Fixes.inc
-#define FIXES_ServerVarMsg 0
+#define FIXES_GetMaxPlayersMsg 		0
+#define FIXES_ServerVarMsg 			0
 #define FIX_OnPlayerEnterVehicle 	0
 #define FIX_OnPlayerEnterVehicle_2 	0
 #define FIX_OnPlayerEnterVehicle_3 	0
@@ -213,7 +214,6 @@ new
 //Players Vars
 //(rBits)
 new
-	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggedIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggingIn 		<MAX_PLAYERS>  = Bit1: false,
@@ -729,44 +729,6 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	return COMMAND_OK;
 }
 
-// TODO: should be a part of 0.3DL Download module
-public OnPlayerRequestDownload(playerid, type, crc)
-{
-	if(!IsPlayerConnected(playerid))
-		return 0;
-
-	if(!Bit1_Get(gr_PlayerDownloading, playerid))
-	{
-		Bit1_Set(gr_PlayerLoggedIn, playerid, false);
-		Bit1_Set(gr_PlayerDownloading, playerid, true);
-	}
-
-	new fullurl[256+1];
-	new dlfilename[64+1];
-	new foundfilename=0;
-	new SERVER_DOWNLOAD[] = "http://51.77.200.63/samp_models/"; // Models Redirect Download Link for faster download speed
-
-	if(type == DOWNLOAD_REQUEST_TEXTURE_FILE) {
-		foundfilename = FindTextureFileNameFromCRC(crc,dlfilename,64);
-	}
-	else if(type == DOWNLOAD_REQUEST_MODEL_FILE) {
-		foundfilename = FindModelFileNameFromCRC(crc,dlfilename,64);
-	}
-
-	if(foundfilename) {
-		format(fullurl,256,"%s/%s", SERVER_DOWNLOAD, dlfilename);
-		RedirectDownload(playerid,fullurl);
-	}
-	return 1;
-}
-
-public OnPlayerFinishedDownloading(playerid, virtualworld)
-{
-	Bit1_Set(gr_PlayerDownloading, playerid, false);
-	return 1;
-}
-
-
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
     if(weaponid == WEAPON_FIREEXTINGUISHER)
@@ -811,7 +773,8 @@ hook OnPlayerText(playerid, text[])
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk, you are dead!");
 		return 0;
 	}
-	if(PlayerInfo[playerid][pMuted]) {
+	if(PlayerInfo[playerid][pMuted]) 
+	{
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while being muted!");
 		return 0;
 	}
@@ -867,7 +830,6 @@ hook OnPlayerText(playerid, text[])
 hook function ResetPlayerVariables(playerid)
 {	
 	//rBits
-	Bit1_Set( gr_PlayerDownloading		, playerid, false);
 	Bit1_Set( gr_PlayerLoggingIn 		, playerid, false);
 	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false);
 	Bit1_Set( gr_NewUser				, playerid, false);

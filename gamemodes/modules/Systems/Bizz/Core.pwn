@@ -859,7 +859,6 @@ GetBizzFromSQL(sqlid)
 {
     new 
         bizzid = INVALID_BIZNIS_ID;
-
     foreach(new bizz : Business) 
 	{
 		if(BizzInfo[bizz][bOwnerID] == sqlid) 
@@ -1192,7 +1191,6 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 hook OnGameModeInit()
 {
     ResetBizzEnumerator();
-    LoadServerSkins("skins.txt");
     VeronaSkinRectangle = CreateDynamicRectangle(1092.39172, -1431.54944, 1101.95300, -1449.16431);
     return 1;
 }

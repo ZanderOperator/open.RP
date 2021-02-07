@@ -28,7 +28,7 @@
 LoadPlayerPayday(playerid)
 {
     mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(g_SQL, "SELECT * FROM player_payday WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "LoadingPlayerPayday", 
         "i", 
         playerid
@@ -41,7 +41,7 @@ Public: LoadingPlayerPayday(playerid)
     if(!cache_num_rows())
     {
         mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dialog, date) \n\
+            "INSERT INTO player_payday(sqlid, payday, paydaymoney, paydayhad, profit, dialog, date) \n\
                 VALUES('%d', '0', '0', '0', '0', ' ', ' ')",
             PlayerInfo[playerid][pSQLID]
        );

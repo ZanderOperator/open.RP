@@ -177,7 +177,6 @@ hook function LoadServerData()
 {
     LoadAmmunation();
 	return continue();
-
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

@@ -2619,7 +2619,6 @@ hook function LoadServerData()
 {
 	InitPokerTables();
 	return continue();
-
 }
 
 hook function ResetPlayerVariables(playerid)

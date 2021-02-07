@@ -42,7 +42,7 @@ hook function LoadPlayerStats(playerid)
 SavePlayerInventory(playerid)
 {
     mysql_fquery_ex(g_SQL,
-        "UPDATE player_inventory SET mask = '%d', toolkit = '%d', watch = '%d', ciggaretes = '%d, lighter = '%d', \n\
+        "UPDATE player_inventory SET mask = '%d', toolkit = '%d', watch = '%d', ciggaretes = '%d', lighter = '%d', \n\
             parts = '%d', rope = '%d', boombox = '%d' WHERE sqlid = '%d'",
         PlayerInventory[playerid][pMaskID],
         PlayerInventory[playerid][pToolkit],

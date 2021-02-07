@@ -970,11 +970,10 @@ ShowPlayerStats(playerid, targetid)
 	);
     strcat(pDialog,motd, sizeof(pDialog));
 
-    format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | VIP Vozilo: [%d] | Donator Veh Perms: [%d] | Mobile Bill: [%d$]\n",
+    format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | Donator Veh Perms: [%d] | Mobile Bill: [%d$]\n",
 		PlayerGym[targetid][pMuscle],
 		PlayerInfo[targetid][pWarns],
 		( 60 - PaydayInfo[targetid][pPayDay]),
-		PlayerVIP[targetid][pDonatorVehicle],
 		PlayerVIP[targetid][pDonatorVehPerms],
 		PlayerMobile[targetid][pMobileCost]
 	);

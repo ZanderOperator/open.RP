@@ -262,7 +262,6 @@ hook function LoadServerData()
 {
 	LoadPickups();
 	return continue();
-
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)

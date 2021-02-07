@@ -38,7 +38,7 @@ hook function LoadPlayerStats(playerid)
 SavePlayerJailStats(playerid)
 {
     mysql_fquery_ex(g_SQL,
-        "UPDATE player_jail SET jailed = '%d', jailtime = '%d', arrested = '%d', bailprice = '%d WHERE sqlid = '%d'",
+        "UPDATE player_jail SET jailed = '%d', jailtime = '%d', arrested = '%d', bailprice = '%d' WHERE sqlid = '%d'",
         PlayerJail[playerid][pJailed],
         PlayerJail[playerid][pJailTime],
         PlayerJail[playerid][pArrested],

@@ -664,7 +664,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                     va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
                         ExteriorPlants[index][epName],
                         ExteriorPlants[index][epPrice]
-                   );
+                    );
                     ExteriorObjectsId[playerid] = index;
                 }
                 case 1:
@@ -672,7 +672,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                     va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
                         ExteriorFurniture[index][efName],
                         ExteriorFurniture[index][efPrice]
-                   );
+                    );
                     ExteriorObjectsId[playerid] = index;
                 }
                 case 2:
@@ -680,7 +680,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                     va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
                         ExteriorMisc[index][emName],
                         ExteriorMisc[index][emPrice]
-                   );
+                    );
                     ExteriorObjectsId[playerid] = index;
                 }
             }
@@ -886,8 +886,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:exterior(playerid, params[])
 {
-    new houseid = PlayerKeys[playerid][pHouseKey];
-    if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
+    new 
+        houseid = PlayerKeys[playerid][pHouseKey];
+    if(houseid == INVALID_HOUSE_ID) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 
     if(!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
     {

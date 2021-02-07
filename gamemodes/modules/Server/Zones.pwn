@@ -45,7 +45,7 @@ stock DestroyZonesTD(playerid)
 	return 1;
 }
 
-hook OnPlayerConnect(playerid)
+hook OnPlayerSpawn(playerid)
 {
 	CreateZonesTD(playerid);
 	return 1;

@@ -152,3 +152,107 @@ Query: INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offse
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
 #1 0079e008 in public OnQueryError (errorid=1062, error[]=@05fd29b8 "Duplicate entry '21443' for key 'weaponsql'", callback[]=@05fd29b4 "", query[]=@05fd2670 "INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety, off...", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+
+[07/02/2021, 22:29:28] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM accounts WHERE name = 'Jason_Logan'' at line 1: Callback Indirect_FromCallback
+Query: SELECT sql FROM accounts WHERE name = 'Jason_Logan'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 000935a8 in public OnQueryError (errorid=1064, error[]=@0a0b6df4 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6d9c "Indirect_FromCallback", query[]=@0a0b6ccc "SELECT sql FROM accounts WHERE name = 'Jason_Logan'", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 23:26:23] - MySQL Error ID: 1146
+Error Table 'open_rp.player_job' doesn't exist: Callback LoadingPlayerPayday
+Query: SELECT * FROM player_job WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1146, error[]=@0a0b653c "Table 'open_rp.player_job' doesn't exist", callback[]=@0a0b64ec "LoadingPlayerPayday", query[]=@0a0b6440 "SELECT * FROM player_job WHERE sqlid = '1'", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 23:26:23] - MySQL Error ID: 1146
+Error Table 'open_rp.player_job' doesn't exist: Callback LoadingPlayerJob
+Query: SELECT * FROM player_job WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1146, error[]=@0a0b6530 "Table 'open_rp.player_job' doesn't exist", callback[]=@0a0b64ec "LoadingPlayerJob", query[]=@0a0b6440 "SELECT * FROM player_job WHERE sqlid = '1'", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 23:26:23] - MySQL Error ID: 1054
+Error Unknown column 'drugsecond' in 'field list': Callback 
+Query: INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder) 
+VALUES ('1', '0', '0', '0')
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b65d0 "Unknown column 'drugsecond' in 'field list'", callback[]=@0a0b65cc "", query[]=@0a0b6440 "INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder) ", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 23:45:31] - MySQL Error ID: 1054
+Error Unknown column 'payday' in 'field list': Callback 
+Query: INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dialog, date) 
+VALUES('1', '0', '0', '0', '0', ' ', ' ')
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6644 "Unknown column 'payday' in 'field list'", callback[]=@0a0b6640 "", query[]=@0a0b6444 "INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dialog, da...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '', playaWarns = '0', levels = '6', connecttime = '1', 
+muted = '0', respects ...' at line 2: Callback 
+Query: UPDATE accounts SET lastlogin = '07/02/2021, 00:10:36', lastloginstamp = '1612739436', lastip = '127.0.0.1', forumname = '', 
+lastupdatever = 'open.RP v0.5.0.-96cc762', registered = 1', playaWarns = '0', levels = '6', connecttime = '1', 
+muted = '0', respects = '1', changenames = '0', changetimes = '0',
+mustread = '0' WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b69a8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b69a4 "", query[]=@0a0b645c "UPDATE accounts SET lastlogin = '07/02/2021, 00:10:36', lastloginstamp = '161273...", MySQL:handle=1) at modules/Server/MySQL.
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1054
+Error Unknown column 'casinocooldown' in 'field list': Callback 
+Query: UPDATE player_inventory SET casinocooldown = '0', jackercooldown = '0', ammucooldown = '0' 
+WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6618 "Unknown column 'casinocooldown' in 'field list'", callback[]=@0a0b6614 "", query[]=@0a0b645c "UPDATE player_inventory SET casinocooldown = '0', jackercooldown = '0', ammucool...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1'' at line 1: Callback 
+Query: UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice = '0 WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b65f8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b65f4 "", query[]=@0a0b645c "UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice =...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1'' at line 1: Callback 
+Query: UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice = '0 WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b65f8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b65f4 "", query[]=@0a0b645c "UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice =...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1'' at line 1: Callback 
+Query: UPDATE player_vip_status SET vipRank = '0', vipTime = '0', donateveh = '0', dvehperms = '0 WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b6614 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6610 "", query[]=@0a0b645c "UPDATE player_vip_status SET vipRank = '0', vipTime = '0', donateveh = '0', dveh...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '0', 
+parts = '0', rope = '0', boombox = '0' WHERE sqlid = '1'' at line 1: Callback 
+Query: UPDATE player_inventory SET mask = '0', toolkit = '0', watch = '0', ciggaretes = '0, lighter = '0', 
+parts = '0', rope = '0', boombox = '0' WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b66d8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b66d4 "", query[]=@0a0b645c "UPDATE player_inventory SET mask = '0', toolkit = '0', watch = '0', ciggaretes =...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[07/02/2021, 00:10:36] - MySQL Error ID: 1054
+Error Unknown column 'facLeadId' in 'field list': Callback 
+Query: UPDATE player_savings SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b65cc "Unknown column 'facLeadId' in 'field list'", callback[]=@0a0b65c8 "", query[]=@0a0b645c "UPDATE player_savings SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE s...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+
+[08/02/2021, 01:14:05] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '', playaWarns = '0', levels = '6', connecttime = '1', 
+muted = '0', respects ...' at line 2: Callback 
+Query: UPDATE accounts SET lastlogin = '08/02/2021, 01:14:05', lastloginstamp = '1612743245', lastip = '127.0.0.1', forumname = '', 
+lastupdatever = 'open.RP v0.5.0.-96cc762', registered = 1', playaWarns = '0', levels = '6', connecttime = '1', 
+muted = '0', respects = '1', changenames = '0', changetimes = '0',
+mustread = '0' WHERE sqlid = '1'
+AMX backtrace:
+#0 native GetBacktrace () in crashdetect.DLL
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b6638 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6634 "", query[]=@0a0b60ec "UPDATE accounts SET lastlogin = '08/02/2021, 01:14:05', lastloginstamp = '161274...", MySQL:handle=1) at modules/Server/MySQL.

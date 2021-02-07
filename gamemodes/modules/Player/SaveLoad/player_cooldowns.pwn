@@ -38,7 +38,7 @@ hook function LoadPlayerStats(playerid)
 SavePlayerCoolDowns(playerid)
 {
     mysql_fquery_ex(g_SQL,
-        "UPDATE player_inventory SET casinocooldown = '%d', jackercooldown = '%d', ammucooldown = '%d' \n\
+        "UPDATE player_cooldowns SET casinocooldown = '%d', jackercooldown = '%d', ammucooldown = '%d' \n\
             WHERE sqlid = '%d'",
         PlayerCoolDown[playerid][pCasinoCool],
         PlayerCoolDown[playerid][pJackerCool],

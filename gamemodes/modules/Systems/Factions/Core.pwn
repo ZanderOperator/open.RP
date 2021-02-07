@@ -165,7 +165,7 @@ hook function LoadPlayerStats(playerid)
 SavePlayerFaction(playerid)
 {
     mysql_fquery_ex(g_SQL,
-        "UPDATE player_savings SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
+        "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
         PlayerFaction[playerid][pLeader],
         PlayerFaction[playerid][pMember],
         PlayerFaction[playerid][pRank],
@@ -1033,7 +1033,6 @@ hook function LoadServerData()
 {
     LoadFactions();
 	return continue();
-
 }
 
 hook OnGameModeInit()

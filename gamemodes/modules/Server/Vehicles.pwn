@@ -7,9 +7,10 @@ GetVehicleDriver(vehicleid)
 {
 	new
 		playerid = INVALID_PLAYER_ID;
-
-	foreach(new i : Player) {
-		if(IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
+	foreach(new i : Player)
+	{
+		if(IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER) 
+		{
 			playerid = i;
 			break;
 		}
@@ -55,9 +56,11 @@ RemovePlayersFromVehicle(vehicleid)
 
 bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 {
-	new Float:vX, Float:vY, Float: vZ;
+	new 
+		Float:vX, Float:vY, Float: vZ;
 	GetVehiclePos(vehicleid, vX, vY, vZ);
-	if(IsPlayerInRangeOfPoint(playerid, range, vX, vY, vZ)) return true;
+	if(IsPlayerInRangeOfPoint(playerid, range, vX, vY, vZ)) 
+		return true;
 	return false;
 }
 
@@ -143,7 +146,8 @@ GetVehicleCapacityByModel(modelid)
 
 WeaponModels(weaponid) 
 {
-    new const g_aWeaponModels[] = {
+    new const g_aWeaponModels[] = 
+	{
 		0, 331, 333, 334, 335, 336, 337, 338, 339, 341, 321, 322, 323, 324,
 		325, 326, 342, 343, 344, 0, 0, 0, 346, 347, 348, 349, 350, 351, 352,
 		353, 355, 356, 372, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366,
@@ -157,8 +161,13 @@ WeaponModels(weaponid)
 
 IsVehicleWithoutTrunk(modelid)
 {
-	switch(modelid) {
-	    case 403,406,407,408,416,417,423,424,425,430,432,434,435,441,443,444,446,447,449,450,452,453,454,457,460,464,465,469,472,473,476,481,485,486,493,494,495,501,502,503,504,505,509,510,512,513,514,515,520,524,525,528,530,531,532,537,538,539,544,552,556,557,564,568,569,570,571,572,573,574,578,583,584, 590,591,592,593,594,595,601,606,607,608,610,611:
+	switch(modelid) 
+	{
+	    case 403,406,407,408,416,417,423,424,425,430,432,434,435,441,443,444,
+			446,447,449,450,452,453,454,457,460,464,465,469,472,473,476,481,485,486,493,494,495,501,
+			502,503,504,505,509,510,512,513,514,515,520,524,525,528,530,531,532,537,538,539,544,552,
+			556,557,564,568,569,570,571,572,573,574,578,583,584, 590,591,592,593,594,
+			595,601,606,607,608,610,611:
 	        return true;
 	}
 	return false;
@@ -180,7 +189,6 @@ GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
         x = 0.0;
         y = 0.0;
         z = 0.0;
- 
         return 0;
     }
     else
@@ -437,6 +445,5 @@ SetVehiclePosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:up
 	if(update)
 		defer InstantStreamerUpdate(playerid);
 	else InstantStreamerUpdate(playerid);
-	
 	return 1;
 }

@@ -1,3 +1,7 @@
+// Disable const correctness warnings on the community compiler
+#pragma warning disable 239
+#pragma warning disable 214
+
 #include <a_samp>
 //#include <zcmd>
 #include <streamer>
@@ -141,7 +145,6 @@ stock CreateMapIcons()
 
 public OnFilterScriptInit()
 {
-
 	//
 	tmpobjid = CreateObject(11387, 1613.032592, -1817.345947, 15.791243, -0.000012, 0.000003, -94.999984, 300.00);
 	tmpobjid = CreateObject(11390, 1629.835083, -1809.347290, 16.802244, -0.000012, 0.000003, -94.999984, 300.00);
@@ -334,7 +337,8 @@ public OnFilterScriptInit()
 	return 1;
 }
 
-public OnPlayerConnect(playerid) {
+public OnPlayerConnect(playerid)
+{
 	RemovePlayerBuildings(playerid);
 	return 1;
 }
@@ -349,7 +353,7 @@ stock RemovePlayerBuildings(playerid)
     RemoveBuildingForPlayer(playerid, 13484, 738.3984, -553.9844, 21.9609, 0.25);
 	RemoveBuildingForPlayer(playerid, 13137, 646.1641, -527.8984, 28.0703, 0.25);*/
 
-	//PD Station
+	// PD Station
 	RemoveBuildingForPlayer(playerid, 3622, 2135.739, -2186.449, 15.671, 0.250);
 	RemoveBuildingForPlayer(playerid, 3687, 2135.739, -2186.449, 15.671, 0.250);
 	RemoveBuildingForPlayer(playerid, 3622, 2150.199, -2172.360, 15.671, 0.250);

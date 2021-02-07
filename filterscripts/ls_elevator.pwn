@@ -1,3 +1,7 @@
+// Disable const correctness warnings on the community compiler
+#pragma warning disable 239
+#pragma warning disable 214
+
 /*
 *   Example elevator system for the new LS building.
 *

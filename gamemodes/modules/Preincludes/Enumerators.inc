@@ -198,7 +198,6 @@ enum E_VIP_INFO
 {
 	pDonateRank,
 	pDonateTime,
-	pDonatorVehicle,
 	pDonatorVehPerms,
 }
 new 	

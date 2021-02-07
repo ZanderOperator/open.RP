@@ -84,6 +84,12 @@ LoadServerSkins(f_name[])
     return 1;
 }
 
+hook OnGameModeInit()
+{
+	LoadServerSkins("skins.txt");
+	return 1;
+}
+
 hook function ResetPlayerVariables(playerid)
 {
     ResetModelShuntVar(playerid);

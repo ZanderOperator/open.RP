@@ -2652,7 +2652,6 @@ hook function LoadServerData()
 {
 	LoadTowerData();
 	return continue();
-
 }
 
 hook OnGameModeInit()

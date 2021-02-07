@@ -62,7 +62,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         if(IsPlayerInRangeOfPoint(playerid, 5.0, 1277.762573, -1269.913208, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[0] == 0)
             {
@@ -76,7 +76,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1269.862304, -1269.913208, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[1] == 0)
             {
@@ -90,7 +90,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1261.960449, -1269.913208, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[2] == 0) {
                 MoveDynamicObject(fd_gate[2], 1261.960449, -1269.913208, 10.030691, 1.4, 0.000007, 0.000000, 89.999977);
@@ -103,7 +103,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1254.079467, -1269.913208, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[3] == 0)
             {
@@ -117,7 +117,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1246.167724, -1269.913208, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[4] == 0)
             {
@@ -131,7 +131,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1277.482299, -1252.062744, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[5] == 0)
             {
@@ -145,7 +145,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1269.582031, -1252.062744, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[6] == 0)
             {
@@ -159,7 +159,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1261.680175, -1252.062744, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[7] == 0)
             {
@@ -173,7 +173,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1253.799194, -1252.062744, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[8] == 0)
             {
@@ -187,7 +187,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 5.0, 1253.799194, -1252.062744, 14.500725))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[8] == 0)
             {
@@ -201,7 +201,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         else if(IsPlayerInRangeOfPoint(playerid, 8.0, 1327.863159, -1235.412109, 13.384195))
         {
             if(GetPlayerFactionType(playerid) != FACTION_TYPE_FD) 
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not member of LSFD!");
+                return SendClientMessage(playerid, -1, "You are not LSFD!");
 
             if(fd_gstatus[9] == 0)
             {

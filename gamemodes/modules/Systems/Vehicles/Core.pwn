@@ -473,11 +473,7 @@ GetPlayerPrivateVehicle(playerid)
 			break;
 		}
 	}
-	if(found == -1)
-		PlayerKeys[playerid][pVehicleKey] = -1;
-	else
-		PlayerKeys[playerid][pVehicleKey] = found;
-	return 1;
+	return found;
 }
 
 RefillVehicles()

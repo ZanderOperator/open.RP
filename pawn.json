@@ -33,7 +33,8 @@
 		"hostname": "SA-MP Server",
 		"maxplayers": 50,
 		"language": "",
-		"stream_distance": 300
+		"stream_distance": 300,
+		"extra":{"useartwork": "1"}
 	},
 	"runtimes": [
 		{
@@ -41,9 +42,7 @@
 			"filterscripts": [
 				"ls_elevator",
 				"ls_beachside",
-				"ServerMaps",
-				"Train"
-			],
+				"ServerMaps"			],
 			"plugins": [
 				"crashdetect",
 				"mysql",
@@ -60,7 +59,7 @@
 			"maxplayers": 10,
 			"language": "English",
 			"mapname": "Los Santos",
-			"weburl": "https://open.mp/",
+			"weburl": "open.mp",
 			"announce": false,
 			"lanmode": true,
 			"query": false,

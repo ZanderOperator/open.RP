@@ -150,7 +150,6 @@ hook function LoadServerData()
 {
 	LoadServerJobs();
 	return continue();
-
 }
 
 /*

@@ -277,7 +277,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 		MySQL_PQueryInline(g_SQL,  
 			using inline CheckPlayerInBase,
-			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e'", tmpname), 
+			va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", tmpname), 
 			"i",
 			playerid
 		);
@@ -398,45 +398,13 @@ public LoadPlayerData(playerid)
 
 		LoadPlayerStats(playerid);
 		
-		PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
-		PlayerKeys[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
-		PlayerKeys[playerid][pGarageKey] = -1;
-		PlayerKeys[playerid][pIllegalGarageKey]	= -1;
-		PlayerKeys[playerid][pComplexKey] = INVALID_COMPLEX_ID;
-		PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
-		PlayerKeys[playerid][pVehicleKey] = -1;
-		
-		new 
-			house = GetHouseFromSQL(PlayerInfo[playerid][pSQLID]);
-		if(house != INVALID_HOUSE_ID)
-			PlayerKeys[playerid][pHouseKey] = house;
-		
-		new 
-			bizz = GetBizzFromSQL(PlayerInfo[playerid][pSQLID]);
-		if(bizz != INVALID_BIZNIS_ID)
-			PlayerKeys[playerid][pBizzKey] = bizz;
-		
-		new 
-			garage = GetGarageFromSQL(PlayerInfo[playerid][pSQLID]);
-		if(garage != -1)
-			PlayerKeys[playerid][pGarageKey] = garage;
-
-		new 
-			igarage = GetIllegalGarageFromSQL(PlayerInfo[playerid][pSQLID]);
-		if(igarage != -1)
-			PlayerKeys[playerid][pIllegalGarageKey] = igarage;
-
-		new 
-			complex_id = GetComplexRoomFromSQL(PlayerInfo[playerid][pSQLID]);
-		if(complex_id != INVALID_COMPLEX_ID)
-			PlayerKeys[playerid][pComplexKey] = complex_id;
-	
-		new 
-			complex_room = GetComplexRoomFromSQL(PlayerInfo[playerid][pSQLID]);
-		if(complex_room != INVALID_COMPLEX_ID)
-			PlayerKeys[playerid][pComplexRoomKey] = complex_room;
-		
-		GetPlayerPrivateVehicle(playerid);
+		PlayerKeys[playerid][pHouseKey] = GetHouseFromSQL(PlayerInfo[playerid][pSQLID]);
+		PlayerKeys[playerid][pBizzKey] = GetBizzFromSQL(PlayerInfo[playerid][pSQLID]);
+		PlayerKeys[playerid][pGarageKey] = GetGarageFromSQL(PlayerInfo[playerid][pSQLID]);
+		PlayerKeys[playerid][pIllegalGarageKey] = GetIllegalGarageFromSQL(PlayerInfo[playerid][pSQLID]);
+		PlayerKeys[playerid][pComplexKey] = GetComplexFromSQL(PlayerInfo[playerid][pSQLID]);
+		PlayerKeys[playerid][pComplexRoomKey] = GetComplexRoomFromSQL(PlayerInfo[playerid][pSQLID]);
+		PlayerKeys[playerid][pVehicleKey] = GetPlayerPrivateVehicle(playerid);
 		
 		Bit1_Set( gr_PlayerLoggingIn, playerid, true);
   		SetPlayerSpawnInfo(playerid);
@@ -535,6 +503,9 @@ public OnAccountFinish(playerid)
 	
 	PlayerNewUser_Set(playerid,true);
 	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
+	
+	DestroyLoginTextdraws(playerid);
+	CreateWebTD(playerid);
 	
 	SpawnPlayer(playerid);
     return 1;
@@ -669,8 +640,8 @@ SavePlayerData(playerid)
 
 	mysql_fquery_ex(g_SQL, 
 		"UPDATE accounts SET lastlogin = '%e', lastloginstamp = '%d', lastip = '%e', forumname = '%e', \n\
-			lastupdatever = '%e', registered = %d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
-			muted = '%d', respects = '%d', changenames = '%d', changetimes = '%d',\n\
+			lastupdatever = '%e', registered = '%d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
+			muted = '%d', respects = '%d', changenames = '%d', changetimes = '%d', \n\
 			mustread = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pLastLogin],
 		PlayerInfo[playerid][pLastLoginTimestamp],
@@ -803,7 +774,7 @@ SetPlayerSpawnInfo(playerid)
 	}
 	else
 	{
-		switch( PlayerInfo[playerid][pSpawnChange]) 
+		switch(PlayerInfo[playerid][pSpawnChange]) 
 		{
 			case 0: 
 			{
@@ -812,11 +783,11 @@ SetPlayerSpawnInfo(playerid)
 			}
 			case 1:
 			{
-				if(( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID ) ||  
-					( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID))
+				if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID 
+					|| PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID)
 				{
 					new house;
-					if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID )
+					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
 					{
 						house = PlayerKeys[playerid][pHouseKey];
 						if(!HouseInfo[house][hFurLoaded])

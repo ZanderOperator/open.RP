@@ -508,16 +508,6 @@ BuyVehicle(playerid, bool:credit_activated = false)
 
 	Bit8_Set(gr_UsingDealer, PlayerDealer[playerid], 0);
 
-	if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerVIP[playerid][pDonateRank] != 0)
-	{
-		PlayerVIP[playerid][pDonatorVehicle] = modelid;
-		
-		mysql_fquery(g_SQL, "UPDATE player_vip_status SET donateveh = '%d' WHERE sqlid = '%d'", 
-			PlayerVIP[playerid][pDonatorVehicle],
-			PlayerInfo[playerid][pSQLID]
-		);	
-	}
-
     if(LandVehicles[PreviewType[playerid]][viPremium])
 	{
         PlayerVIP[playerid][pDonatorVehPerms] -= 1;

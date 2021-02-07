@@ -1,3 +1,7 @@
+// Disable const correctness warnings on the community compiler
+#pragma warning disable 239
+#pragma warning disable 214
+
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // Example Filterscript for the new LS BeachSide Building with Elevator

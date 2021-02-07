@@ -166,7 +166,7 @@ LoadPlayerDrugStats(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(g_SQL, 
-				"INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder) \n\
+				"INSERT INTO player_drug_stats(sqlid, drugused, drugseconds, drugorder) \n\
 					VALUES ('%d', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
 			);

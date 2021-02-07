@@ -542,6 +542,7 @@ CMD:me(playerid, params[])
 	ProxDetector(22.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
    	return 1;
 }
+
 CMD:lowme(playerid, params[])
 {
 	if(PlayerInfo[playerid][pMuted])
