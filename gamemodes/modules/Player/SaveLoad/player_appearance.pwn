@@ -19,7 +19,7 @@ Public: LoadingPlayerAppearance(playerid)
             "INSERT INTO player_appearance(sqlid, skin, walkstyle, accent, look) \n\
                 VALUES('%d', '21', '0', '', '')",
             PlayerInfo[playerid][pSQLID]
-       );
+        );
         return 1;
     }
     cache_get_value_name_int(0, "skin"		    , PlayerAppearance[playerid][pSkin]);
@@ -38,7 +38,7 @@ hook function LoadPlayerStats(playerid)
 SavePlayerAppearance(playerid)
 {
     mysql_fquery_ex(g_SQL,
-        "UPDATE player_appearance SET skin = '%d', walkstyle = '%d', accent = '%d, \n\
+        "UPDATE player_appearance SET skin = '%d', walkstyle = '%d', \n\
             accent = '%e', look = '%e' WHERE sqlid = '%d'",
         PlayerAppearance[playerid][pSkin],
         PlayerAppearance[playerid][pWalkStyle],

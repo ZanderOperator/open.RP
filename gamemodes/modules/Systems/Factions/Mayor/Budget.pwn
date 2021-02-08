@@ -69,7 +69,7 @@ public OnCityLoaded()
     cache_get_value_name_int(0, "illegalbudget", CityInfo[cIllegalBudget]);
     cache_get_value_name_int(0, "tax"   , CityInfo[cTax]);
 
-    print("MySQL Report: City info loaded!");
+    print("MySQL Report: City Info Loaded!");
     return 1;
 }
 

@@ -57,7 +57,7 @@ enum E_PLAYER_DATA
 	pWarns,
 	pLevel,
 	pLastLogin[24],
-	pLastUpdateVer[24],
+	pLastUpdateVer[32],
 	pLastLoginTimestamp,
 	pTempRank[2],
 	pAdmin,

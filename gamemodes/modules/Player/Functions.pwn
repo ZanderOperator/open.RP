@@ -298,7 +298,7 @@ ConvertSQLIDToName(id)
 		
 	new 
 		Cache:result = 	mysql_query(g_SQL, 
-							va_fquery(g_SQL, "SELECT name FROM acounts WHERE sqlid = '%d'", id)
+							va_fquery(g_SQL, "SELECT name FROM accounts WHERE sqlid = '%d'", id)
 						);
 	
 	if(cache_num_rows() == 0)

@@ -210,28 +210,23 @@ public OnPlayerRequestClass(playerid, classid)
 			{
 				TogglePlayerControllable(playerid, false);
 				SetCameraBehindPlayer(playerid);
-				RandomPlayerCameraView(playerid);
-
-				format(dialogtext, 
-					sizeof(dialogtext), 
+				RandomPlayerCameraView(playerid);					
+				
+				va_ShowPlayerDialog(playerid, 
+					DIALOG_LOGIN, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Login", 
 					""COL_WHITE"Greetings "COL_LIGHTBLUE"%s!\n\n\
 						"COL_WHITE"It's nice to see you again on our server.\n\
 						Please enter your account's password and log in.\n\
 						You have "COL_LIGHTBLUE"%d"COL_WHITE" seconds to\n\
 						sign in, otherwise you'll be kicked out.\n\n\
-						Thank you and we hope you'll enjoy your gameplay\n\
-						on %s!",
-					GetName(playerid),
-					MAX_LOGIN_TIME
-				);					
-				
-				ShowPlayerDialog(playerid, 
-					DIALOG_LOGIN, 
-					DIALOG_STYLE_PASSWORD, 
-					""COL_WHITE"Login", 
-					dialogtext, 
+						Thank you and we hope you'll enjoy your gameplay on "COL_LIGHTBLUE"%s"COL_WHITE"!", 
 					"Proceed", 
-					"Abort"
+					"Abort",
+					GetName(playerid),
+					MAX_LOGIN_TIME,
+					SERVER_NAME
 				);
 				
 				Bit8_Set(gr_LoginInputs, playerid, 0);
@@ -310,7 +305,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name(0, 	"forumname"		, PlayerInfo[playerid][pForumName]		, 24);
 		cache_get_value_name(0, 	"email"			, PlayerInfo[playerid][pEmail]			, MAX_PLAYER_MAIL);
 		cache_get_value_name(0, 	"SAMPid"		, PlayerInfo[playerid][pSAMPid]			, 128);
-		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer]	, 24);
+		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer]	, 32);
 		cache_get_value_name_int(0, "registered"	, PlayerInfo[playerid][pRegistered]);
 		cache_get_value_name_int(0, "adminLvl"		, PlayerInfo[playerid][pTempRank][0]);
 		cache_get_value_name_int(0, "helper"		, PlayerInfo[playerid][pTempRank][1]);
@@ -396,7 +391,7 @@ public LoadPlayerData(playerid)
 			return 1;
 		}
 
-		LoadPlayerStats(playerid);
+		LoadPlayerStats(playerid); // // Loading data non-related to 'accounts' database table.
 		
 		PlayerKeys[playerid][pHouseKey] = GetHouseFromSQL(PlayerInfo[playerid][pSQLID]);
 		PlayerKeys[playerid][pBizzKey] = GetBizzFromSQL(PlayerInfo[playerid][pSQLID]);
@@ -717,10 +712,10 @@ hook function ResetPlayerVariables(playerid)
 
 RandomPlayerCameraView(playerid)
 {
-	new choosecamera = random(3);
+	new 
+		camview = random(3);
 	SetPlayerVirtualWorld(playerid, random(9999));
-	
- 	switch(choosecamera)
+ 	switch(camview)
   	{
   		case 0:
   		{
@@ -741,7 +736,7 @@ RandomPlayerCameraView(playerid)
 			InterpolateCameraLookAt(playerid, 2511.572509, -1011.466735, 87.745338, 2063.165771, -1375.001464, 46.008289, 30000);
        	}
     }
-	return (true);
+	return 1;
 }
 
 SetPlayerSpawnInfo(playerid)
@@ -920,7 +915,7 @@ hook OnPlayerConnect(playerid)
 	return 1;
 }
 
-#include <YSI_Coding\y_hooks>
+//#include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if(SigningIn[playerid])
@@ -951,7 +946,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 	if(!IsPlayerReconing(playerid) && GMX == 0) 
 	{
-		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s)))",
+		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s) ))",
 			GetName(playerid, false),
 			playerid,
 			szDisconnectReason[reason]
@@ -967,7 +962,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	// Player Sets
 	if(GMX == 1) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "[OBAVIJEST] Spremljeni su Vasi podaci. Server Vas je automatski kickao.");
+		SendClientMessage(playerid, COLOR_RED, "[!]: Your data has been saved. Server has automatically kicked you out.");
 		KickMessage(playerid);
 	}
 	defer SafeResetPlayerVariables(playerid);

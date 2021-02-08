@@ -12,7 +12,6 @@
 #pragma warning disable 239
 #pragma warning disable 214
 
-#include <crashdetect>
 #include <a_samp>
 #include <a_http>
 

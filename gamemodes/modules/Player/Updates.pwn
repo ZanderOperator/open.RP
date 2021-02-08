@@ -109,14 +109,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(!response)
 					{
-						format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
+						strcpy(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION);
 						RewardPlayer(playerid);
 					}
 					else 
 					{
 						if(isnull(page2) && isnull(page3))
 						{
-							format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
+							strcpy(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION);
 					 		RewardPlayer(playerid);
 						}
 						else if(!isnull(page2) && isnull(page3))
@@ -142,7 +142,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 						if(isnull(page3) && isnull(page4))
 						{
-							format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
+							strcpy(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION);
 							RewardPlayer(playerid);
 						}
 						else if(!isnull(page3) && isnull(page4))
@@ -168,7 +168,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 						if(isnull(page4))
 						{
-							format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
+							strcpy(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION);
 							RewardPlayer(playerid);
 						}
 						else
@@ -187,7 +187,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					else
 					{
-						format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
+						strcpy(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION);
 						RewardPlayer(playerid);
 					}
 				}

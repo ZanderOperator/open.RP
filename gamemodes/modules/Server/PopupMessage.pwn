@@ -1,12 +1,13 @@
 #include <YSI_Coding\y_hooks>
 
 /*
-	- Defines & Enums
+	- Consts & Enums
 */
 
-#define MAX_LINE_MESSAGE_LENGTH (90)
+const MAX_LINE_MESSAGE_LENGTH =  90; // 90 chars in 1 line of TextDraw
 
-enum {
+enum 
+{
 	MESSAGE_TYPE_NONE = 0,
 	MESSAGE_TYPE_ERROR,
 	MESSAGE_TYPE_INFO,
@@ -17,7 +18,7 @@ enum {
 	- Vars(32bit)
 */
 
-new
+static
 	bool: _PopUpActivated[MAX_PLAYERS] = { false, ... },
 	Timer: PopUpTimer[MAX_PLAYERS],
 	PlayerText:MessageTextdraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
@@ -26,24 +27,25 @@ new
 	- Functions
 */
 
-CreateMessage(playerid, bool: status) {
+CreateMessage(playerid, bool: status) 
+{
 	if(status == false)
 		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
-	else if(status == true) {
+
+	else if(status == true) 
+	{
 		MessageTextdraw[playerid] = CreatePlayerTextDraw(playerid, 328.000091, 350.947723, "");
-		//PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.163333, 0.936296);
-		PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.2, 1.0);
+		PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.248749, 1.020959);
 		PlayerTextDrawAlignment(playerid, MessageTextdraw[playerid], 2);
 		PlayerTextDrawColor(playerid, MessageTextdraw[playerid], -1);
-		PlayerTextDrawSetShadow(playerid, MessageTextdraw[playerid], 0);
-		PlayerTextDrawSetOutline(playerid, MessageTextdraw[playerid], 1);
+		PlayerTextDrawSetShadow(playerid, MessageTextdraw[playerid], 1);
+		PlayerTextDrawSetOutline(playerid, MessageTextdraw[playerid], 0);
 		PlayerTextDrawBackgroundColor(playerid, MessageTextdraw[playerid], 255);
 		PlayerTextDrawFont(playerid, MessageTextdraw[playerid], 1);
 		PlayerTextDrawSetProportional(playerid, MessageTextdraw[playerid], 1);
-		PlayerTextDrawSetShadow(playerid, MessageTextdraw[playerid], 0);
 		PlayerTextDrawShow(playerid, MessageTextdraw[playerid]);
 	}
-	return (true);
+	return 1;
 }
 
 GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE) 
@@ -52,9 +54,9 @@ GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE)
 		prefix[21];
 	switch(MESSAGE_TYPE) 
 	{
-		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[!]";
-		case MESSAGE_TYPE_INFO: prefix = "~y~[!]";
-		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[!]";
+		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[ ! ]";
+		case MESSAGE_TYPE_INFO: prefix = "~y~[ ! ]";
+		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[ ! ]";
 	}
 	return prefix;
 }
@@ -114,30 +116,30 @@ SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 		format(final_msg, sizeof(final_msg), "%s: ~w~%s", GetMessagePrefix(MESSAGE_TYPE), message);
 	}
 	stop PopUpTimer[playerid];
-	new messagetime = DetermineMessageDuration(message);
+	new 
+		messagetime = DetermineMessageDuration(message);
 	PopUpTimer[playerid] = defer RemoveMessage[messagetime](playerid);
 	return PlayerTextDrawSetString(playerid, MessageTextdraw[playerid], final_msg);
 }
 
 SendFormatMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[], va_args<>) 
 {	
+	if(MESSAGE_TYPE == MESSAGE_TYPE_NONE)
+		return 1;
+
 	new 
 		format_message[192];
-	if(MESSAGE_TYPE == MESSAGE_TYPE_NONE)
-		return (true);
-	
 	_PopUpActivated[playerid] = true;
-	
 	va_format(format_message, sizeof (format_message), message, va_start<3>);
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, format_message);
 }
 
-SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])  {	
+SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])  
+{	
 	if(MESSAGE_TYPE == MESSAGE_TYPE_NONE)
 		return (true);
 	
-	_PopUpActivated[playerid] = true;
-	
+	_PopUpActivated[playerid] = true;	
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, message);
 }
 
@@ -155,10 +157,11 @@ timer RemoveMessage[1000](playerid)
 /*
 	- Hooks
 */
+
 hook OnPlayerDisconnect(playerid, reason) 
 {
-	_PopUpActivated[playerid] = (false);
-	CreateMessage(playerid, (false));
+	_PopUpActivated[playerid] = false;
+	CreateMessage(playerid, false);
 	stop PopUpTimer[playerid];
-	return (true);
+	return 1;
 }

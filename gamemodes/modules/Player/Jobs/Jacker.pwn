@@ -231,7 +231,7 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 	}
 	if(!save) 
 	{
-		mysql_fquery(g_SQL, "UPDATE illegal_garages SET wanted = '%d' WHERE id = '%d'", 
+		mysql_fquery(g_SQL, "UPDATE illegal_garages SET wantedlevel = '%d' WHERE id = '%d'", 
 			IllegalGarage[garage][igWantedLevel], 
 			IllegalGarage[garage][igSQLID]
 		);
@@ -247,9 +247,11 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 		IllegalGarage[garage][igName],
 		tmpStars,
 		IllegalGarage[garage][igMoney],
-		( (IllegalGarage[garage][igOwner] != 0) ? 
-			(ConvertSQLIDToName(IllegalGarage[garage][igOwner]))
-			: ("On sell (/garage buy)"))
+		(
+			(IllegalGarage[garage][igOwner] != 0) ? 
+			(ConvertSQLIDToName(IllegalGarage[garage][igOwner])) 
+			: ("On sell (/garage buy)")
+		)
 	);
 	UpdateDynamic3DTextLabelText(IllegalGarage[garage][ig3dText], -1, tmpString);
 }
@@ -402,6 +404,7 @@ static InitIllegalGarage(garage)
 
 	if(!IsValidDynamicObject(IllegalGarage[garage][igBoard]))
 		IllegalGarage[garage][igBoard] = CreateDynamicObject(3077, bX, bY, bZ, 0.000, 0.000, brZ, -1,- 1, -1,300.000, 300.000);
+		
 	// Total: 6 board texts in 3 rows on jacker board
 	new 
 		Float: ltX = IllegalGarage[garage][ig3dTextPos][0] - 0.8, // Left aligned board text
@@ -812,11 +815,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			IllegalGarage[garage][igWantedLevel] = 0;
 			IllegalGarage[garage][igCarsJacked] = 0;
+
+			mysql_fquery(g_SQL, "UPDATE illegal_garages SET wantedlevel = '%d', jackedcars = '%d' WHERE id = '%d'", 
+				IllegalGarage[garage][igWantedLevel], 
+				IllegalGarage[garage][igCarsJacked],
+				IllegalGarage[garage][igSQLID]
+			);
+
 			SendFormatMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have sucessfully dropped Wanted Level in %s to 0!",
 				IllegalGarage[garage][igName]
 			);
+
 			PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, PlayerBribeMoney[playerid]);
 			PlayerBribeMoney[playerid] = 0;
 		}

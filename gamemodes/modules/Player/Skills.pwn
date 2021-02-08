@@ -63,10 +63,12 @@ static LoadPlayerSkills(playerid)
 {
 	inline OnPlayerSkillsLoad()
 	{
-		if(cache_num_rows())
+		new 
+			rows = cache_num_rows();
+		if(!rows)
 			return 1;
 
-		for(new i = 0; i < MAX_SKILLS; i++)
+		for(new i = 0; i < rows; i++)
 		{
 			cache_get_value_name_int(i, "id"	, PlayerSkills[playerid][sSQLID][i]);
 			cache_get_value_name_int(i, "job"	, PlayerSkills[playerid][sJob][i]);
