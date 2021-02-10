@@ -10,7 +10,6 @@ static
 	Float:AdminMark4[MAX_PLAYERS][3],
 	Float:AdminMark5[MAX_PLAYERS][3];
 
-
 /*
 	 ######  ##     ## ########   ######  
 	##    ## ###   ### ##     ## ##    ## 
@@ -445,13 +444,14 @@ CMD:teampin(playerid, params[])
 
 CMD:makeadmin(playerid, params[])
 {
-	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	
+	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new 
 		giveplayerid, level, teamPIN[12];
-	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[?]: /makeadmin [Playerid / Part of name][level(1-1338)][Team PIN for /alogin]");
-	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
-	
+	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /makeadmin [Playerid / Part of name][level(1-1338)][Team PIN for /alogin]");
+	if(giveplayerid == INVALID_PLAYER_ID) 
+		return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
 	if(!level) 
 	{
@@ -470,8 +470,8 @@ CMD:makeadmin(playerid, params[])
 	
 	if(!strlen(PlayerInfo[giveplayerid][pTeamPIN])) 
 	{
-		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Admin PIN kod", "Congrats on your Game Admin position!\nTeam PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\nDo not give your Team PIN to anyone and remember it well/write it down!\nYour Team PIN is:"COL_COMPADMIN"%s\n"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", "Okay", "", teamPIN);
-		bcrypt_hash(teamPIN, BCRYPT_COST, "OnAdminPINHashed", "dd", giveplayerid, level);
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You MUST enter Team PIN 1 to 12 chars long for credentials!");
+		return 1;
 	}
 	
 	PlayerInfo[giveplayerid][pAdmin] = PlayerInfo[giveplayerid][pTempRank][0] = level;
@@ -487,8 +487,25 @@ CMD:makeadmin(playerid, params[])
 	);
 	#endif
 	
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Postavljeni ste za Game Admina level %d od Administratora %s", level, GetName(playerid,false));
-	va_SendClientMessage(playerid, COLOR_RED, "[!] Postavili ste %s za Game Admina.", GetName(giveplayerid,false));
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!]: You have been given Game Admin Level %d from Administrator %s", level, GetName(playerid,false));
+	va_SendClientMessage(playerid, COLOR_RED, "[!]: You gave %s Game Admin Level %d.", GetName(giveplayerid,false), level);
+
+	va_ShowPlayerDialog(giveplayerid, 
+		0, 
+		DIALOG_STYLE_MSGBOX, 
+		"Admin Team PIN", 
+		"\nCongrats on your Game Admin position!\n\
+			Team PIN is unique for you, and is your Game Admin credentials.\n\
+			Each login you have to use /alogin to use Team Commands.\n\
+			Do not give your Team PIN to anyone and remember it well/write it down!\n\n\
+			Your Team PIN is:"COL_COMPADMIN"%s\n\
+			"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", 
+		"Okay", 
+		"", 
+		teamPIN
+	);
+	
+	bcrypt_hash(teamPIN, BCRYPT_COST, "OnAdminPINHashed", "dd", giveplayerid, level);
 	return 1;
 }
 

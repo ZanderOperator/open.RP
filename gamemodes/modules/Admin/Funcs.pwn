@@ -525,7 +525,7 @@ Public: OnHelperPINHashed(playerid, level)
 
 	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d' LIMIT 1", 
+	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d'", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
@@ -533,7 +533,8 @@ Public: OnHelperPINHashed(playerid, level)
 	return 1;
 }
 
-Public: OnAdminPINHashed(playerid, level)
+forward OnAdminPINHashed(playerid, level);
+public OnAdminPINHashed(playerid, level)
 {
 	new 
 		saltedPin[BCRYPT_HASH_LENGTH];
@@ -541,7 +542,7 @@ Public: OnAdminPINHashed(playerid, level)
 
 	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d' LIMIT 1", 
+	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d'", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
@@ -557,7 +558,7 @@ Public: OnTeamPINHashed(playerid)
 	
 	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d' LIMIT 1", 
+	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d'", 
 		saltedPin, 
 		PlayerInfo[playerid][pSQLID]
 	);

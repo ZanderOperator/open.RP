@@ -74,10 +74,6 @@
 // Fixes
 #include <fixes>
 
-// bcrypt encription
-#include <bcrypt>
-#define BCRYPT_COST 12
-
 // New SA-MP callbacks by Emmet
 #include <callbacks> 
 
@@ -109,6 +105,11 @@
 #include <YSI_Server\y_flooding>
 #include <YSI_Visual\y_commands>
 #include <YSI_Game\y_vehicledata>
+
+// bcrypt encription & inline support
+#include <bcrypt>
+#include <YSI_Extra\y_inline_bcrypt>
+#define BCRYPT_COST 12
 
 // Other pre-includes
 #include <OnPlayerSlowUpdate>
