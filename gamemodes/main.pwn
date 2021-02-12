@@ -147,6 +147,7 @@
 		- When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" 
 			in /scriptfiles in order for players to see what's new InGame
 */
+
 #define SERVER_NAME								"open.RP"
 #define HOSTNAME 								#SERVER_NAME"[0.3DL]"
 #define WEB_URL									"https://open.mp/"
@@ -489,6 +490,7 @@ public ServerRestartRequest(index, response_code, data[])
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
 */
+
 main()
 {
 	

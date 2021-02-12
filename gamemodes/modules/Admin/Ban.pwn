@@ -47,7 +47,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		}
 		else
 		{
-		    format( banString, 128, "AdmCMD: Account %s je is automatically locked by the server. Reason: %s",
+		    format( banString, 128, "AdmCMD: Account %s is automatically locked by the server. Reason: %s",
 				GetName( playerid, false),
 				reason
 			);

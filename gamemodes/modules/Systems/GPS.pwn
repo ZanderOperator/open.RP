@@ -692,7 +692,7 @@ CMD:agps(playerid, params[])
                 {3C95C2}[!]: List of all GPS ID's can be found on /agps goto.", 
             "Move", 
             "Close"
-       );
+        );
         return 1;
     }
     if(!strcmp(action, "goto", true))
@@ -703,7 +703,8 @@ CMD:agps(playerid, params[])
     }
     if(!strcmp(action, "setadmin", true))
     {
-        new gpsid, adminloc;
+        new 
+            gpsid, adminloc;
         if(sscanf(params, "s[15]ii", action, gpsid, adminloc))
         {
             SendClientMessage(playerid, 

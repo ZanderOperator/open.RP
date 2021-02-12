@@ -15,7 +15,7 @@ Y8,           8b       d8 88       88  `"Y8ba,    88     `"Y8ba,
 
 const MAX_ILLEGAL_GARAGES		= 10;
 const DESTROYING_CAR_TIME		= 45; 		// 45 seconds
-const LIST_UPDATE_TIME			= 3600; 	// 1 hour
+const LIST_UPDATE_TIME			= 3600; 	// Every 1 hour, Illegal Garage Wanted Cars on Board will be updated
 const CHOP_SHOP_PRICE			= 60000; 	// 60,000$
 
 /*
