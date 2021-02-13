@@ -191,7 +191,7 @@ static LoadIllegalGarages()
 			cache_get_value_name_float(row, 	"boardX"	, IllegalGarage[row][igBoardPos][0]);
 			cache_get_value_name_float(row, 	"boardY"	, IllegalGarage[row][igBoardPos][1]);
 			cache_get_value_name_float(row, 	"boardZ"	, IllegalGarage[row][igBoardPos][2]);
-			cache_get_value_name_float(row, 	"rotZ"		, IllegalGarage[row][igBoardPos][2]);
+			cache_get_value_name_float(row, 	"rotZ"		, IllegalGarage[row][igBoardPos][3]);
 			
 			Iter_Add(IllegalGarage, row);
 			InitIllegalGarage(row);
@@ -244,11 +244,11 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 		135, 
 		""COL_LIGHTBLUE"%s\n\
 			==============="COL_WHITE"%s\n\
-			"COL_LIGHTBLUE"\n===============\n"COL_LIGHTBLUE"%d$\n===============\n\
+			"COL_LIGHTBLUE"\n===============\n"COL_LIGHTBLUE"%s===============\n\
 			"COL_WHITE"%s", 
 		IllegalGarage[garage][igName],
 		tmpStars,
-		IllegalGarage[garage][igMoney],
+		FormatNumber(IllegalGarage[garage][igMoney]),
 		(
 			(IllegalGarage[garage][igOwner] != 0) ? 
 			(ConvertSQLIDToName(IllegalGarage[garage][igOwner])) 
@@ -292,16 +292,18 @@ static GetVehiclesForIllegalGarages(garage)
 	
 	new
 		Float: bX = IllegalGarage[garage][igBoardPos][0],
-		Float: bY = IllegalGarage[garage][igBoardPos][1] - 1.0,
-		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.0, // Header board text - "Wanted List"
+		Float: bY = IllegalGarage[garage][igBoardPos][1],
+		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.3, // Header board text - "Wanted List"
 		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0; 
+
+	bY += 0.1;
 
 	if(CountVehicleModels() < 6)
 	{
 		if(IsValidDynamicObject(IllegalGarage[garage][igHeader]))
 			DestroyDynamicObject(IllegalGarage[garage][igHeader]);
 		IllegalGarage[garage][igHeader] = CreateDynamicObject(18659, bX, bY, hZ, 0.000, 0.000, rotZ, -1, -1, -1, 300.000, 300.000);
-		SetDynamicObjectMaterialText(IllegalGarage[garage][igHeader], 0, "Not recieving vehicles!", 140, "courier", 42, 1, -1, 0, 1);
+		SetDynamicObjectMaterialText(IllegalGarage[garage][igHeader], 0, "Not recieving cars!", 140, "courier", 42, 1, -1, 0, 1);
 		return 0;
 	}
 	new 
@@ -338,12 +340,12 @@ static UpdateIllegalGarage(garage)
 	if(!GetVehiclesForIllegalGarages(garage))
 		return 1;
 	new 
-		Float: bY = IllegalGarage[garage][igBoardPos][1] - 1.0,	// Y of the board object
+		Float: bY = IllegalGarage[garage][igBoardPos][1] + 0.1,	// Y of the board object
 		Float: ltX = IllegalGarage[garage][igBoardPos][0] - 0.8, // Left aligned board text
 		Float: rtX = IllegalGarage[garage][igBoardPos][0] + 0.8, // Right aligned board text
-		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 1.5, // First row of board text
-		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.0, // Second row of board text
-		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 0.5, // Third row of board text
+		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 1.8, // First row of board text
+		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.3, // Second row of board text
+		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 0.8, // Third row of board text
 		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0;
 	new 
 		vehicleName[MAX_VEHICLE_NAME];
@@ -400,22 +402,23 @@ static InitIllegalGarage(garage)
 { 	
 	new
 		Float: bX = IllegalGarage[garage][igBoardPos][0],
-		Float: bY = IllegalGarage[garage][igBoardPos][1] - 1.0,
+		Float: bY = IllegalGarage[garage][igBoardPos][1],
 		Float: bZ = IllegalGarage[garage][igBoardPos][2] - 1.0,
 		Float: brZ = IllegalGarage[garage][igBoardPos][3];
 
 	if(!IsValidDynamicObject(IllegalGarage[garage][igBoard]))
 		IllegalGarage[garage][igBoard] = CreateDynamicObject(3077, bX, bY, bZ, 0.000, 0.000, brZ, -1,- 1, -1,300.000, 300.000);
 		
+	bY += 0.1;
 	// Total: 6 board texts in 3 rows on jacker board
 	new 
 		Float: ltX = IllegalGarage[garage][igBoardPos][0] - 0.8, // Left aligned board text
 		Float: rtX = IllegalGarage[garage][igBoardPos][0] + 0.8, // Right aligned board text
-		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.0, // Header board text - "Wanted List"
-		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 1.5, // First row of board text
-		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.0, // Second row of board text
-		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 0.5, // Third row of board text
-		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0; 
+		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.3, // Header board text - "Wanted List"
+		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 1.8, // First row of board text
+		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.3, // Second row of board text
+		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 0.8, // Third row of board text
+		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0;
 	
 	IllegalGarage[garage][igHeader] = CreateDynamicObject(18659, bX, bY, hZ, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
 	SetDynamicObjectMaterialText(IllegalGarage[garage][igHeader], 0, "Wanted List", 140, "courier", 42, 1, -1, 0, 1);
@@ -436,7 +439,7 @@ static InitIllegalGarage(garage)
 	IllegalGarage[garage][igText][5] = CreateDynamicObject(18659, rtX, bY, Z3, 0.000, 0.000, rotZ, -1, -1, -1, 300.000, 300.000);
 	SetDynamicObjectMaterialText(IllegalGarage[garage][igText][5], 0, "6", 140, "courier", 38, 1, -1, 0, 1);
 	UpdateIllegalGarage(garage);
-	IllegalGarage[garage][ig3dText] = CreateDynamic3DTextLabel("*", -1, IllegalGarage[garage][igBoardPos][0], IllegalGarage[garage][igBoardPos][1], IllegalGarage[garage][igBoardPos][2], 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, -1, -1, -1, 30.0);
+	IllegalGarage[garage][ig3dText] = CreateDynamic3DTextLabel("*", -1, IllegalGarage[garage][igBoardPos][0], IllegalGarage[garage][igBoardPos][1], (IllegalGarage[garage][igBoardPos][2] + 5.0), 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, -1, -1, -1, 30.0);
 	CheckGarageWantedLevel(garage);
 	return 1;
 }
@@ -709,11 +712,11 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 			garage = EditingBoardID[playerid];
 		if(response == EDIT_RESPONSE_FINAL)
 		{
-			if(rx != 0.0 || ry != 0.0)
+			if(rx != 0.0 || ry != 0.0 || rz != 0)
 			{
 				ResetIllegalGarage(garage);
 				EditingBoardID[playerid] = -1;
-				SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't change X or Y axis rotation! Creation aborted.");
+				SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't change rotation of the board! Creation aborted.");
 				return 1;
 			}
 			IllegalGarage[garage][igBoardPos][0] = x;
