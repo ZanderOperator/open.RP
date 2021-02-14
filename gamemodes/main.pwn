@@ -70,9 +70,11 @@
 	#### ##    ##  ######	########  #######  ########  ########  ######
 */
 
-
 // Fixes
 #include <fixes>
+
+// sscanf by Y-Less
+#include <sscanf2>
 
 // New SA-MP callbacks by Emmet
 #include <callbacks> 
@@ -115,7 +117,6 @@
 #include <OnPlayerSlowUpdate>
 #include <animsfix> // legacy
 #include <rBits> // legacy
-#include <sscanf2>
 #include <progress2>
 #include <mapandreas>
 #include <fSelection>

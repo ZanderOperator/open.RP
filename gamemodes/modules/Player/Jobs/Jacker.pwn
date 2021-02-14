@@ -210,8 +210,8 @@ static LoadIllegalGarages()
 static CheckGarageWantedLevel(garage, bool:save=false)
 {
 	new
-		tmpStars[5];
-	tmpStars = "None";
+		tmpStars[20];
+	tmpStars = "No Wanted Level";
 	switch( IllegalGarage[garage][igCarsJacked]) 
 	{
 		case 55 .. 95:   
@@ -239,21 +239,17 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 		);
 	}
 	new
-		tmpString[135];		
+		tmpString[180];		
 	format(tmpString, 
-		135, 
+		180, 
 		""COL_LIGHTBLUE"%s\n\
-			==============="COL_WHITE"%s\n\
-			"COL_LIGHTBLUE"\n===============\n"COL_LIGHTBLUE"%s===============\n\
+			==============="COL_WHITE"%s"COL_LIGHTBLUE"===============\n\
+			"COL_LIGHTBLUE"\n==============="COL_WHITE"%s"COL_LIGHTBLUE"===============\n\
 			"COL_WHITE"%s", 
 		IllegalGarage[garage][igName],
 		tmpStars,
 		FormatNumber(IllegalGarage[garage][igMoney]),
-		(
-			(IllegalGarage[garage][igOwner] != 0) ? 
-			(ConvertSQLIDToName(IllegalGarage[garage][igOwner])) 
-			: ("On sell (/garage buy)")
-		)
+		(IllegalGarage[garage][igOwner] != 0) ? ("Owned") : ("On sell (/garage buy)")
 	);
 	UpdateDynamic3DTextLabelText(IllegalGarage[garage][ig3dText], -1, tmpString);
 }
@@ -293,7 +289,7 @@ static GetVehiclesForIllegalGarages(garage)
 	new
 		Float: bX = IllegalGarage[garage][igBoardPos][0],
 		Float: bY = IllegalGarage[garage][igBoardPos][1],
-		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.3, // Header board text - "Wanted List"
+		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.7, // Header board text - "Wanted List"
 		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0; 
 
 	bY += 0.1;
@@ -343,9 +339,9 @@ static UpdateIllegalGarage(garage)
 		Float: bY = IllegalGarage[garage][igBoardPos][1] + 0.1,	// Y of the board object
 		Float: ltX = IllegalGarage[garage][igBoardPos][0] - 0.8, // Left aligned board text
 		Float: rtX = IllegalGarage[garage][igBoardPos][0] + 0.8, // Right aligned board text
-		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 1.8, // First row of board text
-		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.3, // Second row of board text
-		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 0.8, // Third row of board text
+		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 2.2, // First row of board text
+		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.7, // Second row of board text
+		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 1.2, // Third row of board text
 		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0;
 	new 
 		vehicleName[MAX_VEHICLE_NAME];
@@ -403,7 +399,7 @@ static InitIllegalGarage(garage)
 	new
 		Float: bX = IllegalGarage[garage][igBoardPos][0],
 		Float: bY = IllegalGarage[garage][igBoardPos][1],
-		Float: bZ = IllegalGarage[garage][igBoardPos][2] - 1.0,
+		Float: bZ = IllegalGarage[garage][igBoardPos][2],
 		Float: brZ = IllegalGarage[garage][igBoardPos][3];
 
 	if(!IsValidDynamicObject(IllegalGarage[garage][igBoard]))
@@ -414,10 +410,10 @@ static InitIllegalGarage(garage)
 	new 
 		Float: ltX = IllegalGarage[garage][igBoardPos][0] - 0.8, // Left aligned board text
 		Float: rtX = IllegalGarage[garage][igBoardPos][0] + 0.8, // Right aligned board text
-		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.3, // Header board text - "Wanted List"
-		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 1.8, // First row of board text
-		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.3, // Second row of board text
-		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 0.8, // Third row of board text
+		Float: hZ = IllegalGarage[garage][igBoardPos][2] + 2.7, // Header board text - "Wanted List"
+		Float: Z1 = IllegalGarage[garage][igBoardPos][2] + 2.2, // First row of board text
+		Float: Z2 = IllegalGarage[garage][igBoardPos][2] + 1.7, // Second row of board text
+		Float: Z3 = IllegalGarage[garage][igBoardPos][2] + 1.2, // Third row of board text
 		Float: rotZ = IllegalGarage[garage][igBoardPos][3] - 90.0;
 	
 	IllegalGarage[garage][igHeader] = CreateDynamicObject(18659, bX, bY, hZ, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
