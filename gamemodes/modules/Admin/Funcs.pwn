@@ -1015,7 +1015,7 @@ public OfflineBanPlayer(playerid, playername[], reason[], days)
 		HOOK_BanEx(playerid, playername, playerip, playerid, reason, days);
 		#endif
 	}
-	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
+	else return SendClientMessage(playerid, COLOR_RED, "[ERROR - MySQL]: There's no player with that nickname!");
 	return 1;
 }
 
@@ -1033,7 +1033,7 @@ public OfflineJailPlayer(playerid, jailtime)
 			sqlid
 		);
 	}
-	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
+	else return SendClientMessage(playerid, COLOR_RED, "[ERROR - MySQL]: There's no player with that nickname!");
 	return 1;
 }
 
@@ -1064,7 +1064,7 @@ stock CheckInactivePlayer(playerid, sql)
 		TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
 		TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 		
-		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
+		format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
 			ConvertSQLIDToName(sqlid),
 			sqlid,
 			startdate,
@@ -1075,7 +1075,7 @@ stock CheckInactivePlayer(playerid, sql)
 		);
 		strcat(dialogstring, motd, sizeof(dialogstring));
 
-		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Provjera neaktivnosti igraca:", dialogstring, "Close", "");
+		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Checking player inactivity:", dialogstring, "Close", "");
 		return 1;
 	}
 	MySQL_TQueryInline(g_SQL,  
@@ -1121,7 +1121,7 @@ stock ListInactivePlayers(playerid)
 				TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
 				TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 				
-				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
+				format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
 					ConvertSQLIDToName(sqlid),
 					sqlid,
 					startdate,
@@ -1132,10 +1132,10 @@ stock ListInactivePlayers(playerid)
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
 			}
-			ShowPlayerDialog(playerid, DIALOG_INACTIVITY_LIST, DIALOG_STYLE_MSGBOX, "Najnovije neaktivnosti:", dialogstring, "Close", "");
+			ShowPlayerDialog(playerid, DIALOG_INACTIVITY_LIST, DIALOG_STYLE_MSGBOX, "Recent inactivities:", dialogstring, "Close", "");
 			return 1;
 		}
-		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno nema prijavljenih neaktivnosti u bazi podataka!");
+		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "There are currently no reported inactivity in the database!");
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnInactiveAccountsList,
@@ -1175,16 +1175,16 @@ public CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const rea
     new 
 		rows;
     cache_get_row_count(rows);
-    if(!rows) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije u bazi!");
+    if(!rows) return SendClientMessage(playerid,COLOR_RED, "That player's not in base!");
     
 	new
 		prisoned;
 	cache_get_value_name_int(0, "jailed", prisoned);
-    if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "Taj igrac je vec u arei/zatvoru!");
+    if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "That player's already in area/prison!");
 	
 	mysql_fquery(g_SQL, "UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", minutes, sqlid);
 		
-	va_SendClientMessage(playerid,COLOR_RED, "[!] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
+	va_SendClientMessage(playerid,COLOR_RED, "[!] You have successfully placed the offline player %s in the arena for %d minutes.",targetname, minutes);
 	return 1;
 }
 
@@ -1205,8 +1205,8 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     if(warns == 3) 
 	{
 		OfflineBanPlayer(playerid, targetname, "3. Warn", 10);
-        SendClientMessage(playerid,COLOR_RED, "[!] Taj igrac je imao 3. warna te je automatski banan!");
-        va_SendClientMessageToAll(COLOR_RED,"AdmCMD: %s [Offline] je dobio ban od admina %s, razlog: 3. Warn",targetname,GetName(playerid,false));
+        SendClientMessage(playerid,COLOR_RED, "[!] That player had 3 warns and he's automatically banned!");
+        va_SendClientMessageToAll(COLOR_RED,"AdmCMD: %s [Offline] got banned from Game Admin %s, reason: 3. Warn",targetname,GetName(playerid,false));
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
 		#endif
@@ -1214,7 +1214,7 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     } 
 	else 
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "[!] Uspjesno si warnao igraca %s, te mu je to ukupno %d warn!",targetname,warns);
+		va_SendClientMessage(playerid,COLOR_RED, "[!] You have successfully warned player %s and that's his %d warn!",targetname,warns);
         mysql_fquery(g_SQL, "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
     }
 	return 1;
@@ -1303,12 +1303,12 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 		price = cars * 150;
 		
     if(cars == 0)
-		return SendClientMessage(playerid, COLOR_RED, "Igrac ne posjeduje vozilo");
+		return SendClientMessage(playerid, COLOR_RED, "Player has no car!");
 	else
 	{
-	    if(GetPlayerMoney(giveplayerid) < price) return SendClientMessage(playerid, COLOR_RED, "Igrac nema dovoljno novca.");
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si premjestio parking svim vozilima igracu "COL_WHITE"%s"COL_YELLOW" - (%i$). ", GetName(giveplayerid, true), price);
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin %s vam je premjestio parking svih vozila(%i$).", GetName(playerid, true), price);
+	    if(GetPlayerMoney(giveplayerid) < price) return SendClientMessage(playerid, COLOR_RED, "Player does not have enough money.");
+		va_SendClientMessage(playerid, COLOR_RED, "[!] You have successfully moved the parking lot of all vehicles to the player "COL_WHITE"%s"COL_YELLOW" - (%i$). ", GetName(giveplayerid, true), price);
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin %s has moved the parking of all your vehicles(%i$).", GetName(playerid, true), price);
 		PlayerToBudgetMoney(giveplayerid, price);
 	}
 	new
@@ -1349,7 +1349,7 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 forward LoadNamesFromIp(playerid, const ip[]);
 public LoadNamesFromIp(playerid, const ip[])
 {
-	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "Nitko se nije logirao sa IP adresom: %s (DATABAZA)!", ip);
+	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "No one logged in with an IP address: %s (DATABASE)!", ip);
 
 	new
 		dialogString[1024];
@@ -1367,14 +1367,14 @@ public LoadNamesFromIp(playerid, const ip[])
 		
 		format(dialogString, 1024, "%s%s\t%s\t%s\n", dialogString, tmpName, tmpIp,tmpOnline);
 	}
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST_HEADERS, "IP Adresa u nick", dialogString, "Ok", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST_HEADERS, "IP Address to nickname", dialogString, "Ok", "");
 	return 1;
 }
 
 forward CountFactionMembers(playerid, orgid);
 public CountFactionMembers(playerid, orgid)
 {
-	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "[!] Organizacija %s broji 0 clanova (0 je online)!", FactionInfo[orgid][fName]);
+	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "[!] Faction %s has 0 members (0 is online)!", FactionInfo[orgid][fName]);
 	
 	new activeMembers = 0;
 	foreach(new i : Player)
@@ -1383,7 +1383,7 @@ public CountFactionMembers(playerid, orgid)
 			activeMembers++;
 	}
 	
-	va_SendClientMessage(playerid, COLOR_RED, "[!] Organizacija %s broji %d clanova (%d je online)!", FactionInfo[orgid][fName], cache_num_rows(), activeMembers);
+	va_SendClientMessage(playerid, COLOR_RED, "[!] Faction %s has %d members (%d is online)!", FactionInfo[orgid][fName], cache_num_rows(), activeMembers);
 	return 1;
 }
 
@@ -1403,7 +1403,7 @@ public CheckPlayerData(playerid, const name[])
 			name
 		);
 	}
-	else SendClientMessage(playerid, COLOR_RED, "Nick je nepostojeci u bazi podataka.");
+	else SendClientMessage(playerid, COLOR_RED, "That nickname does not exist in database.");
 	
 	return 1;
 }
@@ -1411,7 +1411,7 @@ public CheckPlayerData(playerid, const name[])
 forward CheckLastLogin(playerid, const name[]);
 public CheckLastLogin(playerid, const name[])
 {
-	if(!cache_num_rows()) return SendClientMessage(playerid, COLOR_RED, "Korisnik se nikada nije logirao!");
+	if(!cache_num_rows()) return SendClientMessage(playerid, COLOR_RED, "Player never logged in!");
 	
 	new lastip[MAX_PLAYER_IP], lastdate, date[12], time[12];
 	cache_get_value_name_int(0, 	"time"	, lastdate);
@@ -1422,7 +1422,7 @@ public CheckLastLogin(playerid, const name[])
 	
 	if(PlayerInfo[playerid][pAdmin])
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac %s je zadnji puta bio online: %s u %s, sa IP: %s.", 
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Last time player %s was online: %s - %s, with an IP: %s.", 
 			name,
 			date,
 			time,
@@ -1431,7 +1431,7 @@ public CheckLastLogin(playerid, const name[])
 	}
 	else
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac %s je zadnji puta bio online: %d.%d.%d - %d:%d:%d", 
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Last time player %s was online: %d.%d.%d - %d:%d:%d", 
 			name,
 			date[2],
 			date[1],
@@ -1565,7 +1565,7 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
             SetVehiclePos(carid,fX,fY,MapAndreas_FindZ_For2DCoord(fX,fY,fZ));
         }
         else SetPlayerPosFindZ(playerid, fX, fY, fZ);
-        SendClientMessage(playerid, COLOR_RED, "[!] S obzirom da nisam vojni analiticar, moguce je da ne bude bas precizno.");
+        SendClientMessage(playerid, COLOR_RED, "[!] Since I'm not a military analyst, it may not be very accurate.");
     }
     return 1;
 }
@@ -1574,7 +1574,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 	if(PlayerInfo[playerid][pAdmin] >= 1)
 	{
 		va_SendClientMessage(playerid, COLOR_RED, "[!] %s (%d)", GetName(clickedplayerid,false), clickedplayerid);
-		va_SendClientMessage(playerid, 0xC9C9C9FF, "IC:  Novac: [%d$] - Banka: [%d$] - Mob: [%d] - Org: [%s] - Rank: [%s (%d)]",
+		va_SendClientMessage(playerid, 0xC9C9C9FF, "IC:  Money: [%d$] - Bank: [%d$] - Mob: [%d] - Org: [%s] - Rank: [%s (%d)]",
 			PlayerInfo[clickedplayerid][pMoney],
 			PlayerInfo[clickedplayerid][pBank],
 			PlayerMobile[clickedplayerid][pMobileNumber],
@@ -1583,7 +1583,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 			PlayerFaction[clickedplayerid][pRank]
 		);
 		
-		va_SendClientMessage(playerid, 0xC9C9C9FF, "OOC: Lvl: [%d] - Sati: [%d] - Warn: [%d/3] - Jail: [%d] - Jailtime: [%d]",
+		va_SendClientMessage(playerid, 0xC9C9C9FF, "OOC: Lvl: [%d] - Hours: [%d] - Warn: [%d/3] - Jail: [%d] - Jailtime: [%d]",
 			PlayerInfo[clickedplayerid][pLevel],
 			PlayerInfo[clickedplayerid][pConnectTime],
 			PlayerInfo[clickedplayerid][pWarns],
@@ -1594,7 +1594,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 		{
 			new 
 				biznis = GetBizzFromSQL(PlayerInfo[clickedplayerid][pSQLID]);
-			va_SendClientMessage(playerid, 0xCED490FF, "BIZNIS: ID: [%d] - Naziv: [%s] ", biznis, BizzInfo[biznis][bMessage]);
+			va_SendClientMessage(playerid, 0xCED490FF, "BIZ: ID: [%d] - Name: [%s] ", biznis, BizzInfo[biznis][bMessage]);
 		}	
 	}
 
@@ -1634,9 +1634,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetPlayerVirtualWorld(PortedPlayer[playerid], GetPlayerVirtualWorld(playerid));
 			}
             new string[100];
-			format(string, sizeof(string), "Teleportiran si od strane admina/helpera %s", GetName(playerid,false));
+			format(string, sizeof(string), "You've been teleported by an admin/helper %s", GetName(playerid,false));
 			SendClientMessage(PortedPlayer[playerid], COLOR_GREY, string);
-			format(string, sizeof(string), "Teleportirao si %s, ID %d", GetName(PortedPlayer[playerid],false), PortedPlayer[playerid]);
+			format(string, sizeof(string), "You teleported %s, ID %d", GetName(PortedPlayer[playerid],false), PortedPlayer[playerid]);
 			SendClientMessage(playerid, COLOR_GREY, string);
 			return 1;
 		}

@@ -59,18 +59,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 format(sub_str, sizeof(sub_str), "Report ID: %i\n", listitem + 1);
                 strcat(primary_str, sub_str);
 
-                format(sub_str, sizeof(sub_str), "Reporter: %s\n", ReportData[listitem + 1][reportBy]);
+                format(sub_str, sizeof(sub_str), "Reported by: %s\n", ReportData[listitem + 1][reportBy]);
                 strcat(primary_str, sub_str);
 
-                format(sub_str, sizeof(sub_str), "Detalji: %s\n", ReportData[listitem + 1][reportReason]);
+                format(sub_str, sizeof(sub_str), "Details: %s\n", ReportData[listitem + 1][reportReason]);
                 strcat(primary_str, sub_str);
 
-                format(sub_str, sizeof(sub_str), "Cekanje: %d sekundi\n\n",  gettime() - ReportData[listitem + 1][reportTime]);
+                format(sub_str, sizeof(sub_str), "Wait Time: %d sekundi\n\n",  gettime() - ReportData[listitem + 1][reportTime]);
                 strcat(primary_str, sub_str);
 
-                strcat(primary_str, "{5CD2FE}Preuzmite, ili proslijedite ovaj report.");
+                strcat(primary_str, "{5CD2FE}Take or send this report.");
 
-                ConfirmDialog(playerid, "{5CD2FE}Preuzmi Report", primary_str, "OnSelectReport", listitem + 1);
+                ConfirmDialog(playerid, "{5CD2FE}Take Report", primary_str, "OnSelectReport", listitem + 1);
 				return 1;
             }
             return 1;
@@ -266,9 +266,9 @@ stock SecondsToMinute(seconds)
 CMD:report(playerid, params[])
 {
     if(Player_BlockedReport(playerid)) 
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes slati reporte.");
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You cannot send reports.");
 	if(Player_ReportID(playerid) != -1)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si poslao report! Pricekaj da ti admini odgovore na isti.");
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You've already sent a report! Wait for response.");
 
 	if(isnull(params))
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /report [tekst]");
@@ -278,12 +278,12 @@ CMD:report(playerid, params[])
 		string[678];
 	format(string, 
 		sizeof(string), 
-		"{5CD2FE}WARNING:\nPoruka koju saljete ce biti prikazana svi online adminima.\n\
-			Razlog: %s\n\nUkoliko vam je neko nanio stetu predlazemo da prijavite na forumu.\n\
-			Ukoliko Admin nije prisustvovao situaciji on ne moze nista uraditi bez valjanih dokaza.\n\
-			Ukoliko vam je potreban teleport, unfreeze, slap, ili nesto slicno morate \n\
-			navesti valjan razlog.\nGeneralno bi trebali slati reporte u kojima je navedeno \n\
-			sto vise detalja kako bi vam admin mogao sto prije pomoci.\n\
+		"{5CD2FE}WARNING:\nThe message you send will be displayed to all online admins.\n\
+			Reason: %s\n\nIf someone has caused you damage, we suggest you report it on the forum.\n\
+			If the Admin is not present at the situation he cannot do anything without valid evidence.\n\
+			If you need a teleport, unfreeze, slap, or something similar you must state a valid reason. \n\
+			Generally, you should send reports with as much detail as possible \n\
+			so that the admin can help you as soon as possible..\n\
 			\n%s", 
 		PlayerReport[playerid],
 		WEB_URL
@@ -295,9 +295,9 @@ CMD:report(playerid, params[])
 CMD:reports(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
+		return SendClientMessage(playerid, COLOR_RED, "You are not authorized.");
 
-    SendMessage(playerid, MESSAGE_TYPE_INFO, "Ukoliko vam se nije prikazao dialog onda nema aktivnih reporta!");
+    SendMessage(playerid, MESSAGE_TYPE_INFO, "If dialog is not shown to you, then there is no active reports!");
 	new
 		primary_str[900], sub_str[128];
 
@@ -315,7 +315,7 @@ CMD:reports(playerid, params[])
 CMD:reportsx(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
+		return SendClientMessage(playerid, COLOR_RED, "You are not authorized.");
 
 	SendClientMessage(playerid, COLOR_SKYBLUE, "____________________REPORTS{5CD2FE}____________________");
 
@@ -323,10 +323,10 @@ CMD:reportsx(playerid, params[])
 	{
 		if(strlen(ReportData[i][reportReason]) > 70)
 		{
-			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Na cekanju: %i Minuta | Report: %.70s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
+			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Wait Time: %i Minutes | Report: %.70s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
 			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] ...%s", ReportData[i][reportReason][70]);
 		}
-		else va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Na cekanju: %i Minuta | Report: %s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
+		else va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Wait Time: %i Minutes | Report: %s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
 	}
 
 	return 1;
@@ -335,15 +335,15 @@ CMD:reportsx(playerid, params[])
 CMD:acceptreport(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
+		return SendClientMessage(playerid, COLOR_RED, "You are not authorized!");
 
 	new
 		reportid, str[128];
 
 	if(sscanf(params, "d", reportid))return SendClientMessage(playerid, COLOR_RED, "[?]: /acceptreport [report id]");
-	if(reportid > MAX_REPORTS || !ReportData[reportid][reportExists]) return SendClientMessage(playerid, COLOR_RED, "Report pod navedenim ID-om ne postoji!");
+	if(reportid > MAX_REPORTS || !ReportData[reportid][reportExists]) return SendClientMessage(playerid, COLOR_RED, "There's no report with that ID!");
 
-	format(str, sizeof(str), "[REPORT] %s je preuzeo report ID %d od %s", GetName(playerid, false), reportid, ReportData[reportid][reportBy]);
+	format(str, sizeof(str), "[REPORT] %s took over report ID %d by %s", GetName(playerid, false), reportid, ReportData[reportid][reportBy]);
  	SendAdminNotification(MESSAGE_TYPE_INFO, str);
 
 	ClearReport(reportid);
