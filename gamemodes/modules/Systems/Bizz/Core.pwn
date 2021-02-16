@@ -347,7 +347,7 @@ public OnServerBizzesLoad()
         Iter_Add(Business, b);
     }
 
-    printf("MySQL Report: Businesses Loaded. [%d/%d]!", Iter_Count(Business), MAX_BIZZES);
+    printf("MySQL Report: Businesses Loaded. [%d/%d]", Iter_Count(Business), MAX_BIZZES);
     return 1;
 }
 
@@ -1153,12 +1153,12 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         bizz = CP_GetBizzID(checkpointid);
     
-    if(!Iter_Contains(Business, bizz) || Player_GetBizzCP(playerid) != bizz)
-        return 1;
-
-    DestroyBizzInfoTD(playerid);
-    Player_SetBizzCP(playerid, -1);
-    Player_SetInfrontBizz(playerid, INVALID_BIZNIS_ID);
+    if(Iter_Contains(Business, bizz))
+    {
+        DestroyBizzInfoTD(playerid);
+        Player_SetBizzCP(playerid, -1);
+        Player_SetInfrontBizz(playerid, INVALID_BIZNIS_ID);
+    }
     return 1;
 }
 

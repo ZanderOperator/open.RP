@@ -27,7 +27,7 @@ static
 	- Functions
 */
 
-CreateMessage(playerid, bool: status) 
+static CreateMessage(playerid, bool: status) 
 {
 	if(status == false)
 		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
@@ -48,20 +48,20 @@ CreateMessage(playerid, bool: status)
 	return 1;
 }
 
-GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE) 
+static GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE) 
 {
 	new 
-		prefix[21];
+		prefix[10];
 	switch(MESSAGE_TYPE) 
 	{
-		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[ ! ]";
-		case MESSAGE_TYPE_INFO: prefix = "~y~[ ! ]";
-		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[ ! ]";
+		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~!";
+		case MESSAGE_TYPE_INFO: prefix = "~y~!";
+		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~!";
 	}
 	return prefix;
 }
 
-DetermineMessageDuration(const message[])
+static DetermineMessageDuration(const message[])
 {
     // Calculate the amount of time needed to read the notification '''
     new wpm = 180, // Readable words per minute
@@ -74,9 +74,10 @@ DetermineMessageDuration(const message[])
     return delay + words_time + bonus;
 }
 
-SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
+static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 {
-    new len = strlen(message),
+    new 
+		len = strlen(message),
 		format_message[192],
 		final_msg[192];
 	
@@ -122,7 +123,7 @@ SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 	return PlayerTextDrawSetString(playerid, MessageTextdraw[playerid], final_msg);
 }
 
-SendFormatMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[], va_args<>) 
+stock SendFormatMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[], va_args<>) 
 {	
 	if(MESSAGE_TYPE == MESSAGE_TYPE_NONE)
 		return 1;
@@ -134,10 +135,10 @@ SendFormatMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[], v
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, format_message);
 }
 
-SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])  
+stock SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])  
 {	
 	if(MESSAGE_TYPE == MESSAGE_TYPE_NONE)
-		return (true);
+		return 1;
 	
 	_PopUpActivated[playerid] = true;	
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, message);
@@ -151,7 +152,7 @@ timer RemoveMessage[1000](playerid)
 	_PopUpActivated[playerid] = false;
 	CreateMessage(playerid, false);
 	stop PopUpTimer[playerid];
-	return (true);
+	return 1;
 }
 
 /*

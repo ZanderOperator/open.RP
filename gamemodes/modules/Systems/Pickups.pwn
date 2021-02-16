@@ -280,14 +280,14 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 {
     new 
-        pickupid = CP_GetBizzID(checkpointid);
-    
-    if(!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
-        return 1;
+        pickupid = CP_GetPickupID(checkpointid);
 
-    Player_SetPickupCP(playerid, -1);
-    Player_SetInfrontPickup(playerid, -1);
-    return 1;
+    if(Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
+	{
+    	Player_SetPickupCP(playerid, -1);
+    	Player_SetInfrontPickup(playerid, -1);
+	}
+	return 1;
 }
 
 

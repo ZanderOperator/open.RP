@@ -298,6 +298,21 @@ static GetVehiclesForIllegalGarages(garage)
 	{
 		if(IsValidDynamicObject(IllegalGarage[garage][igHeader]))
 			DestroyDynamicObject(IllegalGarage[garage][igHeader]);
+
+		// Vehicle names as Board Text objects removal
+		if(IsValidDynamicObject(IllegalGarage[garage][igText][0]))
+			DestroyDynamicObject(IllegalGarage[garage][igText][0]);
+		if(IsValidDynamicObject(IllegalGarage[garage][igText][1]))
+			DestroyDynamicObject(IllegalGarage[garage][igText][1]);
+		if(IsValidDynamicObject(IllegalGarage[garage][igText][2]))
+			DestroyDynamicObject(IllegalGarage[garage][igText][2]);
+		if(IsValidDynamicObject(IllegalGarage[garage][igText][3]))
+			DestroyDynamicObject(IllegalGarage[garage][igText][3]);
+		if(IsValidDynamicObject(IllegalGarage[garage][igText][4]))
+			DestroyDynamicObject(IllegalGarage[garage][igText][4]);
+		if(IsValidDynamicObject(IllegalGarage[garage][igText][5]))
+			DestroyDynamicObject(IllegalGarage[garage][igText][5]);
+
 		IllegalGarage[garage][igHeader] = CreateDynamicObject(18659, bX, bY, hZ, 0.000, 0.000, rotZ, -1, -1, -1, 300.000, 300.000);
 		SetDynamicObjectMaterialText(IllegalGarage[garage][igHeader], 0, "Not recieving cars!", 140, "courier", 42, 1, -1, 0, 1);
 		return 0;

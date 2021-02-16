@@ -231,7 +231,7 @@ public OnHouseGaragesLoad()
         CreateGarageEnter(row);
         Iter_Add(Garage, row);
     }
-    printf("MySQL Report: Garages Loaded. [%d/%d]!", num_rows, MAX_GARAGES);
+    printf("MySQL Report: Garages Loaded. [%d/%d]", num_rows, MAX_GARAGES);
     return 1;
 }
 

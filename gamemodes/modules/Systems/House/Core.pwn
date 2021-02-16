@@ -1398,12 +1398,12 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         house = CP_GetHouseID(checkpointid);
     
-    if(!Iter_Contains(House, house) || Player_GetHouseCP(playerid) != house)
-        return 1;
-
-    DestroyHouseInfoTD(playerid);
-    Player_SetHouseCP(playerid, -1);
-    Player_SetInfrontHouse(playerid, INVALID_HOUSE_ID);
+    if(Iter_Contains(House, house))
+    {  
+        DestroyHouseInfoTD(playerid);
+        Player_SetHouseCP(playerid, -1);
+        Player_SetInfrontHouse(playerid, INVALID_HOUSE_ID);
+    }
     return 1;
 }
 
