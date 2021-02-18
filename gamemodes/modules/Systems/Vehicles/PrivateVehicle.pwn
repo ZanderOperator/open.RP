@@ -257,7 +257,7 @@ new
 	BreakLockVehicleID	[MAX_PLAYERS],
 	BreakTrunkVehicleID	[MAX_PLAYERS];
 
-new const VehicleColoursTableRGB[256][] = {
+static const VehicleColoursTableRGB[256][] = {
 	"000000", "F5F5F5", "2A77A1", "840410", "263739", "86446E", "D78E10", "4C75B7", "BDBEC6", "5E7072",
 	"46597A", "656A79", "5D7E8D", "58595A", "D6DAD6", "9CA1A3", "335F3F", "730E1A", "7B0A2A", "9F9D94",
 	"3B4E78", "732E3E", "691E3B", "96918C", "515459", "3F3E45", "A5A9A7", "635C5A", "3D4A68", "979592",
@@ -4347,7 +4347,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 
 					mysql_fquery(g_SQL, 
 						"INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety,\n\ 
-							offsetz, offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', %d, %f, %f, %f, %f, %f, %f)", 
+							offsetz, offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f')", 
 						model,
 						VehicleInfo[AttachVehID][vWeaponSQLID][wslot], 
 						VehicleInfo[AttachVehID][vSQLID], 

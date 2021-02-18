@@ -108,12 +108,13 @@ hook function ResetPlayerVariables(playerid)
 GivePlayerPayCheck(playerid)
 {
 	new
-		profit 				= 0,
+		profit = 0,
 		p_dialog[2048],
 		f_dialog[256];
 		
 	format(p_dialog, sizeof(p_dialog), "\t{3C95C2}Financial Report - %s", GetName(playerid));
-	
+	strcat(p_dialog, f_dialog, sizeof(p_dialog));
+
 	if(PlayerMobile[playerid][pCryptoNumber] != 0 || PlayerMobile[playerid][pMobileCost] > 0)
 	{
 		format(f_dialog, sizeof(f_dialog), "\n{3C95C2}Subscription:");
