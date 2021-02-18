@@ -1,14 +1,14 @@
 #include <YSI_Coding\y_hooks>
 
-#define PROPERTY_TYPE_HOUSE			(1)
-#define PROPERTY_TYPE_BIZZ			(2)
-#define PROPERTY_TYPE_VEHICLE		(3)
-
-#define MAX_CREDIT_USAGE_TIME		(3600*3) // 3h
+const PROPERTY_TYPE_HOUSE			= 1;
+const PROPERTY_TYPE_BIZZ			= 2;
+const PROPERTY_TYPE_VEHICLE			= 3;
+const MAX_CREDIT_USAGE_TIME			= (3600*3); // 3h
+const MAX_SAVINGS_AMOUNT			= (200000); // Maximum of 200.000$ can be put on bank savings at once
+const MAX_SAVINGS_TIME				= 100; // 100 hours = 100% interest rate | 1 hour = 1% interest rate
 
 static 
-	PaymentBuyPrice[MAX_PLAYERS],
-	Bit16:r_SavingsMoney<MAX_PLAYERS> = {Bit16:0, ...};
+	PaymentBuyPrice[MAX_PLAYERS];
 
 Player_SetBuyPrice(playerid, amount)
 {
@@ -77,34 +77,34 @@ SavePlayerCredit(playerid)
 
 LoadPlayerSavings(playerid)
 {
-    mysql_pquery(g_SQL, 
+	inline LoadingPlayerSavings()
+	{
+		if(!cache_num_rows())
+		{
+			mysql_fquery_ex(g_SQL, 
+				"INSERT INTO player_savings(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
+					VALUES('%d', '0', '0', '0', '0')",
+				PlayerInfo[playerid][pSQLID]
+			);
+			return 1;
+		}
+		
+		cache_get_value_name_int(0,	"savings_cool"	, PlayerSavings[playerid][pSavingsCool]);
+		cache_get_value_name_int(0,	"savings_time"	, PlayerSavings[playerid][pSavingsTime]);
+		cache_get_value_name_int(0,	"savings_type"	, PlayerSavings[playerid][pSavingsType]);
+		cache_get_value_name_int(0,	"savings_money"	, PlayerSavings[playerid][pSavingsMoney]);
+		return 1;
+	}
+
+    MySQL_PQueryInline(g_SQL, 
+		using inline LoadingPlayerSavings,
         va_fquery(g_SQL, "SELECT * FROM player_savings WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadingPlayerSavings", 
         "i", 
         playerid
-   );
+   	);
     return 1;
 }
 
-Public: LoadingPlayerSavings(playerid)
-{
-    if(!cache_num_rows())
-    {
-        mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_savings(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
-                VALUES('%d', '0', '0', '0', '0')",
-            PlayerInfo[playerid][pSQLID]
-       );
-        return 1;
-    }
-    
-    cache_get_value_name_int(0,	"savings_cool"	, PlayerSavings[playerid][pSavingsCool]);
-    cache_get_value_name_int(0,	"savings_time"	, PlayerSavings[playerid][pSavingsTime]);
-    cache_get_value_name_int(0,	"savings_type"	, PlayerSavings[playerid][pSavingsType]);
-    cache_get_value_name_int(0,	"savings_money"	, PlayerSavings[playerid][pSavingsMoney]);
-   
-    return 1;
-}
 
 SavePlayerSavings(playerid)
 {
@@ -116,32 +116,46 @@ SavePlayerSavings(playerid)
         PlayerSavings[playerid][pSavingsType],
         PlayerSavings[playerid][pSavingsMoney],
         PlayerInfo[playerid][pSQLID]
-   );
+   	);
     return 1;
 }
 
 
 /*
-	####  ######     ###    ######## 
-	 ##  ##    ##   ## ##      ##    
-	 ##  ##        ##   ##     ##    
-	 ##   ######  ##     ##    ##    
-	 ##        ## #########    ##    
-	 ##  ##    ## ##     ##    ##    
-	####  ######  ##     ##    ##    
+
+	88                  db              88888888ba                         88         
+	88                 d88b       ,d    88      "8b                        88         
+	88                d8'`8b      88    88      ,8P                        88         
+	88 ,adPPYba,     d8'  `8b   MM88MMM 88aaaaaa8P' ,adPPYYba, 8b,dPPYba,  88   ,d8   
+	88 I8[    ""    d8YaaaaY8b    88    88""""""8b, ""     `Y8 88P'   `"8a 88 ,a8"    
+	88  `"Y8ba,    d8""""""""8b   88    88      `8b ,adPPPPP88 88       88 8888[      
+	88 aa    ]8I  d8'        `8b  88,   88      a8P 88,    ,88 88       88 88`"Yba,   
+	88 `"YbbdP"' d8'          `8b "Y888 88888888P"  `"8bbdP"Y8 88       88 88   `Y8a                                                                              
 */
-stock IsAtBank(playerid) {
-	return IsPlayerInRangeOfPoint(playerid, 50.0, 1396.864900, -23.823700, 1001.003800);
+
+
+stock IsAtBank(playerid) 
+{
+	if(!Bizz_Exists(Player_InBusiness(playerid)))
+		return 0;
+	new 
+		bizzid = Player_InBusiness(playerid);
+	if(BizzInfo[bizzid][bType] == BIZZ_TYPE_BANK)
+		return 1;
+	return 0; 
 }
 
 /*
-	##     ##  #######   #######  ##    ## 
-	##     ## ##     ## ##     ## ##   ##  
-	##     ## ##     ## ##     ## ##  ##   
-	######### ##  	 ## ##     ## #####    
-	##     ## ##     ## ##     ## ##  ##   
-	##     ## ##     ## ##     ## ##   ##  
-	##     ##  #######   #######  ##    ## 
+                                                          
+	88        88                         88                   
+	88        88                         88                   
+	88        88                         88                   
+	88aaaaaaaa88  ,adPPYba,   ,adPPYba,  88   ,d8  ,adPPYba,  
+	88""""""""88 a8"     "8a a8"     "8a 88 ,a8"   I8[    ""  
+	88        88 8b       d8 8b       d8 8888[      `"Y8ba,   
+	88        88 "8a,   ,a8" "8a,   ,a8" 88`"Yba,  aa    ]8I  
+	88        88  `"YbbdP"'   `"YbbdP"'  88   `Y8a `"YbbdP"'  
+
 */
 
 
@@ -165,7 +179,6 @@ hook function ResetPlayerVariables(playerid)
 	ResetCreditVars(playerid);
 	ResetSavingsVars(playerid);
 	PaymentBuyPrice[playerid] = 0;
-	Bit16_Set(r_SavingsMoney, playerid, 0);
 	return continue(playerid);
 }
 
@@ -183,13 +196,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch(listitem) 
 			{
 				case 0: 
-				{	// mali kredit
-					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 5 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
-					if(!IsPlayerCredible(playerid, 10000)) return 1;
+				{	// Small Loan(10.000$)
+					if(PlayerInfo[playerid][pLevel] < 5) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 5 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
+					if(!IsPlayerCredible(playerid, 10000)) 
+						return 1;
+					
 					BudgetToPlayerMoney(playerid, 10000);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 10 000$.");
-					format(string, sizeof(string), "* %s otvara kofer potom sprema 10.000$ u njega.", GetName(playerid, true));
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Congratulations, you just got an 10.000$ loan from bank.");
+					format(string, sizeof(string), "* %s takes 10.000$ from the bank counter.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					CreditInfo[playerid][cRate] = 1;
@@ -197,14 +214,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					CreditInfo[playerid][cAmount] = 10000;
 				}
 				case 1: 
-				{ 	// srednji kredit
-					if(PlayerInfo[playerid][pLevel] < 7) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 7 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
-					if(!IsPlayerCredible(playerid, 25000)) return 1;
+				{ 	// Medium Loan(25.000$)
+					if(PlayerInfo[playerid][pLevel] < 7) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 7 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
+					if(!IsPlayerCredible(playerid, 25000)) 
+						return 1;
 				
 					BudgetToPlayerMoney(playerid, 25000);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 25 000$.");
-					format(string, sizeof(string), "* %s otvara kofer potom sprema 25.000$ u njega.", GetName(playerid, true));
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Congratulations, you just got an 25.000$ loan from bank.");
+					format(string, sizeof(string), "* %s takes 25.000$ from the bank counter.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					CreditInfo[playerid][cCreditType] = 2;	
@@ -212,14 +232,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					CreditInfo[playerid][cAmount] = 25000;
 				}
 				case 2:  
-				{	// veliki kredit
-					if(PlayerInfo[playerid][pLevel] < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 10 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
-					if(!IsPlayerCredible(playerid, 50000)) return 1;
+				{	// Big Loan(50.000$)
+					if(PlayerInfo[playerid][pLevel] < 10) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 10 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
+					if(!IsPlayerCredible(playerid, 50000)) 
+						return 1;
 
 					BudgetToPlayerMoney(playerid, 50000);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 50 000$.");
-					format(string, sizeof(string), "* %s otvara kofer potom sprema 50.000$ u njega.", GetName(playerid, true));
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Congratulations, you just got an 50.000$ loan from bank.");
+					format(string, sizeof(string), "* %s takes 50.000$ from the bank counter.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					CreditInfo[playerid][cCreditType] = 3;	
@@ -227,44 +250,86 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					CreditInfo[playerid][cAmount] = 50000;
 				}
 				case 3:  
-				{	// veliki kredit v2
-					if(PlayerInfo[playerid][pLevel] < 15) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 15 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
+				{	// Largest Cash Loan(100.000$)
+					if(PlayerInfo[playerid][pLevel] < 15) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 15 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
 					if(!IsPlayerCredible(playerid, 100000)) return 1;
 
 					BudgetToPlayerMoney(playerid, 100000);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 100 000$.");
-					format(string, sizeof(string), "* %s otvara kofer potom sprema 100.000$ u njega.", GetName(playerid, true));
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Congratulations, you just got an 100.000$ loan from bank.");
+					format(string, sizeof(string), "* %s takes 100.000$ from the bank counter.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					CreditInfo[playerid][cCreditType] = 4;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 100000;
 				}
-				case 4: // Namjenski kredit za vozilo 
-				{
-					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 5 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
-					if(!IsPlayerCredible(playerid, 100000)) return 1;
+				case 4: 
+				{	// Vehicle Buyment(up to 50.000$)
+					if(PlayerInfo[playerid][pLevel] < 5) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 5 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
+					if(!IsPlayerCredible(playerid, 50000)) 
+						return 1;
 
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu vozila do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
-					format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu vozila.", GetName(playerid, true));
+					va_ShowPlayerDialog(playerid, 
+						0,
+						DIALOG_STYLE_MSGBOX,
+						"Vehicle Buyment Contract",
+						"\n"COL_WHITE"You just signed a vehicle buyment contract.\n\n\
+							Contract covers up to 50.000$ expenses in buying vehicle.\n\
+							You have "COL_YELLOW"%d "COL_WHITE"hours to fulfill your vehicle buying obligation.\n\n\
+							If you "COL_RED"fail "COL_WHITE"to buy new vehicle in %d hours,\n\
+							"COL_RED"Vehicle Buyment Contract becomes invalid!",
+						"Okay",
+						"",
+						(MAX_CREDIT_USAGE_TIME/3600),
+						(MAX_CREDIT_USAGE_TIME/3600)
+					);
+					format(string, 
+						sizeof(string), 
+						"* %s takes his pencil and signs Vehicle Buyment contract with bank.", 
+						GetName(playerid, true)
+					);
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					CreditInfo[playerid][cCreditType] = 5;	
 					CreditInfo[playerid][cRate] = 1;
-					CreditInfo[playerid][cAmount] = 100000;
+					CreditInfo[playerid][cAmount] = 50000;
 					CreditInfo[playerid][cUsed] = false;
 					CreditInfo[playerid][cTimestamp] = gettimestamp() + MAX_CREDIT_USAGE_TIME;
 				}
-				case 5: // Namjenski kredit za kucu 
-				{
-					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 5 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
-					if(!IsPlayerCredible(playerid, 100000)) return 1;
-
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu kuce do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
-					format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu kuce.", GetName(playerid, true));
+				case 5: 
+				{	// Vehicle Buyment(up to 100.000$)
+					if(PlayerInfo[playerid][pLevel] < 5) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 5 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
+					if(!IsPlayerCredible(playerid, 100000)) 
+						return 1;
+					
+					va_ShowPlayerDialog(playerid, 
+						0,
+						DIALOG_STYLE_MSGBOX,
+						"House Buyment Contract",
+						"\n"COL_WHITE"You just signed a house buyment contract.\n\n\
+							Contract covers up to 100.000$ expenses in buying house.\n\
+							You have "COL_YELLOW"%d "COL_WHITE"hours to fulfill your house buying obligation.\n\n\
+							If you "COL_RED"fail "COL_WHITE"to buy new house in %d hours,\n\
+							"COL_RED"House Buyment Contract becomes invalid!",
+						"Okay",
+						"",
+						(MAX_CREDIT_USAGE_TIME/3600),
+						(MAX_CREDIT_USAGE_TIME/3600)
+					);
+					format(string, 
+						sizeof(string), 
+						"* %s takes his pencil and signs House Leasing contract with bank.", 
+						GetName(playerid, true)
+					);
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					CreditInfo[playerid][cCreditType] = 6;	
@@ -275,13 +340,32 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 6: // Namjenski kredit za biznis 
 				{
-					if(PlayerInfo[playerid][pLevel] < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 10 da biste mogli podici ovaj tip kredita.");
-					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
-					if(!IsPlayerCredible(playerid, 100000)) return 1;
+					if(PlayerInfo[playerid][pLevel] < 10) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at least Level 10 to raise this credit.");
+					if(CreditInfo[playerid][cCreditType] >= 1) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To get this credit, you need to pay off previous one first.");
+					if(!IsPlayerCredible(playerid, 100000)) 
+						return 1;
 
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu biznisa do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
-					format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu biznisa.", GetName(playerid, true));
-					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					va_ShowPlayerDialog(playerid, 
+						0,
+						DIALOG_STYLE_MSGBOX,
+						"Business Buyment Contract",
+						"\n"COL_WHITE"You just signed a business buyment contract.\n\n\
+							Contract covers up to 100.000$ expenses in buying business.\n\
+							You have "COL_YELLOW"%d "COL_WHITE"hours to fulfill your business buying obligation.\n\n\
+							If you "COL_RED"fail "COL_WHITE"to buy new business in %d hours,\n\
+							"COL_RED"Business Buyment Contract becomes invalid!",
+						"Okay",
+						"",
+						(MAX_CREDIT_USAGE_TIME/3600),
+						(MAX_CREDIT_USAGE_TIME/3600)
+					);
+					format(string, 
+						sizeof(string), 
+						"* %s takes his pencil and signs Business Leasing contract with bank.", 
+						GetName(playerid, true)
+					);
 					
 					CreditInfo[playerid][cCreditType] = 7;	
 					CreditInfo[playerid][cRate] = 1;
@@ -295,9 +379,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ACCEPT_SAVINGS: 
 		{
-			if(!response) 
-				return ResetSavingsVars(playerid), SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Odbili ste staviti novac na stedni racun.");
-			
+			if(!response)
+			{ 
+				ResetSavingsVars(playerid);
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have refused to put money on savings.");
+			}
+
 			PlayerSavings[playerid][pSavingsCool] = 0;
 			PlayerSavings[playerid][pSavingsType] = PlayerSavings[playerid][pSavingsTime];
 			PlayerInfo[playerid][pBank] -= PlayerSavings[playerid][pSavingsMoney];
@@ -310,118 +397,281 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SavePlayerSavings(playerid);
 			
 			// Message
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerSavings[playerid][pSavingsMoney]), PlayerSavings[playerid][pSavingsTime], PlayerSavings[playerid][pSavingsTime]);
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_INFO, 
+				"You've invested %s from bank account to term savings lasting %d hours with %d% of interest.", 
+				FormatNumber(PlayerSavings[playerid][pSavingsMoney]), 
+				PlayerSavings[playerid][pSavingsTime], 
+				PlayerSavings[playerid][pSavingsTime]
+			);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/bank_savings.txt", "(%s) Player %s[%d] started savings in bank for %dh(Interest rate at the end of savings: %d%) and invested %d$.", 
+			Log_Write("logfiles/bank_savings.txt", 
+				"(%s) Player %s[%d] started savings in bank for %dh(Interest rate at the end of savings: %d%) and invested %d$.", 
 				ReturnDate(), 
 				GetName(playerid), 
 				PlayerInfo[playerid][pSQLID], 
 				PlayerSavings[playerid][pSavingsTime],
 				PlayerSavings[playerid][pSavingsTime],
-				PlayerSavings[playerid][pSavingsMoney]
+				FormatNumber(PlayerSavings[playerid][pSavingsMoney])
 			);
 			#endif
+			return 1;
 		}
 		case DIALOG_VEH_PAYMENT:
 		{
-			if(!response) // Metoda placanja bez kredita
+			if(!response) // Creditless purchase method
 			{
 				if(AC_GetPlayerMoney(playerid) < PaymentBuyPrice[playerid])
-					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ovog vozila(%d$)!", PaymentBuyPrice[playerid]);
+				{
+					return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"You don't have enough money on you to buy this vehicle. ~r~(%s)", 
+						FormatNumber(PaymentBuyPrice[playerid])
+					);
+				}
 				else return BuyVehicle(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
-				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Iznos kredita ne moze biti manji od 1$, ni veci od %d$!", CreditInfo[playerid][cAmount]);
-				return va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_ERROR, 
+					"Input can't be smaller than 1$ or larger than %s!", 
+					FormatNumber(CreditInfo[playerid][cAmount])
+				);
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_VEH_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"Vehicle Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via VBC(credit).\n\
+						Please input how much from the vehicle(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
 			}
-			new creditamount = strval(inputtext);
+			new 
+				creditamount = strval(inputtext);
 			if((AC_GetPlayerMoney(playerid) + creditamount) >= PaymentBuyPrice[playerid])
 			{
 				CreditInfo[playerid][cAmount] = creditamount;
 				CreditInfo[playerid][cUsed] = true;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (PaymentBuyPrice[playerid] - creditamount));
+				
 			 	BuyVehicle(playerid, true);
 				PaymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
+
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_SUCCESS, 
+					"You have sucessfully used %s from VSC credit. The rest of the price (%s) you paid from your hands!", 
+					FormatNumber(creditamount), 
+					FormatNumber(PaymentBuyPrice[playerid] - creditamount)
+				);
 			}
 			else
 			{
-				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Kredit od %d$ sa %d$ iz ruku nije dostatan da se namiri vrijednost vozila(%d$)!", creditamount, AC_GetPlayerMoney(playerid), PaymentBuyPrice[playerid]);
-				return va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_ERROR, 
+					"%s credit with %s that you have in hands is not enough to cover expenses of vehicle(%s)!", 
+					FormatNumber(creditamount), 
+					FormatNumber(AC_GetPlayerMoney(playerid)), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_VEH_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"Vehicle Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via VBC(credit).\n\
+						Please input how much from the vehicle(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
 			}
+			return 1;
 		}
 		case DIALOG_HOUSE_PAYMENT:
 		{
-			if(!response) // Metoda placanja bez kredita
+			if(!response) // Creditless purchase method
 			{
 				if(AC_GetPlayerMoney(playerid) < PaymentBuyPrice[playerid])
-					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ove kuce(%d$)!", PaymentBuyPrice[playerid]);
+				{
+					return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"You don't have enough money on you to buy this house. ~r~(%s)", 
+						FormatNumber(PaymentBuyPrice[playerid])
+					);
+				}
 				else return BuyHouse(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
-				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Iznos kredita ne moze biti manji od 1$, ni veci od %d$!", CreditInfo[playerid][cAmount]);
-				return va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_ERROR, 
+					"Credit amount can't be smaller than 1$, or larger than %d$!", 
+					FormatNumber(CreditInfo[playerid][cAmount])
+				);
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_HOUSE_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"House Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via HBC(credit).\n\
+						Please input how much from the house(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
 			}
-			new creditamount = strval(inputtext);
+			new 
+				creditamount = strval(inputtext);
 			if((AC_GetPlayerMoney(playerid) + creditamount) >= PaymentBuyPrice[playerid])
 			{
 				CreditInfo[playerid][cAmount] = creditamount;
 				CreditInfo[playerid][cUsed] = true;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (PaymentBuyPrice[playerid] - creditamount));
 				BuyHouse(playerid, true);
 				PaymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
+
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_SUCCESS, 
+					"You have sucessfully used %s from HBC credit. The rest of the price (%s) you paid from your hands!", 
+					FormatNumber(creditamount), 
+					FormatNumber(PaymentBuyPrice[playerid] - creditamount)
+				);
 			}
 			else
 			{
-				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Kredit od %d$ sa %d$ iz ruku nije dostatan da se namiri vrijednost kuce(%d$)!", creditamount, AC_GetPlayerMoney(playerid), PaymentBuyPrice[playerid]);
-				return va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_ERROR, 
+					"%s credit with %s that you have in hands is not enough to cover expenses of house. (%s)", 
+					FormatNumber(creditamount), 
+					FormatNumber(AC_GetPlayerMoney(playerid)), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_HOUSE_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"House Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via HBC(credit).\n\
+						Please input how much from the house(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
 			}
+			return 1;
 		}
 		case DIALOG_BIZZ_PAYMENT:
 		{
-			if(!response) // Metoda placanja bez kredita
+			if(!response) // Creditless purchase method
 			{
 				if(AC_GetPlayerMoney(playerid) < PaymentBuyPrice[playerid])
-					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ovog biznisa(%d$)!", PaymentBuyPrice[playerid]);
+				{
+					return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"You don't have enough money on you to buy this business. ~r~(%s)", 
+						FormatNumber(PaymentBuyPrice[playerid])
+					);
+				}
 				else return BuyBiznis(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
-				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Iznos kredita ne moze biti manji od 1$, ni veci od %d$!", CreditInfo[playerid][cAmount]);
-				return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_ERROR, 
+					"Input can't be smaller than 1$ or larger than %s!", 
+					FormatNumber(CreditInfo[playerid][cAmount])
+				);
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_BIZZ_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"Business Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via BBC(credit).\n\
+						Please input how much from the business(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
 			}
-			new creditamount = strval(inputtext);
+			new 
+				creditamount = strval(inputtext);
 			if((AC_GetPlayerMoney(playerid) + creditamount) >= PaymentBuyPrice[playerid])
 			{
 				CreditInfo[playerid][cAmount] = creditamount;
 				CreditInfo[playerid][cUsed] = true;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (PaymentBuyPrice[playerid] - creditamount));
 				BuyBiznis(playerid, true);
 				PaymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
+
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_SUCCESS, 
+					"You have sucessfully used %s from 	BBC credit. The rest of the price (%s) you paid from your hands!", 
+					FormatNumber(creditamount), 
+					FormatNumber(PaymentBuyPrice[playerid] - creditamount)
+				);
 			}
 			else
 			{
-				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Kredit od %d$ sa %d$ iz ruku nije dostatan da se namiri vrijednost biznisa(%d$)!", creditamount, AC_GetPlayerMoney(playerid), PaymentBuyPrice[playerid]);
-				return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_ERROR, 
+					"%s credit with %s that you have in hands is not enough to cover expenses of business. (%s)", 
+					FormatNumber(creditamount), 
+					FormatNumber(AC_GetPlayerMoney(playerid)), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_BIZZ_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"Business Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via BBC(credit).\n\
+						Please input how much from the business(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
 			}
+			return 1;
 		}
 	}
-	return (true);
+	return 0;
 }
 
-BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
+/*
+                                                      
+	88888888888                                           
+	88                                                    
+	88                                                    
+	88aaaaa 88       88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
+	88""""" 88       88 88P'   `"8a a8"     "" I8[    ""  
+	88      88       88 88       88 8b          `"Y8ba,   
+	88      "8a,   ,a88 88       88 "8a,   ,aa aa    ]8I  
+	88       `"YbbdP'Y8 88       88  `"Ybbd8"' `"YbbdP"'  
+
+*/
+
+static BankTransferMoney(playerid, giveplayerid, amount)
 {
-	new
-		btmpString[128];
-	PlayerInfo[playerid][pBank] -= MoneyAmmount;
-	PlayerInfo[giveplayerid][pBank] += MoneyAmmount;
-	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
-	va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
+	PlayerInfo[playerid][pBank] -= amount;
+	PlayerInfo[giveplayerid][pBank] += amount;
+
+	va_SendClientMessage(playerid, 
+		COLOR_YELLOW, 
+		"You have transferred "COL_LIGHTBLUE"%s "COL_YELLOW"on bank account of %s.", 
+		FormatNumber(amount), 
+		GetName(giveplayerid,true)
+	);
+	va_SendClientMessage(giveplayerid, 
+		COLOR_YELLOW, 
+		"%s transferred "COL_LIGHTBLUE"%s "COL_YELLOW"on your bank account.",
+		GetName(giveplayerid,true),
+		FormatNumber(amount)
+	);
 	
 	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pBank],
@@ -433,16 +683,25 @@ BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
 		PlayerInfo[giveplayerid][pSQLID]
 	);
 		
-	if(MoneyAmmount >= 1000) {
-		format(btmpString, sizeof(btmpString), "[A] Bank transfer: %s je prebacio $%d igracu %s", GetName(playerid, false), MoneyAmmount, GetName(giveplayerid, false));
+	if(amount >= 1000) 
+	{
+		new
+			btmpString[128];
+		format(btmpString, 
+			sizeof(btmpString), 
+			"[A] - Bank Transfer: %s transferred "COL_LIGHTBLUE"%s "COL_YELLOW" to player %s", 
+			GetName(playerid, false), 
+			FormatNumber(amount), 
+			GetName(giveplayerid, false)
+		);
 		ABroadCast(COLOR_YELLOW,btmpString,1);
 	}
 	#if defined MODULE_LOGS
-	Log_Write("/logfiles/bank.txt", "(%s) %s[SQLID: %d] transferred $%d to %s[SQLID: %d]",
+	Log_Write("/logfiles/bank.txt", "(%s) %s[SQLID: %d] transferred %s to %s[SQLID: %d]",
 		ReturnDate(),
 		GetName(playerid, false),
 		PlayerInfo[playerid][pSQLID],
-		MoneyAmmount,
+		FormatNumber(amount),
 		GetName(giveplayerid, false),
 		PlayerInfo[giveplayerid][pSQLID]
 	);
@@ -484,26 +743,62 @@ GetPlayerPaymentOption(playerid, type)
 		case BUY_TYPE_VEHICLE:
 		{
 			if(CreditInfo[playerid][cCreditType] == 5 && !CreditInfo[playerid][cUsed])
-				va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+			{
+				va_ShowPlayerDialog(playerid, 
+					DIALOG_VEH_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"Vehicle Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via VBC(credit).\n\
+						Please input how much from the vehicle(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
+			}
 			else return BuyVehicle(playerid);
 		}
 		case BUY_TYPE_HOUSE:
 		{
 			if(CreditInfo[playerid][cCreditType] == 6 && !CreditInfo[playerid][cUsed])
-				va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+			{
+				va_ShowPlayerDialog(playerid, 
+					DIALOG_HOUSE_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"House Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via HBC(credit).\n\
+						Please input how much from the house(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
+			}
 			else BuyHouse(playerid);
 		}
 		case BUY_TYPE_BIZZ:
 		{
 			if(CreditInfo[playerid][cCreditType] == 7 && !CreditInfo[playerid][cUsed])
-				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], PaymentBuyPrice[playerid]);
+			{
+				va_ShowPlayerDialog(playerid, 
+					DIALOG_BIZZ_PAYMENT, 
+					DIALOG_STYLE_INPUT, 
+					"Business Buyment Contract", 
+					"\n"COL_WHITE"You have "COL_LIGHTBLUE"%s"COL_WHITE" available via BBC(credit).\n\
+						Please input how much from the business(%s) you wish to pay via credit:", 
+					"Input", 
+					"No credit", 
+					FormatNumber(CreditInfo[playerid][cAmount]), 
+					FormatNumber(PaymentBuyPrice[playerid])
+				);
+			}
 			else BuyBiznis(playerid);
 		}
 	}
 	return 1;
 }
 
-IsPlayerCredible(playerid, amount)
+static IsPlayerCredible(playerid, amount)
 {
 	new 
 		bool:value = false;
@@ -513,39 +808,38 @@ IsPlayerCredible(playerid, amount)
 		if(FactionInfo[fid][fType] != FACTION_TYPE_LAW && FactionInfo[fid][fType] != FACTION_TYPE_LAW2 && FactionInfo[fid][fType] != FACTION_TYPE_FD && FactionInfo[fid][fType] != FACTION_TYPE_NEWS) 	
 			value = false;
 		else 
-		{
 			value = true;
-			goto end_point;
-		}
 	}
 	// Legal Employment
 	if(PlayerJob[playerid][pJob] >= 0 && !IsIllegalJob(playerid))
 	{
 		if(PlayerJob[playerid][pContractTime] > 15)
-		{
 			value = true;
-			goto end_point;
-		}
-		else value = false;
 	}
 	if(!value)
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne ispunjujete uvjete potrebne za uzimanje kredita - Posao sa +15h ugovorom ili clanstvo u legalnoj fakciji.");
-	
-	end_point:
-	if(value)
 	{
-		new 
-			ratevalue = amount / 250;
-		if((PaydayInfo[playerid][pProfit] + 100) < ratevalue && PlayerInfo[playerid][pBank] < (amount * 0.7))
-		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati barem %d$ profita po placi/70% iznosa kredita na banci da bi mogli redovno placati kredit.", (ratevalue + 100));
-			value = false;
-		}
+		SendClientMessage(playerid, 
+			COLOR_LIGHTRED, 
+			"You don't meet the terms for credit raising - Legal job with 15+ hour contract or legal faction employment."
+		);
+		return 0;
+	}	
+	new 
+		ratevalue = amount / 250;
+	if((PaydayInfo[playerid][pProfit] + 100) < ratevalue && PlayerInfo[playerid][pBank] < (amount * 0.7))
+	{
+		va_SendClientMessage(playerid, 
+			COLOR_LIGHTRED, 
+			"You should have profit above %s per hour/70% of credit(%s) on bank account to be credible for this credit.", 
+			FormatNumber(ratevalue + 100),
+			FormatNumber(amount)
+		);
+		value = false;
 	}
 	return value;
 }
 
-GetValuablePropertyType(playerid)
+static GetValuablePropertyType(playerid)
 {
 	new 
 		housevalue = 0, 
@@ -691,64 +985,80 @@ ResetCreditVars(playerid)
 	return 1;
 }
 
-ResetSavingsVars(playerid)
+static ResetSavingsVars(playerid)
  {
 	PlayerSavings[playerid][pSavingsCool] = 0;
 	PlayerSavings[playerid][pSavingsTime] = 0;
 	PlayerSavings[playerid][pSavingsType] = 0;
 	PlayerSavings[playerid][pSavingsMoney] = 0;
-	return (true);
+	return 1;
 }
 
 /*
-	 ######  ##     ## ########  
-	##    ## ###   ### ##     ## 
-	##       #### #### ##     ## 
-	##       ## ### ## ##     ## 
-	##       ##     ## ##     ## 
-	##    ## ##     ## ##     ## 
-	 ######  ##     ## ########  
+                                               
+  ,ad8888ba,  88b           d88 88888888ba,    
+ d8"'    `"8b 888b         d888 88      `"8b   
+d8'           88`8b       d8'88 88        `8b  
+88            88 `8b     d8' 88 88         88  
+88            88  `8b   d8'  88 88         88  
+Y8,           88   `8b d8'   88 88         8P  
+ Y8a.    .a8P 88    `888'    88 88      .a8P   
+  `"Y8888Y"'  88     `8'     88 88888888Y"'    
+
 */
+
 CMD:bank(playerid, params[])
 {
-	if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
-	if(PlayerDeath[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+	if(!IsAtBank(playerid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be in bank to use this command!");
+	if(PlayerDeath[playerid][pKilled])
+		 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't use this command if you're Wounded/DeathMode!");
 	
 	new
 		pick[15];
-	if(sscanf( params, "s[15] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "[?]: /bank [opcija]");
+	if(sscanf(params, "s[15] ", pick)) 
+	{
+		SendClientMessage(playerid, COLOR_RED, "[?]: /bank [option]");
 		SendClientMessage(playerid, COLOR_RED, "[!] withdraw - deposit - transfer");
 		SendClientMessage(playerid, COLOR_RED, "[!] credit - checkcredit - paycredit - savings - savingsinfo");
 		return 1;
 	}
-	if(!strcmp( pick, "withdraw", true)) {
+	if(!strcmp(pick, "withdraw", true)) 
+	{
 		new
 			moneys;
-		if(sscanf( params, "s[15]i", pick, moneys)) return SendClientMessage(playerid, COLOR_RED, "[?]: /bank withdraw [kolicina novca]");
-		if(moneys > PlayerInfo[playerid][pBank] || moneys < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca  na banci!");
+		if(sscanf( params, "s[15]i", pick, moneys)) 
+			return SendClientMessage(playerid, COLOR_RED, "[?]: /bank withdraw [amount of $]");
+		if(moneys > PlayerInfo[playerid][pBank] || moneys < 1) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(moneys));
 		
 		BankToPlayerMoney(playerid, moneys);
 		
-		new
-			tmpString[128];
-		format(tmpString, sizeof(tmpString), "[BANKA]: Podigli ste %d$ s vaseg racuna, Ukupno preostalo: %d$",
-			moneys, 
-			PlayerInfo[playerid][pBank] 
+		SendFormatMessage(playerid, 
+			MESSAGE_TYPE_SUCCESS, 
+			"[BANK]: You have withdrawn %s from your bank account.~n~Amount left: %s",
+			FormatNumber(moneys), 
+			FormatNumber(PlayerInfo[playerid][pBank]) 
 		);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, tmpString);
 		
 	}
-	else if(!strcmp( pick, "deposit", true)) {
+	else if(!strcmp(pick, "deposit", true)) 
+	{
 		new
 			moneys;
-			
-		if(sscanf( params, "s[15]i", pick, moneys)) return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank deposit [kolicina novca]");
-		if(moneys > AC_GetPlayerMoney(playerid) || moneys < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca");
+		if(sscanf(params, "s[15]i", pick, moneys)) 
+			return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank deposit [amount of $]");
+		if(moneys > AC_GetPlayerMoney(playerid) || moneys < 1) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s with you!", FormatNumber(moneys));
 		
 		PlayerToBankMoney(playerid, moneys);
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "[BANKA]: Uspjesno ste stavili %d$ na bankovni racun. Novi iznos: %d$", moneys, PlayerInfo[playerid][pBank]);
+		SendFormatMessage(playerid, 
+			MESSAGE_TYPE_SUCCESS, 
+			"[BANK]: You've sucessfully deposited %s on your bank account.~n~New balance: %s", 
+			FormatNumber(moneys), 
+			FormatNumber(PlayerInfo[playerid][pBank])
+		);
 		
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/bank_deposit.txt", "(%s) Player %s[%d] deposited %d$ in his bank account. [Old state]: %d$ | [New state]: %d$ ", 
@@ -761,73 +1071,146 @@ CMD:bank(playerid, params[])
 		);
 		#endif
 	}
-	else if(!strcmp( pick, "transfer", true)) {
+	else if(!strcmp(pick, "transfer", true)) 
+	{
 		new
-			moneys, giveplayerid;
-		if(sscanf( params, "s[15]ui", pick, giveplayerid, moneys)) return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank transfer [Playerid / Part of name][iznos]");
-		if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 2+!");
-		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
-		if(moneys > 0 && PlayerInfo[playerid][pBank] >= moneys) 
-			BankTransferMoney(playerid, giveplayerid, moneys);
+			moneys, 
+			giveplayerid;
+		if(sscanf(params, "s[15]ui", pick, giveplayerid, moneys)) 
+			return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank transfer [Playerid / Part of name][amount]");
+		if(PlayerInfo[playerid][pLevel] < 2) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be Level 2+!");
+		if(giveplayerid == INVALID_PLAYER_ID) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online.");
+		if(moneys > PlayerInfo[playerid][pBank]|| moneys < 1) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(moneys));
 		
-		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi iznos transakcije!");
+		BankTransferMoney(playerid, giveplayerid, moneys);
 	}
 	else if(!strcmp(pick, "credit", true))
 	{
-		if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristit ovu komandu !");
-		ShowPlayerDialog(playerid, DIALOG_CREDIT, DIALOG_STYLE_LIST, "Odabir kredita:", "Kredit [10.000{088A08}$] (Potreban level: {F29A0C}5+)\nKredit [25.000{088A08}$] (Potreban level: {F29A0C}7+)\nKredit [50.000{088A08}$] (Potreban level: {F29A0C}10+)\nKredit [100.000{088A08}$] (Potreban level: {F29A0C}15+)\nKredit za vozilo[Do 100.000{088A08}$] (Potreban level: {F29A0C}5+)\nKredit za kucu[Do 100.000{088A08}$] (Potreban level: {F29A0C}5+)\nKredit za Biznis [100.000{088A08}$] (Potreban level: {F29A0C}10+)", "Izaberi", "Izadji");
+		if(!IsAtBank(playerid)) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at the bank if you want to use this command!");
+		ShowPlayerDialog(playerid, 
+			DIALOG_CREDIT, 
+			DIALOG_STYLE_LIST, 
+			"Choose your credit:", 
+			"Credit [10.000{088A08}$] (Level required: {F29A0C}5+)\n\
+				Credit [25.000{088A08}$] (Level required: {F29A0C}7+)\n\
+				Credit [50.000{088A08}$] (Level required: {F29A0C}10+)\n\
+				Credit [100.000{088A08}$] (Level required: {F29A0C}15+)\n\
+				Vehicle Buyment Contract[Up to 50.000{088A08}$] (Level required: {F29A0C}5+)\n\
+				House Buyment Contract[Up to 100.000{088A08}$] (Level required: {F29A0C}5+)\n\
+				Business Buyment Contract[Up to100.000{088A08}$] (Level required: {F29A0C}10+)", 
+			"Choose", 
+			"Exit"
+		);
 	}
 	else if(!strcmp(pick, "checkcredit", true))
 	{
+		if(!IsAtBank(playerid)) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at the bank if you want to use this command!");
+		if(CreditInfo[playerid][cCreditType] == 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have an active credit.");
+
 		new 
-			ostatak = (250) - (CreditInfo[playerid][cRate]);
-		if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristit ovu komandu !");
-		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas podignut kredit.");
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "[BANKA]: Preostalo vam je %d(%d neplacenih) rata od %d za otplatu kredita. Iznos kredita je %d$.", ostatak, CreditInfo[playerid][cUnpaid], CreditInfo[playerid][cAmount]);
+			rest = 250 - CreditInfo[playerid][cRate];
+		SendFormatMessage(playerid, 
+			MESSAGE_TYPE_INFO, 
+			"[BANK]: You have %d(%d in debt/owed) rates of credit(Total %d) to pay off credit.~n~Credit amount: %s.", 
+			rest, 
+			CreditInfo[playerid][cUnpaid], 
+			FormatNumber(CreditInfo[playerid][cAmount])
+		);
 		return 1;
 	}
 	else if(!strcmp(pick, "savings", true))
 	{
-		if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristit ovu komandu !");
-		new money, time, buffer[128];
-		if(sscanf(params, "s[15]ii", pick, time, money)) {
-			SendClientMessage(playerid, COLOR_RED, "[?]: /bank savings [vrijeme][svota]");
-			SendClientMessage(playerid, COLOR_RED, "OPTION: Vrijeme: 10 - 100 In Game sati(1 sat = 1% kamate) | Svota: 1$ - 200 000$");
+		if(!IsAtBank(playerid)) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be at the bank if you want to use this command!");
+		new 
+			money, 
+			time;
+		if(sscanf(params, "s[15]ii", pick, time, money)) 
+		{
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bank savings [time in hours][amount]");
+			va_SendClientMessage(playerid, 
+				COLOR_RED, "Time: 10 - %d In Game hours(1 hour = 1% interest rate) | Amount: 1$ - %s$",
+				MAX_SAVINGS_TIME,
+				FormatNumber(MAX_SAVINGS_AMOUNT)
+			);
 			return 1;
 		}
-		if(CreditInfo[playerid][cCreditType] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Jos niste otplatili svoj kredit te ne mozete zapoceti stednju.");
-		if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 3+ da koristite ovu komandu!");
-		if(PlayerSavings[playerid][pSavingsType] > 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate cekati kraj stednje!");
-		if(PlayerSavings[playerid][pSavingsCool]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate cekati jos %d paydayeva da uzmete novu stednju!", PlayerSavings[playerid][pSavingsCool]);
-		if((PlayerInfo[playerid][pBank] - money) < 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca na bankovnom racunu!");
-		if(money > 200001) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete stavljati vece svote od 200 000$!");
-		if(time < 10 || time > 101) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrijeme stednje ne moze biti manje od 1h, ni vece od 100h!");
-		
-		format(buffer, 128, "\nJeste li sigurni da zelite staviti %s na vas stedni racun?", FormatNumber(money));
-		ShowPlayerDialog(playerid, DIALOG_ACCEPT_SAVINGS, DIALOG_STYLE_MSGBOX, "* Savings - Confirm", buffer, "(da)", "Close");
+		if(CreditInfo[playerid][cCreditType] != 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You haven't paid your current credit off, you can't start term savings.");
+		if(PlayerInfo[playerid][pLevel] < 3) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must be Level 3+ to use this command");
+		if(PlayerSavings[playerid][pSavingsType] > 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Your current Term Savings must end before investing more money!");
+		if(PlayerSavings[playerid][pSavingsCool])
+		{
+			return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"You have to wait %d hours to start new savings!", 
+						PlayerSavings[playerid][pSavingsCool]
+			);
+		}
+		if(money > PlayerInfo[playerid][pBank]|| money < 1) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(money));
+		if(money > (MAX_SAVINGS_AMOUNT))
+		{ 
+			return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"You can't invest more than %s in savings!", 
+						FormatNumber(MAX_SAVINGS_AMOUNT)
+			);
+		}
+		if(time < 10 || time > MAX_SAVINGS_TIME) 
+		{
+			return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"Duration of savings can't be less than 10, or more than %d!", 
+						MAX_SAVINGS_TIME
+			);
+		}
+		va_ShowPlayerDialog(playerid, 
+			DIALOG_ACCEPT_SAVINGS, 
+			DIALOG_STYLE_MSGBOX, 
+			"Bank Term Savings", 
+			"\nAre you sure you want to put %s on your bank term savings for %d hours?", 
+			"Yes", 
+			"No",
+			FormatNumber(money),
+			time
+		);
 		
 		PlayerSavings[playerid][pSavingsTime] = time;
 		PlayerSavings[playerid][pSavingsMoney] = money;
 	}
 	else if(!strcmp(pick, "savingsinfo", true))
 	{
-		if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 3+ da koristite ovu komandu!");
-		if(PlayerSavings[playerid][pSavingsType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivnu stednju!");
-		new bankstring[128];
+		if(PlayerInfo[playerid][pLevel] < 3) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must be Level 3+ to use this command");
+		if(PlayerSavings[playerid][pSavingsType] == 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have an active term savings!");
 
-		format(bankstring, sizeof(bankstring), "[BANKA]: Iznos orocene stednje: [%d$] | [%d] paydaya do kraja orocene stednje | Kamatna stopa: [%d %]", 
-			PlayerSavings[playerid][pSavingsMoney],
+		SendFormatMessage(playerid,
+			MESSAGE_TYPE_INFO,
+			"[BANK]: Balance on Term Savings: [%s] | [%d] hours untill end | Interest rate: [%d%]", 
+			FormatNumber(PlayerSavings[playerid][pSavingsMoney]),
 			PlayerSavings[playerid][pSavingsTime], 
-			PlayerSavings[playerid][pSavingsType]);
-		
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, bankstring);
+			PlayerSavings[playerid][pSavingsType]
+		);
 		return 1;
 	}
 	else if(!strcmp(pick, "paycredit", true))
 	{
-		if(PlayerDeath[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ti nemas dignut kredit");
-		if(CreditInfo[playerid][cCreditType] > 4 && !CreditInfo[playerid][cUsed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Jos uvijek niste iskoristili namjenski kredit, prvo obavite kupovinu!");
+		if(PlayerDeath[playerid][pKilled])
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't use this command if you're Wounded/DeathMode!");
+		if(CreditInfo[playerid][cCreditType] == 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have an active credit!");
+		if(CreditInfo[playerid][cCreditType] > 4 && !CreditInfo[playerid][cUsed]) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You didn't fulfill your purchasement obligation!");
 		
 		new 
 			rest = (250 - CreditInfo[playerid][cRate]), 
@@ -836,30 +1219,61 @@ CMD:bank(playerid, params[])
 			
 		if(sscanf(params, "s[15]i", pick, cashdeposit)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "[?]: /bank paycredit [kolicina rata]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /bank paycredit [amount of rates]");
 			if(CreditInfo[playerid][cUnpaid] > 0)
-				va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Imate %d neplacenih rata kredita, tako da se prvo ona podmiruju!", CreditInfo[playerid][cUnpaid]);
-			va_SendClientMessage(playerid, COLOR_RED, "[!] Imate jos %d rata za otplatiti.", rest);
+			{
+				va_SendClientMessage(playerid, 
+					COLOR_LIGHTRED, 
+					"[BANK]: You have %d unpaid(owed) credit rates, so paying will be prioritized on settling that debt.", 
+					CreditInfo[playerid][cUnpaid]
+				);
+			}
+			va_SendClientMessage(playerid, COLOR_RED, "[!]: You have %d credit rates to pay off.", rest);
 			return 1;
 		}
-		if(AntiSpamInfo[playerid][asCreditPay] > gettimestamp()) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BANK_CREDITPAY);
-		if(cashdeposit > rest || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata !");
-		
+		if(AntiSpamInfo[playerid][asCreditPay] > gettimestamp())
+		{
+			return SendFormatMessage(playerid, 
+						MESSAGE_TYPE_ERROR, 
+						"[ANTI-SPAM]: Don't spamm with the command. Wait for %d seconds to continue!", 
+						ANTI_SPAM_BANK_CREDITPAY
+			);
+		}
+		if(cashdeposit > rest || cashdeposit < 1) 
+		{
+			return SendFormatMessage(playerid, 
+				MESSAGE_TYPE_ERROR, 
+				"Amount of rates can't be smaller than 1, or larger than %d!",
+				rest
+			);
+		}
 		if(CreditInfo[playerid][cUnpaid] > 0)
 		{
-			if(cashdeposit > CreditInfo[playerid][cUnpaid] || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko neplacenih rata !");
+			if(cashdeposit > CreditInfo[playerid][cUnpaid] || cashdeposit < 1) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have that many credit rates left!");
+
 			money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
 			if(AC_GetPlayerMoney(playerid) >= money) 
 			{
-				PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
+				PlayerToBudgetMoney(playerid, money); 
 				CreditInfo[playerid][cUnpaid] -= cashdeposit;
-				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata koje ste dugovali za $%d.", cashdeposit, money);
+
+				SendFormatMessage(playerid, 
+					MESSAGE_TYPE_INFO, 
+					"You paid for %d rates that you owed %s.", 
+					FormatNumber(cashdeposit), 
+					FormatNumber(money)
+				);
 				if(CreditInfo[playerid][cUnpaid] == 0)
-					SendClientMessage(playerid, COLOR_LIGHTBLUE, "[BANKA]: Uspjesno ste otplatili sve neplacene rate kredita. Nemojte se dovesti opet u istu situaciju.");
-					
+				{
+					SendClientMessage(playerid, 
+						COLOR_LIGHTBLUE, 
+						"[BANK]: You have sucessfully paid off all your owed credit rates."
+					);
+				}	
 				goto mysql_save;
 			}
-			else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
+			else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You need %s to pay off %d rates!", FormatNumber(money), cashdeposit);
 		}
 		switch(CreditInfo[playerid][cCreditType])
 		{
@@ -870,25 +1284,29 @@ CMD:bank(playerid, params[])
 			case 5 .. 7: money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
 		}
 		if(AC_GetPlayerMoney(playerid) < money)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You need %s to pay off %d rates!", FormatNumber(money), cashdeposit);
 
 		PlayerToBudgetMoney(playerid, money);
 		CreditInfo[playerid][cRate] += cashdeposit;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
+		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "You have paid %d rates of credit %s.", cashdeposit, FormatNumber(money));
 
 		if(CreditInfo[playerid][cRate] >= 250)
 		{
 			ResetCreditVars(playerid);
-			SendClientMessage(playerid, COLOR_RED, "[!] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
+			SendClientMessage(playerid, COLOR_RED, "[!]: You have just paid last of your credit! You can raise new one again.");
 		}
 
 		mysql_save:
 		SavePlayerCredit(playerid);
-		
 		#if defined MODULE_LOGS
-		Log_Write("/logfiles/credit_pay.txt", "(%s) %s paid %d credit rates for $%s",  ReturnDate(), GetName(playerid, false), cashdeposit, money);
+		Log_Write("/logfiles/credit_pay.txt", 
+			"(%s) %s paid %d credit rates for %s",  
+			ReturnDate(), 
+			GetName(playerid, false), 
+			cashdeposit, 
+			FormatNumber(money)
+		);
 		#endif
-		
 		AntiSpamInfo[playerid][asCreditPay] = gettimestamp() + ANTI_SPAM_BANK_CREDITPAY;
 		return 1;
 	}

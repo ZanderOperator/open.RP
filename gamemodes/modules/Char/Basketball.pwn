@@ -673,12 +673,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						{
 							basket = i;
 							BasketInfo[i][Player][j] = playerid;
-							goto end;
+							break;
 						}
 					}
 				}
 			}
-			end:
 			BasketInfo[basket][Players] ++;
 			Bit1_Set(PlayingBBall, playerid, true);
 			BasketID[playerid] = basket;

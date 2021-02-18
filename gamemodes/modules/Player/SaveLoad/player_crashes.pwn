@@ -52,22 +52,20 @@ timer SetPlayerCrash[6000](playerid)
 			SCRIPT_VERSION
 		);
 		ShowAdminMessage(playerid);
-		goto spawn_end;
 	}
 	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerAdminMessage[playerid][pAdmMsgConfirm] || isnull(PlayerAdminMessage[playerid][pAdminMsg])))
 	{
 		if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
 			Player_SetReward(playerid, true);
 		ShowPlayerUpdateList(playerid);
-		goto spawn_end;
 	}
-	else if(!isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm] && strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) == 0)
+	else if(!isnull(PlayerAdminMessage[playerid][pAdminMsg])
+		 && !PlayerAdminMessage[playerid][pAdmMsgConfirm] 
+		 && strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) == 0
+		)
 	{
 		ShowAdminMessage(playerid);
-		goto spawn_end;
 	}
-
-	spawn_end:	
 	SafeSpawned[playerid] = true;
 
 	AC_SetPlayerWeapons(playerid);

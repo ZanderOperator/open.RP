@@ -105,14 +105,19 @@ static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 				break;
 			}
 		}
-		if(!broken)
-			goto no_split;
-			
-		format(final_msg, sizeof(final_msg), "%s: ~w~%s~n~%s~n~", GetMessagePrefix(MESSAGE_TYPE), buffer, buffer2);
+		if(broken)
+		{			
+			format(final_msg, 
+				sizeof(final_msg), 
+				"%s: ~w~%s~n~%s~n~", 
+				GetMessagePrefix(MESSAGE_TYPE), 
+				buffer, 
+				buffer2
+			);
+		}
 	}
     else
 	{
-		no_split:
 		format(format_message, sizeof(format_message), "%s\n", message);
 		format(final_msg, sizeof(final_msg), "%s: ~w~%s", GetMessagePrefix(MESSAGE_TYPE), message);
 	}
