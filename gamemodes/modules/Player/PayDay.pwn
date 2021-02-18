@@ -595,14 +595,9 @@ GivePlayerPayCheck(playerid)
 	SavePlayerExperience(playerid);
 	
 	strcpy(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
-
-	if(!IsPlayerInAnyVehicle(playerid))
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, PaydayInfo[playerid][pPayDayDate], p_dialog, "Close", "");
-	else 
-		SendMessage(playerid, MESSAGE_TYPE_INFO, "Your PayDay has arrived. (( /payday ))");
-
 	strcpy(PaydayInfo[playerid][pPayDayDialog], p_dialog, 1536);
 	PaydayInfo[playerid][pPayDayMoney] = 0;
+	va_SendClientMessage(playerid, COLOR_WHITE, ""COL_LIGHTBLUE"[%s]: "COL_WHITE"Your PayDay has arrived. (( /payday ))", SERVER_NAME);
 	return 1;
 }
 
