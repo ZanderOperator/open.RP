@@ -289,7 +289,7 @@ GivePlayerPayCheck(playerid)
 						This is your %d. owed credit rate.\n\
 						If you posess more than 3 owed credit rate obligations,\n\
 						The Bank is allowed to seize "COL_RED"your properties.",
-					creditlost,
+					FormatNumber(creditlost),
 					CreditInfo[playerid][cUnpaid]
 				);
 				strcat(p_dialog, f_dialog, sizeof(p_dialog));
@@ -311,7 +311,6 @@ GivePlayerPayCheck(playerid)
 		}
 		SavePlayerCredit(playerid);
 	}
-	
 
 	if(PlayerSavings[playerid][pSavingsCool] > 0)
 	{
@@ -389,7 +388,7 @@ GivePlayerPayCheck(playerid)
 		BudgetToPlayerBankMoney(playerid, orgsalary);
 		profit += orgsalary; 			
 		orgbonus = floatround(factionbank * salarypercent);
-		FactionToPlayerBankMoney(playerid, FactionInfo[PlayerFaction[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
+		FactionToPlayerBankMoney(playerid, FactionInfo[PlayerFaction[playerid][pMember]][fType], orgbonus);
 		orgsalary += orgbonus;
 
 		format(f_dialog, sizeof(f_dialog), "\n\tSalary: "COL_GREEN"+%s (Bonus: %s)", FormatNumber(orgsalary), FormatNumber(orgbonus));
