@@ -115,9 +115,9 @@ CMD:hhelp(playerid, params[])
 // All
 CMD:alogin(playerid, params[])
 {
-	if(!PlayerInfo[playerid][pTempRank][0] && !PlayerInfo[playerid][pTempRank][1]) return SendClientMessage(playerid, COLOR_RED, "Niste admin/helper!");
-	if(!strlen(PlayerInfo[playerid][pTeamPIN])) return SendClientMessage(playerid, COLOR_RED, "Nemate sigurnosni PIN!");
-	if(PlayerInfo[playerid][pAdmin] || PlayerInfo[playerid][pHelper]) return SendClientMessage(playerid, COLOR_RED, "Vec imate postavljene rankove!");
+	if(!PlayerInfo[playerid][pTempRank][0] && !PlayerInfo[playerid][pTempRank][1]) return SendClientMessage(playerid, COLOR_RED, "You are not authorized to use this command!");
+	if(!strlen(PlayerInfo[playerid][pTeamPIN])) return SendClientMessage(playerid, COLOR_RED, "You don't have a PIN!");
+	if(PlayerInfo[playerid][pAdmin] || PlayerInfo[playerid][pHelper]) return SendClientMessage(playerid, COLOR_RED, "You already have the ranks set!");
 
 	new	pin[16];
 	if(sscanf(params, "s[16]", pin)) 
@@ -135,7 +135,7 @@ CMD:makehelper(playerid, params[])
 	new 
 		giveplayerid, level, teamPIN[12];
 	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[?]: /makehelper [Playerid / Part of name][level(1-4)]");
-	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
+	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Player's not connected!");
 	
 	if(!level) 
 	{
@@ -147,8 +147,8 @@ CMD:makehelper(playerid, params[])
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
 		PlayerInfo[giveplayerid][pHelper] 		= 0;
 		PlayerInfo[giveplayerid][pTeamPIN][0]	= EOS;
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Skinuli ste %s Game Helpera!", GetName(giveplayerid, false));
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Skinut vam je Game Helper od strane %s!", GetName(playerid, false));
+		va_SendClientMessage(playerid, COLOR_RED, "[!] You removed position of Game Helper from %s!", GetName(giveplayerid, false));
+		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] You've been removed from the position of Game Helper by %s!", GetName(playerid, false));
 		return 1;
 	}
 	
@@ -170,8 +170,8 @@ CMD:makehelper(playerid, params[])
 	#endif
 	
 	PlayerInfo[giveplayerid][pHelper] = PlayerInfo[giveplayerid][pTempRank][1] = level;
-	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Postavljeni ste za Game Helper od Administratora %s", GetName(playerid,false));
-	va_SendClientMessage(playerid, COLOR_RED, "[!]  Postavili ste %s za Game Helper.", GetName(giveplayerid,false));
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[!] You've been appointed to the positio of Game Helper by %s", GetName(playerid,false));
+	va_SendClientMessage(playerid, COLOR_RED, "[!]  You appointed %s Game Helper position.", GetName(giveplayerid,false));
 	return 1;
 }
 
@@ -180,27 +180,27 @@ CMD:inactivity(playerid, params[])
 	new choice[12], playername[24], giveplayerid, bool:online=false, days, reason[64];
 	
 	if(PlayerInfo[playerid][pAdmin] < 3)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Game Admin Level 3+!");
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin level 3+!");
 		
 	if(sscanf(params, "s[12] ", choice)) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "OPCIJE: add, remove, check, list");
+		SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity [option]");
+		SendClientMessage(playerid, COLOR_RED, "OPTIONS: add, remove, check, list");
 		return 1;
 	}
 	if(!strcmp(choice, "check", true))
 	{
 		if(sscanf(params, "s[12]s[24]", choice, playername))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity check [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity check [Player_Name]");
 			return 1;
 		}
 		new sqlid = ConvertNameToSQLID(playername);
 		if(sqlid == -1)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s ne postoji u bazi podataka.", playername);
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
 		if(!IsValidInactivity(sqlid))
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s nema registriranu neaktivnost u bazi podataka!");
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
 			
 		CheckInactivePlayer(playerid, sqlid);
 	}		
@@ -213,19 +213,19 @@ CMD:inactivity(playerid, params[])
 		new startstamp, endstamp;
 		if(sscanf(params, "s[12]s[24]is[64]", choice, playername, days, reason))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity add [Ime_Prezime][broj dana][reason]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity add [Player_Name][days number][reason]");
 			return 1;
 		}
 		if(days < 1 || days > 45)
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Neaktivnost ne moze biti kraca od 1, ni dulja od 45 dana!");
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Inactivity cannot be shorter than 1, nor longer than 45 days!");
 		if(strlen(reason) < 1 || strlen(reason) >= 64)
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Razlog ne moze biti kraci od 1, ni dulji od 64 znaka!");
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Reason cannot be shorter than 1, nor longer than 64 characters!");
 		new sqlid = ConvertNameToSQLID(playername);
 		if(sqlid == -1)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s ne postoji u bazi podataka.", playername);
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
 		if(IsValidInactivity(sqlid))
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s vec ima registriranu neaktivnost u bazi podataka!");
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s already has registered inactivity in the database!");
 		
 		startstamp = gettimestamp();
 		endstamp = gettimestamp() + (3600 * 24 * days);
@@ -266,24 +266,24 @@ CMD:inactivity(playerid, params[])
 		
 		if(online)
 		{
-			va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Game Admin %s vam je odobrio neaktivnost od %d dana, razlog: %s.", GetName(playerid, false), days, reason);
-			SendClientMessage(giveplayerid, COLOR_LIGHTRED, "UPOZORENJE: Ukoliko se ulogirate na account za vrijeme neaktivnosti, ona se automatski ponistava!");
+			va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Game Admin %s has allowed you an inactivity of %d days, reason: %s.", GetName(playerid, false), days, reason);
+			SendClientMessage(giveplayerid, COLOR_LIGHTRED, "WARNING: If you log in to your account during inactivity, it is automatically canceled!");
 		}
-		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Uspjesno ste registrirali neaktivnost %s[SQLID: %d] na %d dana. Razlog: %s", playername, sqlid, days, reason);
+		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "You have successfully registered %s[SQLID: %d] inactivity of %d days. Reason: %s", playername, sqlid, days, reason);
 	}
 	if(!strcmp(choice, "remove", true))
 	{
 		if(sscanf(params, "s[12]s[24]", choice, playername))
 		{
-			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity remove [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity remove [Player_Name]");
 			return 1;
 		}
 		new sqlid = ConvertNameToSQLID(playername);
 		if(sqlid == -1)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s ne postoji u bazi podataka.", playername);
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
 		if(!IsValidInactivity(sqlid))
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s nema ima registriranu neaktivnost u bazi podataka!");
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
 		
 		foreach(new i : Player)
 		{
@@ -312,9 +312,9 @@ CMD:inactivity(playerid, params[])
 		#endif
 		
 		if(online)
-			va_SendClientMessage(giveplayerid, COLOR_LIGHTRED, "Game Admin %s vam je ponistio registriranu neaktivnost.", GetName(playerid, false));
+			va_SendClientMessage(giveplayerid, COLOR_LIGHTRED, "Game Admin %s has canceled your registered inactivity.", GetName(playerid, false));
 			
-		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Uspjesno ste ponistili registriranu neaktivnost %s[SQLID: %d]", playername, sqlid);
+		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "You have successfully canceled %s's[SQLID: %d] registered inactivity.", playername, sqlid);
 	}
 	return 1;
 }
@@ -322,10 +322,10 @@ CMD:inactivity(playerid, params[])
 CMD:hon(playerid, params[])
 {
 	if(Helper_OnDuty(playerid))
-		return SendClientMessage(playerid,COLOR_RED, "Vec ste na Helper duznosti!");
+		return SendClientMessage(playerid,COLOR_RED, "You are already on Helper duty!");
     if(PlayerInfo[playerid][pHelper] >= 1)
 	{
-		SendClientMessage(playerid,COLOR_RED, "[!] Sada si na Helper duznosti!");
+		SendClientMessage(playerid,COLOR_RED, "[!] You're on Helper duty now!");
 		Helper_SetOnDuty(playerid, true);
         SetPlayerColor(playerid, COLOR_HELPER);
 		SetPlayerHealth(playerid, 100);
@@ -340,10 +340,10 @@ CMD:hon(playerid, params[])
 CMD:hoff(playerid, params[])
 {
     if(!Helper_OnDuty(playerid))
-		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
+		return SendClientMessage(playerid,COLOR_RED, "You are not on Helper duty!");
     if(PlayerInfo[playerid][pHelper] >= 1)
 	{
-		SendClientMessage(playerid,COLOR_RED, "[!] Vise nisi na Helper duznosti!");
+		SendClientMessage(playerid,COLOR_RED, "[!] You are no longer on Helper duty!");
 		Helper_SetOnDuty(playerid, false);
         SetPlayerColor(playerid,TEAM_HIT_COLOR);
 		SetPlayerArmour(playerid, 0);
@@ -358,9 +358,9 @@ CMD:hoff(playerid, params[])
 CMD:hm(playerid, params[])
 {
 	if(!Helper_OnDuty(playerid))
-		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
+		return SendClientMessage(playerid,COLOR_RED, "You are not on Helper dutyi!");
 	if(Player_UsingMask(playerid))
-		return SendClientMessage(playerid,COLOR_RED, "Skinite masku prije nego sto koristite /hm!");
+		return SendClientMessage(playerid,COLOR_RED, "Remove the mask before using /hm!");
 	if(PlayerInfo[playerid][pHelper] >= 1)
 	{
 	    if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[?]: /hm [poruka]");
@@ -371,7 +371,7 @@ CMD:hm(playerid, params[])
 		Log_Write("/logfiles/a_adminmessage.txt", globalstring);
 		#endif
  	}
-    else SendClientMessage(playerid, COLOR_RED, "Niste autorizirani za koristenje ove komande!");
+    else SendClientMessage(playerid, COLOR_RED, "You are not authorized to use this command!");
     return 1;
 }
 
