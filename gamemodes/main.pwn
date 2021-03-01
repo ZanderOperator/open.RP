@@ -28,7 +28,7 @@
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)
 
-//#define 	MODULE_LOGS											// Player/Game Admin Command/Actions logging feature 
+//#define MODULE_LOGS											// Player/Game Admin Command/Actions logging feature 
 
 // MySQL inline query functions
 #define MYSQL_USE_YINLINE						true

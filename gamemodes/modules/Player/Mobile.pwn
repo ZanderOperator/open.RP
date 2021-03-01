@@ -2660,12 +2660,6 @@ hook OnGameModeInit()
 	return 1;
 }
 
-hook OnPlayerConnect(playerid)
-{
-	StartCallTimestamp[playerid] = 0;
-	return 1;
-}
-
 hook function ResetPlayerVariables(playerid)
 {
 	HidePlayerMobile(playerid);

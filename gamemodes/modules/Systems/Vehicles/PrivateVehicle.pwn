@@ -4205,7 +4205,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerInfo[sellerid][pSQLID],
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],
-				ReturnVehicleName(GetVehicleModel(sellVehid)),
+				ReturnVehicleName(VehicleInfo[sellVehid][vModel]),
 				VehicleInfo[sellVehid][vSQLID],
 				FormatNumber(PlayerSellingPrice[playerid])
 			);
@@ -4346,8 +4346,8 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					AttachObjectToVehicle(VehicleInfo[AttachVehID][vWeaponObjectID][wslot], AttachVehID, finalx, finaly, ofz, fRotX, fRotY, ofaz);
 
 					mysql_fquery(g_SQL, 
-						"INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety,\n\ 
-							offsetz, offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f')", 
+						"INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety,\n\
+							offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f')", 
 						model,
 						VehicleInfo[AttachVehID][vWeaponSQLID][wslot], 
 						VehicleInfo[AttachVehID][vSQLID], 

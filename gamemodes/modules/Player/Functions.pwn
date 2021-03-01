@@ -908,16 +908,18 @@ ShowPlayerStats(playerid, targetid)
 {
 	new
 		tmpString[20],
-		motd[256], gender[15+1];
+		gender[10],
+		motd[256],
+		pDialog[1536];
 
-	switch(PlayerInfo[targetid][pSex])	{
+	switch(PlayerInfo[targetid][pSex])
+	{
 		case 0: format(gender, sizeof(gender), "Musko"); // re-bug
 		case 1: format(gender, sizeof(gender), "Musko");
 		case 2: format(gender, sizeof(gender), "Zensko");
 	}
 		
-    new pDialog[1500];
-	format(motd, sizeof(motd),"Datum: %s\n\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Mobile Nr.: [%d] | Crypto Nr.: [%d] | Novac: [$%d] | Banka: [$%d] n",
+	format(motd, sizeof(motd),"Datum: %s\n\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Mobile Nr.: [%d] | Crypto Nr.: [%d] | Novac: [$%d] | Banka: [$%d]\n",
 		ReturnDate(),
 		GetName(targetid,true),
 		gender,

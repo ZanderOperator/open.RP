@@ -1061,7 +1061,8 @@ CMD:bank(playerid, params[])
 		);
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/bank_deposit.txt", "(%s) Player %s[%d] deposited %d$ in his bank account. [Old state]: %d$ | [New state]: %d$ ", 
+		Log_Write("logfiles/bank_deposit.txt", 
+			"(%s) Player %s[%d] deposited %d$ in his bank account. [Old state]: %d$ | [New state]: %d$ ", 
 			ReturnDate(), 
 			GetName(playerid), 
 			PlayerInfo[playerid][pSQLID], 

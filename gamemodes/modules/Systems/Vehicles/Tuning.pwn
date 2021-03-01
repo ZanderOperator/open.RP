@@ -5,8 +5,10 @@
 #define D_CANCEL 		"Back"
 #define D_TEXT			"Paintjobs\nAuspuh\nPrednji branik\nStraznji branik\nKrov\nSpoiler\nBocni branici\nFelge\nHidraulika\nNitro"
 
-#define REMOVE_PRICE			200
-
+const MAX_COMPONENTS = 194;
+const MAX_COMPONENT_SLOTS = 14;
+const MAX_PAINTJOBS = 36;
+const REMOVE_PRICE	= 200;
 
 static 
 	PlayerText:TuningBuy[MAX_PLAYERS][14] = { PlayerText:INVALID_TEXT_DRAW, ... },
@@ -20,9 +22,10 @@ enum vPaintjobInfo
 	pPrice,
 	ppName[12]
 };
-#define NUMBER_TYPE_PAINTJOB 	36
+
+
 static const
-	pjInfo[NUMBER_TYPE_PAINTJOB][vPaintjobInfo] = {
+	pjInfo[MAX_PAINTJOBS][vPaintjobInfo] = {
 	{ 483, 0, 15000, "Paintjob 1"},
 	{ 534, 0, 15000, "Paintjob 1"},
 	{ 534, 1, 15000, "Paintjob 2"},
@@ -68,9 +71,6 @@ enum ComponentsInfo
 	cPrice,
 	cType
 };
-
-#define MAX_COMPONENTS				(194)
-#define MAX_COMPONENT_SLOTS			(14)
 
 static const
 	cInfo[MAX_COMPONENTS][ComponentsInfo] = {
@@ -270,7 +270,6 @@ static const
 	{ 1193, "Slamin Rear Bumper", 4000, CARMODTYPE_REAR_BUMPER }
 };
 
-
 enum tp_Info 
 {
 	tID,
@@ -442,7 +441,7 @@ stock CreatePlayerTuningTextDraws( playerid)
 
 stock DeletePlayerTuningTD(playerid)
 {
-	for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++) 
+	for(new i = 0; i < MAX_COMPONENT_SLOTS; i ++) 
 	{
 		PlayerTextDrawHide( playerid, TuningBuy[playerid][i]);
 		PlayerTextDrawDestroy( playerid, TuningBuy[playerid][i]);
@@ -543,7 +542,9 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 	} 
 	else 
 	{
-		if(!cache_num_rows()) return 1;
+		if(!cache_num_rows()) 
+			return 1;
+
 		cache_get_value_name_int(0, "spoiler"	, VehicleInfo[vehicleid][vSpoiler]);
 		cache_get_value_name_int(0, "hood"		, VehicleInfo[vehicleid][vHood]);
 		cache_get_value_name_int(0, "roof"		, VehicleInfo[vehicleid][vRoof]);
@@ -558,6 +559,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 		cache_get_value_name_int(0, "rvent"		, VehicleInfo[vehicleid][vRightVent]);
 		cache_get_value_name_int(0, "lvent"		, VehicleInfo[vehicleid][vLeftVent]);
 		cache_get_value_name_int(0, "paintjob"	, VehicleInfo[vehicleid][vPaintJob]);
+
 		SetVehicleTuning(vehicleid);
 	}
 	return 1;
@@ -565,7 +567,8 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 
 stock RemoveAllVehicleTuning(vehicleid)
 {
-	new componentid;
+	new 
+		componentid;
 	for (new i; i < 14; i++)
 	{
 		componentid = GetVehicleComponentInSlot(vehicleid, i);
@@ -938,16 +941,15 @@ stock GetVehicleCameraPos( vehicleid, &Float:x, &Float:y, &Float:z, Float:xoff=0
 
 stock TuningTDControl( playerid, bool:show) 
 {
-	if(show == true) 
+	if(show) 
 	{
-        for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++) 
+        for(new i = 0; i < MAX_COMPONENT_SLOTS; i ++) 
 			PlayerTextDrawShow( playerid, TuningBuy[playerid][i]);
 		ClickedTuningTD[playerid] = true;
-		
 	}
-	else if(show == false) 
+	else
 	{
-		for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++) 
+		for(new i = 0; i < MAX_COMPONENT_SLOTS; i ++) 
 			PlayerTextDrawHide( playerid, TuningBuy[playerid][i]);
 		ClickedTuningTD[playerid] = false;
 	}
@@ -985,7 +987,7 @@ stock ResetVehicleTuning(vehid)
 	}
 	new componentid;
 	ChangeVehiclePaintjob( vehid, 3);
-	for( new i; i < MAX_COMPONENT_SLOTS; i++) 
+	for(new i; i < MAX_COMPONENT_SLOTS; i++) 
 	{
 		componentid = GetVehicleComponentInSlot( vehid, i);
 		if(componentid != 0)
@@ -1023,7 +1025,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 	                case 0: 
 					{
-						for( new i = 0; i < NUMBER_TYPE_PAINTJOB; i++) 
+						for(new i = 0; i < MAX_PAINTJOBS; i++) 
 						{
 			                if(pjInfo[i][vehID] == GetVehicleModel( vehicleid)) 
 							{
@@ -1062,7 +1064,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 1: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_EXHAUST) 
 							{
@@ -1104,7 +1106,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 2: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_FRONT_BUMPER) 
 							{
@@ -1146,7 +1148,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 3: 
 					{ 
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_REAR_BUMPER) 
 							{
@@ -1189,7 +1191,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                case 4: 
 					{
 
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_ROOF) 
 							{
@@ -1232,7 +1234,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 5: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_SPOILER) 
 							{
@@ -1274,7 +1276,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 6: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_SIDESKIRT) 
 							{
@@ -1316,7 +1318,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 7: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_WHEELS)
 							{
@@ -1358,7 +1360,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 8: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_HYDRAULICS) 
 							{
@@ -1400,7 +1402,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                }
 	                case 9: 
 					{
-	                    for( new i = 0; i < MAX_COMPONENTS; i++) 
+	                    for(new i = 0; i < MAX_COMPONENTS; i++) 
 						{
 			                if(cInfo[i][cType] == CARMODTYPE_NITRO) 
 							{
@@ -1490,7 +1492,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					compid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid);
             
-	            for( new i = ( TPInfo[playerid][tID]+1); i < MAX_COMPONENTS; i++) 
+	            for(new i = ( TPInfo[playerid][tID]+1); i < MAX_COMPONENTS; i++) 
 				{
 					if(cInfo[i][cType] == TPInfo[playerid][tType]) 
 					{
@@ -1524,7 +1526,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					paintid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid);
 			    
-			    for( new i = ( TPInfo[playerid][tID]+1); i < NUMBER_TYPE_PAINTJOB; i++) 
+			    for(new i = ( TPInfo[playerid][tID]+1); i < MAX_PAINTJOBS; i++) 
 				{
 			    	if(pjInfo[i][vehID] == GetVehicleModel( vehicleid))
 					 {
@@ -1561,7 +1563,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					compid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid);
 
-	            for( new i = (TPInfo[playerid][tID]-1); i > 0; i--) 
+	            for(new i = (TPInfo[playerid][tID]-1); i > 0; i--) 
 				{
 					if(cInfo[i][cType] == TPInfo[playerid][tType]) 
 					{
@@ -1596,7 +1598,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					paintid = -1, 
 					vehicleid = GetPlayerVehicleID( playerid);
 
-			    for( new i = (TPInfo[playerid][tID]-1); i > 0; i--) 
+			    for(new i = (TPInfo[playerid][tID]-1); i > 0; i--) 
 				{
 			    	if(pjInfo[i][vehID] == GetVehicleModel( vehicleid)) 
 					{
