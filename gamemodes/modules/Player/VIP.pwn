@@ -17,9 +17,9 @@ Public: LoadingPlayerVIP(playerid)
     {
         mysql_fquery_ex(g_SQL, 
             "INSERT INTO player_vip_status(sqlid, vipRank, vipTime, dvehperms) \n\
-                VALUES('%d', '0', '0', '0', '0')",
+                VALUES('%d', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-       );
+       	);
         return 1;
     }
     cache_get_value_name_int(0, "vipRank"		, PlayerVIP[playerid][pDonateRank]);

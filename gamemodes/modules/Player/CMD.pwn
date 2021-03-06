@@ -392,7 +392,7 @@ CMD:exit(playerid, params[])
     {
         if(IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
         {
-            if(IsPlayerSafeBreaking(playerid))
+            if(Player_BreakingSafe(playerid))
                 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete izaci van dok ne obijete sef!");
 
             StopAudioStreamForPlayer(playerid);

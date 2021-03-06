@@ -80,7 +80,8 @@ static stock
 */
 
 // 32 bit
-static stock
+static
+	bool:BreakingSafe[MAX_PLAYERS],
 	PickPocketPlayer[MAX_PLAYERS],
 	PickPocketCool[MAX_PLAYERS],
 	PocketDialog[MAX_PLAYERS][5],
@@ -113,6 +114,12 @@ new
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
+
+bool:Player_BreakingSafe(playerid)
+{
+	return BreakingSafe[playerid];
+}
+
 /*
 	.88b  d88.  .d8b.  d888888b d8b   db 
 	88'YbdP88 d8' 8b   88'   888o  88 
@@ -246,27 +253,32 @@ static InitPlayerPocket(playerid, targetid)
 		buffer[256],
 		dialogPos = 0;
 		
-	if(AC_GetPlayerMoney(targetid) >  50) {
+	if(AC_GetPlayerMoney(targetid) >  50) 
+	{
 		format( buffer, 256, "Novac (%d$)\n", AC_GetPlayerMoney(targetid));
 		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_MONEY;
 		dialogPos++;
 	}
-	if(PlayerInfo[targetid][pClock]) {
+	if(PlayerInventory[targetid][pWatch]) 
+	{
 		format( buffer, 256, "%sSat\n", buffer);
 		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_WATCH;
 		dialogPos++;
 	}
-	if(PlayerInfo[targetid][pMobileNumber]) {
+	if(PlayerMobile[targetid][pMobileNumber]) 
+	{
 		format( buffer, 256, "%sMobitel\n", buffer);
 		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_MOBILE;
 		dialogPos++;
 	}
-	if(PlayerInfo[targetid][pCryptoNumber]) {
+	if(PlayerMobile[targetid][pCryptoNumber]) 
+	{
 		format( buffer, 256, "%sCrypto\n", buffer);
 		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_CRYPTO;
 		dialogPos++;
 	}
-	if(PlayerInfo[targetid][pMaskID] > 0) {
+	if(PlayerInventory[targetid][pMaskID] > 0) 
+	{
 		format( buffer, 256, "%sMaska\n", buffer);
 		PocketDialog[playerid][dialogPos] = DIALOG_TYPE_MASK;
 		dialogPos++;
@@ -332,7 +344,7 @@ static PickPocketTargetPlayer(playerid, type)
 				succeed = 1 + random(5);
 			if(succeed == 2 || succeed == 5) {
 				
-				PlayerInfo[targetid][pClock] = 0;
+				PlayerInventory[targetid][pWatch] = 0;
 				
 				new
 					tmpString[108];
@@ -364,9 +376,9 @@ static PickPocketTargetPlayer(playerid, type)
 				succeed = 1 + random(5);
 			if(succeed == 1 || succeed == 2) {
 				
-				PlayerInfo[targetid][pMobileNumber]		= 0;
-				PlayerInfo[targetid][pMobileModel]		= 0;
-				PlayerInfo[targetid][pMobileCost]		= 0;
+				PlayerMobile[targetid][pMobileNumber]		= 0;
+				PlayerMobile[targetid][pMobileModel]		= 0;
+				PlayerMobile[targetid][pMobileCost]			= 0;
 				
 				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 					PlayerInfo[targetid][pSQLID]
@@ -403,7 +415,7 @@ static PickPocketTargetPlayer(playerid, type)
 				succeed = 1 + random(5);
 			if(succeed == 4 || succeed == 5) 
 			{
-				PlayerInfo[targetid][pCryptoNumber]		= 0;
+				PlayerMobile[targetid][pCryptoNumber]		= 0;
 				
 				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 					PlayerInfo[targetid][pSQLID]
@@ -438,7 +450,7 @@ static PickPocketTargetPlayer(playerid, type)
 				succeed = 1 + random(5);
 			if(succeed == 3 || succeed == 2) {
 				
-				PlayerInfo[targetid][pMaskID]		= -1;		
+				PlayerInventory[targetid][pMaskID]		= -1;		
 				
 				new
 					tmpString[110];
@@ -755,7 +767,7 @@ stock static ShowSafeLockingTDs(playerid)
 
 stock static StartPlayerSafeBreaking(playerid)
 {
-	Bit1_Set( gr_SafeBreaking, playerid, true);
+	BreakingSafe[playerid] = true;
 	TogglePlayerControllable(playerid, false);
 	
 	SafeBreaking[playerid][sbLeft] 	= 0;
@@ -792,7 +804,7 @@ stock StopSafeBreaking(playerid)
 	SafeBreaking[playerid][sbJumpTop]	= 0;
 	
 	ClearAnimations(playerid);	
-	Bit1_Set( gr_SafeBreaking, playerid, false);
+	BreakingSafe[playerid] = false;
 	DestroySafeLockingTDs(playerid);
 	TogglePlayerControllable(playerid, true);
 	return 1;
@@ -901,27 +913,30 @@ CMD:sellgoods(playerid, params[])
 // SKILL 2 - HOUSE
 CMD:crack_alarm(playerid, params[])
 {
-	if(( PlayerJob[playerid][pJob] != JOB_BURGLAR) || GetPlayerSkillLevel(playerid) < 2) 
-		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if(PlayerJob[playerid][pJob] != JOB_BURGLAR || GetPlayerSkillLevel(playerid) < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Only burglars with Skill Level 2+ can use this command!");
 	new
 		house = Player_InfrontHouse(playerid);
-	if(!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar house checkpointa!");
-	if(house == INVALID_HOUSE_ID || house == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
-	if(!HouseInfo[house][hAlarm]) return SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kuca nema alarm!");
+	if(!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be inside house checkpoint!");
+	if(house == INVALID_HOUSE_ID || house == 0) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be in front of house!");
+	if(!HouseInfo[house][hAlarm]) 
+		return SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "House doesn't have an alarm!");
 
-	DestroyHouseInfoTD(playerid);
-	new
-		time,
-		words;
-		
-	switch( HouseInfo[house][hAlarm]) {
-		case 0, 1: 	{ time = 300; words = 20; } // 5 minute
-		case 2: 	{ time = 240; words = 16; } // 4 minute
-		case 3: 	{ time = 180; words = 14; }	// 3 minute
-		case 4: 	{ time = 120; words = 8;  }  // 2 minute
+	switch(random(10))
+	{
+		case 0..6:
+		{
+			HouseInfo[house][hAlarm] = 0;
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You've managed to deactivate alarm!");
+		}
+		case 7..9:
+		{
+			PlayHouseAlarm(house);
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have failed to crack the alarm, it activated, the police is notified!");
+		}
 	}
-	InitScrambling(playerid, words, time, SCRAMBLING_HOUSE);
-	TogglePlayerControllable(playerid, false);
 	return 1;
 }
 

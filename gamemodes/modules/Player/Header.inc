@@ -73,4 +73,4 @@ forward bool:Player_MobileOn(playerid);
 forward Player_SetMobileOn(playerid, bool:v);
 
 // AFK Timer
-forward Player_SetAFK(playerid, amount);
+//forward Player_SetAFK(playerid, amount);

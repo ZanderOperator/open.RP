@@ -31,7 +31,6 @@ const CHOP_SHOP_PRICE			= 60000; 	// 60,000$
 
 */
                                                
-
 static
 	Iterator:IllegalGarage<MAX_ILLEGAL_GARAGES>;
 

@@ -155,15 +155,15 @@
 #define SCRIPT_VERSION							#SERVER_NAME" v0.5.0.-"#GIT_REV
 
 // The rest of the defines
-#include "modules/Preincludes/Defines.inc"
+#include "modules\Preincludes/Defines.inc"
 // Enumerator Declarations
-#include "modules/Preincludes/Enumerators.inc"
+#include "modules\Preincludes/Enumerators.inc"
 // Globally used Arrays declarations
-#include "modules/Arrays/Core.inc"
+#include "modules\Arrays/Core.inc"
 // Main Header file - purpose is bypassing the include order
-#include "modules/Preincludes/Header.inc"
+#include "modules\Preincludes/Header.inc"
 // Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
-#include "modules/Preincludes/CustomHooks.inc"
+#include "modules\Preincludes/CustomHooks.inc"
 	
 
 /*
@@ -216,7 +216,6 @@ new
 //Players Vars
 //(rBits)
 new
-	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggedIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggingIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_NewUser				<MAX_PLAYERS>  = Bit1: false,
@@ -284,7 +283,6 @@ new
 	##     ## ##     ## ##     ## ##     ## ##       ##       ##    ##
 	##     ##  #######  ########   #######  ######## ########  ######
 */
-
 
 #include "modules/Server/Core.inc"
 #include "modules/Systems/Core.inc"

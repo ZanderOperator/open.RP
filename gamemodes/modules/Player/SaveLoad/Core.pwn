@@ -447,8 +447,8 @@ public RegisterPlayer(playerid) // TODO: mandatory checkup!
     mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (online,registered,register_date,name,password,teampin,email,\n\
-				secawnser,levels,age,sex,handMoney,bankMoney,casinocool) \n\
-				VALUES ('1','0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d','%d')",
+				secawnser,levels,age,sex,handMoney,bankMoney) \n\
+				VALUES ('1','0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pLastLogin],
 			GetName(playerid, false),
 			PlayerInfo[playerid][pPassword],
@@ -457,8 +457,8 @@ public RegisterPlayer(playerid) // TODO: mandatory checkup!
 			PlayerInfo[playerid][pAge],
 			PlayerInfo[playerid][pSex],
 			NEW_PLAYER_MONEY,
-			NEW_PLAYER_BANK,
-			5), 
+			NEW_PLAYER_BANK
+		), 
 		"OnAccountFinish", 
 		"i", 
 		playerid
@@ -478,8 +478,8 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pMuted] 			= true;
 	PlayerInfo[playerid][pAdmin] 			= 0;
 	PlayerInfo[playerid][pHelper] 			= 0; 
-	PlayerCoolDown[playerid][pCasinoCool]		= 5;
-	PlayerCoolDown[playerid][pCasinoCool]		= 5;
+	PlayerCoolDown[playerid][pCasinoCool]	= 5;
+	PlayerCoolDown[playerid][pCasinoCool]	= 5;
 
 	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
