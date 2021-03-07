@@ -6,31 +6,36 @@
 #define MODULE_BANS
 
 /*
-	########  ######## ######## #### ##    ## ########  ######
-	##     ## ##       ##        ##  ###   ## ##       ##    ##
-	##     ## ##       ##        ##  ####  ## ##       ##
-	##     ## ######   ######    ##  ## ## ## ######    ######
-	##     ## ##       ##        ##  ##  #### ##             ##
-	##     ## ##       ##        ##  ##   ### ##       ##    ##
-	########  ######## ##       #### ##    ## ########  ######
+
+ ,ad8888ba,                                                       
+ d8"'    `"8b                                     ,d               
+d8'                                               88               
+88             ,adPPYba,  8b,dPPYba,  ,adPPYba, MM88MMM ,adPPYba,  
+88            a8"     "8a 88P'   `"8a I8[    ""   88    I8[    ""  
+Y8,           8b       d8 88       88  `"Y8ba,    88     `"Y8ba,   
+ Y8a.    .a8P "8a,   ,a8" 88       88 aa    ]8I   88,   aa    ]8I  
+  `"Y8888Y"'   `"YbbdP"'  88       88 `"YbbdP"'   "Y888 `"YbbdP"'  
+
 */
-///////////////////////////////////////////////////////////////////
+
 const MIN_REASON_LEN		= 1;
 const MAX_REASON_LEN		= 22;
 
 /*
-	 ######  ########  #######   ######  ##    ##  ######
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
-	##          ##    ##     ## ##       ##  ##   ##
-	 ######     ##    ##     ## ##       #####     ######
-		  ##    ##    ##     ## ##       ##  ##         ##
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
-	 ######     ##     #######   ######  ##    ##  ######
+
+88888888888                                           
+88                                                    
+88                                                    
+88aaaaa 88       88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
+88""""" 88       88 88P'   `"8a a8"     "" I8[    ""  
+88      88       88 88       88 8b          `"Y8ba,   
+88      "8a,   ,a88 88       88 "8a,   ,aa aa    ]8I  
+88       `"YbbdP'Y8 88       88  `"Ybbd8"' `"YbbdP"'  
+                                                      
 */
-///////////////////////////////////////////////////////////////////
-stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
+
+stock HOOK_Ban(playerid, adminid, const reason[], days = -1)
 {
-	#pragma unused anticheat
 	new
 		forumname[MAX_PLAYER_NAME],
 		banString[128];
@@ -39,52 +44,53 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	{
 		if(days != -3)
 		{
-			format( banString, 128, "AdmCMD: %s is banned by Anti-Cheat. Reason: %s",
-				GetName( playerid, false),
+			format(banString, 128, "AdmCMD: %s is banned by Anti-Cheat. Reason: %s",
+				GetName(playerid, false),
 				reason
 			);
-			format( forumname, MAX_PLAYER_NAME, "Anti-Cheat");
+			format(forumname, MAX_PLAYER_NAME, "Anti-Cheat");
 		}
 		else
 		{
-		    format( banString, 128, "AdmCMD: Account %s is automatically locked by the server. Reason: %s",
-				GetName( playerid, false),
+		    format(banString, 128, "AdmCMD: Account %s is automatically locked by the server. Reason: %s",
+				GetName(playerid, false),
 				reason
 			);
-			format( forumname, MAX_PLAYER_NAME, "AutoServerLock");
+			format(forumname, MAX_PLAYER_NAME, "AutoServerLock");
 		}
 	}
 	else if(adminid != INVALID_PLAYER_ID) 
 	{
 		if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN) 
 		{
-			va_SendMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
+			va_SendMessage(adminid, 
+				MESSAGE_TYPE_ERROR, 
+				"Invalid reason input (%d[min]-%d[max] chars required).", 
+				MIN_REASON_LEN, 
+				MAX_REASON_LEN
+			);
 			return 1;
 		}
-		format( banString, 128, "AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
-			GetName( playerid, false),
+		format(banString, 128, "AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
+			GetName(playerid, false),
 			PlayerInfo[adminid][pForumName],
-			GetName( adminid, false),
+			GetName(adminid, false),
 			reason
 		);
 	}
-	SendClientMessageToAll( COLOR_RED, banString);
+	SendClientMessageToAll(COLOR_RED, banString);
 
 	new
 		unban_time;
-
 	if(days == -1)
 		unban_time = -1;
 	else if(days == -3)
 	    unban_time = -3;
-	else {
-		unban_time = days * 86400; //86400 je jedan dan u timestampu
+	else 
+	{
+		unban_time = days * 86400; // 86400 is one day in seconds
 		unban_time += gettimestamp();
 	}
-	new year, month, day, date[32];
-	getdate(year, month, day);
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
-
 
 	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE sqlid = '%d'",
 		unban_time,
@@ -96,11 +102,11 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
 			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
-		GetName( playerid, false),
-		ReturnPlayerIP( playerid),
+		GetName(playerid, false),
+		ReturnPlayerIP(playerid),
 		PlayerInfo[playerid][pForumName],
 		reason,
-		date,
+		ReturnDate(),
 		unban_time
 	);
 
@@ -108,7 +114,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	ExpInfo[playerid][eAllPoints] = 0;
 
 	PlayerInfo[playerid][pBanned] 	= 1;
-	BanMessage( playerid);
+	BanMessage(playerid);
 	return 1;
 }
 
@@ -116,51 +122,65 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 {
 	if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN) 
 	{
-		va_SendMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
+		va_SendMessage(adminid, 
+			MESSAGE_TYPE_ERROR, 
+			"Invalid reason input (%d[min]-%d[max] chars required).", 
+			MIN_REASON_LEN, 
+			MAX_REASON_LEN
+		);
 		return 1;
 	}
 	va_SendClientMessageToAll( COLOR_RED,"AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
-		GetName( playerid, false),
+		GetName(playerid, false),
 		PlayerInfo[adminid][pForumName],
-		GetName( adminid, false),
+		GetName(adminid, false),
 		reason
 	);
 
 	new
 		unban_time;
-
 	if(days == -1)
 		unban_time = -1;
-	else {
+	else 
+	{
 		unban_time = days * 60 * 60 * 24;
 		unban_time += gettimestamp();
 	}
-	new year, month, day, date[32];
-	getdate(year, month, day);
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	new sqlid,
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
+	inline BanAccount()
+	{
+		if(!cache_num_rows())
+			return SendMessage(adminid, MESSAGE_TYPE_ERROR, "That account doesn't exist.");
 
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_delete(result);
+		cache_get_value_name_int(0, "sqlid", sqlid);
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE name = '%e'",
-		unban_time,
-		reason,
-		playername
-	);
+		mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE name = '%e'",
+			unban_time,
+			reason,
+			playername
+		);
 
-	mysql_fquery_ex(g_SQL, 
-		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
-			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
-		sqlid,
-		playername,
-		playerip,
-		PlayerInfo[playerid][pForumName],
-		reason,
-		date,
-		unban_time
+		mysql_fquery(g_SQL, "UPDATE experience SET points = '0', allpoints = '0' WHERE sqlid = '%d'",
+			PlayerInfo[playerid][pSQLID]
+		);
+
+		mysql_fquery_ex(g_SQL, 
+			"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
+				VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
+			sqlid,
+			playername,
+			playerip,
+			PlayerInfo[playerid][pForumName],
+			reason,
+			ReturnDate(),
+			unban_time
+		);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,
+		using inline BanAccount, 
+		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername),
+		""
 	);
 	return 1;
 }
@@ -188,6 +208,7 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	new 
 		dformat[64];
 	format(dformat,sizeof dformat,"unbanip %s",playerip);
+
 	// Ensuring proper IP unban
 	SendRconCommand(dformat);
 	SendRconCommand(dformat);
@@ -198,8 +219,8 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s(%s) unbanned IP %s",
 		ReturnDate(),
-		GetName( adminid, false),
-		ReturnPlayerIP( adminid),
+		GetName(adminid, false),
+		ReturnPlayerIP(adminid),
 		playerip
 	);
 	#endif

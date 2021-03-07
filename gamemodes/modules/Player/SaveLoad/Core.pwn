@@ -1296,7 +1296,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			        va_SendClientMessage(playerid, COLOR_RED, "Please post an unban request on %s.", WEB_URL);
 
 					#if defined MODULE_BANS
-					HOOK_Ban(playerid, INVALID_PLAYER_ID, "Wrong safety answer", -3,  true);
+					HOOK_Ban(playerid, INVALID_PLAYER_ID, "Wrong safety answer", -3);
 					#endif
 					return 1;
 				}

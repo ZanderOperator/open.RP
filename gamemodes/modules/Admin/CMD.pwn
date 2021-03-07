@@ -11,74 +11,154 @@ static
 	Float:AdminMark5[MAX_PLAYERS][3];
 
 /*
-	 ######  ##     ## ########   ######  
-	##    ## ###   ### ##     ## ##    ## 
-	##       #### #### ##     ## ##       
-	##       ## ### ## ##     ##  ######  
-	##       ##     ## ##     ##       ## 
-	##    ## ##     ## ##     ## ##    ## 
-	 ######  ##     ## ########   ######  
+                                               
+  ,ad8888ba,  88b           d88 88888888ba,    
+ d8"'    `"8b 888b         d888 88      `"8b   
+d8'           88`8b       d8'88 88        `8b  
+88            88 `8b     d8' 88 88         88  
+88            88  `8b   d8'  88 88         88  
+Y8,           88   `8b d8'   88 88         8P  
+ Y8a.    .a8P 88    `888'    88 88      .a8P   
+  `"Y8888Y"'  88     `8'     88 88888888Y"'    
+
 */
 
 CMD:ahelp(playerid, params[])
 {
-	new p_dialog[2772], // 25.3.2020 - Runner
-		f_dialog[256];
-
 	if(PlayerInfo[playerid][pAdmin] == 0)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+
+	new p_dialog[2772],
+		f_dialog[256];
+
     if(PlayerInfo[playerid][pAdmin] >= 1)
 	{
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /alogin, /forumname, /lastdriver, /toga, /bhears, /a, /houseo, /bizo, /complexo, /checknetstats.");
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1]: /alogin, /forumname, /lastdriver, /toga, /bhears, /a, /houseo, /bizo, /complexo, /checknetstats"
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /rtc, /gotopos, /goto, /checklastlogin, /fly, /lt, /rt, /checkoffline, /count, /akill.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1]: /rtc, /gotopos, /goto, /checklastlogin, /fly, /lt, /rt, /checkoffline, /count, /akill."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /freeze, /unfreeze, /learn, /slap, /clearchat, /dmers, /masked, /setviwo, /recon, /reconoff.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1]: /freeze, /unfreeze, /learn, /slap, /clearchat, /dmers, /masked, /setviwo, /recon, /reconoff."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /return, /aon, /pweapons, /am, /mute, /setint, /check, /kick, /approveobjects, /apm.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1]: /return, /aon, /pweapons, /am, /mute, /setint, /check, /kick, /approveobjects, /apm."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /house_id, /biznis_id, /complex_id, /afurniture, /atoll, /adminmsg\n");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1]: /house_id, /biznis_id, /complex_id, /afurniture, /atoll, /adminmsg\n"
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
 	if(PlayerInfo[playerid][pAdmin] >= 2) 
 	{
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /getcar, /gotomark, /mark, /getip, /iptoname, /prisonex, /warnex, /ban, /unprison, /prison.");
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 2]: /getcar, /gotomark, /mark, /getip, /iptoname, /prisonex, /warnex, /ban, /unprison, /prison."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /charge, /gotocar, /unbanip, /rtcinradius, /weatherall, /prisoned, /banex, /jailex, /jail, /unjail.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 2]: /charge, /gotocar, /unbanip, /rtcinradius, /weatherall, \n\
+				/prisoned, /banex, /jailex, /jail, /unjail."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /gethere, /unban, /warn, /pmears, /rtcacar(radius), /cnn, /givebullet, /rears, /checkfreq, /banip.\n");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 2]: /gethere, /unban, /warn, /pmears, /rtcacar(radius), \n\
+				/cnn, /givebullet, /rears, /checkfreq, /banip.\n"
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
     }
 	if(PlayerInfo[playerid][pAdmin] >= 3) 
 	{
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 3]: /skin, /sethp, /pns, /blockreport, /fpm, /fpmed, /entercar, /checkcostats.");
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 3]: /skin, /sethp, /pns, /blockreport, /fpm, /fpmed, /entercar, /checkcostats."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog, sizeof(f_dialog), "\n{FF9933}[A 3]: /check_gunrack, /check_hdrugs, /putplayerincar, /refillnos, /flipcar\n");
+
+		format(f_dialog, 
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 3]: /check_gunrack, /check_hdrugs, /putplayerincar, /refillnos, /flipcar\n"
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
 	if(PlayerInfo[playerid][pAdmin] >= 4) 
 	{
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /aname, /rac, /setarmour, /veh, /veh_spawned, /undie, /unfreezearound, /freezearound, /setarmouraround.");
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 4]: /aname, /rac, /setarmour, /veh, /veh_spawned, /undie, \n\
+				/unfreezearound, /freezearound, /setarmouraround."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /sethparound, /fixveh, /aunlock, /atake, /mutearound, /togreport, /fire, /deletevehicle, /bizinfo, /hidestatus.\n");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 4]: /sethparound, /fixveh, /aunlock, /atake, /mutearound, /togreport, \n\
+				/deletevehicle, /bizinfo, /hidestatus.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if(PlayerInfo[playerid][pAdmin] >= 1337) {
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fakekick, /timeout, /givemoney, /address, /edit(biz/house), /asellbiz, /asellhouse, /asellcomplex, /asellcomplexroom, /fuelcars.");
+	if(PlayerInfo[playerid][pAdmin] >= 1337) 
+	{
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1337]: /fakekick, /timeout, /givemoney, /address, /edit(biz/house) \n\
+				/asellbiz, /asellhouse, /asellcomplex, /asellcomplexroom, /fuelcars."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fuelcar, /factionmembers, /weather, /setstat, /fstyle, /givelicense, /givegun, /ac, /healcar, /create_garage, /garage.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FF9933}[A 1337]: /fuelcar, /factionmembers, /weather, /setstat, /fstyle, /givelicense,\n\
+				/givegun, /ac, /healcar, /create_garage, /garage."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
+
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /item_give/drop/reload, /checkinv, /lts, /dakar, /quad.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if(PlayerInfo[playerid][pAdmin] >= 1338) {
-		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /makehelper, /makeadmin, /playercars, /makeadmin, /happyhours, /removewarn, /crash, /givepremium, /achangename, /giveallmoney.");
+	if(PlayerInfo[playerid][pAdmin] >= 1338) 
+	{
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FA5555}[A 1338]: /makehelper, /makeadmin, /playercars, /makeadmin \n\
+				/happyhours, /removewarn, /crash, /givepremium, /achangename, /giveallmoney."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /customhouseint, /createpickup, /bizint, /city, /setcity, /agps.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FA5555}[A 1338]: /customhouseint, /createpickup, /bizint, /city, /setcity, /agps."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /exp, /custombizint, /createvehicle, /bizint, /houseint, /afaction.\n/changepass, /teampin - Promjena passworda/Team PIN-a.");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FA5555}[A 1338]: /exp, /custombizint, /createvehicle, /bizint, /houseint, /afaction\n\
+				/changepass, "COL_RED"/teampin - Promjena passworda/Team PIN-a."
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /blacklist, /unblacklist, /agivedrug, /checkplayerdrugs, /checkvehdrugs, /togreg, ");
+
+		format(f_dialog,
+			sizeof(f_dialog), 
+			"\n{FA5555}[A 1338]: /blacklist, /unblacklist, /agivedrug, /checkplayerdrugs, /checkvehdrugs, /togreg"
+		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
     ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{FF9933}* Game Admin Commands", p_dialog, "Close", "");

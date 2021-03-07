@@ -219,28 +219,6 @@ IsValidInactivity(sqlid)
 	return value;
 }
 
-IsAccountTeamStaff(sqlid)
-{
-	new	Cache:result,
-		bool:value = false,
-		admin = 0,
-		helper = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d'", sqlid));
-
-	if(!cache_num_rows())
-		value = false;
-	else
-	{
-		cache_get_value_name_int(0, "adminLvl", admin);
-		cache_get_value_name_int(0, "helper", helper);
-		if(admin > 0 || helper > 0)
-			value = true;
-	}
-	cache_delete(result);
-	return value;
-}
-
 ShowPlayerCars(playerid, playersqlid, player_name[])
 {
 	new 

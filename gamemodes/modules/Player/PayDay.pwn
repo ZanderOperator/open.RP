@@ -461,7 +461,7 @@ GivePlayerPayCheck(playerid)
 
 	format(f_dialog,
 		sizeof(f_dialog), 
-		"\nTotal profit: %s%s "COL_YELLOW"(Izracun ne sadrzi troskove kredita i dobitke stednje)", 
+		"\nTotal profit: %s%s "COL_YELLOW"(Doesn't include money in savings/expenses of credit)", 
 		(profit > 0) ? (""COL_GREEN"+") : (""COL_LRED"-"),
 		FormatNumber(profit)
 	);

@@ -1,70 +1,9 @@
 #include <YSI_Coding\y_hooks>
 
-static GetPlayerPaydayCount(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT monthpaydays FROM experience WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "monthpaydays", value);
-	
-	cache_delete(result);
-	return value;
-}
-
 static ResetMonthPaydays()
 {
 	mysql_fquery(g_SQL, "UPDATE experience SET monthpaydays = '0' WHERE 1");
 	return 1;
-}
-
-static GetPlayerVIP(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT vipRank FROM player_vip_status WHERE sqlid = '%d'", sqlid));
-	 
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "vipRank", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-static GetPlayerJobKey(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT jobkey FROM player_job WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "jobkey", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-static GetPlayerContractTime(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT contracttime FROM player_job WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "contracttime", value);
-	
-	cache_delete(result);
-	return value;
 }
 
 CheckAccountsForInactivity()
@@ -78,7 +17,8 @@ CheckAccountsForInactivity()
 	// Inactivity check based on last login timestamp
 	inline OnInactiveAccsLoad()
 	{
-		new rows;
+		new 
+			rows;
 		cache_get_row_count(rows);
 		if(rows == 0) 
 			return Log_Write("logfiles/inactive_players.txt", "(%s) - Accounts for property/job removal due to inactivity currently don't exist.", ReturnDate());
@@ -90,9 +30,7 @@ CheckAccountsForInactivity()
 			loginstamp,
 			propertytimestamp, 
 			playername[24], 
-			motd[256];
-			
-		new 
+			motd[256],
 			bool:d = false,
 			donaterank = 0,
 			bool:skip = false,
@@ -102,10 +40,7 @@ CheckAccountsForInactivity()
 			bizzid = INVALID_BIZNIS_ID, 
 			cid = INVALID_COMPLEX_ID, 
 			crid = INVALID_COMPLEX_ID,
-			garageid = INVALID_HOUSE_ID,
-			Cache:Data;
-			
-		Data = cache_save();
+			garageid = INVALID_HOUSE_ID;
 			
 		for( new i=0; i < rows; i++) 
 		{
@@ -120,19 +55,27 @@ CheckAccountsForInactivity()
 			crid = INVALID_COMPLEX_ID;
 			garageid = INVALID_HOUSE_ID;
 
+			// accounts table
 			cache_get_value_name_int(i, "sqlid", sqlid);
 			cache_get_value_name(i, 	"name"	, playername, 24);
 			cache_get_value_name_int(i, "lastloginstamp", loginstamp);
-			
-			if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
-				continue;
 
-			jobkey = GetPlayerJobKey(sqlid);
-			contracttime = GetPlayerContractTime(sqlid);
-			monthpaydays = GetPlayerPaydayCount(sqlid);
-			donaterank = GetPlayerVIP(sqlid);
+			// player_vip_status table
+			cache_get_value_name_int(i, "vipRank", donaterank);
+
+			// player_job_table
+			cache_get_value_name_int(i, "jobkey", jobkey);
+			cache_get_value_name_int(i, "contracttime", contracttime);
+
+			// experience table
+			cache_get_value_name_int(i, "monthpaydays", monthpaydays);
 			
-			cache_set_active(Data); // Povratak cachea nakon provjere u bazi
+			// inactivity table
+			if(IsValidInactivity(sqlid)) // If there's registered inactivity in database
+				continue;
+			
+			// player_admin_msg table
+			strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
 
 			switch(donaterank)
 			{
@@ -146,7 +89,6 @@ CheckAccountsForInactivity()
 				continue;
 			}
 			
-			strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
 			if(isnull(logString))
 				d = false;
 			else d = true;
@@ -322,13 +264,25 @@ CheckAccountsForInactivity()
 				SendServerMessage(sqlid, logString);
 			}
 		}
-		cache_delete(Data);
 		return 1;
 	}
 	MySQL_PQueryInline(g_SQL,  
 		using inline OnInactiveAccsLoad, 
 		va_fquery(g_SQL,  
-			"SELECT sqlid, name, lastloginstamp FROM accounts WHERE lastloginstamp <= '%d'",
+			"SELECT \n\
+				accounts.sqlid, accounts,name, accounts.lastloginstamp, \n\
+				player_vip_status.vipRank, \n\
+				player_job.jobkey, player_job.contracttime, \n\
+				experience.monthpaydays \n\
+			FROM \n\
+				accounts, \n\
+				player_vip_status, \n\
+				player_job, \n\
+				experience \n\
+			WHERE \n\
+				accounts.lastloginstamp <= '%d' \n\
+			AND \n\
+				accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid",
 			inactivetimestamp
 		),
 		""
@@ -340,16 +294,14 @@ CheckAccountsForInactivity()
 	{
 		inline OnMinPayDayAccsLoad()
 		{
-			new rows, Cache:QueryData;
-			QueryData = cache_save();
+			new 
+				rows;
 			cache_get_row_count(rows);
 
 			new 
 				sqlid,
 				playername[24],
-				motd[256];
-				
-			new 
+				motd[256],
 				bool:d = false,
 				donaterank = 0,
 				bool:skip = false,
@@ -372,21 +324,23 @@ CheckAccountsForInactivity()
 				crid = INVALID_COMPLEX_ID;
 				garageid = INVALID_HOUSE_ID;
 			
+				// accounts table
 				cache_get_value_name_int(i, "sqlid", sqlid);
+				cache_get_value_name(i, "name", playername);
 
-				format(playername, sizeof(playername), "%s", ConvertSQLIDToName(sqlid));
-				donaterank = GetPlayerVIP(sqlid);
+				// player_vip_status table
+				cache_get_value_name_int(i, "vipRank", donaterank);
 				
+				// player_admin_msg table
 				strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
+
 				if(isnull(logString))
 					d = false;
 				else d = true;
 
 				if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
 					continue;
-			
-				cache_set_active(QueryData); // Povratak cachea nakon provjere u bazi
-			
+						
 				switch(donaterank)
 				{
 					case 1 .. 4: skip = true;
@@ -541,20 +495,36 @@ CheckAccountsForInactivity()
 				}
 				SendServerMessage(sqlid, logString);
 			}
-			cache_delete(QueryData);
 			return 1;
 		}
 		MySQL_PQueryInline(g_SQL,  
 			using inline OnMinPayDayAccsLoad, 
-			va_fquery(g_SQL, "SELECT * FROM experience WHERE monthpaydays < '%d'", MIN_MONTH_PAYDAYS),
+			va_fquery(g_SQL, 
+				"SELECT \n\
+					experience.sqlid, \n\
+					accounts.name, \n\
+					player_vip_status.vipRank \n\
+				FROM \n\
+					experience, \n\
+					accounts, \n\
+					player_vip_status \n\
+				WHERE \n\
+					experience.monthpaydays < '%d' \n\
+				AND experience.sqlid = accounts.sqlid = player_vip_status.sqlid", 
+				MIN_MONTH_PAYDAYS
+			),
 			""
 		);
 		
 		// Monthly EXP rewards for top 5 players with most paydays in previous month
 		inline OnRewardActivePlayers()
 		{
-			new rows, rewarded= 0, sql, monthpaydays, Cache:RewardQueryData;
-			RewardQueryData = cache_save();
+			new 
+				rows, 
+				rewarded= 0, 
+				sql, 
+				monthpaydays;
+
 			cache_get_row_count(rows);
 			for(new i = 0; i < rows; i++)
 			{
@@ -564,11 +534,7 @@ CheckAccountsForInactivity()
 				logString[0] = EOS;
 				cache_get_value_name_int(i, "sqlid", sql);
 				cache_get_value_name_int(i, "monthpaydays", monthpaydays);
-
-				if(IsAccountTeamStaff(sql))
-					continue;
 				
-				cache_set_active(RewardQueryData); // Povratak cachea nakon provjere u bazi
 				rewarded++;
 				switch(rewarded)
 				{
@@ -690,14 +656,26 @@ CheckAccountsForInactivity()
 					}
 				}
 			}
-			cache_delete(RewardQueryData);
 			ResetMonthPaydays();
 			return 1;
 		}
 
 		MySQL_PQueryInline(g_SQL,  
 			using inline OnRewardActivePlayers, 
-			va_fquery(g_SQL, "SELECT * FROM  experience ORDER BY experience.monthpaydays DESC LIMIT 0 , 30"),
+			va_fquery(g_SQL,
+				"SELECT \n\
+					experience.monthpaydays\n\
+				FROM \n\
+					accounts, \n\
+					experience \n\
+				WHERE \n\
+					accounts.playaBanTime == '0' \n\
+					AND (accounts.adminLvl = '0' AND accounts.helper = '0')\n\
+					AND accounts.sqlid = monthpaydays.sqlid \n\
+				ORDER BY \n\
+					experience.monthpaydays DESC \n\
+				LIMIT 0 , 30"
+			),
 			""
 		);
 		return 1;
