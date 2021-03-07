@@ -11,7 +11,7 @@
 
 #include <YSI_Coding\y_hooks>
 
-#define GARAGE_PARAMETER_SIZE               (15.0)
+#define GARAGE_PARAMETER_SIZE               (7.5)
 
 /*
     ##     ##    ###    ########   ######
@@ -135,7 +135,7 @@ static CreateGarageEnter(g_id)
     return 1;
 }
 
-static stock CreateGarageInfoTD(playerid)
+stock CreateGarageInfoTD(playerid, garage)
 {
     DestroyGarageInfoTD(playerid);
     GarageBcg1[playerid] = CreatePlayerTextDraw(playerid, 639.612121, 116.752761, "usebox");
@@ -194,6 +194,28 @@ static stock CreateGarageInfoTD(playerid)
     PlayerTextDrawBackgroundColor(playerid, GarageCMDTD[playerid], 255);
     PlayerTextDrawSetProportional(playerid, GarageCMDTD[playerid], 1);
     PlayerTextDrawShow(playerid,            GarageCMDTD[playerid]);
+
+    new
+        string[128];
+
+    if(!GarageInfo[garage][gOwnerID])            
+    {
+        format(string, sizeof(string), "Garaza je na prodaju~n~Adresa: %s~n~Cijena: %d~g~$~n~",
+            GarageInfo[garage][gAdress],
+            GarageInfo[garage][gPrice]
+       );
+        PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage buy");
+    }
+    else
+    {
+        format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$",
+            ConvertSQLIDToName(GarageInfo[garage][gOwnerID]),
+            GarageInfo[garage][gAdress],
+            GarageInfo[garage][gPrice]
+        );
+        PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage lock (vlasnik)");
+    }
+    PlayerTextDrawSetString(playerid, GarageInfoTD[playerid], string);
     return 1;
 }
 
@@ -542,29 +564,8 @@ hook OnPlayerEnterDynArea(playerid, areaid)
         garage = Area_GetGarageID(areaid);
     if(!Iter_Contains(Garage, garage))
         return 1;
-    
-    new
-        string[128];
 
-    CreateGarageInfoTD(playerid);
-    if(!GarageInfo[garage][gOwnerID])            
-    {
-        format(string, sizeof(string), "Garaza je na prodaju~n~Adresa: %s~n~Cijena: %d~g~$~n~",
-            GarageInfo[garage][gAdress],
-            GarageInfo[garage][gPrice]
-       );
-        PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage buy");
-    }
-    else
-    {
-        format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$",
-            ConvertSQLIDToName(GarageInfo[garage][gOwnerID]),
-            GarageInfo[garage][gAdress],
-            GarageInfo[garage][gPrice]
-       );
-        PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage lock (vlasnik)");
-    }
-    PlayerTextDrawSetString(playerid, GarageInfoTD[playerid], string);
+    CreateGarageInfoTD(playerid, garage);
 
     Player_SetGarageArea(playerid, areaid);
     Player_SetInfrontGarage(playerid, garage);

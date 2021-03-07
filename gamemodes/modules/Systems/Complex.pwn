@@ -177,7 +177,7 @@ stock LoadComplexes()
         va_fquery(g_SQL, "SELECT * FROM server_complex WHERE 1"), 
         "OnServerComplexLoad",
         ""
-   );
+    );
     return 1;
 }
 

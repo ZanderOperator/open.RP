@@ -468,9 +468,9 @@ CMD:makeadmin(playerid, params[])
 		return 1;
 	}
 	
-	if(!strlen(PlayerInfo[giveplayerid][pTeamPIN])) 
+	if(!strlen(teamPIN)) 
 	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You MUST enter Team PIN 1 to 12 chars long for credentials!");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You MUST enter Team PIN 1 to 12 chars long for /alogin credentials!");
 		return 1;
 	}
 	

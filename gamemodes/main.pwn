@@ -36,7 +36,7 @@
 // #define COA_UCP
 
 // GMT Zone
-#define GMT_ZONE_DIFFERENCE						(3600)			// GMT + 1
+#define GMT_ZONE_DIFFERENCE						(0)
 
 // 0.3DL
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu

@@ -42,12 +42,12 @@
 		"maxplayers": 50,
 		"language": "",
 		"stream_distance": 300,
-		"extra":{"useartwork": "1"}
+		"extra": {"useartwork": "1"}
 	},
 	"runtimes": [
 		{
 			"name": "dev",
-			"rcon_password": "123",
+			"rcon_password": "0000",
 			"port": 7777,
 			"hostname": "[open.RP] - OpenSourced RolePlay",
 			"maxplayers": 10,

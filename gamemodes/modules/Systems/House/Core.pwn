@@ -24,8 +24,6 @@
 #define ZONE_WIDTH              150.0
 #define ZONE_HEIGHT             195.0
 
-#define CP_TYPE_HOUSE       (1)
-
 
 /*
     ##     ##    ###    ########   ######
@@ -1344,9 +1342,16 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    new house = CP_GetHouseID(checkpointid);
+    new 
+        house = CP_GetHouseID(checkpointid);
     if(!Iter_Contains(House, house))
         return 1;
+
+
+    new 
+        garage = Player_InfrontGarage(playerid);
+    if(garage != -1)
+        DestroyGarageInfoTD(playerid);
 
     CreateHouseInfoTD(playerid);
     new string[128];
@@ -1404,6 +1409,10 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
         Player_SetHouseCP(playerid, -1);
         Player_SetInfrontHouse(playerid, INVALID_HOUSE_ID);
     }
+    new 
+        garage = Player_InfrontGarage(playerid);
+    if(garage != -1)
+        CreateGarageInfoTD(playerid, garage);
     return 1;
 }
 

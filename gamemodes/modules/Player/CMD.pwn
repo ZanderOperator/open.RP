@@ -113,43 +113,6 @@ CMD:enter(playerid, params[])
 		}
 		else GameTextForPlayer(playerid, "~r~Zakljucano", 5000, 1);
     }
-	else if(IsPlayerInDynamicArea(playerid, Player_GarageArea(playerid)))
-	{
-		new 
-			garage = Player_InfrontGarage(playerid);
-		if(garage == -1)
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred garaze!");
-
-		if(PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] && !Admin_OnDuty(playerid) && !GarageInfo[garage][gLocked])
-		{
-			GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
-			return 1;
-		}
-
-		if(GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID])
-			GameTextForPlayer(playerid, "~w~Dobrodosli u garazu", 800, 1);
-		
-		new vehicleid = GetPlayerVehicleID(playerid);
-		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER || vehicleid == INVALID_VEHICLE_ID)
-			SetPlayerPosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
-		else
-		{
-			TogglePlayerControllable(playerid, 0);
-
-			new Float:X, Float:Y, Float:Z, Float:A;
-			GetVehiclePos(vehicleid, X, Y, Z);
-			GetVehicleZAngle(vehicleid, A);
-
-			PlayerSafeExit[playerid][giX] = X;
-			PlayerSafeExit[playerid][giY] = Y;
-			PlayerSafeExit[playerid][giZ] = Z;
-			PlayerSafeExit[playerid][giRZ] = A;
-			SetVehiclePosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY] + 1.5, GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
-			SetVehicleZAngle(vehicleid, 90.0);
-		}
-		Player_SetInGarage(playerid, garage);
-		DestroyGarageInfoTD(playerid);
-	}
     else if(IsPlayerInDynamicCP(playerid, Player_GetBizzCP(playerid)))
     {
 		new biznis = Player_InfrontBizz(playerid);
@@ -271,6 +234,43 @@ CMD:enter(playerid, params[])
 		if(rob_started[playerid] == true)
         	PlayStorageAlarm(playerid, false);
     }
+	else if(IsPlayerInDynamicArea(playerid, Player_GarageArea(playerid)))
+	{
+		new 
+			garage = Player_InfrontGarage(playerid);
+		if(garage == -1)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred garaze!");
+
+		if(PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] && !Admin_OnDuty(playerid) && !GarageInfo[garage][gLocked])
+		{
+			GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
+			return 1;
+		}
+
+		if(GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID])
+			GameTextForPlayer(playerid, "~w~Dobrodosli u garazu", 800, 1);
+		
+		new vehicleid = GetPlayerVehicleID(playerid);
+		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER || vehicleid == INVALID_VEHICLE_ID)
+			SetPlayerPosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
+		else
+		{
+			TogglePlayerControllable(playerid, 0);
+
+			new Float:X, Float:Y, Float:Z, Float:A;
+			GetVehiclePos(vehicleid, X, Y, Z);
+			GetVehicleZAngle(vehicleid, A);
+
+			PlayerSafeExit[playerid][giX] = X;
+			PlayerSafeExit[playerid][giY] = Y;
+			PlayerSafeExit[playerid][giZ] = Z;
+			PlayerSafeExit[playerid][giRZ] = A;
+			SetVehiclePosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY] + 1.5, GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
+			SetVehicleZAngle(vehicleid, 90.0);
+		}
+		Player_SetInGarage(playerid, garage);
+		DestroyGarageInfoTD(playerid);
+	}
     return 1;
 }
 
