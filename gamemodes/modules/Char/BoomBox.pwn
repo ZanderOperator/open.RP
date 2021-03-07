@@ -416,7 +416,7 @@ CMD:music(playerid, params[])
 		if(Bit1_Get(gr_MusicApproved, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac vec ima odobreno pustanje glazbe!");
 		Bit1_Set(gr_MusicApproved, giveplayerid, true);
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Odobrili ste igracu %s da koristi /music url.", GetName(giveplayerid));
-		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "Admin %s Vam je odobrio da korisite /music url na Boomboxu", GetName(playerid));
+		va_SendMessage(giveplayerid, MESSAGE_TYPE_INFO, "Admin %s Vam je odobrio da korisite /music url na Boomboxu", GetName(playerid));
 	}
 	else if(!strcmp(option, "url"))
 	{

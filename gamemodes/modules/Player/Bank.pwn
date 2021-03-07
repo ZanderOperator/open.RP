@@ -397,7 +397,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SavePlayerSavings(playerid);
 			
 			// Message
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_INFO, 
 				"You've invested %s from bank account to term savings lasting %d hours with %d% of interest.", 
 				FormatNumber(PlayerSavings[playerid][pSavingsMoney]), 
@@ -424,7 +424,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(AC_GetPlayerMoney(playerid) < PaymentBuyPrice[playerid])
 				{
-					return SendFormatMessage(playerid, 
+					return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"You don't have enough money on you to buy this vehicle. ~r~(%s)", 
 						FormatNumber(PaymentBuyPrice[playerid])
@@ -434,7 +434,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_ERROR, 
 					"Input can't be smaller than 1$ or larger than %s!", 
 					FormatNumber(CreditInfo[playerid][cAmount])
@@ -462,7 +462,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PaymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
 
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_SUCCESS, 
 					"You have sucessfully used %s from VSC credit. The rest of the price (%s) you paid from your hands!", 
 					FormatNumber(creditamount), 
@@ -471,7 +471,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else
 			{
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_ERROR, 
 					"%s credit with %s that you have in hands is not enough to cover expenses of vehicle(%s)!", 
 					FormatNumber(creditamount), 
@@ -498,7 +498,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(AC_GetPlayerMoney(playerid) < PaymentBuyPrice[playerid])
 				{
-					return SendFormatMessage(playerid, 
+					return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"You don't have enough money on you to buy this house. ~r~(%s)", 
 						FormatNumber(PaymentBuyPrice[playerid])
@@ -508,7 +508,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_ERROR, 
 					"Credit amount can't be smaller than 1$, or larger than %d$!", 
 					FormatNumber(CreditInfo[playerid][cAmount])
@@ -535,7 +535,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PaymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
 
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_SUCCESS, 
 					"You have sucessfully used %s from HBC credit. The rest of the price (%s) you paid from your hands!", 
 					FormatNumber(creditamount), 
@@ -544,7 +544,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else
 			{
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_ERROR, 
 					"%s credit with %s that you have in hands is not enough to cover expenses of house. (%s)", 
 					FormatNumber(creditamount), 
@@ -571,7 +571,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(AC_GetPlayerMoney(playerid) < PaymentBuyPrice[playerid])
 				{
-					return SendFormatMessage(playerid, 
+					return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"You don't have enough money on you to buy this business. ~r~(%s)", 
 						FormatNumber(PaymentBuyPrice[playerid])
@@ -581,7 +581,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_ERROR, 
 					"Input can't be smaller than 1$ or larger than %s!", 
 					FormatNumber(CreditInfo[playerid][cAmount])
@@ -608,7 +608,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PaymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
 
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_SUCCESS, 
 					"You have sucessfully used %s from 	BBC credit. The rest of the price (%s) you paid from your hands!", 
 					FormatNumber(creditamount), 
@@ -617,7 +617,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else
 			{
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_ERROR, 
 					"%s credit with %s that you have in hands is not enough to cover expenses of business. (%s)", 
 					FormatNumber(creditamount), 
@@ -1030,11 +1030,11 @@ CMD:bank(playerid, params[])
 		if(sscanf( params, "s[15]i", pick, moneys)) 
 			return SendClientMessage(playerid, COLOR_RED, "[?]: /bank withdraw [amount of $]");
 		if(moneys > PlayerInfo[playerid][pBank] || moneys < 1) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(moneys));
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(moneys));
 		
 		BankToPlayerMoney(playerid, moneys);
 		
-		SendFormatMessage(playerid, 
+		va_SendMessage(playerid, 
 			MESSAGE_TYPE_SUCCESS, 
 			"[BANK]: You have withdrawn %s from your bank account.~n~Amount left: %s",
 			FormatNumber(moneys), 
@@ -1049,11 +1049,11 @@ CMD:bank(playerid, params[])
 		if(sscanf(params, "s[15]i", pick, moneys)) 
 			return SendClientMessage(playerid, COLOR_RED, "[?]:  /bank deposit [amount of $]");
 		if(moneys > AC_GetPlayerMoney(playerid) || moneys < 1) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s with you!", FormatNumber(moneys));
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s with you!", FormatNumber(moneys));
 		
 		PlayerToBankMoney(playerid, moneys);
 		
-		SendFormatMessage(playerid, 
+		va_SendMessage(playerid, 
 			MESSAGE_TYPE_SUCCESS, 
 			"[BANK]: You've sucessfully deposited %s on your bank account.~n~New balance: %s", 
 			FormatNumber(moneys), 
@@ -1084,7 +1084,7 @@ CMD:bank(playerid, params[])
 		if(giveplayerid == INVALID_PLAYER_ID) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online.");
 		if(moneys > PlayerInfo[playerid][pBank]|| moneys < 1) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(moneys));
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(moneys));
 		
 		BankTransferMoney(playerid, giveplayerid, moneys);
 	}
@@ -1116,7 +1116,7 @@ CMD:bank(playerid, params[])
 
 		new 
 			rest = 250 - CreditInfo[playerid][cRate];
-		SendFormatMessage(playerid, 
+		va_SendMessage(playerid, 
 			MESSAGE_TYPE_INFO, 
 			"[BANK]: You have %d(%d in debt/owed) rates of credit(Total %d) to pay off credit.~n~Credit amount: %s.", 
 			rest, 
@@ -1150,17 +1150,17 @@ CMD:bank(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Your current Term Savings must end before investing more money!");
 		if(PlayerSavings[playerid][pSavingsCool])
 		{
-			return SendFormatMessage(playerid, 
+			return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"You have to wait %d hours to start new savings!", 
 						PlayerSavings[playerid][pSavingsCool]
 			);
 		}
 		if(money > PlayerInfo[playerid][pBank]|| money < 1) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(money));
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have %s on your bank account!", FormatNumber(money));
 		if(money > (MAX_SAVINGS_AMOUNT))
 		{ 
-			return SendFormatMessage(playerid, 
+			return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"You can't invest more than %s in savings!", 
 						FormatNumber(MAX_SAVINGS_AMOUNT)
@@ -1168,7 +1168,7 @@ CMD:bank(playerid, params[])
 		}
 		if(time < 10 || time > MAX_SAVINGS_TIME) 
 		{
-			return SendFormatMessage(playerid, 
+			return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"Duration of savings can't be less than 10, or more than %d!", 
 						MAX_SAVINGS_TIME
@@ -1195,7 +1195,7 @@ CMD:bank(playerid, params[])
 		if(PlayerSavings[playerid][pSavingsType] == 0) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have an active term savings!");
 
-		SendFormatMessage(playerid,
+		va_SendMessage(playerid,
 			MESSAGE_TYPE_INFO,
 			"[BANK]: Balance on Term Savings: [%s] | [%d] hours untill end | Interest rate: [%d%]", 
 			FormatNumber(PlayerSavings[playerid][pSavingsMoney]),
@@ -1234,7 +1234,7 @@ CMD:bank(playerid, params[])
 		}
 		if(AntiSpamInfo[playerid][asCreditPay] > gettimestamp())
 		{
-			return SendFormatMessage(playerid, 
+			return va_SendMessage(playerid, 
 						MESSAGE_TYPE_ERROR, 
 						"[ANTI-SPAM]: Don't spamm with the command. Wait for %d seconds to continue!", 
 						ANTI_SPAM_BANK_CREDITPAY
@@ -1242,7 +1242,7 @@ CMD:bank(playerid, params[])
 		}
 		if(cashdeposit > rest || cashdeposit < 1) 
 		{
-			return SendFormatMessage(playerid, 
+			return va_SendMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
 				"Amount of rates can't be smaller than 1, or larger than %d!",
 				rest
@@ -1259,7 +1259,7 @@ CMD:bank(playerid, params[])
 				PlayerToBudgetMoney(playerid, money); 
 				CreditInfo[playerid][cUnpaid] -= cashdeposit;
 
-				SendFormatMessage(playerid, 
+				va_SendMessage(playerid, 
 					MESSAGE_TYPE_INFO, 
 					"You paid for %d rates that you owed %s.", 
 					FormatNumber(cashdeposit), 
@@ -1274,7 +1274,7 @@ CMD:bank(playerid, params[])
 				}	
 				goto mysql_save;
 			}
-			else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You need %s to pay off %d rates!", FormatNumber(money), cashdeposit);
+			else return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You need %s to pay off %d rates!", FormatNumber(money), cashdeposit);
 		}
 		switch(CreditInfo[playerid][cCreditType])
 		{
@@ -1285,11 +1285,11 @@ CMD:bank(playerid, params[])
 			case 5 .. 7: money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
 		}
 		if(AC_GetPlayerMoney(playerid) < money)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You need %s to pay off %d rates!", FormatNumber(money), cashdeposit);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You need %s to pay off %d rates!", FormatNumber(money), cashdeposit);
 
 		PlayerToBudgetMoney(playerid, money);
 		CreditInfo[playerid][cRate] += cashdeposit;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "You have paid %d rates of credit %s.", cashdeposit, FormatNumber(money));
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have paid %d rates of credit %s.", cashdeposit, FormatNumber(money));
 
 		if(CreditInfo[playerid][cRate] >= 250)
 		{

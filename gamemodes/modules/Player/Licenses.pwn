@@ -450,7 +450,7 @@ CMD:takedriving(playerid, params[])
 	if(Bit1_Get( gr_DrivingStarted, playerid)) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec polazete vozacki!");
 	if(AC_GetPlayerMoney(playerid) < CAR_LICENSE_PRICE) 		
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %s!", FormatNumber(CAR_LICENSE_PRICE));
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %s!", FormatNumber(CAR_LICENSE_PRICE));
 	if(Bit1_Get( gr_TookDriving, playerid)) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste uzeli papire i krenuli s polaganjem!");
 	if(!IsPlayerInRangeOfPoint( playerid, 5.0, 1779.8975, -1721.5961, 12.5387)) 
@@ -476,7 +476,7 @@ CMD:buylicenses(playerid, params[])
 		if(LicenseInfo[playerid][pFlyLic])			
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za letenje!");
 		if(AC_GetPlayerMoney(playerid) < FLY_LICENSE_PRICE)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FLY_LICENSE_PRICE);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FLY_LICENSE_PRICE);
 		
 		GameTextForPlayer(playerid, "~g~Kupljena dozvola za letenje!", 1500, 1);
 		LicenseInfo[playerid][pFlyLic] = 1;
@@ -491,7 +491,7 @@ CMD:buylicenses(playerid, params[])
 		if(LicenseInfo[playerid][pFishLic])		
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za ribolov!");
 		if(AC_GetPlayerMoney(playerid) < FISH_LICENSE_PRICE) 	
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FISH_LICENSE_PRICE);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FISH_LICENSE_PRICE);
 		
 		GameTextForPlayer(playerid, "~g~Kupljena dozvola za ribolov!", 1500, 1);
 		LicenseInfo[playerid][pFishLic] = 1;

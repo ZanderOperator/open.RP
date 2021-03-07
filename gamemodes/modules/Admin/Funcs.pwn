@@ -251,7 +251,7 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 	{
 		if(!cache_num_rows())
 		{
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
 				"%s doesn't own any vehicles.",
 				owner_name

@@ -376,8 +376,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			new Float: t_overall = float(TaxiInfo[taxist][pTaxiPoints]) / (TaxiInfo[taxist][pTaxiVoted]);
 			
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali Taxisti %s ocjenu %d za voznju.", GetName(taxist), rating);
-			SendFormatMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dobili ocjenu %d za vasu taxi voznju, sada imate ukupnu ocjenu %.1f", rating, t_overall);
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali Taxisti %s ocjenu %d za voznju.", GetName(taxist), rating);
+			va_SendMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dobili ocjenu %d za vasu taxi voznju, sada imate ukupnu ocjenu %.1f", rating, t_overall);
 			
 			SavePlayerTaxiStats(playerid);
 			Taxi_Biznis(taxist, TaxiInfo[taxist][pTaxiPoints], TaxiData[playerid][eTaxiPayment]);
@@ -397,10 +397,10 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 			if(TaxiData[playerid][eTaxiActive] == true) {
 				new taxist = TaxiData[playerid][eTaxiDriver];
 					
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili sa vasom taxi voznjom, voznju ste naplatili %s.", 
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili sa vasom taxi voznjom, voznju ste naplatili %s.", 
 					FormatNumber(TaxiData[playerid][eTaxiPayment])
 				);
-				SendFormatMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili sa vasom taxi voznjom, zaradili ste %s.", 
+				va_SendMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili sa vasom taxi voznjom, zaradili ste %s.", 
 					FormatNumber(TaxiData[playerid][eTaxiPayment])
 				);
 				if(TaxiData[playerid][eTaxiTraveled] > 1)
@@ -451,7 +451,7 @@ CMD:taxi(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi jos uvijek nemate Taxi Rating!");
 			
 		new Float: t_overall = float(TaxiInfo[playerid][pTaxiPoints]) / float(TaxiInfo[playerid][pTaxiVoted]);
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vas trenutni rating je: %.1f", t_overall);
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vas trenutni rating je: %.1f", t_overall);
 	}
 	
     if(strcmp(action,"start",true) == 0) {
@@ -509,7 +509,7 @@ CMD:taxi(playerid, params[])
 		PlayerTextDrawSetString(passanger_id, Taximeter[passanger_id][7], buffer_t);
 		PlayerTextDrawSetString(passanger_id, Taximeter[passanger_id][6], buffer_f);
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zapoceli ste sa voznjom %s, taximeter je ukljucen (FARE: %s po %dm).", 
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zapoceli ste sa voznjom %s, taximeter je ukljucen (FARE: %s po %dm).", 
 			GetName(playerid, false), FormatNumber(TaxiData[playerid][eTaxiFare], TaxiData[playerid][eTaxiMetersFare])
 		);
 		
@@ -553,7 +553,7 @@ CMD:taxi(playerid, params[])
 				SendClientMessage(playerid, 0xAFAFAFAA, "=> 'Meters' je na koliko odvozenih metara ce te dobiti novac.");
 		
 		if(fare < DEFAULT_TAXI_FARE) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Fare ne smije biti manji od defualt postavljenog (%s = defualt).", DEFAULT_TAXI_FARE);		
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Fare ne smije biti manji od defualt postavljenog (%s = defualt).", DEFAULT_TAXI_FARE);		
 		if(meters < 500) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Meters ne smije biti manji od 500(m).");	
 		if(fare > 10) 
@@ -565,7 +565,7 @@ CMD:taxi(playerid, params[])
 		format(buffer_f, sizeof(buffer_f), "Fare:_~g~%s", FormatNumber(TaxiData[playerid][eTaxiFare]));
 		PlayerTextDrawSetString(playerid, Taximeter[playerid][6], buffer_f);
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavavili novu cijenu, sada po kilometru zaradujete %s.", FormatNumber(fare));
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavavili novu cijenu, sada po kilometru zaradujete %s.", FormatNumber(fare));
 	}
 	if(strcmp(action,"duty",true) == 0) {
 		if(!IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid)))) 

@@ -421,7 +421,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) return 1;
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if(AC_GetPlayerMoney(playerid) < MealInfo[mealIndex][mdPrice]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu jela (%d$)!", MealInfo[mealIndex][mdPrice]);
+			if(AC_GetPlayerMoney(playerid) < MealInfo[mealIndex][mdPrice]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu jela (%d$)!", MealInfo[mealIndex][mdPrice]);
 			PlayerToBudgetMoney(playerid, MealInfo[mealIndex][mdPrice]);
 			
 			// Clear
@@ -445,7 +445,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 			SetPlayerAttachedObject(playerid, MEAL_OBJECT_INDEX, MealInfo[mealIndex][mdModel], 5, 0.037000, 0.017999, 0.431999, 76.599922, 156.700042, 178.499969);
 			EditAttachedObject(playerid, MEAL_OBJECT_INDEX);
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili %s za %d$, sada namjestite objekt za drzanje i koristite /meal za vise komandi!",
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili %s za %d$, sada namjestite objekt za drzanje i koristite /meal za vise komandi!",
 				MealInfo[mealIndex][mdName],
 				MealInfo[mealIndex][mdPrice]
 			);

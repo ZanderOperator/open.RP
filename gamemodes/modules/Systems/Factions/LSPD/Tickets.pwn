@@ -112,7 +112,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 
     mysql_tquery(g_SQL, "COMMIT");
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", GetName(giveplayerid, false));
+    va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", GetName(giveplayerid, false));
     return 1;
 }
 
@@ -127,7 +127,7 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
     mysql_fquery(g_SQL, "DELETE FROM tickets WHERE id = '%d'", sqlid);
 
     if(mdc_notification)
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);
 }
 
 stock LoadVehicleTickets(vehicleid)
@@ -265,7 +265,7 @@ CMD:ticket(playerid, params[])
         if(vehicleid == -1 || vehicleid == INVALID_VEHICLE_ID)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have a spawned private vehicle!");
         if(!VehicleHasFines(vehicleid))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Your %s doesn't have any fines registered!",  ReturnVehicleName(VehicleInfo[vehicleid][vModel]));
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Your %s doesn't have any fines registered!",  ReturnVehicleName(VehicleInfo[vehicleid][vModel]));
 
         ShowVehicleTickets(playerid, vehicleid);
     }
@@ -284,7 +284,7 @@ CMD:ticket(playerid, params[])
         result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT id, reciever, money FROM tickets WHERE id = '%d'", id));
 
         if(!cache_num_rows()) 
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket ID #%d doesn't exist!", id);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket ID #%d doesn't exist!", id);
 
         new ticketId, moneys;
         cache_get_value_name(0, "reciever", tmp, sizeof(tmp));
@@ -295,11 +295,11 @@ CMD:ticket(playerid, params[])
         if(!strcmp(reciever, GetName(playerid,false), true) && ticketId == id)
         {
             if(AC_GetPlayerMoney(playerid) < moneys) 
-                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(moneys-AC_GetPlayerMoney(playerid)));
+                return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(moneys-AC_GetPlayerMoney(playerid)));
 
             PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, moneys); 
             DeletePlayerTicket(playerid, id, false);
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You paid Ticket #%d (%s).", id, FormatNumber(moneys));
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You paid Ticket #%d (%s).", id, FormatNumber(moneys));
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "That ticket isn't for you to pay!"); 
         cache_delete(result);
@@ -318,16 +318,16 @@ CMD:ticket(playerid, params[])
         if(vehicleid == -1 || vehicleid == INVALID_VEHICLE_ID) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have an private vehicle spawned!");
         if(!VehicleHasFines(vehicleid))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Your %s doesn't have any fines registered!",  ReturnVehicleName(VehicleInfo[vehicleid][vModel]));
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Your %s doesn't have any fines registered!",  ReturnVehicleName(VehicleInfo[vehicleid][vModel]));
         if(!(1 <= slot <= MAX_VEHICLE_TICKETS))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Ticket slot has to be greater than 0 and lesser then %d!", MAX_VEHICLE_TICKETS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ticket slot has to be greater than 0 and lesser then %d!", MAX_VEHICLE_TICKETS);
 
         new tmpSlot = slot - 1;
 
         if(!VehicleInfo[vehicleid][vTickets][tmpSlot])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have any tickets in that slot!");
         if(AC_GetPlayerMoney(playerid) <  VehicleInfo[vehicleid][vTickets][tmpSlot]) 
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot]-AC_GetPlayerMoney(playerid)));
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot]-AC_GetPlayerMoney(playerid)));
         
         PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, VehicleInfo[vehicleid][vTickets][tmpSlot]); 
 
@@ -371,9 +371,9 @@ CMD:giveticket(playerid, params[])
         if(!ProxDetectorS(5.0, playerid, giveplayerid)) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "The player is not near you!");
         if(strlen(reason) >= MAX_TICKET_REASON_LEN) 
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Reason can have max %d chars!", MAX_TICKET_REASON_LEN);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Reason can have max %d chars!", MAX_TICKET_REASON_LEN);
         if(49 > moneys > MAX_TICKET_MONEY_VAL) 
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Minimal fine amount is 50$, maximal %s!", FormatNumber(MAX_TICKET_MONEY_VAL));
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Minimal fine amount is 50$, maximal %s!", FormatNumber(MAX_TICKET_MONEY_VAL));
 
         InsertPlayerTicket(playerid, giveplayerid, moneys, reason);
 
@@ -396,9 +396,9 @@ CMD:giveticket(playerid, params[])
         if(vehicleid == INVALID_VEHICLE_ID) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must be near private vehicle in order to issue a ticket!");
         if(strlen(reason) < 1 || strlen(reason) > MAX_TICKET_REASON_LEN)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket reason can't be shorter than 1 or longer than %d chars!", MAX_TICKET_REASON_LEN);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket reason can't be shorter than 1 or longer than %d chars!", MAX_TICKET_REASON_LEN);
         if(moneys < 1 || moneys > MAX_TICKET_MONEY_VAL)    
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket price can't be less than 1 or more than %d chars!", MAX_TICKET_MONEY_VAL);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket price can't be less than 1 or more than %d chars!", MAX_TICKET_MONEY_VAL);
         new
             tkts = -1;
 
@@ -430,7 +430,7 @@ CMD:giveticket(playerid, params[])
             }
         }
         if(tkts == -1)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s already has %d tickets!", ReturnVehicleName(VehicleInfo[vehicleid][vModel]), MAX_VEHICLE_TICKETS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "%s already has %d tickets!", ReturnVehicleName(VehicleInfo[vehicleid][vModel]), MAX_VEHICLE_TICKETS);
         
         new
             tmpString[144];

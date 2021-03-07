@@ -215,7 +215,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
 
     Iter_Add(WhWeapons[whid], wslot);
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d) u Warehouse %s.", 
+    va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d) u Warehouse %s.", 
         GetWeaponNameEx(weaponid), 
         ammo, 
         FactionInfo[fid][fName]
@@ -960,7 +960,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             AC_GivePlayerMoney(playerid, -amount);
             UpdateWarehouseMoney(warehouseid);
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %d$ u %s warehouse.", amount);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %d$ u %s warehouse.", amount);
             format(string, sizeof(string), "* %s pohranjuje %d$ u skladiste.", GetName(playerid, true), amount);
             SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
             ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
@@ -991,7 +991,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             AC_GivePlayerMoney(playerid, amount);
             UpdateWarehouseMoney(warehouseid);
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %d$ iz %s warehousea.", amount);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %d$ iz %s warehousea.", amount);
             format(string, sizeof(string), "* %s uzima %d$ iz skladista.", GetName(playerid, true), amount);
             SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
             ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
@@ -1056,7 +1056,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(!CheckPlayerWeapons(playerid, weaponid)) return 1;
             AC_GivePlayerWeapon(playerid, weaponid, ammo);
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, 
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, 
                 "Uspjesno ste uzeli %s(%d) iz warehousea.", 
                 GetWeaponNameEx(weaponid), 
                 ammo
@@ -1265,9 +1265,9 @@ CMD:warehouse(playerid, params[])
         if(IsAtValidWarehouse(playerid, wh))
             return SendClientMessage(playerid, COLOR_RED, "[GREKSA]: Ne mozete opljackati warehouse vlastite fakcije!");
         if(CountOnlineMembers(WarehouseInfo[wh][whFactionSQLID]) < MIN_DEFENDERS)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi opljackali ovaj warehouse, minimalno %d clanova fakcije u vlasnistvu istog trebaju biti online!", MIN_DEFENDERS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi opljackali ovaj warehouse, minimalno %d clanova fakcije u vlasnistvu istog trebaju biti online!", MIN_DEFENDERS);
         if(CountMembersInRadius(wh, fid) < MIN_ROBBERS)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi pokrenuli pljacku, minimalno %d clanova vase fakcije trebaju biti u krugu 20m od warehouse sefa!", MIN_ROBBERS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi pokrenuli pljacku, minimalno %d clanova vase fakcije trebaju biti u krugu 20m od warehouse sefa!", MIN_ROBBERS);
 
         StartWarehouseRobbery(playerid, wh);
     }
@@ -1313,20 +1313,20 @@ CMD:awarehouse(playerid, params[])
         }
         // TODO: Or just use Iter_Contains
         if(facID < 1 || facID > MAX_FACTIONS)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         // ^ Needed to reindex into the array. User input is human-friendly, ranging from
         // 1..N whereas script indices should start from 0.
         if(DoesWarehouseExist(FactionInfo[facID][fID]))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d vec postoji(%s).", FactionInfo[facID][fID], FactionInfo[facID][fName]);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d vec postoji(%s).", FactionInfo[facID][fID], FactionInfo[facID][fName]);
 
         new Float:X, Float:Y, Float:Z;
         GetPlayerPos(playerid, X, Y, Z);
 
         new freeslot = Iter_Free(Warehouses);
         AddWarehouse(freeslot, facID, X, Y, Z);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s Warehouse(ID %d) je uspjesno stvoren na vasoj trenutnoj poziciji.", FactionInfo[facID][fName], FactionInfo[facID][fID]);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s Warehouse(ID %d) je uspjesno stvoren na vasoj trenutnoj poziciji.", FactionInfo[facID][fName], FactionInfo[facID][fID]);
     }
     else if(!strcmp(option, "remove", true))
     {
@@ -1339,15 +1339,15 @@ CMD:awarehouse(playerid, params[])
         }
         // TODO: Or just use Iter_Contains
         if(facID < 1 || facID > MAX_FACTIONS)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         if(!DoesWarehouseExist(FactionInfo[facID][fID]))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d ne postoji!", FactionInfo[facID][fID]);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d ne postoji!", FactionInfo[facID][fID]);
 
         new whid = FetchWarehouseEnumFromFaction(FactionInfo[facID][fID]);
         RemoveWarehouse(whid);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s Warehouse(ID %d) je uspjesno izbrisan iz baze podataka.", FactionInfo[facID][fName], FactionInfo[facID][fID]);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s Warehouse(ID %d) je uspjesno izbrisan iz baze podataka.", FactionInfo[facID][fName], FactionInfo[facID][fID]);
     }
     else if(!strcmp(option, "move", true))
     {
@@ -1360,17 +1360,17 @@ CMD:awarehouse(playerid, params[])
         }
 
         if(facID < 1 || facID > MAX_FACTIONS)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Faction ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         new whid = FetchWarehouseEnumFromFaction(facID);
         if(!Iter_Contains(Warehouses, whid))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Organizacija %s ne posjeduje warehouse.", FactionInfo[facID][fName]);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Organizacija %s ne posjeduje warehouse.", FactionInfo[facID][fName]);
 
         new Float:X, Float:Y, Float:Z;
         GetPlayerPos(playerid, X, Y, Z);
         MoveWarehouse(whid, X, Y, Z);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ulaz u %s Warehouse je uspjesno premjesten na vasu trenutnu poziciju.", FactionInfo[facID][fName]);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ulaz u %s Warehouse je uspjesno premjesten na vasu trenutnu poziciju.", FactionInfo[facID][fName]);
     }
     else if(!strcmp(option, "goto", true))
     {
@@ -1382,15 +1382,15 @@ CMD:awarehouse(playerid, params[])
         }
 
         if(facID < 1 || facID > MAX_FACTIONS)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse ID ne moze biti manji od 1 niti veci od %d.", MAX_FACTIONS);
 
         facID--;
         whid = FetchWarehouseEnumFromFaction(facID);
         if(!DoesWarehouseExist(WarehouseInfo[whid][whFactionSQLID]))
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d ne postoji!", whid);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Warehouse pod ID-em %d ne postoji!", whid);
 
         SetPlayerPosEx(playerid, WarehouseInfo[whid][whEnter][0], WarehouseInfo[whid][whEnter][1], WarehouseInfo[whid][whEnter][2], 0, 0, false);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste portani do %s Warehousea (Faction ID %d)", FactionInfo[facID][fName], FactionInfo[facID][fID]);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste portani do %s Warehousea (Faction ID %d)", FactionInfo[facID][fName], FactionInfo[facID][fID]);
     }
     return 1;
 }

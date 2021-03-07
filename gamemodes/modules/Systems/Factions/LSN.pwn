@@ -247,7 +247,7 @@ CMD:toglive(playerid, params[])
     
     blockedLive[playerid] = status;
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s si News Live chat!", 
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s si News Live chat!", 
 		(status) ? ("Ukljucio") : ("Iskljucio")
 	);
 	return 1;
@@ -299,12 +299,12 @@ CMD:live(playerid, params[])
 
     if(OnLive[giveplayerid])
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste dozvolu gostu %s za pricanje u eter.", playerName);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste dozvolu gostu %s za pricanje u eter.", playerName);
         va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[INFO]: Izgubili ste dozvolu za govor u eteru od novinara %s!", newsName);
     }
     else
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dali ste dozvolu gostu %s za ulazak u eter. Da skines dozvolu koristi /live.", playerName);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dali ste dozvolu gostu %s za ulazak u eter. Da skines dozvolu koristi /live.", playerName);
         va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[INFO]: Dobili ste dozvolu za govor u eteru od novinara %s!", newsName);
     }
     OnLive[giveplayerid] = !OnLive[giveplayerid];

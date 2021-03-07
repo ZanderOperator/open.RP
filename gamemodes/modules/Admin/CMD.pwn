@@ -197,10 +197,10 @@ CMD:inactivity(playerid, params[])
 		}
 		new sqlid = ConvertNameToSQLID(playername);
 		if(sqlid == -1)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
 		if(!IsValidInactivity(sqlid))
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
 			
 		CheckInactivePlayer(playerid, sqlid);
 	}		
@@ -222,10 +222,10 @@ CMD:inactivity(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Reason cannot be shorter than 1, nor longer than 64 characters!");
 		new sqlid = ConvertNameToSQLID(playername);
 		if(sqlid == -1)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
 		if(IsValidInactivity(sqlid))
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s already has registered inactivity in the database!");
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s already has registered inactivity in the database!");
 		
 		startstamp = gettimestamp();
 		endstamp = gettimestamp() + (3600 * 24 * days);
@@ -280,10 +280,10 @@ CMD:inactivity(playerid, params[])
 		}
 		new sqlid = ConvertNameToSQLID(playername);
 		if(sqlid == -1)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
 		if(!IsValidInactivity(sqlid))
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
 		
 		foreach(new i : Player)
 		{
@@ -386,7 +386,7 @@ CMD:ach(playerid, params[])
 	if(!Player_NeedsHelp(targetid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR,"That player didn't request help.");
 	
-	SendFormatMessage(targetid, MESSAGE_TYPE_INFO, "Helper %s accepted your help request.", GetName(playerid));
+	va_SendMessage(targetid, MESSAGE_TYPE_INFO, "Helper %s accepted your help request.", GetName(playerid));
 	SendHelperMessage(COLOR_RED, 
 		"[!]: Helper %s accepted help request from %s.",
 		GetName(playerid, true), 
@@ -565,7 +565,7 @@ CMD:removewarn(playerid, params[])
     
 	PlayerInfo[giveplayerid][pWarns] -= 1;
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, 
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, 
 		"You have removed warn to player %s", 
 		GetName(giveplayerid,false)
 	);
@@ -755,7 +755,7 @@ CMD:aname(playerid, params[])
 		case 0: 
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete taj nick!");
 		case 1: 
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName); 
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName); 
 	}
 	return 1;
 } 
@@ -1062,7 +1062,7 @@ CMD:asellgarage(playerid, params[])
     if(sscanf(params, "i", garage)) 
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /asellgarage [garageid]");
 	if(!Garage_Exists(garage)) 
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
 		
 	foreach(new i : Player)
 	{
@@ -1107,7 +1107,7 @@ CMD:asellgarage(playerid, params[])
 	GarageInfo[garage][gOwnerID] 			= 0;
 	GarageInfo[garage][gLocked] 			= 1;
 
-	SendFormatMessage(playerid, 
+	va_SendMessage(playerid, 
 		MESSAGE_TYPE_SUCCESS, 
 		"You sold garage %s with admin command!",
 		GarageInfo[garage][gAdress]
@@ -1410,7 +1410,7 @@ CMD:healcar(playerid, params[])
 	
 	SetVehicleHealth(vehicleid, health);
 	
-	SendFormatMessage(playerid, 
+	va_SendMessage(playerid, 
 		MESSAGE_TYPE_SUCCESS,
 		"You have succesfully set %s's health on %d (vID: %d)",
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
@@ -1992,7 +1992,7 @@ CMD:deletevehicle(playerid, params[])
 			DestroyFarmerObjects(playerid); // TODO:farmer
 			AC_DestroyVehicle(vehicleid);
 			DestroyAdminVehicle(playerid, vehicleid);
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
 		}
 		case 2: 
 		{
@@ -2445,7 +2445,7 @@ CMD:fpm(playerid, params[])
     if(sscanf(params, "u", giveplayerid)) 
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /fpm [ID / Part of name]");
     if(!IsPlayerConnected(giveplayerid)) 
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d isn't online!", giveplayerid);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d isn't online!", giveplayerid);
     if(PlayerInfo[giveplayerid][pAdmin] >= 1 || PlayerInfo[giveplayerid][pHelper] >= 1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't forbid PM's to Team Staff!"); 
 	
@@ -2726,7 +2726,7 @@ CMD:prisonex(playerid, params[])
 
 	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", targetname);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", targetname);
 
     mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT jailed FROM player_jail WHERE sqlid = '%d'", sqlid), 
@@ -3018,7 +3018,7 @@ CMD:rtcinradius(playerid, params[])
 			}
 		}
 	}
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sva vozila u radiusu %2.f od vas su respawnana! Ukoliko zelite respawnati prikolicu, koristite /dl te /rtcacar!", radius);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sva vozila u radiusu %2.f od vas su respawnana! Ukoliko zelite respawnati prikolicu, koristite /dl te /rtcacar!", radius);
 	return 1;
 }
 
@@ -3039,7 +3039,7 @@ CMD:weatherall(playerid, params[])
 	foreach (new i : Player)
 		SetPlayerWeather(i, weather);
 	
-	SendFormatMessage(playerid, 
+	va_SendMessage(playerid, 
 		MESSAGE_TYPE_SUCCESS, 
 		"Weather ID %d has been sucessfully set to everyone!", 
 		weather
@@ -3310,7 +3310,7 @@ CMD:unban(playerid, params[])
 	if(sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[?]: /unban [Igracev Nick]");
 	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
-		SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
+		va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
 
 	#if defined MODULE_BANS
 	UnbanPlayerName(targetname, playerid);
@@ -3532,7 +3532,7 @@ CMD:bizo(playerid, params[])
 	if(sscanf( params, "i", biznis)) return SendClientMessage(playerid, COLOR_RED, "[?]:  /bizo [biznisid]");
 	
 	if(!Bizz_Exists(biznis))
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Business ID %d doesn't exist!", biznis);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Business ID %d doesn't exist!", biznis);
 	
 	SetPlayerPosEx(playerid, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ], 0, 0, true);
 	
@@ -3622,7 +3622,7 @@ CMD:rtc(playerid, params[])
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel]), 
 		vehicleid
 	);
-	SendFormatMessage(playerid, 
+	va_SendMessage(playerid, 
 		MESSAGE_TYPE_SUCCESS, 
 		"%s[ID: %d] is sucessfully respawned.",
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
@@ -3639,13 +3639,13 @@ CMD:rtcacar(playerid, params[])
 	if(sscanf( params, "i", vehicleid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /rtcacar [vehicleid]");
 	
 	if(!IsValidVehicle(vehicleid))
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ID %d ne postoji na serveru!", vehicleid);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ID %d ne postoji na serveru!", vehicleid);
 	if(IsVehicleOccupied(vehicleid))
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Netko se trenutno nalazi u vozilu ID %d!", vehicleid);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko se trenutno nalazi u vozilu ID %d!", vehicleid);
 		
 	SetVehicleToRespawn(vehicleid);
 
-	SendFormatMessage(playerid, 
+	va_SendMessage(playerid, 
 		MESSAGE_TYPE_SUCCESS, 
 		"%s[ID: %d] is sucessfully respawned.",
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
@@ -3817,7 +3817,7 @@ CMD:checkoffline(playerid, params[])
     
 	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
 
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
@@ -3857,7 +3857,7 @@ CMD:count(playerid, params[])
 		GetName(playerid,false),
 		seconds
 	);
-	SendFormatMessage(playerid, 
+	va_SendMessage(playerid, 
 		MESSAGE_TYPE_SUCCESS, 
 		"You have started countdown of %d seconds.",
 		seconds
@@ -3884,7 +3884,7 @@ CMD:respawn(playerid, params[])
 		GetName(playerid, false),
 		GetName(giveplayerid, false)
 	);
-	SendFormatMessage(giveplayerid, 
+	va_SendMessage(giveplayerid, 
 		MESSAGE_TYPE_SUCCESS, 
 		"Game Admin %s sucessfully respawned you.",
 		GetName(playerid, false)
@@ -4548,8 +4548,8 @@ CMD:givegun(playerid, params[])
 	if(! CheckPlayerWeapons(giveplayerid, gun)) return 1;
 	AC_GivePlayerWeapon(giveplayerid, gun, ammo);
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa %d metaka.", GetName(giveplayerid, false), GetWeaponNameEx(gun), ammo);
-	SendFormatMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Game Admin %s vam je dao %s sa %d metaka.", GetName(playerid, false), GetWeaponNameEx(gun), ammo);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa %d metaka.", GetName(giveplayerid, false), GetWeaponNameEx(gun), ammo);
+	va_SendMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Game Admin %s vam je dao %s sa %d metaka.", GetName(playerid, false), GetWeaponNameEx(gun), ammo);
 	
 
 	#if defined MODULE_LOGS
@@ -4590,8 +4590,8 @@ CMD:givebullet(playerid, params[])
 	if(! CheckPlayerWeapons(giveplayerid, gun)) return 1;
 	AC_GivePlayerWeapon(giveplayerid, gun, 1);
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa jednim metkom.", GetName(giveplayerid, false), GetWeaponNameEx(gun));
-	SendFormatMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Game Admin %s vam je dao %s sa jednim metkom.", GetName(playerid, false), GetWeaponNameEx(gun));
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa jednim metkom.", GetName(giveplayerid, false), GetWeaponNameEx(gun));
+	va_SendMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Game Admin %s vam je dao %s sa jednim metkom.", GetName(playerid, false), GetWeaponNameEx(gun));
 	
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_givegun.txt", "(%s) Game Admin %s gave %s %s with 1 bullet.",
@@ -4745,7 +4745,7 @@ CMD:forceduty(playerid, params[])
 		(Admin_OnDuty(giveplayerid)) ? ("on") : ("off"),	 
 		GetName(playerid, false)
 	);
-	SendFormatMessage(giveplayerid,
+	va_SendMessage(giveplayerid,
 		MESSAGE_TYPE_INFO,
 		"Game Admin %s forced you %s Admin Duty.", 
 		(Admin_OnDuty(giveplayerid)) ? ("on") : ("off"),	 

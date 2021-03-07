@@ -113,7 +113,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
     inline OnPlayerMDCLoad()
     {
         if(!cache_num_rows())
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik %s ne postoji!", playername);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik %s ne postoji!", playername);
 
         new
             loadInfo[E_PLAYER_DATA],
@@ -682,7 +682,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
 static DeletePlayerMDCCrime(playerid, sqlid)
 {
     mysql_fquery(g_SQL, "DELETE FROM jail WHERE id = '%d'", sqlid);
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali dosje #%d!", sqlid);
+    va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali dosje #%d!", sqlid);
     return 1;
 }
 
@@ -1234,7 +1234,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         {
             new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
-                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
+                return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
                );
 
@@ -1252,7 +1252,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         {
             new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
-                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
+                return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
                );
 
@@ -1302,7 +1302,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             inline OnMobileNumberCheck()
             {
                 if(!cache_num_rows())
-                    return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik sa brojem %d ne postoji!", mobilenumber);
+                    return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik sa brojem %d ne postoji!", mobilenumber);
 
                 new playersql,
                     modelid;
@@ -1329,7 +1329,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             
             new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
-                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
+                return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
                );
 

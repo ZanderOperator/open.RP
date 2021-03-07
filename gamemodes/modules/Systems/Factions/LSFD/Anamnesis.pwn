@@ -28,14 +28,14 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 		date
 	);
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno si dodao zapis u karton za %s.", GetName(giveplayerid,true));
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno si dodao zapis u karton za %s.", GetName(giveplayerid,true));
     return 1;
 }
 
 stock static DeletePlayerCarton(playerid, sqlid) 
 {
 	va_fquery(g_SQL, "DELETE FROM anamnesis WHERE id = '%d'", sqlid);
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali karton broj: #%d!", sqlid);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali karton broj: #%d!", sqlid);
     return 1;
 }
 

@@ -127,7 +127,7 @@ static CreateRoadblock(playerid, id)
 
     EditDynamicObject(playerid, Roadblocks[i][sObject]);
 
-    SendFormatMessage(playerid, 
+    va_SendMessage(playerid, 
         MESSAGE_TYPE_INFO, 
         "%s has been created. Please adjust its position and save it!",
         RoadblockList[id][rName]
@@ -184,7 +184,7 @@ CMD:rb(playerid, params[])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You should be Rank 2+ for this action!");
     if(Iter_Free(Roadblock) == -1)
     {
-        SendFormatMessage(playerid, 
+        va_SendMessage(playerid, 
             MESSAGE_TYPE_ERROR, 
             "Max. limit of roadblocks has been reached! (%d)",
             MAX_ROADBLOCKS
@@ -316,7 +316,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
             Roadblocks[r_id][sY] = y;
             Roadblocks[r_id][sZ] = z;
 		
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have sucessfully placed %s.", 
 				RoadblockList[list_id][rName]

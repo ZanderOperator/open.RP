@@ -194,7 +194,7 @@ static CreateAdForPlayer(playerid)
 	va_GameTextForPlayer(playerid, "~r~Placeno za reklamu: $%d", 5000, 5, price);
 	
 	lastAdId = index;		
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili oglas. Trenutno je %i oglas/a za prikazivanje prije tvog.", index);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili oglas. Trenutno je %i oglas/a za prikazivanje prije tvog.", index);
 	
 	SendAdminMessage(COLOR_RED, 
 		"[AdTrace] - [%dx]: %s | %s", 
@@ -421,7 +421,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(PlayerVIP[playerid][pDonateRank] > 0)
 				price = 0;
 			else
-				if(price > AC_GetPlayerMoney(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Nemate dovoljno novaca za platiti oglas. Cijena oglasa je %d$.", price);
+				if(price > AC_GetPlayerMoney(playerid)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Nemate dovoljno novaca za platiti oglas. Cijena oglasa je %d$.", price);
 			
 			CreateAdForPlayer(playerid);
 			return 1;
@@ -461,8 +461,8 @@ CMD:carad(playerid, params[])
 		new text[64], partOne[22], partTwo[22], partThree[22];
 		if(sscanf(params, "s[8]s[64]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "[?]: /carad set [text (64 znaka max)]");
 		new money = strlen(text) * 6;
-		if(AC_GetPlayerMoney(playerid) < money) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za postavljanje oglasa (%d$)", money);
-		if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)  return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Vec postoji oglas na vasem vozilu! Prvo korisite /carad delete");
+		if(AC_GetPlayerMoney(playerid) < money) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za postavljanje oglasa (%d$)", money);
+		if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)  return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Vec postoji oglas na vasem vozilu! Prvo korisite /carad delete");
 		strmid(partOne, text, 0, 21);
 		strmid(partTwo, text, 22, 43);
 		strmid(partThree, text, 44, strlen(text));
@@ -470,7 +470,7 @@ CMD:carad(playerid, params[])
 		format(tmpString, sizeof(tmpString), "%s\n%s\n%s", partOne, partTwo, partThree);
 		VehicleInfo[vehicleid][vVehicleAdId] = CreateDynamic3DTextLabel(text, COLOR_WHITE, 0.9697, -1.7760, 0.0680, 4.0, INVALID_PLAYER_ID, vehicleid, 1, -1, -1, -1, 4.0);
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Postavili ste oglas na vozilo i platili %d$", money);
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Postavili ste oglas na vozilo i platili %d$", money);
 		PlayerToFactionMoneyTAX( playerid, FACTION_TYPE_NEWS, money); // placanje oglasa novac u faction bank od LSNa
 	}
 	else if(!strcmp(pick, "delete", true))

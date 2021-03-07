@@ -235,7 +235,7 @@ static stock SetPlayerInteriorPreview(playerid, interior)
     if(interior > sizeof(BlankInts)) return 0;
 
     PreviewingInterior[playerid] = interior;
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno pregledavate interijer %s. Za kupnju kucajte /bint buy!", BlankInts[interior][iName]);
+    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno pregledavate interijer %s. Za kupnju kucajte /bint buy!", BlankInts[interior][iName]);
     CreateFurnitureBlankIntTDs(playerid, BlankInts[interior][iName], BlankInts[interior][iPrice]);
     SetPlayerPosEx(playerid, BlankInts[interior][iPosX], BlankInts[interior][iPosY], BlankInts[interior][iPosZ], playerid, 1, true);
     return 1;
@@ -246,7 +246,7 @@ static stock BuyBlankInterior(playerid, house)
     // TODO: house bounds check
     new interior = PreviewingInterior[playerid];
 
-    if(AC_GetPlayerMoney(playerid) < BlankInts[interior][iPrice]) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu enterijera (%d$)!", BlankInts[interior][iPrice]);
+    if(AC_GetPlayerMoney(playerid) < BlankInts[interior][iPrice]) va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu enterijera (%d$)!", BlankInts[interior][iPrice]);
 
     HouseInfo[house][hExitX] = BlankInts[interior][iPosX];
     HouseInfo[house][hExitY] = BlankInts[interior][iPosY];
@@ -262,7 +262,7 @@ static stock BuyBlankInterior(playerid, house)
     DestroyFurnitureBlankIntTDs(playerid);
     PlayerToBudgetMoney(playerid, BlankInts[interior][iPrice]); // Novac ide u proracun
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili interijer %s za %d$!",
+    va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili interijer %s za %d$!",
         BlankInts[interior][iName],
         BlankInts[interior][iPrice]
    );
@@ -982,7 +982,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
     HouseInfo[houseid][hFurObjectid][index] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, HouseInfo[houseid][hVirtualWorld], HouseInfo[houseid][hInt], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
     new price = GetFurnitureObjectPrice(playerid, PlayerPrwsIndex[playerid]);
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
+    va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
     PlayerToBudgetMoney(playerid, price); // novac ide u proracun
     EditState[playerid] = 0;
 
@@ -2509,7 +2509,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
            );
 
             SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][edit_index], slot, -1, "none", "none", 0);
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali teksturu i boju na Slotu %d za odabrani objekt.", slot);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali teksturu i boju na Slotu %d za odabrani objekt.", slot);
 
             PlayerEditIndex   [playerid] = -1;
             PlayerEditClsIndex[playerid] = -1;
@@ -2607,7 +2607,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
             new index = Player_ModelToIndex(playerid, modelid);
             if(AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index))
             {
-                SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", GetFurnitureObjectPrice(playerid, index));
+                va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", GetFurnitureObjectPrice(playerid, index));
 
                 switch (FurnObjectsType[playerid])
                 {
@@ -2744,7 +2744,7 @@ CMD:furniture(playerid, params[])
         if(PlayerEditingHouse[giveplayerid] == PlayerKeys[playerid][pHouseKey])
         {
             PlayerEditingHouse[giveplayerid] = INVALID_HOUSE_ID;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste %s dopustenje za uredjivanje kuce!", GetName(giveplayerid, false));
+            va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste %s dopustenje za uredjivanje kuce!", GetName(giveplayerid, false));
             va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je skinio dopustenje za uredjivanje njegove kuce!", GetName(playerid, false));
             return 1;
         }
@@ -2752,10 +2752,10 @@ CMD:furniture(playerid, params[])
         foreach (new i : Player)
         {
             if(PlayerEditingHouse[i] == PlayerKeys[playerid][pHouseKey])
-                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste odobrili %s da vam uredjuje kucu!", GetName(i, false));
+                return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste odobrili %s da vam uredjuje kucu!", GetName(i, false));
         }
         PlayerEditingHouse[giveplayerid] = PlayerKeys[playerid][pHouseKey];
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da vam uredjuje kucu!", GetName(giveplayerid, false));
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da vam uredjuje kucu!", GetName(giveplayerid, false));
         va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dopustio da mu uredjujete kucu. Kucajte /furniture menu!", GetName(playerid, false));
         return 1;
     }
@@ -2831,7 +2831,7 @@ CMD:afurniture(playerid, params[])
         }
 
         GetHouseFurnitureSlot(target_id, house_id);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sljedeci free slot: %d(house: %d).", FreeFurniture_Slot[target_id], house_id);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sljedeci free slot: %d(house: %d).", FreeFurniture_Slot[target_id], house_id);
         return 1;
     }
     else if(!strcmp(action, "setpremium", true))
@@ -2856,7 +2856,7 @@ CMD:afurniture(playerid, params[])
         }
 
         SetPlayerPremiumFurniture(target_id, house_id);
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Postavili ste igracu %s (house_id: %d) premium furniture slotove (%d).", GetName(target_id, true), house_id, FURNITURE_PREMIUM_OBJECTS);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Postavili ste igracu %s (house_id: %d) premium furniture slotove (%d).", GetName(target_id, true), house_id, FURNITURE_PREMIUM_OBJECTS);
         va_SendClientMessage(target_id, COLOR_RED, "[!] Administrator %s vam je postavio premium furniture slotove (%d).", GetName(playerid, true), FURNITURE_PREMIUM_OBJECTS);
         return 1;
     }
@@ -2876,7 +2876,7 @@ CMD:afurniture(playerid, params[])
             return 1;
         }
 
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste refreshali furniture slotove igracu %s.", GetName(target_id, true));
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste refreshali furniture slotove igracu %s.", GetName(target_id, true));
         UpdatePremiumHouseFurSlots(target_id, playerid, PlayerKeys[target_id][pHouseKey]);
         return 1;
     }

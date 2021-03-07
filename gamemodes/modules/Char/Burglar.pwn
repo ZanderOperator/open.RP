@@ -322,7 +322,7 @@ static PickPocketTargetPlayer(playerid, type)
 					GetName(targetid) 
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz djepa!", money);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz djepa!", money);
 				UpgradePlayerSkill(playerid);
 			}
 			if(succeed == 1 || succeed == 2 || succeed == 4 || succeed == 5) 
@@ -1071,7 +1071,7 @@ CMD:stealmoney(playerid, params[])
 		rand = random(50) + 1;
 		if(rand == 4 || rand == 16 || rand == 30 || rand == 42 || rand == 23) {
 			stolen_money = floatround(( HouseInfo[house][hTakings]) / 3);
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerJob[playerid][pFreeWorks] 	-= 7;
 			UpgradePlayerSkill(playerid);
@@ -1094,7 +1094,7 @@ CMD:stealmoney(playerid, params[])
 		if(rand == 5 || rand == 18 || rand == 12)
 		{
 			stolen_money = floatround(( HouseInfo[house][hTakings]) / 2);
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerJob[playerid][pFreeWorks] 	-= 7;
 			UpgradePlayerSkill(playerid);

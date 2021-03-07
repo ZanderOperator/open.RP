@@ -59,7 +59,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if(!response) return 1;
 
-            if(AC_GetPlayerMoney(playerid) < MeleeWeapons[listitem][mwPrice]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", MeleeWeapons[listitem][mwPrice]);
+            if(AC_GetPlayerMoney(playerid) < MeleeWeapons[listitem][mwPrice]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", MeleeWeapons[listitem][mwPrice]);
 
             PlayerToIllegalBudgetMoney(playerid, MeleeWeapons[listitem][mwPrice]);
             AC_GivePlayerWeapon(playerid, MeleeWeapons[listitem][mwWeaponId], 1, true, false);

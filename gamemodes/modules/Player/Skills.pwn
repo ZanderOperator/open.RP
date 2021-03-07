@@ -170,7 +170,7 @@ UpgradePlayerSkill(playerid)
 		skill = 5;
 	
 	if(skill > 0) 
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Your job skill level increased. Now it's %d, congrats!", skill);
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Your job skill level increased. Now it's %d, congrats!", skill);
 	PlayerSkills[playerid][sSkill][skillid]++;
 	if(PlayerSkills[playerid][sSkill][skillid] >= 250) 
 		PlayerSkills[playerid][sSkill][skillid] = 250;
@@ -288,7 +288,7 @@ CMD:setskill(playerid, params[])
 	PlayerSkills[giveplayerid][sSkill][skillid] = value;
 	SavePlayerSkill(giveplayerid, skillid);
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You've sucessfully set %d %s Skill Points to player %s!", 
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You've sucessfully set %d %s Skill Points to player %s!", 
 		value,
 		ReturnJob(PlayerSkills[giveplayerid][sJob][skillid]),
 		GetName(giveplayerid, false)

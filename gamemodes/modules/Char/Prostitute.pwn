@@ -52,7 +52,7 @@ CreateProstitute(playerid, skin_id, free_id) {
 	ProstituteData[free_id][prID] = CreateActor(skin_id, ProstituteData[free_id][prPos][0], ProstituteData[free_id][prPos][1], ProstituteData[free_id][prPos][2], ProstituteData[free_id][prPos][3]);
 	SetActorVirtualWorld(ProstituteData[free_id][prID], GetPlayerVirtualWorld(playerid));
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste kreirali prostitutku sa ID-om %d.", free_id);
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste kreirali prostitutku sa ID-om %d.", free_id);
 	return (true);
 }
 
@@ -72,7 +72,7 @@ DeleteProstitute(playerid, prostitute_id) {
 	DestroyActor(ProstituteData[prostitute_id][prID]);
 	Iter_Remove(PROSTITUTE, prostitute_id);
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste unistili/obrisali prostitutku sa ID-om %d.", prostitute_id);
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste unistili/obrisali prostitutku sa ID-om %d.", prostitute_id);
 	return (true);
 }
 
@@ -98,7 +98,7 @@ MoveProstitute(playerid, prostitute_id) {
 	}
 	ProstituteData[prostitute_id][prShowName] = CreateDynamic3DTextLabel(buffer, COLOR_WHITE, ProstituteData[prostitute_id][prPos][0], ProstituteData[prostitute_id][prPos][1], ProstituteData[prostitute_id][prPos][2], 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste promijenili poziciji prostitutki sa ID-om %d.", prostitute_id);
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste promijenili poziciji prostitutki sa ID-om %d.", prostitute_id);
 	return (true);
 }
 
@@ -136,7 +136,7 @@ SetProstituteName(playerid, prostitute_id, prostitute_name[])
 	}
 	ProstituteData[prostitute_id][prShowName] = CreateDynamic3DTextLabel(buffer, -1, ProstituteData[prostitute_id][prPos][0], ProstituteData[prostitute_id][prPos][1], ProstituteData[prostitute_id][prPos][2], 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili ime prostitutki id '%d' na '%s'.", prostitute_id, prostitute_name);
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili ime prostitutki id '%d' na '%s'.", prostitute_id, prostitute_name);
 	return (true);
 }
 
@@ -155,9 +155,9 @@ SetProstitutePriceTip(playerid, prostitute_id, tipmoney) {
 	ProstituteData[prostitute_id][prShowName] = CreateDynamic3DTextLabel(buffer, -1, ProstituteData[prostitute_id][prPos][0], ProstituteData[prostitute_id][prPos][1], ProstituteData[prostitute_id][prPos][2], 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
 
 	if(tipmoney != 0)
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili 'tip money/price' prostitutki id '%d' na '$%s'.", prostitute_id, FormatNumber(tipmoney));
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili 'tip money/price' prostitutki id '%d' na '$%s'.", prostitute_id, FormatNumber(tipmoney));
 	if(tipmoney == 0)
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste makli 'tip money/price' prostitutki id '%d'.", prostitute_id);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste makli 'tip money/price' prostitutki id '%d'.", prostitute_id);
 	return (true);
 }
 
@@ -264,7 +264,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if(AC_GetPlayerMoney(playerid) <  ProstituteData[i][TipMoney])
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise novca.");
 				if(gettimestamp() < quick_timer[playerid])
-					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati %d sekundi.", QUICK_TIMER_COOLDOWN);
+					return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati %d sekundi.", QUICK_TIMER_COOLDOWN);
 
 				ProstituteData[i][prEarned] += ProstituteData[i][TipMoney];
 				AC_GivePlayerMoney(playerid, -ProstituteData[i][TipMoney]);
@@ -341,7 +341,7 @@ CMD:prostitute(playerid, const params[]) {
 			foreach(new i : PROSTITUTE) {
 				if(IsPlayerInRangeOfPoint(playerid, 5.0, ProstituteData[i][prPos][0], ProstituteData[i][prPos][1], ProstituteData[i][prPos][2])) {
 					if(!strcmp(GetName(playerid), ProstituteData[i][prOwner], (false)))
-						return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete provijeriti tu prostitutku, nije u vasem posjedu.");
+						return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete provijeriti tu prostitutku, nije u vasem posjedu.");
 
 					va_SendClientMessage(playerid, COLOR_RED, "[!] Prostitute Name: %s, Prostitute Earned: %s, Prostitute Tip Price: %s.",
 						ProstituteData[i][prName],
@@ -356,10 +356,10 @@ CMD:prostitute(playerid, const params[]) {
 				if(IsPlayerInRangeOfPoint(playerid, 5.0, ProstituteData[i][prPos][0], ProstituteData[i][prPos][1], ProstituteData[i][prPos][2])) {
 
 					if(!strcmp(GetName(playerid), ProstituteData[i][prOwner], (false)))
-						return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete uzeti novac od te prostitutke, nije u vasem posjedu.");
+						return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete uzeti novac od te prostitutke, nije u vasem posjedu.");
 
 					if(ProstituteData[i][prEarned] == 0)
-						return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ta prostitutka nije nista zaradila.");
+						return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ta prostitutka nije nista zaradila.");
 
 					va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste uzeli novac(%s) koji je vasa prostitutka ('%s') zaradila.",
 						FormatNumber(ProstituteData[i][prEarned]),
@@ -392,7 +392,7 @@ CMD:prostitute(playerid, const params[]) {
 			return (true);
 		}
 		if(tipmoney < MIN_TIP_MONEY || tipmoney > MAX_TIP_MONEY)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete staviti 'tip' manje od %s ili vise od %s.", FormatNumber(MIN_TIP_MONEY), FormatNumber(MAX_TIP_MONEY));
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete staviti 'tip' manje od %s ili vise od %s.", FormatNumber(MIN_TIP_MONEY), FormatNumber(MAX_TIP_MONEY));
 
 		SetProstitutePriceTip(playerid, prostitute_id, tipmoney);
 	}

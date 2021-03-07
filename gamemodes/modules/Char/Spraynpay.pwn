@@ -40,7 +40,7 @@ hook OnGameModeInit(){
 CMD:enterspray( playerid, params[]) 
 {
 	if(pns_garages == false) 
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Admini su trenutno ugasili mogucnost koristenja ove komande.");
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Admini su trenutno ugasili mogucnost koristenja ove komande.");
     if(GetPlayerState( playerid) != PLAYER_STATE_DRIVER) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "Morate biti na mjestu vozaca.");
     
     new 
@@ -53,7 +53,7 @@ CMD:enterspray( playerid, params[])
 	if(PlayerVIP[playerid][pDonateRank] != 0)
 		price = 0;
 		
-	if(AC_GetPlayerMoney(playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s).", FormatNumber(price));
+	if(AC_GetPlayerMoney(playerid) < price) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s).", FormatNumber(price));
 	if(IsPlayerInRangeOfPoint( playerid, 3.0, 1099.1404, -824.9033, 181.2554)) {
 	
 	    // novac u proracun
@@ -132,7 +132,7 @@ timer SprayDone[5000]( playerid, sprayid, price)
 		if(VehicleInfo[vehicleid][vBodyArmor] == 1)
 			AC_SetVehicleHealth(vehicleid, 1600.0);		
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste popravili vase vozilo za %s.", FormatNumber(price));
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste popravili vase vozilo za %s.", FormatNumber(price));
 		BizzInfo[110][bTill] += floatround(price / 7); 
 		ChangeVehicleColor(vehicleid, pnscolor1, pnscolor2);
 		

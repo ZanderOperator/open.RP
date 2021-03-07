@@ -459,7 +459,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 if(AC_GetPlayerMoney(playerid) < putMoney) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 
                 PlayerToBusinessMoney(playerid, biznis, putMoney); // Novac od Mayora ide u biznis
-                SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste stavili %d$ u blagajnu biznisa %s!", putMoney, BizzInfo[biznis][bMessage]);
+                va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste stavili %d$ u blagajnu biznisa %s!", putMoney, BizzInfo[biznis][bMessage]);
                 #if defined MODULE_LOGS
                 Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s put %d$ in business %s [SQlID: %d].",
                     ReturnDate(),
@@ -489,10 +489,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 takeMoney = strval(inputtext);
             if(takeMoney > 0)
             {
-                if(BizzInfo[biznis][bTill] < takeMoney) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "U blagajni biznisa nema toliko novca. Stanje blagajne: %d$", BizzInfo[biznis][bTill]);
+                if(BizzInfo[biznis][bTill] < takeMoney) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "U blagajni biznisa nema toliko novca. Stanje blagajne: %d$", BizzInfo[biznis][bTill]);
 
                 BusinessToPlayerMoney(playerid, biznis, takeMoney); // Novac iz biznisa ide u ruke Mayora
-                SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste digli %d$ iz blagajne biznisa %s!", takeMoney, BizzInfo[biznis][bMessage]);
+                va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste digli %d$ iz blagajne biznisa %s!", takeMoney, BizzInfo[biznis][bMessage]);
                 #if defined MODULE_LOGS
                 Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s took %d$ from business %s [SQlID: %d].",
                     ReturnDate(),
@@ -547,7 +547,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new takeMoney = strval(inputtext);
             if(0 <= takeMoney <= CityInfo[cBudget])
             {
-                SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste %d $ iz proracuna!", takeMoney);
+                va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste %d $ iz proracuna!", takeMoney);
                 BudgetToPlayerMoney(playerid, takeMoney); // Novac od budgeta ide Mayoru
                 #if defined MODULE_LOGS
                 Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s took %d$ from city budget.(Left: %d$).",
@@ -579,7 +579,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 if(AC_GetPlayerMoney(playerid) < takeMoney) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 
                 PlayerToBudgetMoney(playerid, takeMoney); // Novac od Mayora ide u budget
-                SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste %d$ u proracun!", takeMoney);
+                va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste %d$ u proracun!", takeMoney);
                 #if defined MODULE_LOGS
                 Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s put %d$ in city budget.(Current state: %d$).",
                     ReturnDate(),
@@ -612,7 +612,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             CityInfo[cTax] = newTax;
             mysql_fquery(g_SQL, "UPDATE city SET tax = '%d' WHERE 1", CityInfo[cTax]);
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili porez u Los Santosu, sada on iznosi %d posto",
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili porez u Los Santosu, sada on iznosi %d posto",
                 CityInfo[cTax]
            );
             return 1;
@@ -870,7 +870,7 @@ CMD:charity(playerid, params[])
         pay
    );
     #endif
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste donirali %d$ gradu!", pay);
+    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste donirali %d$ gradu!", pay);
     return 1;
 }
 

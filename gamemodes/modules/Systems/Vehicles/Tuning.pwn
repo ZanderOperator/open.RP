@@ -703,7 +703,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 	if(VehicleInfo[vehicleid][vTuned]) 
 	{
 		if(AC_GetPlayerMoney(playerid) < REMOVE_PRICE)
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi uklonili tuniranu komponentu, potrebno Vam je %d$!", REMOVE_PRICE);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi uklonili tuniranu komponentu, potrebno Vam je %d$!", REMOVE_PRICE);
 		
 		switch(listitem)
 		{
@@ -714,7 +714,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 				VehicleInfo[vehicleid][vPaintJob] = 255;
 				ChangeVehiclePaintjob( vehicleid, 3);
 				ChangeVehicleColor( vehicleid, VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2]);
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli PaintJob sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli PaintJob sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 1:
 			{
@@ -722,7 +722,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani auspuh!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vExhaust]);
 				VehicleInfo[vehicleid][vExhaust] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli auspuh sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli auspuh sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 2:
 			{
@@ -730,7 +730,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani prednji branik!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vFrontBumper]);
 				VehicleInfo[vehicleid][vFrontBumper] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli prednji branik sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli prednji branik sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 3:
 			{
@@ -738,7 +738,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani straznji branik!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vRearBumper]);
 				VehicleInfo[vehicleid][vRearBumper] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli straznji branik sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli straznji branik sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 4:
 			{
@@ -746,7 +746,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani krov!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vRoof]);
 				VehicleInfo[vehicleid][vRoof] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli krov sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli krov sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 5:
 			{
@@ -754,7 +754,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani spoiler!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vSpoiler]);
 				VehicleInfo[vehicleid][vSpoiler] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli spoiler sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli spoiler sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 6:
 			{
@@ -762,7 +762,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirani bocni branik!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vSkirt]);
 				VehicleInfo[vehicleid][vSkirt] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli bocne branike sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli bocne branike sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 7:
 			{
@@ -770,7 +770,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tunirane felge!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vWheels]);
 				VehicleInfo[vehicleid][vWheels] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli felge sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli felge sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 8:
 			{
@@ -778,7 +778,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 					return SendErrorMessage(playerid, "Vozilo ne posjeduje tuniranu hidrauliku!");
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vHydraulics]);
 				VehicleInfo[vehicleid][vHydraulics] = -1;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli hidrauliku sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli hidrauliku sa vozila za %d$.", REMOVE_PRICE);
 			}
 			case 9:
 			{
@@ -787,7 +787,7 @@ stock RemoveComponentFromVehicle(playerid, vehicleid, listitem)
 				RemoveVehicleComponent(vehicleid, VehicleInfo[vehicleid][vNitro]);
 				VehicleInfo[vehicleid][vNitro] = -1;
 				VehicleInfo[vehicleid][vNOSCap] = 0;
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli nitro sa vozila za %d$.", REMOVE_PRICE);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste maknuli nitro sa vozila za %d$.", REMOVE_PRICE);
 				DestroyNOSTD(playerid); // maknuto
 			}
 		}
@@ -1649,10 +1649,10 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				new vehname[36];
 				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]));
 				if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili %s na %s.", cInfo[cid][cName], vehname);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili %s na %s.", cInfo[cid][cName], vehname);
 				else
 				{
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili %s na %s za %d$.", cInfo[cid][cName], vehname, cInfo[cid][cPrice]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili %s na %s za %d$.", cInfo[cid][cName], vehname, cInfo[cid][cPrice]);
 					PlayerToBudgetMoney(playerid, cInfo[cid][cPrice]); // novac ide u proracun
 				}
 			}
@@ -1672,10 +1672,10 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				new vehname[36];
 				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]));
 				if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili PaintJob na %s.", vehname);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili PaintJob na %s.", vehname);
 				else
 				{
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili PaintJob na %s za %d$.", vehname, pjInfo[TPInfo[playerid][tID]][pPrice]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ugradili PaintJob na %s za %d$.", vehname, pjInfo[TPInfo[playerid][tID]][pPrice]);
 					PlayerToBudgetMoney(playerid, pjInfo[TPInfo[playerid][tID]][pPrice]); // Novac ide u proracun
 				}
 				SaveVehicleTuning(vehicleid);
@@ -1843,7 +1843,7 @@ CMD:remove_tuning(playerid, params[])
 		VehicleInfo[vehicleid][vSQLID]
 	);
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Tuning je uspjesno uklonjen sa %s [SQL ID: %d]", 
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Tuning je uspjesno uklonjen sa %s [SQL ID: %d]", 
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel]), 
 		VehicleInfo[vehicleid][vSQLID]
 	);

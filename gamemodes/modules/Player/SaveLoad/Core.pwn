@@ -1022,7 +1022,7 @@ hook OnPlayerSpawn(playerid)
 			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
+			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Player_SetUsingMask(playerid, false);
 			if(PlayerInventory[playerid][pMaskID])
@@ -1046,7 +1046,7 @@ hook OnPlayerSpawn(playerid)
 			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
+			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Player_SetUsingMask(playerid, false);
 			if(PlayerInventory[playerid][pMaskID])

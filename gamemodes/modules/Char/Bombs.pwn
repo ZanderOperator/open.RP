@@ -218,7 +218,7 @@ CMD:bomb(playerid, params[])
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos playerida!");
 		Bit1_Set( r_BombAccept, giveplayerid, true);
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin %s vam je dozvolio postavljanje bombe!", GetName(playerid, false));
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Odobrili ste %s postavljanje bombe!", GetName(giveplayerid, false));		
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Odobrili ste %s postavljanje bombe!", GetName(giveplayerid, false));		
 	}
 	else if(!strcmp(param, "plant", true)) 
 	{
@@ -233,7 +233,7 @@ CMD:bomb(playerid, params[])
 				new
 					time;
 				if(sscanf( params, "s[8]i", param, time)) return SendClientMessage(playerid, COLOR_RED, "[?]: /bomb plant [vrijeme (u sekundama)]");
-				if(time < MIN_BOMB_TIME || time > MAX_BOMB_TIME) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Timer na bombi mora biti u rasponu od %d do %d.", MIN_BOMB_TIME, MAX_BOMB_TIME); 
+				if(time < MIN_BOMB_TIME || time > MAX_BOMB_TIME) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Timer na bombi mora biti u rasponu od %d do %d.", MIN_BOMB_TIME, MAX_BOMB_TIME); 
 				CreateBomb(playerid, BOMB_TYPE_C4_TIME, time, INVALID_VEHICLE_ID);
 			}
 			case BOMB_TYPE_CAR: 

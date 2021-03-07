@@ -531,7 +531,7 @@ CMD:levelup(playerid, params[])
 	    GameTextForPlayer( playerid, "~g~Level up!", 1000, 1);
 	else {
 	    new expamount = ( PlayerInfo[playerid][pLevel] + 1) * 4;
-	    SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebas imati %d respekta, a ti trenutno imas [%d]!",expamount,PlayerInfo[playerid][pRespects]);
+	    va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trebas imati %d respekta, a ti trenutno imas [%d]!",expamount,PlayerInfo[playerid][pRespects]);
 	}
 	return 1;
 }
@@ -1259,7 +1259,7 @@ CMD:accept(playerid, params[])
 		if(sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /accept swat [ID / Part of name]");
 	    if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online.");
 		if(( IsACop(playerid) && PlayerFaction[playerid][pRank] >= FactionInfo[PlayerFaction[playerid][pMember]][rABuyGun]) || ( IsASD(playerid) && PlayerFaction[playerid][pRank] >= FactionInfo[PlayerFaction[playerid][pMember]][rABuyGun])) {
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /swat komandu.", GetName(giveplayerid,true));
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /swat komandu.", GetName(giveplayerid,true));
 			va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dopustio da mozete koristit /swat komandu.", GetName(playerid,true));
 			Player_SetIsSWAT(giveplayerid, true);
 			SendClientMessage(giveplayerid, COLOR_RED, "[!] Mozes koristiti /swat.");
@@ -1345,10 +1345,10 @@ CMD:accept(playerid, params[])
 	    if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED,"Taj igrac nije online.");
 		
 		if(rank < FactionInfo[member][rAGovRepair]) 
-				return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[member][rAGovRepair]);
+				return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[member][rAGovRepair]);
 
 		Player_SetCanRepairGovVehicle(giveplayerid, true);
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /govrepair komandu.", GetName(giveplayerid,true));
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /govrepair komandu.", GetName(giveplayerid,true));
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dopustio da mozete koristit /govrepair komandu.", GetName(playerid,true));
 		SendClientMessage(giveplayerid, COLOR_RED, "[!] Mozes jednom popraviti i napuniti auto.");
 	}
@@ -1362,9 +1362,9 @@ CMD:accept(playerid, params[])
 		if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo LSPD/SASD mogu davati dozvole za uzimanje oruzja u Armoury-u.");
 		if(!IsACop(giveplayerid) && !IsASD(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo LSPD/SASD mogu uzimati dozvole za uzimanje oruzja u Armoury-u.");
 		if(PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rBuyGun]) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rBuyGun]);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rBuyGun]);
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /buygun komandu.", GetName(giveplayerid));
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /buygun komandu.", GetName(giveplayerid));
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dopustio da mozete koristit /buygun komandu.", GetName(playerid));
 		SendClientMessage(giveplayerid, COLOR_RED, "[!] Imate pravo na oruzje iz armorya. Koristite /buygun!");
 	}
@@ -1375,7 +1375,7 @@ CMD:accept(playerid, params[])
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 		if(( IsACop(playerid) && PlayerFaction[playerid][pRank] >= 2)) 
 		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze uci u Impound Garazu!", GetName(giveplayerid));
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze uci u Impound Garazu!", GetName(giveplayerid));
 			va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dopustio da mozete uci u Impound Garazu (/impoundgarage)!", GetName(playerid));
 			Bit1_Set(gr_ImpoundApproval, giveplayerid, false);
 		}
@@ -1823,7 +1823,7 @@ CMD:give(playerid, params[])
 						AC_GivePlayerWeapon(giveplayerid, weapon, finalammo);
 					}
 					else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedopustena radnja!");
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %d sanzera %s(%d metaka).", GetName(giveplayerid), magamount, WeapNames[weapon], finalammo);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %d sanzera %s(%d metaka).", GetName(giveplayerid), magamount, WeapNames[weapon], finalammo);
 					va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dao %d sanzera %s(%d metaka).", GetName(playerid), magamount, WeapNames[weapon], finalammo);
 					format(globalstring, sizeof(globalstring), "* %s daje %d sanzera %s %s.", GetName(playerid), magamount, WeapNames[weapon], GetName(giveplayerid));
 					ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -1942,7 +1942,7 @@ CMD:give(playerid, params[])
 				if(IllegalFactionJobCheck(PlayerFaction[playerid][pLeader], 13) >= 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalan broj car jackera po organizaciji je 5!");
 				PlayerJob[giveplayerid][pJob] = JOB_JACKER;
 
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste posao car jackera igracu %s.", GetName(giveplayerid, true));
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste posao car jackera igracu %s.", GetName(giveplayerid, true));
 				va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Igrac %s vam je dao posao car jacker.", GetName(playerid, true));
 			}
 			else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten!");
@@ -2102,7 +2102,7 @@ CMD:changename(playerid, params[])
 	{
 		case 1:
 		{
-			if(PlayerInfo[playerid][pChangenames] > gettimestamp() && !PlayerVIP[playerid][pDonateRank]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise prava na promjene imena! Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[playerid][pChangenames]));
+			if(PlayerInfo[playerid][pChangenames] > gettimestamp() && !PlayerVIP[playerid][pDonateRank]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise prava na promjene imena! Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[playerid][pChangenames]));
 			if(!PlayerVIP[playerid][pDonateRank] && AC_GetPlayerMoney(playerid) < 10000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 10.000$!");
 		}
 		case 2:
@@ -2110,7 +2110,7 @@ CMD:changename(playerid, params[])
 			if(PlayerVIP[playerid][pDonateRank] > 0)
 			{
 				if(PlayerInfo[playerid][pChangeTimes] == 0)
-					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Potrosili ste sve dodatne changenameove koje ste dobili sa Premium Paketom. Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[playerid][pChangenames]));
+					return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Potrosili ste sve dodatne changenameove koje ste dobili sa Premium Paketom. Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[playerid][pChangenames]));
 			}
 			else 
 				return va_SendClientMessage(playerid, 
@@ -2341,7 +2341,7 @@ CMD:setwalk(playerid, params[])
 	new walkStyle;
 	if(sscanf(params, "i", walkStyle)) return SendClientMessage(playerid, COLOR_WHITE,"[?]: /setwalk [ID stila]");
 	if(walkStyle < 1  || walkStyle > 29) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos ID stila! (1-29)");
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Odabrali ste stil hodanja #%d.", walkStyle);
+    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Odabrali ste stil hodanja #%d.", walkStyle);
 
 	PlayerAppearance[playerid][pWalkStyle] = walkStyle; 
 	mysql_fquery(g_SQL, "UPDATE player_appearance SET walkstyle = '%d' WHERE sqlid = '%d'",
@@ -2433,8 +2433,8 @@ CMD:marry(playerid, params[])
     if(giveplayerid == playerid) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe vjencati.");
 	if(!ProxDetectorS(5.0, playerid, giveplayerid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Poslali ste zahtjev za vjencanjem %s", GetName(giveplayerid));
-    SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "%s vam je poslao zahtjev za vjencanjem, kucajte /accept marriage za vjencanje!", GetName(playerid));
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Poslali ste zahtjev za vjencanjem %s", GetName(giveplayerid));
+    va_SendMessage(giveplayerid, MESSAGE_TYPE_INFO, "%s vam je poslao zahtjev za vjencanjem, kucajte /accept marriage za vjencanje!", GetName(playerid));
     MarriagePartner[playerid] 		= giveplayerid;
     MarriagePartner[giveplayerid] 	= playerid;
 	return 1;

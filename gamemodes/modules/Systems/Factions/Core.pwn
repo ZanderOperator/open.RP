@@ -1002,7 +1002,7 @@ public OnFactionCountings(playerid)
         return 1;
     }
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Stanje organizacije (%d/%d)", CountMembers(PlayerFaction[playerid][pMember]), num_rows);
+    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Stanje organizacije (%d/%d)", CountMembers(PlayerFaction[playerid][pMember]), num_rows);
     return 1;
 }
 
@@ -1094,7 +1094,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             FactionInfo[fcid][fRanks]   = 6;
             FactionInfo[fcid][fFactionBank] = 0;
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kreirao si fakciju pod IDom %d sa imenom '%s'!",
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kreirao si fakciju pod IDom %d sa imenom '%s'!",
                 creatingInfoId[playerid] + 1,
                 FactionInfo[fcid][fName]
            );
@@ -1379,7 +1379,7 @@ CMD:afaction(playerid, params[])
         if(IsFreeSlot(fid)) return SendClientMessage(playerid, COLOR_RED, "Na tom slotu nije kreirana fakcija!");
         // TODO: strcpy
         format(FactionInfo[fid][fName],24,"%s",newname);
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si ime fakcije ID %d na %s.", fid+1, newname);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si ime fakcije ID %d na %s.", fid+1, newname);
 
         mysql_fquery(g_SQL, "UPDATE server_factions SET name = '%e' WHERE id = '%d'", 
             newname, 
@@ -1393,7 +1393,7 @@ CMD:afaction(playerid, params[])
         if(sscanf(params, "s[16]ii", option, fid, ranks)) return SendClientMessage(playerid, COLOR_RED, "[?]: /afaction ranks [ID][Broj rankova (1-15)]");
         if(IsFreeSlot(fid)) return SendClientMessage(playerid, COLOR_RED, "Na tom slotu nije kreirana fakcija!");
         FactionInfo[fid][fRanks] = ranks;
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si broj rankova fakcije ID %d na %d.", fid+1, ranks);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si broj rankova fakcije ID %d na %d.", fid+1, ranks);
 
         mysql_fquery(g_SQL, "UPDATE server_factions SET ranks = '%d' WHERE id = '%d'",
             FactionInfo[fid][fRanks],
@@ -1691,7 +1691,7 @@ CMD:faction(playerid, params[])
         }
 
         if(!found) 
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda %s ne postoji u permisijama!", cmdname);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda %s ne postoji u permisijama!", cmdname);
 
         va_SendClientMessage(playerid, COLOR_RED, "[!] Postavio si komandu %s na rank %d.", cmdname, rnk);
 
@@ -1876,7 +1876,7 @@ CMD:faction(playerid, params[])
         if(!IsValidNick(targetname)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti roleplay nick!");
         new sqlid = ConvertNameToSQLID(targetname);
         if(sqlid == -1)
-            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik %s ne postoji u bazi podataka.", targetname);
+            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik %s ne postoji u bazi podataka.", targetname);
 
         mysql_tquery(g_SQL, 
             va_fquery(g_SQL, "SELECT * FROM player_faction WHERE sqlid = '%d'", sqlid), 
@@ -2364,7 +2364,7 @@ CMD:carsign(playerid, params[])
     }
     if(PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rCarSign])
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rCarSign]);
+        va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rCarSign]);
         return 1;
     }
     if(sscanf(params, "s[8] ", pick))
@@ -2548,7 +2548,7 @@ CMD:frtc(playerid, params[])
     if(PlayerFaction[playerid][pLeader] == VehicleInfo[vehid][vFaction])
     {
         SetVehicleToRespawn(vehid);
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Respawnao si vozilo ID %d. (/frtc)", vehid);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Respawnao si vozilo ID %d. (/frtc)", vehid);
     }
     return 1;
 }

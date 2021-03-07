@@ -203,7 +203,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if(safe_bullets == 0 || safe_bullets > AmmuInfo[index][aiMaxBullets])
             {
-                SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalni broj metaka za %s je %d!", AmmuInfo[index][aiName], AmmuInfo[index][aiMaxBullets]);
+                va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalni broj metaka za %s je %d!", AmmuInfo[index][aiName], AmmuInfo[index][aiMaxBullets]);
                 return 1;
             }
             if(AC_GetPlayerMoney(playerid) < money) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca!");
@@ -242,7 +242,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
            );
             #endif
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste %s sa %d metaka za %d$!",
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste %s sa %d metaka za %d$!",
                 AmmuInfo[index][aiName],
                 safe_bullets,
                 money
@@ -342,7 +342,7 @@ CMD:ammunation(playerid, params[])
     {
         new slotid;
         if(sscanf(params, "s[8]i", pick, slotid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /ammunation delete [slotid]");
-        if(slotid < 0 && slotid > MAX_AMMU_SLOTS) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID (0-%d).", MAX_AMMU_SLOTS-1);
+        if(slotid < 0 && slotid > MAX_AMMU_SLOTS) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID (0-%d).", MAX_AMMU_SLOTS-1);
 
         AmmuInfo[slotid][aiSQLID] = 0;
         AmmuInfo[slotid][aiName] = EOS;

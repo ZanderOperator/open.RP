@@ -69,21 +69,21 @@ stock RewardPlayer(playerid)
 			case 0..49:
 			{
 				BudgetToPlayerMoney(playerid, 500);
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 500$. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 500$. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 			case 50..89:
 			{
 				ExpInfo[playerid][ePoints] += 1;
 				ExpInfo[playerid][eAllPoints] += 1;
 				SavePlayerExperience(playerid);
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 1 EXP bodom. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 1 EXP bodom. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 			case 90..99:
 			{
 				ExpInfo[playerid][ePoints] += 5;
 				ExpInfo[playerid][eAllPoints] += 5;
 				SavePlayerExperience(playerid);
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 5 EXP bodova. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
+				va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 5 EXP bodova. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 		}
 		Player_SetReward(playerid, false);

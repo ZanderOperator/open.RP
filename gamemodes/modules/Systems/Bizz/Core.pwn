@@ -3137,7 +3137,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if(AC_GetPlayerMoney(playerid) < skin_price)
             {
-                SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)!", skin_price);
+                va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)!", skin_price);
                 SetPlayerSkin(playerid, player_skin);
 
                 PlayerSkinId   [playerid] = 0;
@@ -3392,8 +3392,8 @@ CMD:setfuelprice(playerid, params[])
     new bizz, fuelprice;
     if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
     if(sscanf(params, "ii", bizz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setfuelprice [biznisid][naftaprice]");
-    if(!Iter_Contains(Business, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis sa ID-em %d ne postoji na serveru!", bizz);
-    if(BizzInfo[bizz][bType] != BIZZ_TYPE_GASSTATION) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis %s[ID %d] nije benzinska postaja!", BizzInfo[bizz][bMessage], bizz);
+    if(!Iter_Contains(Business, bizz)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis sa ID-em %d ne postoji na serveru!", bizz);
+    if(BizzInfo[bizz][bType] != BIZZ_TYPE_GASSTATION) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis %s[ID %d] nije benzinska postaja!", BizzInfo[bizz][bMessage], bizz);
     if(fuelprice < 1 || fuelprice > 10) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-10)!");
 
     va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste postavili cijenu nafte na - "COL_WHITE"%i"COL_YELLOW".", fuelprice);
@@ -3410,7 +3410,7 @@ CMD:bizint(playerid, params[])
     if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
     if(sscanf(params, "ii", bizz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "[?]: /bizint [biznisid][pick] (0 - brisanje)");
     if(pick < 0 || pick > 37) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-37)!");
-    if(!Iter_Contains(Business, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
+    if(!Iter_Contains(Business, bizz)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
     // TODO: remove redundant check below, if statement above this check will stop this one from executing if true
     if(bizz > sizeof(BizzInfo) || bizz <= 0) return SendClientMessage(playerid, COLOR_RED, "Pogresan biznis ID!");
 
@@ -3714,7 +3714,7 @@ CMD:custombizint(playerid, params[])
         SendClientMessage(playerid, COLOR_WHITE, "[?]: /custombizint [bizid][Interior ID][Virtual World ID][X][Y][Z]");
         return 1;
     }
-    if(!Iter_Contains(Business, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
+    if(!Iter_Contains(Business, bizz)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
 
     BizzInfo[bizz][bExitX] = iX;
     BizzInfo[bizz][bExitY] = iY;
@@ -4008,7 +4008,7 @@ CMD:bizentrance(playerid, params[])
     if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi 1338!");
     if(sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "[?]: /bizentrance [bizid] - izmjena ulaza biznisa");
     if(!Iter_Contains(Business, proplev))
-        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", proplev);
+        return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", proplev);
 
     new
         Float:X,Float:Y,Float:Z;

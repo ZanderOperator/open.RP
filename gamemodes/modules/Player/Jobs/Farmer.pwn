@@ -836,7 +836,7 @@ CMD:milk(playerid, params[])
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		
 		MilkInfo[playerid][mLiters] = 0;
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili kanister sa mlijekom u spremiste, te ste zaradili %i$!", moneys);
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili kanister sa mlijekom u spremiste, te ste zaradili %i$!", moneys);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid);
 	}
@@ -1075,7 +1075,7 @@ CMD:seeds(playerid, params[])
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Bacili ste sjemenke na pod.");
 	}
 	else if(!strcmp(param, "check", true)) {
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno kod sebe imate %i sjemenki, a u prikolici %i.", 
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno kod sebe imate %i sjemenki, a u prikolici %i.", 
 			SeedInfo[playerid][sSeeds] * 10, 
 			SeedInfo[playerid][sTrailerSeeds]
 		);
@@ -1326,7 +1326,7 @@ CMD:crops(playerid, params[])
 			UpgradePlayerSkill(playerid);
 		}
 
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili vrecu sa usjevom u spremiste!");
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili vrecu sa usjevom u spremiste!");
 	}
 	else if(!strcmp(param, "take", true)) {
 		if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
@@ -1628,7 +1628,7 @@ CMD:eggs(playerid, params[])
 			
 		EggInfo[playerid][eEggs] = 0;
 		EggInfo[playerid][eProcessed] = 0;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste spremili kutiju s jajima, te ste zaradili %i$!", Profit);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste spremili kutiju s jajima, te ste zaradili %i$!", Profit);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid);
 	}

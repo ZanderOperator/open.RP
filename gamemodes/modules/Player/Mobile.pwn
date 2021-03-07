@@ -395,7 +395,7 @@ stock GetMobileName(modelid)
 stock BuyPlayerPhone(playerid, listid)
 {
 	if(AC_GetPlayerMoney(playerid) < PhoneModels[listid][phModelPrice]) 
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca da kupis %s(%d$)!", 
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca da kupis %s(%d$)!", 
 					PhoneModels[listid][phModelName], 
 					PhoneModels[listid][phModelPrice]
 				);
@@ -600,7 +600,7 @@ stock PrintAllTowers(playerid)
 			stpCount++;
 		}
 	}
-	if(stpCount == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nema napravljenih signalnih tornjeva!");
+	if(stpCount == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nema napravljenih signalnih tornjeva!");
 	return 1;
 }
 
@@ -2240,10 +2240,10 @@ stock IsPlayerInWater(playerid)
 stock SendSMS(playerid, recnumber, smsmessage[])
 {
 	if(GetPlayerSignal(playerid) < 1) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** No signal **");
-	//if(PlayerInfo[playerid][pMobileMoney] <= 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate dovoljno novaca na racunu!");
+	//if(PlayerInfo[playerid][pMobileMoney] <= 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate dovoljno novaca na racunu!");
 
     new gplayerid = INVALID_PLAYER_ID;
-	if(recnumber == PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete poslati poruku sami sebi!");
+	if(recnumber == PlayerMobile[playerid][pMobileNumber]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete poslati poruku sami sebi!");
 	foreach(new i : Player)
 	{
 		if(PlayerMobile[i][pMobileNumber]) 
@@ -2411,7 +2411,7 @@ stock PhoneCall(playerid, callnumber)
 
 	if(!Bit1_Get( gr_PlayerUsingPhonebooth, playerid))
 	{
-		if(!PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+		if(!PlayerMobile[playerid][pMobileNumber]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 		if(GetPlayerSignal(playerid) < 1 && callnumber != 911) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** No signal **");
 	}
 	if(callnumber == 911) 
@@ -2445,7 +2445,7 @@ stock PhoneCall(playerid, callnumber)
 		if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid))
 			return SendClientMessage(playerid, COLOR_RED, "[!] Ne smijete to koristiti!");
 
-	    if(!IsAtGovornica(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nisi kod telefonske govornice!");
+	    if(!IsAtGovornica(playerid)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nisi kod telefonske govornice!");
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Los Santos Sanitary, izvolite?");
 		CallingId[playerid] =  32715;
@@ -2480,7 +2480,7 @@ stock PhoneCall(playerid, callnumber)
 			gplayerid = INVALID_PLAYER_ID;
 
 		if(callnumber == PlayerMobile[playerid][pMobileNumber]) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zvati sami sebe!");
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zvati sami sebe!");
 		
 		foreach(new i : Player) 
 		{
@@ -2489,7 +2489,7 @@ stock PhoneCall(playerid, callnumber)
 				gplayerid = i;
 
 				if(PlayerJail[gplayerid][pJailed] != 0) 
-					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
+					return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
 				if(GetPlayerSignal(gplayerid) < 1 || IsPlayerReconing(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Player_MobileOn(gplayerid))
 				{
 					format(PTDTextString, sizeof(PTDTextString), "~r~ZAUZETO");
@@ -2960,17 +2960,17 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	    if(response == 1)
 		{
 			new newtwid = GetFreeTowerID();
-			if(newtwid == -1) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete kreirati vise signalnih tornjeva!");
+			if(newtwid == -1) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete kreirati vise signalnih tornjeva!");
 			SetTowerInfo(newtwid, TowerEditingNetwork[playerid], x, y, z, rx, ry, rz, TowerEditingRadius[playerid]);
 			CreateTower(newtwid);
 		    DestroyDynamicObject(objectid);
 			CreateTowerObject(newtwid);
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Kreirali ste signalni toranj! [ID:%d | SQLID:%d]", newtwid, TowerSQLID(newtwid));
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Kreirali ste signalni toranj! [ID:%d | SQLID:%d]", newtwid, TowerSQLID(newtwid));
 		}
 		else if(response == 0)
 		{
 		    DestroyDynamicObject(objectid);
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Signalni toranj nije napravljen jer ste odbacili izmjene!");
+			va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Signalni toranj nije napravljen jer ste odbacili izmjene!");
 		}
 	}
 	return 1;
@@ -3094,7 +3094,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        if(strlen(inputtext) < 2 || strlen(inputtext) > 63) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** SMS text mora biti u rasponu od 2 do 63 slova! **\n\nUpisite poruku:", "Send", "Abort");
 			new pInputNumber = strval(DialogInputNumber[playerid]);
 			if(strlen(DialogInputNumber[playerid]) == 6) SendSMS(playerid, pInputNumber, inputtext);
-			else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Niste unijeli broj mobitela!");
+			else va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste unijeli broj mobitela!");
 	    }
 	    case DIALOG_MOBILE_CALL_CONTACT: {
 	        if(!response) return 1;
@@ -3178,7 +3178,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0: 
 				{
 				    new slotid = ContactEditing[playerid];
-				    if(PlayerContactNumber[playerid][slotid] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
+				    if(PlayerContactNumber[playerid][slotid] == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 					PhoneTDAction[playerid] = PTD_ACTION_CALL;
 					PhoneAction(playerid, PHONE_SHOW);
 				    new DialogDial[32];
@@ -3206,7 +3206,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 1: 
 				{
 				    new slotid = ContactEditing[playerid];
-				    if(PlayerContactNumber[playerid][slotid] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
+				    if(PlayerContactNumber[playerid][slotid] == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 					PhoneTDAction[playerid] = PTD_ACTION_SMS;
 					PhoneAction(playerid, PHONE_SHOW);
 					format(DialogInputNumber[playerid], 11, "%d", PlayerContactNumber[playerid][slotid]);
@@ -3217,7 +3217,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    new
 						slotid = ContactEditing[playerid];
 
-					if(PlayerContactNumber[playerid][slotid] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
+					if(PlayerContactNumber[playerid][slotid] == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 
 					if(slotid < 0)
 					    slotid = 0;
@@ -3237,7 +3237,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    new
 						slotid = ContactEditing[playerid];
 				    if(0 <= ContactEditing[playerid] <= 9) {
-				        if(PlayerContactNumber[playerid][slotid] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
+				        if(PlayerContactNumber[playerid][slotid] == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 						Bit8_Set( gr_MobileContactSlot, playerid, ContactEditing[playerid]);
 						ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 					}
@@ -3252,7 +3252,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new slotid = strval( inputtext);
 			if(1 <= slotid <= MAX_MOBILE_CONTACTS) 
 			{
-				if(PlayerContactNumber[playerid][(slotid-1)] != 0) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot je popunjen, ako nastavite onda cete obrisati postojece podatke!");
+				if(PlayerContactNumber[playerid][(slotid-1)] != 0) va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Slot je popunjen, ako nastavite onda cete obrisati postojece podatke!");
 				Bit8_Set( gr_MobileContactSlot, playerid, slotid-1);
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:", "Input", "Abort");
 			} 
@@ -3809,8 +3809,8 @@ CMD:destroytower(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	new dtowerid;
 	if(sscanf(params, "i", dtowerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /destroytower [id]");
-	if(!DeleteTower(dtowerid)) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Taj toranj ne postoji u bazi podataka (koristite IG id, a ne SQLID)!");
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Unistili ste toranj ID %d!", dtowerid);
+	if(!DeleteTower(dtowerid)) va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Taj toranj ne postoji u bazi podataka (koristite IG id, a ne SQLID)!");
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Unistili ste toranj ID %d!", dtowerid);
 	return 1;
 }
 
@@ -3824,8 +3824,8 @@ CMD:viewtowers(playerid, params[])
 CMD:togphone(playerid, params[])
 {
     if(PlayerDeath[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-    if(!PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
-    if(IsPlayerInWater(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete upaliti mobitel u vodi!");
+    if(!PlayerMobile[playerid][pMobileNumber]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+    if(IsPlayerInWater(playerid)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete upaliti mobitel u vodi!");
 
     if(!Player_MobileOn(playerid))
     {
@@ -3844,7 +3844,7 @@ CMD:togphone(playerid, params[])
 CMD:ph(playerid, params[])
 {
     if(Player_PhoneStatus(playerid) == PHONE_HIDE) 
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Prvo izvadite mobitel!");
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Prvo izvadite mobitel!");
     SelectTextDraw(playerid, 0xA3B4C5FF);
 	return 1;
 }
@@ -3852,7 +3852,7 @@ CMD:ph(playerid, params[])
 CMD:phone(playerid, params[])
 {
 	if(PlayerDeath[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-	if(!PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+	if(!PlayerMobile[playerid][pMobileNumber]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 	PhoneTDAction[playerid] = PTD_ACTION_HOME;
 	if(Player_PhoneStatus(playerid) == PHONE_SHOW || Player_PhoneStatus(playerid) == PHONE_NEXT)
 	{
@@ -3873,8 +3873,8 @@ CMD:phone(playerid, params[])
 
 CMD:pcall(playerid, params[])
 {
-	if(!IsAtGovornica(playerid)) 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nisi kod telefonske govornice!");
-	if(AC_GetPlayerMoney(playerid) < 10) 	return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate 10$!");
+	if(!IsAtGovornica(playerid)) 			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nisi kod telefonske govornice!");
+	if(AC_GetPlayerMoney(playerid) < 10) 	return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate 10$!");
 	new
 		number;
 
@@ -3911,7 +3911,7 @@ CMD:call(playerid, params[])
 CMD:pickup(playerid, params[])
 {
 	if(IsPlayerAttachedObjectSlotUsed(playerid, 6)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate objekt u desnoj ruci!");
-	if(CallingId[playerid] != 999) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Vec ste u razogovu!");
+	if(CallingId[playerid] != 999) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Vec ste u razogovu!");
 
 	foreach(new i : Player)
 	{
@@ -3945,7 +3945,7 @@ CMD:sms(playerid, params[])
 	if(PlayerDeath[playerid][pKilled])
 		return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozes koristiti ovu komandu dok imas opciju /die!");
 	if(!PlayerMobile[playerid][pMobileNumber])
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[?]: /sms  [broj][tekst]");
 	if(strlen(params) > 110) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prevelika poruka (max. 110 znakova)!");
 
@@ -3955,7 +3955,7 @@ CMD:sms(playerid, params[])
 		smsText[110];
 
 	if(sscanf( params, "is[110]", number, smsText)) return SendClientMessage(playerid, COLOR_RED, "[?]: /sms [broj][text]");
-	if(strlen(smsText) < 2 || strlen(smsText) > 110) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"SMS text mora biti u rasponu od 2 do 110 slova!");
+	if(strlen(smsText) < 2 || strlen(smsText) > 110) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"SMS text mora biti u rasponu od 2 do 110 slova!");
 	valstr(string, number);
 	if(strlen(string) == 6)
 	{
@@ -3971,7 +3971,7 @@ CMD:sms(playerid, params[])
 		}
 		// kraj SMS tracea
 	}
-	else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Niste unijeli broj mobitela!");
+	else va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste unijeli broj mobitela!");
 	return 1;
 }
 
@@ -4006,7 +4006,7 @@ CMD:speakerphone(playerid, params[])
 
 CMD:hangup(playerid, params[])
 {
-	if(!Bit1_Get( gr_CanHangup, playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne razgovaras na telefon.");
+	if(!Bit1_Get( gr_CanHangup, playerid)) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ne razgovaras na telefon.");
 	if(PlayerVIP[playerid][pDonateRank] == 0)
 	{
 		if(StartCallTimestamp[playerid] != 0)
@@ -4031,9 +4031,9 @@ CMD:cryptotext(playerid, params[])
 		cryptonumber, inputstring[80];
 
     if(sscanf(params, "is[80]", cryptonumber, inputstring)) return SendClientMessage(playerid, COLOR_RED, "[?]: /cryptotext [crypto number][text]");
- 	if(PlayerMobile[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
-	if(PlayerJail[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
-    if(strlen(inputstring) > 80) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Poruka je preduga,nemoze imati vise od 80 znakova!");
+ 	if(PlayerMobile[playerid][pCryptoNumber] == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
+	if(PlayerJail[playerid][pJailed] != 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
+    if(strlen(inputstring) > 80) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Poruka je preduga,nemoze imati vise od 80 znakova!");
 	new
 		globalstring[128];
 	format(globalstring, sizeof(globalstring), "> %s pise poruku na mobitel.", GetName(playerid));
@@ -4061,9 +4061,9 @@ CMD:cryptonumber(playerid, params[])
 {
 	new _crypt;
     if(sscanf(params, "i", _crypt)) return SendClientMessage(playerid, COLOR_RED, "[?]: /cryptonumber [crypto number]");
- 	if(PlayerMobile[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
-	if(PlayerJail[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
-	if(_crypt < 100 || _crypt > 999999) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Broj moze biti izmedju 100 i 999999!");
+ 	if(PlayerMobile[playerid][pCryptoNumber] == 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
+	if(PlayerJail[playerid][pJailed] != 0) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
+	if(_crypt < 100 || _crypt > 999999) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Broj moze biti izmedju 100 i 999999!");
 
 	new	Cache:result;
 	

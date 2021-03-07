@@ -498,7 +498,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			if(ammo_amount > MAX_PACKAGE_AMOUNT)
-				return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise od %d metaka naruciti u jednom paketu.", MAX_PACKAGE_AMOUNT);
+				return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise od %d metaka naruciti u jednom paketu.", MAX_PACKAGE_AMOUNT);
 
 			get_PackageAmount[playerid] = package_amount;
 
@@ -691,7 +691,7 @@ CMD:package(playerid, params[])
 			GetWeaponNameEx(weapon_id), 
 			ammo_amount
 		);
-		SendFormatMessage(playerid, COLOR_RED, "[!] Dali ste igracu %s paket sa oruzjem %s - ammo: %d.", 
+		va_SendMessage(playerid, COLOR_RED, "[!] Dali ste igracu %s paket sa oruzjem %s - ammo: %d.", 
 			GetName(targetid), 
 			GetWeaponNameEx(weapon_id),
 			ammo_amount
@@ -720,7 +720,7 @@ CMD:package(playerid, params[])
 				mysql_fquery(g_SQL, "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][i]);
 			}
 		}
-		SendFormatMessage(playerid, COLOR_RED, "[!] Uspjesno ste vozilu id %d obrisali sve weapon pakete.", vehicleid);
+		va_SendMessage(playerid, COLOR_RED, "[!] Uspjesno ste vozilu id %d obrisali sve weapon pakete.", vehicleid);
 
 		Iter_Clear(V_PACKAGES[vehicleid]);
 	}
@@ -915,7 +915,7 @@ CMD:package(playerid, params[])
 
 		// message
 		if(PlayerPackage[playerid][p_weapon][package_id] != KEVLAR_VEST)
-			format(buffer, sizeof(buffer), "> %s pocinje da sklapa oruzje.", GetName(playerid)), SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "[PACKAGE]: Poceli ste da raspakujete paket oruzja, ne pomerajte se %d sekundi.", seconds);
+			format(buffer, sizeof(buffer), "> %s pocinje da sklapa oruzje.", GetName(playerid)), va_SendMessage(playerid, MESSAGE_TYPE_INFO, "[PACKAGE]: Poceli ste da raspakujete paket oruzja, ne pomerajte se %d sekundi.", seconds);
 
 		SendClientMessage(playerid, COLOR_PURPLE, buffer);
 		SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 15, 10000);
@@ -985,7 +985,7 @@ CMD:package(playerid, params[])
 				DeletePlayerPackage(targetid, i);
 		}
 		Iter_Clear(P_PACKAGES[targetid]);
-		SendFormatMessage(playerid, COLOR_RED, "[!] Uspjesno ste igracu %s obrisali sve weapon pakete.", GetName(targetid));
+		va_SendMessage(playerid, COLOR_RED, "[!] Uspjesno ste igracu %s obrisali sve weapon pakete.", GetName(targetid));
 		va_SendClientMessage(targetid, COLOR_RED, "[!] Administrator %s vam je obrisao sve weapon pakete.", GetName(playerid));
 	}
 

@@ -426,7 +426,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         index = GetFreeRacingCPSlot(playerid);
                     if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Popunili ste vas inventory!");
 
-                    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dodali ste CP u slot %d!", CreateRacingCP(playerid, X, Y, Z)+1);
+                    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Dodali ste CP u slot %d!", CreateRacingCP(playerid, X, Y, Z)+1);
 
                     if(RacingInfo[playerid][rdContesters][0] <= 0)
                     {
@@ -500,7 +500,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             ResetPlayerRaceCP(playerid, RacingDialogID[playerid]);
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Obrisali ste checkpoint u slotu #%d!", RacingDialogID[playerid]+1);
+            va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Obrisali ste checkpoint u slotu #%d!", RacingDialogID[playerid]+1);
             RacingDialogID[playerid] = -1;
 
             if(!GetRacingCpPool(playerid))
@@ -527,7 +527,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             InRace       [playerid] = false;
 
             va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s je prihvatio vas poziv za utrku! Za pokretanje utrke idite /race start.", GetName(playerid, true));
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Prihvatili ste poziv za trku od %s!", GetName(giveplayerid, true));
+            va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Prihvatili ste poziv za trku od %s!", GetName(giveplayerid, true));
             return 1;
         }
     }
@@ -572,7 +572,7 @@ CMD:race(playerid, params[])
         if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe zvati, vase je mjesto osigurano!");
 
         CallRaceContestant(playerid, giveplayerid);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pozvali %s u utrku!", GetName(giveplayerid,true));
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pozvali %s u utrku!", GetName(giveplayerid,true));
     }
     else if(!strcmp(param, "start", true))
     {

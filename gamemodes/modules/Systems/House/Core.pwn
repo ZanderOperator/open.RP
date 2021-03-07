@@ -2763,7 +2763,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             HouseInfo[houseid][hVirtualWorld] = viwo;
             UpdateHouseVirtualWorld(houseid);
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Virtual World kuce %d[SQLID: %d] je uspjesno postavljen na %d te je stvaranje kuce dovrseno!", houseid, HouseInfo[houseid][hSQLID], viwo);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Virtual World kuce %d[SQLID: %d] je uspjesno postavljen na %d te je stvaranje kuce dovrseno!", houseid, HouseInfo[houseid][hSQLID], viwo);
             return 1;
         }
     }
@@ -2792,7 +2792,7 @@ CMD:buyhouse(playerid, params[])
     if(HouseInfo[house][hOwnerID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca mora biti na prodaju!");
     if(PlayerInfo[playerid][pLevel] < HouseInfo[house][hLevel])
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level %d da bi ste kupili ovu kucu!", HouseInfo[house][hLevel]);
+        va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level %d da bi ste kupili ovu kucu!", HouseInfo[house][hLevel]);
         return 1;
     }
     if(PlayerKeys[playerid][pHouseKey] < 0)
@@ -2884,7 +2884,7 @@ CMD:houseint(playerid, params[])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "House with that ID doesn't exist");
     if(int < 0 || int > sizeof(HouseInts)) 
     {
-        return SendFormatMessage(playerid, 
+        return va_SendMessage(playerid, 
             MESSAGE_TYPE_ERROR, 
             "Interior ID's can't go below 0 or above %d!", 
             sizeof(HouseInts)
@@ -2895,7 +2895,7 @@ CMD:houseint(playerid, params[])
     HouseInfo[houseid][hExitZ] = HouseInts[int][iEnterZ];
     HouseInfo[houseid][hInt] = HouseInts[int][iInterior];    
     
-    SendFormatMessage(playerid, 
+    va_SendMessage(playerid, 
         MESSAGE_TYPE_INFO, 
         "Interior(House ID %d): %s.", 
         houseid,
@@ -3122,7 +3122,7 @@ CMD:rent(playerid, params[])
             if((PlayerKeys[playerid][pRentKey] == INVALID_HOUSE_ID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne iznajmljujete kucu!");
 
             new house = PlayerKeys[playerid][pRentKey];
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste iznajmljivati kucu na adresi %s.", HouseInfo[house][hAdress]);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste iznajmljivati kucu na adresi %s.", HouseInfo[house][hAdress]);
             PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
             PlayerInfo[playerid][pSpawnChange] = 0;
             SetPlayerSpawnInfo(playerid);

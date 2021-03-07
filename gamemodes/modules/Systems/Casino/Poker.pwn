@@ -2247,7 +2247,7 @@ static JoinPokerTable(playerid, tableid)
 			}
 		}
 	}
-	else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Sva mjesta su za ovim stolom popunjena! [%d/%d]", PokerTable[tableid][pkrPlayers], PokerTable[tableid][pkrLimit]);
+	else va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sva mjesta su za ovim stolom popunjena! [%d/%d]", PokerTable[tableid][pkrPlayers], PokerTable[tableid][pkrLimit]);
 	return 1;
 }
 
@@ -2305,31 +2305,31 @@ static GetPokerTableLimit(playerid)
 				{
 					if(tableCount < PREMIUM_NONE_POKER_TABLES)
 						return 1;
-					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_NONE_POKER_TABLES);
+					else va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_NONE_POKER_TABLES);
 				}
 				case PREMIUM_BRONZE:
 				{
 					if(tableCount < PREMIUM_BRONZE_POKER_TABLES)
 						return 1;
-					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_BRONZE_POKER_TABLES);
+					else va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_BRONZE_POKER_TABLES);
 				}
 				case PREMIUM_SILVER:
 				{
 					if(tableCount < PREMIUM_SILVER_POKER_TABLES)
 						return 1;
-					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_SILVER_POKER_TABLES);
+					else va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_SILVER_POKER_TABLES);
 				}
 				case PREMIUM_GOLD:
 				{
 					if(tableCount < PREMIUM_GOLD_POKER_TABLES)
 						return 1;
-					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_GOLD_POKER_TABLES);
+					else va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_GOLD_POKER_TABLES);
 				}
 				case PREMIUM_PLATINUM:
 				{
 					if(tableCount < PREMIUM_PLATINUM_POKER_TABLES)
 						return 1;
-					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_PLATINUM_POKER_TABLES);
+					else va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_PLATINUM_POKER_TABLES);
 				}
 			}
 		}
@@ -2959,7 +2959,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				if(strval(inputtext) < PokerTable[PlayingTableID[playerid]][pkrBuyInMin] || strval(inputtext) > PokerTable[PlayingTableID[playerid]][pkrBuyInMax] || strval(inputtext) > AC_GetPlayerMoney(playerid))
 				{
-					SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste premali/preveliki Buy-In/nemate %d$!", strval(inputtext));
+					va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste premali/preveliki Buy-In/nemate %d$!", strval(inputtext));
 					return ShowCasinoGamesMenu(playerid, DIALOG_CGAMESBUYINPOKER);
 				}
 

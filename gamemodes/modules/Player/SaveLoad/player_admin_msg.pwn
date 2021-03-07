@@ -118,7 +118,7 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 		sqlid
 	);
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully left %s a message: %s", user_name, reason);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully left %s a message: %s", user_name, reason);
 	return 1;
 }
 

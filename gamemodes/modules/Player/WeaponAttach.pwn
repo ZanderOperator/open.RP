@@ -229,7 +229,7 @@ Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, F
 
             SetPlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid), GetWeaponModel(weaponid), WeaponSettings[playerid][enum_index][Bone], foX, foY, foZ, frX, frY, frZ, 1.0, 1.0, 1.0);
 
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"Uspjesno ste promjenili poziciju od %s.", 
 				GetWeaponNameEx(weaponid)
@@ -289,7 +289,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				enum_index = GetWeaponObjectEnum(weaponid);
 
             WeaponSettings[playerid][enum_index][Bone] = listitem + 1;
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"Uspjesno ste promjenili bone oruzja %s.", 
 				GetWeaponNameEx(weaponid)
@@ -350,12 +350,12 @@ CMD:weapon(playerid, params[])
 		if(HiddenWeapon[playerid][pwWeaponId] != 0)
 		{
 			if(!SafeSpawned[playerid])
-				return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Pricekajte dok zavrsi spawn te da dobijete unfreeze!");
+				return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Pricekajte dok zavrsi spawn te da dobijete unfreeze!");
 
 			if(!CheckPlayerWeapons(playerid, HiddenWeapon[playerid][pwWeaponId], true))
 				return 1;
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, 
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, 
 				"Izvadili ste svoj sakriveni %s.", 
 				GetWeaponNameEx(HiddenWeapon[playerid][pwWeaponId])
 			);
@@ -395,7 +395,7 @@ CMD:weapon(playerid, params[])
 			if(IsPlayerAttachedObjectSlotUsed(playerid, GetWeaponObjectSlot(weaponid)))
 				RemovePlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid));
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sakrili ste svoj %s.", GetWeaponNameEx(weaponid));
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Sakrili ste svoj %s.", GetWeaponNameEx(weaponid));
 			format( string, sizeof(string), "* %s sakriva %s ispod odjece.", GetName(playerid, true), GetWeaponNameEx(weaponid));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 

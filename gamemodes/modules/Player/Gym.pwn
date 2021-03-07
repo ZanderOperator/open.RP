@@ -165,7 +165,7 @@ timer StartGymBench[50](playerid, mode)
 			GymInfo[playerid][gmValue] 		= 0.0;
 			GymInfo[playerid][gmTimer] 		= repeat OnPlayerUsingGym(playerid, mode);
 			GymInfo[playerid][gmNeeded] 	= floatround( PlayerGym[playerid][pMuscle] * 2.4);
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je napraviti %d liftova za Level Up!", GymInfo[playerid][gmNeeded]);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je napraviti %d liftova za Level Up!", GymInfo[playerid][gmNeeded]);
 			
 			Bit1_Set(r_GymStop, playerid, false);
 			
@@ -193,7 +193,7 @@ timer StartGymBench[50](playerid, mode)
 			GymInfo[playerid][gmNeeded] 	= floatround( PlayerGym[playerid][pMuscle] * 2.4);
 			if(GymInfo[playerid][gmNeeded] <= 20)
 				GymInfo[playerid][gmNeeded] = 20 + (PlayerGym[playerid][pMuscle] * 2); 
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je napraviti %d liftova za Level Up!", GymInfo[playerid][gmNeeded]);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je napraviti %d liftova za Level Up!", GymInfo[playerid][gmNeeded]);
 			
 			SetPlayerAttachedObject(playerid, 9, 2913, 6);
 			Bit1_Set(r_GymStop, playerid, false);
@@ -250,7 +250,7 @@ timer OnPlayerUsingGym[250](playerid, mode)
 					PlayerGym[playerid][pMuscle]++;
 					if(PlayerGym[playerid][pMuscle] >= 50)
 							PlayerGym[playerid][pMuscle] = 50;
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
 					PlayerGym[playerid][pGymTimes]++;
 					LeavePlayerGym(playerid, GymInfo[playerid][gmMode]);
 				}
@@ -285,7 +285,7 @@ timer OnPlayerUsingGym[250](playerid, mode)
 					PlayerGym[playerid][pMuscle]++;
 					if(PlayerGym[playerid][pMuscle] >= 50)
 							PlayerGym[playerid][pMuscle] = 50;
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
 					PlayerGym[playerid][pGymTimes]++;
 					LeavePlayerGym(playerid, GymInfo[playerid][gmMode]);
 				}
@@ -528,7 +528,7 @@ stock static InitPlayerGym(playerid, mode = -1)
 				GymInfo[playerid][gmNeeded] = 50 + (PlayerGym[playerid][pMuscle] * 6);
 			sprintStatus = 1;
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je pretrcati %d distance za Level Up!", GymInfo[playerid][gmNeeded]);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je pretrcati %d distance za Level Up!", GymInfo[playerid][gmNeeded]);
 			//BizzInfo[12][bTill] -= 5;
 		}
 		/*case GYM_MODE_BELLS: {			
@@ -574,7 +574,7 @@ stock static InitPlayerGym(playerid, mode = -1)
 				GymInfo[playerid][gmNeeded] = 50 + (PlayerGym[playerid][pMuscle] * 6);
 			bikeStatus = 1;
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je pretrcati %d distance za Level Up!", GymInfo[playerid][gmNeeded]);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je pretrcati %d distance za Level Up!", GymInfo[playerid][gmNeeded]);
 			//BizzInfo[12][bTill] -= 10;
 		}
 		case GYM_MODE_BENCH: {
@@ -677,7 +677,7 @@ stock static InitPlayerTraining(playerid, mode=-1)
 	GymInfo[playerid][gmCount] 	= 0;
 	GymInfo[playerid][gmNeeded] = GetGymTrainingCount(playerid, mode);
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Udarajte u vrece %d s ~k~~PED_FIREWEAPON~ puta da predjete razinu!", GymInfo[playerid][gmNeeded]);
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Udarajte u vrece %d s ~k~~PED_FIREWEAPON~ puta da predjete razinu!", GymInfo[playerid][gmNeeded]);
 	GameTextForPlayer(playerid,"~y~]]]", 200000, 4);
 	return 1;
 }
@@ -729,35 +729,35 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem) {
 				case 0: { // Box
 					if(PlayerGym[playerid][pMuscle] < 25) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati 25+ razinu misica!");
-					if(AC_GetPlayerMoney(playerid) < BOX_STYLE_PRICE) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", BOX_STYLE_PRICE);
+					if(AC_GetPlayerMoney(playerid) < BOX_STYLE_PRICE) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", BOX_STYLE_PRICE);
 					InitPlayerTraining(playerid, GYM_TRAIN_BOX);
 					PlayerToBusinessMoneyTAX(playerid, 12, BOX_STYLE_PRICE);
 					
 				}
 				case 1: { // Kung Fu
 					if(PlayerGym[playerid][pMuscle] < 20) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati 20+ razinu misica!");
-					if(AC_GetPlayerMoney(playerid) < KUNG_STYLE_PRICE) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", KUNG_STYLE_PRICE);
+					if(AC_GetPlayerMoney(playerid) < KUNG_STYLE_PRICE) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", KUNG_STYLE_PRICE);
 					InitPlayerTraining(playerid, GYM_TRAIN_KUNG);
 					PlayerToBusinessMoneyTAX(playerid, 12, KUNG_STYLE_PRICE);
 					va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Platili ste %d$ za poducavanje novog stila tucnjave!", KUNG_STYLE_PRICE);
 				}
 				case 2: { // Knee Head
 					if(PlayerGym[playerid][pMuscle] < 35) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati 35+ razinu misica!");
-					if(AC_GetPlayerMoney(playerid) < KNEE_STYLE_PRICE) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", KNEE_STYLE_PRICE);
+					if(AC_GetPlayerMoney(playerid) < KNEE_STYLE_PRICE) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", KNEE_STYLE_PRICE);
 					InitPlayerTraining(playerid, GYM_TRAIN_KNEE);
 					PlayerToBusinessMoneyTAX(playerid, 12, KNEE_STYLE_PRICE);
 					va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Platili ste %d$ za poducavanje novog stila tucnjave!", KNEE_STYLE_PRICE);
 				}
 				case 3: { // Grab 'n' Kick
 					if(PlayerGym[playerid][pMuscle] < 40) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati 40+ razinu misica!");
-					if(AC_GetPlayerMoney(playerid) < GRAB_STYLE_PRICE) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", GRAB_STYLE_PRICE);
+					if(AC_GetPlayerMoney(playerid) < GRAB_STYLE_PRICE) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", GRAB_STYLE_PRICE);
 					InitPlayerTraining(playerid, GYM_TRAIN_GRAB);
 					PlayerToBusinessMoneyTAX(playerid, 12, GRAB_STYLE_PRICE);
 					va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Platili ste %d$ za poducavanje novog stila tucnjave!", GRAB_STYLE_PRICE);
 				}
 				case 4: { // Elbow
 					if(PlayerGym[playerid][pMuscle] < 45) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati 45+ razinu misica!");
-					if(AC_GetPlayerMoney(playerid) < ELBOW_STYLE_PRICE) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", ELBOW_STYLE_PRICE);
+					if(AC_GetPlayerMoney(playerid) < ELBOW_STYLE_PRICE) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kod sebe %d$!", ELBOW_STYLE_PRICE);
 					InitPlayerTraining(playerid, GYM_TRAIN_ELBOW);
 					PlayerToBusinessMoneyTAX(playerid, 12, ELBOW_STYLE_PRICE);
 					va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Platili ste %d$ za poducavanje novog stila tucnjave!", ELBOW_STYLE_PRICE);
@@ -841,7 +841,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						PlayerGym[playerid][pMuscle]++;
 						if(PlayerGym[playerid][pMuscle] >= 50)
 							PlayerGym[playerid][pMuscle] = 50;
-						SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
+						va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
 						PlayerGym[playerid][pGymTimes]++;
 						LeavePlayerGym(playerid, GymInfo[playerid][gmMode]);
 					}
@@ -883,7 +883,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						PlayerGym[playerid][pMuscle]++;
 						if(PlayerGym[playerid][pMuscle] >= 50)
 							PlayerGym[playerid][pMuscle] = 50;
-						SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
+						va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerGym[playerid][pMuscle]);
 						PlayerGym[playerid][pGymTimes]++;
 						LeavePlayerGym(playerid, GymInfo[playerid][gmMode]);
 					}

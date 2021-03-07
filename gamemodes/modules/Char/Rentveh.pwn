@@ -182,7 +182,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 		else if	(PlayerVIP[playerid][pDonateRank] >= PREMIUM_GOLD)
 			price = 0;
 			
-		if(AC_GetPlayerMoney(playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Rent ovog vozila kosta %s!", FormatNumber(price));
+		if(AC_GetPlayerMoney(playerid) < price) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Rent ovog vozila kosta %s!", FormatNumber(price));
 		PlayerRentVehicle(playerid, RentVehInfo[index][rvModel], price);	
 	}
 	return (true);
@@ -208,7 +208,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else if	(PlayerVIP[playerid][pDonateRank] >= PREMIUM_GOLD)
 				price = 0;
 			
-			if(AC_GetPlayerMoney(playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Rent ovog vozila kosta %d$!", price);
+			if(AC_GetPlayerMoney(playerid) < price) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Rent ovog vozila kosta %d$!", price);
 			PlayerRentVehicle(playerid, RentVehInfo[listitem][rvModel], price);	
 	    }
 	}

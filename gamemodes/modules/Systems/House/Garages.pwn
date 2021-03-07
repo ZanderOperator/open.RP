@@ -597,7 +597,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new seller = GarageSeller[playerid];
             if(seller == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio prodaju garaze!");
             if(!IsPlayerConnected(seller)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prodavac nije online!");
-            if(AC_GetPlayerMoney(playerid) < GaragePrice[playerid]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", GaragePrice[playerid]);
+            if(AC_GetPlayerMoney(playerid) < GaragePrice[playerid]) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", GaragePrice[playerid]);
 
             new garage = PlayerKeys[seller][pGarageKey];
             PlayerKeys[playerid][pGarageKey] = PlayerKeys[seller][pGarageKey];
@@ -744,7 +744,7 @@ CMD:garage(playerid, params[])
         }
         if(AC_GetPlayerMoney(playerid) < GarageInfo[nearGarage][gPrice])
         {
-            SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)", GarageInfo[nearGarage][gPrice]);
+            va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)", GarageInfo[nearGarage][gPrice]);
             return 1;
         }
         if(GarageInfo[nearGarage][gHouseID] != INVALID_HOUSE_ID && GarageInfo[nearGarage][gHouseID] != PlayerKeys[playerid][pHouseKey])
@@ -762,7 +762,7 @@ CMD:garage(playerid, params[])
             GarageInfo[nearGarage][gOwnerID],
             GarageInfo[nearGarage][gSQLID]
        );
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili garazu za (%d$)", GarageInfo[nearGarage][gPrice]);
+        va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili garazu za (%d$)", GarageInfo[nearGarage][gPrice]);
     }
     else if(!strcmp(param, "sell", true))
     {
@@ -911,7 +911,7 @@ CMD:garageentrance(playerid, params[])
     }
     if(!Iter_Contains(Garage, proplev))
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", proplev);
+        va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", proplev);
         return 1;
     }
 

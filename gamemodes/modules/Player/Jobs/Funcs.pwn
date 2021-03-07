@@ -457,7 +457,7 @@ CMD:quitjob(playerid, params[])
 				RemovePlayerJob(playerid);
 			} else {
 				new chours = 5 - PlayerJob[playerid][pContractTime];
-				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
+				va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
 			}
 		}
 		case 1: {
@@ -466,7 +466,7 @@ CMD:quitjob(playerid, params[])
 				RemovePlayerJob(playerid);
 			} else {
 				new chours = 2 - PlayerJob[playerid][pContractTime];
-				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
+				va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
 			}
 		}
 		case 2: {
@@ -477,7 +477,7 @@ CMD:quitjob(playerid, params[])
 				PlayerJob[playerid][pContractTime] = 0;
 			} else {
 				new chours = 2 - PlayerJob[playerid][pContractTime];
-				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
+				va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
 			}
 		}
 		case 3,4: {

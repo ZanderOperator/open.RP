@@ -406,7 +406,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             free_id = GPS_Create(gpsname, X, Y, Z);
             if(free_id == -1)
             {
-                SendFormatMessage(playerid, 
+                va_SendMessage(playerid, 
                     MESSAGE_TYPE_ERROR, 
                     "Maximum number of GPS locations reached (%d)!",
                     MAX_GPS_LOCATIONS
@@ -419,7 +419,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 gpsname,
                 free_id
            );
-            SendFormatMessage(playerid, 
+            va_SendMessage(playerid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "You have sucessfully created new GPS Location: %s - ID %d.",
                 gpsname, 
@@ -442,7 +442,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 GPS_data[gpsid][gpsName],
                 gpsid
            );
-            SendFormatMessage(playerid, 
+            va_SendMessage(playerid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "You have sucessfully deleted GPS Location: %s - ID %d.",                
                 GPS_data[gpsid][gpsName],
@@ -469,7 +469,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 GPS_data[enum_id][gpsPosZ], 
                 5.0
            );
-            SendFormatMessage(playerid, 
+            va_SendMessage(playerid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "GPS on location %s sucessfully marked on radar.", 
                 GPS_data[enum_id][gpsName]
@@ -499,7 +499,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     GPS_data[listitem][gpsName]
                );
             }
-            SendFormatMessage(portedid, 
+            va_SendMessage(portedid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "You have been teleported to %s.", 
                 GPS_data[listitem][gpsName]
@@ -539,7 +539,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 foreach(new i: Player)
                     SetPlayerMapIcon(i, GPS_data[gpsid][gpsID], GPS_data[gpsid][gpsPosX], GPS_data[gpsid][gpsPosY], GPS_data[gpsid][gpsPosZ], GPS_data[gpsid][gpsMapIcon], 0, MAPICON_LOCAL);
                 
-                SendFormatMessage(playerid,
+                va_SendMessage(playerid,
                     MESSAGE_TYPE_SUCCESS,
                     "You have sucessfully set Map Icon ID %d on location %s.", 
                     mapicon,
@@ -551,7 +551,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 foreach(new i: Player)
                     RemovePlayerMapIcon(playerid, GPS_data[gpsid][gpsID]);
 
-                SendFormatMessage(playerid,
+                va_SendMessage(playerid,
                     MESSAGE_TYPE_SUCCESS,
                     "You have sucessfully removed Map Icon on location %s.", 
                     mapicon,
@@ -579,7 +579,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             GPS_data[gpsid][gpsPosZ] = Z;
             GPS_Save(gpsid);
 
-            SendFormatMessage(playerid,
+            va_SendMessage(playerid,
                 MESSAGE_TYPE_SUCCESS,
                 "You have sucessfully changed position of GPS location %s.",
                 GPS_data[gpsid][gpsName]
@@ -635,7 +635,7 @@ CMD:portplayer(playerid, params[])
     GPS_PortPlayer[playerid] = giveplayerid;
     GPS_DialogShow(playerid, true);
 
-    SendFormatMessage(playerid,
+    va_SendMessage(playerid,
         MESSAGE_TYPE_INFO, 
         "You chose to teleport %s. Please pick a location.", 
         GetName(giveplayerid, false)
@@ -723,7 +723,7 @@ CMD:agps(playerid, params[])
         GPS_data[gpsid][gpsAdmin] = adminloc;
         GPS_Save(gpsid);
 
-        SendFormatMessage(playerid, 
+        va_SendMessage(playerid, 
             MESSAGE_TYPE_SUCCESS, 
             "You have sucessfully set GPS location %s[ID: %d] available %s.", 
             GPS_data[gpsid][gpsName], 

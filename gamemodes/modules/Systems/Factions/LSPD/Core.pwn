@@ -1703,7 +1703,7 @@ CMD:setchannel(playerid, params[]) {
             if(pdchannel_id == SetPDChannel_ID[playerid])
                 return SendErrorMessage(playerid, "Vec se nalazite u tom kanalu.");
             SetPDChannel_ID[playerid] = pdchannel_id;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste se spojili na channel: %s.", GetPDChannelName(pdchannel_id));
+            va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste se spojili na channel: %s.", GetPDChannelName(pdchannel_id));
         }
         if(IsFDMember(playerid))
         {
@@ -1724,7 +1724,7 @@ CMD:setchannel(playerid, params[]) {
                 return SendErrorMessage(playerid, "Vec se nalazite u tom kanalu.");
 
             SetFDChannel_ID[playerid] = fdchannel_id;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste se spojili na channel: %s.", GetFDChannelName(fdchannel_id));
+            va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste se spojili na channel: %s.", GetFDChannelName(fdchannel_id));
         }
     }
     return 1;
@@ -1823,7 +1823,7 @@ CMD:arrest(playerid, params[])
     if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas!");
     //if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi uhitit!");
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uhitili ste %s !", GetName(giveplayerid));
+    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uhitili ste %s !", GetName(giveplayerid));
     SendClientMessage(playerid, COLOR_RED, "[!] Odvedite zatvorenika u celiju!");
 
     format(string, sizeof(string), "* [HQ] %s %s je uhitio %s. Razlog: %s; Kazna: %d$. ", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid), reason, moneys);
@@ -1873,14 +1873,14 @@ CMD:editarrest(playerid, params[])
     if(pick == 1)
     {
         PlayerJail[giveplayerid][pJailTime] = ammount;
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste vrijeme u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste vrijeme u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
     }
     else if(pick == 2)
     {
         // TODO: one variable can not be set to multiple things AT ONCE, maybe logical OR is required?
         if(ammount != 1 && ammount != 2 && ammount != 3) return SendClientMessage(playerid, -1, "SEKTOR: A | B | C");
         PutPlayerInSector(giveplayerid);
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste sektor u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
+        va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste sektor u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
     }
     return 1;
 }
@@ -1892,7 +1892,7 @@ CMD:unfree(playerid, params[])
     // TODO: what if PlayerFaction[playerid][pMember] is -1 or out of bounds? Do not index into an array so HASTILY
     // Always do bounds checking when appropriate
     if(PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rUnFree])
-        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rUnFree]);
+        return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rUnFree]);
 
     new giveplayerid, string[128];
     if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /unfree [playerid / Part of name]");
@@ -1946,7 +1946,7 @@ CMD:cuff(playerid, params[])
     if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi stavit lisice!");
 
     va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je stavio lisice.", GetName(playerid, true));
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Stavio si lisice %s.", GetName(giveplayerid, true));
+    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Stavio si lisice %s.", GetName(giveplayerid, true));
 
     // TODO: why not use va_SendClientMessage again? Stick to a standard, do not mix things.
     new
@@ -2853,7 +2853,7 @@ CMD:undercover(playerid, params[])
         }
         else if(status == 1)
         {
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName);
             Player_SetApprovedUndercover(playerid, false);
         }
     }

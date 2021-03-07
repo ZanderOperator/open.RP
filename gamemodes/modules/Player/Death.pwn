@@ -517,7 +517,7 @@ CMD:alldamages(playerid, params[])
 	GetPlayerPos(gplayerid, pX, pY, pZ);
 	if(GetPlayerDistanceFromPoint(playerid, pX, pY, pZ) >= 50.0)
 	{
-		SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Niste dovoljno blizu %s!", GetName(gplayerid, false));
+		va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste dovoljno blizu %s!", GetName(gplayerid, false));
 		return 1;
 	}
 	

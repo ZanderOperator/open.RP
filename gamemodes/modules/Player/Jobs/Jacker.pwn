@@ -558,7 +558,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		DestroyJackerTextDraw(playerid);
 		stop DestroyingCarTimer[playerid];
 		
-		SendFormatMessage(playerid,
+		va_SendMessage(playerid,
 			MESSAGE_TYPE_INFO,
 			"You have sucessfully dissasembled %s. Hide the vehicle to prevent police from finding about the garage!",
 			ReturnVehicleName(LandVehicles[PlayerJackingCar[playerid]][viModelid])
@@ -741,7 +741,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 				IllegalGarage[garage][igName],
 				garage
 			);
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have sucessfully created Illegal Garage %s[ID %d].", 
 				IllegalGarage[garage][igName],
@@ -750,7 +750,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	
 			EditingBoardID[playerid] = -1;
 
-			SendFormatMessage(playerid,
+			va_SendMessage(playerid,
 				MESSAGE_TYPE_SUCCESS,
 				"You have sucessfully created Illegal Garage %s!",
 				IllegalGarage[garage][igName]
@@ -785,7 +785,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(IllegalGarage[garage][igMoney] < LandVehicles[carid][viCarJackerPrice])
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Garage doesn't have money to pay you out for the heist!");
 			
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have chosen %s as your target vehicle for Jacker Mission!", 
 				ReturnVehicleName(LandVehicles[carid][viModelid])
@@ -811,7 +811,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerJackingCar[playerid] = -1;
 				return 1;
 			}
-	        SendFormatMessage(playerid, 
+	        va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have picked %s Jacking Mission. Once you go offline, the mission terminates!", 
 				ReturnVehicleName(LandVehicles[PlayerJackingCar[playerid]][viModelid])
@@ -845,7 +845,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				IllegalGarage[garage][igSQLID]
 			);
 
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have sucessfully dropped Wanted Level in %s to 0!",
 				IllegalGarage[garage][igName]
@@ -890,7 +890,7 @@ CMD:jacker(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "60 minutes from last Jacking Mission finishing must pass!");
 		if(PlayerJackingCar[playerid] != -1) 
 		{
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
 				"You already have a %s mission active. Use /jacker stop to abort current mission.",
 				ReturnVehicleName(LandVehicles[PlayerJackingCar[playerid]][viModelid])
@@ -942,7 +942,7 @@ CMD:jacker(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vehicle has to be in better state! (Min. 550+ HP)");
 		if(!IsVehicleMission(playerid, GetVehicleModel(vehicleid)))
 		{
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
 				"You got the wrong vehicle. %s was your target vehicle!",
 				ReturnVehicleName(LandVehicles[PlayerJackingCar[playerid]][viModelid])
@@ -1005,7 +1005,7 @@ CMD:igarage(playerid, params[])
 			garage = Iter_Free(IllegalGarage);
 		if(garage == -1)
 		{
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
 				"Max. limit of Illegal Garages reached. (%d)", 
 				MAX_ILLEGAL_GARAGES
@@ -1044,7 +1044,7 @@ CMD:igarage(playerid, params[])
 			return SendClientMessage(playerid, -1, "[!]: /igarage remove [garage_id]");
 		if(Iter_Contains(IllegalGarage, garage))
 		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Illegal Garage %d doesn't exist!", garage);
+			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Illegal Garage %d doesn't exist!", garage);
 			return 1;
 		}
 
@@ -1053,7 +1053,7 @@ CMD:igarage(playerid, params[])
 			IllegalGarage[garage][igName],
 			garage
 		);
-		SendFormatMessage(playerid, 
+		va_SendMessage(playerid, 
 			MESSAGE_TYPE_SUCCESS, 
 			"You have sucessfully deleted Illegal Garage %s[ID %d].", 
 			IllegalGarage[garage][igName],
@@ -1068,7 +1068,7 @@ CMD:igarage(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You already own an illegal garage!");
 		if(AC_GetPlayerMoney(playerid) < CHOP_SHOP_PRICE) 
 		{
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
 				"You don't have %s with you to buy Illegal Garage!", 
 				FormatNumber(CHOP_SHOP_PRICE)
@@ -1093,7 +1093,7 @@ CMD:igarage(playerid, params[])
 			IllegalGarage[garage][igSQLID]  
 		);
 
-		SendFormatMessage(playerid, 
+		va_SendMessage(playerid, 
 			MESSAGE_TYPE_SUCCESS, 
 			"Congratulations, you just bought Illegal Garage %s for %s!", 
 			IllegalGarage[garage][igName],
@@ -1162,7 +1162,7 @@ CMD:igarage(playerid, params[])
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have that much money with you!");
 			
 			IllegalGarageToPlayerMoney(playerid, garage, money);
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have sucessfully took %s from %s garage!", 
 				FormatNumber(money),
@@ -1175,7 +1175,7 @@ CMD:igarage(playerid, params[])
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have that much money with you!");
 			
 			PlayerToIllegalGarageMoney(playerid, garage, money);
-			SendFormatMessage(playerid, 
+			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 
 				"You have sucessfully stored %s in %s garage!", 
 				FormatNumber(money),

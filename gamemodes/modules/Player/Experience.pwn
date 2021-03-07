@@ -279,7 +279,7 @@ stock GivePlayerExperience(playerid, playername[])
 		sqlid
 	);
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
 	if(HappyHours)
 	{
 		ExpInfo[playerid][eGivenEXP] = false;
@@ -331,7 +331,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
 					GameTextForPlayer( playerid, "~g~Level up!", 1000, 1);
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Level Up opciju. Preostalo: %d EXP", LEVEL_UP_EXP, ExpInfo[playerid][ePoints]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Level Up opciju. Preostalo: %d EXP", LEVEL_UP_EXP, ExpInfo[playerid][ePoints]);
 					return 1;
 				}
 				case 1: // Permanent Furniture Slots 
@@ -350,7 +350,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerInfo[playerid][pExtraFurniture] = 1;
 					SetPlayerPremiumFurniture(playerid, PlayerKeys[playerid][pHouseKey]);
 					
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za %d Furniture slotova. Preostalo: %d EXP", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS, ExpInfo[playerid][ePoints]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za %d Furniture slotova. Preostalo: %d EXP", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS, ExpInfo[playerid][ePoints]);
 					return 1;
 				}
 				case 2: // Premium Bronze VIP paket na mjesec dana
@@ -366,7 +366,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				
 					SetPlayerPremiumVIP(playerid, PREMIUM_BRONZE);
 					
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Bronze. Preostalo: %d EXP", PREMIUM_BRONZE_EXP, ExpInfo[playerid][ePoints]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Bronze. Preostalo: %d EXP", PREMIUM_BRONZE_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid, COLOR_RED, "[SERVER]  Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
 					return 1;
 				}
@@ -383,7 +383,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					SetPlayerPremiumVIP(playerid, PREMIUM_SILVER);
 					
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Silver. Preostalo: %d EXP", PREMIUM_SILVER_EXP, ExpInfo[playerid][ePoints]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Silver. Preostalo: %d EXP", PREMIUM_SILVER_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid,COLOR_RED, "[SERVER] Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
 					return 1;
 				}
@@ -400,7 +400,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					SetPlayerPremiumVIP(playerid, PREMIUM_GOLD);
 					
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Gold. Preostalo: %d EXP", PREMIUM_GOLD_EXP, ExpInfo[playerid][ePoints]);
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Gold. Preostalo: %d EXP", PREMIUM_GOLD_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid, COLOR_RED, "[SERVER]  Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
 					return 1;
 				}
@@ -454,8 +454,8 @@ CMD:experience(playerid, params[])
 		}
 		ResetPlayerExperience(giveplayerid);
 		SavePlayerExperience(giveplayerid);
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste resetirali %s sve EXP statse.", GetName(giveplayerid, true));
-		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "Administrator %s Vam je resetirao sve EXP statse.", GetName(playerid, true));
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste resetirali %s sve EXP statse.", GetName(giveplayerid, true));
+		va_SendMessage(giveplayerid, MESSAGE_TYPE_INFO, "Administrator %s Vam je resetirao sve EXP statse.", GetName(playerid, true));
 		return 1;
 	}	
 	if(!strcmp(choice, "setexp", true))
@@ -471,18 +471,18 @@ CMD:experience(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, "[?]: /experience setexp [playerid][exp]");
 			return 1;
 		}
-		if(!IsPlayerConnected(giveplayerid)) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
-		if(!SafeSpawned[giveplayerid]) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
+		if(!IsPlayerConnected(giveplayerid)) va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
+		if(!SafeSpawned[giveplayerid]) va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
 		ExpInfo[giveplayerid][ePoints] = exps;
 		ExpInfo[giveplayerid][eAllPoints] = exps;
 		SavePlayerExperience(giveplayerid);
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili %s EXP statse na %d.", GetName(giveplayerid, true), exps);
-		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "Administrator %s Vam je postavio EXP statse na %d.", GetName(playerid, true), exps);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili %s EXP statse na %d.", GetName(giveplayerid, true), exps);
+		va_SendMessage(giveplayerid, MESSAGE_TYPE_INFO, "Administrator %s Vam je postavio EXP statse na %d.", GetName(playerid, true), exps);
 		return 1;
 	}
 	if(!strcmp(choice, "check", true))
 	{
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno imate %d EXP-a na trosenje. Overall: [%d EXP]", ExpInfo[playerid][ePoints], ExpInfo[playerid][eAllPoints]);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno imate %d EXP-a na trosenje. Overall: [%d EXP]", ExpInfo[playerid][ePoints], ExpInfo[playerid][eAllPoints]);
 		return 1;
 	}	
 	if(!strcmp(choice, "give", true))
@@ -527,7 +527,7 @@ CMD:experience(playerid, params[])
 			ExpInfo[giveplayerid][ePoints] += 1;
 			ExpInfo[giveplayerid][eAllPoints] += 1;
 			
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
 			SendMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Dobili ste 1 EXP od nekoga. Cestitke za dobar RP!");
 			
 			SavePlayerExperience(playerid);

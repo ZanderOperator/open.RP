@@ -684,7 +684,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		}
 		case COMMAND_UNDEFINED:
 		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Command '%s' does not exist!", cmdtext);
+			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Command '%s' does not exist!", cmdtext);
 			
 			#if defined MODULE_LOGS
 			Log_Write("logfiles/cmd_unknown.txt", "(%s)Player %s[%d]{%d}(%s) used non-existing command '%s'.",

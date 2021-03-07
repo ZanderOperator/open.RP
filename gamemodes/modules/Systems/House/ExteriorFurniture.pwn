@@ -836,7 +836,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 { // Biljke
                     if(AC_GetPlayerMoney(playerid) < ExteriorPlants[index][epPrice])
-                        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorPlants[index][epPrice]);
+                        return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorPlants[index][epPrice]);
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorPlants[index][epModelid];
                     PlayerExteriorInfo[playerid][pePrice]   = ExteriorPlants[index][epPrice];
@@ -847,7 +847,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 { // Furniture
                     if(AC_GetPlayerMoney(playerid) < ExteriorFurniture[index][efPrice])
-                        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorFurniture[index][efPrice]);
+                        return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorFurniture[index][efPrice]);
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorFurniture[index][efModelid];
                     PlayerExteriorInfo[playerid][pePrice]   = ExteriorFurniture[index][efPrice];
@@ -858,7 +858,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 { // Misc
                     if(AC_GetPlayerMoney(playerid) < ExteriorMisc[index][emPrice])
-                        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorMisc[index][emPrice]);
+                        return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", ExteriorMisc[index][emPrice]);
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorMisc[index][emModelid];
                     PlayerExteriorInfo[playerid][pePrice]   = ExteriorMisc[index][emPrice];

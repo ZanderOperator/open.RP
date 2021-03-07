@@ -261,7 +261,7 @@ CMD:wiretap(playerid, params[])
     if(faction == -1) return 1;
     if(!IsACop(playerid) && PlayerFaction[playerid][pRank] < FactionInfo[faction][rLstnNumber])
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac r%d+!", FactionInfo[faction][rLstnNumber]);
+        va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac r%d+!", FactionInfo[faction][rLstnNumber]);
         return 1;
     }
 
@@ -308,7 +308,7 @@ CMD:wiretap(playerid, params[])
             Player_SetTappedBy(gplayerid, playerid);
             Player_SetTappingCall(playerid, true);
             Player_SetTappingSMS(playerid, true);
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste prisluskivati %d.", number);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste prisluskivati %d.", number);
             return 1;
         }
     }
@@ -356,7 +356,7 @@ CMD:tracenumber(playerid, params[])
     {
         if(PlayerMobile[gplayerid][pMobileNumber] == number)
         {
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste s trazenjem lokacije broja %d.", number);
+            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste s trazenjem lokacije broja %d.", number);
 
             TracingNumberTimer[playerid] = defer OnPlayerTracingNumber[8000 + random(900)](playerid, gplayerid, 1);
             Player_SetTracingNumber(playerid, true);

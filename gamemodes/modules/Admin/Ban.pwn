@@ -15,8 +15,8 @@
 	########  ######## ##       #### ##    ## ########  ######
 */
 ///////////////////////////////////////////////////////////////////
-#define MIN_REASON_LEN			(1)
-#define MAX_REASON_LEN			(22)
+const MIN_REASON_LEN		= 1;
+const MAX_REASON_LEN		= 22;
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######
@@ -58,7 +58,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	{
 		if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN) 
 		{
-			SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
+			va_SendMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 			return 1;
 		}
 		format( banString, 128, "AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
@@ -116,7 +116,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 {
 	if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN) 
 	{
-		SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
+		va_SendMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 		return 1;
 	}
 	va_SendClientMessageToAll( COLOR_RED,"AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",

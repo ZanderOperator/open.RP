@@ -848,7 +848,7 @@ CMD:parts(playerid, params[])
 		price = ammount * 8;
 		if(AC_GetPlayerMoney(playerid) < price) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes si priustiti toliko djelova !");
 
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Kupio si %d mehanicarskih djelova za $%d.",
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Kupio si %d mehanicarskih djelova za $%d.",
 			ammount,
 			price
 		);
@@ -915,14 +915,14 @@ CMD:parts(playerid, params[])
         if(sscanf( params, "s[16]i", item, ammount))
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /parts take [kolicina]");
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "U ovom vozilu ima %d mehanicarskih djelova.",
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "U ovom vozilu ima %d mehanicarskih djelova.",
 				VehicleInfo[vehicleid][vParts]
 			);
 			return 1;
 		}
         if(ammount < 1 || ammount > VehicleInfo[vehicleid][vParts]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "U ovom vozilu nema toliko mehanicarskih dijelova !");
 
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste %d mehanicarskih djelova iz vozila.",
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste %d mehanicarskih djelova iz vozila.",
 			ammount
 		);
 
@@ -933,7 +933,7 @@ CMD:parts(playerid, params[])
 	{
 		if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
 		SendClientMessage(playerid, COLOR_RED, "[!] Mehanicarski djelovi **");
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Imate %d mehanicarskih djelova kod sebe.",
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Imate %d mehanicarskih djelova kod sebe.",
 			PlayerInventory[playerid][pParts]
 		);
 	}

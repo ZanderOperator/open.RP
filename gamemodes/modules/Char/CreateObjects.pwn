@@ -110,7 +110,7 @@ stock static CreatePlayerObjectsObject(playerid, modelid, Float:x, Float:y, Floa
 	Iter_Add(PlayerCreateObjects[playerid], index);	
 	UpdateStreamerAroundPlayer(playerid);
 
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste objekat ID: %d. Ukoliko Zelite promjeniti poziciju koristite /editobject.", modelid);
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste objekat ID: %d. Ukoliko Zelite promjeniti poziciju koristite /editobject.", modelid);
 	return index;
 }
 
@@ -300,7 +300,7 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
  			co_pid = -1;
 		if((co_pid = IsAPlayerSpawnedObject(modelid, x, y, z)) != -1)
 		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Vlasnik tog objekta je %s[%d]!", GetName(co_pid, false), co_pid);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Vlasnik tog objekta je %s[%d]!", GetName(co_pid, false), co_pid);
 		}
 	}
 	return 1;
@@ -513,7 +513,7 @@ CMD:approveobjects(playerid, params[])
 	
 	CreateObjReq[giveplayerid] = !CreateObjReq[giveplayerid];
 	
-	SendFormatMessage(giveplayerid, 
+	va_SendMessage(giveplayerid, 
 		MESSAGE_TYPE_INFO, "Game Admin %s has %s you to use /createobject.", 
 		GetName(playerid, false),
 		(CreateObjReq[giveplayerid]) ? ("allowed") : ("forbid")

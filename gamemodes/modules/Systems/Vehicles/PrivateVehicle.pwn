@@ -905,7 +905,7 @@ stock PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid)
 		if(!IsWeaponHideable(VehicleInfo[vehicleid][vWeaponId][slot]))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete sakriti samo manja oruzja(microSMG/Tec-9/Colt/Deagle).");
 		
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d metaka) u %s.", 
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d metaka) u %s.", 
 			GetWeaponNameEx(VehicleInfo[vehicleid][vWeaponId][slot]), 
 			VehicleInfo[vehicleid][vWeaponAmmo][slot], 
 			ReturnVehicleName(VehicleInfo[vehicleid][vModel])
@@ -987,7 +987,7 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	);
 	#endif
 	
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d metaka) iz %s.", 
+	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d metaka) iz %s.", 
 		GetWeaponNameEx(VehicleInfo[vehicleid][vWeaponId][slot]), 
 		VehicleInfo[vehicleid][vWeaponAmmo][slot], 
 		ReturnVehicleName(VehicleInfo[vehicleid][vModel])
@@ -1129,7 +1129,7 @@ stock CheckVehicleWeaponTrunkSpace(playerid, vehicleid)
 	else
 	{
 		new rest = maxweapons - Iter_Count(VehWeapon[vehicleid]);
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Preostalo je jos mjesta za %d oruzja u prtljazniku %s-a.", rest, carname);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Preostalo je jos mjesta za %d oruzja u prtljazniku %s-a.", rest, carname);
 	}
 	return 1;
 }
@@ -3860,7 +3860,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(VehicleInfoSQLID[playerid][listitem] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate automobil pohranjen u tome slotu!");
 			SpawnVehicleInfo(playerid, VehicleInfoSQLID[playerid][listitem]);
 			new model = GetVehicleByModel(VehicleInfoModel[playerid][listitem]);
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", LandVehicles[model][viName]);
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", LandVehicles[model][viName]);
 			return 1;
 		}
 		case DIALOG_VEH_UPGRADE:
@@ -4044,7 +4044,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 
 			// Message
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Novi level alarma je %d!", VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vAlarm]);
+			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Novi level alarma je %d!", VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vAlarm]);
 		}
 		case DIALOG_VEH_BATTERY: {
 			if(!response) return 1;
@@ -4265,7 +4265,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be in apropriate Vehicle Dealership!");
 			
 			BudgetToPlayerMoney(playerid, moneys); 
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste prodali svoje vozilo za %d$!", moneys);
+			va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste prodali svoje vozilo za %d$!", moneys);
 						
 			#if defined MODULE_LOGS
 			Log_Write("logfiles/car_junk_sell.txt", "(%s) %s[%d] sold %s for %d$ on Junkyard.",
@@ -4364,7 +4364,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
 					Streamer_Update(playerid);
 					
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, 
+					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, 
 						"Uspjesno ste pohranili %s(%d metaka) u prtljaznik %s-a.", 
 						GetWeaponNameEx(VehicleInfo[AttachVehID][vWeaponId][wslot]),
 						VehicleInfo[AttachVehID][vWeaponAmmo][wslot], 
@@ -4779,7 +4779,7 @@ CMD:car(playerid, params[])
 		}
 		new duration = (PlayerTowTimer[playerid] - gettimestamp()) / 60;
 		defer VehicleTowTimer[PlayerTowTimer[playerid]](PlayerKeys[playerid][pVehicleKey], playerid);
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Vase vozilo ce biti dovuceno za %d minuta!", duration);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Vase vozilo ce biti dovuceno za %d minuta!", duration);
 	}
 	else if(!strcmp(pick, "delete", true)) // brisanje bez spawnanja vozila to ti je fix za onaj bug sa osobom koja spawna nakon brisanja vozila auto
 	{
@@ -4909,7 +4909,7 @@ CMD:car(playerid, params[])
 		if(PlayerKeys[playerid][pVehicleKey] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste spawnali svoje vozilo!");
 		if(VehicleInfoSQLID[playerid][slot-1] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate automobil pohranjen u tome slotu!");
 		SpawnVehicleInfo( playerid, VehicleInfoSQLID[playerid][slot-1]);
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", ReturnVehicleName(VehicleInfoModel[playerid][slot-1]));
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", ReturnVehicleName(VehicleInfoModel[playerid][slot-1]));
 	}
 
 	else if(!strcmp(pick,"list", true))
@@ -5048,7 +5048,7 @@ CMD:car(playerid, params[])
 		if(PlayerInfo[giveplayerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete prodavati vozila level 2 igracima (anti-abuse)!");
 		if(PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate spawnano vozilo!");
 		//if(IsABike(PlayerKeys[playerid][pVehicleKey]) && vehiclePrice < 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Minimalna cijena prodaje bicikla je 100$!");
-		//if(!IsABike(PlayerKeys[playerid][pVehicleKey]) && vehiclePrice < CalculateVehiclePrice(PlayerKeys[playerid][pVehicleKey])) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Minimalna cijena prodaje vaseg vozila je %d$!", CalculateVehiclePrice(PlayerKeys[playerid][pVehicleKey]));
+		//if(!IsABike(PlayerKeys[playerid][pVehicleKey]) && vehiclePrice < CalculateVehiclePrice(PlayerKeys[playerid][pVehicleKey])) return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, " Minimalna cijena prodaje vaseg vozila je %d$!", CalculateVehiclePrice(PlayerKeys[playerid][pVehicleKey]));
 		if(!ProxDetectorS(8.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu igraca kojem prodajete vozilo!");
 		if(PlayerKeys[giveplayerid][pVehicleKey] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac vec ima spawnano vozilo!");
 	
@@ -5067,7 +5067,7 @@ CMD:car(playerid, params[])
 		PlayerCarSeller[giveplayerid] 		= playerid;
 		PlayerSellingPrice[giveplayerid] 	= vehiclePrice;
 
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Ponudili ste %s vase vozilo za %d$", GetName(giveplayerid), vehiclePrice);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Ponudili ste %s vase vozilo za %d$", GetName(giveplayerid), vehiclePrice);
 
 		va_ShowPlayerDialog(giveplayerid, 
 			DIALOG_VEH_SELLING, 
@@ -5230,7 +5230,7 @@ CMD:get(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
 
 		if((CarnisterLiters[playerid] + fuel) > 25) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
+			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
 		if(type > 1 || type < 0) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
 		if(1 <= fuel <= 25) 
@@ -5442,35 +5442,35 @@ CMD:setcostats(playerid, params[])
 		if(input < 0 || input > 7) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (0-7)!");
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vDestroys] = input;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste unistenja na vozilu id %d na %d.", vehicleid, input);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste unistenja na vozilu id %d na %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "alarm", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setcostats alarm [level]");
 		if(input < 1 || input > 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-4)!");
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vAlarm] = input;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste alarm na vozilu id %d na level %d.", vehicleid, input);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste alarm na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "immob", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setcostats immob [level]");
 		if(input < 1 || input > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-5)!");
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vImmob] = input;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste imobilizator na vozilu id %d na level %d.", vehicleid, input);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste imobilizator na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "lock", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setcostats lock [level]");
 		if(input < 1 || input > 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-3)!");
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vLock] = input;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste bravu na vozilu id %d na level %d.", vehicleid, input);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste bravu na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "insurance", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[?]: /setcostats lock [level]");
 		if(input < 0 || input > 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (0-3)!");
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vInsurance] = input;
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste osiguranje na vozilu id %d na level %d.", vehicleid, input);
+		va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste osiguranje na vozilu id %d na level %d.", vehicleid, input);
 	} else {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /setcostats [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: destroys - alarm - immob - lock - insurance");
