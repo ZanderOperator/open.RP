@@ -1017,7 +1017,6 @@ public OfflineJailPlayer(playerid, jailtime)
 
 stock CheckInactivePlayer(playerid, sql)
 {
-	new dialogstring[2056];
 	inline OnInactivePlayerLoad()
 	{	
 		new 
@@ -1029,9 +1028,14 @@ stock CheckInactivePlayer(playerid, sql)
 			enddate[12],
 			endtime[12],
 			reason[64],
-			motd[150];
-			
+			motd[150],
+			playername[MAX_PLAYER_NAME],
+			dialogstring[2056];
+
+		
 		cache_get_value_name_int(0, "sqlid"				, sqlid);
+		cache_get_value_name(0, 	"name"				, playername, 24);
+
 		cache_get_value_name_int(0, "startstamp"		, startstamp);
 		cache_get_value_name_int(0, "endstamp"			, endstamp);
 		cache_get_value_name(0, 	"reason"			, reason, 64);
@@ -1043,7 +1047,7 @@ stock CheckInactivePlayer(playerid, sql)
 		TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 		
 		format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
-			ConvertSQLIDToName(sqlid),
+			playername,
 			sqlid,
 			startdate,
 			starttime,
@@ -1058,7 +1062,17 @@ stock CheckInactivePlayer(playerid, sql)
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnInactivePlayerLoad,
-		va_fquery(g_SQL, "SELECT * FROM  inactive_accounts WHERE sqlid = '%d'", sql),
+		va_fquery(g_SQL, 
+			"SELECT \n\
+				accounts.name, \n\
+				inactive_accounts.* \n\
+			FROM  \n\
+				accounts, \n\
+				inactive_accounts \n\
+			WHERE \n\
+				accounts.sqlid = inactive_accounts.sqlid = '%d'", 
+			sql
+		),
 		"i", 
 		playerid
 	);
@@ -1067,8 +1081,6 @@ stock CheckInactivePlayer(playerid, sql)
 
 stock ListInactivePlayers(playerid)
 {
-	new dialogstring[2056];
-
 	inline OnInactiveAccountsList()
 	{
 		new rows;
@@ -1084,14 +1096,19 @@ stock ListInactivePlayers(playerid)
 				enddate[12],
 				endtime[12],
 				reason[64],
-				motd[150];
+				motd[150],
+				dialogstring[2056],
+				playername[MAX_PLAYER_NAME];
 				
 			for( new i = 0; i < rows; i++) 
-			{
+			{				
+				// inactivity table
 				cache_get_value_name_int(i, "sqlid"				, sqlid);
 				cache_get_value_name_int(i, "startstamp"		, startstamp);
 				cache_get_value_name_int(i, "endstamp"			, endstamp);
 				cache_get_value_name(i, 	"reason"			, reason, 64);
+
+				cache_get_value_name(i, 	"playername"		, playername, 24);
 
 				TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
 				TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
@@ -1100,7 +1117,7 @@ stock ListInactivePlayers(playerid)
 				TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 				
 				format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
-					ConvertSQLIDToName(sqlid),
+					playername,
 					sqlid,
 					startdate,
 					starttime,
@@ -1117,7 +1134,18 @@ stock ListInactivePlayers(playerid)
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnInactiveAccountsList,
-		va_fquery(g_SQL, "SELECT * FROM  inactive_accounts ORDER BY inactive_accounts.id DESC LIMIT 0 , 30"),
+		va_fquery(g_SQL, 
+			"SELECT \n\
+				inactive_accounts*, \n\
+				accounts.name \n\
+			FROM  \n\
+				inactive_accounts \n\
+				accounts \n\
+			WHERE \n\
+				inactive_accounts.sqlid = accounts.sqlid \n\
+			ORDER BY inactive_accounts.id \n\
+			DESC \n\
+			LIMIT 0 , 30"),
 		"i", 
 		playerid
 	);

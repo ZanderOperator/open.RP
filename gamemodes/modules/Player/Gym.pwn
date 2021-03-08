@@ -997,30 +997,28 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 
 LoadPlayerFitness(playerid)
 {
-    mysql_pquery(g_SQL, 
+	inline LoadingPlayerFitness()
+	{
+		if(!cache_num_rows())
+		{
+			mysql_fquery_ex(g_SQL, 
+				"INSERT INTO player_fitness(sqlid, muscle, gymtimes, gymcounter, fightstyle) \n\
+					VALUES('%d', '0', '0', '0', '0')",
+				PlayerInfo[playerid][pSQLID]
+			);
+			return 1;
+		}
+		cache_get_value_name_int(0, "muscle"		, PlayerGym[playerid][pMuscle]);
+		cache_get_value_name_int(0,	"gymtimes"		, PlayerGym[playerid][pGymTimes]);
+		cache_get_value_name_int(0,	"gymcounter"	, PlayerGym[playerid][pGymCounter]);
+		cache_get_value_name_int(0,	"fightstyle"	, PlayerGym[playerid][pFightStyle]);
+		return 1;
+	} 
+    MySQL_PQueryInline(g_SQL,
+		using inline LoadingPlayerFitness, 
         va_fquery(g_SQL, "SELECT * FROM player_fitness WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadingPlayerFitness", 
-        "i", 
-        playerid
+        ""
    );
-    return 1;
-}
-
-Public: LoadingPlayerFitness(playerid)
-{
-    if(!cache_num_rows())
-    {
-        mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_fitness(sqlid, muscle, gymtimes, gymcounter, fightstyle) \n\
-                VALUES('%d', '0', '0', '0', '0')",
-            PlayerInfo[playerid][pSQLID]
-       );
-        return 1;
-    }
-    cache_get_value_name_int(0, "muscle"		, PlayerGym[playerid][pMuscle]);
-    cache_get_value_name_int(0,	"gymtimes"		, PlayerGym[playerid][pGymTimes]);
-	cache_get_value_name_int(0,	"gymcounter"	, PlayerGym[playerid][pGymCounter]);
-    cache_get_value_name_int(0,	"fightstyle"	, PlayerGym[playerid][pFightStyle]);
     return 1;
 }
 

@@ -21,27 +21,36 @@ hook function ResetPlayerVariables(playerid)
 
 stock ListBestTemporaryEXP(playerid)
 {
-	new dialogstring[2056];
+	new 
+		dialogstring[2056];
 	inline OnPlayerLoadTempBestEXP()
 	{
-		new rows;
+		new 
+			rows;
 		cache_get_row_count(rows);
 		if(rows)
 		{
-			new sqlid[30], allpoints[30], points[30], motd[64];
+			new 
+				sqlid,
+				allpoints,
+				points,
+				playername[MAX_PLAYER_NAME], 
+				motd[80];
 			for( new i = 0; i < rows; i++) 
 			{
-				cache_get_value_name_int(i, "sqlid"				, sqlid[i]);
-				cache_get_value_name_int(i, "allpoints"			, allpoints[i]);
-				cache_get_value_name_int(i, "points"			, points[i]);
-			}
-			for( new i = 0; i < rows; i++) 
-			{
+				// experience table
+				cache_get_value_name_int(i, "sqlid"				, sqlid);
+				cache_get_value_name_int(i, "allpoints"			, allpoints);
+				cache_get_value_name_int(i, "points"			, points);
+				
+				// accounts table
+				cache_get_value_name(i, 	"name"				, playername, MAX_PLAYER_NAME);
+
 				format(motd, sizeof(motd), "%d EXP | Overall EXP: %d | %s [SQLID: %d]\n",
-					points[i],
-					allpoints[i],
-					ConvertSQLIDToName(sqlid[i]),
-					sqlid[i]
+					points,
+					allpoints,
+					playername,
+					sqlid
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
 			}
@@ -51,36 +60,55 @@ stock ListBestTemporaryEXP(playerid)
 	}
 	MySQL_PQueryInline(g_SQL,  
 		using inline OnPlayerLoadTempBestEXP, 
-	 	"SELECT * FROM  experience ORDER BY experience.points DESC LIMIT 0 , 30",
-		"i", 
-		playerid
+	 	va_fquery(g_SQL,
+		 	"SELECT \n\
+			 	experience.sqlid, experience.points, experience.allpoints, \n\
+				accounts.name \n\
+			FROM \n\
+				experience, \n\
+				accounts \n\
+			ORDER BY experience.points DESC \n\
+			LIMIT 0 , 30"
+		),
+		""
 	);
 	return 1;
 }
 
 stock ListBestOverallEXP(playerid)
 {
-	new dialogstring[2056];
+	new 
+		dialogstring[2056];
+
 	inline OnListOverallBestEXP()
 	{
-		new rows;
+		new 
+			rows;
 		cache_get_row_count(rows);
 		if(rows)
 		{
-			new sqlid[30], allpoints[30], points[30], motd[64];
+			new 
+				sqlid,
+				allpoints,
+				points,
+				playername[MAX_PLAYER_NAME], 
+				motd[80];
+
 			for( new i = 0; i < rows; i++) 
 			{
-				cache_get_value_name_int(i, "sqlid"				, sqlid[i]);
-				cache_get_value_name_int(i, "allpoints"			, allpoints[i]);
-				cache_get_value_name_int(i, "points"			, points[i]);
-			}
-			for( new i = 0; i < rows; i++) 
-			{
-				format(motd, sizeof(motd), "Overall EXP: %d | %d EXP | %s [SQLID: %d]\n",
-					allpoints[i],
-					points[i],
-					ConvertSQLIDToName(sqlid[i]),
-					sqlid[i]
+				// experience table
+				cache_get_value_name_int(i, "sqlid"				, sqlid);
+				cache_get_value_name_int(i, "allpoints"			, allpoints);
+				cache_get_value_name_int(i, "points"			, points);
+				
+				// accounts table
+				cache_get_value_name(i, 	"name"				, playername, MAX_PLAYER_NAME);
+
+				format(motd, sizeof(motd), "%d EXP | Overall EXP: %d | %s [SQLID: %d]\n",
+					points,
+					allpoints,
+					playername,
+					sqlid
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
 			}
@@ -90,9 +118,17 @@ stock ListBestOverallEXP(playerid)
 	}
 	MySQL_PQueryInline(g_SQL,  
 		using inline OnListOverallBestEXP, 
-		"SELECT * FROM  experience ORDER BY experience.allpoints DESC LIMIT 0 , 30",
-		"i", 
-		playerid
+	 	va_fquery(g_SQL,
+		 	"SELECT \n\
+			 	experience.sqlid, experience.points, experience.allpoints, \n\
+				accounts.name \n\
+			FROM \n\
+				experience, \n\
+				accounts \n\
+			ORDER BY experience.allpoints DESC \n\
+			LIMIT 0 , 30"
+		 ),
+		""
 	);
 	return 1;
 }

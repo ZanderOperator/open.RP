@@ -20,9 +20,14 @@ CheckAccountsForInactivity()
 		new 
 			rows;
 		cache_get_row_count(rows);
-		if(rows == 0) 
-			return Log_Write("logfiles/inactive_players.txt", "(%s) - Accounts for property/job removal due to inactivity currently don't exist.", ReturnDate());
-			
+		if(rows == 0)
+		{
+			Log_Write("logfiles/inactive_players.txt", 
+				"(%s) - Accounts for property/job removal due to inactivity currently don't exist.", 
+				ReturnDate()
+			);
+			return 1;
+		}	
 		new 
 			sqlid, 
 			jobkey, 
@@ -69,14 +74,10 @@ CheckAccountsForInactivity()
 
 			// experience table
 			cache_get_value_name_int(i, "monthpaydays", monthpaydays);
-			
-			// inactivity table
-			if(IsValidInactivity(sqlid)) // If there's registered inactivity in database
-				continue;
-			
-			// player_admin_msg table
-			strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
 
+			// player_admin_msg table
+			cache_get_value_name(i, 	"AdminMessage"	, logString, 1536);
+			
 			switch(donaterank)
 			{
 				case 1: loginstamp += (5 * 24 * 3600);
@@ -98,7 +99,8 @@ CheckAccountsForInactivity()
 				mysql_fquery(g_SQL, "UPDATE player_jobs SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);				
 				RemoveOfflineJob(jobkey);
 				
-				Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his %s[Job ID:%d] job i %d hours of job contract.",
+				Log_Write("logfiles/inactive_players.txt", 
+					"(%s) %s[SQLID: %d] due to inactivity lost his %s[Job ID:%d] job i %d hours of job contract.",
 					ReturnDate(),
 					playername,
 					sqlid,
@@ -107,7 +109,7 @@ CheckAccountsForInactivity()
 					contracttime
 				);
 
-				format(motd, sizeof(motd), "%s[%s] - Izgubili ste	posao %s i %d sati ugovora radi nedovoljne aktivnosti.",
+				format(motd, sizeof(motd), "%s[%s] - You have lost your job (%s) and %d contract hours because of inactivity.",
 					(!d) ? ("") : ("\n"),
 					ReturnDate(),
 					ReturnJob(jobkey),
@@ -116,6 +118,7 @@ CheckAccountsForInactivity()
 				strcat(logString, motd, 1536);
 				d = true;
 			}
+
 			// Property Inactivity Check
 			propertytimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
 			if(loginstamp <= propertytimestamp)
@@ -138,7 +141,8 @@ CheckAccountsForInactivity()
 						 HouseInfo[houseid][hSQLID]
 					);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his house %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -147,11 +151,12 @@ CheckAccountsForInactivity()
 						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost your house (%s) because of inactivity and got %s refunded on your bank account.",
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						HouseInfo[houseid][hAdress], 
-						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
+						FormatNumber(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
 					);		
 					strcat(logString, motd, 1536);
 					d = true;
@@ -165,7 +170,8 @@ CheckAccountsForInactivity()
 						GarageInfo[garageid][gSQLID]
 					);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -174,11 +180,12 @@ CheckAccountsForInactivity()
 						GarageInfo[garageid][gPrice]
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost your garage (%s) because of inactivity and got %d$ refunded on your bank account.",
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						GarageInfo[garageid][gAdress],
-						GarageInfo[garageid][gPrice]
+						FormatNumber(GarageInfo[garageid][gPrice])
 					);
 					strcat(logString, motd, 1536);
 					d = true;
@@ -193,7 +200,8 @@ CheckAccountsForInactivity()
 					
 					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -202,11 +210,12 @@ CheckAccountsForInactivity()
 						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
+					format(motd, sizeof(motd), 
+					"%s[%s] - You've lost your business %s because of inactivity %s refunded on your bank account.", 
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						BizzInfo[bizzid][bMessage],
-						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
+						FormatNumber(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
 					);
 					strcat(logString, motd, 1536);
 					d = true;
@@ -220,7 +229,8 @@ CheckAccountsForInactivity()
 					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -229,7 +239,8 @@ CheckAccountsForInactivity()
 						ComplexInfo[cid][cPrice]
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost Complex %s because of inactivity and got %s refunded on your bank account.",
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						ComplexInfo[cid][cName],
@@ -244,7 +255,8 @@ CheckAccountsForInactivity()
 						ComplexRoomInfo[crid][cSQLID]
 					);					
 
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room %s [SQLID: %d].",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his Complex Room %s [SQLID: %d].",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -252,7 +264,8 @@ CheckAccountsForInactivity()
 						ComplexRoomInfo[crid][cSQLID]
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost rent on Complex Room (%s) in Complex %s because of your inactivity.", 
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						ComplexRoomInfo[crid][cAdress],
@@ -270,19 +283,26 @@ CheckAccountsForInactivity()
 		using inline OnInactiveAccsLoad, 
 		va_fquery(g_SQL,  
 			"SELECT \n\
-				accounts.sqlid, accounts,name, accounts.lastloginstamp, \n\
+				accounts.sqlid, accounts.name, accounts.lastloginstamp, \n\
 				player_vip_status.vipRank, \n\
 				player_job.jobkey, player_job.contracttime, \n\
-				experience.monthpaydays \n\
+				experience.monthpaydays, \n\
+				player_admin_msg.AdminMessage \n\
 			FROM \n\
 				accounts, \n\
 				player_vip_status, \n\
 				player_job, \n\
-				experience \n\
+				experience, \n\
+				player_admin_msg \n\
 			WHERE \n\
 				accounts.lastloginstamp <= '%d' \n\
 			AND \n\
-				accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid",
+				accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid = player_admin_msg.sqlid \n\
+			AND \n\
+				(SELECT COUNT(*) \n\
+				FROM \n\
+					inactive_accounts \n\
+				WHERE accounts.sqlid = inactive_accounts.sqlid) = 0",
 			inactivetimestamp
 		),
 		""
@@ -323,23 +343,21 @@ CheckAccountsForInactivity()
 				cid = INVALID_COMPLEX_ID;
 				crid = INVALID_COMPLEX_ID;
 				garageid = INVALID_HOUSE_ID;
+				logString[0] = EOS;
 			
 				// accounts table
 				cache_get_value_name_int(i, "sqlid", sqlid);
-				cache_get_value_name(i, "name", playername);
+				cache_get_value_name(i, "name", playername, 24);
 
 				// player_vip_status table
 				cache_get_value_name_int(i, "vipRank", donaterank);
 				
 				// player_admin_msg table
-				strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
+				cache_get_value_name(i, "AdminMessage", logString, 1536);
 
 				if(isnull(logString))
 					d = false;
 				else d = true;
-
-				if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
-					continue;
 						
 				switch(donaterank)
 				{
@@ -363,13 +381,14 @@ CheckAccountsForInactivity()
 					if(HouseInfo[houseid][hTakings] > 0)
 						bankmoney += HouseInfo[houseid][hTakings];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
-					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'", 
-						HouseInfo[houseid][hSQLID]
+					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'",
+						 HouseInfo[houseid][hSQLID]
 					);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house on adress %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his house %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -378,26 +397,27 @@ CheckAccountsForInactivity()
 						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
 					);
 					
-				
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost your house (%s) because of inactivity and got %s refunded on your bank account.",
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						HouseInfo[houseid][hAdress], 
-						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
-					);
+						FormatNumber(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
+					);		
 					strcat(logString, motd, 1536);
 					d = true;
 				}
 				if(garageid != INVALID_HOUSE_ID)
 				{
 					bankmoney = GarageInfo[garageid][gPrice];
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 						GarageInfo[garageid][gSQLID]
 					);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -406,11 +426,12 @@ CheckAccountsForInactivity()
 						GarageInfo[garageid][gPrice]
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost your garage (%s) because of inactivity and got %d$ refunded on your bank account.",
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						GarageInfo[garageid][gAdress],
-						GarageInfo[garageid][gPrice]
+						FormatNumber(GarageInfo[garageid][gPrice])
 					);
 					strcat(logString, motd, 1536);
 					d = true;
@@ -421,11 +442,12 @@ CheckAccountsForInactivity()
 					if(BizzInfo[bizzid][bTill] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
 					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Business %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -434,10 +456,12 @@ CheckAccountsForInactivity()
 						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
+					format(motd, sizeof(motd), 
+					"%s[%s] - You've lost your business %s because of inactivity %s refunded on your bank account.", 
 						(!d) ? ("") : ("\n"),
+						ReturnDate(),
 						BizzInfo[bizzid][bMessage],
-						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
+						FormatNumber(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
 					);
 					strcat(logString, motd, 1536);
 					d = true;
@@ -449,10 +473,10 @@ CheckAccountsForInactivity()
 						bankmoney += ComplexInfo[cid][cTill];
 					
 					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					
 					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -461,22 +485,24 @@ CheckAccountsForInactivity()
 						ComplexInfo[cid][cPrice]
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost Complex %s because of inactivity and got %s refunded on your bank account.",
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						ComplexInfo[cid][cName],
 						(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
-					);
+					);	
 					strcat(logString, motd, 1536);
 					d = true;
 				}
 				if(crid != INVALID_COMPLEX_ID)
 				{	
-					mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", 
+					mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
 						ComplexRoomInfo[crid][cSQLID]
-					);
-					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room on adress %s[SQLID: %d].",
+					);					
+
+					Log_Write("logfiles/inactive_players.txt", 
+						"(%s) %s[SQLID: %d] due to inactivity lost his Complex Room %s [SQLID: %d].",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -484,7 +510,8 @@ CheckAccountsForInactivity()
 						ComplexRoomInfo[crid][cSQLID]
 					);
 					
-					format(motd, sizeof(motd), "%s[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
+					format(motd, sizeof(motd), 
+						"%s[%s] - You've lost rent on Complex Room (%s) in Complex %s because of your inactivity.", 
 						(!d) ? ("") : ("\n"),
 						ReturnDate(),
 						ComplexRoomInfo[crid][cAdress],
@@ -503,14 +530,21 @@ CheckAccountsForInactivity()
 				"SELECT \n\
 					experience.sqlid, \n\
 					accounts.name, \n\
-					player_vip_status.vipRank \n\
+					player_vip_status.vipRank, \n\
+					player_admin_msg.AdminMessage \n\
 				FROM \n\
 					experience, \n\
 					accounts, \n\
-					player_vip_status \n\
+					player_vip_status, \n\
+					player_admin_msg \n\
 				WHERE \n\
 					experience.monthpaydays < '%d' \n\
-				AND experience.sqlid = accounts.sqlid = player_vip_status.sqlid", 
+				AND experience.sqlid = accounts.sqlid = player_vip_status.sqlid = player_admin_msg.sqlid \n\
+				AND \n\
+					(SELECT COUNT(*) \n\
+					FROM \n\
+						inactive_accounts \n\
+					WHERE accounts.sqlid = inactive_accounts.sqlid) = 0",
 				MIN_MONTH_PAYDAYS
 			),
 			""
@@ -519,19 +553,14 @@ CheckAccountsForInactivity()
 		// Monthly EXP rewards for top 5 players with most paydays in previous month
 		inline OnRewardActivePlayers()
 		{
-			new 
-				rows, 
-				rewarded= 0, 
+			new  
+				rewarded = 0, 
 				sql,
 				playername[MAX_PLAYER_NAME],
 				monthpaydays;
 
-			cache_get_row_count(rows);
-			for(new i = 0; i < rows; i++)
+			for(new i = 0; i < 5; i++)
 			{
-				if(rewarded == 5)
-					break; 
-
 				logString[0] = EOS;
 				
 				// accounts table
@@ -541,7 +570,6 @@ CheckAccountsForInactivity()
 				// experience table
 				cache_get_value_name_int(i, "monthpaydays", monthpaydays);
 
-				
 				rewarded++;
 				switch(rewarded)
 				{
@@ -557,10 +585,10 @@ CheckAccountsForInactivity()
 							monthpaydays
 						);
 						format(logString, sizeof(logString), 
-							"[%s] - Dobili ste %d EXP-a kao najaktivniji igrac %d. mjeseca \n\
-								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
-								koje Vam server nudi sa komandom /exp buy.\n\
-								Velike cestitke od %s Teama!",
+							"\n[%s] - You got %d EXP as 1. most active player of %d. month with %d PayDays.\n\
+								With this award you can buy various possesions \n\
+								which server offers you with command /exp buy.\n\
+								Congrats from %s Team!",
 							ReturnDate(),
 							PREMIUM_GOLD_EXP,
 							(currentmonth - 1),
@@ -580,10 +608,10 @@ CheckAccountsForInactivity()
 							monthpaydays
 						);
 						format(logString, sizeof(logString), 
-							"[%s] - Dobili ste %d EXP-a kao 2. najaktivniji igrac %d. mjeseca \n\
-								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
-								koje Vam server nudi sa komandom /exp buy.\n\
-								Velike cestitke od %s Teama!",
+							"\n[%s] - You got %d EXP as 2. most active player of %d. month with %d PayDays.\n\
+								With this award you can buy various possesions \n\
+								which server offers you with command /exp buy.\n\
+								Congrats from %s Team!",
 							ReturnDate(),
 							100,
 							(currentmonth - 1),
@@ -603,10 +631,10 @@ CheckAccountsForInactivity()
 							monthpaydays
 						);
 						format(logString, sizeof(logString), 
-							"[%s] - Dobili ste %d EXP-a kao 3. najaktivniji igrac %d. mjeseca \n\
-								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
-								koje Vam server nudi sa komandom /exp buy.\n\
-								Velike cestitke od %s Teama!",
+							"\n[%s] - You got %d EXP as 3. most active player of %d. month with %d PayDays.\n\
+								With this award you can buy various possesions \n\
+								which server offers you with command /exp buy.\n\
+								Congrats from %s Team!",
 							ReturnDate(),
 							75,
 							(currentmonth - 1),
@@ -626,10 +654,10 @@ CheckAccountsForInactivity()
 							monthpaydays
 						);
 						format(logString, sizeof(logString), 
-							"[%s] - Dobili ste %d EXP-a kao 4. najaktivniji igrac %d. mjeseca \n\
-								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
-								koje Vam server nudi sa komandom /exp buy.\n\
-								Velike cestitke od %s Teama!",
+							"\n[%s] - You got %d EXP as 4. most active player of %d. month with %d PayDays.\n\
+								With this award you can buy various possesions \n\
+								which server offers you with command /exp buy.\n\
+								Congrats from %s Team!",
 							ReturnDate(),
 							50,
 							(currentmonth - 1),
@@ -649,10 +677,10 @@ CheckAccountsForInactivity()
 							monthpaydays
 						);
 						format(logString, sizeof(logString), 
-							"[%s] - Dobili ste %d EXP-a kao 5. najaktivniji igrac %d. mjeseca \n\
-								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
-								koje Vam server nudi sa komandom /exp buy.\n\
-								Velike cestitke od %s Teama!",
+							"\n[%s] - You got %d EXP as 5. most active player of %d. month with %d PayDays.\n\
+								With this award you can buy various possesions \n\
+								which server offers you with command /exp buy.\n\
+								Congrats from %s Team!",
 							ReturnDate(),
 							25,
 							(currentmonth - 1),
@@ -679,10 +707,9 @@ CheckAccountsForInactivity()
 					experience \n\
 				WHERE \n\
 					accounts.playaBanTime == '0' \n\
-					AND (accounts.adminLvl = '0' AND accounts.helper = '0')\n\
-					AND accounts.sqlid = monthpaydays.sqlid \n\
-				ORDER BY \n\
-					experience.monthpaydays DESC \n\
+				AND (accounts.adminLvl = '0' AND accounts.helper = '0')\n\
+				AND accounts.sqlid = monthpaydays.sqlid \n\
+				ORDER BY experience.monthpaydays DESC \n\
 				LIMIT 0 , 30"
 			),
 			""

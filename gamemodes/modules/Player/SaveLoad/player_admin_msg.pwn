@@ -143,18 +143,3 @@ ShowAdminMessage(playerid)
 	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
 	return 1;
 }
-
-GetAdminMessage(id)
-{
-	new 
-		message[1536], 
-		Cache:result;
-		
-	result = mysql_query(g_SQL, 
-				va_fquery(g_SQL, "SELECT AdminMessage FROM player_admin_msg WHERE sqlid = '%d'", id)
-			);
-			
-	cache_get_value_name(0, "AdminMessage", message, 2048);
-	cache_delete(result);
-	return message;
-}
