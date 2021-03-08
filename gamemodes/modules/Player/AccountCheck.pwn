@@ -522,7 +522,8 @@ CheckAccountsForInactivity()
 			new 
 				rows, 
 				rewarded= 0, 
-				sql, 
+				sql,
+				playername[MAX_PLAYER_NAME],
 				monthpaydays;
 
 			cache_get_row_count(rows);
@@ -532,8 +533,14 @@ CheckAccountsForInactivity()
 					break; 
 
 				logString[0] = EOS;
+				
+				// accounts table
 				cache_get_value_name_int(i, "sqlid", sql);
+				cache_get_value_name(i, 	"name"	, playername, 24);
+				
+				// experience table
 				cache_get_value_name_int(i, "monthpaydays", monthpaydays);
+
 				
 				rewarded++;
 				switch(rewarded)
@@ -544,7 +551,7 @@ CheckAccountsForInactivity()
 						Log_Write("logfiles/rewarded_players.txt", 
 							"(%s) - %s got awarded with %d EXP as most active player of %d. month with %d paydays.", 
 							ReturnDate(),
-							ConvertSQLIDToName(sql),
+							playername,
 							PREMIUM_GOLD_EXP,
 							(currentmonth - 1),
 							monthpaydays
@@ -568,7 +575,7 @@ CheckAccountsForInactivity()
 						Log_Write("logfiles/rewarded_players.txt", 
 							"(%s) - %s got awarded 100 EXP (2. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
-							ConvertSQLIDToName(sql),
+							playername,
 							(currentmonth - 1),
 							monthpaydays
 						);
@@ -591,7 +598,7 @@ CheckAccountsForInactivity()
 						Log_Write("logfiles/rewarded_players.txt", 
 							"(%s) - %s got awarded with 75 EXP (3. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
-							ConvertSQLIDToName(sql),
+							playername,
 							(currentmonth - 1),
 							monthpaydays
 						);
@@ -614,7 +621,7 @@ CheckAccountsForInactivity()
 						Log_Write("logfiles/rewarded_players.txt", 
 							"(%s) - %s got awarded with 50 EXP (4. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
-							ConvertSQLIDToName(sql),
+							playername,
 							(currentmonth - 1),
 							monthpaydays
 						);
@@ -637,7 +644,7 @@ CheckAccountsForInactivity()
 						Log_Write("logfiles/rewarded_players.txt", 
 							"(%s) - %s got awarded with 25 EXP (5. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
-							ConvertSQLIDToName(sql),
+							playername,
 							(currentmonth - 1),
 							monthpaydays
 						);
@@ -664,6 +671,8 @@ CheckAccountsForInactivity()
 			using inline OnRewardActivePlayers, 
 			va_fquery(g_SQL,
 				"SELECT \n\
+					accounts.sqlid, \n\
+					accounts.name, \n\
 					experience.monthpaydays\n\
 				FROM \n\
 					accounts, \n\

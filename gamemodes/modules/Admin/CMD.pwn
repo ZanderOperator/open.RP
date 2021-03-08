@@ -3906,8 +3906,12 @@ CMD:checkoffline(playerid, params[])
                 accounts.adminLvl, accounts.helper, accounts.playaWarns, accounts.connecttime, \n\
                 player_job.jobkey, player_job.contracttime, \n\
                 player_faction.facMemId, player_faction.facRank \n\
-                FROM accounts, player_job, player_faction \n\
-                WHERE accounts.sqlid = player_job.sqlid = player_faction.sqlid = '%d'",
+            FROM \n\
+				accounts, \n\
+				player_job, \n\
+				player_faction \n\
+            WHERE \n\
+				accounts.sqlid = player_job.sqlid = player_faction.sqlid = '%d'",
 			sqlid
 		), 
 		"CheckOffline", 
