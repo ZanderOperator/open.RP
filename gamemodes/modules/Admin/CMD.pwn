@@ -3891,15 +3891,90 @@ CMD:checkoffline(playerid, params[])
     if(PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorised for this command!");
 
-	new targetname[MAX_PLAYER_NAME];
+	new 
+		targetname[MAX_PLAYER_NAME];
 	if(sscanf(params, "s[24]", targetname)) 
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /checkoffline [nickname]");
     
-	new sqlid = ConvertNameToSQLID(targetname);
+	new 
+		sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
 		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
 
-	mysql_tquery(g_SQL, 
+	inline CheckOffline()
+	{
+		new 
+			aname[MAX_PLAYER_NAME],
+			level,
+			org,
+			rank,
+			cash,
+			bank,
+			housekey = INVALID_HOUSE_ID,
+			bizkey = INVALID_BIZNIS_ID,
+			garagekey = -1,
+			admin,
+			helper,
+			jobkey,
+			contracttime,
+			warnings,
+			playhrs,
+			complexkey,
+			cmplxroomkey;
+		
+		// accounts table
+		cache_get_value_name(0, "name", aname, MAX_PLAYER_NAME); 	
+		cache_get_value_name_int(0,"levels",level);
+		cache_get_value_name_int(0,"handMoney",cash);
+		cache_get_value_name_int(0,"bankMoney",bank);
+		cache_get_value_name_int(0,"adminLvl",admin);
+		cache_get_value_name_int(0,"helper",helper);
+		cache_get_value_name_int(0,"playaWarns",warnings);
+		cache_get_value_name_int(0,"connecttime",playhrs);
+
+		// player_job table
+		cache_get_value_name_int(0,"jobkey",jobkey);
+		cache_get_value_name_int(0,"contracttime",contracttime);
+
+		// player_faction table
+		cache_get_value_name_int(0,"facMemId",org);
+		cache_get_value_name_int(0,"facRank",rank);
+		
+		housekey = GetHouseFromSQL(sqlid);
+		bizkey = GetBizzFromSQL(sqlid);
+		garagekey = GetGarageFromSQL(sqlid);
+		complexkey = GetComplexFromSQL(sqlid);
+		cmplxroomkey = GetComplexRoomFromSQL(sqlid);
+		
+		va_SendClientMessage(playerid, COLOR_ORANGE, "Name: %s - Level: %d - Org: %s[Rank %d] - Cash: %d$ - Bank: %d$",
+			aname,
+			level,
+			FactionInfo[org][fName],
+			rank,
+			cash,
+			bank
+		);
+		va_SendClientMessage(playerid, COLOR_ORANGE, "Hours of gameplay: %d - Warns: %d - Admin Level: %d - Helper Level: %d",
+			playhrs,
+			warnings,
+			admin,
+			helper
+		);
+		va_SendClientMessage(playerid, COLOR_ORANGE, "Job: %s - Contract Time on job: %d hours",
+			ReturnJob(jobkey),
+			contracttime
+		);
+		va_SendClientMessage(playerid, COLOR_ORANGE, "House Key: %d - Biz Key: %d - Garage Key: %d - Complex Key: %d - Complex Room Key: %d",
+			housekey,
+			bizkey,
+			garagekey,
+			complexkey,
+			cmplxroomkey
+		);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,
+		using inline CheckOffline, 
 		va_fquery(g_SQL, 
 			"SELECT \n\
 				accounts.sqlid, accounts.name, accounts.levels, accounts.handMoney, accounts.bankMoney, \n\
@@ -3914,11 +3989,7 @@ CMD:checkoffline(playerid, params[])
 				accounts.sqlid = player_job.sqlid = player_faction.sqlid = '%d'",
 			sqlid
 		), 
-		"CheckOffline", 
-		"iis", 
-		playerid,
-		sqlid, 
-		targetname
+		"" 
 	);
 	return 1;
 }

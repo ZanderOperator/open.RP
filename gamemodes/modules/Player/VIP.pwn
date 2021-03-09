@@ -2,29 +2,28 @@
 
 LoadPlayerVIP(playerid)
 {
-    mysql_pquery(g_SQL, 
+	inline LoadingPlayerVIP()
+	{
+		if(!cache_num_rows())
+		{
+			mysql_fquery_ex(g_SQL, 
+				"INSERT INTO player_vip_status(sqlid, vipRank, vipTime, dvehperms) \n\
+					VALUES('%d', '0', '0', '0')",
+				PlayerInfo[playerid][pSQLID]
+			);
+			return 1;
+		}
+		cache_get_value_name_int(0, "vipRank"		, PlayerVIP[playerid][pDonateRank]);
+		cache_get_value_name_int(0,	"vipTime"		, PlayerVIP[playerid][pDonateTime]);
+		cache_get_value_name_int(0,	"dvehperms"		, PlayerVIP[playerid][pDonatorVehPerms]);
+		return 1;
+	}
+    MySQL_PQueryInline(g_SQL,
+		using inline LoadingPlayerVIP, 
         va_fquery(g_SQL, "SELECT * FROM player_vip_status WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadingPlayerVIP", 
         "i", 
         playerid
    );
-    return 1;
-}
-
-Public: LoadingPlayerVIP(playerid)
-{
-    if(!cache_num_rows())
-    {
-        mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_vip_status(sqlid, vipRank, vipTime, dvehperms) \n\
-                VALUES('%d', '0', '0', '0')",
-            PlayerInfo[playerid][pSQLID]
-       	);
-        return 1;
-    }
-    cache_get_value_name_int(0, "vipRank"		, PlayerVIP[playerid][pDonateRank]);
-    cache_get_value_name_int(0,	"vipTime"		, PlayerVIP[playerid][pDonateTime]);
-    cache_get_value_name_int(0,	"dvehperms"		, PlayerVIP[playerid][pDonatorVehPerms]);
     return 1;
 }
 

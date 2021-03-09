@@ -53,29 +53,28 @@ static
 
 LoadPlayerJob(playerid)
 {
-    mysql_pquery(g_SQL, 
+	inline LoadingPlayerJob()
+	{
+		if(!cache_num_rows())
+		{
+			mysql_fquery_ex(g_SQL, 
+				"INSERT INTO player_job(sqlid, jobkey, contracttime, freeworks) \n\
+					VALUES('%d', '0', '0', '0')",
+				PlayerInfo[playerid][pSQLID]
+		);
+			return 1;
+		}
+		cache_get_value_name_int(0,  "jobkey"		, PlayerJob[playerid][pJob]);
+		cache_get_value_name_int(0,  "contracttime"	, PlayerJob[playerid][pContractTime]);
+		cache_get_value_name_int(0,  "freeworks"	, PlayerJob[playerid][pFreeWorks]);
+		return 1;
+	}
+    MySQL_PQueryInline(g_SQL,
+		using inline LoadingPlayerJob, 
         va_fquery(g_SQL, "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadingPlayerJob", 
         "i", 
         playerid
    );
-    return 1;
-}
-
-Public: LoadingPlayerJob(playerid)
-{
-    if(!cache_num_rows())
-    {
-        mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_job(sqlid, jobkey, contracttime, freeworks) \n\
-                VALUES('%d', '0', '0', '0')",
-            PlayerInfo[playerid][pSQLID]
-       );
-        return 1;
-    }
-    cache_get_value_name_int(0,  "jobkey"		, PlayerJob[playerid][pJob]);
-    cache_get_value_name_int(0,  "contracttime"	, PlayerJob[playerid][pContractTime]);
-    cache_get_value_name_int(0,  "freeworks"	, PlayerJob[playerid][pFreeWorks]);
     return 1;
 }
 
@@ -122,27 +121,26 @@ SaveJobData()
 
 LoadServerJobs() 
 {
-	mysql_pquery(g_SQL, 
+	inline OnServerJobsLoaded() 
+	{
+		if(!cache_num_rows()) 
+			return print( "MySQL Report: No Server Jobs exist to load.");
+		
+		cache_get_value_name_int(0, "Sweeper", JobData[SWEEPER]);
+		cache_get_value_name_int(0, "Mechanic", JobData[MECHANIC]);
+		cache_get_value_name_int(0, "Crafter", JobData[CRAFTER]);
+		cache_get_value_name_int(0, "Taxi", JobData[TAXI]);
+		cache_get_value_name_int(0, "Farmer", JobData[FARMER]);
+		cache_get_value_name_int(0, "Logger", JobData[LOGGER]);
+		cache_get_value_name_int(0, "Garbage", JobData[GARBAGE]);
+		cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,
+		using inline OnServerJobsLoaded, 
 		va_fquery(g_SQL, "SELECT * FROM server_jobs WHERE 1"), 
-		"OnServerJobsLoaded",
 		""
 	);
-	return 1;
-}
-
-Public: OnServerJobsLoaded() 
-{
-	new rows = cache_num_rows();
-	if(!rows) return printf( "MySQL Report: No Server Jobs exist to load.");
-	
-	cache_get_value_name_int(0, "Sweeper", JobData[SWEEPER]);
-	cache_get_value_name_int(0, "Mechanic", JobData[MECHANIC]);
-	cache_get_value_name_int(0, "Crafter", JobData[CRAFTER]);
-	cache_get_value_name_int(0, "Taxi", JobData[TAXI]);
-	cache_get_value_name_int(0, "Farmer", JobData[FARMER]);
-	cache_get_value_name_int(0, "Logger", JobData[LOGGER]);
-	cache_get_value_name_int(0, "Garbage", JobData[GARBAGE]);
-	cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
 	return 1;
 }
 

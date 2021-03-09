@@ -76,9 +76,6 @@ timer SafeHealPlayer[250](playerid)
 
 
 forward LoadPlayerData(playerid);
-forward RegisterPlayer(playerid);
-forward OnAccountFinish(playerid);
-
 
 CheckPlayerInactivity(playerid)
 {
@@ -441,10 +438,51 @@ public LoadPlayerData(playerid)
     return 1;
 }
 
-public RegisterPlayer(playerid) // TODO: mandatory checkup!
+static RegisterPlayer(playerid)
 {
 	strcpy(PlayerInfo[playerid][pLastLogin], ReturnDate());
-    mysql_pquery(g_SQL,
+	
+	inline OnAccountFinish()
+	{	
+		PlayerInfo[playerid][pSQLID] 			= cache_insert_id();
+		PlayerInfo[playerid][pRegistered] 		= 0;
+		PlayerInfo[playerid][pLevel] 			= 1;
+		PlayerAppearance[playerid][pSkin] 		= 29;
+		PaydayInfo[playerid][pPayDayMoney] 		= 0;
+		PaydayInfo[playerid][pProfit]			= 0;
+		PlayerJob[playerid][pFreeWorks] 		= 15;
+		PlayerInfo[playerid][pMuted] 			= true;
+		PlayerInfo[playerid][pAdmin] 			= 0;
+		PlayerInfo[playerid][pHelper] 			= 0; 
+		PlayerCoolDown[playerid][pCasinoCool]	= 5;
+		PlayerCoolDown[playerid][pCasinoCool]	= 5;
+
+		PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
+		PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
+		PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
+		PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
+		PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
+		PlayerKeys[playerid][pVehicleKey]		= -1;
+		
+		UpdateRegisteredPassword(playerid);
+		FirstSaving[playerid] = true; 
+		SavePlayerData(playerid);
+		
+		TogglePlayerSpectating(playerid, 0);
+		SetCameraBehindPlayer(playerid);
+		SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
+		
+		PlayerNewUser_Set(playerid,true);
+		Bit1_Set(gr_PlayerLoggedIn, playerid, true);
+		
+		DestroyLoginTextdraws(playerid);
+		CreateWebTD(playerid);
+		
+		SpawnPlayer(playerid);
+		return 1;
+	}
+    MySQL_PQueryInline(g_SQL,
+		using inline OnAccountFinish,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (online,registered,register_date,name,password,teampin,email,\n\
 				secawnser,levels,age,sex,handMoney,bankMoney) \n\
@@ -459,51 +497,10 @@ public RegisterPlayer(playerid) // TODO: mandatory checkup!
 			NEW_PLAYER_MONEY,
 			NEW_PLAYER_BANK
 		), 
-		"OnAccountFinish", 
 		"i", 
 		playerid
 	);
 	return 1;
-}
-
-public OnAccountFinish(playerid)
-{	
-	PlayerInfo[playerid][pSQLID] 			= cache_insert_id();
-	PlayerInfo[playerid][pRegistered] 		= 0;
-	PlayerInfo[playerid][pLevel] 			= 1;
-	PlayerAppearance[playerid][pSkin] 		= 29;
-	PaydayInfo[playerid][pPayDayMoney] 		= 0;
-	PaydayInfo[playerid][pProfit]			= 0;
-	PlayerJob[playerid][pFreeWorks] 		= 15;
-	PlayerInfo[playerid][pMuted] 			= true;
-	PlayerInfo[playerid][pAdmin] 			= 0;
-	PlayerInfo[playerid][pHelper] 			= 0; 
-	PlayerCoolDown[playerid][pCasinoCool]	= 5;
-	PlayerCoolDown[playerid][pCasinoCool]	= 5;
-
-	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
-	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
-	PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
-	PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
-	PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
-	PlayerKeys[playerid][pVehicleKey]		= -1;
-	
-	UpdateRegisteredPassword(playerid);
-	FirstSaving[playerid] = true; 
-	SavePlayerData(playerid);
-	
-	TogglePlayerSpectating(playerid, 0);
-	SetCameraBehindPlayer(playerid);
-	SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
-	
-	PlayerNewUser_Set(playerid,true);
-	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
-	
-	DestroyLoginTextdraws(playerid);
-	CreateWebTD(playerid);
-	
-	SpawnPlayer(playerid);
-    return 1;
 }
 
 SetPlayerOnlineStatus(playerid, status)

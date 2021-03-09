@@ -226,11 +226,35 @@ stock Player_SetPhoneLine(playerid, v)
     PhoneLine[playerid] = v;
 }
 
-stock LoadTowerData()
+static LoadTowerData()
 {
-	mysql_pquery(g_SQL, 
+	inline OnTowerLoaded()
+	{
+		new
+			rows = cache_num_rows();
+
+		if(!rows)
+			return print("MySQL Report: No Signal Tower data exist to load.");
+		
+		for(new twslotid = 0; twslotid < rows; twslotid++) 
+		{
+			cache_get_value_name_int(twslotid, "id", TowerInfo[twslotid][twSQLID]);
+			cache_get_value_name(twslotid, "network", TowerInfo[twslotid][twNetwork], 24);
+			cache_get_value_name_float(twslotid, "posx", TowerInfo[twslotid][twPosX]);
+			cache_get_value_name_float(twslotid, "posy", TowerInfo[twslotid][twPosY]);
+			cache_get_value_name_float(twslotid, "posz", TowerInfo[twslotid][twPosZ]);
+			cache_get_value_name_float(twslotid, "posrx", TowerInfo[twslotid][twPosRX]);
+			cache_get_value_name_float(twslotid, "posry", TowerInfo[twslotid][twPosRY]);
+			cache_get_value_name_float(twslotid, "posrz", TowerInfo[twslotid][twPosRZ]);
+			cache_get_value_name_float(twslotid, "radius", TowerInfo[twslotid][twRadius]);
+			CreateTowerObject(twslotid);
+		}
+		printf("MySQL Report: Signal Towers Loaded. [%d/%d]", rows, MAX_TOWERS);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL, 
+		using inline OnTowerLoaded,
 		va_fquery(g_SQL, "SELECT * FROM signaltowers WHERE 1"), 
-		"OnTowerLoaded", 
 		""
 	);
 	return 1;
@@ -238,14 +262,28 @@ stock LoadTowerData()
 
 stock LoadPlayerContacts(playerid)
 {
-	mysql_pquery(g_SQL, 
+	inline OnPlayerContactsLoad()
+	{
+		new 
+			rows = cache_num_rows();
+		if(!rows)
+			return 1;
+		
+		for(new i = 0; i < rows; i++)
+		{
+			cache_get_value_name(i, "title",  PlayerContactName[playerid][i], MAX_CONTACT_LEN);
+			cache_get_value_name_int(i, "number", PlayerContactNumber[playerid][i]);
+			Iter_Add(MobileContacts[playerid], i);
+		}
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,
+		using inline OnPlayerContactsLoad,
 		va_fquery(g_SQL, "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT %d", 
 			PlayerInfo[playerid][pSQLID],
 			MAX_MOBILE_CONTACTS
 		), 
-		"OnPlayerContactsLoad", 
-		"i", 
-		playerid
+		""
 	);
 	return 1;
 }
@@ -266,26 +304,26 @@ stock SavePlayerContact(playerid, slotid)
 	return 1;
 }
 
-stock InsertMobileContact(playerid, slotid)
+static InsertMobileContact(playerid, slotid)
 {
-	mysql_pquery(g_SQL,
-		va_fquery(g_SQL, "INSERT INTO player_mobile_contacts(player_id, title, number) VALUES ('%d', '%e', '%d')",
+	inline OnMobileContactInsert()
+	{
+		PlayerContactSQL[playerid][slotid] = cache_insert_id();
+		Iter_Add(MobileContacts[playerid], slotid);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,
+		using inline OnMobileContactInsert,
+		va_fquery(g_SQL, 
+			"INSERT INTO player_mobile_contacts(player_id, title, number) VALUES ('%d', '%e', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerContactName[playerid][slotid],
 			PlayerContactNumber[playerid][slotid]
 		),
-		"OnMobileContactInsert",
 		"ii",
 		playerid,
 		slotid
 	);
-	return 1;
-}
-
-Public: OnMobileContactInsert(playerid, slotid)
-{
-	PlayerContactSQL[playerid][slotid] = cache_insert_id();
-	Iter_Add(MobileContacts[playerid], slotid);
 	return 1;
 }
 
@@ -524,7 +562,13 @@ public GetFreeTowerID()
 
 stock CreateTower(towerid)
 {
-	mysql_pquery(g_SQL, 
+	inline OnTowerCreated()
+	{
+		TowerInfo[towerid][twSQLID] = cache_insert_id();
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL, 
+		using inline OnTowerCreated,
 		va_fquery(g_SQL, 
 			"INSERT INTO signaltowers (network,posx,posy,posz,posrx,posry,posrz,radius) \n\
 				VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",
@@ -536,8 +580,7 @@ stock CreateTower(towerid)
 			TowerInfo[towerid][twPosRY],
 			TowerInfo[towerid][twPosRZ],
 			TowerInfo[towerid][twRadius]
-		), 
-		"OnTowerCreated", 
+		),  
 		"i", 
 		towerid
 	);
@@ -3652,55 +3695,6 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	##    ## ##     ## ##       ##       ##     ## ##     ## ##    ## ##   ##  ##    ##
 	 ######  ##     ## ######## ######## ########  ##     ##  ######  ##    ##  ######
 */
-forward OnTowerLoaded();
-public OnTowerLoaded()
-{
-	new
-		rows = cache_num_rows();
-
-	if(!rows)
-		return print("MySQL Report: No Signal Tower data exist to load.");
-	
-	for(new twslotid = 0; twslotid < rows; twslotid++) 
-	{
-		cache_get_value_name_int(twslotid, "id", TowerInfo[twslotid][twSQLID]);
-		cache_get_value_name(twslotid, "network", TowerInfo[twslotid][twNetwork], 24);
-		cache_get_value_name_float(twslotid, "posx", TowerInfo[twslotid][twPosX]);
-		cache_get_value_name_float(twslotid, "posy", TowerInfo[twslotid][twPosY]);
-		cache_get_value_name_float(twslotid, "posz", TowerInfo[twslotid][twPosZ]);
-		cache_get_value_name_float(twslotid, "posrx", TowerInfo[twslotid][twPosRX]);
-		cache_get_value_name_float(twslotid, "posry", TowerInfo[twslotid][twPosRY]);
-		cache_get_value_name_float(twslotid, "posrz", TowerInfo[twslotid][twPosRZ]);
-		cache_get_value_name_float(twslotid, "radius", TowerInfo[twslotid][twRadius]);
-		CreateTowerObject(twslotid);
-	}
-	printf("MySQL Report: Signal Towers Loaded. [%d/%d]", rows, MAX_TOWERS);
-	return 1;
-}
-
-forward OnTowerCreated(towerid);
-public OnTowerCreated(towerid)
-{
-	TowerInfo[towerid][twSQLID] = cache_insert_id();
-	return 1;
-}
-
-forward OnPlayerContactsLoad(playerid);
-public OnPlayerContactsLoad(playerid)
-{
-	new 
-		rows = cache_num_rows();
-	if(!rows)
-		return 1;
-	
-	for(new i = 0; i < rows; i++)
-	{
-	    cache_get_value_name(i, "title",  PlayerContactName[playerid][i], MAX_CONTACT_LEN);
-		cache_get_value_name_int(i, "number", PlayerContactNumber[playerid][i]);
-		Iter_Add(MobileContacts[playerid], i);
-	}
-	return 1;
-}
 
 timer MobileRinging[15000](playerid)
 {

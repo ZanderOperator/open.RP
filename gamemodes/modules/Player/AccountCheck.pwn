@@ -284,7 +284,7 @@ CheckAccountsForInactivity()
 	{
 		MySQL_PQueryInline(g_SQL,  
 			using inline OnInactiveAccsLoad, 
-			va_fquery(g_SQL,  
+			va_fquery(g_SQL,
 				"SELECT \n\
 					accounts.sqlid, accounts.name, accounts.lastloginstamp, \n\
 					player_vip_status.vipRank, \n\

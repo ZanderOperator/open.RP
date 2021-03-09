@@ -741,31 +741,28 @@ hook function LoadPlayerStats(playerid)
 
 stock InsertObjectSlot(playerid, slot)
 {
-	if(PlayerObject[playerid][slot][poSQLID] == -1)
+	if(PlayerObject[playerid][slot][poSQLID] != -1)
+		return 1;
+		
+	inline OnPlayerObjectInsert()
 	{
-		mysql_pquery(g_SQL, 
-			va_fquery(g_SQL, 
-				"INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
-				PlayerInfo[playerid][pSQLID],
-				PlayerObject[playerid][slot][poModelid],
-				PlayerObject[playerid][slot][poPlaced],
-				PlayerObject[playerid][slot][poBoneId]
-			), 
-			"OnPlayerObjectInsert", 
-			"ii", 
-			playerid, 
-			slot
-		);
+		PlayerObject[playerid][slot][poSQLID] = cache_insert_id();
+		SaveObjectSlot(playerid, slot);
 		return 1;
 	}
-	return 1;
-}
-
-forward OnPlayerObjectInsert(playerid, slot);
-public OnPlayerObjectInsert(playerid, slot)
-{
-	PlayerObject[playerid][slot][poSQLID] = cache_insert_id();
-	SaveObjectSlot(playerid, slot);
+	MySQL_PQueryInline(g_SQL,
+		using inline OnPlayerObjectInsert,
+		va_fquery(g_SQL, 
+			"INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
+			PlayerInfo[playerid][pSQLID],
+			PlayerObject[playerid][slot][poModelid],
+			PlayerObject[playerid][slot][poPlaced],
+			PlayerObject[playerid][slot][poBoneId]
+		), 
+		"ii", 
+		playerid, 
+		slot
+	);
 	return 1;
 }
 

@@ -36,6 +36,7 @@ stock ListBestTemporaryEXP(playerid)
 				points,
 				playername[MAX_PLAYER_NAME], 
 				motd[80];
+
 			for( new i = 0; i < rows; i++) 
 			{
 				// experience table
