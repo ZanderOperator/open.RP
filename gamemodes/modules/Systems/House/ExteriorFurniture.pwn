@@ -209,8 +209,8 @@ static ExteriorMisc[][E_EXTERIOR_MISC_DATA] =
 
 stock LoadHouseExterior(houseid)
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]), 
         "OnHouseExteriorLoad", 
         "i", 
         houseid
@@ -311,8 +311,8 @@ static CreateExteriorObject(playerid)
     ExteriorInfo[houseid][heRotY][index]        = PlayerExteriorInfo[playerid][peRotY];
     ExteriorInfo[houseid][heRotZ][index]        = PlayerExteriorInfo[playerid][peRotZ];
 
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO house_exteriors(house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) \n\
                 VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
             HouseInfo[PlayerKeys[playerid][pHouseKey]][hSQLID],
@@ -348,7 +348,7 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
     ExteriorInfo[houseid][heRotY][index] = fRotY;
     ExteriorInfo[houseid][heRotZ][index] = fRotZ;
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE house_exteriors SET pos_x='%f',pos_y='%f',pos_z='%f',rot_x='%f',rot_y='%f',rot_z='%f' WHERE id = '%d'",
         ExteriorInfo[houseid][hePosX][index],
         ExteriorInfo[houseid][hePosY][index],
@@ -438,7 +438,7 @@ static stock DeleteExteriorObject(houseid, index, bool:iter_clear = false)
         ExteriorInfo[houseid][heObjectId][index] = INVALID_OBJECT_ID;
     }
 
-    mysql_fquery(g_SQL, "DELETE FROM house_exteriors WHERE id = '%d'", ExteriorInfo[houseid][heSQLID][index]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM house_exteriors WHERE id = '%d'", ExteriorInfo[houseid][heSQLID][index]);
 
     ExteriorInfo[houseid][heSQLID][index]       = -1;
     ExteriorInfo[houseid][heHouseId][index]     = 0;

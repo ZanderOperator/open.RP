@@ -1001,7 +1001,7 @@ LoadPlayerFitness(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_fitness(sqlid, muscle, gymtimes, gymcounter, fightstyle) \n\
 					VALUES('%d', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -1014,9 +1014,9 @@ LoadPlayerFitness(playerid)
 		cache_get_value_name_int(0,	"fightstyle"	, PlayerGym[playerid][pFightStyle]);
 		return 1;
 	} 
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
 		using inline LoadingPlayerFitness, 
-        va_fquery(g_SQL, "SELECT * FROM player_fitness WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_fitness WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
    );
     return 1;
@@ -1030,7 +1030,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerFitness(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_fitness SET muscle = '%d', gymtimes = '%d', gymcounter = '%d', fightstyle = '%d' WHERE sqlid = '%d'",
         PlayerGym[playerid][pMuscle],
         PlayerGym[playerid][pGymTimes],

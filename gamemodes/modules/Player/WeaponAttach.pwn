@@ -124,7 +124,7 @@ stock RefreshPlayerWeaponSettings(playerid, weaponid)
 {
 	new index = GetWeaponObjectEnum(weaponid);
 
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE weaponsettings SET WeaponID = '%d', PosX = '%f', PosY = '%f', PosZ = '%f',\n\
 			RotX = '%f', RotY = '%f', RotZ = '%f' WHERE id = '%d'",
 		weaponid,
@@ -144,8 +144,8 @@ stock SavePlayerWeaponSettings(playerid, weaponid)
 	new index = GetWeaponObjectEnum(weaponid);
 	if(WeaponSettings[playerid][index][wsSQLID] == -1)
 	{
-        mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
+        mysql_tquery(SQL_Handle(), 
+			va_fquery(SQL_Handle(), "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
 				PlayerInfo[playerid][pSQLID], 
 				weaponid, 
 				WeaponSettings[playerid][index][Bone]
@@ -171,8 +171,8 @@ Public:OnWeaponSettingsInsert(playerid, weaponid)
 stock LoadPlayerWeaponSettings(playerid)
 {
 	
-    mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]),
+    mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]),
 		"OnWeaponSettingsLoaded", 
 		"i", 
 		playerid

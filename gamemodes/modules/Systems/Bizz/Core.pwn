@@ -292,8 +292,8 @@ stock IsAt247(playerid)
 stock LoadBizzes()
 {
     Iter_Init(Business);
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM bizzes WHERE 1"), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM bizzes WHERE 1"), 
         "OnServerBizzesLoad", 
         ""
    );
@@ -357,8 +357,8 @@ stock LoadBiznisProducts(bizz_id)
     if(!Iter_Contains(Business, bizz_id))
         return 0;
 
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]), 
         "OnServerBiznisProductsLoad", 
         "i", 
         bizz_id
@@ -371,8 +371,8 @@ stock LoadBiznisVips(bizz_id)
     if(!Iter_Contains(Business, bizz_id))
         return 1;
 
-    mysql_pquery(g_SQL,
-        va_fquery(g_SQL, "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
+    mysql_pquery(SQL_Handle(),
+        va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
         "OnServerVipsLoad",
         "i",
         bizz_id
@@ -573,7 +573,7 @@ UpdateBizzFurnitureSlots(playerid)
         if(PlayerInfo[playerid][pSQLID] == BizzInfo[biznisid][bOwnerID])
         {
             BizzInfo[biznisid][bFurSlots] = GetPlayerBizzFurSlots(playerid);
-            mysql_fquery(g_SQL, "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
+            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
                 BizzInfo[biznisid][bFurSlots], 
                 BizzInfo[biznisid][bSQLID]
            );
@@ -601,7 +601,7 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
         price -= CreditInfo[playerid][cAmount];
     PlayerToBudgetMoney(playerid, price);
 
-    mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '%d', till = '%d' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE bizzes SET ownerid = '%d', till = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         BizzInfo[bizz][bTill],
         BizzInfo[bizz][bSQLID]
@@ -760,7 +760,7 @@ static stock RemoveStoreArticle(bizz, article)
 
     if(article < 0 || article >= MAX_BIZZ_ARTICLES) return 0;
 
-    mysql_fquery(g_SQL, "DELETE FROM server_biznis_products WHERE biznis_id = '%d' AND id = '%d' AND type='%d'",
+    mysql_fquery(SQL_Handle(), "DELETE FROM server_biznis_products WHERE biznis_id = '%d' AND id = '%d' AND type='%d'",
         BizzInfo[bizz][bSQLID],
         BiznisProducts[bizz][bpSQLID][article],
         BiznisProducts[bizz][bpType][article]
@@ -801,8 +801,8 @@ static stock SetStoreProductOnSale(bizz, product, price)
     BiznisProducts[bizz][bpPrice][id]  = price;
     BiznisProducts[bizz][bpAmount][id] = 100;
 
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "INSERT INTO server_bizz_products(biznis_id, type, price, amount) \n\
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "INSERT INTO server_bizz_products(biznis_id, type, price, amount) \n\
             VALUES ('%d', '%d', '%d', '%d')",
             BizzInfo[bizz][bSQLID],
             BiznisProducts[bizz][bpType][id],
@@ -822,7 +822,7 @@ static stock UpdateBizzProduct(bizz, productid)
     if(!Iter_Contains(Business, bizz)) 
         return 1;
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE server_biznis_products SET type = '%d', price = '%d', amount = '%d' WHERE id = '%d'",
         BiznisProducts[bizz][bpType][productid],
         BiznisProducts[bizz][bpPrice][productid],
@@ -980,8 +980,8 @@ stock InsertNewBizz(playerid, bizz)
     if(!Bizz_Exists(bizz)) 
         return 0;
 
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO bizzes(id, message, canenter,entrancex, entrancey, entrancez,\n\
             levelneeded, buyprice, type, fur_slots) VALUES (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
             BizzInfo[bizz][bMessage],
@@ -1023,7 +1023,7 @@ Public:OnBizzInsertQuery(playerid, bizz)
 stock DeleteBiznis(bizz)
 {
     if(!Iter_Contains(Business, bizz)) return 1;
-    mysql_fquery(g_SQL, "DELETE FROM bizzes WHERE id = '%d'", BizzInfo[bizz][bSQLID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM bizzes WHERE id = '%d'", BizzInfo[bizz][bSQLID]);
     ResetBizzInfo(bizz);
     Iter_Remove(Business, bizz);
     return 1;
@@ -1380,7 +1380,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1428,7 +1428,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1502,7 +1502,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked= '%d' WHERE id= '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET locked= '%d' WHERE id= '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1538,7 +1538,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1608,7 +1608,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1656,7 +1656,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1690,7 +1690,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1738,7 +1738,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
                            );
@@ -1827,7 +1827,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new
                 bizz = PlayerKeys[playerid][pBizzKey];
 
-            mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '%d' WHERE id = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET ownerid = '%d' WHERE id = '%d'",
                 PlayerInfo[playerid][pSQLID],
                 BizzInfo[bizz][bSQLID]
            );
@@ -2041,7 +2041,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             format(BizzInfo[bouse][bMessage], 16, inputtext);
             va_SendClientMessage(playerid, COLOR_RED, "[!]  Ime biznisa promjenjeno u %s.", BizzInfo[bouse][bMessage]);
 
-            mysql_fquery(g_SQL, "UPDATE bizzes SET message = '%e' WHERE id = '%d'", 
+            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET message = '%e' WHERE id = '%d'", 
                 BizzInfo[bouse][bMessage], 
                 BizzInfo[bouse][bSQLID]
            );
@@ -2139,7 +2139,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     {
                         PlayerMobile[playerid][pMobileCost] += 20;
 
-                        mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+                        mysql_fquery(SQL_Handle(), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
                             PlayerMobile[playerid][pMobileCost],
                             PlayerInfo[playerid][pSQLID]
                        );
@@ -2160,7 +2160,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         if(PlayerRadio[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
                         PlayerRadio[playerid][pHasRadio] = 1;
 
-                        mysql_fquery(g_SQL, "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
+                        mysql_fquery(SQL_Handle(), "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
                             PlayerRadio[playerid][pHasRadio],
                             PlayerInfo[playerid][pSQLID]
                        );
@@ -2295,7 +2295,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             BizzInfo[bouse][bEntranceCost] = value;
             SendClientMessage(playerid, COLOR_RED, "[!]  Postavili ste novu cijenu ulaza!");
 
-            mysql_fquery(g_SQL, "UPDATE bizzes SET entrancecost = '%d' WHERE id = '%d'", 
+            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET entrancecost = '%d' WHERE id = '%d'", 
                 BizzInfo[bouse][bEntranceCost], 
                 BizzInfo[bouse][bSQLID]
            );
@@ -3026,7 +3026,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     SendClientMessage(playerid, COLOR_RED, "[!]  Kupljen bon za mobitel! [25$]");
 
-                    mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+                    mysql_fquery(SQL_Handle(), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
                         PlayerMobile[playerid][pMobileCost],
                         PlayerInfo[playerid][pSQLID]
                    );
@@ -3041,7 +3041,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerRadio[playerid][pHasRadio] = 1;
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupljen radio [1500$]");
 
-                    mysql_fquery(g_SQL, "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
                         PlayerRadio[playerid][pHasRadio],
                         PlayerInfo[playerid][pSQLID]
                    );
@@ -3092,7 +3092,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             BizzInfo[bouse][bPriceProd] = strval(inputtext);
             SendClientMessage(playerid, COLOR_RED, "Uspjesno ste promjenili cijene produkta.");
 
-            mysql_fquery(g_SQL, "UPDATE bizzes SET priceprod = '%d' WHERE id = '%d'", 
+            mysql_fquery(SQL_Handle(), "UPDATE bizzes SET priceprod = '%d' WHERE id = '%d'", 
                 BizzInfo[bouse][bPriceProd], 
                 BizzInfo[bouse][bSQLID]
            );
@@ -3165,7 +3165,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             ApplyAnimationEx(playerid, "CLOTHES", "CLO_Pose_Legs", 4.1, 0, 0, 0, 0, 0, 1, 0);
 
-            mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'",
                 PlayerAppearance[playerid][pSkin],
                 PlayerInfo[playerid][pSQLID]
            );
@@ -3233,7 +3233,7 @@ CMD:createvip(playerid, params[])
             if(IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
            
-            mysql_fquery(g_SQL, "DELETE FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz][bSQLID]);           
+            mysql_fquery(SQL_Handle(), "DELETE FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz][bSQLID]);           
             return 1;
         }
         case 1:
@@ -3372,7 +3372,7 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
     }
-    mysql_fquery_ex(g_SQL, 
+    mysql_fquery_ex(SQL_Handle(), 
         "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\
             VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
         BizzInfo[bizz][bSQLID],
@@ -3400,7 +3400,7 @@ CMD:setfuelprice(playerid, params[])
 
     BizzInfo[bizz][bGasPrice] = fuelprice;
 
-    mysql_fquery(g_SQL, "UPDATE bizzes SET gasprice = '%d' WHERE id = '%d'", fuelprice, BizzInfo[bizz][bSQLID]);
+    mysql_fquery(SQL_Handle(), "UPDATE bizzes SET gasprice = '%d' WHERE id = '%d'", fuelprice, BizzInfo[bizz][bSQLID]);
     return 1;
 }
 
@@ -3689,7 +3689,7 @@ CMD:bizint(playerid, params[])
     BizzInfo[bizz][bVirtualWorld] = BizzInfo[bizz][bInterior] + BizzInfo[bizz][bSQLID];
     BizzInfo[bizz][bCanEnter] = 1;
 
-    mysql_fquery(g_SQL, "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f',\n\
+    mysql_fquery(SQL_Handle(), "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f',\n\
         interior = '%d', virtualworld = '%d', canenter = '%d' WHERE id = '%d'",
         BizzInfo[bizz][bExitX],
         BizzInfo[bizz][bExitY],
@@ -3725,7 +3725,7 @@ CMD:custombizint(playerid, params[])
     if(!BizzInfo[bizz][bCanEnter])
         BizzInfo[bizz][bCanEnter] = 1;
 
-    mysql_fquery(g_SQL, "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f',\n\ 
+    mysql_fquery(SQL_Handle(), "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f',\n\ 
         interior = '%d', virtualworld = '%d', canenter = '%d' WHERE id = '%d'",
         BizzInfo[bizz][bExitX],
         BizzInfo[bizz][bExitY],
@@ -4038,7 +4038,7 @@ CMD:bizentrance(playerid, params[])
    );
     ABroadCast(COLOR_LIGHTRED, string, 4);
 
-    mysql_fquery(g_SQL, "UPDATE bizzes SET entrancex = '%f', entrancey = '%f', entrancez = '%f' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE bizzes SET entrancex = '%f', entrancey = '%f', entrancez = '%f' WHERE id = '%d'",
         X,
         Y,
         Z,

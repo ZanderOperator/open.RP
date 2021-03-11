@@ -325,8 +325,8 @@ stock CreateDeathInfos(playerid, situation = 0)
 }
 stock LoadPlayerDeath(playerid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]),
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]),
 		"LoadingPlayerDeaths", 
 		"i", 
 		playerid
@@ -346,7 +346,7 @@ public LoadingPlayerDeaths(playerid)
 	cache_get_value_name_int(0, "interior", PlayerDeath[playerid][pDeathInt]);
 	cache_get_value_name_int(0, "viwo", PlayerDeath[playerid][pDeathVW]);
 
-	mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	return 1;
 }
 
@@ -456,7 +456,7 @@ timer StartDeathCount[1000](playerid)
             ResetPlayerWounded(playerid);
 			SetPlayerDrunkLevel(playerid, 0);
 			
-			mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);			
+			mysql_fquery(SQL_Handle(), "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);			
 			SetPlayerHealth(playerid, 0);
 		}
 	}

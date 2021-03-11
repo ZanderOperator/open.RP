@@ -10,7 +10,7 @@ timer SetPlayerCrash[6000](playerid)
 	{
 		if(PlayerJail[playerid][pJailed])
 		{
-			mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerCrash[playerid][pCrashId]);
+			mysql_fquery(SQL_Handle(), "DELETE FROM player_crashes WHERE id = '%d'", PlayerCrash[playerid][pCrashId]);
 			ResetPlayerCrash(playerid);
 			SafeSpawned[playerid] = true;
 			return 1;
@@ -34,7 +34,7 @@ timer SetPlayerCrash[6000](playerid)
 			SetPlayerHealth(playerid, PlayerCrash[playerid][pCrashHealth]);
 
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vraceni na prijasnju poziciju.");
-		mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerCrash[playerid][pCrashId]);
+		mysql_fquery(SQL_Handle(), "DELETE FROM player_crashes WHERE id = '%d'", PlayerCrash[playerid][pCrashId]);
 		ResetPlayerCrash(playerid);
 	}
 	if(PlayerInfo[playerid][pMustRead] == true)
@@ -86,8 +86,8 @@ FinalPlayerCheck(playerid)
 
 static LoadPlayerCrashes(playerid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_crashes WHERE player_id = '%d'", 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_crashes WHERE player_id = '%d'", 
 			PlayerInfo[playerid][pSQLID]), 
 		"LoadingPlayerCrashes", 
 		"i", 
@@ -139,7 +139,7 @@ CheckPlayerCrash(playerid, reason)
                 PlayerCrash[playerid][pCrashZ]
            );
 
-			mysql_fquery_ex(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,\n\
+			mysql_fquery_ex(SQL_Handle(), "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,\n\
                 interior,viwo,armor,health,skin,time) \n\
                 VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
 				PlayerInfo[playerid][pSQLID],

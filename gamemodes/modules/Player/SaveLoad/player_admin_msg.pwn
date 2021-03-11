@@ -6,7 +6,7 @@ LoadPlayerAdminMessage(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_admin_msg(sqlid, AdminMessage, AdminMessageBy, AdmMessageConfirm) \n\
 					VALUES('%d', '', '', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -18,9 +18,9 @@ LoadPlayerAdminMessage(playerid)
 		cache_get_value_name_int(0, "AdmMessageConfirm", PlayerAdminMessage[playerid][pAdmMsgConfirm]);
 		return 1;
 	}
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
 		using inline LoadingPlayerAdminMessage, 
-        va_fquery(g_SQL, 
+        va_fquery(SQL_Handle(), 
 			"SELECT * FROM player_admin_msg WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pSQLID]
 		),
@@ -37,7 +37,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerAdminMessage(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '%d' \n\
             WHERE sqlid = '%d'",
         PlayerAdminMessage[playerid][pAdminMsg],
@@ -66,7 +66,7 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     if(SafeSpawned[playerid])
     {
-        mysql_fquery(g_SQL, "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
+        mysql_fquery(SQL_Handle(), "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
             WHERE sqlid = '%d'", 
             PlayerInfo[playerid][pSQLID]
        );
@@ -109,7 +109,7 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 			return 1;
 		}
 	}	
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
 		reason, 
 		GetName(playerid, true), 
@@ -122,7 +122,7 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 
 SendServerMessage(sqlid, const reason[])
 {
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', \n\
 			AdmMessageConfirm = '0' WHERE sqlid = '%d'",
 		reason,

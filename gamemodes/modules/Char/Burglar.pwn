@@ -380,7 +380,7 @@ static PickPocketTargetPlayer(playerid, type)
 				PlayerMobile[targetid][pMobileModel]		= 0;
 				PlayerMobile[targetid][pMobileCost]			= 0;
 				
-				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
+				mysql_fquery(SQL_Handle(), "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 					PlayerInfo[targetid][pSQLID]
 				);
 				ResetMobileContacts(targetid);
@@ -417,7 +417,7 @@ static PickPocketTargetPlayer(playerid, type)
 			{
 				PlayerMobile[targetid][pCryptoNumber]		= 0;
 				
-				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
+				mysql_fquery(SQL_Handle(), "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 					PlayerInfo[targetid][pSQLID]
 				);
 

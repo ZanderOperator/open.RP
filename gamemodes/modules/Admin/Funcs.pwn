@@ -198,7 +198,7 @@ IsValidInactivity(sqlid)
 		endstamp;
 
 	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, 
+	result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), 
 				"SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d'", sqlid)
 			);
 
@@ -211,7 +211,7 @@ IsValidInactivity(sqlid)
 			value = true;
 		else // Prijavljena neaktivnost je istekla
 		{
-			mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
+			mysql_fquery(SQL_Handle(), "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
 			value = false;
 		}
 	}
@@ -251,9 +251,9 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 			va_SendClientMessage(playerid, COLOR_WHITE,"[slot %d] %s [MySQL ID: %d].", i+1, vehName, tmpCarMysqlID);
 		}
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnLoadPlayerVehicles,
-		va_fquery(g_SQL, "SELECT id, modelid FROM cocars WHERE ownerid = '%d' LIMIT %d", 
+		va_fquery(SQL_Handle(), "SELECT id, modelid FROM cocars WHERE ownerid = '%d' LIMIT %d", 
 			playersqlid,
 			MAX_PLAYER_CARS
 		),
@@ -503,7 +503,7 @@ Public: OnHelperPINHashed(playerid, level)
 
 	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d'", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
@@ -520,7 +520,7 @@ public OnAdminPINHashed(playerid, level)
 
 	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d'", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
@@ -536,7 +536,7 @@ Public: OnTeamPINHashed(playerid)
 	
 	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d'", 
 		saltedPin, 
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -1006,7 +1006,7 @@ public OfflineJailPlayer(playerid, jailtime)
 	{
 		new sqlid;
 		cache_get_value_name_int(0,  "sqlid", sqlid);
-  		mysql_fquery(g_SQL, "UPDATE player_jail SET jailed = '1', jailtime = '%d' WHERE sqlid = '%d'", 
+  		mysql_fquery(SQL_Handle(), "UPDATE player_jail SET jailed = '1', jailtime = '%d' WHERE sqlid = '%d'", 
 		  	jailtime, 
 			sqlid
 		);
@@ -1060,9 +1060,9 @@ stock CheckInactivePlayer(playerid, sql)
 		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Checking player inactivity:", dialogstring, "Close", "");
 		return 1;
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnInactivePlayerLoad,
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"SELECT \n\
 				accounts.name, \n\
 				inactive_accounts.* \n\
@@ -1132,9 +1132,9 @@ stock ListInactivePlayers(playerid)
 		}
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "There are currently no reported inactivity in the database!");
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnInactiveAccountsList,
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"SELECT \n\
 				inactive_accounts*, \n\
 				accounts.name \n\
@@ -1188,7 +1188,7 @@ public CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const rea
 	cache_get_value_name_int(0, "jailed", prisoned);
     if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "That player's already in area/prison!");
 	
-	mysql_fquery(g_SQL, "UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", minutes, sqlid);
+	mysql_fquery(SQL_Handle(), "UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", minutes, sqlid);
 		
 	va_SendClientMessage(playerid,COLOR_RED, "[!] You have successfully placed the offline player %s in the arena for %d minutes.",targetname, minutes);
 	return 1;
@@ -1216,12 +1216,12 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
 		#endif
-		mysql_fquery(g_SQL, "UPDATE accounts SET playaWarns = '0' WHERE name = '%e'", targetname);
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaWarns = '0' WHERE name = '%e'", targetname);
     } 
 	else 
 	{
 		va_SendClientMessage(playerid,COLOR_RED, "[!] You have successfully warned player %s and that's his %d warn!",targetname,warns);
-        mysql_fquery(g_SQL, "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
+        mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
     }
 	return 1;
 }
@@ -1260,7 +1260,7 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 		GetPlayerFacingAngle(playerid, angle);
 	}
 	
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', viwo = '0' WHERE ownerid = '%d'",
 		x,
 		y,
@@ -1327,8 +1327,8 @@ public CheckPlayerData(playerid, const name[])
 		new sqlid;
 		cache_get_value_name_int(0, "sqlid", sqlid);
 		
-		mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "SELECT * FROM player_connects WHERE player_id = '%d' ORDER BY time DESC LIMIT 1", sqlid), 
+		mysql_tquery(SQL_Handle(), 
+			va_fquery(SQL_Handle(), "SELECT * FROM player_connects WHERE player_id = '%d' ORDER BY time DESC LIMIT 1", sqlid), 
 			"CheckLastLogin", 
 			"is", 
 			playerid, 
@@ -1439,7 +1439,7 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     if(SafeSpawned[playerid])
     {
-        mysql_fquery(g_SQL, "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
+        mysql_fquery(SQL_Handle(), "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
             WHERE sqlid = '%d'", 
             PlayerInfo[playerid][pSQLID]
        );

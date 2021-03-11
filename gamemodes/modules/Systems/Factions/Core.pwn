@@ -113,7 +113,7 @@ stock NotFDSkin(playerid)
 
 stock DeleteFaction(orgid)
 {
-    mysql_fquery(g_SQL, "DELETE FROM server_factions WHERE id = '%d'", FactionInfo[orgid][fID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM server_factions WHERE id = '%d'", FactionInfo[orgid][fID]);
     
     FactionInfo[orgid][fUsed] = 0;
     FactionInfo[orgid][fType] = 0;
@@ -130,8 +130,8 @@ stock DeleteFaction(orgid)
 
 LoadPlayerFaction(playerid)
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM player_faction WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM player_faction WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "LoadingPlayerFaction", 
         "i", 
         playerid
@@ -143,7 +143,7 @@ Public: LoadingPlayerFaction(playerid)
 {
     if(!cache_num_rows())
     {
-        mysql_fquery_ex(g_SQL, 
+        mysql_fquery_ex(SQL_Handle(), 
             "INSERT INTO player_faction(sqlid, facLeadId, facMemId, facRank) \n\
                 VALUES('%d', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
@@ -164,7 +164,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerFaction(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
         PlayerFaction[playerid][pLeader],
         PlayerFaction[playerid][pMember],
@@ -182,8 +182,8 @@ hook function SavePlayerStats(playerid)
 
 stock LoadFactions()
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_factions WHERE 1"), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_factions WHERE 1"), 
         "OnFactionLoaded",
         ""
    );
@@ -192,8 +192,8 @@ stock LoadFactions()
 
 stock LoadFactionPermissions(factionid)
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_factions_permissions WHERE id = '%d'", FactionInfo[factionid][fID]), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_factions_permissions WHERE id = '%d'", FactionInfo[factionid][fID]), 
         "OnFactionPermissionsLoaded", 
         "i", 
         factionid
@@ -341,8 +341,8 @@ stock SaveFaction(orgid)
     if(isnull(FactionInfo[orgid][fRankName15]))
         format(FactionInfo[orgid][fRankName15], 24, "None");
 
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO server_factions (id, used,name,type,rank1,rank2,rank3,rank4,rank5,rank6,rank7,rank8,rank9,\n\
                 rank10,rank11,rank12,rank13,rank14,rank15,ranks,factionbank) \n\
                 VALUES ('%d','%d','%e','%d','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%d','%d')",
@@ -396,7 +396,7 @@ stock ResetFaction(fid)
 
 stock RemoveLeaders(orgid)
 {
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE player_faction SET facLeadId = '0', facMemId = '0' WHERE facLeadId = '%d'",
         orgid
    );
@@ -414,7 +414,7 @@ stock RemoveLeaders(orgid)
 
 stock RemoveMembers(orgid)
 {
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE player_faction SET facMemId = '0' WHERE facMemId = '%d'",
         orgid
    );
@@ -557,7 +557,7 @@ stock PlayerToFactionMoney ( playerid, ftype, money)
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] += safemoney;
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -579,14 +579,14 @@ stock PlayerToFactionMoneyTAX ( playerid, ftype, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 					
 	
 	CityInfo[cBudget] += taxmoney;
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	foreach(new i : Faction) 								
 	{
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] += finalmoney;		
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -605,7 +605,7 @@ stock FactionToPlayerMoney ( playerid, ftype, money)
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] -= safemoney;		
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -626,14 +626,14 @@ stock FactionToPlayerMoneyTAX ( playerid, ftype, money)
 		finalmoney = safemoney - taxmoney;
 		
 	CityInfo[cBudget] += taxmoney; 	
-	mysql_fquery(g_SQL,, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(),, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	foreach(new i : Faction) 
 	{
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] -= safemoney;		
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -653,7 +653,7 @@ stock FactionToPlayerBankMoney ( playerid, ftype, money)
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] -= safemoney;		
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -661,7 +661,7 @@ stock FactionToPlayerBankMoney ( playerid, ftype, money)
 		}
 	}
 	PlayerInfo[playerid][pBank] += safemoney; 
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -673,14 +673,14 @@ stock BudgetToFactionMoney ( ftype, money)
 	new safemoney = floatround(floatabs(money));
 	
 	CityInfo[cBudget] -= safemoney;
-	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(),  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	foreach(new i : Faction)
 	{
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] += safemoney;		
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -699,7 +699,7 @@ stock FactionToBudgetMoney ( ftype, money)
 		if(FactionInfo[i][fType] == ftype)
 		{
 			FactionInfo[i][fFactionBank] -= safemoney;		
-			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 				FactionInfo[i][fFactionBank],
 				FactionInfo[i][fID]
 			);
@@ -707,7 +707,7 @@ stock FactionToBudgetMoney ( ftype, money)
 		}
 	}
 	CityInfo[cBudget] += safemoney;
-	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(),  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	return 1;
 }
 
@@ -952,17 +952,17 @@ public UninvitePlayer(playerid, const targetname[])
         return 1;
     }
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
         playerSQLID
    );
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'", 
         playerSQLID
    );
 
-    mysql_fquery(g_SQL, "DELETE FROM player_weapons WHERE player_id = '%d'", playerSQLID);
+    mysql_fquery(SQL_Handle(), "DELETE FROM player_weapons WHERE player_id = '%d'", playerSQLID);
 
     format(string, sizeof(string), "[!] Uspjesno ste izbacili igraca %s", targetname);
     SendClientMessage(playerid, COLOR_GREEN, string);
@@ -1364,7 +1364,7 @@ CMD:afaction(playerid, params[])
             case FACTION_TYPE_LAW2:   SendClientMessage(playerid, COLOR_RED, "[!] Promijenio si tip fakcije na law2!");
         }
 
-        mysql_fquery(g_SQL, "UPDATE server_factions SET type = '%d' WHERE id = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE server_factions SET type = '%d' WHERE id = '%d'",
             FactionInfo[fid][fType],
             FactionInfo[fid][fID]
        );
@@ -1381,7 +1381,7 @@ CMD:afaction(playerid, params[])
         format(FactionInfo[fid][fName],24,"%s",newname);
         va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si ime fakcije ID %d na %s.", fid+1, newname);
 
-        mysql_fquery(g_SQL, "UPDATE server_factions SET name = '%e' WHERE id = '%d'", 
+        mysql_fquery(SQL_Handle(), "UPDATE server_factions SET name = '%e' WHERE id = '%d'", 
             newname, 
             FactionInfo[fid][fID]
        );
@@ -1395,7 +1395,7 @@ CMD:afaction(playerid, params[])
         FactionInfo[fid][fRanks] = ranks;
         va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si broj rankova fakcije ID %d na %d.", fid+1, ranks);
 
-        mysql_fquery(g_SQL, "UPDATE server_factions SET ranks = '%d' WHERE id = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE server_factions SET ranks = '%d' WHERE id = '%d'",
             FactionInfo[fid][fRanks],
             FactionInfo[fid][fID]
        );
@@ -1426,7 +1426,7 @@ CMD:afaction(playerid, params[])
        );
         #endif
 
-        mysql_fquery(g_SQL, "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pLeader],
             PlayerFaction[targetid][pMember],
             PlayerFaction[targetid][pRank],
@@ -1444,7 +1444,7 @@ CMD:afaction(playerid, params[])
         if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if(PlayerFaction[targetid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije lider!");
 
-        mysql_fquery(g_SQL, "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
+        mysql_fquery(SQL_Handle(), "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
             PlayerInfo[targetid][pSQLID]
        );
 
@@ -1500,7 +1500,7 @@ CMD:afaction(playerid, params[])
         if(rankid == 14) { format(FactionInfo[fid][fRankName14],24,"%s",rankname); }
         if(rankid == 15) { format(FactionInfo[fid][fRankName15],24,"%s",rankname); }
 
-        mysql_fquery(g_SQL, "UPDATE server_factions SET rank%d = '%e' WHERE id = '%d'", 
+        mysql_fquery(SQL_Handle(), "UPDATE server_factions SET rank%d = '%e' WHERE id = '%d'", 
             rankid, 
             rankname, 
             FactionInfo[fid][fID]
@@ -1581,7 +1581,7 @@ CMD:faction(playerid, params[])
             RemovePlayerJob(targetid);
         }
 
-        mysql_fquery(g_SQL, "UPDATE player_faction SET facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE player_faction SET facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pMember],
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
@@ -1695,7 +1695,7 @@ CMD:faction(playerid, params[])
 
         va_SendClientMessage(playerid, COLOR_RED, "[!] Postavio si komandu %s na rank %d.", cmdname, rnk);
 
-        mysql_fquery(g_SQL, "UPDATE server_factions_permissions SET %e = '%d' WHERE server_factions_permissions.id = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE server_factions_permissions SET %e = '%d' WHERE server_factions_permissions.id = '%d'",
             cmdname,
             rnk,
             mmbr
@@ -1741,12 +1741,12 @@ CMD:faction(playerid, params[])
             PlayerAppearance[playerid][pTmpSkin] = 299;
         }
 
-        mysql_fquery(g_SQL, "UPDATE player_faction SET facMemId = '0', facRank = '0' WHERE sqlid = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE player_faction SET facMemId = '0', facRank = '0' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pSQLID]
        );
 
         PlayerInfo[targetid][pSpawnChange] = 0;
-        mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pSpawnChange],
             PlayerInfo[targetid][pSQLID]
        );
@@ -1791,7 +1791,7 @@ CMD:faction(playerid, params[])
        );
         #endif
 
-        mysql_fquery(g_SQL, "UPDATE player_faction SET facRank = '%d' WHERE sqlid = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE player_faction SET facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
        );
@@ -1878,8 +1878,8 @@ CMD:faction(playerid, params[])
         if(sqlid == -1)
             return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik %s ne postoji u bazi podataka.", targetname);
 
-        mysql_tquery(g_SQL, 
-            va_fquery(g_SQL, "SELECT * FROM player_faction WHERE sqlid = '%d'", sqlid), 
+        mysql_tquery(SQL_Handle(), 
+            va_fquery(SQL_Handle(), "SELECT * FROM player_faction WHERE sqlid = '%d'", sqlid), 
             "UninvitePlayer", 
             "is", 
             playerid, 
@@ -1891,8 +1891,8 @@ CMD:faction(playerid, params[])
     {
         if(!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         
-        mysql_tquery(g_SQL, 
-            va_fquery(g_SQL,  "SELECT sqlid, facRank FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
+        mysql_tquery(SQL_Handle(), 
+            va_fquery(SQL_Handle(),  "SELECT sqlid, facRank FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
                 PlayerFaction[playerid][pLeader], 
                 PlayerFaction[playerid][pLeader]
            ), 
@@ -1904,8 +1904,8 @@ CMD:faction(playerid, params[])
     }
     else if(!strcmp(option, "counts", true))
     {
-        mysql_tquery(g_SQL, 
-            va_fquery(g_SQL, 
+        mysql_tquery(SQL_Handle(), 
+            va_fquery(SQL_Handle(), 
                 "SELECT sqlid FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
                 PlayerFaction[playerid][pLeader], 
                 PlayerFaction[playerid][pLeader]
@@ -1954,7 +1954,7 @@ CMD:faction(playerid, params[])
         PlayerAppearance[targetid][pSkin] = skin;
 
         PlayerToBudgetMoney(targetid, 300);
-        mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
+        mysql_fquery(SQL_Handle(), "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
             PlayerAppearance[targetid][pSkin], 
             PlayerInfo[targetid][pSQLID]
        );
@@ -2017,7 +2017,7 @@ CMD:quitfaction(playerid, params[])
         AC_ResetPlayerWeapons(playerid);
 
     PlayerInfo[playerid][pSpawnChange] = 0;
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
    );
@@ -2394,7 +2394,7 @@ CMD:carsign(playerid, params[])
         DestroyDynamic3DTextLabel(VehicleInfo[vehicleid][vFactionText]);
         VehicleInfo[vehicleid][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vehicleid][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vehicleid, 0, -1, -1, -1, 15.0);
 
-        mysql_fquery(g_SQL, "UPDATE server_cars SET text = '%e' WHERE id = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE server_cars SET text = '%e' WHERE id = '%d'",
             text,
             VehicleInfo[vehicleid][vSQLID]
        );

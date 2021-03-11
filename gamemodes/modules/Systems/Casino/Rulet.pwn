@@ -278,7 +278,7 @@ stock PlayerToRouletteMoney(playerid, money)
 	{
 		BizzInfo[bizzid][bTill] += money;				
 
-		mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizzid][bTill],
 			BizzInfo[bizzid][bSQLID]
 		);

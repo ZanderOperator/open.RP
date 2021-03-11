@@ -1685,7 +1685,7 @@ CMD:dump(playerid, params[])
 	        format(tmpString, sizeof(tmpString), "* %s baca crypto u daljinu.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			
-			mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'", PlayerInfo[playerid][pSQLID]);
+			mysql_fquery(SQL_Handle(), "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'", PlayerInfo[playerid][pSQLID]);
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate crypto!");
 	}
@@ -2156,7 +2156,7 @@ CMD:setlook(playerid, params[])
 		
 		format( PlayerAppearance[playerid][pLook], 120, "%s", inputLook);
 		
-		mysql_fquery(g_SQL, "UPDATE player_appearance SET look = '%e' WHERE sqlid = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE player_appearance SET look = '%e' WHERE sqlid = '%d'",
 			PlayerAppearance[playerid][pLook], 
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -2344,7 +2344,7 @@ CMD:setwalk(playerid, params[])
     va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Odabrali ste stil hodanja #%d.", walkStyle);
 
 	PlayerAppearance[playerid][pWalkStyle] = walkStyle; 
-	mysql_fquery(g_SQL, "UPDATE player_appearance SET walkstyle = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE player_appearance SET walkstyle = '%d' WHERE sqlid = '%d'",
 		walkStyle,
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -2389,7 +2389,7 @@ CMD:spawnchange(playerid, params[])
 	PlayerInfo[playerid][pSpawnChange] = spawn;
 	SetPlayerSpawnInfo(playerid);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pSpawnChange],
 		PlayerInfo[playerid][pSQLID]
 	);

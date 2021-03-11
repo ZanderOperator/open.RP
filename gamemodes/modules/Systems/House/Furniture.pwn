@@ -252,7 +252,7 @@ static stock BuyBlankInterior(playerid, house)
     HouseInfo[house][hExitY] = BlankInts[interior][iPosY];
     HouseInfo[house][hExitZ] = BlankInts[interior][iPosZ];
 
-    mysql_fquery(g_SQL, "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
         HouseInfo[house][hExitX],
         HouseInfo[house][hExitY],
         HouseInfo[house][hExitZ],
@@ -322,7 +322,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 
     HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]);
 
-    mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
+    mysql_fquery(SQL_Handle(), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
         HouseInfo[houseid][hSQLID]
    );
@@ -340,7 +340,7 @@ SetPlayerPremiumFurniture(playerid, houseid)
     HouseInfo[houseid][hFurSlots] = (FURNITURE_PREMIUM_OBJECTS);
     PlayerInfo[playerid][pExtraFurniture] = 1;
 
-    mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
+    mysql_fquery(SQL_Handle(), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
         HouseInfo[houseid][hSQLID]
    );
@@ -422,8 +422,8 @@ public OnFurnitureObjectsLoad(houseid)
 
 static stock InsertFurnitureObject(houseid, index)
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z,\n\
                 texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) \n\
                 VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d','%d',\n\
@@ -469,8 +469,8 @@ stock LoadHouseFurnitureObjects(houseid)
     if(!House_Exists(houseid))
         return 1;
    
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
         "OnFurnitureObjectsLoad", 
         "i", 
         houseid
@@ -1112,7 +1112,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     HouseInfo[houseid][hFurRotY][index]     = ry;
     HouseInfo[houseid][hFurRotZ][index]     = rz;
 
-    mysql_fquery(g_SQL,
+    mysql_fquery(SQL_Handle(),
         "UPDATE furniture SET pos_x = '%f',pos_y = '%f',pos_z = '%f',rot_x = '%f',rot_y = '%f',rot_z = '%f' WHERE sqlid = '%d'",
         x,
         y,
@@ -1161,7 +1161,7 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
     PlayerEditTxtIndex[playerid]                = -1;
     HouseInfo[houseid][hFurTxtId][slotid][slot] = index;
 
-    mysql_fquery(g_SQL, "UPDATE furniture SET texture_%d = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE furniture SET texture_%d = '%d' WHERE sqlid = '%d'",
         (slot+1),
         HouseInfo[houseid][hFurTxtId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
@@ -1191,7 +1191,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
     PlayerEditTxtIndex[playerid]                = -1;
     HouseInfo[houseid][hFurColId][slotid][slot] = index;
 
-    mysql_fquery(g_SQL, "UPDATE furniture SET color_%d = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE furniture SET color_%d = '%d' WHERE sqlid = '%d'",
         (slot + 1),
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
@@ -1204,7 +1204,7 @@ static stock DeleteFurnitureObject(houseid, playerid, index)
     if(houseid == INVALID_HOUSE_ID) return 0;
     // TODO: houseid, index bounds check
 
-    mysql_fquery(g_SQL, "DELETE FROM furniture WHERE sqlid = '%d'", HouseInfo[houseid][hFurSQL][index]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM furniture WHERE sqlid = '%d'", HouseInfo[houseid][hFurSQL][index]);
 
     va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", HouseInfo[houseid][hFurModelid][index], index);
 
@@ -1277,11 +1277,11 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
     Iter_Clear(HouseFurInt[houseid]);
 
-    mysql_pquery(g_SQL, "BEGIN");
-    mysql_fquery_ex(g_SQL, "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_pquery(g_SQL, "COMMIT");
+    mysql_pquery(SQL_Handle(), "BEGIN");
+    mysql_fquery_ex(SQL_Handle(), "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
+    mysql_pquery(SQL_Handle(), "COMMIT");
 
-    mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
+    mysql_fquery(SQL_Handle(), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
         HouseInfo[houseid][hSQLID]
    );
@@ -2502,7 +2502,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             HouseInfo[houseid][hFurTxtId][edit_index][slot] = 0;
             HouseInfo[houseid][hFurColId][edit_index][slot] = -1;
 
-            mysql_fquery(g_SQL, "UPDATE furniture SET texture_%d = '0', color_%d = '-1' WHERE sqlid = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE furniture SET texture_%d = '0', color_%d = '-1' WHERE sqlid = '%d'",
                 (slot+1),
                 (slot+1),
                 HouseInfo[houseid][hFurSQL][edit_index]

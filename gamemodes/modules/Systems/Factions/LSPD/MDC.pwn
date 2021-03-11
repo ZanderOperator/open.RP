@@ -94,7 +94,7 @@ static GetPlayerPhoneNumber(sqlid)
         number = 0,
         numberstr[12];
 
-    result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid));
+    result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid));
     cache_get_value_index_int(0, 0, number);
     cache_delete(result);
 
@@ -201,9 +201,9 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
         SelectTextDraw(playerid, 0x427AF4FF);
     }
         
-    MySQL_PQueryInline(g_SQL,  
+    MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnPlayerMDCLoad, 
-        va_fquery(g_SQL, 
+        va_fquery(SQL_Handle(), 
             "SELECT \n\
                 accounts.sqlid, accounts.sex, accounts.age \n\
                 player_jail.*, \n\
@@ -267,9 +267,9 @@ static OnPlayerArrestDataLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_PQueryInline(g_SQL,  
+    MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnArrestLoad, 
-		va_fquery(g_SQL, "SELECT * FROM jail WHERE suspect = '%e'", playername),
+		va_fquery(SQL_Handle(), "SELECT * FROM jail WHERE suspect = '%e'", playername),
 		""
 	);
     return 1;
@@ -331,9 +331,9 @@ static OnPlayerTicketsLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnTicketsLoad, 
-		va_fquery(g_SQL, "SELECT * FROM tickets WHERE reciever = '%e' LIMIT 10", playername),
+		va_fquery(SQL_Handle(), "SELECT * FROM tickets WHERE reciever = '%e' LIMIT 10", playername),
 		""
 	);
     return 1;
@@ -396,9 +396,9 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
         SelectTextDraw(playerid, 0x427AF4FF);
     }
 
-    MySQL_PQueryInline(g_SQL,  
+    MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnCoVehicleLoad, 
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
             "SELECT  modelid, numberplate, color1, color2, impounded FROM cocars\n\
                 WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT %d",
             playersqlid,
@@ -462,9 +462,9 @@ static OnPlayerAPBLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnAPBLoad, 
-		va_fquery(g_SQL,  "SELECT * FROM apb WHERE suspect = '%e'", playername),
+		va_fquery(SQL_Handle(),  "SELECT * FROM apb WHERE suspect = '%e'", playername),
 		""
 	);
     return 1;
@@ -518,9 +518,9 @@ static GetAPBList(playerid)
         }
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "[APB List]", buffer, "Close", "");
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnAPBListLoad, 
-		va_fquery(g_SQL,  "SELECT * FROM apb ORDER BY id DESC"),
+		va_fquery(SQL_Handle(),  "SELECT * FROM apb ORDER BY id DESC"),
 		""
 	);
     return 1;
@@ -574,9 +574,9 @@ static GetSuspectAPB(playerid, const playername[])
         format(tmpString, sizeof(tmpString), "[APB - %s]", playername);
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnAPBLoad, 
-		va_fquery(g_SQL,  "SELECT * FROM apb WHERE suspect = '%e'", playername),
+		va_fquery(SQL_Handle(),  "SELECT * FROM apb WHERE suspect = '%e'", playername),
 		""
 	);
     return 1;
@@ -664,9 +664,9 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         Secs
    );
 
-    mysql_pquery(g_SQL, "BEGIN");
+    mysql_pquery(SQL_Handle(), "BEGIN");
 
-    mysql_pquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
         "INSERT INTO jail (suspect, policeman, reason, jailtime, date) VALUES ('%e', '%e', '%e', '%d', '%e')",
         JailInfo[giveplayerid][jSuspectName],
         JailInfo[giveplayerid][jPoliceName],
@@ -675,20 +675,20 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         JailInfo[giveplayerid][jDate]
    );
 
-    mysql_pquery(g_SQL, "COMMIT");
+    mysql_pquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 
 static DeletePlayerMDCCrime(playerid, sqlid)
 {
-    mysql_fquery(g_SQL, "DELETE FROM jail WHERE id = '%d'", sqlid);
+    mysql_fquery(SQL_Handle(), "DELETE FROM jail WHERE id = '%d'", sqlid);
     va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali dosje #%d!", sqlid);
     return 1;
 }
 
 static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "INSERT INTO apb(suspect, description, type, pdname) VALUES ('%e','%e','%d','%e')",
         suspect,
         description,
@@ -700,7 +700,7 @@ static InsertAPBInfo(playerid, const suspect[], const description[], type)
 
 static RemoveAPBInfo(sqlid)
 {
-    mysql_fquery(g_SQL, "DELETE FROM apb WHERE id = '%d' LIMIT 1", sqlid);
+    mysql_fquery(SQL_Handle(), "DELETE FROM apb WHERE id = '%d' LIMIT 1", sqlid);
     return 1;
 }
 
@@ -761,9 +761,9 @@ static GetPlayerMDCRecord(playerid, const playername[])
         format(string, sizeof(string), "%s-DOSJE", tmpJail[jSuspectName]);
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, string, buffer, "Close", "");
     }
-    MySQL_PQueryInline(g_SQL,  
+    MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnSuspectLoad, 
-		va_fquery(g_SQL,  "SELECT * FROM jail WHERE suspect = '%e'", playername),
+		va_fquery(SQL_Handle(),  "SELECT * FROM jail WHERE suspect = '%e'", playername),
 		""
 	);
     return 1;
@@ -1314,9 +1314,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), ConvertSQLIDToName(playersql));
                 ShowPlayerDialog(playerid, DIALOG_MDC_PHONE_INFO, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Close", "");
             }
-            MySQL_TQueryInline(g_SQL,  
+            MySQL_TQueryInline(SQL_Handle(),  
                 using inline OnMobileNumberCheck, 
-                va_fquery(g_SQL, "SELECT player_id, model FROM player_phones WHERE number = '%d'", mobilenumber),
+                va_fquery(SQL_Handle(), "SELECT player_id, model FROM player_phones WHERE number = '%d'", mobilenumber),
                 ""
            );
         }

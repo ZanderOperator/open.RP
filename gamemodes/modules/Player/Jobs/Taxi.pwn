@@ -65,7 +65,7 @@ LoadPlayerTaxiStats(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_taxi(sqlid, taxiPoints, taxiVoted) \n\
 					VALUES('%d', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -76,9 +76,9 @@ LoadPlayerTaxiStats(playerid)
 		cache_get_value_name_int(0, "taxiVoted"		, TaxiInfo[playerid][pTaxiVoted]);
 		return 1;
 	}
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
 		using inline LoadingPlayerTaxiStats, 
-        va_fquery(g_SQL, "SELECT * FROM player_taxi WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
+        va_fquery(SQL_Handle(), "SELECT * FROM player_taxi WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
         "i", 
         playerid
    );
@@ -93,7 +93,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerTaxiStats(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_taxi SET taxiPoints = '%d', taxiVoted = '%d' WHERE sqlid = '%d'",
         TaxiInfo[playerid][pTaxiPoints],
         TaxiInfo[playerid][pTaxiVoted],

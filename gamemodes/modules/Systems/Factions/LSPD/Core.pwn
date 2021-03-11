@@ -2436,7 +2436,7 @@ CMD:impound(playerid, params[])
     VehicleInfo[vehicleid][vAngle]      = z_rot;
     VehicleInfo[vehicleid][vImpounded]  = 1;
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
         X,
         Y,
@@ -2470,7 +2470,7 @@ CMD:payimpound(playerid, params[])
 
     VehicleInfo[vehicleid][vImpounded]  = 0;
 
-    mysql_fquery(g_SQL, "UPDATE cocars SET impounded = '%d' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE cocars SET impounded = '%d' WHERE id = '%d'",
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
    );

@@ -817,13 +817,13 @@ stock AC_SetVehicleVelocity(vehicleid, Float:X, Float:Y, Float:Z)
 
 stock LoadServerVehicles()
 {
-	mysql_pquery(g_SQL, "SELECT * FROM server_cars WHERE 1", "OnServerVehicleLoad");
+	mysql_pquery(SQL_Handle(), "SELECT * FROM server_cars WHERE 1", "OnServerVehicleLoad");
 	return 1;
 }
 
 stock static SaveVehicle(vehicleid)
 {
-	mysql_pquery(g_SQL,
+	mysql_pquery(SQL_Handle(),
 		"UPDATE server_cars SET model = '%d', type = '%d', usage = '%d', parkX = '%f', parkY = '%f', parkZ = '%f',\n\
 			angle = '%f', color1 = '%d', color2 = '%d', respawn = '%d', sirenon = '%d', faction = '%d', job = '%d', locked = '%d',\n\
 	 		int = '%d', viwo = '%d', health = '%f', numberplate = '%e', paintjob = '%d', impounded = '%d', text = '%e',\n\
@@ -866,10 +866,10 @@ static ResetVehicleEnumerator()
 
 stock CreateNewVehicle(playerid, vehicleid)
 {
-	mysql_pquery(g_SQL, "BEGIN", "");
+	mysql_pquery(SQL_Handle(), "BEGIN", "");
 	
-	mysql_pquery(g_SQL, 
-		va_fquery(g_SQL, 
+	mysql_pquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), 
 			"INSERT INTO server_cars (model, type, usage, parkX, parkY, parkZ, angle, color1, color2, respawn,\n\
 				sirenon, faction, job, locked, int, viwo, health, numberplate, paintjob, impounded, text, travel) \n\
 				VALUES \n\
@@ -902,7 +902,7 @@ stock CreateNewVehicle(playerid, vehicleid)
 		vehicleid
 	);
 
-	mysql_pquery(g_SQL, "COMMIT", "");
+	mysql_pquery(SQL_Handle(), "COMMIT", "");
 
 	printf("Script Report: Admin %s je kreirao vehicle ID %d",
 		GetName(playerid, false),

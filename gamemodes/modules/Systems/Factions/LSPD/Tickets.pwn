@@ -58,7 +58,7 @@ bool:IsVehicleImpoundable(vehicleid)
 
 static SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {
-    mysql_fquery(g_SQL, "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
+    mysql_fquery(SQL_Handle(), "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],
         VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
    );
@@ -88,7 +88,7 @@ stock GetVehicleTicketReason(ticketsql)
         reason[MAX_TICKET_REASON_LEN],
         Cache:result;
 
-    result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT reason FROM cocars_tickets WHERE id = '%d'", ticketsql));
+    result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT reason FROM cocars_tickets WHERE id = '%d'", ticketsql));
     if(result == MYSQL_INVALID_CACHE)
         format(reason, sizeof(reason), "None");
     else
@@ -99,9 +99,9 @@ stock GetVehicleTicketReason(ticketsql)
 
 stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 {
-    mysql_tquery(g_SQL, "BEGIN");
+    mysql_tquery(SQL_Handle(), "BEGIN");
 
-    mysql_fquery_ex(g_SQL, 
+    mysql_fquery_ex(SQL_Handle(), 
         "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
         GetName(giveplayerid, false),
         GetName(playerid, false),
@@ -110,7 +110,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
         ReturnDate()
    );
 
-    mysql_tquery(g_SQL, "COMMIT");
+    mysql_tquery(SQL_Handle(), "COMMIT");
 
     va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", GetName(giveplayerid, false));
     return 1;
@@ -124,7 +124,7 @@ Public:OnVehicleTicketInsert(vehicleid, slot)
 
 stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 {
-    mysql_fquery(g_SQL, "DELETE FROM tickets WHERE id = '%d'", sqlid);
+    mysql_fquery(SQL_Handle(), "DELETE FROM tickets WHERE id = '%d'", sqlid);
 
     if(mdc_notification)
         va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);
@@ -132,8 +132,8 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 
 stock LoadVehicleTickets(vehicleid)
 {
-    mysql_tquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
+    mysql_tquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
             VehicleInfo[vehicleid][vSQLID],
             MAX_VEHICLE_TICKETS
        ), 
@@ -195,9 +195,9 @@ stock LoadPlayerTickets(playerid, const playername[])
         format(string, sizeof(string), "[%s - TICKETS]", playername);
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, string, buffer, "Close", "");
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnTicketsLoad, 
-		va_fquery(g_SQL, "SELECT * FROM tickets WHERE reciever = '%e'", playername),
+		va_fquery(SQL_Handle(), "SELECT * FROM tickets WHERE reciever = '%e'", playername),
 		""
 	);
     return 1;
@@ -281,7 +281,7 @@ CMD:ticket(playerid, params[])
             reciever[MAX_PLAYER_NAME],
             Cache:result;
 
-        result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT id, reciever, money FROM tickets WHERE id = '%d'", id));
+        result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT id, reciever, money FROM tickets WHERE id = '%d'", id));
 
         if(!cache_num_rows()) 
             return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket ID #%d doesn't exist!", id);
@@ -337,7 +337,7 @@ CMD:ticket(playerid, params[])
             FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot])
        );
 
-        mysql_fquery(g_SQL, "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
+        mysql_fquery(SQL_Handle(), "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
 
         VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]    = 0;
         VehicleInfo[vehicleid][vTickets][tmpSlot]         = 0;
@@ -410,8 +410,8 @@ CMD:giveticket(playerid, params[])
                 VehicleInfo[vehicleid][vTicketShown][t] = false;
                 VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
 
-                mysql_pquery(g_SQL, 
-                    va_fquery(g_SQL, 
+                mysql_pquery(SQL_Handle(), 
+                    va_fquery(SQL_Handle(), 
                         "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) \n\
                             VALUES ('%d','0','%d','%e','%d')",
                         VehicleInfo[vehicleid][vSQLID],

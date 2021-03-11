@@ -112,7 +112,7 @@ LoadPlayerLicenses(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_licenses(sqlid, carlic, gunlic, boatlic, fishlic, flylic, passport) \n\
 					VALUES('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -127,9 +127,9 @@ LoadPlayerLicenses(playerid)
 		cache_get_value_name_int(0,  "passport"		, LicenseInfo[playerid][pPassport]);
 		return 1;
 	}
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
 		using inline LoadingPlayerLicenses, 
-        va_fquery(g_SQL, "SELECT * FROM player_licenses WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_licenses WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
    	);
     return 1;
@@ -143,7 +143,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerLicenses(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_licenses SET carlic = '%d', gunlic = '%d', boatlic = '%d', fishlic = '%d', \n\
             flylic = '%d', passport = '%d' WHERE sqlid = '%d'",
         LicenseInfo[playerid][pCarLic],
@@ -253,7 +253,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				LicenseInfo[playerid][pBoatLic] = 1;
 				
 				// MySQL query
-				mysql_fquery(g_SQL, "UPDATE player_licenses SET boatlic = '1' WHERE sqlid = '%d'",
+				mysql_fquery(SQL_Handle(), "UPDATE player_licenses SET boatlic = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
 				);
 				
@@ -284,7 +284,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste polozili vozacku za automobil!");
 				LicenseInfo[playerid][pCarLic] = 1;
 				
-				mysql_fquery(g_SQL, "UPDATE player_licenses SET carlic = '1' WHERE sqlid = '%d'",
+				mysql_fquery(SQL_Handle(), "UPDATE player_licenses SET carlic = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
 				);
 				
@@ -480,7 +480,7 @@ CMD:buylicenses(playerid, params[])
 		LicenseInfo[playerid][pFlyLic] = 1;
 		PlayerToBudgetMoney(playerid, FLY_LICENSE_PRICE); // u proracun novci idu
 		
-		mysql_fquery(g_SQL, "UPDATE player_licenses SET flylic = '1' WHERE sqlid = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE player_licenses SET flylic = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);		
 	}
@@ -495,7 +495,7 @@ CMD:buylicenses(playerid, params[])
 		LicenseInfo[playerid][pFishLic] = 1;
 		PlayerToBudgetMoney(playerid, FISH_LICENSE_PRICE); // u proracun novci idu
 		
-		mysql_fquery(g_SQL, "UPDATE player_licenses SET fishlic = '1' WHERE sqlid = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE player_licenses SET fishlic = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);
 	}

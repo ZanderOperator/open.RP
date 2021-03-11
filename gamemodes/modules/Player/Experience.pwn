@@ -59,9 +59,9 @@ stock ListBestTemporaryEXP(playerid)
 			return 1;
 		}
 	}
-	MySQL_PQueryInline(g_SQL,  
+	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnPlayerLoadTempBestEXP, 
-	 	va_fquery(g_SQL,
+	 	va_fquery(SQL_Handle(),
 		 	"SELECT \n\
 			 	experience.sqlid, experience.points, experience.allpoints, \n\
 				accounts.name \n\
@@ -117,9 +117,9 @@ stock ListBestOverallEXP(playerid)
 			return 1;
 		}
 	}
-	MySQL_PQueryInline(g_SQL,  
+	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnListOverallBestEXP, 
-	 	va_fquery(g_SQL,
+	 	va_fquery(SQL_Handle(),
 		 	"SELECT \n\
 			 	experience.sqlid, experience.points, experience.allpoints, \n\
 				accounts.name \n\
@@ -136,8 +136,8 @@ stock ListBestOverallEXP(playerid)
 
 LoadPlayerExperience(playerid)
 {	
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"OnPlayerLoadExperience", 
 		"i", 
 		playerid
@@ -161,7 +161,7 @@ Public:OnPlayerLoadExperience(playerid)
 	}
 	else
 	{
-		return mysql_fquery(g_SQL, 
+		return mysql_fquery(SQL_Handle(), 
 					"INSERT INTO experience (sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) \n\
 						VALUES ('%d', '0', '0', '0', '0', '0', '0')",
 					PlayerInfo[playerid][pSQLID]
@@ -180,7 +180,7 @@ stock SavePlayerExperience(playerid)
 	if(!SafeSpawned[playerid])	
 		return 1;
 	
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE experience SET givenexp = '%d', allpoints = '%d', points = '%d', lastpayday = '%d',\n\
 			daypaydays = '%d', monthpaydays = '%d' WHERE sqlid = '%d'",
 		ExpInfo[playerid][eGivenEXP],
@@ -249,7 +249,7 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 	new 
 		sqlid, 
 		level,
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid, levels FROM accounts WHERE name = '%e'", playername)),
+		Cache:result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid, levels FROM accounts WHERE name = '%e'", playername)),
 		rows;
 		
     cache_get_row_count(rows);
@@ -268,8 +268,8 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 		return 0;
 	}
 
-	new Cache:result2 = mysql_query(g_SQL, 
-							va_fquery(g_SQL, "SELECT lastpayday, daypaydays FROM experience WHERE sqlid = '%d'", sqlid)
+	new Cache:result2 = mysql_query(SQL_Handle(), 
+							va_fquery(SQL_Handle(), "SELECT lastpayday, daypaydays FROM experience WHERE sqlid = '%d'", sqlid)
 						);
 	
 	new lastpayday, daypaydays, currentday, day;
@@ -297,7 +297,7 @@ stock GivePlayerExperience(playerid, playername[])
 {
 	new sqlid;
 	
-	new Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
+	new Cache:result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
 
 	new rows;
 	cache_get_row_count(rows);
@@ -309,7 +309,7 @@ stock GivePlayerExperience(playerid, playername[])
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 		
-	mysql_fquery(g_SQL,  
+	mysql_fquery(SQL_Handle(),  
 		"UPDATE experience SET points = points + '%d', allpoints = allpoints + '%d' WHERE sqlid = '%d'", 
 		1, 
 		1, 
@@ -329,7 +329,7 @@ stock GivePlayerExperience(playerid, playername[])
 
 RewardPlayerForActivity(sqlid, amount)
 {	
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE experience SET points = points +'%d', allpoints = allpoints + '%d' WHERE sqlid = '%d'", 
 		amount, 
 		amount, 
@@ -355,13 +355,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi iskoristili Level Up!", LEVEL_UP_EXP);
 						
 					ExpInfo[playerid][ePoints] -= LEVEL_UP_EXP;
-					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
 					
 					PlayerInfo[playerid][pLevel]++;
-					mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE accounts SET levels = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pLevel],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -379,7 +379,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be a house owner to use that EXP buy option!");
 
 					ExpInfo[playerid][ePoints] -= MAX_FURSLOTS_EXP;
-					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -396,7 +396,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Bronze paket!", PREMIUM_BRONZE_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_BRONZE_EXP;
-					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -413,7 +413,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Silver paket!", PREMIUM_SILVER_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_SILVER_EXP;
-					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -430,7 +430,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Gold paket!", PREMIUM_GOLD_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_GOLD_EXP;
-					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);

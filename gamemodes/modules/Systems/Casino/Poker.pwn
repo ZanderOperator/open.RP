@@ -1402,7 +1402,7 @@ static InitPokerTables()
 
 static LoadPokerTables()
 {
-	mysql_pquery(g_SQL, "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
+	mysql_pquery(SQL_Handle(), "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
 	return 1;
 }
 
@@ -1442,8 +1442,8 @@ static SavePokerTable(idx)
 {
 	if(PokerTable[idx][pkrSQL] == -1)
 	{
-		mysql_pquery( g_SQL, 
-			va_fquery(g_SQL, 
+		mysql_pquery( SQL_Handle(), 
+			va_fquery(SQL_Handle(), 
 				"INSERT INTO poker_tables (X, Y, Z, RX, RY, RZ, virtualworld, interior) \n\
 					VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d')",
 				PokerTable[idx][pkrX],
@@ -1462,7 +1462,7 @@ static SavePokerTable(idx)
 	}
 	else
 	{
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"UPDATE poker_tables SET X = '%f', Y = '%f', Z = '%f', RX = '%f', RY = '%f', RZ = '%f',\n\
 				virtualworld = '%d', interior = '%d' WHERE sqlid = '%d'",
 			PokerTable[idx][pkrX],
@@ -2184,7 +2184,7 @@ static DestroyPokerTable(tableid)
 
 static RemovePokerTable(tableid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[tableid][pkrSQL]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[tableid][pkrSQL]);
 	return 1;
 }
 

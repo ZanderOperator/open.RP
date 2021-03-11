@@ -512,7 +512,7 @@ CMD:recover(playerid, params[])
     SetPlayerHealth(giveplayerid, 50.0);
     TogglePlayerControllable(giveplayerid, true);
 
-    mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
 
     va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Bolnicar %s vas je izlijecio i vise niste u post death stanju!",
         GetName(playerid)

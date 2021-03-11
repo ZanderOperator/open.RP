@@ -76,9 +76,9 @@ static LoadPlayerSkills(playerid)
 		}
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnPlayerSkillsLoad,
-		va_fquery(g_SQL, "SELECT * FROM skill WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+		va_fquery(SQL_Handle(), "SELECT * FROM skill WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"i", 
 		playerid
 	);
@@ -119,7 +119,7 @@ static SavePlayerSkill(playerid, skillid)
 {
 	if(PlayerSkills[playerid][sSQLID][skillid] != -1)
 	{
-		mysql_fquery(g_SQL,
+		mysql_fquery(SQL_Handle(),
 			"UPDATE skill SET skill = '%d', jobid = '%d' WHERE id = '%d",
 			PlayerSkills[playerid][sJob][skillid],
 			PlayerSkills[playerid][sSkill][skillid],
@@ -135,7 +135,7 @@ static SavePlayerSkill(playerid, skillid)
 			PlayerSkills[playerid][sSQLID][skillid] = cache_insert_id();
 			return 1;
 		}
-		MySQL_PQueryInline(g_SQL,
+		MySQL_PQueryInline(SQL_Handle(),
 			using inline OnPlayerSkillInsert,
 			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],

@@ -55,7 +55,7 @@ Player_SetFactionList(playerid, slot, factionid)
 
 stock LoadCityStuff()
 {
-    mysql_pquery(g_SQL, "SELECT * FROM city WHERE 1", "OnCityLoaded");
+    mysql_pquery(SQL_Handle(), "SELECT * FROM city WHERE 1", "OnCityLoaded");
     return 1;
 }
 
@@ -75,7 +75,7 @@ public OnCityLoaded()
 
 stock SaveCityInfo()
 {
-    mysql_fquery(g_SQL, "UPDATE city SET budget = '%d', illegalbudget = '%d', tax = '%d' WHERE 1",
+    mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d', illegalbudget = '%d', tax = '%d' WHERE 1",
         CityInfo[cBudget],
         CityInfo[cIllegalBudget],
         CityInfo[cTax]
@@ -182,8 +182,8 @@ stock ResetFactionListIDs(playerid)
 
 stock CheckPlayerTransactions(playerid, const name[])
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_transactions WHERE sendername = '%e' OR recievername = '%e' ORDER BY id DESC",
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_transactions WHERE sendername = '%e' OR recievername = '%e' ORDER BY id DESC",
             name,
             name
        ), 
@@ -260,8 +260,8 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
 
 stock ListServerTransactions(playerid, type)
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_transactions WHERE logtype = '%d' ORDER BY id DESC", type), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_transactions WHERE logtype = '%d' ORDER BY id DESC", type), 
         "OnTransListQueryFinish", 
         "ii", 
         playerid, 
@@ -610,7 +610,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
             CityInfo[cTax] = newTax;
-            mysql_fquery(g_SQL, "UPDATE city SET tax = '%d' WHERE 1", CityInfo[cTax]);
+            mysql_fquery(SQL_Handle(), "UPDATE city SET tax = '%d' WHERE 1", CityInfo[cTax]);
 
             va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili porez u Los Santosu, sada on iznosi %d posto",
                 CityInfo[cTax]
@@ -807,7 +807,7 @@ CMD:setcity(playerid, params[])
         }
 
         CityInfo[cBudget] = moneys;
-        mysql_fquery(g_SQL, "UPDATE city SET budget = '%d' WHERE 1", CityInfo[cBudget]);
+        mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d' WHERE 1", CityInfo[cBudget]);
         return 1;
     }
     else if(!strcmp(pick, "tax", true))
@@ -821,7 +821,7 @@ CMD:setcity(playerid, params[])
         if(1 > moneys > 100) return SendClientMessage(playerid, COLOR_WHITE, "Porez moze biti 1 - 100 posto");
 
         CityInfo[cTax] = moneys;
-        mysql_fquery(g_SQL, "UPDATE city SET tax = '%d' WHERE 1", CityInfo[cTax]);
+        mysql_fquery(SQL_Handle(), "UPDATE city SET tax = '%d' WHERE 1", CityInfo[cTax]);
         return 1;
     }
     else if(!strcmp(pick, "ibudget", true))
@@ -834,7 +834,7 @@ CMD:setcity(playerid, params[])
         }
 
         CityInfo[cIllegalBudget] = moneys;
-        mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d' WHERE 1", CityInfo[cIllegalBudget]);
+        mysql_fquery(SQL_Handle(), "UPDATE city SET illegalbudget = '%d' WHERE 1", CityInfo[cIllegalBudget]);
     }
     return 1;
 }
@@ -902,7 +902,7 @@ CMD:finance(playerid, params[])
         if(id < 0) return SendClientMessage(playerid, COLOR_RED, "ID transakcije ne moze biti manji od 0!");
         if(PlayerFaction[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Mayor!");
 
-        mysql_fquery(g_SQL, "DELETE FROM server_transactions WHERE id = '%d'", id);
+        mysql_fquery(SQL_Handle(), "DELETE FROM server_transactions WHERE id = '%d'", id);
 
         va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali transakciju [ID: %d] iz baze podataka.", id);
         return 1;

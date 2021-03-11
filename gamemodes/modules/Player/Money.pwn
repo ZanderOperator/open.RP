@@ -31,7 +31,7 @@ stock AC_GivePlayerMoney(playerid, amount)
     PlayerPlaySound(playerid, 1054 ,x,y,z);
 
 	PlayerInfo[playerid][pMoney] += amount;
-	mysql_fquery(g_SQL, "UPDATE accounts SET handMoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET handMoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pMoney],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -46,7 +46,7 @@ stock AC_SetPlayerMoney(playerid, amount)
 	PlayerTick[playerid][ptMoney] = gettimestamp();
 
 	PlayerInfo[playerid][pMoney] = amount;
-	mysql_fquery(g_SQL, "UPDATE accounts SET handMoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET handMoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pMoney],
 		PlayerInfo[playerid][pSQLID]
 	);

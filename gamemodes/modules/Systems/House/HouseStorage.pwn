@@ -84,7 +84,7 @@ stock Storage_GetId(storageid)
 
 HouseStorage_Save(storage_id)
 {
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE house_storage SET storageHouse = '%d', storageX = '%.4f', storageY = '%.4f', storageZ = '%.4f',\n\
             storageA = '%.4f', storageInterior = '%d', storageWorld = '%d' WHERE storageID = '%d'",
         HouseStorage[storage_id][storageHouse],
@@ -101,7 +101,7 @@ HouseStorage_Save(storage_id)
 
 HouseStorage_SaveWep(storage_id, wepid)
 {
-    mysql_fquery(g_SQL, "UPDATE house_storage SET gunID%d = '%d', ammoID%d = '%d' WHERE storageID = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE house_storage SET gunID%d = '%d', ammoID%d = '%d' WHERE storageID = '%d'",
         wepid,
         HouseStorage[storage_id][storageWeapons][wepid],
         wepid,
@@ -193,7 +193,7 @@ GetRackLimit(playerid)
 
 stock LoadHouseStorages()
 {
-    mysql_pquery(g_SQL, "SELECT * FROM house_storage WHERE 1", "HouseStorage_Load", "");
+    mysql_pquery(SQL_Handle(), "SELECT * FROM house_storage WHERE 1", "HouseStorage_Load", "");
     return 1;
 }
 
@@ -283,7 +283,7 @@ Storage_RackCreate(playerid, houseid)
     Storage_RackRefresh(i);
     HouseStorage_Save(i);
     
-    mysql_tquery(g_SQL, "INSERT INTO house_storage (storageCreated) VALUES(1)", "OnRackCreated", "d", i);
+    mysql_tquery(SQL_Handle(), "INSERT INTO house_storage (storageCreated) VALUES(1)", "OnRackCreated", "d", i);
     return i;
 }
 
@@ -339,7 +339,7 @@ Storage_RackDelete(storageid)
         return 1;
     }
 
-    mysql_fquery(g_SQL, "DELETE FROM house_storage WHERE storageID = '%d'", HouseStorage[storageid][storageID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM house_storage WHERE storageID = '%d'", HouseStorage[storageid][storageID]);
 
     for (new i = 0; i < (MAX_WEAPON_ONRACK + 1); i++)
     {

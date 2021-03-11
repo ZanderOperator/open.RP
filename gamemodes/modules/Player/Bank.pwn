@@ -35,7 +35,7 @@ LoadPlayerCredit(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
 					VALUES ('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -50,9 +50,9 @@ LoadPlayerCredit(playerid)
 		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,  
+	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnPlayerCreditLoad, 
-		va_fquery(g_SQL, "SELECT * FROM player_credits WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+		va_fquery(SQL_Handle(), "SELECT * FROM player_credits WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
 		"i", 
 		playerid
 	);
@@ -61,7 +61,7 @@ LoadPlayerCredit(playerid)
 
 SavePlayerCredit(playerid)
 {
-	mysql_fquery_ex(g_SQL, 
+	mysql_fquery_ex(SQL_Handle(), 
 		"UPDATE player_credits SET rate = '%d', type = '%d', amount = '%d',\n\
 			unpaid = '%d', used = '%d', timestamp = '%d' WHERE sqlid = '%d'",
 		CreditInfo[playerid][cRate],
@@ -81,7 +81,7 @@ LoadPlayerSavings(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_savings(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
 					VALUES('%d', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -96,9 +96,9 @@ LoadPlayerSavings(playerid)
 		return 1;
 	}
 
-    MySQL_PQueryInline(g_SQL, 
+    MySQL_PQueryInline(SQL_Handle(), 
 		using inline LoadingPlayerSavings,
-        va_fquery(g_SQL, "SELECT * FROM player_savings WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_savings WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
         playerid
    	);
@@ -108,7 +108,7 @@ LoadPlayerSavings(playerid)
 
 SavePlayerSavings(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_savings SET savings_cool = '%d', savings_time = '%d', savings_type = '%d',\n\
             savings_money = '%d' WHERE sqlid = '%d'",
         PlayerSavings[playerid][pSavingsCool],
@@ -389,7 +389,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PlayerSavings[playerid][pSavingsType] = PlayerSavings[playerid][pSavingsTime];
 			PlayerInfo[playerid][pBank] -= PlayerSavings[playerid][pSavingsMoney];
 						
-			mysql_fquery(g_SQL, 
+			mysql_fquery(SQL_Handle(), 
 				"UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSQLID]
@@ -673,12 +673,12 @@ static BankTransferMoney(playerid, giveplayerid, amount)
 		FormatNumber(amount)
 	);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[giveplayerid][pBank],
 		PlayerInfo[giveplayerid][pSQLID]
 	);
@@ -905,14 +905,14 @@ TakePlayerProperty(playerid)
 			HouseInfo[house][hSafeStatus] 	= 0;
 			HouseInfo[house][hOrmar] 		= 0;
 				
-			mysql_fquery(g_SQL, 
+			mysql_fquery(SQL_Handle(), 
 				"UPDATE houses SET ownerid = '0' WHERE ownerid = '%d'", 
 				PlayerInfo[playerid][pSQLID]
 			);
 			PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
 
 			PlayerInfo[playerid][pSpawnChange] = 0;
-			mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pSpawnChange],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -934,7 +934,7 @@ TakePlayerProperty(playerid)
 			BizzInfo[biz][bOwnerID] = 0;
 
 			PlayerKeys[playerid][pBizzKey] = INVALID_BIZNIS_ID;
-			mysql_fquery(g_SQL, 
+			mysql_fquery(SQL_Handle(), 
 				"UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", 
 				BizzInfo[biz][bSQLID]
 			);

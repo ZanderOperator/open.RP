@@ -419,7 +419,7 @@ CMD:callnews(playerid,params[])
 
     PlayerMobile[playerid][pMobileCost] -= 3;
 
-    mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+    mysql_fquery(SQL_Handle(), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
         PlayerMobile[playerid][pMobileCost],
         PlayerInfo[playerid][pSQLID]
    );

@@ -21,7 +21,7 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
 	
-	mysql_fquery_ex(g_SQL, "INSERT INTO anamnesis(patient, disease, doctor, date) VALUES ('%e', '%e', '%e', '%e')",
+	mysql_fquery_ex(SQL_Handle(), "INSERT INTO anamnesis(patient, disease, doctor, date) VALUES ('%e', '%e', '%e', '%e')",
 		GetName(giveplayerid,false),
 		disease,
 		GetName(playerid,false),
@@ -34,15 +34,15 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 
 stock static DeletePlayerCarton(playerid, sqlid) 
 {
-	va_fquery(g_SQL, "DELETE FROM anamnesis WHERE id = '%d'", sqlid);
+	va_fquery(SQL_Handle(), "DELETE FROM anamnesis WHERE id = '%d'", sqlid);
 	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali karton broj: #%d!", sqlid);
     return 1;
 }
 
 stock CheckPlayerCarton(playerid, const name[])
 {
-	mysql_tquery(g_SQL, 
-    	va_fquery(g_SQL, "SELECT * FROM anamnesis WHERE patient = '%e' ORDER BY id DESC", name), 
+	mysql_tquery(SQL_Handle(), 
+    	va_fquery(SQL_Handle(), "SELECT * FROM anamnesis WHERE patient = '%e' ORDER BY id DESC", name), 
         "OnPlayerCartonFinish", 
         "is", 
         playerid, 

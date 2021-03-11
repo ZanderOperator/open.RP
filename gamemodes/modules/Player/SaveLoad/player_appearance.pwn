@@ -6,7 +6,7 @@ LoadPlayerAppearance(playerid)
     {
         if(!cache_num_rows())
         {
-            mysql_fquery_ex(g_SQL, 
+            mysql_fquery_ex(SQL_Handle(), 
                 "INSERT INTO player_appearance(sqlid, skin, walkstyle, accent, look) \n\
                     VALUES('%d', '21', '0', '', '')",
                 PlayerInfo[playerid][pSQLID]
@@ -19,9 +19,9 @@ LoadPlayerAppearance(playerid)
         cache_get_value_name(0, 	"look"		    , PlayerAppearance[playerid][pLook], 120);
         return 1;
     }
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
         using inline LoadingPlayerAppearance,
-        va_fquery(g_SQL, "SELECT * FROM player_appearance WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_appearance WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
     );
     return 1;
@@ -35,7 +35,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerAppearance(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_appearance SET skin = '%d', walkstyle = '%d', \n\
             accent = '%e', look = '%e' WHERE sqlid = '%d'",
         PlayerAppearance[playerid][pSkin],

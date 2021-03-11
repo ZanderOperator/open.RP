@@ -259,7 +259,7 @@ stock UpdateHouseVirtualWorld(houseid)
     if(!Iter_Contains(House, houseid))
         return 1;
 
-    mysql_fquery(g_SQL, "UPDATE houses SET viwo = '%d' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE houses SET viwo = '%d' WHERE id = '%d'",
         HouseInfo[houseid][hVirtualWorld],
         HouseInfo[houseid][hSQLID]
    );
@@ -377,8 +377,8 @@ stock DestroyHouseInfoTD(playerid)
 stock LoadHouses()
 {
     Iter_Init(House);
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM houses WHERE 1"), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM houses WHERE 1"), 
         "OnServerHousesLoad", 
         ""
    );
@@ -440,8 +440,8 @@ Public:OnServerHousesLoad()
 
 static stock InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO houses (level, value, adress, enterX, enterY, enterZ,\n\
                 exitX, exitY, exitZ, ownerid, int) VALUES \n\
                 ('%d', '%d', '%e', '%f', '%f', '%f', '%f', '%f', '%f', '0', '0', '%d')",
@@ -823,12 +823,12 @@ stock BuyHouse(playerid, bool:credit_activated = false)
     HouseInfo[house][hOwnerID] = PlayerInfo[playerid][pSQLID];
     //BizzInfo[2][bTill] += HouseInfo[house][hValue];
 
-    mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '%d' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE houses SET ownerid = '%d' WHERE id = '%d'",
         HouseInfo[house][hOwnerID],
         HouseInfo[house][hSQLID]
    );
 
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
    );
@@ -849,7 +849,7 @@ stock BuyHouse(playerid, bool:credit_activated = false)
     Player_SetInHouse(playerid, house);
     PlayerInfo[playerid][pSpawnChange] = 1;
 
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
    );
@@ -861,7 +861,7 @@ stock BuyHouse(playerid, bool:credit_activated = false)
 stock RemoveHouse(houseid) // TODO: make /ahouse create/delete/changeint/etc. cmd
 {
     if(houseid == INVALID_HOUSE_ID) return 0;
-    mysql_fquery(g_SQL, "DELETE FROM houses WHERE id = '%d'", HouseInfo[houseid][hSQLID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM houses WHERE id = '%d'", HouseInfo[houseid][hSQLID]);
     ResetHouseInfo(houseid);
     Iter_Remove(House, houseid);
     return 1;
@@ -1767,18 +1767,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             PlayerInfo[playerid][pExtraFurniture]   = 0;
             HouseInfo[PlayerKeys[playerid][pHouseKey]][hOwnerID] = PlayerInfo[playerid][pSQLID];
 
-            mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '%d' WHERE id = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE houses SET ownerid = '%d' WHERE id = '%d'",
                 HouseInfo[PlayerKeys[playerid][pHouseKey]][hOwnerID],
                 HouseInfo[PlayerKeys[playerid][pHouseKey]][hSQLID]
            );
 
             // Spawn Change Seller & Buyer
-            mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[pID][pSpawnChange],
                 PlayerInfo[pID][pSQLID]
            );
 
-            mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[playerid][pSpawnChange],
                 PlayerInfo[playerid][pSQLID]
            );
@@ -1932,7 +1932,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             HouseInfo[house][hSafePass] = pass;
 
-            mysql_fquery(g_SQL, "UPDATE houses SET safepass = '%d' WHERE id = '%d'", 
+            mysql_fquery(SQL_Handle(), "UPDATE houses SET safepass = '%d' WHERE id = '%d'", 
                 HouseInfo[house][hSafePass], 
                 HouseInfo[house][hSQLID]
            );
@@ -1982,7 +1982,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     SendClientMessage(playerid, COLOR_RED, "[!] Vasa kuca sada ima sef u koji mozete sakriti sirovine, drogu i oruzje.");
                     
-                    mysql_fquery(g_SQL, "UPDATE houses SET safe = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET safe = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hSafe], 
                         HouseInfo[house][hSQLID]
                    );
@@ -1997,7 +1997,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     SendClientMessage(playerid, COLOR_RED, "[!] Sada mozete koristiti ormar.");
                    
-                    mysql_fquery(g_SQL, "UPDATE houses SET ormar = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET ormar = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hOrmar], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2012,7 +2012,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     GameTextForPlayer(playerid, "~g~Alarm level ++", 1000, 1);
                     
-                    mysql_fquery(g_SQL, "UPDATE houses SET alarm = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET alarm = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hAlarm], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2027,7 +2027,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     GameTextForPlayer(playerid, "~g~Door level ++", 1000, 1);
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET doorlevel = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET doorlevel = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hDoorLevel], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2042,7 +2042,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     GameTextForPlayer(playerid, "~g~Lock level ++", 1000, 1);
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET locklevel = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET locklevel = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hLockLevel], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2062,7 +2062,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     GameTextForPlayer(playerid, "~g~Kupljen novi radio", 1000, 1);
                    
-                    mysql_fquery(g_SQL, "UPDATE houses SET radio = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET radio = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hRadio], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2076,7 +2076,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerToBudgetMoney(playerid, 1550); // Novac ide u proracun
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     GameTextForPlayer(playerid, "~g~Kupljena nova kasa za novac", 1000, 1);
-                    mysql_fquery(g_SQL, "UPDATE houses SET moneysafe = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET moneysafe = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hMoneySafe], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2092,7 +2092,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     GameTextForPlayer(playerid, "~g~Kupljen novi tv", 1000, 1);
                     BizzInfo[85][bTill] += 500;
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET tv = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET tv = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hTV], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2107,7 +2107,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     GameTextForPlayer(playerid, "~g~Kupljen nova mikrovalna", 1000, 1);
                     
-                    mysql_fquery(g_SQL, "UPDATE houses SET microwave = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET microwave = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hMicrowave], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2130,7 +2130,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     va_SendClientMessage(playerid, COLOR_RED, "[STORAGE ALARM]: Uspjesno ste kupili storage-alarm level %d, da ga unapredite kupite ponovo.", HouseInfo[house][hStorageAlarm]);
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET storage_alarm = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET storage_alarm = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hStorageAlarm], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2201,13 +2201,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 { // Mogu iznajmljivati
                     HouseInfo[house][hRentabil] = 1;
-                    mysql_fquery(g_SQL, "UPDATE houses SET rentabil = '1' WHERE id = '%d'", HouseInfo[house][hSQLID]);
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET rentabil = '1' WHERE id = '%d'", HouseInfo[house][hSQLID]);
                     GameTextForPlayer(playerid, "~g~Kuca stavljena na iznajmljivanje", 1000, 1);
                 }
                 case 1:
                 { // Nece moci iznajmljivati
                     HouseInfo[house][hRentabil] = 0;
-                    mysql_fquery(g_SQL, "UPDATE houses SET rentabil = '0' WHERE id = '%d'", HouseInfo[house][hSQLID]);
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET rentabil = '0' WHERE id = '%d'", HouseInfo[house][hSQLID]);
                     GameTextForPlayer(playerid, "~r~Kuca maknuta sa iznajmljivanja", 1000, 1);
                 }
                 case 2: ShowPlayerDialog(playerid, DIALOG_HOUSE_RENTPRICE, DIALOG_STYLE_INPUT, "NAJAM", "Upisi novu cijenu najma!", "Next", "Back");
@@ -2242,7 +2242,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             HouseInfo[house][hRent] = renting;
 
-            mysql_fquery(g_SQL, "UPDATE houses SET rent = '%d' WHERE id = '%d'", 
+            mysql_fquery(SQL_Handle(), "UPDATE houses SET rent = '%d' WHERE id = '%d'", 
                 HouseInfo[house][hRent], 
                 HouseInfo[house][hSQLID]
            );
@@ -2465,7 +2465,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseInfo[house][hOrmar]    = 0;
                     HouseInfo[house][hOwnerID]  = 0;
 
-                    mysql_fquery(g_SQL,
+                    mysql_fquery(SQL_Handle(),
                         "UPDATE houses SET ownerid = '%d', safe = '%d', ormar = '%d' WHERE id = '%d'",
                         HouseInfo[house][hOwnerID],
                         HouseInfo[house][hSafe],
@@ -2483,7 +2483,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerInfo[playerid][pExtraFurniture] = 0;
 
                     PlayerInfo[playerid][pSpawnChange] = 0;
-                    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
                    );
@@ -2514,7 +2514,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         HouseInfo[house][hSkin1] = GetPlayerSkin(playerid);
                         SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste spremili skin u Slot 1!");
 
-                        mysql_fquery(g_SQL, "UPDATE houses SET skin1 = '%d' WHERE id = '%d'", 
+                        mysql_fquery(SQL_Handle(), "UPDATE houses SET skin1 = '%d' WHERE id = '%d'", 
                             HouseInfo[house][hSkin1], 
                             HouseInfo[house][hSQLID]
                        );
@@ -2524,7 +2524,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         HouseInfo[house][hSkin2] = GetPlayerSkin(playerid);
                         SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste spremili skin u slot 2!");
                         
-                        mysql_fquery(g_SQL, "UPDATE houses SET skin2 = '%d' WHERE id = '%d'", 
+                        mysql_fquery(SQL_Handle(), "UPDATE houses SET skin2 = '%d' WHERE id = '%d'", 
                             HouseInfo[house][hSkin2], 
                             HouseInfo[house][hSQLID]
                        );
@@ -2534,7 +2534,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         HouseInfo[house][hSkin3] = GetPlayerSkin(playerid);
                         SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste spremili skin u slot 3!");
 
-                        mysql_fquery(g_SQL, "UPDATE houses SET skin3 = '%d' WHERE id = '%d'", 
+                        mysql_fquery(SQL_Handle(), "UPDATE houses SET skin3 = '%d' WHERE id = '%d'", 
                             HouseInfo[house][hSkin3], 
                             HouseInfo[house][hSQLID]
                        );
@@ -2609,7 +2609,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseInfo[house][hSkin1] = 0;
                     SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali skin iz slota 1!");
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET skin1 = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET skin1 = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hSkin1], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2624,7 +2624,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseInfo[house][hSkin2] = 0;
                     SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali skin iz slota 2!");
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET skin2 = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET skin2 = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hSkin2], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2639,7 +2639,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseInfo[house][hSkin3] = 0;
                     SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste obrisali skin iz slota 3!");
 
-                    mysql_fquery(g_SQL, "UPDATE houses SET skin3 = '%d' WHERE id = '%d'", 
+                    mysql_fquery(SQL_Handle(), "UPDATE houses SET skin3 = '%d' WHERE id = '%d'", 
                         HouseInfo[house][hSkin3], 
                         HouseInfo[house][hSQLID]
                    );
@@ -2830,7 +2830,7 @@ CMD:houseentrance(playerid, params[])
 
     CreateHouseEnter(houseid);
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE houses SET enterX = '%f', enterY = '%f', enterZ = '%f', viwoexit = '%d' WHERE id = '%d'",
         HouseInfo[houseid][hEnterX],
         HouseInfo[houseid][hEnterY],
@@ -2860,7 +2860,7 @@ CMD:customhouseint(playerid, params[])
     HouseInfo[houseid][hExitZ]      = iZ;
     HouseInfo[houseid][hInt]        = hint;
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ = '%f', int = '%d' WHERE id = '%d'",
         HouseInfo[houseid][hExitX],
         HouseInfo[houseid][hExitY],
@@ -2902,7 +2902,7 @@ CMD:houseint(playerid, params[])
         HouseInts[int][iDescription]
    );
 
-    mysql_fquery(g_SQL,
+    mysql_fquery(SQL_Handle(),
         "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ= '%f', int= '%d' WHERE id = '%d'",
         HouseInfo[houseid][hExitX],
         HouseInfo[houseid][hExitY],
@@ -3109,7 +3109,7 @@ CMD:rent(playerid, params[])
             SendClientMessage(playerid, COLOR_GREEN, string);
             PlayerInfo[playerid][pSpawnChange] = 1;
 
-            mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[playerid][pSpawnChange],
                 PlayerInfo[playerid][pSQLID]
            );

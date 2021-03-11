@@ -455,8 +455,8 @@ stock DeletePlayerTuningTD(playerid)
 
 stock LoadVehicleTuning(vehicleid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]),
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]),
 	 	"OnVehicleTuningLoad", 
 	 	"ii", 
 		 vehicleid, 
@@ -468,14 +468,14 @@ stock LoadVehicleTuning(vehicleid)
 
 stock DeleteVehicleTuning(vehicleid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid ='%d'", VehicleInfo[vehicleid][vSQLID]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM vehicle_tuning WHERE vehid ='%d'", VehicleInfo[vehicleid][vSQLID]);
 	return 1;
 }
 
 stock SaveVehicleTuning(vehicleid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]), 
 		"OnVehicleTuningLoad", 
 		"ii", 
 		vehicleid, 
@@ -490,7 +490,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 	{
 		if(cache_num_rows()) 
 		{
-			mysql_fquery(g_SQL,
+			mysql_fquery(SQL_Handle(),
 			 	"UPDATE vehicle_tuning SET spoiler = '%d', hood = '%d', roof = '%d', skirt = '%d', lamps = '%d',\n\
 					nitro = '%d', exhaust = '%d', wheels = '%d', hydraulic = '%d', fbumper = '%d', rbumper = '%d',\n\
 					rvent = '%d', lvent = '%d', paintjob = '%d' WHERE vehid = '%d'",
@@ -513,7 +513,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 		} 
 		else 
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO vehicle_tuning(vehid, spoiler, hood, roof, skirt, lamps, nitro, exhaust, wheels,\n\
 					hydraulic, fbumper, rbumper, rvent, lvent, paintjob) \n\
 					VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
@@ -534,7 +534,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 				VehicleInfo[vehicleid][vPaintJob]
 			);
 		}
-		mysql_fquery(g_SQL, "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
 			VehicleInfo[vehicleid][vTuned],
 			VehicleInfo[vehicleid][vSQLID]
 		);
@@ -1838,7 +1838,7 @@ CMD:remove_tuning(playerid, params[])
 	ResetVehicleTuning(vehicleid); 
 	VehicleInfo[vehicleid][vTuned] = false;
 	
-	mysql_fquery(g_SQL, "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
 		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);

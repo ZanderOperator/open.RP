@@ -78,8 +78,8 @@ new
 
 LoadPlayerPackage(playerid) 
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_wpackages WHERE playerSQL = '%d' LIMIT %d",
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_wpackages WHERE playerSQL = '%d' LIMIT %d",
 			PlayerInfo[playerid][pSQLID],
 			MAX_PLAYER_PACKAGES
 		),
@@ -127,8 +127,8 @@ hook function LoadPlayerStats(playerid)
 
 stock LoadVehiclePackage(vehicleid) 
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT %d", 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT %d", 
 			VehicleInfo[vehicleid][vSQLID],
 			MAX_PACKAGE_VEHICLE
 		), 
@@ -180,8 +180,8 @@ ListPlayerPackages(playerid, forplayerid)
 
 SavePlayerPackages(playerid, slot) 
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "INSERT INTO player_wpackages(playerSQL, weap, ammo) VALUES ('%d', '%d', '%d')",
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "INSERT INTO player_wpackages(playerSQL, weap, ammo) VALUES ('%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerPackage[playerid][p_weapon][slot],
 			PlayerPackage[playerid][p_amount][slot]
@@ -213,8 +213,8 @@ Public:StorePPackageInDB(playerid, slot)
 
 SaveVehiclePackages(vehicleid, slot) 
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "INSERT INTO cocars_wpackages(vehicleid, weap, ammo) VALUES ('%d','%d','%d')",
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "INSERT INTO cocars_wpackages(vehicleid, weap, ammo) VALUES ('%d','%d','%d')",
 			VehicleInfo[vehicleid][vSQLID],
 			VehicleInfo[vehicleid][packWepID][slot],
 			VehicleInfo[vehicleid][packAmmo][slot]
@@ -306,7 +306,7 @@ DeleteVehiclePackage(vehicleid, slot)
 	VehicleInfo[vehicleid][packWepID][slot] = 0;
 	VehicleInfo[vehicleid][packAmmo][slot] = 0;
 
-	mysql_fquery(g_SQL, "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][slot]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][slot]);
 
 	Iter_Remove(V_PACKAGES[vehicleid], slot);
 	return (true);
@@ -318,7 +318,7 @@ DeletePlayerPackage(playerid, package_id)
 	PlayerPackage[playerid][p_amount][package_id] = 0;
 	PlayerPackage[playerid][packExists][package_id] = 0;
 
-	mysql_fquery(g_SQL, "DELETE FROM player_wpackages WHERE id = '%d'", PlayerPackage[playerid][p_SQLID][package_id]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM player_wpackages WHERE id = '%d'", PlayerPackage[playerid][p_SQLID][package_id]);
 	return (true);
 }
 
@@ -717,7 +717,7 @@ CMD:package(playerid, params[])
 				VehicleInfo[vehicleid][packWepID][i] = 0;
 				VehicleInfo[vehicleid][packAmmo][i] = 0;
 
-				mysql_fquery(g_SQL, "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][i]);
+				mysql_fquery(SQL_Handle(), "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][i]);
 			}
 		}
 		va_SendMessage(playerid, COLOR_RED, "[!] Uspjesno ste vozilu id %d obrisali sve weapon pakete.", vehicleid);

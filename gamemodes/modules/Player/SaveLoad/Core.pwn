@@ -84,16 +84,16 @@ CheckPlayerInactivity(playerid)
 		if(!cache_num_rows())
 			return 1;
 		
-		mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
+		mysql_fquery(SQL_Handle(), "DELETE FROM inactive_accounts WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, 
 			"[%s]: Registered inactivity on current account has been deactivated.",
 			SERVER_NAME
 		);		
 		return 1;
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnPlayerInactivityCheck, 
-		va_fquery(g_SQL, "SELECT sqlid FROM inactive_accounts WHERE sqlid = '%d'", 
+		va_fquery(SQL_Handle(), "SELECT sqlid FROM inactive_accounts WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pSQLID]), 
 		"i", 
 		playerid
@@ -106,8 +106,8 @@ Public: OnPasswordChecked(playerid)
 	new bool:match = bcrypt_is_equal();
 	if(match)
 	{
-		mysql_pquery(g_SQL, 
-			va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", GetName(playerid, false)),
+		mysql_pquery(SQL_Handle(), 
+			va_fquery(SQL_Handle(), "SELECT * FROM accounts WHERE name = '%e'", GetName(playerid, false)),
 			"LoadPlayerData", 
 			"i", 
 			playerid
@@ -267,9 +267,9 @@ public OnPlayerRequestClass(playerid, classid)
 			return 1;
 		}
 
-		MySQL_PQueryInline(g_SQL,  
+		MySQL_PQueryInline(SQL_Handle(),  
 			using inline CheckPlayerInBase,
-			va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", tmpname), 
+			va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", tmpname), 
 			"i",
 			playerid
 		);
@@ -364,7 +364,7 @@ public LoadPlayerData(playerid)
 
 		if(unban_time < gettimestamp()) 
 		{
-			mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '0' WHERE sqlid = '%d'", 
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaUnbanTime = '0' WHERE sqlid = '%d'", 
 				PlayerInfo[playerid][pSQLID]
 			);
 		} 
@@ -481,9 +481,9 @@ static RegisterPlayer(playerid)
 		SpawnPlayer(playerid);
 		return 1;
 	}
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
 		using inline OnAccountFinish,
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"INSERT INTO accounts (online,registered,register_date,name,password,teampin,email,\n\
 				secawnser,levels,age,sex,handMoney,bankMoney) \n\
 				VALUES ('1','0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d')",
@@ -505,7 +505,7 @@ static RegisterPlayer(playerid)
 
 SetPlayerOnlineStatus(playerid, status)
 {
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE accounts set online = '%d' WHERE sqlid = '%d'", 
 		status,
 		PlayerInfo[playerid][pSQLID]
@@ -519,7 +519,7 @@ stock IsEMailInDB(const email[])
 		Cache:result,
 		counts;
 	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE email = '%e'", email));
+	result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE email = '%e'", email));
 	counts = cache_num_rows();
 	cache_delete(result);
 	return counts;
@@ -549,7 +549,7 @@ Public: SafeSpawnPlayer(playerid)
 	
 	Player_SetSecurityBreach(playerid, false);
 	
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		"INSERT INTO player_connects(player_id, time, aip) VALUES ('%d','%d','%e')",
 		PlayerInfo[playerid][pSQLID],
 		gettimestamp(),
@@ -628,9 +628,9 @@ SavePlayerData(playerid)
     if(!SafeSpawned[playerid] && !FirstSaving[playerid])	
 		return 1;
 
-	mysql_pquery(g_SQL, "START TRANSACTION");
+	mysql_pquery(SQL_Handle(), "START TRANSACTION");
 
-	mysql_fquery_ex(g_SQL, 
+	mysql_fquery_ex(SQL_Handle(), 
 		"UPDATE accounts SET lastlogin = '%e', lastloginstamp = '%d', lastip = '%e', forumname = '%e', \n\
 			lastupdatever = '%e', registered = '%d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
 			muted = '%d', respects = '%d', changenames = '%d', changetimes = '%d', \n\
@@ -654,7 +654,7 @@ SavePlayerData(playerid)
 
 	SavePlayerStats(playerid); // Saving data non-related to 'accounts' database table.
 
-	mysql_pquery(g_SQL, "COMMIT");
+	mysql_pquery(SQL_Handle(), "COMMIT");
 	FirstSaving[playerid] = false;
 	return 1;
 }
@@ -1228,9 +1228,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				bcrypt_check(input_password, sql_password,  "OnPasswordChecked", "d", playerid);
 				return 1;
 			}
-			MySQL_TQueryInline(g_SQL, 
+			MySQL_TQueryInline(SQL_Handle(), 
 				using inline PasswordForQuery,
-				va_fquery(g_SQL, "SELECT sqlid, password FROM accounts WHERE name = '%e'", GetName(playerid, false)) 
+				va_fquery(SQL_Handle(), "SELECT sqlid, password FROM accounts WHERE name = '%e'", GetName(playerid, false)) 
 			);
 			return 1;
 		}

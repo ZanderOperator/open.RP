@@ -252,9 +252,9 @@ static LoadTowerData()
 		printf("MySQL Report: Signal Towers Loaded. [%d/%d]", rows, MAX_TOWERS);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL, 
+	MySQL_PQueryInline(SQL_Handle(), 
 		using inline OnTowerLoaded,
-		va_fquery(g_SQL, "SELECT * FROM signaltowers WHERE 1"), 
+		va_fquery(SQL_Handle(), "SELECT * FROM signaltowers WHERE 1"), 
 		""
 	);
 	return 1;
@@ -277,9 +277,9 @@ stock LoadPlayerContacts(playerid)
 		}
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnPlayerContactsLoad,
-		va_fquery(g_SQL, "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT %d", 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT %d", 
 			PlayerInfo[playerid][pSQLID],
 			MAX_MOBILE_CONTACTS
 		), 
@@ -290,13 +290,13 @@ stock LoadPlayerContacts(playerid)
 
 stock DeletePlayerContacts(playerid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM player_mobile_contacts WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM player_mobile_contacts WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	return 1;
 }
 
 stock SavePlayerContact(playerid, slotid)
 {
-	mysql_fquery(g_SQL, "UPDATE player_mobile_contacts SET title = '%e', number = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE player_mobile_contacts SET title = '%e', number = '%d' WHERE sqlid = '%d'",
 		PlayerContactName[playerid][slotid],
 		PlayerContactNumber[playerid][slotid],
 		PlayerContactSQL[playerid][slotid]
@@ -312,9 +312,9 @@ static InsertMobileContact(playerid, slotid)
 		Iter_Add(MobileContacts[playerid], slotid);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnMobileContactInsert,
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"INSERT INTO player_mobile_contacts(player_id, title, number) VALUES ('%d', '%e', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerContactName[playerid][slotid],
@@ -329,7 +329,7 @@ static InsertMobileContact(playerid, slotid)
 
 stock DeleteMobileContact(sqlid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM player_mobile_contacts WHERE sqlid = '%d'", sqlid);
+	mysql_fquery(SQL_Handle(), "DELETE FROM player_mobile_contacts WHERE sqlid = '%d'", sqlid);
 	return 1;
 }
 
@@ -337,11 +337,11 @@ stock SavePlayerMobile(playerid, type=1)
 {
 	if(type == 1)
 	{
-		mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
+		mysql_fquery(SQL_Handle(), "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time) \n\
 				VALUES ('%d','%d','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
@@ -356,11 +356,11 @@ stock SavePlayerMobile(playerid, type=1)
 	}
 	else if(type == 2)
 	{
-		mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
+		mysql_fquery(SQL_Handle(), "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time, cryptonumber) \n\
 				VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
@@ -385,8 +385,8 @@ GetMobileNumberFromSQL(sqlid)
 	if(sqlid > 0) 
 	{
 	    new	Cache:result;
-		result = mysql_query(g_SQL, 
-					va_fquery(g_SQL, "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid)
+		result = mysql_query(SQL_Handle(), 
+					va_fquery(SQL_Handle(), "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid)
 				);
   		cache_get_value_index_int(0, 0, dest);
 		cache_delete(result);
@@ -457,7 +457,7 @@ UpdatePlayerMobile(playerid)
 {
 	if(PlayerMobile[playerid][pMobileNumber] != 0)
 	{
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"UPDATE player_phones SET model= '%d', number = '%d', money = '%d' WHERE player_id = '%d' AND type = '1'",
 			PlayerMobile[playerid][pMobileModel],
 			PlayerMobile[playerid][pMobileNumber],
@@ -467,7 +467,7 @@ UpdatePlayerMobile(playerid)
 	}
 	if(PlayerMobile[playerid][pCryptoNumber] != 0)
 	{
-		mysql_fquery(g_SQL, "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2'",
+		mysql_fquery(SQL_Handle(), "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2'",
 			PlayerMobile[playerid][pCryptoNumber],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -483,8 +483,8 @@ hook function SavePlayerStats(playerid)
 
 stock LoadPlayerMobile(playerid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_phones WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_phones WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"OnPlayerMobileLoad", 
 		"i", 
 		playerid
@@ -567,9 +567,9 @@ stock CreateTower(towerid)
 		TowerInfo[towerid][twSQLID] = cache_insert_id();
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL, 
+	MySQL_PQueryInline(SQL_Handle(), 
 		using inline OnTowerCreated,
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"INSERT INTO signaltowers (network,posx,posy,posz,posrx,posry,posrz,radius) \n\
 				VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",
 			TowerInfo[towerid][twNetwork],
@@ -602,7 +602,7 @@ stock DeleteTower(towerid)
 	TowerInfo[towerid][twPosRZ] = 0.0;
 	TowerInfo[towerid][twRadius] = 0.0;
 
-	mysql_fquery(g_SQL, "DELETE FROM signaltowers WHERE id = '%d' LIMIT 1", TowerInfo[towerid][twSQLID]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM signaltowers WHERE id = '%d' LIMIT 1", TowerInfo[towerid][twSQLID]);
 	return 1;
 }
 
@@ -625,7 +625,7 @@ stock RemovePlayerMobile(playerid)
 
 	DeletePlayerContacts(playerid);
 	
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		 "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'", 
 		 PlayerInfo[playerid][pSQLID]
 	);
@@ -2308,7 +2308,7 @@ stock SendSMS(playerid, recnumber, smsmessage[])
 	SendInfoMessage(gplayerid, "Dobili ste novu SMS poruku!");
 
 	PlayerMobile[playerid][pMobileCost] ++;
-	mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+	mysql_fquery(SQL_Handle(), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
 		PlayerMobile[playerid][pMobileCost],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -4009,7 +4009,7 @@ CMD:hangup(playerid, params[])
 			PlayerMobile[playerid][pMobileCost] += cost;
 			va_SendClientMessage(playerid, COLOR_RED, "[!] Poziv je naplacen %d$", cost);
 
-			mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
 				PlayerMobile[playerid][pMobileCost],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -4061,13 +4061,13 @@ CMD:cryptonumber(playerid, params[])
 
 	new	Cache:result;
 	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM player_phones WHERE type = '2' AND cryptonumber = '%d'", _crypt));
+	result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT * FROM player_phones WHERE type = '2' AND cryptonumber = '%d'", _crypt));
 	if(cache_num_rows()) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj broj CRYPTOa vec postoji!");
 	cache_delete(result);
 	
 	PlayerMobile[playerid][pCryptoNumber] = _crypt;
-	mysql_fquery(g_SQL, "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2' ORDER BY id DESC LIMIT 1",
+	mysql_fquery(SQL_Handle(), "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2' ORDER BY id DESC LIMIT 1",
 		PlayerMobile[playerid][pCryptoNumber],
 		PlayerInfo[playerid][pSQLID]
 	);

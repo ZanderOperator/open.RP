@@ -57,7 +57,7 @@ LoadPlayerJob(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_job(sqlid, jobkey, contracttime, freeworks) \n\
 					VALUES('%d', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
@@ -69,9 +69,9 @@ LoadPlayerJob(playerid)
 		cache_get_value_name_int(0,  "freeworks"	, PlayerJob[playerid][pFreeWorks]);
 		return 1;
 	}
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
 		using inline LoadingPlayerJob, 
-        va_fquery(g_SQL, "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
         playerid
    );
@@ -86,7 +86,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerJob(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_job SET jobkey = '%d', contracttime = '%d', freeworks = '%d' WHERE sqlid = '%d'",
         PlayerJob[playerid][pJob],
         PlayerJob[playerid][pContractTime],
@@ -104,7 +104,7 @@ hook function SavePlayerStats(playerid)
 
 SaveJobData() 
 {
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE server_jobs SET Sweeper = '%d', Mechanic = '%d', Crafter = '%d', Taxi = '%d', Farmer = '%d',\n\
 		Logger = '%d', Garbage = '%d', Impounder = '%d' WHERE 1",
 		JobData[SWEEPER],
@@ -136,9 +136,9 @@ LoadServerJobs()
 		cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnServerJobsLoaded, 
-		va_fquery(g_SQL, "SELECT * FROM server_jobs WHERE 1"), 
+		va_fquery(SQL_Handle(), "SELECT * FROM server_jobs WHERE 1"), 
 		""
 	);
 	return 1;
@@ -269,8 +269,8 @@ IllegalFactionJobCheck(factionid, jobid)
     new	Cache:result,
 		counts;
 
-	result = mysql_query(g_SQL, 
-				va_fquery(g_SQL, 
+	result = mysql_query(SQL_Handle(), 
+				va_fquery(SQL_Handle(), 
 					"SELECT sqlid \n\
 						FROM player_jobs, player_faction \n\
 						WHERE player_jobs.jobkey = '%d' \n\

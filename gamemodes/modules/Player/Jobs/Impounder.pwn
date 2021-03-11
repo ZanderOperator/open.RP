@@ -212,7 +212,7 @@ OPUnTowIV(playerid, veh)
 		VehicleInfo[veh][vAngle] 		= z_rot;
 		VehicleInfo[veh][vImpounded] 	= 1;
 	
-		mysql_fquery(g_SQL,
+		mysql_fquery(SQL_Handle(),
 			"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
 			X,
 			Y,

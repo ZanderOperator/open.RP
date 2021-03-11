@@ -2,7 +2,7 @@
 
 static ResetMonthPaydays()
 {
-	mysql_fquery(g_SQL, "UPDATE experience SET monthpaydays = '0' WHERE 1");
+	mysql_fquery(SQL_Handle(), "UPDATE experience SET monthpaydays = '0' WHERE 1");
 	return 1;
 }
 
@@ -96,7 +96,7 @@ CheckAccountsForInactivity()
 			
 			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME)) 
 			{
-				mysql_fquery(g_SQL, "UPDATE player_jobs SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);				
+				mysql_fquery(SQL_Handle(), "UPDATE player_jobs SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);				
 				RemoveOfflineJob(jobkey);
 				
 				Log_Write("logfiles/inactive_players.txt", 
@@ -135,9 +135,9 @@ CheckAccountsForInactivity()
 					if(HouseInfo[houseid][hTakings] > 0)
 						bankmoney += HouseInfo[houseid][hTakings];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
+					mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
-					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'",
 						 HouseInfo[houseid][hSQLID]
 					);
 					
@@ -164,9 +164,9 @@ CheckAccountsForInactivity()
 				if(garageid != INVALID_HOUSE_ID)
 				{
 					bankmoney = GarageInfo[garageid][gPrice];
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
-					mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
+					mysql_fquery(SQL_Handle(), "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 						GarageInfo[garageid][gSQLID]
 					);
 					
@@ -196,9 +196,9 @@ CheckAccountsForInactivity()
 					if(BizzInfo[bizzid][bTill] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
+					mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
-					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
+					mysql_fquery(SQL_Handle(), "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", 
 						"(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
@@ -226,8 +226,8 @@ CheckAccountsForInactivity()
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
 					
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
+					mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(SQL_Handle(), "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", 
 						"(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
@@ -251,7 +251,7 @@ CheckAccountsForInactivity()
 				}
 				if(crid != INVALID_COMPLEX_ID)
 				{	
-					mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
+					mysql_fquery(SQL_Handle(), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
 						ComplexRoomInfo[crid][cSQLID]
 					);					
 
@@ -280,71 +280,38 @@ CheckAccountsForInactivity()
 		return 1;
 	}
 	getdate(_, currentmonth, currentday);
-	if(currentday == 1) 
-	{
-		MySQL_PQueryInline(g_SQL,  
-			using inline OnInactiveAccsLoad, 
-			va_fquery(g_SQL,
-				"SELECT \n\
-					accounts.sqlid, accounts.name, accounts.lastloginstamp, \n\
-					player_vip_status.vipRank, \n\
-					player_job.jobkey, player_job.contracttime, \n\
-					experience.monthpaydays, \n\
-					player_admin_msg.AdminMessage \n\
-				FROM \n\
-					accounts, \n\
-					player_vip_status, \n\
-					player_job, \n\
-					experience, \n\
-					player_admin_msg \n\
-				WHERE \n\
-					accounts.lastloginstamp <= '%d' \n\
-				OR experience.monthpaydays < '%d' \n\
-				AND \n\
-					accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid = player_admin_msg.sqlid \n\
-				AND \n\
-					(SELECT COUNT(*) \n\
-					FROM \n\
-						inactive_accounts \n\
-					WHERE accounts.sqlid = inactive_accounts.sqlid) = 0",
-				MIN_MONTH_PAYDAYS,
-				inactivetimestamp
-			),
-			""
-		);
-	}
-	else 
-	{
-		MySQL_PQueryInline(g_SQL,  
+
+	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnInactiveAccsLoad, 
-			va_fquery(g_SQL,  
-				"SELECT \n\
-					accounts.sqlid, accounts.name, accounts.lastloginstamp, \n\
-					player_vip_status.vipRank, \n\
-					player_job.jobkey, player_job.contracttime, \n\
-					experience.monthpaydays, \n\
-					player_admin_msg.AdminMessage \n\
+		va_fquery(SQL_Handle(),
+			"SELECT \n\
+				accounts.sqlid, accounts.name, accounts.lastloginstamp, \n\
+				player_vip_status.vipRank, \n\
+				player_job.jobkey, player_job.contracttime, \n\
+				experience.monthpaydays, \n\
+				player_admin_msg.AdminMessage \n\
+			FROM \n\
+				accounts, \n\
+				player_vip_status, \n\
+				player_job, \n\
+				experience, \n\
+				player_admin_msg \n\
+			WHERE \n\
+				accounts.lastloginstamp <= '%d' \n\
+			%s \n\
+			AND \n\
+				accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid = player_admin_msg.sqlid \n\
+			AND \n\
+				(SELECT COUNT(*) \n\
 				FROM \n\
-					accounts, \n\
-					player_vip_status, \n\
-					player_job, \n\
-					experience, \n\
-					player_admin_msg \n\
-				WHERE \n\
-					accounts.lastloginstamp <= '%d' \n\
-				AND \n\
-					accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid = player_admin_msg.sqlid \n\
-				AND \n\
-					(SELECT COUNT(*) \n\
-					FROM \n\
-						inactive_accounts \n\
-					WHERE accounts.sqlid = inactive_accounts.sqlid) = 0",
-				MIN_MONTH_PAYDAYS,
-				inactivetimestamp
-			),
-			""
-		);
-	}
+					inactive_accounts \n\
+				WHERE accounts.sqlid = inactive_accounts.sqlid) = 0",
+			MIN_MONTH_PAYDAYS,
+			inactivetimestamp,
+			(currentday == 1) ? ("OR experience.monthpaydays < '%d'") : ""
+		),
+		""
+	);
 		
 	// Monthly EXP rewards for top 5 players with most paydays in previous month
 	inline OnRewardActivePlayers()
@@ -492,9 +459,9 @@ CheckAccountsForInactivity()
 	}
 	if(currentday == 1)
 	{
-		MySQL_PQueryInline(g_SQL,  
+		MySQL_PQueryInline(SQL_Handle(),  
 			using inline OnRewardActivePlayers, 
-			va_fquery(g_SQL,
+			va_fquery(SQL_Handle(),
 				"SELECT \n\
 					accounts.sqlid, \n\
 					accounts.name, \n\

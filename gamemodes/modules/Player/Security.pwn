@@ -76,7 +76,7 @@ Public: OnPasswordUpdateEx(sqlid)
 	new password[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(password);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
 		password,
 		sqlid
 	);
@@ -90,7 +90,7 @@ Public: OnPasswordUpdate(playerid)
 	
 	strcpy(PlayerInfo[playerid][pPassword], password, BCRYPT_HASH_LENGTH);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
 		password,
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -221,7 +221,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			strcpy(PlayerInfo[playerid][pSecQuestAnswer], inputtext, 31);
 			
-			mysql_fquery(g_SQL, "UPDATE accounts SET secquestion = '%d', secawnser = '%e' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET secquestion = '%d', secawnser = '%e' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pSecQuestion],
 				PlayerInfo[playerid][pSecQuestAnswer],
 				PlayerInfo[playerid][pSQLID]
@@ -256,7 +256,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			strcpy(PlayerInfo[playerid][pEmail], inputtext, MAX_PLAYER_MAIL);
 			
-			mysql_fquery(g_SQL, "UPDATE accounts SET email = '%e' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET email = '%e' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pEmail],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -382,7 +382,7 @@ CMD:changepass(playerid, params[])
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[?]: /changepass [Ime_Prezime][password].");
 	
 	// mysql search
-	mysql_search = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", usernick));
+	mysql_search = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", usernick));
 	if(!cache_num_rows())
 		return va_SendClientMessage(playerid,COLOR_RED, "Account %s ne postoji!", usernick), cache_delete(mysql_search);
 	cache_get_value_name_int(0, "sqlid"	, usersql);

@@ -85,8 +85,8 @@ Player_SetGpsActivated(playerid, bool:v)
 static GPS_Load()
 {
     Iter_Clear(GPS_location);
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM gps"), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM gps"), 
         "GPS_Loaded", 
         ""
    );
@@ -120,7 +120,7 @@ public GPS_Loaded()
 
 static GPS_Save(gpsid)
 {
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE gps SET gpsName = '%e', gpsPosX = '%.4f', gpsPosY = '%.4f', gpsPosZ = '%.4f',\n\
             gpsMapIcon = '%d', admin_gps = '%d' WHERE id = '%d'",
         GPS_data[gpsid][gpsName],
@@ -149,7 +149,7 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
     GPS_data[free_id][gpsAdmin]    = 0;
 
     strcpy(GPS_data[free_id][gpsName], gps_name);
-    mysql_tquery(g_SQL, 
+    mysql_tquery(SQL_Handle(), 
         "INSERT INTO gps (gpsCreated) VALUES(1)", 
         "GPS_Created", 
         "i", 
@@ -179,7 +179,7 @@ static GPS_Delete(gpsid)
             RemovePlayerMapIcon(gpsid, GPS_data[i][gpsMapIcon]);
     }
 
-    mysql_fquery(g_SQL, "DELETE FROM gps WHERE id = '%d'", GPS_data[gpsid][gpsID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM gps WHERE id = '%d'", GPS_data[gpsid][gpsID]);
 
     strcpy(GPS_data[gpsid][gpsName], "None");
     GPS_data[gpsid][gpsMapIcon] = -1;

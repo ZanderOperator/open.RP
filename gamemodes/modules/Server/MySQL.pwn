@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-new 
+static 
     MySQL:g_SQL,        // Main Database Connection Handler
     va_query[2048];     // Main MySQL query string 
 
@@ -16,6 +16,11 @@ new
     88       `"YbbdP'Y8 88       88  `"Ybbd8"' `"YbbdP"'  
 
 */
+
+MySQL:SQL_Handle()
+{
+    return g_SQL;
+}
 
 // Formated mysql_tquery
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)

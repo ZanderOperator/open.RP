@@ -84,7 +84,7 @@ Player_SetPickupCP(playerid, v)
 
 stock LoadPickups()
 {
-	mysql_pquery(g_SQL, "SELECT * FROM server_pickups WHERE 1", "OnPickupsLoad");
+	mysql_pquery(SQL_Handle(), "SELECT * FROM server_pickups WHERE 1", "OnPickupsLoad");
 	return 1;
 }
 
@@ -200,10 +200,10 @@ stock static ClearInputsPick(playerid)
 
 stock static CreateNewPickup(playerid, pickup)
 {
-	mysql_pquery(g_SQL, "BEGIN");
+	mysql_pquery(SQL_Handle(), "BEGIN");
 
-	mysql_pquery(g_SQL,
-		va_fquery(g_SQL,
+	mysql_pquery(SQL_Handle(),
+		va_fquery(SQL_Handle(),
 			"INSERT INTO server_pickups (pickupmodel,pickuptype,canenter,\n\
 				entrancex, entrancey, entrancez,exitx,exity,exitz,enterdiscription, discription, viwo, organizations, job, pint) \n\
 				VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
@@ -227,7 +227,7 @@ stock static CreateNewPickup(playerid, pickup)
 		"i", 
 		pickup
 	);
-	mysql_pquery(g_SQL, "COMMIT");
+	mysql_pquery(SQL_Handle(), "COMMIT");
 		
     PickupInfo[pickup][epID] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
 	
@@ -398,7 +398,7 @@ CMD:deletepickup(playerid, params[])
 	PickupInfo[pickup][epExity] 		= 0.0;
 	PickupInfo[pickup][epExitz] 		= 0.0;
 	
-	mysql_fquery(g_SQL, "DELETE FROM server_pickups WHERE id = '%d'", PickupInfo[pickup][epSQLID]);
+	mysql_fquery(SQL_Handle(), "DELETE FROM server_pickups WHERE id = '%d'", PickupInfo[pickup][epSQLID]);
 	
 	DestroyDynamicPickup(PickupInfo[pickup][epID]);
 

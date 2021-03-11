@@ -99,7 +99,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype)
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}
 	}
-	mysql_fquery_ex(g_SQL, 
+	mysql_fquery_ex(SQL_Handle(), 
 		"INSERT INTO server_transactions (sendername, recievername, money, logtype, date, description) \n\
 			VALUES ('%e','%e','%d','%d','%e','%e')",
 		GetName(playerid, false),
@@ -134,7 +134,7 @@ stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log = false, 
 	AC_GivePlayerMoney(giveplayerid, finalmoney); 			
 	
 	CityInfo[cBudget] += taxmoney;
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	if(log) 
 		LogTransaction ( playerid, giveplayerid, safemoney, logtype);
@@ -153,10 +153,10 @@ stock PlayerToBusinessMoneyTAX ( playerid, bizid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 				 							
 
 	CityInfo[cBudget] += taxmoney;
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	BizzInfo[bizid][bTill] += finalmoney;
-	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 		BizzInfo[bizid][bTill],
 		BizzInfo[bizid][bSQLID]
 	);
@@ -170,7 +170,7 @@ stock PlayerToBusinessMoney ( playerid, bizid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 			
 	
 	BizzInfo[bizid][bTill] += safemoney;				
-	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 		BizzInfo[bizid][bTill],
 		BizzInfo[bizid][bSQLID]
 	);
@@ -189,10 +189,10 @@ stock BusinessToPlayerMoneyTAX ( playerid, bizid, money)
 	AC_GivePlayerMoney(playerid, finalmoney); 				
 
 	CityInfo[cBudget] += taxmoney;
-	mysql_fquery(g_SQL,"UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(),"UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	BizzInfo[bizid][bTill] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 		BizzInfo[bizid][bTill],
 		BizzInfo[bizid][bSQLID]
 	);
@@ -206,7 +206,7 @@ stock BusinessToPlayerMoney ( playerid, bizid, money)
 	AC_GivePlayerMoney(playerid, safemoney); 			
 
 	BizzInfo[bizid][bTill] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 		BizzInfo[bizid][bTill],
 		BizzInfo[bizid][bSQLID]
 	);
@@ -220,7 +220,7 @@ stock PlayerToBudgetMoney(playerid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 				
 	
 	CityInfo[cBudget] += safemoney; 
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	return 1;
 }
 
@@ -231,7 +231,7 @@ stock BudgetToPlayerMoney (playerid, money)
 	AC_GivePlayerMoney(playerid, safemoney);
 
 	CityInfo[cBudget] -= safemoney; 
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	return 1;
 }
 
@@ -240,10 +240,10 @@ stock BudgetToPlayerBankMoney (playerid, money)
 	new safemoney = floatround(floatabs(money));
 
 	CityInfo[cBudget] -= safemoney; 
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	
 	PlayerInfo[playerid][pBank] += safemoney; 
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -255,10 +255,10 @@ stock PlayerBankToBudgetMoney ( playerid, money)
 	new safemoney = floatround(floatabs(money));
 
 	CityInfo[cBudget] += safemoney;
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	PlayerInfo[playerid][pBank] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -272,7 +272,7 @@ stock PlayerToComplexMoney (playerid, complexid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 		
 
 	ComplexInfo[complexid][cTill] += safemoney;
-	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 		ComplexInfo[complexid][cTill],
 		ComplexInfo[complexid][cSQLID]
 	);
@@ -291,10 +291,10 @@ stock PlayerToComplexMoneyTAX ( playerid, complexid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 	
 
 	CityInfo[cBudget] += taxmoney; 				
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	ComplexInfo[complexid][cTill] += finalmoney;
-	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 		ComplexInfo[complexid][cTill],
 		ComplexInfo[complexid][cSQLID]
 	);
@@ -306,13 +306,13 @@ stock PlayerBankToComplexMoney ( playerid, complexid, money)
 	new safemoney = floatround(floatabs(money));
 					
 	ComplexInfo[complexid][cTill] += safemoney;				
-	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 		ComplexInfo[complexid][cTill],
 		ComplexInfo[complexid][cSQLID]
 	);
 
 	PlayerInfo[playerid][pBank] -= safemoney; 
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -329,16 +329,16 @@ stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money)
 		finalmoney = safemoney - taxmoney;	
 						
 	CityInfo[cBudget] += taxmoney;
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	ComplexInfo[complexid][cTill] += finalmoney;			
-	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 		ComplexInfo[complexid][cTill],
 		ComplexInfo[complexid][cSQLID]
 	);
 
 	PlayerInfo[playerid][pBank] -= safemoney; 
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -354,7 +354,7 @@ stock ComplexToPlayerMoney (playerid, complexid, money)
 	AC_GivePlayerMoney(playerid, safemoney); 				
 
 	ComplexInfo[complexid][cTill] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 		ComplexInfo[complexid][cTill],
 		ComplexInfo[complexid][cSQLID]
 	);
@@ -373,10 +373,10 @@ stock ComplexToPlayerMoneyTAX ( playerid, complexid, money)
 	AC_GivePlayerMoney(playerid, finalmoney); 
 
 	CityInfo[cBudget] += taxmoney; 
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	
 	ComplexInfo[complexid][cTill] -= safemoney;	
-	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 		ComplexInfo[complexid][cTill],
 		ComplexInfo[complexid][cSQLID]
 	);
@@ -388,7 +388,7 @@ stock PlayerToHouseMoney ( playerid, houseid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 
 
 	HouseInfo[houseid][hTakings] += safemoney;	
-	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 	);
@@ -407,10 +407,10 @@ stock PlayerToHouseMoneyTAX ( playerid, houseid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 					
 	
 	CityInfo[cBudget] += taxmoney; 	
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	HouseInfo[houseid][hTakings] += finalmoney;
-	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 	);
@@ -426,16 +426,16 @@ stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money)
 		finalmoney = safemoney - taxmoney; 					
 	
 	CityInfo[cBudget] += taxmoney; 								
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	PlayerInfo[playerid][pBank] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
 
 	HouseInfo[houseid][hTakings] += finalmoney;
-	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 	);
@@ -449,7 +449,7 @@ stock HouseToPlayerMoney ( playerid, houseid, money)
 	AC_GivePlayerMoney(playerid, safemoney); 				
 	
 	HouseInfo[houseid][hTakings] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 	);
@@ -468,10 +468,10 @@ stock HouseToPlayerMoneyTAX ( playerid, houseid, money)
 	AC_GivePlayerMoney(playerid, finalmoney); 				
 
 	CityInfo[cBudget] += taxmoney; 	
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	HouseInfo[houseid][hTakings] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 	);
@@ -485,7 +485,7 @@ stock PlayerToIllegalBudgetMoney (playerid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 
 
 	CityInfo[cIllegalBudget] += safemoney; 
-	mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
 	return 1;
 }
 
@@ -494,7 +494,7 @@ stock IllegalBudgetToPlayerMoney (playerid, money)
 	new safemoney = floatround(floatabs(money));
 	
 	CityInfo[cIllegalBudget] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
 
 	AC_GivePlayerMoney(playerid, safemoney);
 	return 1;
@@ -505,7 +505,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 	new safemoney = floatround(floatabs(money));
 	
 	CityInfo[cIllegalBudget] += safemoney;
-	mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
+	mysql_fquery(SQL_Handle(), "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
 	
 	WarehouseInfo[whid][whMoney] -= money;
 	UpdateWarehouseMoney(whid);
@@ -519,7 +519,7 @@ stock BankToPlayerMoney (playerid, money)
 	AC_GivePlayerMoney(playerid, safemoney);
 
 	PlayerInfo[playerid][pBank] -= safemoney;
-	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -533,7 +533,7 @@ stock PlayerToBankMoney (playerid, money)
 	AC_GivePlayerMoney(playerid, -safemoney); 				
 	
 	PlayerInfo[playerid][pBank] += safemoney;		
-	mysql_fquery(g_SQL,  "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(),  "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -545,10 +545,10 @@ stock BusinessToBudgetMoney ( bizid, money)
 	new safemoney = floatround(floatabs(money));
 
 	CityInfo[cBudget] += safemoney; 						
-	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(),  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	BizzInfo[bizid][bTill] -= safemoney; 
-	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 		BizzInfo[bizid][bTill],
 		BizzInfo[bizid][bSQLID]
 	);
@@ -560,10 +560,10 @@ stock BudgetToBusinessMoney ( bizid, money)
 	new safemoney = floatround(floatabs(money));
 		
 	CityInfo[cBudget] -= safemoney;
-	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	mysql_fquery(SQL_Handle(),  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	BizzInfo[bizid][bTill] += safemoney;
-	mysql_fquery(g_SQL,  "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+	mysql_fquery(SQL_Handle(),  "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 		BizzInfo[bizid][bTill],
 		BizzInfo[bizid][bSQLID]
 	);
@@ -577,7 +577,7 @@ stock IllegalToLegalBudgetMoney (money)
 	CityInfo[cIllegalBudget] -= safemoney; 	
 	CityInfo[cBudget] += safemoney; 
 
-	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d', illegalbudget = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE city SET budget = '%d', illegalbudget = '%d'", 
 		CityInfo[cBudget],
 		CityInfo[cIllegalBudget]
 	);

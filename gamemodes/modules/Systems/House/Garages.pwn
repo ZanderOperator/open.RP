@@ -221,8 +221,8 @@ stock CreateGarageInfoTD(playerid, garage)
 
 stock LoadHouseGarages()
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_garages WHERE 1"), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_garages WHERE 1"), 
         "OnHouseGaragesLoad", 
         ""
    );
@@ -604,7 +604,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             GarageInfo[garage][gOwnerID] = PlayerInfo[playerid][pSQLID];
             PlayerKeys[seller][pGarageKey] = -1;
 
-            mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '%d' WHERE id = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE server_garages SET ownerid = '%d' WHERE id = '%d'",
                    GarageInfo[garage][gOwnerID],
                    GarageInfo[garage][gSQLID]
            );
@@ -661,8 +661,8 @@ CMD:create_garage(playerid, params[])
     
     strcpy(GarageInfo[garage][gAdress], adress, 16);
     
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO server_garages (ownerid, adress, price, locked, houseid, enterX, enterY, enterZ,\n\
                 exitX, exitY, exitZ) \n\
                 VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
@@ -758,7 +758,7 @@ CMD:garage(playerid, params[])
         GarageInfo[nearGarage][gOwnerID] = PlayerInfo[playerid][pSQLID];
         GarageInfo[nearGarage][gLocked] = 1;
 
-        mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '%d', locked = '1' WHERE id = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE server_garages SET ownerid = '%d', locked = '1' WHERE id = '%d'",
             GarageInfo[nearGarage][gOwnerID],
             GarageInfo[nearGarage][gSQLID]
        );
@@ -827,7 +827,7 @@ CMD:garage(playerid, params[])
         GarageInfo[garageid][gExitY] = GaragesIntInfo[type][giY];
         GarageInfo[garageid][gExitZ] = GaragesIntInfo[type][giZ];
 
-        mysql_fquery(g_SQL, "UPDATE server_garages SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
+        mysql_fquery(SQL_Handle(), "UPDATE server_garages SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
             GarageInfo[garageid][gExitX],
             GarageInfo[garageid][gExitY],
             GarageInfo[garageid][gExitZ],
@@ -841,7 +841,7 @@ CMD:garage(playerid, params[])
             garageid = Player_InfrontGarage(playerid);
         if(garageid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
 
-        mysql_fquery(g_SQL, "DELETE FROM server_garages WHERE id = '%d' LIMIT 1", GarageInfo[garageid][gSQLID]);
+        mysql_fquery(SQL_Handle(), "DELETE FROM server_garages WHERE id = '%d' LIMIT 1", GarageInfo[garageid][gSQLID]);
 
         if(IsValidDynamicPickup(GarageInfo[garageid][gEnterPck]))
             DestroyDynamicPickup(GarageInfo[garageid][gEnterPck]);
@@ -924,7 +924,7 @@ CMD:garageentrance(playerid, params[])
 
     CreateGarageEnter(proplev);
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE server_garages SET enterX = '%f', enterY = '%f', enterZ = '%f' WHERE id = '%d'",
         X,
         Y,
@@ -961,7 +961,7 @@ CMD:customgarageint(playerid, params[])
     GarageInfo[garageid][gExitY] = Y;
     GarageInfo[garageid][gExitZ] = Z;
 
-    mysql_fquery(g_SQL, "UPDATE server_garages SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE server_garages SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
         GarageInfo[garageid][gExitX],
         GarageInfo[garageid][gExitY],
         GarageInfo[garageid][gExitZ],

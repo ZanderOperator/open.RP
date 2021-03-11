@@ -6,7 +6,7 @@ LoadPlayerHealth(playerid)
     {
         if(!cache_num_rows())
         {
-            mysql_fquery_ex(g_SQL, 
+            mysql_fquery_ex(SQL_Handle(), 
                 "INSERT INTO player_health(sqlid, health, armour, hunger) \n\
                     VALUES('%d', '100.0', '0.0', '5.0')",
                 PlayerInfo[playerid][pSQLID]
@@ -18,9 +18,9 @@ LoadPlayerHealth(playerid)
         cache_get_value_name_float(0,	"hunger"	, PlayerHealth[playerid][pHunger]);
         return 1;
     }
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
         using inline LoadingPlayerHealth,
-        va_fquery(g_SQL, "SELECT * FROM player_health WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_health WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
     );
     return 1;
@@ -34,7 +34,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerHealth(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_health SET health = '%d', armour = '%d', hunger = '%d' WHERE sqlid = '%d'",
         PlayerHealth[playerid][pHealth],
         PlayerHealth[playerid][pArmour],

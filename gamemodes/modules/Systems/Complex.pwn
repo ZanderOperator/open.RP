@@ -173,8 +173,8 @@ stock DestroyCompInfoTD(playerid)
 stock LoadComplexes()
 {
     Iter_Init(Complex);
-    mysql_pquery(g_SQL,
-        va_fquery(g_SQL, "SELECT * FROM server_complex WHERE 1"), 
+    mysql_pquery(SQL_Handle(),
+        va_fquery(SQL_Handle(), "SELECT * FROM server_complex WHERE 1"), 
         "OnServerComplexLoad",
         ""
     );
@@ -184,8 +184,8 @@ stock LoadComplexes()
 stock LoadComplexRooms()
 {
     Iter_Init(ComplexRoom);
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL,"SELECT * FROM server_complex_rooms WHERE 1"), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(),"SELECT * FROM server_complex_rooms WHERE 1"), 
         "OnComplexRoomsLoad",
         ""
    );
@@ -262,7 +262,7 @@ stock GetComplexRooms(sqlid)
             query[128];
 
         format(query, sizeof(query), "SELECT COUNT(id) FROM server_complex_rooms WHERE complex_id = '%d' AND active = 1", sqlid);
-        result = mysql_query(g_SQL, query);
+        result = mysql_query(SQL_Handle(), query);
         cache_get_value_index(0, 0, dest);
         cache_delete(result);
     }
@@ -729,12 +729,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     ComplexInfo[complex][cOwnerID]  = -1;
 
-                    mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = 0 WHERE id = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE server_complex SET owner_id = 0 WHERE id = '%d'",
                         ComplexInfo[complex][cSQLID]
                    );
 
                     PlayerInfo[playerid][pSpawnChange] = 0;
-                    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
                    );
@@ -751,11 +751,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste izbacili %s iz vaseg Complex-a!", ConvertSQLIDToName(ComplexRoomInfo[complex][cOwnerID]));
 
-                    mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
                         ComplexRoomInfo[complex][cSQLID]
                    );
 
-                    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'",
                         ComplexRoomInfo[complex][cOwnerID]
                    );
                     ComplexRoomInfo[complex][cOwnerID] = -1;
@@ -824,7 +824,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ComplexRoomInfo[room_id][cActive] = 1;
                     ComplexRoomInfo[room_id][cRPickup] = CreateDynamicPickup(1273, 2, ComplexRoomInfo[room_id][cEnterX], ComplexRoomInfo[room_id][cEnterY], ComplexRoomInfo[room_id][cEnterZ], ComplexRoomInfo[room_id][cVWExit], ComplexRoomInfo[room_id][cIntExit], -1, 30.0);
 
-                    mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET active = '%d' WHERE id = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE server_complex_rooms SET active = '%d' WHERE id = '%d'",
                         ComplexRoomInfo[room_id][cActive],
                         ComplexRoomInfo[room_id][cSQLID]
                    );
@@ -857,7 +857,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste unaprijedili interior sobe.");
                     ComplexRoomInfo[room_id][cQuality]++;
 
-                    mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET quality = '%d' WHERE id = '%d'",
+                    mysql_fquery(SQL_Handle(), "UPDATE server_complex_rooms SET quality = '%d' WHERE id = '%d'",
                         ComplexRoomInfo[room_id][cQuality],
                         ComplexRoomInfo[room_id][cSQLID]
                    );
@@ -879,7 +879,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new room_id = SelectedRoom[playerid];
 
             ComplexRoomInfo[room_id][cValue] = value;
-            mysql_fquery(g_SQL,"UPDATE server_complex_rooms SET value = '%d' WHERE id = '%d'",
+            mysql_fquery(SQL_Handle(),"UPDATE server_complex_rooms SET value = '%d' WHERE id = '%d'",
                 ComplexRoomInfo[room_id][cValue],
                 ComplexRoomInfo[room_id][cSQLID]
            );
@@ -901,7 +901,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
           
             // TODO: strcpy
             format(ComplexInfo[complex_id][cName], 25, inputtext);
-            mysql_fquery(g_SQL, "UPDATE server_complex SET name = '%e' WHERE id = '%d'",
+            mysql_fquery(SQL_Handle(), "UPDATE server_complex SET name = '%e' WHERE id = '%d'",
                 ComplexInfo[complex_id][cName],
                 ComplexInfo[complex_id][cSQLID]
            );
@@ -974,17 +974,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                 PlayerInfo[playerid][pSpawnChange] = 3;
 
-                mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
+                mysql_fquery(SQL_Handle(), "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
                     ComplexInfo[complex_id][cOwnerID],
                     ComplexInfo[complex_id][cSQLID]
                );
 
-                mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+                mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[playerid][pSpawnChange],
                     PlayerInfo[playerid][pSQLID]
                );
 
-                mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+                mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[pID][pSpawnChange],
                     PlayerInfo[pID][pSQLID]
                );
@@ -1059,7 +1059,7 @@ CMD:buycomplex(playerid, params[])
     PlayerInfo[playerid][pSpawnChange] = 3;
     PlayerPlayTrackSound(playerid);
 
-    mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         ComplexInfo[complex][cSQLID]
    );
@@ -1116,12 +1116,12 @@ CMD:rentroom(playerid, params[])
     PlayerInfo[playerid][pSpawnChange] = 3;
     ComplexRoomInfo[complex][cOwnerID] = PlayerInfo[playerid][pSQLID];
 
-    mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '%d' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE server_complex_rooms SET ownerid = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         ComplexRoomInfo[complex][cSQLID]
    );
 
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
    );
@@ -1149,7 +1149,7 @@ CMD:unrentroom(playerid, params[])
     new complex_id = PlayerKeys[playerid][pComplexRoomKey];
     if(complex_id == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi nemate zakupljenu sobu!");
 
-    mysql_fquery(g_SQL,"UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
+    mysql_fquery(SQL_Handle(),"UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
         ComplexRoomInfo[complex_id][cSQLID]
    );
 
@@ -1161,7 +1161,7 @@ CMD:unrentroom(playerid, params[])
     else
         PlayerInfo[playerid][pSpawnChange] = 0;
 
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
    );

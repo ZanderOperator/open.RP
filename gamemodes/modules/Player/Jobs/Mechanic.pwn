@@ -388,7 +388,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInventory[giveplayerid][pParts] -= 5;
 
-				mysql_fquery(g_SQL, "UPDATE cocars SET destroys = '%d' WHERE id = '%d'",
+				mysql_fquery(SQL_Handle(), "UPDATE cocars SET destroys = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vDestroys],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
@@ -413,7 +413,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInventory[giveplayerid][pParts] -= 2;
 
-				mysql_fquery(g_SQL, "UPDATE cocars SET stereo = '%d' WHERE id = '%d'",
+				mysql_fquery(SQL_Handle(), "UPDATE cocars SET stereo = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vStereo],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
@@ -446,7 +446,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInventory[giveplayerid][pParts] -= 4000;
 
-				mysql_fquery(g_SQL, "UPDATE cocars SET tirearmor = '%d' WHERE id = '%d'",
+				mysql_fquery(SQL_Handle(), "UPDATE cocars SET tirearmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vTireArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
@@ -473,7 +473,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInventory[giveplayerid][pParts] -= 7000;
 
-				mysql_fquery(g_SQL, "UPDATE cocars SET bodyarmor = '%d' WHERE id = '%d'",
+				mysql_fquery(SQL_Handle(), "UPDATE cocars SET bodyarmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);

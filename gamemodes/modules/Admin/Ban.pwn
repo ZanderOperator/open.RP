@@ -92,13 +92,13 @@ stock HOOK_Ban(playerid, adminid, const reason[], days = -1)
 		unban_time += gettimestamp();
 	}
 
-	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE sqlid = '%d'",
 		unban_time,
 		reason,
 		PlayerInfo[playerid][pSQLID]
 	);
 
-	mysql_fquery_ex(g_SQL, 
+	mysql_fquery_ex(SQL_Handle(), 
 		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
 			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
@@ -154,17 +154,17 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 
 		cache_get_value_name_int(0, "sqlid", sqlid);
 
-		mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE name = '%e'",
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE name = '%e'",
 			unban_time,
 			reason,
 			playername
 		);
 
-		mysql_fquery(g_SQL, "UPDATE experience SET points = '0', allpoints = '0' WHERE sqlid = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE experience SET points = '0', allpoints = '0' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery_ex(g_SQL, 
+		mysql_fquery_ex(SQL_Handle(), 
 			"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
 				VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 			sqlid,
@@ -177,9 +177,9 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 		);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline BanAccount, 
-		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername),
+		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", playername),
 		""
 	);
 	return 1;
@@ -187,7 +187,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 
 stock UnbanPlayerName(const playername[], adminid)
 {
-	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '0', playaBanReason = '' WHERE name = '%e'", playername);
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaUnbanTime = '0', playaBanReason = '' WHERE name = '%e'", playername);
 	va_SendClientMessage(adminid, COLOR_RED, "[!]: You have sucesfully unbanned account %s!", playername);
 
 	#if defined MODULE_LOGS

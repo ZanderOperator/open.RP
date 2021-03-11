@@ -209,8 +209,8 @@ Public:OnWeaponInsertQuery(playerid, slotid)
 
 stock AC_LoadPlayerWeapons(playerid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"LoadPlayerWeapons", 
 		"i", 
 		playerid
@@ -233,7 +233,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"UPDATE player_weapons SET player_id = '%d', weapon_id = '%d', weapon_ammo = '%d', hidden = '%d'\n\
 				WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID],
@@ -245,8 +245,8 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	}
 	else if(PlayerWeapons[playerid][pwSQLID][slotid] == -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		mysql_tquery(g_SQL, 
-				va_fquery(g_SQL, 
+		mysql_tquery(SQL_Handle(), 
+				va_fquery(SQL_Handle(), 
 				"INSERT INTO player_weapons (player_id, weapon_id, weapon_ammo, hidden) \n\
 					VALUES ('%d', '%d', '%d', '%d')",
 				PlayerInfo[playerid][pSQLID],
@@ -454,7 +454,7 @@ stock AC_ResetPlayerWeapons(playerid, bool:base_reset=true)
 	if(base_reset)
 	{
 		Iter_Clear(P_Weapons[playerid]);
-		mysql_fquery(g_SQL, "DELETE FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
+		mysql_fquery(SQL_Handle(), "DELETE FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	}
 	return 1;
 }
@@ -498,7 +498,7 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 	// MySQL Query
 	if(base_update)
 	{
-		mysql_fquery(g_SQL,  "DELETE FROM player_weapons WHERE player_id = '%d' AND weapon_id = '%d'", 
+		mysql_fquery(SQL_Handle(),  "DELETE FROM player_weapons WHERE player_id = '%d' AND weapon_id = '%d'", 
 			PlayerInfo[playerid][pSQLID], 
 			weaponid
 		);

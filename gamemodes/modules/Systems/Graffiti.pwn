@@ -159,8 +159,8 @@ static
 // TODO: bad spelling. LoadGraffiti
 stock LoadGraffits()
 {
-    mysql_pquery(g_SQL,
-        va_fquery(g_SQL, "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS), 
+    mysql_pquery(SQL_Handle(),
+        va_fquery(SQL_Handle(), "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS), 
         "OnGraffitsLoad"
    );
     return 1;
@@ -325,10 +325,10 @@ stock GetGrafColor(colorid)
 
 stock InsertGraffitIntoDB(grafid)
 {    
-    mysql_pquery(g_SQL, "BEGIN", "");
+    mysql_pquery(SQL_Handle(), "BEGIN", "");
 
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), 
             "INSERT INTO graffiti (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) \n\
                 VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
             GraffitInfo[grafid][gText],
@@ -348,7 +348,7 @@ stock InsertGraffitIntoDB(grafid)
         grafid
    );
 
-    mysql_pquery(g_SQL, "COMMIT", "");
+    mysql_pquery(SQL_Handle(), "COMMIT", "");
     return 1;
 }
 
@@ -467,7 +467,7 @@ stock EditGraffit(grafid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
     GraffitInfo[grafid][gRotY] = newRotY;
     GraffitInfo[grafid][gRotZ] = newRotZ;
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE graffiti SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
         GraffitInfo[grafid][gPosX],
         GraffitInfo[grafid][gPosY],
@@ -485,7 +485,7 @@ stock DestroyGraffit(grafid)
 {
     if(grafid == -1) return 0;
 
-    mysql_fquery(g_SQL, "DELETE FROM graffiti WHERE id = '%i'", GraffitInfo[grafid][gId]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM graffiti WHERE id = '%i'", GraffitInfo[grafid][gId]);
 
     if(IsValidDynamicObject(GraffitInfo[grafid][gObject]))
         DestroyDynamicObject(GraffitInfo[grafid][gObject]);
@@ -574,8 +574,8 @@ public OnTagsLoaded()
 
 stock LoadTags()
 {
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
+    mysql_pquery(SQL_Handle(), 
+        va_fquery(SQL_Handle(), "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
         "OnTagsLoaded",
         ""
    );
@@ -664,7 +664,7 @@ stock GetOfficialGangTag(playerid)
 
 stock InsertSprayTagIntoDB(tagid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "INSERT INTO spraytags (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) \n\
             VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
         TagInfo[tagid][tModelid],
@@ -754,7 +754,7 @@ stock EditSprayTag(tagid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
     TagInfo[tagid][tRotY] = newRotY;
     TagInfo[tagid][tRotZ] = newRotZ;
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery(SQL_Handle(), 
         "UPDATE spraytags SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
         TagInfo[tagid][tPosX],
         TagInfo[tagid][tPosY],
@@ -773,7 +773,7 @@ stock DestroySprayTag(tagid)
     if(IsValidDynamicObject(TagInfo[tagid][tgObject]))
         DestroyDynamicObject(TagInfo[tagid][tgObject]);
 
-    mysql_fquery(g_SQL, "DELETE FROM spraytags WHERE id = '%d'", TagInfo[tagid][tId]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM spraytags WHERE id = '%d'", TagInfo[tagid][tId]);
 
     TagInfo[tagid][tId]         = -1;
     TagInfo[tagid][tModelid]    = -1;

@@ -29,7 +29,7 @@ LoadPlayerPayday(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(g_SQL, 
+			mysql_fquery_ex(SQL_Handle(), 
 				"INSERT INTO player_payday(sqlid, payday, paydaymoney, paydayhad, profit, dialog, date) \n\
 					VALUES('%d', '0', '0', '0', '0', ' ', ' ')",
 				PlayerInfo[playerid][pSQLID]
@@ -44,9 +44,9 @@ LoadPlayerPayday(playerid)
 		cache_get_value_name(0, 	"date"	        , PaydayInfo[playerid][pPayDayDate], 32);
 		return 1;
 	}
-    MySQL_PQueryInline(g_SQL, 
+    MySQL_PQueryInline(SQL_Handle(), 
 		using inline LoadingPlayerPayday,
-		va_fquery(g_SQL, "SELECT * FROM player_payday WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+		va_fquery(SQL_Handle(), "SELECT * FROM player_payday WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
         playerid
    );
@@ -61,7 +61,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerPayday(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_payday SET payday = '%d', paydaymoney = '%d', paydayhad = '%d', profit = '%d',\n\
             dialog = '%e', date = '%e' WHERE sqlid = '%d'",
         PaydayInfo[playerid][pPayDay],
@@ -136,7 +136,7 @@ GivePlayerPayCheck(playerid)
 		PlayerMobile[playerid][pMobileCost] = 0;
 		profit -= PlayerMobile[playerid][pMobileCost];
 		
-		mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+		mysql_fquery(SQL_Handle(), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
 			PlayerMobile[playerid][pMobileCost],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -337,7 +337,7 @@ GivePlayerPayCheck(playerid)
 			PlayerSavings[playerid][pSavingsType] = 0;
 			PlayerSavings[playerid][pSavingsMoney] = 0;
 
-			mysql_fquery(g_SQL, 
+			mysql_fquery(SQL_Handle(), 
 				"UPDATE accounts SET bankMoney = '%d'WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSQLID]

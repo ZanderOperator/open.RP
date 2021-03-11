@@ -21,8 +21,8 @@ stock SaveAdminConnectionTime(playerid)
 
 	new Cache:result;
 	
-	result = mysql_query(g_SQL, 
-				va_fquery(g_SQL, 
+	result = mysql_query(SQL_Handle(), 
+				va_fquery(SQL_Handle(), 
 					"SELECT * FROM stats_admins WHERE sqlid = '%d' AND \n\
 						EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())", 
 					PlayerInfo[playerid][pSQLID]
@@ -31,14 +31,14 @@ stock SaveAdminConnectionTime(playerid)
 	
 	if(cache_num_rows()) 
 	{
-		mysql_fquery(g_SQL, "UPDATE stats_admins SET times = '%d' WHERE sqlid = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE stats_admins SET times = '%d' WHERE sqlid = '%d'", 
 			ExpInfo[playerid][eMonthPayDays], 
 			PlayerInfo[playerid][pSQLID] 
 		);
 	} 
 	else 
 	{
-		mysql_fquery(g_SQL, "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
+		mysql_fquery(SQL_Handle(), "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
 			PlayerInfo[playerid][pSQLID],
 			ExpInfo[playerid][eMonthPayDays]
 		);
@@ -58,8 +58,8 @@ stock static GetAdminConnectionTime(playerid, giveplayerid)
 
 stock static GetAdminConnectionTimeEx(playerid, sqlid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), 
 			"SELECT * FROM stats_admins WHERE sqlid = '%d' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())",
 			 sqlid
 		), 

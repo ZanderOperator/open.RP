@@ -139,7 +139,7 @@ GetIllegalGarageFromSQL(sqlid)
 
 static DeleteIllegalGarage(garage)
 {
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		"DELETE FROM illegal_garages WHERE id = '%d'",
 		IllegalGarage[garage][igSQLID]
 	);
@@ -155,9 +155,9 @@ static CreateIllegalGarage(garage)
 		InitIllegalGarage(garage);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,  
+	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnIllegalGarageCreated, 
-		va_fquery(g_SQL,
+		va_fquery(SQL_Handle(),
 			"INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, boardX, boardY, boardZ, rotZ) \n\
 				VALUES ('0', '%e', '0', '0', '%f', '%f', '%f', '%f')",
 			IllegalGarage[garage][igName],
@@ -198,9 +198,9 @@ static LoadIllegalGarages()
 		printf("MySQL Report: Illegal Garages Loaded. [%d/%d]", cache_num_rows(), MAX_ILLEGAL_GARAGES);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,  
+	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnIllegalGaragesLoad,
-		va_fquery(g_SQL, "SELECT * FROM illegal_garages"),
+		va_fquery(SQL_Handle(), "SELECT * FROM illegal_garages"),
 		""
 	);
 	return 1;
@@ -231,7 +231,7 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 	}
 	if(!save) 
 	{
-		mysql_fquery(g_SQL, "UPDATE illegal_garages SET wantedlevel = '%d', jackedcars = '%d' WHERE id = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE illegal_garages SET wantedlevel = '%d', jackedcars = '%d' WHERE id = '%d'", 
 			IllegalGarage[garage][igWantedLevel],
 			IllegalGarage[garage][igCarsJacked], 
 			IllegalGarage[garage][igSQLID]
@@ -459,7 +459,7 @@ static IllegalGarageToPlayerMoney(playerid, garage, money)
 	new
 		safemoney = floatround(floatabs(money));	
 	IllegalGarage[garage][igMoney] -= safemoney;
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		"UPDATE illegal_garages SET money = '%d' WHERE id = '%d'",
 		IllegalGarage[garage][igMoney],
 		IllegalGarage[garage][igSQLID]
@@ -473,7 +473,7 @@ static PlayerToIllegalGarageMoney(playerid, garage, money)
 	new
 		safemoney = floatround(floatabs(money));	
 	IllegalGarage[garage][igMoney] += safemoney;
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		"UPDATE illegal_garages SET money = '%d' WHERE id = '%d'",
 		IllegalGarage[garage][igMoney],
 		IllegalGarage[garage][igSQLID]
@@ -539,7 +539,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		
 		IllegalGarage[garage][igCarsJacked]++;
 		
-		mysql_fquery(g_SQL, "UPDATE illegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE illegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
 			IllegalGarage[garage][igCarsJacked], 
 			IllegalGarage[garage][igSQLID]
 		);
@@ -567,7 +567,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		IllegalGarageToPlayerMoney(playerid, garage, value);
 
 		IllegalGarage[garage][igMoney] += (LandVehicles[PlayerJackingCar[playerid]][viCarJackerPrice] * 3);
-		mysql_fquery(g_SQL,
+		mysql_fquery(SQL_Handle(),
 			"UPDATE illegal_garages SET money = '%d' WHERE id = '%d'",
 			IllegalGarage[garage][igMoney],
 			IllegalGarage[garage][igSQLID] 
@@ -839,7 +839,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			IllegalGarage[garage][igWantedLevel] = 0;
 			IllegalGarage[garage][igCarsJacked] = 0;
 
-			mysql_fquery(g_SQL, "UPDATE illegal_garages SET wantedlevel = '%d', jackedcars = '%d' WHERE id = '%d'", 
+			mysql_fquery(SQL_Handle(), "UPDATE illegal_garages SET wantedlevel = '%d', jackedcars = '%d' WHERE id = '%d'", 
 				IllegalGarage[garage][igWantedLevel], 
 				IllegalGarage[garage][igCarsJacked],
 				IllegalGarage[garage][igSQLID]
@@ -1087,7 +1087,7 @@ CMD:igarage(playerid, params[])
 		PlayerToIllegalBudgetMoney(playerid, CHOP_SHOP_PRICE); 
 
 		IllegalGarage[garage][igOwner] = PlayerInfo[playerid][pSQLID];
-		mysql_fquery(g_SQL,
+		mysql_fquery(SQL_Handle(),
 			"UPDATE illegal_garages SET owner = '%d' WHERE id = '%d'",
 			IllegalGarage[garage][igOwner],
 			IllegalGarage[garage][igSQLID]  

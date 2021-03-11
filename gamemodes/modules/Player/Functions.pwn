@@ -260,7 +260,7 @@ stock LevelUp(playerid)
 		else
 			PlayerInfo[playerid][pRespects] = 0;
 
-		mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pLevel],
 			PlayerInfo[playerid][pRespects],
 			PlayerInfo[playerid][pSQLID]
@@ -275,8 +275,8 @@ ConvertNameToSQLID(const playername[])
 {
 	new 
 		sqlid = -1,
-		Cache:result = mysql_query(g_SQL, 
-							va_fquery(g_SQL, 
+		Cache:result = mysql_query(SQL_Handle(), 
+							va_fquery(SQL_Handle(), 
 								"SELECT sqlid FROM accounts WHERE name = '%e'", 
 								playername
 							)),
@@ -297,8 +297,8 @@ ConvertSQLIDToName(id)
 		nick[MAX_PLAYER_NAME];
 		
 	new 
-		Cache:result = 	mysql_query(g_SQL, 
-							va_fquery(g_SQL, "SELECT name FROM accounts WHERE sqlid = '%d'", id)
+		Cache:result = 	mysql_query(SQL_Handle(), 
+							va_fquery(SQL_Handle(), "SELECT name FROM accounts WHERE sqlid = '%d'", id)
 						);
 	
 	if(cache_num_rows() == 0)
@@ -472,7 +472,7 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	new	Cache:result,
 		counts;
 	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", newname));
+	result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", newname));
 	counts = cache_num_rows();
 	cache_delete(result);
 	
@@ -493,7 +493,7 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	);
 	#endif
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET name = '%e', sex = '%d', age = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(SQL_Handle(), "UPDATE accounts SET name = '%e', sex = '%d', age = '%d' WHERE sqlid = '%d'",
 		newname,
 		PlayerInfo[playerid][pSex],
 		PlayerInfo[playerid][pAge],

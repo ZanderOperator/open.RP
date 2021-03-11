@@ -219,7 +219,7 @@ CMD:makehelper(playerid, params[])
 	
 	if(!level) 
 	{
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"UPDATE accounts SET teampin = '', helper = '0' WHERE sqlid = '%d'", 
 			PlayerInfo[giveplayerid][pSQLID]
 		);
@@ -324,7 +324,7 @@ CMD:inactivity(playerid, params[])
 				}
 			}
 		}
-		mysql_fquery_ex(g_SQL, 
+		mysql_fquery_ex(SQL_Handle(), 
 			"INSERT INTO inactive_accounts(sqlid, startstamp, endstamp, reason) VALUES ('%d','%d','%d','%e')",
 			sqlid,
 			startstamp,
@@ -379,7 +379,7 @@ CMD:inactivity(playerid, params[])
 				}
 			}
 		}
-		mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
+		mysql_fquery(SQL_Handle(), "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
 		
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] deleted %s[SQLID: %d] registered inactivity from database.",
@@ -486,7 +486,7 @@ CMD:playercars(playerid, params[])
 	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /playercars [Ime_Prezime].");
 	
-	mysql_search = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", player_nick));
+	mysql_search = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", player_nick));
 	cache_get_value_name_int(0, "sqlid"	, player_sqlid);
 	cache_delete(mysql_search);
 	
@@ -535,7 +535,7 @@ CMD:makeadmin(playerid, params[])
 	
 	if(!level) 
 	{
-		mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '',adminLvl = '0' WHERE sqlid = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET teampin = '',adminLvl = '0' WHERE sqlid = '%d'", 
 			PlayerInfo[giveplayerid][pSQLID]
 		);
 		
@@ -598,7 +598,7 @@ CMD:makeadminex(playerid, params[])
 			gplayername[MAX_PLAYER_NAME];
 		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[?]: /makeadminex [Ime_Prezime][Level(1-1338)][Team PIN for /alogin]");
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET adminLvl = '%d' WHERE name = '%e' LIMIT 1", level, gplayername);
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET adminLvl = '%d' WHERE name = '%e' LIMIT 1", level, gplayername);
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	return 1;
@@ -918,7 +918,7 @@ CMD:address(playerid, params[])
 	if(!IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[id][hEnterX], HouseInfo[id][hEnterY], HouseInfo[id][hEnterZ])) return SendClientMessage( playerid, COLOR_RED, "Morate biti blizu kuce!");
 	
 	format(HouseInfo[id][hAdress], 32, address);
-	mysql_fquery(g_SQL, "UPDATE houses SET adress = '%e' WHERE id = '%d'", address, HouseInfo[id][hSQLID]);
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET adress = '%e' WHERE id = '%d'", address, HouseInfo[id][hSQLID]);
 	va_SendClientMessage(playerid, COLOR_RED, "[!] Promjenili ste adresu kuce u %s", address);
 	return 1;
 }
@@ -948,35 +948,35 @@ CMD:edit(playerid, params[])
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bLevelNeeded] = proplev;
-				mysql_fquery(g_SQL, "UPDATE bizzes SET levelneeded = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE bizzes SET levelneeded = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"price",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bBuyPrice] = proplev;
-				mysql_fquery(g_SQL, "UPDATE bizzes SET buyprice = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE bizzes SET buyprice = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"funds",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bTill] = proplev;
-				mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE bizzes SET till = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"locked",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bLocked] = proplev;
-				mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"bizviwo",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bVirtualWorld] = proplev;
-				mysql_fquery(g_SQL, "UPDATE bizzes SET virtualworld = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE bizzes SET virtualworld = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"type",true) == 0)
 			{
@@ -984,7 +984,7 @@ CMD:edit(playerid, params[])
 				propid = i;
 				if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[!]: Type range is 0-14!");
 				BizzInfo[i][bType] = proplev;
-				mysql_fquery(g_SQL, "UPDATE bizzes SET type = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE bizzes SET type = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 		}
 		if(proptype != 0 && propid != -1)
@@ -1000,49 +1000,49 @@ CMD:edit(playerid, params[])
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLevel] = proplev;
-				mysql_fquery(g_SQL,"UPDATE houses SET level = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(),"UPDATE houses SET level = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"price",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hValue] = proplev;
-				mysql_fquery(g_SQL, "UPDATE houses SET value = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET value = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"locked",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLock] = proplev;
-				mysql_fquery(g_SQL, "UPDATE houses SET lock = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET lock = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"doorlevel",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hDoorLevel] = proplev;
-				mysql_fquery(g_SQL, "UPDATE houses SET doorlevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET doorlevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"locklevel",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLockLevel] = proplev;
-				mysql_fquery(g_SQL, "UPDATE houses SET locklevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET locklevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"alarmlevel",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hAlarm] = proplev;
-				mysql_fquery(g_SQL, "UPDATE houses SET alarm = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET alarm = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"hviwo",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hVirtualWorld] = proplev;
-				mysql_fquery(g_SQL, "UPDATE houses SET viwo = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET viwo = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 		}
 		if(proptype != 0 && propid != -1)
@@ -1090,15 +1090,15 @@ CMD:asellbiz(playerid, params[])
 		);
 		SendServerMessage(BizzInfo[biz][bOwnerID], logString);
 			
-		mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
 			BizzInfo[biz][bBuyPrice],
 			BizzInfo[biz][bOwnerID]
 		);
 		
-		mysql_fquery(g_SQL,"UPDATE city SET budget = budget - '%d'", BizzInfo[biz][bBuyPrice]);
+		mysql_fquery(SQL_Handle(),"UPDATE city SET budget = budget - '%d'", BizzInfo[biz][bBuyPrice]);
 	}
 	
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", 
 		BizzInfo[biz][bSQLID]
 	);
@@ -1171,15 +1171,15 @@ CMD:asellgarage(playerid, params[])
 		);
 		SendServerMessage(GarageInfo[garage][gOwnerID], logString);
 
-		mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
 			GarageInfo[garage][gPrice],
 			GarageInfo[garage][gOwnerID]
 		);
 		
-		mysql_fquery(g_SQL,"UPDATE city SET budget = budget - '%d'", GarageInfo[garage][gPrice]);
+		mysql_fquery(SQL_Handle(),"UPDATE city SET budget = budget - '%d'", GarageInfo[garage][gPrice]);
 	}
 
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 		GarageInfo[garage][gSQLID]
 	);
@@ -1240,7 +1240,7 @@ CMD:asellhouse(playerid, params[])
 			BudgetToPlayerMoney(i, HouseInfo[house][hValue]);
 
 			PlayerInfo[i][pSpawnChange] = 0;
-			mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[i][pSpawnChange],
 				PlayerInfo[i][pSQLID]
 			);
@@ -1267,14 +1267,14 @@ CMD:asellhouse(playerid, params[])
 		);
 		SendServerMessage(HouseInfo[house][hOwnerID], logString);
 
-		mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
 			HouseInfo[house][hValue],
 			HouseInfo[house][hOwnerID]
 		);
-		mysql_fquery(g_SQL, "UPDATE city SET budget = budget - '%d'", HouseInfo[house][hValue]);
+		mysql_fquery(SQL_Handle(), "UPDATE city SET budget = budget - '%d'", HouseInfo[house][hValue]);
 	}
 	
-	mysql_fquery(g_SQL, "UPDATE houses SET ownerid='0' WHERE ownerid = '%d'", HouseInfo[house][hOwnerID]);
+	mysql_fquery(SQL_Handle(), "UPDATE houses SET ownerid='0' WHERE ownerid = '%d'", HouseInfo[house][hOwnerID]);
 
 	HouseInfo[house][hOwnerID]		= 0;
 	HouseInfo[house][hLock] 		= 1;
@@ -1352,14 +1352,14 @@ CMD:asellcomplex(playerid, params[])
 		);
 		SendServerMessage(ComplexInfo[complex][cOwnerID], logString);
 
-		mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
+		mysql_fquery(SQL_Handle(), "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", 
 			ComplexInfo[complex][cPrice],
 			ComplexInfo[complex][cOwnerID]
 		);
-		mysql_fquery(g_SQL, "UPDATE city SET budget = budget - '%d'", ComplexInfo[complex][cPrice]);
+		mysql_fquery(SQL_Handle(), "UPDATE city SET budget = budget - '%d'", ComplexInfo[complex][cPrice]);
 	}
 
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE server_complex SET owner_id= '-1' WHERE id = '%d'", 
 		ComplexInfo[complex][cSQLID]
 	);	
@@ -1416,7 +1416,7 @@ CMD:asellcomplexroom(playerid, params[])
 			);
 
 			PlayerInfo[i][pSpawnChange] = 0;
-			mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[i][pSpawnChange],
 				PlayerInfo[i][pSQLID]
 			);
@@ -1427,7 +1427,7 @@ CMD:asellcomplexroom(playerid, params[])
 	
 	ComplexRoomInfo[complex][cOwnerID] = -1;
 	
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", 
 		ComplexRoomInfo[complex][cSQLID]
 	);
@@ -1542,8 +1542,8 @@ CMD:factionmembers(playerid, params[])
 	if(sscanf(params, "i", orgid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /factionmembers [Orgid]");
 	if(orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
 	
-    mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE facMemId = '%d'", orgid), 
+    mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE facMemId = '%d'", orgid), 
 		"CountFactionMembers", 
 		"ii", 
 		playerid, 
@@ -1605,7 +1605,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 			
-			mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[giveplayerid][pLevel],
 				PlayerInfo[giveplayerid][pRespects],
 				PlayerInfo[giveplayerid][pSQLID]
@@ -1621,7 +1621,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE accounts SET age = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET age = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1636,7 +1636,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_phones SET number = '%d' WHERE playerid = '%d' AND type = '1'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_phones SET number = '%d' WHERE playerid = '%d' AND type = '1'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1651,7 +1651,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE accounts SET respects = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET respects = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1666,7 +1666,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 			
-			mysql_fquery(g_SQL, "UPDATE accounts SET connecttime = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET connecttime = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1691,7 +1691,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE accounts SET sex = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET sex = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1709,7 +1709,7 @@ CMD:setstat(playerid, params[])
 				ReturnJob(amount)
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_job SET jobkey = '%d', contracttime = '0' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_job SET jobkey = '%d', contracttime = '0' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1724,7 +1724,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_job SET contracttime = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_job SET contracttime = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1743,7 +1743,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_payday SET payday = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_payday SET payday = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1758,7 +1758,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_fitness SET muscle = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_fitness SET muscle = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1773,7 +1773,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_jail SET arrested = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_jail SET arrested = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1788,7 +1788,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 		
-			mysql_fquery(g_SQL, "UPDATE accounts SET changetimes = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET changetimes = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1814,7 +1814,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_cooldowns SET casinocooldown = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_cooldowns SET casinocooldown = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1829,7 +1829,7 @@ CMD:setstat(playerid, params[])
 				amount
 			);
 
-			mysql_fquery(g_SQL, "UPDATE player_fishes SET fishingskill = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE player_fishes SET fishingskill = '%d' WHERE sqlid = '%d'",
 				amount,
 				PlayerInfo[giveplayerid][pSQLID]
 			);
@@ -1854,7 +1854,7 @@ CMD:skin(playerid, params[])
 	PlayerAppearance[giveplayerid][pTmpSkin] = skin;
 	PlayerAppearance[giveplayerid][pSkin] = skin;
 	
-	mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(SQL_Handle(), "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
 		PlayerAppearance[giveplayerid][pSkin], 
 		PlayerInfo[giveplayerid][pSQLID]
 	);
@@ -2079,7 +2079,7 @@ CMD:deletevehicle(playerid, params[])
 			if(PlayerInfo[playerid][pAdmin] < 1338) 
 				return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 
-			mysql_fquery(g_SQL, "DELETE FROM cocars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
+			mysql_fquery(SQL_Handle(), "DELETE FROM cocars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
 			
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Uspjesno ste izbrisali %s(ID: %d | SQLID: %d) iz baze/igre!", 
 				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
@@ -2094,7 +2094,7 @@ CMD:deletevehicle(playerid, params[])
 		{
 			if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 
-			mysql_fquery(g_SQL, "DELETE FROM server_cars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
+			mysql_fquery(SQL_Handle(), "DELETE FROM server_cars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
 
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Uspjesno ste izbrisali %s(ID: %d | SQLID: %d) iz baze/igre!", 
 				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
@@ -2216,7 +2216,7 @@ CMD:undie(playerid, params[])
 	SetPlayerHealth(giveplayerid, 25.0);
 	TogglePlayerControllable(giveplayerid, true);
 
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"DELETE FROM player_deaths WHERE player_id = '%d'", 
 		PlayerInfo[giveplayerid][pSQLID]
 	);
@@ -2740,8 +2740,8 @@ CMD:buyparkall(playerid, params[])
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /buyparkall [playerid / Part of name]");
 	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT COUNT(ownerid) FROM cocars WHERE ownerid = '%d'", PlayerInfo[giveplayerid][pSQLID]), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT COUNT(ownerid) FROM cocars WHERE ownerid = '%d'", PlayerInfo[giveplayerid][pSQLID]), 
 		"OfflinePlayerVehicles", 
 		"ii", 
 		playerid, 
@@ -2771,8 +2771,8 @@ CMD:iptoname(playerid, params[])
 	if(sscanf(params, "s[24]", ip)) return SendClientMessage(playerid, COLOR_RED, "[?]: /iptoname [IP adresa]");
 	if(strcount(ip, ".") < 3) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli valjnu IP adresu!");
 
-	mysql_tquery(g_SQL,
-		va_fquery(g_SQL, 
+	mysql_tquery(SQL_Handle(),
+		va_fquery(SQL_Handle(), 
 			"SELECT name,online,lastip FROM  player_connects INNER JOIN\n\
 				accounts ON accounts.sqlid = player_connects.player_id WHERE aip = '%e'", ip), 
 		"LoadNamesFromIp", 
@@ -2808,8 +2808,8 @@ CMD:prisonex(playerid, params[])
 	if(sqlid == -1)
 		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", targetname);
 
-    mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT jailed FROM player_jail WHERE sqlid = '%d'", sqlid), 
+    mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT jailed FROM player_jail WHERE sqlid = '%d'", sqlid), 
 		"CheckPlayerPrison", 
 		"iisis", 
 		playerid,
@@ -2831,8 +2831,8 @@ CMD:warnex(playerid, params[])
     if(sscanf(params,"s[24]s[20]", targetname, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /warnex [Ime][reason]");
 	if(strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
    	
-    mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT playaWarns FROM accounts WHERE name = '%e'", targetname), 
+    mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT playaWarns FROM accounts WHERE name = '%e'", targetname), 
 		"LoadPlayerWarns", 
 		"iss", 
 		playerid, 
@@ -2841,7 +2841,7 @@ CMD:warnex(playerid, params[])
 	);
 	
 	new sqlid, 
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname));
+		Cache:result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname));
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	
@@ -2855,7 +2855,7 @@ CMD:warnex(playerid, params[])
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
-	mysql_fquery_ex(g_SQL, "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+	mysql_fquery_ex(SQL_Handle(), "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
@@ -3013,7 +3013,7 @@ CMD:charge(playerid, params[])
 	getdate(year, month, day);
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	mysql_fquery(g_SQL, 
+	mysql_fquery(SQL_Handle(), 
 		"INSERT INTO charges (player_id,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
@@ -3183,8 +3183,8 @@ CMD:banex(playerid, params[])
 	if(strlen(targetname) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
     if(strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
 	
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT lastip FROM accounts WHERE name = '%e'", targetname), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT lastip FROM accounts WHERE name = '%e'", targetname), 
 		"OfflineBanPlayer", 
 		"issi", 
 		playerid, 
@@ -3214,8 +3214,8 @@ CMD:jailex(playerid, params[])
 		if(!strcmp(giveplayername, LoopName)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè je online!");
 	}
 
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", giveplayername), 
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", giveplayername), 
 		"OfflineJailPlayer", 
 		"ii", 
 		playerid, 
@@ -3454,7 +3454,7 @@ CMD:warn(playerid, params[])
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
-	mysql_fquery(g_SQL,
+	mysql_fquery(SQL_Handle(),
 		 "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
@@ -3812,8 +3812,8 @@ CMD:checklastlogin(playerid, params[])
 	if(sscanf(params, "s[24]", targetname)) 
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /checklastlogin [Ime_Prezime]");
 	
-    mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname), 
+    mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname), 
 		"CheckPlayerData", 
 		"is", 
 		playerid, 
@@ -3973,9 +3973,9 @@ CMD:checkoffline(playerid, params[])
 		);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline CheckOffline, 
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"SELECT \n\
 				accounts.sqlid, accounts.name, accounts.levels, accounts.handMoney, accounts.bankMoney, \n\
                 accounts.adminLvl, accounts.helper, accounts.playaWarns, accounts.connecttime, \n\
@@ -4804,8 +4804,8 @@ CMD:adminmsg(playerid, params[])
 	if(sscanf(params, "s[25]s[128]", playerb, n_reason))
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /adminmsg [character name][message]");
 
-    mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT sqlid, online FROM accounts WHERE name = '%e'", playerb), 
+    mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT sqlid, online FROM accounts WHERE name = '%e'", playerb), 
 		"AddAdminMessage", "iss", 
 		playerid, 
 		playerb, 

@@ -62,7 +62,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     // TODO: translate fields and text in database to English
                     format(string, sizeof(string), "SELECT glasovi FROM elections WHERE opcija = 'Za'");
-                    mysql_query(g_SQL, string);
+                    mysql_query(SQL_Handle(), string);
 
                     new votes;
                     cache_get_value_name_int(0, "glasovi", votes);
@@ -74,12 +74,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(string, sizeof(string), "%s ubacuje svoj listic u glasacku kutiju.", GetName(playerid, false));
                     ProxDetector(25.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 
-                    mysql_fquery(g_SQL,"UPDATE elections SET glasovi = '%d' WHERE opcija = 'Za'", votes);
+                    mysql_fquery(SQL_Handle(),"UPDATE elections SET glasovi = '%d' WHERE opcija = 'Za'", votes);
                 }
                 case 1:
                 {
                     format(string, sizeof(string), "SELECT glasovi FROM elections WHERE opcija = 'Protiv'");
-                    mysql_query(g_SQL, string);
+                    mysql_query(SQL_Handle(), string);
 
                     new votes;
                     cache_get_value_name_int(0, "glasovi", votes);
@@ -91,7 +91,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(string, sizeof(string), "%s ubacuje svoj listic u glasacku kutiju.", GetName(playerid, false));
                     ProxDetector(25.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 
-                    mysql_fquery(g_SQL, "UPDATE elections SET glasovi = '%d' WHERE opcija = 'Protiv'", votes);
+                    mysql_fquery(SQL_Handle(), "UPDATE elections SET glasovi = '%d' WHERE opcija = 'Protiv'", votes);
                 }
             }
             return 1;
@@ -153,7 +153,7 @@ CMD:votes(playerid, params[])
 
         // Votes FOR
         format(query, sizeof(query), "SELECT glasovi FROM elections WHERE opcija = 'Za'");
-        mysql_query(g_SQL, query);
+        mysql_query(SQL_Handle(), query);
         cache_get_value_name_int(0, "glasovi", votes);
 
         SendClientMessage(playerid, COLOR_ORANGE, "*__________________________VOTE STATUS__________________________");
@@ -161,7 +161,7 @@ CMD:votes(playerid, params[])
 
         // Votes AGAINST
         format(query, sizeof(query), "SELECT glasovi FROM elections WHERE opcija = 'Protiv'");
-        mysql_query(g_SQL, query);
+        mysql_query(SQL_Handle(), query);
         cache_get_value_name_int(0, "glasovi", votes);
 
         SendClientMessage(playerid, COLOR_ORANGE, "*__________________________VOTE STATUS__________________________");

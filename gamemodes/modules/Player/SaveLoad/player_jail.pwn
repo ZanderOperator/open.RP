@@ -6,7 +6,7 @@ LoadPlayerJailStats(playerid)
     {
         if(!cache_num_rows())
         {
-            mysql_fquery_ex(g_SQL, 
+            mysql_fquery_ex(SQL_Handle(), 
                 "INSERT INTO player_jail(sqlid, jailed, jailtime, arrested, bailprice) \n\
                     VALUES('%d', '0', '0', '0', '0')",
                 PlayerInfo[playerid][pSQLID]
@@ -19,9 +19,9 @@ LoadPlayerJailStats(playerid)
         cache_get_value_name_int(0,  "bailprice"	, PlayerJail[playerid][pBailPrice]);
         return 1;
     }
-    MySQL_PQueryInline(g_SQL,
+    MySQL_PQueryInline(SQL_Handle(),
         using inline LoadingPlayerJailStats, 
-        va_fquery(g_SQL, "SELECT * FROM player_jail WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(SQL_Handle(), "SELECT * FROM player_jail WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
     );
     return 1;
@@ -35,7 +35,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerJailStats(playerid)
 {
-    mysql_fquery_ex(g_SQL,
+    mysql_fquery_ex(SQL_Handle(),
         "UPDATE player_jail SET jailed = '%d', jailtime = '%d', arrested = '%d', bailprice = '%d' WHERE sqlid = '%d'",
         PlayerJail[playerid][pJailed],
         PlayerJail[playerid][pJailTime],

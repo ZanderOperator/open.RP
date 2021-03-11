@@ -694,8 +694,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 
 stock LoadPlayerObjects(playerid)
 {
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
+	mysql_tquery(SQL_Handle(), 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
 			PlayerInfo[playerid][pSQLID]
 		), 
 		"OnPlayerObjectsLoad", 
@@ -750,9 +750,9 @@ stock InsertObjectSlot(playerid, slot)
 		SaveObjectSlot(playerid, slot);
 		return 1;
 	}
-	MySQL_PQueryInline(g_SQL,
+	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnPlayerObjectInsert,
-		va_fquery(g_SQL, 
+		va_fquery(SQL_Handle(), 
 			"INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerObject[playerid][slot][poModelid],
@@ -770,7 +770,7 @@ stock SaveObjectSlot(playerid, slot)
 {
 	if(PlayerObject[playerid][slot][poSQLID] != -1 && PlayerObject[playerid][slot][poModelid] != -1)
 	{
-		mysql_fquery(g_SQL, 
+		mysql_fquery(SQL_Handle(), 
 			"UPDATE player_objects SET  placed = '%d', bone = '%d', posX = '%f', posY = '%f', posZ = '%f',\n\
 				rotX = '%f', rotY = '%f', rotZ = '%f', sizeX = '%f', sizeY = '%f', sizeZ = '%f',\n\
 				color1 = '%d', color2 = '%d' WHERE sqlid= '%d'",
@@ -796,7 +796,7 @@ stock SaveObjectSlot(playerid, slot)
 
 stock DeleteObjectSlot(playerid, slot)
 {
-	mysql_fquery(g_SQL, "DELETE FROM player_objects WHERE sqlid = '%d' AND player_id = '%d'",
+	mysql_fquery(SQL_Handle(), "DELETE FROM player_objects WHERE sqlid = '%d' AND player_id = '%d'",
 		PlayerObject[playerid][slot][poSQLID],
 		PlayerInfo[playerid][pSQLID]
 	);
