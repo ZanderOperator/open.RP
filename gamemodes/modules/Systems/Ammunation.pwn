@@ -64,44 +64,36 @@ static
     ##        #######  ##    ##  ######   ######  
 */
 
-Public:OnAmmuWeaponInsert(slot)
-{
-    AmmuInfo[slot][aiSQLID] = cache_insert_id();
-    return 1;
-}
-
-Public:OnAmmuWeaponsLoaded()
-{
-    new
-        rows = cache_num_rows();
-
-    if(!rows)
-    {
-        print("MySQL Report: No Ammunation weapons data exist to load.");
-        return 1;
-    }
-
-    for (new slotid = 0; slotid < rows; slotid++)
-    {
-        cache_get_value_name_int(slotid, "id", AmmuInfo[slotid][aiSQLID]);
-        cache_get_value_name(slotid, "name", AmmuInfo[slotid][aiName], 64);
-        cache_get_value_name_int(slotid, "weapon", AmmuInfo[slotid][aiWeapon]);
-        cache_get_value_name_int(slotid, "price", AmmuInfo[slotid][aiPrice]);
-        cache_get_value_name_int(slotid, "license", AmmuInfo[slotid][aiLicense]);
-        cache_get_value_name_int(slotid, "maxbullets", AmmuInfo[slotid][aiMaxBullets]);
-        Iter_Add(AmmuIterator, slotid);
-    }
-    printf("MySQL Report: Ammunation Weapons Loaded. [%d/%d]", rows, MAX_AMMU_SLOTS);
-    return 1;
-}
-
 stock LoadAmmunation() 
 {
-    mysql_pquery(SQL_Handle(), 
+    inline OnAmmuWeaponsLoaded()
+    {
+        new
+            rows = cache_num_rows();
+        if(!rows)
+        {
+            print("MySQL Report: No Ammunation weapons data exist to load.");
+            return 1;
+        }
+
+        for (new slotid = 0; slotid < rows; slotid++)
+        {
+            cache_get_value_name_int(slotid, "id", AmmuInfo[slotid][aiSQLID]);
+            cache_get_value_name(slotid, "name", AmmuInfo[slotid][aiName], 64);
+            cache_get_value_name_int(slotid, "weapon", AmmuInfo[slotid][aiWeapon]);
+            cache_get_value_name_int(slotid, "price", AmmuInfo[slotid][aiPrice]);
+            cache_get_value_name_int(slotid, "license", AmmuInfo[slotid][aiLicense]);
+            cache_get_value_name_int(slotid, "maxbullets", AmmuInfo[slotid][aiMaxBullets]);
+            Iter_Add(AmmuIterator, slotid);
+        }
+        printf("MySQL Report: Ammunation Weapons Loaded. [%d/%d]", rows, MAX_AMMU_SLOTS);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnAmmuWeaponsLoaded,
         "SELECT * FROM ammunation_weapons WHERE 1", 
-        "OnAmmuWeaponsLoaded",
         ""
-   );
+    );
     return 1;
 }
 
@@ -127,16 +119,25 @@ static stock DeleteAmmuWeapon(slotid) // Delete oruzja iz liste
 
 static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 {
-    mysql_pquery(SQL_Handle(), 
+    inline OnAmmuWeaponInsert()
+    {
+        AmmuInfo[slotid][aiSQLID] = cache_insert_id();
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnAmmuWeaponInsert,
         va_fquery(SQL_Handle(), 
-            "INSERT INTO ammunation_weapons (name, weapon, price, license, maxbullets) VALUES ('%e',%d,%d,%d,%d)",
+            "INSERT INTO \n\
+                ammunation_weapons \n\
+            (name, weapon, price, license, maxbullets) \n\
+            VALUES \n\
+            ('%e', '%d', '%d', '%d', '%d')",
             AmmuInfo[slotid][aiName],
             AmmuInfo[slotid][aiWeapon],
             AmmuInfo[slotid][aiPrice],
             AmmuInfo[slotid][aiLicense],
             AmmuInfo[slotid][aiMaxBullets]
-       ), 
-        "OnAmmuWeaponInsert", 
+        ), 
         "i", 
         slotid
    );

@@ -166,8 +166,11 @@ LoadPlayerDrugStats(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(SQL_Handle(), 
-				"INSERT INTO player_drug_stats(sqlid, drugused, drugseconds, drugorder) \n\
-					VALUES ('%d', '0', '0', '0')",
+				"INSERT INTO \n\
+					player_drug_stats \n\
+				(sqlid, drugused, drugseconds, drugorder) \n\
+				VALUES \n\
+					('%d', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;
@@ -1037,13 +1040,16 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 	
 	mysql_tquery(SQL_Handle(), 
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO player_drugs (player_id, code, amount, effect, timestamp) \n\
-				VALUES ('%d', '%d', '%f', '%f', '%d')",
+			"INSERT INTO \n\
+				player_drugs \n\
+			(player_id, code, amount, effect, timestamp) \n\
+			VALUES \n\
+				('%d', '%d', '%f', '%f', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			typ,
 			dmnt,
 			dq,
-			gettime()
+			gettimestamp()
 		), 
 		"GetDrugSQLID", 
 		"iii", 
@@ -1073,13 +1079,16 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	
 	mysql_tquery(SQL_Handle(), 
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO cocars_drugs (vehicle_id, code, amount, quality, timestamp) \n\
-				VALUES ('%d', '%d', '%f', '%f', '%d')",
+			"INSERT INTO \n\
+				cocars_drugs \n\
+			(vehicle_id, code, amount, quality, timestamp) \n\
+			VALUES \n\
+				('%d', '%d', '%f', '%f', '%d')",
 			VehicleInfo[vehicleid][vSQLID],
 			dtyp,
 			damnt,
 			dqua,
-			gettime()
+			gettimestamp()
 		), 
 		"GetDrugSQLID", 
 		"iii", 

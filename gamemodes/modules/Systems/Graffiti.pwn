@@ -159,50 +159,43 @@ static
 // TODO: bad spelling. LoadGraffiti
 stock LoadGraffits()
 {
-    mysql_pquery(SQL_Handle(),
-        va_fquery(SQL_Handle(), "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS), 
-        "OnGraffitsLoad"
-   );
-    return 1;
-}
-
-forward OnGraffitsLoad();
-public OnGraffitsLoad()
-{
-    new rows  = cache_num_rows();
-    if(!rows)
+    inline OnGraffitsLoad()
     {
-        printf("MySQL Report: No graffits exist to load.");
+        new 
+            rows  = cache_num_rows();
+        if(!rows)
+        {
+            printf("MySQL Report: No graffits exist to load.");
+            return 1;
+        }
+
+        for (new b = 0; b < rows; b++)
+        {
+            cache_get_value_name_int(b,         "id"        , GraffitInfo[b][gId]);
+            cache_get_value_name(b,             "text"      , GraffitInfo[b][gText], 32);
+            cache_get_value_name_int(b,         "font"      , GraffitInfo[b][gFont]);
+            cache_get_value_name_int(b,         "fontsize"  , GraffitInfo[b][gFontSize]);
+            cache_get_value_name_int(b,         "fontcolor" , GraffitInfo[b][gColor]);
+            cache_get_value_name_float(b,       "posx"      , GraffitInfo[b][gPosX]);
+            cache_get_value_name_float(b,       "posy"      , GraffitInfo[b][gPosY]);
+            cache_get_value_name_float(b,       "posz"      , GraffitInfo[b][gPosZ]);
+            cache_get_value_name_float(b,       "rotx"      , GraffitInfo[b][gRotX]);
+            cache_get_value_name_float(b,       "roty"      , GraffitInfo[b][gRotY]);
+            cache_get_value_name_float(b,       "rotz"      , GraffitInfo[b][gRotZ]);
+            cache_get_value_name(b,             "author"    , GraffitInfo[b][gAuthor], MAX_PLAYER_NAME);
+
+            GraffitInfo[b][gObject] = CreateDynamicObject(GROVE_TAG,GraffitInfo[b][gPosX],GraffitInfo[b][gPosY],GraffitInfo[b][gPosZ],GraffitInfo[b][gRotX],GraffitInfo[b][gRotY],GraffitInfo[b][gRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
+            SetDynamicObjectMaterialText(GraffitInfo[b][gObject], 0, GraffitInfo[b][gText], OBJECT_MATERIAL_SIZE_512x256, GetGrafFont(GraffitInfo[b][gFont]), GraffitInfo[b][gFontSize], 0, GetGrafColor(GraffitInfo[b][gColor]), 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
+            Iter_Add(Graffits, b);
+        }
+        printf("MySQL Report: Graffitis Loaded. [%d/%d]", Iter_Count(Graffits), MAX_GRAFS);
         return 1;
     }
-
-    for (new b = 0; b < rows; b++)
-    {
-        cache_get_value_name_int(b,         "id"        , GraffitInfo[b][gId]);
-        cache_get_value_name(b,             "text"      , GraffitInfo[b][gText], 32);
-        cache_get_value_name_int(b,         "font"      , GraffitInfo[b][gFont]);
-        cache_get_value_name_int(b,         "fontsize"  , GraffitInfo[b][gFontSize]);
-        cache_get_value_name_int(b,         "fontcolor" , GraffitInfo[b][gColor]);
-        cache_get_value_name_float(b,       "posx"      , GraffitInfo[b][gPosX]);
-        cache_get_value_name_float(b,       "posy"      , GraffitInfo[b][gPosY]);
-        cache_get_value_name_float(b,       "posz"      , GraffitInfo[b][gPosZ]);
-        cache_get_value_name_float(b,       "rotx"      , GraffitInfo[b][gRotX]);
-        cache_get_value_name_float(b,       "roty"      , GraffitInfo[b][gRotY]);
-        cache_get_value_name_float(b,       "rotz"      , GraffitInfo[b][gRotZ]);
-        cache_get_value_name(b,             "author"    , GraffitInfo[b][gAuthor], MAX_PLAYER_NAME);
-
-        GraffitInfo[b][gObject] = CreateDynamicObject(GROVE_TAG,GraffitInfo[b][gPosX],GraffitInfo[b][gPosY],GraffitInfo[b][gPosZ],GraffitInfo[b][gRotX],GraffitInfo[b][gRotY],GraffitInfo[b][gRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
-        SetDynamicObjectMaterialText(GraffitInfo[b][gObject], 0, GraffitInfo[b][gText], OBJECT_MATERIAL_SIZE_512x256, GetGrafFont(GraffitInfo[b][gFont]), GraffitInfo[b][gFontSize], 0, GetGrafColor(GraffitInfo[b][gColor]), 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
-        Iter_Add(Graffits, b);
-    }
-    printf("MySQL Report: Graffitis Loaded. [%d/%d]", Iter_Count(Graffits), MAX_GRAFS);
-    return 1;
-}
-
-forward OnGraffitCreate(grafid);
-public OnGraffitCreate(grafid)
-{
-    GraffitInfo[grafid][gId] = cache_insert_id();
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnGraffitsLoad,
+        va_fquery(SQL_Handle(), "SELECT * FROM graffiti WHERE 1 LIMIT 0, %d", MAX_GRAFS), 
+        ""
+    );
     return 1;
 }
 
@@ -323,14 +316,21 @@ stock GetGrafColor(colorid)
     return color;
 }
 
-stock InsertGraffitIntoDB(grafid)
+static InsertGraffitIntoDB(grafid)
 {    
-    mysql_pquery(SQL_Handle(), "BEGIN", "");
-
-    mysql_pquery(SQL_Handle(), 
+    inline OnGraffitCreate()
+    {
+        GraffitInfo[grafid][gId] = cache_insert_id();
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(), 
+        using inline OnGraffitCreate,
         va_fquery(SQL_Handle(), 
-            "INSERT INTO graffiti (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) \n\
-                VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
+            "INSERT INTO \n\
+                graffiti \n\
+            (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) \n\
+            VALUES \n\
+                ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
             GraffitInfo[grafid][gText],
             GraffitInfo[grafid][gFont],
             GraffitInfo[grafid][gFontSize],
@@ -342,13 +342,10 @@ stock InsertGraffitIntoDB(grafid)
             GraffitInfo[grafid][gRotY],
             GraffitInfo[grafid][gRotZ],
             GraffitInfo[grafid][gAuthor]
-       ), 
-        "OnGraffitCreate", 
+        ), 
         "i", 
         grafid
-   );
-
-    mysql_pquery(SQL_Handle(), "COMMIT", "");
+    );    
     return 1;
 }
 
@@ -540,45 +537,43 @@ stock UpdateGraffitProgress(playerid, grafid)
     return 1;
 }
 
-forward OnTagsLoaded();
-public OnTagsLoaded()
-{
-    new rows  = cache_num_rows();
-    if(!rows)
-    {
-        printf("MySQL Report: No spray tags exist to load.");
-        return 1;
-    }
-
-    for (new b = 0; b < rows; b++)
-    {
-        cache_get_value_name_int  (b,   "id"        , TagInfo[b][tId]);
-        cache_get_value_name_int  (b,   "modelid"   , TagInfo[b][tModelid]);
-        cache_get_value_name_float(b,   "posx"      , TagInfo[b][tPosX]);
-        cache_get_value_name_float(b,   "posy"      , TagInfo[b][tPosY]);
-        cache_get_value_name_float(b,   "posz"      , TagInfo[b][tPosZ]);
-        cache_get_value_name_float(b,   "rotx"      , TagInfo[b][tRotX]);
-        cache_get_value_name_float(b,   "roty"      , TagInfo[b][tRotY]);
-        cache_get_value_name_float(b,   "rotz"      , TagInfo[b][tRotZ]);
-        cache_get_value_name_int  (b,   "faction"   , TagInfo[b][tFaction]);
-        cache_get_value_name(b,         "author"    , TagInfo[b][tAuthor], MAX_PLAYER_NAME);
-
-        SetFactionTagCount(TagInfo[b][tFaction], 1);
-        TagInfo[b][tgObject] = CreateDynamicObject(TagInfo[b][tModelid], TagInfo[b][tPosX], TagInfo[b][tPosY], TagInfo[b][tPosZ],
-                                                   TagInfo[b][tRotX], TagInfo[b][tRotY], TagInfo[b][tRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
-        Iter_Add(SprayTags, b);
-    }
-    printf("MySQL Report: Spray Tags Loaded. [%d/%d]", Iter_Count(SprayTags), MAX_TAGS);
-    return 1;
-}
-
 stock LoadTags()
 {
-    mysql_pquery(SQL_Handle(), 
+    inline OnTagsLoaded()
+    {
+        new rows  = cache_num_rows();
+        if(!rows)
+        {
+            printf("MySQL Report: No spray tags exist to load.");
+            return 1;
+        }
+
+        for (new b = 0; b < rows; b++)
+        {
+            cache_get_value_name_int  (b,   "id"        , TagInfo[b][tId]);
+            cache_get_value_name_int  (b,   "modelid"   , TagInfo[b][tModelid]);
+            cache_get_value_name_float(b,   "posx"      , TagInfo[b][tPosX]);
+            cache_get_value_name_float(b,   "posy"      , TagInfo[b][tPosY]);
+            cache_get_value_name_float(b,   "posz"      , TagInfo[b][tPosZ]);
+            cache_get_value_name_float(b,   "rotx"      , TagInfo[b][tRotX]);
+            cache_get_value_name_float(b,   "roty"      , TagInfo[b][tRotY]);
+            cache_get_value_name_float(b,   "rotz"      , TagInfo[b][tRotZ]);
+            cache_get_value_name_int  (b,   "faction"   , TagInfo[b][tFaction]);
+            cache_get_value_name(b,         "author"    , TagInfo[b][tAuthor], MAX_PLAYER_NAME);
+
+            SetFactionTagCount(TagInfo[b][tFaction], 1);
+            TagInfo[b][tgObject] = CreateDynamicObject(TagInfo[b][tModelid], TagInfo[b][tPosX], TagInfo[b][tPosY], TagInfo[b][tPosZ],
+                                                    TagInfo[b][tRotX], TagInfo[b][tRotY], TagInfo[b][tRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
+            Iter_Add(SprayTags, b);
+        }
+        printf("MySQL Report: Spray Tags Loaded. [%d/%d]", Iter_Count(SprayTags), MAX_TAGS);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(), 
+        using inline OnTagsLoaded,
         va_fquery(SQL_Handle(), "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
-        "OnTagsLoaded",
         ""
-   );
+    );
     return 1;
 }
 
@@ -665,8 +660,11 @@ stock GetOfficialGangTag(playerid)
 stock InsertSprayTagIntoDB(tagid)
 {
     mysql_fquery_ex(SQL_Handle(),
-        "INSERT INTO spraytags (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) \n\
-            VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
+        "INSERT INTO \n\
+            spraytags \n\
+        (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) \n\
+        VALUES \n\
+            ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
         TagInfo[tagid][tModelid],
         TagInfo[tagid][tPosX],
         TagInfo[tagid][tPosY],

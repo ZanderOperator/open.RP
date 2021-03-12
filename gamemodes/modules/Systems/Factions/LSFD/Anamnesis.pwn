@@ -21,7 +21,12 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
 	
-	mysql_fquery_ex(SQL_Handle(), "INSERT INTO anamnesis(patient, disease, doctor, date) VALUES ('%e', '%e', '%e', '%e')",
+	mysql_fquery_ex(SQL_Handle(), 
+		"INSERT INTO \n\
+			anamnesis \n\
+		(patient, disease, doctor, date) \n\
+		VALUES \n\
+			('%e', '%e', '%e', '%e')",
 		GetName(giveplayerid,false),
 		disease,
 		GetName(playerid,false),

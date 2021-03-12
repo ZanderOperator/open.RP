@@ -158,8 +158,11 @@ static CreateIllegalGarage(garage)
 	MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnIllegalGarageCreated, 
 		va_fquery(SQL_Handle(),
-			"INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, boardX, boardY, boardZ, rotZ) \n\
-				VALUES ('0', '%e', '0', '0', '%f', '%f', '%f', '%f')",
+			"INSERT INTO \n\
+				illegal_garages \n\
+			(owner, name, jackedcars, wantedlevel, boardX, boardY, boardZ, rotZ) \n\
+			VALUES \n\
+				('0', '%e', '0', '0', '%f', '%f', '%f', '%f')",
 			IllegalGarage[garage][igName],
 			IllegalGarage[garage][igBoardPos][0],
 			IllegalGarage[garage][igBoardPos][1],

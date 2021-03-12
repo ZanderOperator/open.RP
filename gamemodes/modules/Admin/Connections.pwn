@@ -38,7 +38,7 @@ stock SaveAdminConnectionTime(playerid)
 	} 
 	else 
 	{
-		mysql_fquery(SQL_Handle(), "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
+		mysql_fquery_ex(SQL_Handle(), "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
 			PlayerInfo[playerid][pSQLID],
 			ExpInfo[playerid][eMonthPayDays]
 		);

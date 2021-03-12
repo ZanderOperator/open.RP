@@ -37,263 +37,6 @@ bool: Vehicle_Exists(type, vehicleid)
 	return Iter_Contains(ServerVehicle[type], vehicleid);
 }
 
-Public:OnServerVehicleLoad()
-{
-	if(!cache_num_rows()) return printf("MySQL Report: No cars exist to load.");
-	
-	new
-		carLoad[E_VEHICLE_DATA],
-		vCarID,
-		tmp[9],rmp[15];
-
-	for(new b = 0; b < cache_num_rows(); b++) 
-	{
-		cache_get_value_name_int(b, 	"model"		, carLoad[vModel]);
-		cache_get_value_name_float(b, 	"parkX"		, carLoad[vParkX]);
-		cache_get_value_name_float(b, 	"parkY"		, carLoad[vParkY]);
-		cache_get_value_name_float(b, 	"parkZ"		, carLoad[vParkZ]);
-		cache_get_value_name_float(b, 	"angle"		, carLoad[vAngle]);
-		cache_get_value_name_int(b, 	"color1"	, carLoad[vColor1]);
-		cache_get_value_name_int(b, 	"color2"	, carLoad[vColor2]);
-		cache_get_value_name_int(b, 	"respawn"	, carLoad[vRespawn]);
-		cache_get_value_name_int(b, 	"sirenon"	, carLoad[vSirenon]);
-
-		vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon]);
-
-		VehicleInfo[vCarID][vModel] 			= carLoad[vModel];
-		VehicleInfo[vCarID][vParkX] 			= carLoad[vParkX];
-		VehicleInfo[vCarID][vParkY] 			= carLoad[vParkY];
-		VehicleInfo[vCarID][vParkZ] 			= carLoad[vParkZ];
-		VehicleInfo[vCarID][vAngle] 			= carLoad[vAngle];
-		VehicleInfo[vCarID][vColor1] 			= carLoad[vColor1];
-		VehicleInfo[vCarID][vColor2] 			= carLoad[vColor2];
-		VehicleInfo[vCarID][vRespawn] 			= carLoad[vRespawn];
-		VehicleInfo[vCarID][vSirenon] 			= carLoad[vSirenon];
-
-		cache_get_value_name_int(b, 	"id"		, VehicleInfo[vCarID][vSQLID]);
-		cache_get_value_name_int(b, 	"type"		, VehicleInfo[vCarID][vType]);
-		cache_get_value_name_int(b, 	"usage"		, VehicleInfo[vCarID][vUsage]);
-		cache_get_value_name_int(b, 	"faction"	, VehicleInfo[vCarID][vFaction]);
-		cache_get_value_name_int(b, 	"job"		, VehicleInfo[vCarID][vJob]);
-		cache_get_value_name_int(b, 	"locked"	, VehicleInfo[vCarID][vLocked]);
-		cache_get_value_name_int(b, 	"int"		, VehicleInfo[vCarID][vInt]);
-		cache_get_value_name_int(b, 	"viwo"		, VehicleInfo[vCarID][vViwo]);
-		cache_get_value_name_float(b, 	"health"	, VehicleInfo[vCarID][vHealth]);
-		cache_get_value_name_int(b, 	"paintjob"	, VehicleInfo[vCarID][vPaintJob]);
-
-		VehicleInfo[vCarID][vBodyArmor] 		= carLoad[vBodyArmor];
-		VehicleInfo[vCarID][vTireArmor] 		= carLoad[vTireArmor];
-
-		cache_get_value_name(b, "numberplate", tmp, sizeof(tmp));
-		format( VehicleInfo[vCarID][vNumberPlate], 8, tmp);
-
-		cache_get_value_name_float(b, 	"travel"		, VehicleInfo[vCarID][vTravel]);
-		cache_get_value_name_int(b, 	"overheated"	, VehicleInfo[vCarID][vOverHeated]);
-		VehicleInfo[vCarID][vFuel] 				= 100;
-		VehicleInfo[vCarID][vTrunk] 			= 1;
-		VehicleInfo[vCarID][vCanStart] 			= 1;
-		VehicleInfo[vCarID][vParts] 			= 0;
-		VehicleInfo[vCarID][vTimesDestroy] 		= 0;
-		SetVehicleHealth( vCarID, VehicleInfo[vCarID][vHealth]);
-
-		new model = GetVehicleModel(vCarID);
-		cache_get_value_name(b, "text", rmp);
-		format( VehicleInfo[vCarID][vText], 13, rmp);
-		if(VehicleInfo[vCarID][vFaction] > 0 || VehicleInfo[vCarID][vJob] > 0) VehicleInfo[vCarID][vAudio] = 1;
-		
-		switch( VehicleInfo[vCarID][vFaction]) 
-		{
-			case 1: 
-			{
-				if(!(model == 497 || model == 469 || model == 430 || model == 431)) 
-				{
-					if(isnull(VehicleInfo[vCarID][vText]))
-						format(VehicleInfo[vCarID][vText], 13, "LSPD");
-					if(VehicleInfo[vCarID][vText][0] != '0') {
-						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-						VehicleInfo[vCarID][vFactionTextOn] = 1;
-					}
-				}
-			}
-			case 3: 
-			{
-				if(!(model == 497 || model == 469 || model == 430 || model == 431)) 
-				{
-					if(isnull(VehicleInfo[vCarID][vText]))
-						format(VehicleInfo[vCarID][vText], 13, "LSSD");
-					if(VehicleInfo[vCarID][vText][0] != '0') 
-					{
-						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-						VehicleInfo[vCarID][vFactionTextOn] = 1;
-					}
-				}
-			}
-			case 4: 
-			{
-				if(isnull(VehicleInfo[vCarID][vText]))
-					format(VehicleInfo[vCarID][vText], 13, "GOV");
-				if(VehicleInfo[vCarID][vText][0] != '0') 
-				{
-					VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-					VehicleInfo[vCarID][vFactionTextOn] = 1;
-				}
-				VehicleInfo[vCarID][vBodyArmor] = 1;
-				AC_SetVehicleHealth(vCarID, 1600.0);
-			}
-			case 2: {
-				switch(model) {
-					case 407: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5361, -3.8234, -0.7254, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 416: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5434, -3.6819, -0.4500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 424: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.0413, -1.6196, 0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 544: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.0442, -3.7343, -0.2000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 490: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6381, -3.2258, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 596: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 599: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6504, -2.7506, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 552: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.9242, -3.0798, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 427: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.3975, -3.6268, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-						VehicleInfo[vCarID][vFactionTextOn] = 1;
-					}
-					case 525: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6073, -3.0629, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 437: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.4615, -5.4731, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 563: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.7704, -4.0637, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-					case 497: {
-						if(isnull(VehicleInfo[vCarID][vText]))
-							format(VehicleInfo[vCarID][vText], 13, "LSFD");
-
-						if(VehicleInfo[vCarID][vText][0] != '0') {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.1615, -2.0197, -0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
-							VehicleInfo[vCarID][vFactionTextOn] = 1;
-						}
-					}
-				}
-			}
-		}
-		if(VehicleInfo[vCarID][vNumberPlate][0] == '0')
-				SetVehicleNumberPlate(vCarID, "");
-			else
-				SetVehicleNumberPlate(vCarID, VehicleInfo[vCarID][vNumberPlate]);
-
-		new
-			engine,lights,alarm,doors, edoors, bonnet,boot,objective;
-		if(VehicleInfo[vCarID][vLocked])
-			doors = 1;
-		else doors = 0;
-		GetVehicleParamsEx(vCarID,engine,lights,alarm,edoors,bonnet,boot,objective);
-
-		if(IsABike(model) || IsAPlane(model) || IsABike(model)) {
-			SetVehicleParamsEx(vCarID,VEHICLE_PARAMS_ON,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
-			VehicleInfo[vCarID][vEngineRunning] = 1;
-		} else {
-			SetVehicleParamsEx(vCarID,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
-			VehicleInfo[vCarID][vEngineRunning] = 0;
-		}
-		LinkVehicleToInterior(vCarID, 	VehicleInfo[vCarID][vInt]);
-		SetVehicleVirtualWorld(vCarID, 	VehicleInfo[vCarID][vViwo]);
-
-		Iter_Add(ServerVehicle[VehicleInfo[vCarID][vUsage]], vCarID);
-	}
-	printf("MySQL Report: Vehicles Loaded. [%d/%d]", cache_num_rows(), MAX_VEHICLES);
-	return 1;
-}
-
-Public:OnServerVehicleCreate(vehicleid)
-{
-	VehicleInfo[vehicleid][vSQLID] = cache_insert_id();
-	SaveVehicle(vehicleid);
-}
-
 task VehicleGlobalTask[1000]()
 {
 	if(gettimestamp() >= VehicleTimer && gettimestamp() >= GlobalVehicleStamp)
@@ -595,11 +338,11 @@ hook function ResetVehicleInfo(vehicleid)
 	VehicleInfo[vehicleid][vImpounded]              = 0;
 	VehicleInfo[vehicleid][vFactionTextOn]          = 0;
 	
-	VehicleInfo[vehicleid][vTicketsSQLID][0]		= 0;
-	VehicleInfo[vehicleid][vTicketsSQLID][1]		= 0;
-	VehicleInfo[vehicleid][vTicketsSQLID][2]		= 0;
-	VehicleInfo[vehicleid][vTicketsSQLID][3]		= 0;
-	VehicleInfo[vehicleid][vTicketsSQLID][4]		= 0;
+	VehicleInfo[vehicleid][vTicketSQLID][0]		= 0;
+	VehicleInfo[vehicleid][vTicketSQLID][1]		= 0;
+	VehicleInfo[vehicleid][vTicketSQLID][2]		= 0;
+	VehicleInfo[vehicleid][vTicketSQLID][3]		= 0;
+	VehicleInfo[vehicleid][vTicketSQLID][4]		= 0;
 	VehicleInfo[vehicleid][vTickets][0]			= 0;
 	VehicleInfo[vehicleid][vTickets][1]			= 0;
 	VehicleInfo[vehicleid][vTickets][2]			= 0;
@@ -815,15 +558,272 @@ stock AC_SetVehicleVelocity(vehicleid, Float:X, Float:Y, Float:Z)
 #endif
 #define SetVehicleVelocity AC_SetVehicleVelocity
 
-stock LoadServerVehicles()
+static LoadServerVehicles()
 {
-	mysql_pquery(SQL_Handle(), "SELECT * FROM server_cars WHERE 1", "OnServerVehicleLoad");
+	inline OnServerVehicleLoad()
+	{
+		if(!cache_num_rows()) 
+			return printf("MySQL Report: No cars exist to load.");
+		
+		new
+			carLoad[E_VEHICLE_DATA],
+			vCarID,
+			tmp[9],rmp[15];
+
+		for(new b = 0; b < cache_num_rows(); b++) 
+		{
+			cache_get_value_name_int(b, 	"model"		, carLoad[vModel]);
+			cache_get_value_name_float(b, 	"parkX"		, carLoad[vParkX]);
+			cache_get_value_name_float(b, 	"parkY"		, carLoad[vParkY]);
+			cache_get_value_name_float(b, 	"parkZ"		, carLoad[vParkZ]);
+			cache_get_value_name_float(b, 	"angle"		, carLoad[vAngle]);
+			cache_get_value_name_int(b, 	"color1"	, carLoad[vColor1]);
+			cache_get_value_name_int(b, 	"color2"	, carLoad[vColor2]);
+			cache_get_value_name_int(b, 	"respawn"	, carLoad[vRespawn]);
+			cache_get_value_name_int(b, 	"sirenon"	, carLoad[vSirenon]);
+
+			vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon]);
+
+			VehicleInfo[vCarID][vModel] 			= carLoad[vModel];
+			VehicleInfo[vCarID][vParkX] 			= carLoad[vParkX];
+			VehicleInfo[vCarID][vParkY] 			= carLoad[vParkY];
+			VehicleInfo[vCarID][vParkZ] 			= carLoad[vParkZ];
+			VehicleInfo[vCarID][vAngle] 			= carLoad[vAngle];
+			VehicleInfo[vCarID][vColor1] 			= carLoad[vColor1];
+			VehicleInfo[vCarID][vColor2] 			= carLoad[vColor2];
+			VehicleInfo[vCarID][vRespawn] 			= carLoad[vRespawn];
+			VehicleInfo[vCarID][vSirenon] 			= carLoad[vSirenon];
+
+			cache_get_value_name_int(b, 	"id"		, VehicleInfo[vCarID][vSQLID]);
+			cache_get_value_name_int(b, 	"type"		, VehicleInfo[vCarID][vType]);
+			cache_get_value_name_int(b, 	"usage"		, VehicleInfo[vCarID][vUsage]);
+			cache_get_value_name_int(b, 	"faction"	, VehicleInfo[vCarID][vFaction]);
+			cache_get_value_name_int(b, 	"job"		, VehicleInfo[vCarID][vJob]);
+			cache_get_value_name_int(b, 	"locked"	, VehicleInfo[vCarID][vLocked]);
+			cache_get_value_name_int(b, 	"int"		, VehicleInfo[vCarID][vInt]);
+			cache_get_value_name_int(b, 	"viwo"		, VehicleInfo[vCarID][vViwo]);
+			cache_get_value_name_float(b, 	"health"	, VehicleInfo[vCarID][vHealth]);
+			cache_get_value_name_int(b, 	"paintjob"	, VehicleInfo[vCarID][vPaintJob]);
+
+			VehicleInfo[vCarID][vBodyArmor] 		= carLoad[vBodyArmor];
+			VehicleInfo[vCarID][vTireArmor] 		= carLoad[vTireArmor];
+
+			cache_get_value_name(b, "numberplate", tmp, sizeof(tmp));
+			format( VehicleInfo[vCarID][vNumberPlate], 8, tmp);
+
+			cache_get_value_name_float(b, 	"travel"		, VehicleInfo[vCarID][vTravel]);
+			cache_get_value_name_int(b, 	"overheated"	, VehicleInfo[vCarID][vOverHeated]);
+			VehicleInfo[vCarID][vFuel] 				= 100;
+			VehicleInfo[vCarID][vTrunk] 			= 1;
+			VehicleInfo[vCarID][vCanStart] 			= 1;
+			VehicleInfo[vCarID][vParts] 			= 0;
+			VehicleInfo[vCarID][vTimesDestroy] 		= 0;
+			SetVehicleHealth( vCarID, VehicleInfo[vCarID][vHealth]);
+
+			new 
+				model = GetVehicleModel(vCarID);
+			cache_get_value_name(b, "text", rmp);
+			format( VehicleInfo[vCarID][vText], 13, rmp);
+			if(VehicleInfo[vCarID][vFaction] > 0 || VehicleInfo[vCarID][vJob] > 0) 
+				VehicleInfo[vCarID][vAudio] = 1;
+			
+			switch( VehicleInfo[vCarID][vFaction]) 
+			{
+				case 1: 
+				{
+					if(!(model == 497 || model == 469 || model == 430 || model == 431)) 
+					{
+						if(isnull(VehicleInfo[vCarID][vText]))
+							format(VehicleInfo[vCarID][vText], 13, "LSPD");
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+							VehicleInfo[vCarID][vFactionTextOn] = 1;
+						}
+					}
+				}
+				case 3: 
+				{
+					if(!(model == 497 || model == 469 || model == 430 || model == 431)) 
+					{
+						if(isnull(VehicleInfo[vCarID][vText]))
+							format(VehicleInfo[vCarID][vText], 13, "LSSD");
+						if(VehicleInfo[vCarID][vText][0] != '0') 
+						{
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+							VehicleInfo[vCarID][vFactionTextOn] = 1;
+						}
+					}
+				}
+				case 4: 
+				{
+					if(isnull(VehicleInfo[vCarID][vText]))
+						format(VehicleInfo[vCarID][vText], 13, "GOV");
+					if(VehicleInfo[vCarID][vText][0] != '0') 
+					{
+						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+						VehicleInfo[vCarID][vFactionTextOn] = 1;
+					}
+					VehicleInfo[vCarID][vBodyArmor] = 1;
+					AC_SetVehicleHealth(vCarID, 1600.0);
+				}
+				case 2: {
+					switch(model) {
+						case 407: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5361, -3.8234, -0.7254, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 416: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5434, -3.6819, -0.4500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 424: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.0413, -1.6196, 0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 544: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.0442, -3.7343, -0.2000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 490: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6381, -3.2258, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 596: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 599: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6504, -2.7506, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 552: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.9242, -3.0798, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 427: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.3975, -3.6268, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+							VehicleInfo[vCarID][vFactionTextOn] = 1;
+						}
+						case 525: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6073, -3.0629, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 437: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.4615, -5.4731, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 563: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.7704, -4.0637, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+						case 497: {
+							if(isnull(VehicleInfo[vCarID][vText]))
+								format(VehicleInfo[vCarID][vText], 13, "LSFD");
+
+							if(VehicleInfo[vCarID][vText][0] != '0') {
+								VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.1615, -2.0197, -0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
+								VehicleInfo[vCarID][vFactionTextOn] = 1;
+							}
+						}
+					}
+				}
+			}
+			if(VehicleInfo[vCarID][vNumberPlate][0] == '0')
+					SetVehicleNumberPlate(vCarID, "");
+				else
+					SetVehicleNumberPlate(vCarID, VehicleInfo[vCarID][vNumberPlate]);
+
+			new
+				engine,lights,alarm,doors, edoors, bonnet,boot,objective;
+			if(VehicleInfo[vCarID][vLocked])
+				doors = 1;
+			else doors = 0;
+			GetVehicleParamsEx(vCarID,engine,lights,alarm,edoors,bonnet,boot,objective);
+
+			if(IsABike(model) || IsAPlane(model) || IsABike(model)) {
+				SetVehicleParamsEx(vCarID,VEHICLE_PARAMS_ON,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
+				VehicleInfo[vCarID][vEngineRunning] = 1;
+			} else {
+				SetVehicleParamsEx(vCarID,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,alarm,doors,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
+				VehicleInfo[vCarID][vEngineRunning] = 0;
+			}
+			LinkVehicleToInterior(vCarID, 	VehicleInfo[vCarID][vInt]);
+			SetVehicleVirtualWorld(vCarID, 	VehicleInfo[vCarID][vViwo]);
+
+			Iter_Add(ServerVehicle[VehicleInfo[vCarID][vUsage]], vCarID);
+		}
+		printf("MySQL Report: Vehicles Loaded. [%d/%d]", cache_num_rows(), MAX_VEHICLES);
+		return 1;
+	}
+	MySQL_PQueryInline(SQL_Handle(),
+		using inline OnServerVehicleLoad,
+		"SELECT * FROM server_cars WHERE 1", 
+		""
+	);
 	return 1;
 }
 
-stock static SaveVehicle(vehicleid)
+static SaveVehicle(vehicleid)
 {
-	mysql_pquery(SQL_Handle(),
+	mysql_fquery_ex(SQL_Handle(),
 		"UPDATE server_cars SET model = '%d', type = '%d', usage = '%d', parkX = '%f', parkY = '%f', parkZ = '%f',\n\
 			angle = '%f', color1 = '%d', color2 = '%d', respawn = '%d', sirenon = '%d', faction = '%d', job = '%d', locked = '%d',\n\
 	 		int = '%d', viwo = '%d', health = '%f', numberplate = '%e', paintjob = '%d', impounded = '%d', text = '%e',\n\
@@ -864,15 +864,21 @@ static ResetVehicleEnumerator()
 	return 1;
 }
 
-stock CreateNewVehicle(playerid, vehicleid)
-{
-	mysql_pquery(SQL_Handle(), "BEGIN", "");
-	
-	mysql_pquery(SQL_Handle(), 
+static CreateNewVehicle(playerid, vehicleid)
+{	
+	inline OnServerVehicleCreate()
+	{
+		VehicleInfo[vehicleid][vSQLID] = cache_insert_id();
+		SaveVehicle(vehicleid);
+	}
+	MySQL_PQueryInline(SQL_Handle(),
+		using inline OnServerVehicleCreate, 
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO server_cars (model, type, usage, parkX, parkY, parkZ, angle, color1, color2, respawn,\n\
+			"INSERT INTO \n\
+				server_cars \n\
+			(model, type, usage, parkX, parkY, parkZ, angle, color1, color2, respawn,\n\
 				sirenon, faction, job, locked, int, viwo, health, numberplate, paintjob, impounded, text, travel) \n\
-				VALUES \n\
+			VALUES \n\
 				('%d','%d','%d','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%f','%e','%d','%d','%e','%d')",
 			VehicleInfo[vehicleid][vModel],
 			VehicleInfo[vehicleid][vType],
@@ -897,15 +903,13 @@ stock CreateNewVehicle(playerid, vehicleid)
 			VehicleInfo[vehicleid][vText],
 			VehicleInfo[vehicleid][vTravel]
 		),
-		"OnServerVehicleCreate", 
 		"i", 
 		vehicleid
 	);
 
-	mysql_pquery(SQL_Handle(), "COMMIT", "");
-
-	printf("Script Report: Admin %s je kreirao vehicle ID %d",
+	printf("Script Report: Game Admin %s created %s[Vehicle ID: %d]",
 		GetName(playerid, false),
+		ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
 		VehicleInfo[vehicleid][vSQLID]
 	);
 	return 1;

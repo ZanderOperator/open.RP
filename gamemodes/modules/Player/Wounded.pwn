@@ -166,8 +166,12 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	);
 	DMERSBroadCast(COLOR_RED, tmpString, 1);
 
-	mysql_fquery(SQL_Handle(), "INSERT INTO server_deaths (killer_id, death_id, weaponid, date) \n\
-		VALUES ('%d','%d','%d','%d')",
+	mysql_fquery_ex(SQL_Handle(), 
+		"INSERT INTO \n\
+			server_deaths \n\
+		(killer_id, death_id, weaponid, date) \n\
+		VALUES \n\
+			('%d','%d','%d','%d')",
 		PlayerInfo[KilledBy[playerid]][pSQLID],
 		PlayerInfo[playerid][pSQLID],
 		KilledReason[playerid],
@@ -175,7 +179,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	);
 	
 	#if defined MODULE_LOGS
-	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) has killed %s{%d}(%s) with %s(%d).",
+	Log_Write("logfiles/kills.txt", 
+		"(%s) %s{%d}(%s) has killed %s{%d}(%s) with %s(%d).",
 		ReturnDate(),
 		GetName(killerid, false),
 		PlayerInfo[killerid][pSQLID],
@@ -207,8 +212,12 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		//DropPlayerWeapons(playerid, X, Y);
 		//DropPlayerDrugs(playerid, X, Y, true);
 
-		mysql_fquery_ex(SQL_Handle(), "INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
-			VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+		mysql_fquery_ex(SQL_Handle(), 
+			"INSERT INTO \n\
+				player_deaths \n\
+			(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+			VALUES \n\
+				('%d','%f','%f','%f','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerDeath[playerid][pKilled],
 			PlayerDeath[playerid][pDeathX],
@@ -324,8 +333,11 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					//DropPlayerDrugs(playerid, X, Y, true);
 
 					mysql_fquery_ex(SQL_Handle(), 
-						"INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
-							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+						"INSERT INTO \n\
+							player_deaths \n\
+						(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+						VALUES \n\
+							('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerDeath[playerid][pKilled],
 						PlayerDeath[playerid][pDeathX],
@@ -443,8 +455,11 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					//DropPlayerDrugs(playerid, X, Y, true);
 
 					mysql_fquery_ex(SQL_Handle(), 
-						"INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
-							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+						"INSERT INTO \n\
+							player_deaths \n\
+						(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+						VALUES \n\
+							('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerDeath[playerid][pKilled],
 						PlayerDeath[playerid][pDeathX],

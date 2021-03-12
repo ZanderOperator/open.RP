@@ -7,8 +7,11 @@ LoadPlayerAdminMessage(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(SQL_Handle(), 
-				"INSERT INTO player_admin_msg(sqlid, AdminMessage, AdminMessageBy, AdmMessageConfirm) \n\
-					VALUES('%d', '', '', '0')",
+				"INSERT INTO \n\
+					player_admin_msg \n\
+				(sqlid, AdminMessage, AdminMessageBy, AdmMessageConfirm) \n\
+				VALUES \n\
+					('%d', '', '', '0')",
 				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;

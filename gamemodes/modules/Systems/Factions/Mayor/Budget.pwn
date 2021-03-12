@@ -27,8 +27,6 @@
 */
 
 static
-    // Passanje imena za OnDialogResponse
-    gPersonChecked[MAX_PLAYER_NAME],
     // Passanje listitem odabira za factionbank dialog mayora
     FactionListID[MAX_PLAYERS],
     // Varijabla koja sprema u kojoj pod kojim listitemom je koja fakcija (NPR ako je 2 ilegalna onda ce ovako izgledat)
@@ -55,21 +53,25 @@ Player_SetFactionList(playerid, slot, factionid)
 
 stock LoadCityStuff()
 {
-    mysql_pquery(SQL_Handle(), "SELECT * FROM city WHERE 1", "OnCityLoaded");
-    return 1;
-}
+    inline OnCityLoaded()
+    {
+        new 
+            rows = cache_num_rows();
+        if(!rows) 
+            return print( "MySQL Report: No City Info Data exists to load.");
 
-forward OnCityLoaded();
-public OnCityLoaded()
-{
-    new rows = cache_num_rows();
-    if(!rows) return printf( "MySQL Report: No city info exist to load.");
+        cache_get_value_name_int(0, "budget", CityInfo[cBudget]);
+        cache_get_value_name_int(0, "illegalbudget", CityInfo[cIllegalBudget]);
+        cache_get_value_name_int(0, "tax"   , CityInfo[cTax]);
 
-    cache_get_value_name_int(0, "budget", CityInfo[cBudget]);
-    cache_get_value_name_int(0, "illegalbudget", CityInfo[cIllegalBudget]);
-    cache_get_value_name_int(0, "tax"   , CityInfo[cTax]);
-
-    print("MySQL Report: City Info Loaded!");
+        print("MySQL Report: City Info Loaded!");
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnCityLoaded, 
+        "SELECT * FROM city WHERE 1", 
+        ""
+    );
     return 1;
 }
 
@@ -180,149 +182,158 @@ stock ResetFactionListIDs(playerid)
 
 // ######################### POREZNA STOCKS #########################################
 
-stock CheckPlayerTransactions(playerid, const name[])
+static CheckPlayerTransactions(playerid, const name[])
 {
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM server_transactions WHERE sendername = '%e' OR recievername = '%e' ORDER BY id DESC",
-            name,
-            name
-       ), 
-        "OnPlayerTransactionFinish", 
+    new 
+        searchednick[MAX_PLAYER_NAME];
+    strcpy(searchednick, name, MAX_PLAYER_NAME);
+    inline OnPlayerTransactionFinish()
+    {
+        new 
+            rows = cache_num_rows();
+        if(!rows) 
+            return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nije pronadjena trazena osoba.");
+
+        // TODO: optimise memory usage by removing unecessary strings
+        new
+            dialogstring[4096],
+            motd[256],
+            typestring[22],
+            descstring[64],
+            dtitle[60],
+            buyer[MAX_PLAYER_NAME],
+            seller[MAX_PLAYER_NAME],
+            datestring[24],
+            amount,
+            ltype,
+            sqlid,
+            lenleft;
+
+        for (new i = 0; i < rows; i++)
+        {
+            lenleft = sizeof(dialogstring) - strlen(dialogstring);
+            if(lenleft < sizeof(motd))
+                break;
+
+            cache_get_value_name_int(i,    "id"          ,    sqlid);
+            cache_get_value_name    (i,    "sendername"  ,    buyer,      sizeof(buyer));
+            cache_get_value_name    (i,    "recievername",    seller,     sizeof(seller));
+            cache_get_value_name_int(i,    "money"       ,    amount);
+            cache_get_value_name_int(i,    "logtype"     ,    ltype);
+            cache_get_value_name    (i,    "date"        ,    datestring, sizeof(datestring));
+            cache_get_value_name    (i,    "description" ,    descstring, sizeof(descstring));
+
+            // TODO: use strcpy instead of format
+            switch (ltype)
+            {
+                case LOG_TYPE_BIZSELL:     format(typestring, sizeof(typestring), "Transakcije biznisa");
+                case LOG_TYPE_HOUSESELL:   format(typestring, sizeof(typestring), "Transakcije kuce");
+                case LOG_TYPE_VEHICLESELL: format(typestring, sizeof(typestring), "Transakcije vozila");
+                case LOG_TYPE_COMPLEXSELL: format(typestring, sizeof(typestring), "Transakcije kompleksa");
+                case LOG_TYPE_GARAGESELL:  format(typestring, sizeof(typestring), "Transakcije garaza");
+            }
+
+            format(motd, sizeof(motd), "ID: %d | %s | %s | Kupac: %s | Prodavac: %s | Iznos: %d$ | %s\n",
+                sqlid,
+                datestring,
+                typestring,
+                buyer,
+                seller,
+                amount,
+                descstring
+            );
+            strcat(dialogstring, motd, sizeof(dialogstring));
+        }
+        format(dtitle, sizeof(dtitle), "Imovinske transakcije: %s", searchednick);
+        ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnPlayerTransactionFinish,
+        va_fquery(SQL_Handle(), 
+            "SELECT \n\
+                * \n\
+            FROM \n\
+                server_transactions \n\
+            WHERE \n\
+                sendername = '%e' OR recievername = '%e' \n\
+            ORDER BY id DESC",
+            searchednick,
+            searchednick
+        ), 
         "is", 
         playerid, 
-        name
-   );
+        searchednick
+    );
     return 1;
 }
 
-forward OnPlayerTransactionFinish(playerid, const searchednick[]);
-public OnPlayerTransactionFinish(playerid, const searchednick[])
+static ListServerTransactions(playerid, type)
 {
-    new rows = cache_num_rows();
-    if(!rows) return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nije pronadjena trazena osoba.");
-
-    // TODO: optimise memory usage by removing unecessary strings
-    new
-        dialogstring[4096],
-        motd[256],
-        typestring[22],
-        descstring[64],
-        dtitle[60],
-        buyer[MAX_PLAYER_NAME],
-        seller[MAX_PLAYER_NAME],
-        datestring[24],
-        amount,
-        ltype,
-        sqlid,
-        lenleft;
-
-    for (new i = 0; i < rows; i++)
+    inline OnTransListQueryFinish()
     {
-        lenleft = sizeof(dialogstring) - strlen(dialogstring);
-        if(lenleft < sizeof(motd))
-            break;
+        new 
+            rows = cache_num_rows();
+        if(!rows) 
+            return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nema nijednog unosa za trazeni upit.");
 
-        cache_get_value_name_int(i,    "id"          ,    sqlid);
-        cache_get_value_name    (i,    "sendername"  ,    buyer,      sizeof(buyer));
-        cache_get_value_name    (i,    "recievername",    seller,     sizeof(seller));
-        cache_get_value_name_int(i,    "money"       ,    amount);
-        cache_get_value_name_int(i,    "logtype"     ,    ltype);
-        cache_get_value_name    (i,    "date"        ,    datestring, sizeof(datestring));
-        cache_get_value_name    (i,    "description" ,    descstring, sizeof(descstring));
-
-        // TODO: use strcpy instead of format
-        switch (ltype)
-        {
-            case LOG_TYPE_BIZSELL:     format(typestring, sizeof(typestring), "Transakcije biznisa");
-            case LOG_TYPE_HOUSESELL:   format(typestring, sizeof(typestring), "Transakcije kuce");
-            case LOG_TYPE_VEHICLESELL: format(typestring, sizeof(typestring), "Transakcije vozila");
-            case LOG_TYPE_COMPLEXSELL: format(typestring, sizeof(typestring), "Transakcije kompleksa");
-            case LOG_TYPE_GARAGESELL:  format(typestring, sizeof(typestring), "Transakcije garaza");
-        }
-
-        format(motd, sizeof(motd), "ID: %d | %s | %s | Kupac: %s | Prodavac: %s | Iznos: %d$ | %s\n",
-            sqlid,
-            datestring,
-            typestring,
-            buyer,
-            seller,
+        // TODO: optimise memory usage by removing unecessary strings
+        new 
+            dialogstring[4096],
+            motd[256],
+            typestring[64],
+            descstring[64],
+            dtitle[60],
+            buyer[MAX_PLAYER_NAME],
+            seller[MAX_PLAYER_NAME],
+            datestring[24],
             amount,
-            descstring
-       );
-        strcat(dialogstring, motd, sizeof(dialogstring));
-    }
-    // TODO: why format a global variable here, investigate this
-    format(gPersonChecked, sizeof(gPersonChecked), "%s", searchednick);
-    format(dtitle, sizeof(dtitle), "Imovinske transakcije: %s", searchednick);
-    ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
-    return 1;
-}
+            sqlid,
+            lenleft;
 
-stock ListServerTransactions(playerid, type)
-{
-    mysql_pquery(SQL_Handle(), 
+        for (new i = 0; i < rows; i++)
+        {
+            lenleft = sizeof(dialogstring) - strlen(dialogstring);
+            if(lenleft < sizeof(motd))
+                break;
+
+            cache_get_value_name_int(i,    "id"          ,     sqlid);
+            cache_get_value_name    (i,    "sendername"  ,     buyer,      sizeof(buyer));
+            cache_get_value_name    (i,    "recievername",     seller,     sizeof(seller));
+            cache_get_value_name_int(i,    "money"       ,     amount);
+            cache_get_value_name    (i,    "date"        ,     datestring, sizeof(datestring));
+            cache_get_value_name    (i,    "description" ,     descstring, sizeof(descstring));
+
+            switch(type)
+            {
+                case LOG_TYPE_BIZSELL:     format(typestring, sizeof(typestring), "Transakcije biznisa");
+                case LOG_TYPE_HOUSESELL:   format(typestring, sizeof(typestring), "Transakcije kuce");
+                case LOG_TYPE_VEHICLESELL: format(typestring, sizeof(typestring), "Transakcije vozila");
+                case LOG_TYPE_COMPLEXSELL: format(typestring, sizeof(typestring), "Transakcije kompleksa");
+                case LOG_TYPE_GARAGESELL:  format(typestring, sizeof(typestring), "Transakcije garaza");
+            }
+
+            format(motd, sizeof(motd), "ID: %d | %s | Kupac: %s | Prodavac: %s | Iznos: %d$ | %s\n",
+                sqlid,
+                datestring,
+                buyer,
+                seller,
+                amount,
+                descstring
+            );
+            strcat(dialogstring, motd, sizeof(dialogstring));
+        }
+        format(dtitle, sizeof(dtitle), "Lista transakcija: %s", typestring);
+        ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnTransListQueryFinish,
         va_fquery(SQL_Handle(), "SELECT * FROM server_transactions WHERE logtype = '%d' ORDER BY id DESC", type), 
-        "OnTransListQueryFinish", 
         "ii", 
         playerid, 
         type
-   );
-    return 1;
-}
-
-forward OnTransListQueryFinish(playerid, logtype);
-public OnTransListQueryFinish(playerid, logtype)
-{
-    new rows = cache_num_rows();
-    if(!rows) return SendClientMessage(playerid, COLOR_RED, "U bazi transakcija nema nijednog unosa za trazeni upit.");
-
-    // TODO: optimise memory usage by removing unecessary strings
-    new dialogstring[4096],
-        motd[256],
-        typestring[64],
-        descstring[64],
-        dtitle[60],
-        buyer[MAX_PLAYER_NAME],
-        seller[MAX_PLAYER_NAME],
-        datestring[24],
-        amount,
-        sqlid,
-        lenleft;
-
-    for (new i = 0; i < rows; i++)
-    {
-        lenleft = sizeof(dialogstring) - strlen(dialogstring);
-        if(lenleft < sizeof(motd))
-            break;
-
-        cache_get_value_name_int(i,    "id"          ,     sqlid);
-        cache_get_value_name    (i,    "sendername"  ,     buyer,      sizeof(buyer));
-        cache_get_value_name    (i,    "recievername",     seller,     sizeof(seller));
-        cache_get_value_name_int(i,    "money"       ,     amount);
-        cache_get_value_name    (i,    "date"        ,     datestring, sizeof(datestring));
-        cache_get_value_name    (i,    "description" ,     descstring, sizeof(descstring));
-
-        switch (logtype)
-        {
-            case LOG_TYPE_BIZSELL:     format(typestring, sizeof(typestring), "Transakcije biznisa");
-            case LOG_TYPE_HOUSESELL:   format(typestring, sizeof(typestring), "Transakcije kuce");
-            case LOG_TYPE_VEHICLESELL: format(typestring, sizeof(typestring), "Transakcije vozila");
-            case LOG_TYPE_COMPLEXSELL: format(typestring, sizeof(typestring), "Transakcije kompleksa");
-            case LOG_TYPE_GARAGESELL:  format(typestring, sizeof(typestring), "Transakcije garaza");
-        }
-
-        format(motd, sizeof(motd), "ID: %d | %s | Kupac: %s | Prodavac: %s | Iznos: %d$ | %s\n",
-            sqlid,
-            datestring,
-            buyer,
-            seller,
-            amount,
-            descstring
-       );
-        strcat(dialogstring, motd, sizeof(dialogstring));
-    }
-    format(dtitle, sizeof(dtitle), "Lista transakcija: %s", typestring);
-    ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
+    );
     return 1;
 }
 
@@ -726,8 +737,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_PLAYER_TRANSACTIONS:
         {
-            // TODO: what is this variable actually used for? investigate
-            format(gPersonChecked, sizeof(gPersonChecked), "\n");
             return 1;
         }
         case DIALOG_LIST_TRANSACTIONS:

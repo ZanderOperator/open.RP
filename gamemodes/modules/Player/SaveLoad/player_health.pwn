@@ -7,8 +7,11 @@ LoadPlayerHealth(playerid)
         if(!cache_num_rows())
         {
             mysql_fquery_ex(SQL_Handle(), 
-                "INSERT INTO player_health(sqlid, health, armour, hunger) \n\
-                    VALUES('%d', '100.0', '0.0', '5.0')",
+                "INSERT INTO \n\
+                    player_health \n\
+                (sqlid, health, armour, hunger) \n\
+                VALUES \n\
+                    ('%d', '100.0', '0.0', '5.0')",
                 PlayerInfo[playerid][pSQLID]
             );
             return 1;

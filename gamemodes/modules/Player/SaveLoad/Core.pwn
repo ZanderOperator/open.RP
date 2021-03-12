@@ -484,9 +484,12 @@ static RegisterPlayer(playerid)
     MySQL_PQueryInline(SQL_Handle(),
 		using inline OnAccountFinish,
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO accounts (online,registered,register_date,name,password,teampin,email,\n\
-				secawnser,levels,age,sex,handMoney,bankMoney) \n\
-				VALUES ('1','0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d')",
+			"INSERT INTO \n\
+				accounts \n\
+			(online, registered, register_date, name, password, teampin, email,\n\
+				secawnser, levels, age, sex, handMoney, bankMoney) \n\
+			VALUES \n\
+				('1', '0', '%e', '%e', '%e', '', '%e', '', '%d', '%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pLastLogin],
 			GetName(playerid, false),
 			PlayerInfo[playerid][pPassword],
@@ -652,7 +655,7 @@ SavePlayerData(playerid)
 		PlayerInfo[playerid][pSQLID]
 	);
 
-	SavePlayerStats(playerid); // Saving data non-related to 'accounts' database table.
+	SavePlayerStats(playerid); // Saving data non-related to 'accounts' table.
 
 	mysql_pquery(SQL_Handle(), "COMMIT");
 	FirstSaving[playerid] = false;

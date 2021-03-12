@@ -120,7 +120,7 @@ stock IsWeaponHideable(weaponid)
     return (weaponid == 28 || weaponid == 32);
 
 
-stock RefreshPlayerWeaponSettings(playerid, weaponid)
+static RefreshPlayerWeaponSettings(playerid, weaponid)
 {
 	new index = GetWeaponObjectEnum(weaponid);
 
@@ -139,18 +139,25 @@ stock RefreshPlayerWeaponSettings(playerid, weaponid)
 	return 1;
 }
 
-stock SavePlayerWeaponSettings(playerid, weaponid)
+static SavePlayerWeaponSettings(playerid, weaponid)
 {
-	new index = GetWeaponObjectEnum(weaponid);
+	new 
+		index = GetWeaponObjectEnum(weaponid);
 	if(WeaponSettings[playerid][index][wsSQLID] == -1)
 	{
-        mysql_tquery(SQL_Handle(), 
+		inline OnWeaponSettingsInsert()
+		{
+			WeaponSettings[playerid][index][wsSQLID] = cache_insert_id();
+			RefreshPlayerWeaponSettings(playerid, weaponid);
+			return 1;
+		}
+        MySQL_PQueryInline(SQL_Handle(),
+			using inline OnWeaponSettingsInsert,
 			va_fquery(SQL_Handle(), "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
 				PlayerInfo[playerid][pSQLID], 
 				weaponid, 
 				WeaponSettings[playerid][index][Bone]
 			), 
-			"OnWeaponSettingsInsert", 
 			"ii", 
 			playerid, 
 			weaponid
@@ -160,47 +167,43 @@ stock SavePlayerWeaponSettings(playerid, weaponid)
 	return 1;
 }
 
-Public:OnWeaponSettingsInsert(playerid, weaponid)
+static LoadPlayerWeaponSettings(playerid)
 {
-	new index = GetWeaponObjectEnum(weaponid);
-	WeaponSettings[playerid][index][wsSQLID] = cache_insert_id();
-	RefreshPlayerWeaponSettings(playerid, weaponid);
-	return 1;
-}
+	inline OnWeaponSettingsLoaded()
+	{
+		new 
+			rows, 
+			weaponid, 
+			index;
+		
+		cache_get_row_count(rows);
+		if(rows  == 0) 
+			return 0;
 
-stock LoadPlayerWeaponSettings(playerid)
-{
-	
-    mysql_tquery(SQL_Handle(), 
+		for (new i; i < rows; i++)
+		{
+			cache_get_value_name_int(i, "WeaponID", weaponid);
+			index = GetWeaponObjectEnum(weaponid);
+
+			cache_get_value_name_int(i,   "id"	, WeaponSettings[playerid][index][wsSQLID]);
+			cache_get_value_name_float(i, "PosX", WeaponSettings[playerid][index][Position][0]);
+			cache_get_value_name_float(i, "PosY", WeaponSettings[playerid][index][Position][1]);
+			cache_get_value_name_float(i, "PosZ", WeaponSettings[playerid][index][Position][2]);
+
+			cache_get_value_name_float(i, "RotX", WeaponSettings[playerid][index][Position][3]);
+			cache_get_value_name_float(i, "RotY", WeaponSettings[playerid][index][Position][4]);
+			cache_get_value_name_float(i, "RotZ", WeaponSettings[playerid][index][Position][5]);
+
+			cache_get_value_name_int(i, "Bone", WeaponSettings[playerid][index][Bone]);
+		}
+		return 1;
+	}
+    MySQL_PQueryInline(SQL_Handle(),
+		using inline OnWeaponSettingsLoaded,
 		va_fquery(SQL_Handle(), "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]),
-		"OnWeaponSettingsLoaded", 
 		"i", 
 		playerid
 	);
-	return 1;
-}
-
-Public:OnWeaponSettingsLoaded(playerid)
-{
-    new rows, weaponid, index;
-    cache_get_row_count(rows);
-	if(rows  == 0) return 0;
-    for (new i; i < rows; i++)
-    {
-        cache_get_value_name_int(i, "WeaponID", weaponid);
-        index = GetWeaponObjectEnum(weaponid);
-
-		cache_get_value_name_int(i,   "id"	, WeaponSettings[playerid][index][wsSQLID]);
-        cache_get_value_name_float(i, "PosX", WeaponSettings[playerid][index][Position][0]);
-        cache_get_value_name_float(i, "PosY", WeaponSettings[playerid][index][Position][1]);
-        cache_get_value_name_float(i, "PosZ", WeaponSettings[playerid][index][Position][2]);
-
-        cache_get_value_name_float(i, "RotX", WeaponSettings[playerid][index][Position][3]);
-        cache_get_value_name_float(i, "RotY", WeaponSettings[playerid][index][Position][4]);
-        cache_get_value_name_float(i, "RotZ", WeaponSettings[playerid][index][Position][5]);
-
-        cache_get_value_name_int(i, "Bone", WeaponSettings[playerid][index][Bone]);
-    }
 	return 1;
 }
 

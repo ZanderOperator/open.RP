@@ -37,8 +37,11 @@ LoadPlayerRadio(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(SQL_Handle(), 
-				"INSERT INTO player_radio(sqlid, HasRadio, MainSlot, Radio1, Slot1, Radio2, Slot2, Radio3, Slot3) \n\
-					VALUES('%d', '0', '0', '0', '0', '0', '0', '0', '0')",
+				"INSERT INTO \n\
+					player_radio \n\
+				(sqlid, HasRadio, MainSlot, Radio1, Slot1, Radio2, Slot2, Radio3, Slot3) \n\
+				VALUES \n\
+					('%d', '0', '0', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;

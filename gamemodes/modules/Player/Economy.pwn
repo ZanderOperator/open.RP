@@ -100,8 +100,11 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype)
 		}
 	}
 	mysql_fquery_ex(SQL_Handle(), 
-		"INSERT INTO server_transactions (sendername, recievername, money, logtype, date, description) \n\
-			VALUES ('%e','%e','%d','%d','%e','%e')",
+		"INSERT INTO \n\
+			server_transactions \n\
+		(sendername, recievername, money, logtype, date, description) \n\
+		VALUES \n\
+			('%e','%e','%d','%d','%e','%e')",
 		GetName(playerid, false),
 		GetName(giveplayerid, false),
 		money,

@@ -42,18 +42,20 @@ timer SetPlayerCrash[6000](playerid)
 		GetPlayerPreviousInfo(playerid);
 		LearnPlayer(playerid, 1);
 	}
-	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm])
+	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 
+		&& !isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm])
 	{
 		va_SendClientMessage(playerid, 
 			COLOR_LIGHTBLUE, 
-			"[%s]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", \n\
-				za vise informacija - /update.", 
+			"[%s]: "COL_WHITE"Server has been updated on version "COL_LIGHTBLUE"%s"COL_WHITE", \n\
+				for more info - /update.", 
 			SERVER_NAME,
 			SCRIPT_VERSION
 		);
 		ShowAdminMessage(playerid);
 	}
-	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerAdminMessage[playerid][pAdmMsgConfirm] || isnull(PlayerAdminMessage[playerid][pAdminMsg])))
+	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 
+		&& (PlayerAdminMessage[playerid][pAdmMsgConfirm] || isnull(PlayerAdminMessage[playerid][pAdminMsg])))
 	{
 		if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
 			Player_SetReward(playerid, true);
@@ -125,11 +127,11 @@ CheckPlayerCrash(playerid, reason)
 				Float:armor;
 
 			GetPlayerHealth(playerid, health);
-			PlayerCrash[playerid][pCrashHealth] 	= health;
+			PlayerCrash[playerid][pCrashHealth] = health;
 			GetPlayerArmour(playerid, armor);
-			PlayerCrash[playerid][pCrashArmour] 	= armor;
+			PlayerCrash[playerid][pCrashArmour] = armor;
 
-			PlayerCrash[playerid][pCrashVW] 	= GetPlayerVirtualWorld(playerid);
+			PlayerCrash[playerid][pCrashVW] = GetPlayerVirtualWorld(playerid);
 			PlayerCrash[playerid][pCrashInt] = GetPlayerInterior(playerid);
 			PlayerAppearance[playerid][pTmpSkin] = GetPlayerSkin(playerid);
 
@@ -137,11 +139,14 @@ CheckPlayerCrash(playerid, reason)
                 PlayerCrash[playerid][pCrashX], 
                 PlayerCrash[playerid][pCrashY], 
                 PlayerCrash[playerid][pCrashZ]
-           );
+           	);
 
-			mysql_fquery_ex(SQL_Handle(), "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,\n\
-                interior,viwo,armor,health,skin,time) \n\
-                VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
+			mysql_fquery_ex(SQL_Handle(), 
+				"INSERT INTO \n\
+					player_crashes \n\
+				(player_id, pos_x, pos_y, pos_z, interior, viwo, armor, health, skin, time) \n\
+                VALUES \n\
+					('%d', '%.4f', '%.4f', '%.4f', '%d', '%d', '%f', '%f', '%d', '%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerCrash[playerid][pCrashX],
 				PlayerCrash[playerid][pCrashY],
@@ -155,11 +160,12 @@ CheckPlayerCrash(playerid, reason)
 			);
 			if(reason == 0)
 			{
-				new	tmpString[73];
+				new	
+					tmpString[73];
 				format(tmpString, sizeof(tmpString), 
                     "AdmWarn: Player %s just had a Client Crash.",
                     GetName(playerid,false)
-               );
+               	);
 				ABroadCast(COLOR_LIGHTRED,tmpString,1);
 			}
 		}

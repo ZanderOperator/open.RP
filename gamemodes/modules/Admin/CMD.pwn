@@ -325,7 +325,11 @@ CMD:inactivity(playerid, params[])
 			}
 		}
 		mysql_fquery_ex(SQL_Handle(), 
-			"INSERT INTO inactive_accounts(sqlid, startstamp, endstamp, reason) VALUES ('%d','%d','%d','%e')",
+			"INSERT INTO \n\
+				inactive_accounts \n\
+			(sqlid, startstamp, endstamp, reason) \n\
+			VALUES \n\
+				('%d','%d','%d','%e')",
 			sqlid,
 			startstamp,
 			endstamp,
@@ -2855,7 +2859,12 @@ CMD:warnex(playerid, params[])
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
-	mysql_fquery_ex(SQL_Handle(), "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+	mysql_fquery_ex(SQL_Handle(), 
+		"INSERT INTO \n\
+			warns \n\
+		(player_id,name, forumname, reason, date) \n\
+		VALUES \n\
+			('%d', '%e', '%e', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
@@ -3013,8 +3022,12 @@ CMD:charge(playerid, params[])
 	getdate(year, month, day);
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	mysql_fquery(SQL_Handle(), 
-		"INSERT INTO charges (player_id,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+	mysql_fquery_ex(SQL_Handle(), 
+		"INSERT INTO \n\
+			charges \n\
+		(player_id,name, admin_name, money, reason, date) \n\
+		VALUES \n\
+			('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -3454,8 +3467,12 @@ CMD:warn(playerid, params[])
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
-	mysql_fquery(SQL_Handle(),
-		 "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+	mysql_fquery_ex(SQL_Handle(),
+		 "INSERT INTO \n\
+			warns \n\
+		(player_id,name, forumname, reason, date) \n\
+		VALUES \n\
+			('%d', '%e', '%e', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],

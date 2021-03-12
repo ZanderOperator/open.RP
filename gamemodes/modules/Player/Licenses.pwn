@@ -113,8 +113,11 @@ LoadPlayerLicenses(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(SQL_Handle(), 
-				"INSERT INTO player_licenses(sqlid, carlic, gunlic, boatlic, fishlic, flylic, passport) \n\
-					VALUES('%d', '0', '0', '0', '0', '0', '0')",
+				"INSERT INTO \n\
+					player_licenses \n\
+				(sqlid, carlic, gunlic, boatlic, fishlic, flylic, passport) \n\
+				VALUES \n\
+					('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
 		);
 			return 1;

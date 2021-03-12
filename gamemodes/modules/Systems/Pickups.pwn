@@ -82,56 +82,54 @@ Player_SetPickupCP(playerid, v)
     PickupCP[playerid] = v;
 }
 
-stock LoadPickups()
+static LoadPickups()
 {
-	mysql_pquery(SQL_Handle(), "SELECT * FROM server_pickups WHERE 1", "OnPickupsLoad");
-	return 1;
-}
+	inline OnPickupsLoad() 
+	{
+		new
+			count = cache_num_rows();	
 
-forward OnPickupCreate(pickupid);
-public OnPickupCreate(pickupid)
-	PickupInfo[pickupid][epSQLID] = cache_insert_id();
+		if(!count) 
+			return print("MySQL Report: No pickups exist to load.");
 
-forward OnPickupsLoad();
-public OnPickupsLoad() 
-{
-	new
-		count = cache_num_rows();	
-
-	if(!count) 
-		return print("MySQL Report: No pickups exist to load.");
-
- 	for(new b = 0; b < count; b++) 
-	 {
-		cache_get_value_name_int(b, 	"id"			, PickupInfo[b][epSQLID]);
-		cache_get_value_name_int(b, 	"pickupmodel"	, PickupInfo[b][epPickupModel]);
-		cache_get_value_name_int(b, 	"pickuptype"	, PickupInfo[b][epPickupType]);
-		cache_get_value_name_int(b, 	"canenter"		, PickupInfo[b][epCanEnter]);
-		cache_get_value_name_float(b, 	"entrancex"		, PickupInfo[b][epEntrancex]);
-		cache_get_value_name_float(b, 	"entrancey"		, PickupInfo[b][epEntrancey]);
-		cache_get_value_name_float(b, 	"entrancez"		, PickupInfo[b][epEntrancez]);
-		cache_get_value_name_float(b, 	"exitx"			, PickupInfo[b][epExitx]);
-		cache_get_value_name_float(b, 	"exity"			, PickupInfo[b][epExity]);
-		cache_get_value_name_float(b, 	"exitz"			, PickupInfo[b][epExitz]);
-		cache_get_value_name(b, "enterdiscription", PickupInfo[b][epEnterDiscription], 64); 		
-		cache_get_value_name(b, "discription", PickupInfo[b][epDiscription], 64); 						
-		cache_get_value_name_int(b, "viwo"				, PickupInfo[b][epViwo]);
-		cache_get_value_name_int(b, "organizations"		, PickupInfo[b][epOrganizations]);
-		cache_get_value_name_int(b, "job"				, PickupInfo[b][epJob]);
-		cache_get_value_name_int(b, "pint"				, PickupInfo[b][epInt]);
-		cache_get_value_name_int(b, "enterInt"			, PickupInfo[b][epEnterInt]);
-		cache_get_value_name_int(b, "enterViwo"			, PickupInfo[b][epEnterViwo]);
-
-		PickupInfo[b][epID] = CreateDynamicPickup(PickupInfo[b][epPickupModel], PickupInfo[b][epPickupType], PickupInfo[b][epEntrancex], PickupInfo[b][epEntrancey], PickupInfo[b][epEntrancez], -1, -1, -1, 80.0);
-		Iter_Add(PickupsIter, b);
-		if(PickupInfo[b][epCanEnter])
+		for(new b = 0; b < count; b++) 
 		{
-			CreatePickupEnter(b);
-			Iter_Add(Pickup[PICKUP_TYPE_ENTERABLE], b);
+			cache_get_value_name_int(b, 	"id"			, PickupInfo[b][epSQLID]);
+			cache_get_value_name_int(b, 	"pickupmodel"	, PickupInfo[b][epPickupModel]);
+			cache_get_value_name_int(b, 	"pickuptype"	, PickupInfo[b][epPickupType]);
+			cache_get_value_name_int(b, 	"canenter"		, PickupInfo[b][epCanEnter]);
+			cache_get_value_name_float(b, 	"entrancex"		, PickupInfo[b][epEntrancex]);
+			cache_get_value_name_float(b, 	"entrancey"		, PickupInfo[b][epEntrancey]);
+			cache_get_value_name_float(b, 	"entrancez"		, PickupInfo[b][epEntrancez]);
+			cache_get_value_name_float(b, 	"exitx"			, PickupInfo[b][epExitx]);
+			cache_get_value_name_float(b, 	"exity"			, PickupInfo[b][epExity]);
+			cache_get_value_name_float(b, 	"exitz"			, PickupInfo[b][epExitz]);
+			cache_get_value_name(b, "enterdiscription", PickupInfo[b][epEnterDiscription], 64); 		
+			cache_get_value_name(b, "discription", PickupInfo[b][epDiscription], 64); 						
+			cache_get_value_name_int(b, "viwo"				, PickupInfo[b][epViwo]);
+			cache_get_value_name_int(b, "organizations"		, PickupInfo[b][epOrganizations]);
+			cache_get_value_name_int(b, "job"				, PickupInfo[b][epJob]);
+			cache_get_value_name_int(b, "pint"				, PickupInfo[b][epInt]);
+			cache_get_value_name_int(b, "enterInt"			, PickupInfo[b][epEnterInt]);
+			cache_get_value_name_int(b, "enterViwo"			, PickupInfo[b][epEnterViwo]);
+
+			PickupInfo[b][epID] = CreateDynamicPickup(PickupInfo[b][epPickupModel], PickupInfo[b][epPickupType], PickupInfo[b][epEntrancex], PickupInfo[b][epEntrancey], PickupInfo[b][epEntrancez], -1, -1, -1, 80.0);
+			Iter_Add(PickupsIter, b);
+			if(PickupInfo[b][epCanEnter])
+			{
+				CreatePickupEnter(b);
+				Iter_Add(Pickup[PICKUP_TYPE_ENTERABLE], b);
+			}
+			else Iter_Add(Pickup[PICKUP_TYPE_NON_ENTERABLE], b);
 		}
-		else Iter_Add(Pickup[PICKUP_TYPE_NON_ENTERABLE], b);
+		printf("MySQL Report: Pickups Loaded. [%d/%d]", Iter_Count(PickupsIter), MAX_PICKUPS);
+		return 1;
 	}
-	printf("MySQL Report: Pickups Loaded. [%d/%d]", Iter_Count(PickupsIter), MAX_PICKUPS);
+	MySQL_PQueryInline(SQL_Handle(), 
+		using inline OnPickupsLoad,
+		"SELECT * FROM server_pickups WHERE 1", 
+		""
+	);
 	return 1;
 }
 
@@ -200,13 +198,20 @@ stock static ClearInputsPick(playerid)
 
 stock static CreateNewPickup(playerid, pickup)
 {
-	mysql_pquery(SQL_Handle(), "BEGIN");
-
-	mysql_pquery(SQL_Handle(),
+	inline OnPickupCreate()
+	{
+		PickupInfo[pickup][epSQLID] = cache_insert_id();
+		return 1;
+	}
+	MySQL_PQueryInline(SQL_Handle(),
+		using inline OnPickupCreate,
 		va_fquery(SQL_Handle(),
-			"INSERT INTO server_pickups (pickupmodel,pickuptype,canenter,\n\
-				entrancex, entrancey, entrancez,exitx,exity,exitz,enterdiscription, discription, viwo, organizations, job, pint) \n\
-				VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
+			"INSERT INTO \n\
+				server_pickups \n\
+			(pickupmodel, pickuptype, canenter, entrancex, entrancey, entrancez, exitx, exity, exitz, \n\
+				enterdiscription, discription, viwo, organizations, job, pint) \n\
+			VALUES \n\
+				('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
 			PickupInfo[pickup][epPickupModel],
 			PickupInfo[pickup][epPickupType],
 			PickupInfo[pickup][epCanEnter],
@@ -223,11 +228,9 @@ stock static CreateNewPickup(playerid, pickup)
 			PickupInfo[pickup][epJob],
 			PickupInfo[pickup][epInt]
 		),
-	 	"OnPickupCreate", 
 		"i", 
 		pickup
 	);
-	mysql_pquery(SQL_Handle(), "COMMIT");
 		
     PickupInfo[pickup][epID] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
 	

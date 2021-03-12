@@ -41,7 +41,7 @@ enum // U coarp.amx
 
 enum whInfo
 {
-    whFactionSQLID, // SQL ID of Faction that warehouse belongs to (( FactionInfo[factionid][fID]))
+    whFactionSQLID, // SQL ID of Faction that warehouse belongs to (( FactionInfo[factionid][fID] ))
     Float:whEnter[3],
     Float:whExit[3],
     Float:whVault[3],
@@ -56,7 +56,7 @@ static WarehouseInfo[MAX_FACTIONS][whInfo];
 enum WH_WEAPON_INFO
 {
     whWeaponSQL,
-    whFactionSQLID, // SQL ID of Faction that weapon belongs to (( FactionInfo[factionid][fID]))
+    whFactionSQLID, // SQL ID of Faction that weapon belongs to (( FactionInfo[factionid][fID] ))
     whWeaponId,
     whAmmo
 }
@@ -94,7 +94,9 @@ Warehouse_FactionSQL(warehouseid)
 
 stock ResetWarehouseEnum(wh)
 {
-    DestroyDynamicPickup(WarehouseInfo[wh][whPickupID]);
+    if(IsValidDynamicPickup(WarehouseInfo[wh][whPickupID]))
+        DestroyDynamicPickup(WarehouseInfo[wh][whPickupID]);
+
     WarehouseInfo[wh][whFactionSQLID] = -1;
     WarehouseInfo[wh][whEnter][0] = 0.0;
     WarehouseInfo[wh][whEnter][1] = 0.0;
@@ -110,14 +112,6 @@ stock ResetWarehouseEnum(wh)
     WarehouseInfo[wh][whViwo] = 0;
     WarehouseInfo[wh][whPickupID] = -1;
     WarehouseInfo[wh][whMoney] = 0;
-    return 1;
-}
-
-stock LoadFactionWarehouse(factionid)
-{
-    new 
-        wh = Iter_Free(Warehouses);
-    ResetWarehouseEnum(wh);
 
     for (new i = 0; i < MAX_WAREHOUSE_WEAPONS; i++)
     {
@@ -126,69 +120,83 @@ stock LoadFactionWarehouse(factionid)
         WarehouseWeapons[wh][i][whWeaponId]     = 0;
         WarehouseWeapons[wh][i][whAmmo]         = 0;
     }
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM server_warehouses WHERE fid = '%d'", FactionInfo[factionid][fID]), 
-        "OnWarehouseLoaded", 
-        "i", 
-        factionid
-   );
-}
-
-Public:OnWarehouseLoaded(factionid)
-{
-    if(!cache_num_rows()) return 0;
-
-    new freeslot = Iter_Free(Warehouses);
-    WarehouseInfo[freeslot][whFactionSQLID] = FactionInfo[factionid][fID];
-    cache_get_value_name_float(0, "enterX"          , WarehouseInfo[freeslot][whEnter][0]);
-    cache_get_value_name_float(0, "enterY"          , WarehouseInfo[freeslot][whEnter][1]);
-    cache_get_value_name_float(0, "enterZ"          , WarehouseInfo[freeslot][whEnter][2]);
-    cache_get_value_name_float(0, "exitX"           , WarehouseInfo[freeslot][whExit][0]);
-    cache_get_value_name_float(0, "exitY"           , WarehouseInfo[freeslot][whExit][1]);
-    cache_get_value_name_float(0, "exitZ"           , WarehouseInfo[freeslot][whExit][2]);
-    cache_get_value_name_float(0, "vaultX"          , WarehouseInfo[freeslot][whVault][0]);
-    cache_get_value_name_float(0, "vaultY"          , WarehouseInfo[freeslot][whVault][1]);
-    cache_get_value_name_float(0, "vaultZ"          , WarehouseInfo[freeslot][whVault][2]);
-    cache_get_value_name_int(0,   "int"             , WarehouseInfo[freeslot][whInt]);
-    cache_get_value_name_int(0,   "viwo"            , WarehouseInfo[freeslot][whViwo]);
-    cache_get_value_name_int(0,   "lock"            , WarehouseInfo[freeslot][whLocked]);
-    cache_get_value_name_int(0,   "money"           , WarehouseInfo[freeslot][whMoney]);
-    Iter_Add(Warehouses, freeslot);
-
-    WarehouseInfo[freeslot][whPickupID] =  CreateDynamicPickup(1239, 1, WarehouseInfo[freeslot][whVault][0], WarehouseInfo[freeslot][whVault][1], WarehouseInfo[freeslot][whVault][2], WarehouseInfo[freeslot][whViwo], WarehouseInfo[freeslot][whInt], -1);
-    LoadWarehouseWeapons(WarehouseInfo[freeslot][whFactionSQLID]);
     return 1;
 }
 
-stock LoadWarehouseWeapons(factid)
+stock LoadFactionWarehouse(factionid)
 {
-    new whid = FetchWarehouseEnumFromFaction(factid);
+    new 
+        wh = Iter_Free(Warehouses);
+    ResetWarehouseEnum(wh);
+    inline OnWarehouseLoaded()
+    {
+        if(!cache_num_rows()) 
+            return print("MySQL Report: There are no Faction Warehouses to load from database.");
 
-    mysql_pquery(SQL_Handle(), 
+        new 
+            freeslot = Iter_Free(Warehouses);
+        WarehouseInfo[freeslot][whFactionSQLID] = FactionInfo[factionid][fID];
+        cache_get_value_name_float(0, "enterX"          , WarehouseInfo[freeslot][whEnter][0]);
+        cache_get_value_name_float(0, "enterY"          , WarehouseInfo[freeslot][whEnter][1]);
+        cache_get_value_name_float(0, "enterZ"          , WarehouseInfo[freeslot][whEnter][2]);
+        cache_get_value_name_float(0, "exitX"           , WarehouseInfo[freeslot][whExit][0]);
+        cache_get_value_name_float(0, "exitY"           , WarehouseInfo[freeslot][whExit][1]);
+        cache_get_value_name_float(0, "exitZ"           , WarehouseInfo[freeslot][whExit][2]);
+        cache_get_value_name_float(0, "vaultX"          , WarehouseInfo[freeslot][whVault][0]);
+        cache_get_value_name_float(0, "vaultY"          , WarehouseInfo[freeslot][whVault][1]);
+        cache_get_value_name_float(0, "vaultZ"          , WarehouseInfo[freeslot][whVault][2]);
+        cache_get_value_name_int(0,   "int"             , WarehouseInfo[freeslot][whInt]);
+        cache_get_value_name_int(0,   "viwo"            , WarehouseInfo[freeslot][whViwo]);
+        cache_get_value_name_int(0,   "lock"            , WarehouseInfo[freeslot][whLocked]);
+        cache_get_value_name_int(0,   "money"           , WarehouseInfo[freeslot][whMoney]);
+        Iter_Add(Warehouses, freeslot);
+
+        WarehouseInfo[freeslot][whPickupID] =  CreateDynamicPickup(1239, 1, WarehouseInfo[freeslot][whVault][0], WarehouseInfo[freeslot][whVault][1], WarehouseInfo[freeslot][whVault][2], WarehouseInfo[freeslot][whViwo], WarehouseInfo[freeslot][whInt], -1);
+        LoadWarehouseWeapons(WarehouseInfo[freeslot][whFactionSQLID]);
+        return 1;
+    }
+
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnWarehouseLoaded, 
+        va_fquery(SQL_Handle(), "SELECT * FROM server_warehouses WHERE fid = '%d'", FactionInfo[factionid][fID]),  
+        "i",
+        factionid
+    );
+    return 1;
+}
+
+static LoadWarehouseWeapons(factid)
+{
+    new 
+        whid = FetchWarehouseEnumFromFaction(factid);
+
+    inline OnWarehouseWeaponsLoaded()
+    {
+        new 
+            rows = cache_num_rows();
+        if(!rows) 
+            return 0;
+
+        for (new i = 0; i < rows; i++)
+        {
+            cache_get_value_name_int(i, "id"        , WarehouseWeapons[whid][i][whWeaponSQL]);
+            cache_get_value_name_int(i, "fid"       , WarehouseWeapons[whid][i][whFactionSQLID]);
+            cache_get_value_name_int(i, "weaponid"  , WarehouseWeapons[whid][i][whWeaponId]);
+            cache_get_value_name_int(i, "ammo"      , WarehouseWeapons[whid][i][whAmmo]);
+            Iter_Add(WhWeapons[whid], i);
+        }
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnWarehouseWeaponsLoaded, 
         va_fquery(SQL_Handle(), "SELECT * FROM warehouse_weapons WHERE fid = '%d'", factid), 
-        "OnWarehouseWeaponsLoaded", 
         "i", 
         whid
-   );
-}
-
-Public:OnWarehouseWeaponsLoaded(whid)
-{
-    new rows = cache_num_rows();
-    if(!rows) return 0;
-
-    for (new i = 0; i < rows; i++)
-    {
-        cache_get_value_name_int(i, "id"        , WarehouseWeapons[whid][i][whWeaponSQL]);
-        cache_get_value_name_int(i, "fid"       , WarehouseWeapons[whid][i][whFactionSQLID]);
-        cache_get_value_name_int(i, "weaponid"  , WarehouseWeapons[whid][i][whWeaponId]);
-        cache_get_value_name_int(i, "ammo"      , WarehouseWeapons[whid][i][whAmmo]);
-        Iter_Add(WhWeapons[whid], i);
-    }
+    );
     return 1;
 }
 
-stock PutWeaponInWarehouse(playerid, weaponid, ammo)
+static PutWeaponInWarehouse(playerid, weaponid, ammo)
 {
     AC_ResetPlayerWeapon(playerid, weaponid);
 
@@ -201,13 +209,23 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
     WarehouseWeapons[whid][wslot][whWeaponId] = weaponid;
     WarehouseWeapons[whid][wslot][whAmmo] = ammo;
 
-    mysql_tquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "INSERT INTO warehouse_weapons(fid, weaponid, ammo) VALUES ('%d','%d','%d')",
+    inline OnWarehouseWeaponInsert() 
+    {
+        WarehouseWeapons[whid][wslot][whWeaponSQL] = cache_insert_id();
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnWarehouseWeaponInsert, 
+        va_fquery(SQL_Handle(), 
+            "INSERT INTO \n\
+                warehouse_weapons \n\
+            (fid, weaponid, ammo) \n\
+            VALUES \n\
+                ('%d','%d','%d')",
             FactionInfo[fid][fID],
             weaponid,
             ammo
-       ), 
-        "OnWarehouseWeaponInsert", 
+        ), 
         "ii", 
         whid, 
         wslot
@@ -233,12 +251,6 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
    );
     #endif
 
-    return 1;
-}
-
-Public:OnWarehouseWeaponInsert(warehouseid, wslot)
-{
-    WarehouseWeapons[warehouseid][wslot][whWeaponSQL] = cache_insert_id();
     return 1;
 }
 
@@ -442,8 +454,11 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
     WarehouseInfo[wh][whPickupID] =  CreateDynamicPickup(1239, 1, WarehouseInfo[wh][whVault][0], WarehouseInfo[wh][whVault][1], WarehouseInfo[wh][whVault][2], WarehouseInfo[wh][whViwo], WarehouseInfo[wh][whInt], -1);
 
     mysql_fquery_ex(SQL_Handle(), 
-        "INSERT INTO server_warehouses(fid, enterX, enterY, enterZ, exitX , exitY , exitZ, vaultX, vaultY, vaultZ,\n\
-            int, viwo, lock, money) VALUES ('%d','%f','%f','%f','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d')",
+        "INSERT INTO \n\
+            server_warehouses \n\
+        (fid, enterX, enterY, enterZ, exitX , exitY , exitZ, vaultX, vaultY, vaultZ, int, viwo, lock, money) \n\
+        VALUES \n\
+            ('%d','%f','%f','%f','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d')",
         WarehouseInfo[wh][whFactionSQLID],
         WarehouseInfo[wh][whEnter][0],
         WarehouseInfo[wh][whEnter][1],
@@ -458,7 +473,7 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
         WarehouseInfo[wh][whViwo],
         WarehouseInfo[wh][whLocked],
         WarehouseInfo[wh][whMoney]
-   );
+    );
     Iter_Add(Warehouses, wh);
     return 1;
 }

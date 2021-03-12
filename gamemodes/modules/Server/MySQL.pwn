@@ -45,10 +45,21 @@ va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 
 public OnQueryError(errorid, const error[], const callback[], const query[], MySQL:handle)
 {
-    new backtrace[2048];
-    GetAmxBacktrace(backtrace, sizeof(backtrace));
-    Log_Write("logfiles/AMX_Query_Log.txt", "\n[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
-    printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
+    Log_Write("logfiles/AMX_Query_Log.txt", 
+        "[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s", 
+        ReturnDate(), 
+        errorid, 
+        error, 
+        callback, 
+        query
+    );
+    printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s", 
+        ReturnDate(), 
+        errorid, 
+        error, 
+        callback, 
+        query    
+    );
     return 1;
 }
 

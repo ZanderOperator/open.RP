@@ -144,56 +144,58 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
     return 1;
 }
 
-Public:HouseStorage_Load()
-{
-    new 
-        rows = cache_num_rows();
-
-    if(!rows)
-    {
-        print("MySQL Report: There are no House Storage Racks to load from database!");
-        return 1;
-    }
-
-    for (new i = 0; i < cache_num_rows(); i++)
-    {
-        HouseStorage[i][storageExists] = true;
-
-        cache_get_value_name_int(i, "storageID", HouseStorage[i][storageID]);
-        cache_get_value_name_int(i, "storageHouse", HouseStorage[i][storageHouse]);
-        cache_get_value_name_int(i, "storageInterior", HouseStorage[i][storageInterior]);
-        cache_get_value_name_int(i, "storageWorld", HouseStorage[i][storageWorld]);
-
-        cache_get_value_name_int(i, "gunID0", HouseStorage[i][storageWeapons][0]);
-        cache_get_value_name_int(i, "gunID1", HouseStorage[i][storageWeapons][1]);
-        cache_get_value_name_int(i, "gunID2", HouseStorage[i][storageWeapons][2]);
-        cache_get_value_name_int(i, "gunID3", HouseStorage[i][storageWeapons][3]);
-
-        cache_get_value_name_int(i, "ammoID0", HouseStorage[i][storageAmmo][0]);
-        cache_get_value_name_int(i, "ammoID1", HouseStorage[i][storageAmmo][1]);
-        cache_get_value_name_int(i, "ammoID2", HouseStorage[i][storageAmmo][2]);
-        cache_get_value_name_int(i, "ammoID3", HouseStorage[i][storageAmmo][3]);
-
-        cache_get_value_name_float(i, "storageX", HouseStorage[i][storagePos][0]);
-        cache_get_value_name_float(i, "storageY", HouseStorage[i][storagePos][1]);
-        cache_get_value_name_float(i, "storageZ", HouseStorage[i][storagePos][2]);
-        cache_get_value_name_float(i, "storageA", HouseStorage[i][storagePos][3]);
-
-        Storage_RackRefresh(i);
-        Iter_Add(HStorage_Iter, i);
-    }
-    printf("MySQL Report: House Storage Racks Loaded. [%d/%d]", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
-    return 1;
-}
-
 GetRackLimit(playerid)
 {
     return (PlayerVIP[playerid][pDonateRank] + 1);
 }
 
-stock LoadHouseStorages()
-{
-    mysql_pquery(SQL_Handle(), "SELECT * FROM house_storage WHERE 1", "HouseStorage_Load", "");
+static LoadHouseStorages()
+{ 
+    inline HouseStorage_Load()
+    {
+        new 
+            rows = cache_num_rows();
+        if(!rows)
+        {
+            print("MySQL Report: There are no House Storage Racks to load from database!");
+            return 1;
+        }
+
+        for (new i = 0; i < cache_num_rows(); i++)
+        {
+            HouseStorage[i][storageExists] = true;
+
+            cache_get_value_name_int(i, "storageID", HouseStorage[i][storageID]);
+            cache_get_value_name_int(i, "storageHouse", HouseStorage[i][storageHouse]);
+            cache_get_value_name_int(i, "storageInterior", HouseStorage[i][storageInterior]);
+            cache_get_value_name_int(i, "storageWorld", HouseStorage[i][storageWorld]);
+
+            cache_get_value_name_int(i, "gunID0", HouseStorage[i][storageWeapons][0]);
+            cache_get_value_name_int(i, "gunID1", HouseStorage[i][storageWeapons][1]);
+            cache_get_value_name_int(i, "gunID2", HouseStorage[i][storageWeapons][2]);
+            cache_get_value_name_int(i, "gunID3", HouseStorage[i][storageWeapons][3]);
+
+            cache_get_value_name_int(i, "ammoID0", HouseStorage[i][storageAmmo][0]);
+            cache_get_value_name_int(i, "ammoID1", HouseStorage[i][storageAmmo][1]);
+            cache_get_value_name_int(i, "ammoID2", HouseStorage[i][storageAmmo][2]);
+            cache_get_value_name_int(i, "ammoID3", HouseStorage[i][storageAmmo][3]);
+
+            cache_get_value_name_float(i, "storageX", HouseStorage[i][storagePos][0]);
+            cache_get_value_name_float(i, "storageY", HouseStorage[i][storagePos][1]);
+            cache_get_value_name_float(i, "storageZ", HouseStorage[i][storagePos][2]);
+            cache_get_value_name_float(i, "storageA", HouseStorage[i][storagePos][3]);
+
+            Storage_RackRefresh(i);
+            Iter_Add(HStorage_Iter, i);
+        }
+        printf("MySQL Report: House Storage Racks Loaded. [%d/%d]", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline HouseStorage_Load, 
+        "SELECT * FROM house_storage WHERE 1", 
+        ""
+    );
     return 1;
 }
 

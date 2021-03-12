@@ -60,7 +60,7 @@ static SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {
     mysql_fquery(SQL_Handle(), "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],
-        VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
+        VehicleInfo[vehicleid][vTicketSQLID][ticket_slot]
    );
     return 1;
 }
@@ -73,7 +73,7 @@ stock CheckVehicleTickets(playerid, vehicleid)
         {
             va_SendClientMessage(playerid, COLOR_ORANGE, "* You got a vehicle ticket worth %s. Reason: %s",
                 FormatNumber(VehicleInfo[vehicleid][vTickets][i]),
-                GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i])
+                GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketSQLID][i])
            );
             VehicleInfo[vehicleid][vTicketShown][i] = true;
             SaveVehicleTicketStatus(vehicleid, i);
@@ -102,7 +102,11 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
     mysql_tquery(SQL_Handle(), "BEGIN");
 
     mysql_fquery_ex(SQL_Handle(), 
-        "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
+        "INSERT INTO \n\
+            tickets \n\
+        (reciever, officer, money, reason, date) \n\
+        VALUES \n\
+            ('%e', '%e', '%d', '%e', '%e')",
         GetName(giveplayerid, false),
         GetName(playerid, false),
         money,
@@ -113,12 +117,6 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
     mysql_tquery(SQL_Handle(), "COMMIT");
 
     va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", GetName(giveplayerid, false));
-    return 1;
-}
-
-Public:OnVehicleTicketInsert(vehicleid, slot)
-{
-    VehicleInfo[vehicleid][vTicketsSQLID][slot] = cache_insert_id();
     return 1;
 }
 
@@ -150,7 +148,7 @@ Public:LoadingVehicleTickets(vehicleid)
     {
         for (new i = 0; i < cache_num_rows(); i++)
         {
-            cache_get_value_name_int(i,  "id"       , VehicleInfo[vehicleid][vTicketsSQLID][i]);
+            cache_get_value_name_int(i,  "id"       , VehicleInfo[vehicleid][vTicketSQLID][i]);
             cache_get_value_name_int(i,  "isShown"  , VehicleInfo[vehicleid][vTicketShown][i]);
             cache_get_value_name_int(i,  "price"    , VehicleInfo[vehicleid][vTickets][i]);
             cache_get_value_name_int(i,  "time"     , VehicleInfo[vehicleid][vTicketStamp][i]);
@@ -211,12 +209,12 @@ stock ShowVehicleTickets(playerid, vehicleid)
 
     for (new i = 0; i < MAX_VEHICLE_TICKETS; i++)
     {
-        if(VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
+        if(VehicleInfo[vehicleid][vTicketSQLID][i] != 0)
         {
             format(motd, sizeof(motd), "ID #%d | Fine: %s | Reason: %s\n",
                 (i+1),
                 FormatNumber(VehicleInfo[vehicleid][vTickets][i]),
-                GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i])
+                GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketSQLID][i])
            );
             strcat(buffer, motd, sizeof(buffer));
         }
@@ -231,7 +229,7 @@ stock bool:VehicleHasFines(vehicleid)
     new bool:value = false;
     for(new i = 0; i < MAX_VEHICLE_TICKETS; i++)
     {
-        if(VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
+        if(VehicleInfo[vehicleid][vTicketSQLID][i] != 0)
         {
             value = true;
             break;
@@ -337,9 +335,9 @@ CMD:ticket(playerid, params[])
             FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot])
        );
 
-        mysql_fquery(SQL_Handle(), "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
+        mysql_fquery(SQL_Handle(), "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketSQLID][tmpSlot]);
 
-        VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]    = 0;
+        VehicleInfo[vehicleid][vTicketSQLID][tmpSlot]    = 0;
         VehicleInfo[vehicleid][vTickets][tmpSlot]         = 0;
         VehicleInfo[vehicleid][vTicketShown][tmpSlot]     = false;
         VehicleInfo[vehicleid][vTicketStamp][tmpSlot]     = false;
@@ -410,20 +408,28 @@ CMD:giveticket(playerid, params[])
                 VehicleInfo[vehicleid][vTicketShown][t] = false;
                 VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
 
-                mysql_pquery(SQL_Handle(), 
+                inline OnVehicleTicketInsert()
+                {
+                    VehicleInfo[vehicleid][vTicketSQLID][t] = cache_insert_id();
+                    return 1;
+                }
+                MySQL_PQueryInline(SQL_Handle(), 
+                    using inline OnVehicleTicketInsert,
                     va_fquery(SQL_Handle(), 
-                        "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) \n\
-                            VALUES ('%d','0','%d','%e','%d')",
+                        "INSERT INTO \n\
+                            cocars_tickets \n\
+                        (vehicle_id, isShown, price, reason, time) \n\
+                        VALUES \n\
+                            ('%d','0','%d','%e','%d')",
                         VehicleInfo[vehicleid][vSQLID],
                         VehicleInfo[vehicleid][vTickets][t],
                         reason,
                         gettime()
-                   ), 
-                    "OnVehicleTicketInsert", 
+                    ), 
                     "ii", 
                     vehicleid, 
                     t
-               );
+                );
                 
                 tkts = t;
                 break;

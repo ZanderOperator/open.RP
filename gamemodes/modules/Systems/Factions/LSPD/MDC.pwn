@@ -209,9 +209,13 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
                 player_jail.*, \n\
                 player_licenses.*, \n\
                 player_appearance.char, player_appearance.look\n\
-                FROM accounts, player_jail, player_licenses, player_appearance \n\
-                WHERE accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = \n\
-                player_appearance.sqlid = '%d'",
+            FROM \n\
+                accounts, \n\
+                player_jail, \n\
+                player_licenses, \n\
+                player_appearance \n\
+            WHERE \n\
+                accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = player_appearance.sqlid = '%d'",
             sqlid
        ),
 		""
@@ -399,8 +403,13 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
     MySQL_PQueryInline(SQL_Handle(),  
 		using inline OnCoVehicleLoad, 
 		va_fquery(SQL_Handle(), 
-            "SELECT  modelid, numberplate, color1, color2, impounded FROM cocars\n\
-                WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT %d",
+            "SELECT  \n\
+                modelid, numberplate, color1, color2, impounded \n\
+            FROM \n\
+                cocars\n\
+            WHERE \n\
+                ownerid = '%d' AND numberplate != '' AND numberplate != '0' \n\
+            LIMIT %d",
             playersqlid,
             MAX_PLAYER_CARS
        ),
@@ -611,18 +620,18 @@ static GetVehicleMDCInfo(playerid, vehicleid)
     new motd[128];
     for (new i = 0; i < MAX_VEHICLE_TICKETS; i++)
     {
-        if(VehicleInfo[vehicleid][vTicketsSQLID][i] != 0)
+        if(VehicleInfo[vehicleid][vTicketSQLID][i] != 0)
         {
             if(i == 0)
             {
-                format(mdcString2, sizeof(mdcString2), " Ticket #1: %s - %d$", GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][0]), VehicleInfo[vehicleid][vTickets][0]);
+                format(mdcString2, sizeof(mdcString2), " Ticket #1: %s - %d$", GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketSQLID][0]), VehicleInfo[vehicleid][vTickets][0]);
                 strcat(mdcString2, motd, sizeof(mdcString2));
             }
             else
             {
                 format(mdcString2, sizeof(mdcString2), "~n~ Ticket #%d: %s - %d$",
                     (i+1),
-                    GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i]),
+                    GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketSQLID][i]),
                     VehicleInfo[vehicleid][vTickets][i]
                );
                 strcat(mdcString2, motd, sizeof(mdcString2));
@@ -644,38 +653,24 @@ static GetVehicleMDCInfo(playerid, vehicleid)
 // Stocks
 stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
 {
-    format(JailInfo[giveplayerid][jSuspectName], MAX_PLAYER_NAME, GetName(giveplayerid, false));
-    format(JailInfo[giveplayerid][jPoliceName] , MAX_PLAYER_NAME, GetName(playerid, false));
-    format(JailInfo[giveplayerid][jReason], MAX_PLAYER_NAME, reason);
+    strcpy(JailInfo[giveplayerid][jSuspectName], GetName(giveplayerid, false));
+    strcpy(JailInfo[giveplayerid][jPoliceName], GetName(playerid, false));
+    strcpy(JailInfo[giveplayerid][jReason], reason);
     JailInfo[giveplayerid][jTime] = jailtime;
+    strcpy(JailInfo[giveplayerid][jDate], ReturnDate());
 
-    new
-        Day, Month, Year, Hours, Mins, Secs;
-
-    getdate(Year, Month, Day);
-    gettime(Hours, Mins, Secs);
-
-    format(JailInfo[giveplayerid][jDate], 32, "%02d/%02d/%d, %02d:%02d:%02d",
-        Day,
-        Month,
-        Year,
-        Hours,
-        Mins,
-        Secs
-   );
-
-    mysql_pquery(SQL_Handle(), "BEGIN");
-
-    mysql_pquery(SQL_Handle(), 
-        "INSERT INTO jail (suspect, policeman, reason, jailtime, date) VALUES ('%e', '%e', '%e', '%d', '%e')",
+    mysql_fquery_ex(SQL_Handle(), 
+        "INSERT INTO \n\
+            jail \n\
+        (suspect, policeman, reason, jailtime, date) \n\
+        VALUES \n\
+            ('%e', '%e', '%e', '%d', '%e')",
         JailInfo[giveplayerid][jSuspectName],
         JailInfo[giveplayerid][jPoliceName],
         JailInfo[giveplayerid][jReason],
         JailInfo[giveplayerid][jTime],
         JailInfo[giveplayerid][jDate]
-   );
-
-    mysql_pquery(SQL_Handle(), "COMMIT");
+    );
     return 1;
 }
 
@@ -689,7 +684,11 @@ static DeletePlayerMDCCrime(playerid, sqlid)
 static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
     mysql_fquery_ex(SQL_Handle(),
-        "INSERT INTO apb(suspect, description, type, pdname) VALUES ('%e','%e','%d','%e')",
+        "INSERT INTO \n\
+            apb \n\
+        (suspect, description, type, pdname) \n\
+        VALUES \n\
+            ('%e','%e','%d','%e')",
         suspect,
         description,
         type,

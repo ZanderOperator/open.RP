@@ -36,8 +36,11 @@ LoadPlayerCredit(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(SQL_Handle(), 
-				"INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
-					VALUES ('%d', '0', '0', '0', '0', '0', '0')",
+				"INSERT INTO \n\
+					player_credits \n\
+				(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
+				VALUES \n\
+					('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;
@@ -82,13 +85,15 @@ LoadPlayerSavings(playerid)
 		if(!cache_num_rows())
 		{
 			mysql_fquery_ex(SQL_Handle(), 
-				"INSERT INTO player_savings(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
-					VALUES('%d', '0', '0', '0', '0')",
+				"INSERT INTO \n\
+					player_savings \n\
+				(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
+				VALUES \n\
+					('%d', '0', '0', '0', '0')",
 				PlayerInfo[playerid][pSQLID]
 			);
 			return 1;
 		}
-		
 		cache_get_value_name_int(0,	"savings_cool"	, PlayerSavings[playerid][pSavingsCool]);
 		cache_get_value_name_int(0,	"savings_time"	, PlayerSavings[playerid][pSavingsTime]);
 		cache_get_value_name_int(0,	"savings_type"	, PlayerSavings[playerid][pSavingsType]);

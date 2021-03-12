@@ -240,20 +240,6 @@ CheckPlayerHouseInt(playerid, int, viwo)
     return 1;
 }
 
-Public:OnHouseInsertInDB(houseid, playerid)
-{
-    HouseInfo[houseid][hSQLID] = cache_insert_id();
-    if(HouseInfo[houseid][hInt] > 0)
-    {
-        HouseInfo[houseid][hVirtualWorld] = HouseInfo[houseid][hSQLID];
-        UpdateHouseVirtualWorld(houseid);
-    }
-    else
-        ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Input", "Exit");
-
-    return 1;
-}
-
 stock UpdateHouseVirtualWorld(houseid)
 {
     if(!Iter_Contains(House, houseid))
@@ -377,73 +363,99 @@ stock DestroyHouseInfoTD(playerid)
 stock LoadHouses()
 {
     Iter_Init(House);
-    mysql_pquery(SQL_Handle(), 
+
+    inline OnServerHousesLoad()
+    {
+        new 
+            num_rows = cache_num_rows();
+        if(!num_rows) 
+            return print("MySQL Report: No Houses exist to load in database.");
+
+        for (new row = 0; row < num_rows; row++)
+        {
+            cache_get_value_name_int(row,       "id"        ,   HouseInfo[row][hSQLID]);
+            cache_get_value_name_float(row,     "enterX"    ,   HouseInfo[row][hEnterX]);
+            cache_get_value_name_float(row,     "enterY"    ,   HouseInfo[row][hEnterY]);
+            cache_get_value_name_float(row,     "enterZ"    ,   HouseInfo[row][hEnterZ]);
+            cache_get_value_name_float(row,     "exitX"     ,   HouseInfo[row][hExitX]);
+            cache_get_value_name_float(row,     "exitY"     ,   HouseInfo[row][hExitY]);
+            cache_get_value_name_float(row,     "exitZ"     ,   HouseInfo[row][hExitZ]);
+            cache_get_value_name(row,           "adress"    ,   HouseInfo[row][hAdress], 32);
+            cache_get_value_name_int(row,       "ownerid"   ,   HouseInfo[row][hOwnerID]);
+            cache_get_value_name_int(row,       "value"     ,   HouseInfo[row][hValue]);
+            cache_get_value_name_int(row,       "int"       ,   HouseInfo[row][hInt]);
+            cache_get_value_name_int(row,       "viwo"      ,   HouseInfo[row][hVirtualWorld]);
+            cache_get_value_name_int(row,       "lock"      ,   HouseInfo[row][hLock]);
+            cache_get_value_name_int(row,       "rentabil"  ,   HouseInfo[row][hRentabil]);
+            cache_get_value_name_int(row,       "takings"   ,   HouseInfo[row][hTakings]);
+            cache_get_value_name_int(row,       "level"     ,   HouseInfo[row][hLevel]);
+            cache_get_value_name_int(row,       "freeze"    ,   HouseInfo[row][hFreeze]);
+            cache_get_value_name_int(row,       "viwoexit"  ,   HouseInfo[row][h3dViwo]);
+            cache_get_value_name_int(row,       "opensafe"  ,   HouseInfo[row][hSafeStatus]);
+            cache_get_value_name_int(row,       "safepass"  ,   HouseInfo[row][hSafePass]);
+            cache_get_value_name_int(row,       "safe"      ,   HouseInfo[row][hSafe]);
+            cache_get_value_name_int(row,       "ormar"     ,   HouseInfo[row][hOrmar]);
+            cache_get_value_name_int(row,       "skin1"     ,   HouseInfo[row][hSkin1]);
+            cache_get_value_name_int(row,       "skin2"     ,   HouseInfo[row][hSkin2]);
+            cache_get_value_name_int(row,       "skin3"     ,   HouseInfo[row][hSkin3]);
+            cache_get_value_name_int(row,       "groceries" ,   HouseInfo[row][hGroceries]);
+            cache_get_value_name_int(row,       "doorlevel" ,   HouseInfo[row][hDoorLevel]);
+            cache_get_value_name_int(row,       "alarm"     ,   HouseInfo[row][hAlarm]);
+            cache_get_value_name_int(row,       "locklevel" ,   HouseInfo[row][hLockLevel]);
+            cache_get_value_name_int(row,       "moneysafe" ,   HouseInfo[row][hMoneySafe]);
+            cache_get_value_name_int(row,       "radio"     ,   HouseInfo[row][hRadio]);
+            cache_get_value_name_int(row,       "tv"        ,   HouseInfo[row][hTV]);
+            cache_get_value_name_int(row,       "microwave" ,   HouseInfo[row][hMicrowave]);
+            cache_get_value_name_int(row,       "storage_alarm",HouseInfo[row][hStorageAlarm]);
+            cache_get_value_name_int(row,       "bank"      ,   HouseInfo[row][hTakings]);
+            cache_get_value_name_int(row,       "fur_slots" ,   HouseInfo[row][hFurSlots]);
+
+            HouseInfo[row][hFurLoaded] = false;
+            LoadHouseExterior(row);
+            CreateHouseEnter(row);
+            Iter_Add(House, row);
+        }
+        printf("MySQL Report: Houses Loaded. [%d/%d]", Iter_Count(House), MAX_HOUSES);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnServerHousesLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM houses WHERE 1"), 
-        "OnServerHousesLoad", 
         ""
    );
     return 1;
 }
 
-Public:OnServerHousesLoad()
+static InsertHouseInDB(houseid, playerid) 
 {
-    new num_rows = cache_num_rows();
-    if(!num_rows) return printf("MySQL Report: No houses exist to load.");
-
-    for (new row = 0; row < num_rows; row++)
+    inline OnHouseInsertInDB()
     {
-        cache_get_value_name_int(row,       "id"        ,   HouseInfo[row][hSQLID]);
-        cache_get_value_name_float(row,     "enterX"    ,   HouseInfo[row][hEnterX]);
-        cache_get_value_name_float(row,     "enterY"    ,   HouseInfo[row][hEnterY]);
-        cache_get_value_name_float(row,     "enterZ"    ,   HouseInfo[row][hEnterZ]);
-        cache_get_value_name_float(row,     "exitX" ,   HouseInfo[row][hExitX]);
-        cache_get_value_name_float(row,     "exitY" ,   HouseInfo[row][hExitY]);
-        cache_get_value_name_float(row,     "exitZ" ,   HouseInfo[row][hExitZ]);
-        cache_get_value_name(row,           "adress"    ,   HouseInfo[row][hAdress], 32);
-        cache_get_value_name_int(row,       "ownerid"   ,   HouseInfo[row][hOwnerID]);
-        cache_get_value_name_int(row,       "value"     ,   HouseInfo[row][hValue]);
-        cache_get_value_name_int(row,       "int"       ,   HouseInfo[row][hInt]);
-        cache_get_value_name_int(row,       "viwo"      ,   HouseInfo[row][hVirtualWorld]);
-        cache_get_value_name_int(row,       "lock"      ,   HouseInfo[row][hLock]);
-        cache_get_value_name_int(row,       "rentabil"  ,   HouseInfo[row][hRentabil]);
-        cache_get_value_name_int(row,       "takings"   ,   HouseInfo[row][hTakings]);
-        cache_get_value_name_int(row,       "level" ,   HouseInfo[row][hLevel]);
-        cache_get_value_name_int(row,       "freeze"    ,   HouseInfo[row][hFreeze]);
-        cache_get_value_name_int(row,       "viwoexit"  ,   HouseInfo[row][h3dViwo]);
-        cache_get_value_name_int(row,       "opensafe"  ,   HouseInfo[row][hSafeStatus]);
-        cache_get_value_name_int(row,       "safepass"  ,   HouseInfo[row][hSafePass]);
-        cache_get_value_name_int(row,       "safe"      ,   HouseInfo[row][hSafe]);
-        cache_get_value_name_int(row,       "ormar" ,   HouseInfo[row][hOrmar]);
-        cache_get_value_name_int(row,       "skin1" ,   HouseInfo[row][hSkin1]);
-        cache_get_value_name_int(row,       "skin2" ,   HouseInfo[row][hSkin2]);
-        cache_get_value_name_int(row,       "skin3" ,   HouseInfo[row][hSkin3]);
-        cache_get_value_name_int(row,       "groceries",    HouseInfo[row][hGroceries]);
-        cache_get_value_name_int(row,       "doorlevel" , HouseInfo[row][hDoorLevel]);
-        cache_get_value_name_int(row,       "alarm"     , HouseInfo[row][hAlarm]);
-        cache_get_value_name_int(row,       "locklevel" , HouseInfo[row][hLockLevel]);
-        cache_get_value_name_int(row,       "moneysafe" , HouseInfo[row][hMoneySafe]);
-        cache_get_value_name_int(row,       "radio"     , HouseInfo[row][hRadio]);
-        cache_get_value_name_int(row,       "tv"            , HouseInfo[row][hTV]);
-        cache_get_value_name_int(row,       "microwave" , HouseInfo[row][hMicrowave]);
-        cache_get_value_name_int(row,       "storage_alarm", HouseInfo[row][hStorageAlarm]);
-        cache_get_value_name_int(row,       "bank"          , HouseInfo[row][hTakings]);
-        cache_get_value_name_int(row,       "fur_slots" , HouseInfo[row][hFurSlots]);
-
-        HouseInfo[row][hFurLoaded] = false;
-        LoadHouseExterior(row);
-        CreateHouseEnter(row);
-        Iter_Add(House, row);
+        HouseInfo[houseid][hSQLID] = cache_insert_id();
+        if(HouseInfo[houseid][hInt] > 0)
+        {
+            HouseInfo[houseid][hVirtualWorld] = HouseInfo[houseid][hSQLID];
+            UpdateHouseVirtualWorld(houseid);
+        }
+        else
+        {
+            ShowPlayerDialog(playerid, 
+                DIALOG_VIWO_PICK, 
+                DIALOG_STYLE_INPUT, 
+                "Odabir Virtual Worlda", 
+                "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", 
+                "Input", 
+                "Exit"
+            );
+        }
+        return 1;
     }
-    printf("MySQL Report: Houses Loaded. [%d/%d]", Iter_Count(House), MAX_HOUSES);
-    return 1;
-}
-
-static stock InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
-{
-    mysql_pquery(SQL_Handle(), 
+    MySQL_PQueryInline(SQL_Handle(), 
+        using inline OnHouseInsertInDB,
         va_fquery(SQL_Handle(), 
-            "INSERT INTO houses (level, value, adress, enterX, enterY, enterZ,\n\
-                exitX, exitY, exitZ, ownerid, int) VALUES \n\
+            "INSERT INTO \n\
+                houses \n\
+            (level, value, adress, enterX, enterY, enterZ, exitX, exitY, exitZ, ownerid, int) \n\
+            VALUES \n\
                 ('%d', '%d', '%e', '%f', '%f', '%f', '%f', '%f', '%f', '0', '0', '%d')",
             HouseInfo[houseid][hLevel],
             HouseInfo[houseid][hValue],
@@ -455,12 +467,11 @@ static stock InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
             HouseInfo[houseid][hExitY],
             HouseInfo[houseid][hExitZ],
             HouseInfo[houseid][hInt]
-       ), 
-        "OnHouseInsertInDB", 
+        ), 
         "ii", 
         houseid, 
         playerid
-   );
+    );
     return 1;
 }
 

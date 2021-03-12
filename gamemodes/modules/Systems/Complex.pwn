@@ -173,9 +173,42 @@ stock DestroyCompInfoTD(playerid)
 stock LoadComplexes()
 {
     Iter_Init(Complex);
-    mysql_pquery(SQL_Handle(),
+
+    inline OnServerComplexLoad()
+    {
+        new 
+            num_rows = cache_num_rows();
+        if(!num_rows) 
+            return print("MySQL Report: No complex exist to load.");
+
+        for (new row = 0; row < num_rows; row++)
+        {
+            cache_get_value_name_int  (row,    "id"      ,    ComplexInfo[row][cSQLID]);
+            cache_get_value_name_int  (row,    "owner_id",    ComplexInfo[row][cOwnerID]);
+            cache_get_value_name_float(row,    "x"       ,    ComplexInfo[row][cEnterX]);
+            cache_get_value_name_float(row,    "y"       ,    ComplexInfo[row][cEnterY]);
+            cache_get_value_name_float(row,    "z"       ,    ComplexInfo[row][cEnterZ]);
+            cache_get_value_name_float(row,    "exit_x"  ,    ComplexInfo[row][cExitX]);
+            cache_get_value_name_float(row,    "exit_y"  ,    ComplexInfo[row][cExitY]);
+            cache_get_value_name_float(row,    "exit_z"  ,    ComplexInfo[row][cExitZ]);
+            cache_get_value_name      (row,    "name"    ,    ComplexInfo[row][cName], 25);
+            cache_get_value_name_int  (row,    "till"    ,    ComplexInfo[row][cTill]);
+            cache_get_value_name_int  (row,    "price"   ,    ComplexInfo[row][cPrice]);
+            cache_get_value_name_int  (row,    "level"   ,    ComplexInfo[row][cLevel]);
+            cache_get_value_name_int  (row,    "viwo"    ,    ComplexInfo[row][cViwo]);
+            cache_get_value_name_int  (row,    "interior",    ComplexInfo[row][cInt]);
+
+            CreateComplexEnter(row);
+            Iter_Add(Complex, row);
+        }
+        printf("MySQL Report: Complexes Loaded. [%d/%d]", Iter_Count(Complex), MAX_COMPLEX);
+        return 1;
+    }
+ 
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnServerComplexLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM server_complex WHERE 1"), 
-        "OnServerComplexLoad",
+        "",
         ""
     );
     return 1;
@@ -184,9 +217,93 @@ stock LoadComplexes()
 stock LoadComplexRooms()
 {
     Iter_Init(ComplexRoom);
-    mysql_pquery(SQL_Handle(), 
+
+    inline OnComplexRoomsLoad()
+    {
+        new 
+            num_rows = cache_num_rows();
+        if(!num_rows) 
+            return print("MySQL Report: No complex rooms exist to load.");
+
+        for (new row = 0; row < num_rows; row++)
+        {
+            cache_get_value_name_int  (row,    "id"         ,    ComplexRoomInfo[row][cSQLID]);
+            cache_get_value_name_int  (row,    "complex_id" ,    ComplexRoomInfo[row][cComplexID]);
+            cache_get_value_name_int  (row,    "active"     ,    ComplexRoomInfo[row][cActive]);
+            cache_get_value_name_float(row,    "enterX"     ,    ComplexRoomInfo[row][cEnterX]);
+            cache_get_value_name_float(row,    "enterY"     ,    ComplexRoomInfo[row][cEnterY]);
+            cache_get_value_name_float(row,    "enterZ"     ,    ComplexRoomInfo[row][cEnterZ]);
+            // TODO: "adress" is spelt with double d
+            cache_get_value_name      (row,    "adress"     ,    ComplexRoomInfo[row][cAdress], 25);
+            cache_get_value_name_int  (row,    "ownerid"    ,    ComplexRoomInfo[row][cOwnerID]);
+            cache_get_value_name_int  (row,    "value"      ,    ComplexRoomInfo[row][cValue]);
+            cache_get_value_name_int  (row,    "int"        ,    ComplexRoomInfo[row][cInt]);
+            cache_get_value_name_int  (row,    "viwo"       ,    ComplexRoomInfo[row][cViwo]);
+            cache_get_value_name_int  (row,    "intexit"    ,    ComplexRoomInfo[row][cIntExit]);
+            cache_get_value_name_int  (row,    "viwoexit"   ,    ComplexRoomInfo[row][cVWExit]);
+            cache_get_value_name_int  (row,    "lock"       ,    ComplexRoomInfo[row][cLock]);
+            cache_get_value_name_int  (row,    "level"      ,    ComplexRoomInfo[row][cLevel]);
+            cache_get_value_name_int  (row,    "freeze"     ,    ComplexRoomInfo[row][cFreeze]);
+            cache_get_value_name_int  (row,    "gunsafe1"   ,    ComplexRoomInfo[row][cGunSafe][0]);
+            cache_get_value_name_int  (row,    "gunsafe2"   ,    ComplexRoomInfo[row][cGunSafe][1]);
+            cache_get_value_name_int  (row,    "gunsafe3"   ,    ComplexRoomInfo[row][cGunSafe][2]);
+            cache_get_value_name_int  (row,    "gunsafe4"   ,    ComplexRoomInfo[row][cGunSafe][3]);
+            cache_get_value_name_int  (row,    "gunammo1"   ,    ComplexRoomInfo[row][cGunAmmo][0]);
+            cache_get_value_name_int  (row,    "gunammo2"   ,    ComplexRoomInfo[row][cGunAmmo][1]);
+            cache_get_value_name_int  (row,    "gunammo3"   ,    ComplexRoomInfo[row][cGunAmmo][2]);
+            cache_get_value_name_int  (row,    "gunammo4"   ,    ComplexRoomInfo[row][cGunAmmo][3]);
+            cache_get_value_name_int  (row,    "opensafe"   ,    ComplexRoomInfo[row][cSafeStatus]);
+            cache_get_value_name_int  (row,    "safepass"   ,    ComplexRoomInfo[row][cSafePass]);
+            cache_get_value_name_int  (row,    "safe"       ,    ComplexRoomInfo[row][cSafe]);
+            cache_get_value_name_int  (row,    "ormar"      ,    ComplexRoomInfo[row][cOrmar]);
+            cache_get_value_name_int  (row,    "skin1"      ,    ComplexRoomInfo[row][cSkin1]);
+            cache_get_value_name_int  (row,    "skin2"      ,    ComplexRoomInfo[row][cSkin2]);
+            cache_get_value_name_int  (row,    "skin3"      ,    ComplexRoomInfo[row][cSkin3]);
+            cache_get_value_name_int  (row,    "groceries"  ,    ComplexRoomInfo[row][cGroceries]);
+            cache_get_value_name_int  (row,    "quality"    ,    ComplexRoomInfo[row][cQuality]);
+            cache_get_value_name_int  (row,    "doorlevel"  ,    ComplexRoomInfo[row][cDoorLevel]);
+            cache_get_value_name_int  (row,    "alarm"      ,    ComplexRoomInfo[row][cAlarm]);
+            cache_get_value_name_int  (row,    "locklevel"  ,    ComplexRoomInfo[row][cLockLevel]);
+            cache_get_value_name_int  (row,    "phone"      ,    ComplexRoomInfo[row][cPhone]);
+            cache_get_value_name_int  (row,    "phonenumber",    ComplexRoomInfo[row][cPhoneNumber]);
+            cache_get_value_name_int  (row,    "moneysafe"  ,    ComplexRoomInfo[row][cMoneySafe]);
+            cache_get_value_name_int  (row,    "radio"      ,    ComplexRoomInfo[row][cRadio]);
+            cache_get_value_name_int  (row,    "tv"         ,    ComplexRoomInfo[row][cTV]);
+            cache_get_value_name_int  (row,    "microwave"  ,    ComplexRoomInfo[row][cMicrowave]);
+
+            switch (ComplexRoomInfo[row][cQuality])
+            {
+                case 1:
+                {
+                    ComplexRoomInfo[row][cExitX] = 244.0068;
+                    ComplexRoomInfo[row][cExitY] = 304.9704;
+                    ComplexRoomInfo[row][cExitZ] = 999.1484;
+                    ComplexRoomInfo[row][cInt]   = 1;
+                }
+                case 2:
+                {
+                    ComplexRoomInfo[row][cExitX] = 443.8501;
+                    ComplexRoomInfo[row][cExitY] = 509.1825;
+                    ComplexRoomInfo[row][cExitZ] = 1001.4195;
+                    ComplexRoomInfo[row][cInt]   = 12;
+                }
+                case 3:
+                {
+                    ComplexRoomInfo[row][cExitX] = -2167.9109;
+                    ComplexRoomInfo[row][cExitY] = 642.3528;
+                    ComplexRoomInfo[row][cExitZ] = 1057.5938;
+                    ComplexRoomInfo[row][cInt]   = 1;
+                }
+            }
+            CreateCRoomEnter(row);
+            Iter_Add(ComplexRoom, row);
+        }
+        printf("MySQL Report: Complex Rooms Loaded. [%d/%d]", Iter_Count(ComplexRoom), MAX_COMPLEX_ROOMS);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnComplexRoomsLoad,
         va_fquery(SQL_Handle(),"SELECT * FROM server_complex_rooms WHERE 1"), 
-        "OnComplexRoomsLoad",
         ""
    );
     return 1;
@@ -422,119 +539,6 @@ static stock CreateCompInfoTD(playerid)
     PlayerTextDrawBackgroundColor(playerid, CompCMDTD[playerid], 255);
     PlayerTextDrawSetProportional(playerid, CompCMDTD[playerid], 1);
     PlayerTextDrawShow(playerid,            CompCMDTD[playerid]);
-    return 1;
-}
-
-forward OnComplexRoomsLoad();
-public OnComplexRoomsLoad()
-{
-    new num_rows = cache_num_rows();
-    if(!num_rows) return printf("MySQL Report: No complex rooms exist to load.");
-
-    for (new row = 0; row < num_rows; row++)
-    {
-        cache_get_value_name_int  (row,    "id"         ,    ComplexRoomInfo[row][cSQLID]);
-        cache_get_value_name_int  (row,    "complex_id" ,    ComplexRoomInfo[row][cComplexID]);
-        cache_get_value_name_int  (row,    "active"     ,    ComplexRoomInfo[row][cActive]);
-        cache_get_value_name_float(row,    "enterX"     ,    ComplexRoomInfo[row][cEnterX]);
-        cache_get_value_name_float(row,    "enterY"     ,    ComplexRoomInfo[row][cEnterY]);
-        cache_get_value_name_float(row,    "enterZ"     ,    ComplexRoomInfo[row][cEnterZ]);
-        // TODO: "adress" is spelt with double d
-        cache_get_value_name      (row,    "adress"     ,    ComplexRoomInfo[row][cAdress], 25);
-        cache_get_value_name_int  (row,    "ownerid"    ,    ComplexRoomInfo[row][cOwnerID]);
-        cache_get_value_name_int  (row,    "value"      ,    ComplexRoomInfo[row][cValue]);
-        cache_get_value_name_int  (row,    "int"        ,    ComplexRoomInfo[row][cInt]);
-        cache_get_value_name_int  (row,    "viwo"       ,    ComplexRoomInfo[row][cViwo]);
-        cache_get_value_name_int  (row,    "intexit"    ,    ComplexRoomInfo[row][cIntExit]);
-        cache_get_value_name_int  (row,    "viwoexit"   ,    ComplexRoomInfo[row][cVWExit]);
-        cache_get_value_name_int  (row,    "lock"       ,    ComplexRoomInfo[row][cLock]);
-        cache_get_value_name_int  (row,    "level"      ,    ComplexRoomInfo[row][cLevel]);
-        cache_get_value_name_int  (row,    "freeze"     ,    ComplexRoomInfo[row][cFreeze]);
-        cache_get_value_name_int  (row,    "gunsafe1"   ,    ComplexRoomInfo[row][cGunSafe][0]);
-        cache_get_value_name_int  (row,    "gunsafe2"   ,    ComplexRoomInfo[row][cGunSafe][1]);
-        cache_get_value_name_int  (row,    "gunsafe3"   ,    ComplexRoomInfo[row][cGunSafe][2]);
-        cache_get_value_name_int  (row,    "gunsafe4"   ,    ComplexRoomInfo[row][cGunSafe][3]);
-        cache_get_value_name_int  (row,    "gunammo1"   ,    ComplexRoomInfo[row][cGunAmmo][0]);
-        cache_get_value_name_int  (row,    "gunammo2"   ,    ComplexRoomInfo[row][cGunAmmo][1]);
-        cache_get_value_name_int  (row,    "gunammo3"   ,    ComplexRoomInfo[row][cGunAmmo][2]);
-        cache_get_value_name_int  (row,    "gunammo4"   ,    ComplexRoomInfo[row][cGunAmmo][3]);
-        cache_get_value_name_int  (row,    "opensafe"   ,    ComplexRoomInfo[row][cSafeStatus]);
-        cache_get_value_name_int  (row,    "safepass"   ,    ComplexRoomInfo[row][cSafePass]);
-        cache_get_value_name_int  (row,    "safe"       ,    ComplexRoomInfo[row][cSafe]);
-        cache_get_value_name_int  (row,    "ormar"      ,    ComplexRoomInfo[row][cOrmar]);
-        cache_get_value_name_int  (row,    "skin1"      ,    ComplexRoomInfo[row][cSkin1]);
-        cache_get_value_name_int  (row,    "skin2"      ,    ComplexRoomInfo[row][cSkin2]);
-        cache_get_value_name_int  (row,    "skin3"      ,    ComplexRoomInfo[row][cSkin3]);
-        cache_get_value_name_int  (row,    "groceries"  ,    ComplexRoomInfo[row][cGroceries]);
-        cache_get_value_name_int  (row,    "quality"    ,    ComplexRoomInfo[row][cQuality]);
-        cache_get_value_name_int  (row,    "doorlevel"  ,    ComplexRoomInfo[row][cDoorLevel]);
-        cache_get_value_name_int  (row,    "alarm"      ,    ComplexRoomInfo[row][cAlarm]);
-        cache_get_value_name_int  (row,    "locklevel"  ,    ComplexRoomInfo[row][cLockLevel]);
-        cache_get_value_name_int  (row,    "phone"      ,    ComplexRoomInfo[row][cPhone]);
-        cache_get_value_name_int  (row,    "phonenumber",    ComplexRoomInfo[row][cPhoneNumber]);
-        cache_get_value_name_int  (row,    "moneysafe"  ,    ComplexRoomInfo[row][cMoneySafe]);
-        cache_get_value_name_int  (row,    "radio"      ,    ComplexRoomInfo[row][cRadio]);
-        cache_get_value_name_int  (row,    "tv"         ,    ComplexRoomInfo[row][cTV]);
-        cache_get_value_name_int  (row,    "microwave"  ,    ComplexRoomInfo[row][cMicrowave]);
-
-        switch (ComplexRoomInfo[row][cQuality])
-        {
-            case 1:
-            {
-                ComplexRoomInfo[row][cExitX] = 244.0068;
-                ComplexRoomInfo[row][cExitY] = 304.9704;
-                ComplexRoomInfo[row][cExitZ] = 999.1484;
-                ComplexRoomInfo[row][cInt]   = 1;
-            }
-            case 2:
-            {
-                ComplexRoomInfo[row][cExitX] = 443.8501;
-                ComplexRoomInfo[row][cExitY] = 509.1825;
-                ComplexRoomInfo[row][cExitZ] = 1001.4195;
-                ComplexRoomInfo[row][cInt]   = 12;
-            }
-            case 3:
-            {
-                ComplexRoomInfo[row][cExitX] = -2167.9109;
-                ComplexRoomInfo[row][cExitY] = 642.3528;
-                ComplexRoomInfo[row][cExitZ] = 1057.5938;
-                ComplexRoomInfo[row][cInt]   = 1;
-            }
-        }
-        CreateCRoomEnter(row);
-        Iter_Add(ComplexRoom, row);
-    }
-    printf("MySQL Report: Complex Rooms Loaded. [%d/%d]", Iter_Count(ComplexRoom), MAX_COMPLEX_ROOMS);
-    return 1;
-}
-
-forward OnServerComplexLoad();
-public OnServerComplexLoad()
-{
-    new num_rows = cache_num_rows();
-    if(!num_rows) return printf("MySQL Report: No complex exist to load.");
-
-    for (new row = 0; row < num_rows; row++)
-    {
-        cache_get_value_name_int  (row,    "id"      ,    ComplexInfo[row][cSQLID]);
-        cache_get_value_name_int  (row,    "owner_id",    ComplexInfo[row][cOwnerID]);
-        cache_get_value_name_float(row,    "x"       ,    ComplexInfo[row][cEnterX]);
-        cache_get_value_name_float(row,    "y"       ,    ComplexInfo[row][cEnterY]);
-        cache_get_value_name_float(row,    "z"       ,    ComplexInfo[row][cEnterZ]);
-        cache_get_value_name_float(row,    "exit_x"  ,    ComplexInfo[row][cExitX]);
-        cache_get_value_name_float(row,    "exit_y"  ,    ComplexInfo[row][cExitY]);
-        cache_get_value_name_float(row,    "exit_z"  ,    ComplexInfo[row][cExitZ]);
-        cache_get_value_name      (row,    "name"    ,    ComplexInfo[row][cName], 25);
-        cache_get_value_name_int  (row,    "till"    ,    ComplexInfo[row][cTill]);
-        cache_get_value_name_int  (row,    "price"   ,    ComplexInfo[row][cPrice]);
-        cache_get_value_name_int  (row,    "level"   ,    ComplexInfo[row][cLevel]);
-        cache_get_value_name_int  (row,    "viwo"    ,    ComplexInfo[row][cViwo]);
-        cache_get_value_name_int  (row,    "interior",    ComplexInfo[row][cInt]);
-
-        CreateComplexEnter(row);
-        Iter_Add(Complex, row);
-    }
-    printf("MySQL Report: Complexes Loaded. [%d/%d]", Iter_Count(Complex), MAX_COMPLEX);
     return 1;
 }
 

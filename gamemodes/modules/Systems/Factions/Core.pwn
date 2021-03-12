@@ -130,29 +130,31 @@ stock DeleteFaction(orgid)
 
 LoadPlayerFaction(playerid)
 {
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM player_faction WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadingPlayerFaction", 
-        "i", 
-        playerid
-   );
-    return 1;
-}
-
-Public: LoadingPlayerFaction(playerid)
-{
-    if(!cache_num_rows())
+    inline LoadingPlayerFaction()
     {
-        mysql_fquery_ex(SQL_Handle(), 
-            "INSERT INTO player_faction(sqlid, facLeadId, facMemId, facRank) \n\
-                VALUES('%d', '0', '0', '0')",
-            PlayerInfo[playerid][pSQLID]
-       );
+        if(!cache_num_rows())
+        {
+            mysql_fquery_ex(SQL_Handle(), 
+                "INSERT INTO \n\
+                    player_faction \n\
+                (sqlid, facLeadId, facMemId, facRank) \n\
+                VALUES \n\
+                    ('%d', '0', '0', '0')",
+                PlayerInfo[playerid][pSQLID]
+            );
+            return 1;
+        }
+        cache_get_value_name_int(0,  "facLeadId"	, PlayerFaction[playerid][pLeader]);
+        cache_get_value_name_int(0,  "facMemId"		, PlayerFaction[playerid][pMember]);
+        cache_get_value_name_int(0,  "facRank"		, PlayerFaction[playerid][pRank]);
         return 1;
     }
-    cache_get_value_name_int(0,  "facLeadId"	, PlayerFaction[playerid][pLeader]);
-    cache_get_value_name_int(0,  "facMemId"		, PlayerFaction[playerid][pMember]);
-    cache_get_value_name_int(0,  "facRank"		, PlayerFaction[playerid][pRank]);
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline LoadingPlayerFaction,
+        va_fquery(SQL_Handle(), "SELECT * FROM player_faction WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "i", 
+        playerid
+    );
     return 1;
 }
 
@@ -182,19 +184,109 @@ hook function SavePlayerStats(playerid)
 
 stock LoadFactions()
 {
-    mysql_pquery(SQL_Handle(), 
+    inline OnFactionsLoaded()
+    {
+        new
+            tmp[64],
+            tmpId,
+            rows = cache_num_rows();
+
+        if(!rows) return printf("MySQL Report: No factions exist to load.");
+
+        for (new i = 0; i < rows; i++)
+        {
+            cache_get_value_name_int(i, "id", tmpId);
+            // TODO: nije dobro indeksirati array sa indeksima iz SQL-a
+            // cemu onda sluze iteratori?! također, treba provjeriti da rows
+            // ne prelazi MAX_FACTIONS (vece jednako) u startu
+
+            // FactionInfo[index] - neka index ide od 0..MAX_FACTIONS-1
+            // kako se ne bi izgubilo jedan index slot ako kreću bzvz od 1
+            // zatim samo indeksiras unutra pomocu iteratora
+            // svugdje u kodu napravis neki getter koji ti povezuje taj index u array
+            // sa SQL ID-em te fakcije u bazi
+            FactionInfo[tmpId][fID] = tmpId;
+
+            cache_get_value_name_int(i, "used"  , FactionInfo[tmpId][fUsed]);
+            cache_get_value_name(i, "name", tmp);
+            format(FactionInfo[tmpId][fName], 24, tmp);
+            cache_get_value_name_int(i, "type", FactionInfo[tmpId][fType]);
+            cache_get_value_name(i, "rank1", tmp);
+            format(FactionInfo[tmpId][fRankName1], 24, tmp);
+            cache_get_value_name(i, "rank2", tmp);
+            format(FactionInfo[tmpId][fRankName2], 24, tmp);
+            cache_get_value_name(i, "rank3", tmp);
+            format(FactionInfo[tmpId][fRankName3], 24, tmp);
+            cache_get_value_name(i, "rank4", tmp);
+            format(FactionInfo[tmpId][fRankName4], 24, tmp);
+            cache_get_value_name(i, "rank5", tmp);
+            format(FactionInfo[tmpId][fRankName5], 24, tmp);
+            cache_get_value_name(i, "rank6", tmp);
+            format(FactionInfo[tmpId][fRankName6], 24, tmp);
+            cache_get_value_name(i, "rank7", tmp);
+            format(FactionInfo[tmpId][fRankName7], 24, tmp);
+            cache_get_value_name(i, "rank8", tmp);
+            format(FactionInfo[tmpId][fRankName8], 24, tmp);
+            cache_get_value_name(i, "rank9", tmp);
+            format(FactionInfo[tmpId][fRankName9], 24, tmp);
+            cache_get_value_name(i, "rank10", tmp);
+            format(FactionInfo[tmpId][fRankName10], 24, tmp);
+            cache_get_value_name(i, "rank11", tmp);
+            format(FactionInfo[tmpId][fRankName11], 24, tmp);
+            cache_get_value_name(i, "rank12", tmp);
+            format(FactionInfo[tmpId][fRankName12], 24, tmp);
+            cache_get_value_name(i, "rank13", tmp);
+            format(FactionInfo[tmpId][fRankName13], 24, tmp);
+            cache_get_value_name(i, "rank14", tmp);
+            format(FactionInfo[tmpId][fRankName14], 24, tmp);
+            cache_get_value_name(i, "rank15", tmp);
+            format(FactionInfo[tmpId][fRankName15], 24, tmp);
+            cache_get_value_name_int(i, "ranks", FactionInfo[tmpId][fRanks]);
+            format(FactionInfo[tmpId][fFactionBank], 24, tmp);
+            cache_get_value_name_int(i, "factionbank", FactionInfo[tmpId][fFactionBank]);
+
+            LoadFactionPermissions(tmpId);
+            LoadFactionWarehouse(tmpId);
+            Iter_Add(Faction, tmpId);
+        }
+        printf("MySQL Report: Factions Loaded. [%d/%d]", Iter_Count(Faction), MAX_FACTIONS);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnFactionsLoaded,
         va_fquery(SQL_Handle(), "SELECT * FROM server_factions WHERE 1"), 
-        "OnFactionLoaded",
         ""
-   );
+    );
     return 1;
 }
 
 stock LoadFactionPermissions(factionid)
 {
-    mysql_pquery(SQL_Handle(), 
+    inline OnFactionPermissionsLoaded()
+    {
+        if(!cache_num_rows()) 
+            return 0;
+
+        cache_get_value_name_int(0,    "siren"       ,    FactionInfo[factionid][rSiren]);
+        cache_get_value_name_int(0,    "cargun"      ,    FactionInfo[factionid][rCarGun]);
+        cache_get_value_name_int(0,    "carsign"     ,    FactionInfo[factionid][rCarSign]);
+        cache_get_value_name_int(0,    "abuygun"     ,    FactionInfo[factionid][rABuyGun]);
+        cache_get_value_name_int(0,    "buygun"      ,    FactionInfo[factionid][rBuyGun]);
+        cache_get_value_name_int(0,    "aswat"       ,    FactionInfo[factionid][rASwat]);
+        cache_get_value_name_int(0,    "govrepair"   ,    FactionInfo[factionid][rGovRepair]);
+        cache_get_value_name_int(0,    "agovrepair"  ,    FactionInfo[factionid][rAGovRepair]);
+        cache_get_value_name_int(0,    "unfree"      ,    FactionInfo[factionid][rUnFree]);
+        cache_get_value_name_int(0,    "cleartrunk"  ,    FactionInfo[factionid][rClrTrunk]);
+        cache_get_value_name_int(0,    "listennumber",    FactionInfo[factionid][rLstnNumber]);
+        cache_get_value_name_int(0,    "race"        ,    FactionInfo[factionid][rRace]);
+        cache_get_value_name_int(0,    "undercover"  ,    FactionInfo[factionid][rUndercover]);
+        cache_get_value_name_int(0,    "aundercover" ,    FactionInfo[factionid][rAUndercover]);
+        cache_get_value_name_int(0,    "listensms"   ,    FactionInfo[factionid][rLstnSMS]);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnFactionPermissionsLoaded, 
         va_fquery(SQL_Handle(), "SELECT * FROM server_factions_permissions WHERE id = '%d'", FactionInfo[factionid][fID]), 
-        "OnFactionPermissionsLoaded", 
         "i", 
         factionid
    );
@@ -212,99 +304,6 @@ IsPlayerNearPlayer(playerid, targetid, Float:radius)
     GetPlayerPos(targetid, fX, fY, fZ);
     // TODO: introduce a new variable and do all these checks nicely formatted. Don't go over 110 chars per line.
     return (GetPlayerInterior(playerid) == GetPlayerInterior(targetid) && GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(targetid)) && IsPlayerInRangeOfPoint(playerid, radius, fX, fY, fZ);
-}
-
-forward OnFactionLoaded();
-public OnFactionLoaded()
-{
-    new
-        tmp[64],
-        tmpId,
-        rows = cache_num_rows();
-
-    if(!rows) return printf("MySQL Report: No factions exist to load.");
-
-    for (new i = 0; i < rows; i++)
-    {
-        cache_get_value_name_int(i, "id", tmpId);
-        // TODO: nije dobro indeksirati array sa indeksima iz SQL-a
-        // cemu onda sluze iteratori?! također, treba provjeriti da rows
-        // ne prelazi MAX_FACTIONS (vece jednako) u startu
-
-        // FactionInfo[index] - neka index ide od 0..MAX_FACTIONS-1
-        // kako se ne bi izgubilo jedan index slot ako kreću bzvz od 1
-        // zatim samo indeksiras unutra pomocu iteratora
-        // svugdje u kodu napravis neki getter koji ti povezuje taj index u array
-        // sa SQL ID-em te fakcije u bazi
-        FactionInfo[tmpId][fID] = tmpId;
-
-        cache_get_value_name_int(i, "used"  , FactionInfo[tmpId][fUsed]);
-        cache_get_value_name(i, "name", tmp);
-        format(FactionInfo[tmpId][fName], 24, tmp);
-        cache_get_value_name_int(i, "type", FactionInfo[tmpId][fType]);
-        cache_get_value_name(i, "rank1", tmp);
-        format(FactionInfo[tmpId][fRankName1], 24, tmp);
-        cache_get_value_name(i, "rank2", tmp);
-        format(FactionInfo[tmpId][fRankName2], 24, tmp);
-        cache_get_value_name(i, "rank3", tmp);
-        format(FactionInfo[tmpId][fRankName3], 24, tmp);
-        cache_get_value_name(i, "rank4", tmp);
-        format(FactionInfo[tmpId][fRankName4], 24, tmp);
-        cache_get_value_name(i, "rank5", tmp);
-        format(FactionInfo[tmpId][fRankName5], 24, tmp);
-        cache_get_value_name(i, "rank6", tmp);
-        format(FactionInfo[tmpId][fRankName6], 24, tmp);
-        cache_get_value_name(i, "rank7", tmp);
-        format(FactionInfo[tmpId][fRankName7], 24, tmp);
-        cache_get_value_name(i, "rank8", tmp);
-        format(FactionInfo[tmpId][fRankName8], 24, tmp);
-        cache_get_value_name(i, "rank9", tmp);
-        format(FactionInfo[tmpId][fRankName9], 24, tmp);
-        cache_get_value_name(i, "rank10", tmp);
-        format(FactionInfo[tmpId][fRankName10], 24, tmp);
-        cache_get_value_name(i, "rank11", tmp);
-        format(FactionInfo[tmpId][fRankName11], 24, tmp);
-        cache_get_value_name(i, "rank12", tmp);
-        format(FactionInfo[tmpId][fRankName12], 24, tmp);
-        cache_get_value_name(i, "rank13", tmp);
-        format(FactionInfo[tmpId][fRankName13], 24, tmp);
-        cache_get_value_name(i, "rank14", tmp);
-        format(FactionInfo[tmpId][fRankName14], 24, tmp);
-        cache_get_value_name(i, "rank15", tmp);
-        format(FactionInfo[tmpId][fRankName15], 24, tmp);
-        cache_get_value_name_int(i, "ranks", FactionInfo[tmpId][fRanks]);
-        format(FactionInfo[tmpId][fFactionBank], 24, tmp);
-        cache_get_value_name_int(i, "factionbank", FactionInfo[tmpId][fFactionBank]);
-
-        LoadFactionPermissions(tmpId);
-        LoadFactionWarehouse(tmpId);
-        Iter_Add(Faction, tmpId);
-    }
-    printf("MySQL Report: Factions Loaded. [%d/%d]", Iter_Count(Faction), MAX_FACTIONS);
-    return 1;
-}
-
-forward OnFactionPermissionsLoaded(factionid);
-public OnFactionPermissionsLoaded(factionid)
-{
-    if(!cache_num_rows()) return 0;
-
-    cache_get_value_name_int(0,    "siren"       ,    FactionInfo[factionid][rSiren]);
-    cache_get_value_name_int(0,    "cargun"      ,    FactionInfo[factionid][rCarGun]);
-    cache_get_value_name_int(0,    "carsign"     ,    FactionInfo[factionid][rCarSign]);
-    cache_get_value_name_int(0,    "abuygun"     ,    FactionInfo[factionid][rABuyGun]);
-    cache_get_value_name_int(0,    "buygun"      ,    FactionInfo[factionid][rBuyGun]);
-    cache_get_value_name_int(0,    "aswat"       ,    FactionInfo[factionid][rASwat]);
-    cache_get_value_name_int(0,    "govrepair"   ,    FactionInfo[factionid][rGovRepair]);
-    cache_get_value_name_int(0,    "agovrepair"  ,    FactionInfo[factionid][rAGovRepair]);
-    cache_get_value_name_int(0,    "unfree"      ,    FactionInfo[factionid][rUnFree]);
-    cache_get_value_name_int(0,    "cleartrunk"  ,    FactionInfo[factionid][rClrTrunk]);
-    cache_get_value_name_int(0,    "listennumber",    FactionInfo[factionid][rLstnNumber]);
-    cache_get_value_name_int(0,    "race"        ,    FactionInfo[factionid][rRace]);
-    cache_get_value_name_int(0,    "undercover"  ,    FactionInfo[factionid][rUndercover]);
-    cache_get_value_name_int(0,    "aundercover" ,    FactionInfo[factionid][rAUndercover]);
-    cache_get_value_name_int(0,    "listensms"   ,    FactionInfo[factionid][rLstnSMS]);
-    return 1;
 }
 
 stock SaveFaction(orgid)
@@ -341,11 +340,21 @@ stock SaveFaction(orgid)
     if(isnull(FactionInfo[orgid][fRankName15]))
         format(FactionInfo[orgid][fRankName15], 24, "None");
 
-    mysql_pquery(SQL_Handle(), 
+    inline OnAdminFactionCreate()
+    {
+        // TODO: bounds checking, also, this function is wrong. Do not equate faction SQL ID's to FactionInfo indices!!!
+        FactionInfo[orgid][fID] = orgid;
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(), 
+        using inline OnAdminFactionCreate,
         va_fquery(SQL_Handle(), 
-            "INSERT INTO server_factions (id, used,name,type,rank1,rank2,rank3,rank4,rank5,rank6,rank7,rank8,rank9,\n\
+            "INSERT INTO \n\
+                server_factions \n\
+            (id,used,name,type,rank1,rank2,rank3,rank4,rank5,rank6,rank7,rank8,rank9,\n\
                 rank10,rank11,rank12,rank13,rank14,rank15,ranks,factionbank) \n\
-                VALUES ('%d','%d','%e','%d','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%d','%d')",
+            VALUES \n\
+                ('%d','%d','%e','%d','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%d','%d')",
             orgid,
             FactionInfo[orgid][fUsed],
             FactionInfo[orgid][fName],
@@ -368,19 +377,10 @@ stock SaveFaction(orgid)
             FactionInfo[orgid][fRanks],
             FactionInfo[orgid][fFactionBank]
 
-       ), 
-        "OnAdminFactionCreate", 
+        ), 
         "i", 
         orgid
-   );
-    return 1;
-}
-
-forward OnAdminFactionCreate(orgid);
-public OnAdminFactionCreate(orgid)
-{
-    // TODO: bounds checking, also, this function is wrong. Do not equate faction SQL ID's to FactionInfo indices!!!
-    FactionInfo[orgid][fID] = orgid;
+    );
     return 1;
 }
 

@@ -169,49 +169,41 @@ ListPlayerWeapons(playerid, forplayerid)
 			HiddenWeapon[playerid][pwAmmo]
 		);
 }
- 
-Public:LoadPlayerWeapons(playerid)
+
+static AC_LoadPlayerWeapons(playerid)
 {
-	if(cache_num_rows())
+	inline LoadPlayerWeapons()
 	{
-		new
-			sqlid = -1,
-			weaponid = 0,
-			ammo = 0,
-			hidden = 0;
-
-	    for( new i = 0; i < cache_num_rows(); i++)
+		if(cache_num_rows())
 		{
-			cache_get_value_name_int( i, "sqlid", sqlid);
-			cache_get_value_name_int( i, "weapon_id", weaponid);
-			cache_get_value_name_int( i, "weapon_ammo", ammo);
-			cache_get_value_name_int( i, "hidden", hidden);
-			if(hidden == 1)
+			new
+				sqlid = -1,
+				weaponid = 0,
+				ammo = 0,
+				hidden = 0;
+
+			for( new i = 0; i < cache_num_rows(); i++)
 			{
-				HiddenWeapon[playerid][pwSQLID] = sqlid;
-				HiddenWeapon[playerid][pwWeaponId] = weaponid;
-				HiddenWeapon[playerid][pwAmmo] = ammo;
-				continue;
+				cache_get_value_name_int( i, "sqlid", sqlid);
+				cache_get_value_name_int( i, "weapon_id", weaponid);
+				cache_get_value_name_int( i, "weapon_ammo", ammo);
+				cache_get_value_name_int( i, "hidden", hidden);
+				if(hidden == 1)
+				{
+					HiddenWeapon[playerid][pwSQLID] = sqlid;
+					HiddenWeapon[playerid][pwWeaponId] = weaponid;
+					HiddenWeapon[playerid][pwAmmo] = ammo;
+					continue;
+				}
+				PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(weaponid)] = sqlid;
+				AC_GivePlayerWeapon(playerid, weaponid, ammo, false, false);
 			}
-			PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(weaponid)] 		= sqlid;
-			AC_GivePlayerWeapon(playerid, weaponid, ammo, false, false);
 		}
+		return 1;
 	}
-	return 1;
-}
-
-Public:OnWeaponInsertQuery(playerid, slotid)
-{
-	PlayerWeapons[playerid][pwSQLID][slotid] = cache_insert_id();
-	Iter_Add(P_Weapons[playerid], slotid);
-	return 1;
-}
-
-stock AC_LoadPlayerWeapons(playerid)
-{
-	mysql_tquery(SQL_Handle(), 
+	MySQL_PQueryInline(SQL_Handle(),
+		using inline LoadPlayerWeapons,
 		va_fquery(SQL_Handle(), "SELECT * FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
-		"LoadPlayerWeapons", 
 		"i", 
 		playerid
 	);
@@ -245,16 +237,25 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	}
 	else if(PlayerWeapons[playerid][pwSQLID][slotid] == -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		mysql_tquery(SQL_Handle(), 
-				va_fquery(SQL_Handle(), 
-				"INSERT INTO player_weapons (player_id, weapon_id, weapon_ammo, hidden) \n\
-					VALUES ('%d', '%d', '%d', '%d')",
+		inline OnWeaponInsertQuery()
+		{
+			PlayerWeapons[playerid][pwSQLID][slotid] = cache_insert_id();
+			Iter_Add(P_Weapons[playerid], slotid);
+			return 1;
+		}
+		MySQL_PQueryInline(SQL_Handle(),
+			using inline OnWeaponInsertQuery, 
+			va_fquery(SQL_Handle(), 
+				"INSERT INTO \n\
+					player_weapons \n\
+				(player_id, weapon_id, weapon_ammo, hidden) \n\
+				VALUES \n\
+					('%d', '%d', '%d', '%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerWeapons[playerid][pwWeaponId][slotid],
 				PlayerWeapons[playerid][pwAmmo][slotid],
 				PlayerWeapons[playerid][pwHidden][slotid]
 			), 
-			"OnWeaponInsertQuery", 
 			"ii", 
 			playerid, 
 			slotid

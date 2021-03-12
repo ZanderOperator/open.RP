@@ -425,14 +425,17 @@ BuyVehicle(playerid, bool:credit_activated = false)
 	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnVehicleBuy, 
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO cocars(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,\n\
+			"INSERT INTO \n\
+				cocars \n\
+			(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,\n\
 				interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,\n\
 				batterylife, insurance, panels, doors, tires, lights, travel, lock, alarm, immob,\n\
 				audio, canstart, parts, destroys, health, batterytype, hydraulics,\n\
-				impounded, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) VALUES \n\
+				impounded, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) \n\
+			VALUES \n\
 				('%d','%d','%d','%e','%.2f','%.2f','%.2f','%.2f','%d','%d','%d','%d','%d','%d','%f',\n\
-				'%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f',\n\
-				'%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+					'%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f',\n\
+					'%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 			modelid,
 			PreviewColor1[playerid],
 			PreviewColor2[playerid],
@@ -938,9 +941,9 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		VehicleInfo[vehicleid][vWeaponSQLID][slot] = cache_insert_id();
 		return 1;
 	}
-   	MySQL_TQueryInline(SQL_Handle(),
+   	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnVehicleWeaponInsert,
-		va_fquery(SQL_Handle(), "INSERT INTO cocars_weapons(vehicle_id, weapon_id, ammo) VALUES ('%d','%d','%d')",
+		va_fquery(SQL_Handle(), "INSERT INTO cocars_weapons(vehicle_id, weapon_id, ammo) VALUES ('%d', '%d', '%d')",
 			VehicleInfo[vehicleid][vSQLID],
 			VehicleInfo[vehicleid][vWeaponId][slot],
 			VehicleInfo[vehicleid][vWeaponAmmo][slot]
@@ -1177,30 +1180,33 @@ stock LoadVehicleWeaponPos(vehicleid)
 { 
 	inline LoadingVehicleWeaponPos()
 	{
-		if(cache_num_rows()) 
-		{
-			new tmpSQL;
-			for(new i = 0; i < cache_num_rows(); i++) 
-			{	
-				cache_get_value_name_int(i,    "weaponsql"	, tmpSQL);
-				foreach(new wslot: VehWeapon[vehicleid])
+		new 
+			rows = cache_num_rows();
+		if(!rows) 
+			return 1;
+		
+		new 
+			tmpSQL;
+		for(new i = 0; i < cache_num_rows(); i++) 
+		{	
+			cache_get_value_name_int(i,    "weaponsql"	, tmpSQL);
+			foreach(new wslot: VehWeapon[vehicleid])
+			{
+				if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] == tmpSQL)
 				{
-					if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] == tmpSQL)
-					{
-						cache_get_value_name_float(i,  "offsetx"	, VehicleInfo[vehicleid][vOffsetx][wslot]);
-						cache_get_value_name_float(i,  "offsety"	, VehicleInfo[vehicleid][vOffsety][wslot]);
-						cache_get_value_name_float(i,  "offsetz"	, VehicleInfo[vehicleid][vOffsetz][wslot]);
-						cache_get_value_name_float(i,  "offsetrx"	, VehicleInfo[vehicleid][vOffsetxR][wslot]);
-						cache_get_value_name_float(i,  "offsetry"	, VehicleInfo[vehicleid][vOffsetyR][wslot]);
-						cache_get_value_name_float(i,  "offsetrz"	, VehicleInfo[vehicleid][vOffsetzR][wslot]);	
-					
-						if(VehicleInfo[vehicleid][vOffsetx][wslot] == 0 && VehicleInfo[vehicleid][vOffsety][wslot] == 0 && VehicleInfo[vehicleid][vOffsetz][wslot] == 0)
-							continue;
-					
-						VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), 0.0, 0.0, 0.0, 0, 0, 0, 0);	
-						AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
-						Iter_Add(VehWeaponObject[vehicleid], wslot);
-					}
+					cache_get_value_name_float(i,  "offsetx"	, VehicleInfo[vehicleid][vOffsetx][wslot]);
+					cache_get_value_name_float(i,  "offsety"	, VehicleInfo[vehicleid][vOffsety][wslot]);
+					cache_get_value_name_float(i,  "offsetz"	, VehicleInfo[vehicleid][vOffsetz][wslot]);
+					cache_get_value_name_float(i,  "offsetrx"	, VehicleInfo[vehicleid][vOffsetxR][wslot]);
+					cache_get_value_name_float(i,  "offsetry"	, VehicleInfo[vehicleid][vOffsetyR][wslot]);
+					cache_get_value_name_float(i,  "offsetrz"	, VehicleInfo[vehicleid][vOffsetzR][wslot]);	
+				
+					if(VehicleInfo[vehicleid][vOffsetx][wslot] == 0 && VehicleInfo[vehicleid][vOffsety][wslot] == 0 && VehicleInfo[vehicleid][vOffsetz][wslot] == 0)
+						continue;
+				
+					VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), 0.0, 0.0, 0.0, 0, 0, 0, 0);	
+					AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
+					Iter_Add(VehWeaponObject[vehicleid], wslot);
 				}
 			}
 		}
@@ -4345,9 +4351,12 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					VehicleInfo[AttachVehID][vWeaponObjectID][wslot] = CreateObject(model, 0, 0, 0, 0, 0, 0, 100.0);
 					AttachObjectToVehicle(VehicleInfo[AttachVehID][vWeaponObjectID][wslot], AttachVehID, finalx, finaly, ofz, fRotX, fRotY, ofaz);
 
-					mysql_fquery(SQL_Handle(), 
-						"INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety,\n\
-							offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f')", 
+					mysql_fquery_ex(SQL_Handle(), 
+						"INSERT INTO \n\
+							cocars_wobjects \n\
+						(model, weaponsql, vehicle_id, offsetx, offsety, offsetrx, offsetry, offsetrz) \n\
+						VALUES \n\
+							('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f')", 
 						model,
 						VehicleInfo[AttachVehID][vWeaponSQLID][wslot], 
 						VehicleInfo[AttachVehID][vSQLID], 

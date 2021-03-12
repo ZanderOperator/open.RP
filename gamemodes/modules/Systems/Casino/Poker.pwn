@@ -1402,39 +1402,44 @@ static InitPokerTables()
 
 static LoadPokerTables()
 {
-	mysql_pquery(SQL_Handle(), "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
-	return 1;
-}
-
-forward OnPokerTablesLoaded();
-public OnPokerTablesLoaded()
-{
-	new rows = cache_num_rows();
-	if(!rows) return 1;
-	for(new i = 0; i < rows; i++)
+	inline OnPokerTablesLoaded()
 	{
-		cache_get_value_name_int(i,	"sqlid"	, PokerTable[i][pkrSQL]);
-		cache_get_value_name_float(i,  "X"	, PokerTable[i][pkrX]);
-		cache_get_value_name_float(i,  "Y"	, PokerTable[i][pkrY]);
-		cache_get_value_name_float(i,  "Z"	, PokerTable[i][pkrZ]);
-		cache_get_value_name_float(i,  "RX"	, PokerTable[i][pkrRX]);
-		cache_get_value_name_float(i,  "RY"	, PokerTable[i][pkrRY]);
-		cache_get_value_name_float(i,  "RZ"	, PokerTable[i][pkrRZ]);
-		cache_get_value_name_int(i,	"virtualworld", PokerTable[i][pkrVW]);
-		cache_get_value_name_int(i,	"interior"			, PokerTable[i][pkrInt]);
+		new 
+			rows = cache_num_rows();
+		if(!rows) 
+			return 1;
+			
+		for(new i = 0; i < rows; i++)
+		{
+			cache_get_value_name_int(i,	"sqlid"	, PokerTable[i][pkrSQL]);
+			cache_get_value_name_float(i,  "X"	, PokerTable[i][pkrX]);
+			cache_get_value_name_float(i,  "Y"	, PokerTable[i][pkrY]);
+			cache_get_value_name_float(i,  "Z"	, PokerTable[i][pkrZ]);
+			cache_get_value_name_float(i,  "RX"	, PokerTable[i][pkrRX]);
+			cache_get_value_name_float(i,  "RY"	, PokerTable[i][pkrRY]);
+			cache_get_value_name_float(i,  "RZ"	, PokerTable[i][pkrRZ]);
+			cache_get_value_name_int(i,	"virtualworld", PokerTable[i][pkrVW]);
+			cache_get_value_name_int(i,	"interior", PokerTable[i][pkrInt]);
 
-		PlacePokerTable(i, 1, 
-			PokerTable[i][pkrX], 
-			PokerTable[i][pkrY], 
-			PokerTable[i][pkrZ], 
-			PokerTable[i][pkrRX], 
-			PokerTable[i][pkrRY], 
-			PokerTable[i][pkrRZ], 
-			PokerTable[i][pkrVW], 
-			PokerTable[i][pkrInt]
-		);
+			PlacePokerTable(i, 1, 
+				PokerTable[i][pkrX], 
+				PokerTable[i][pkrY], 
+				PokerTable[i][pkrZ], 
+				PokerTable[i][pkrRX], 
+				PokerTable[i][pkrRY], 
+				PokerTable[i][pkrRZ], 
+				PokerTable[i][pkrVW], 
+				PokerTable[i][pkrInt]
+			);
+		}
+		printf("MySQL Report: Poker Tables Loaded. [%d/%d]", rows, MAX_POKERTABLES);
+		return 1;
 	}
-	printf("MySQL Report: Poker Tables Loaded. [%d/%d]", rows, MAX_POKERTABLES);
+	MySQL_PQueryInline(SQL_Handle(),
+		using inline OnPokerTablesLoaded,
+		"SELECT * FROM poker_tables WHERE 1",  
+		""
+	);
 	return 1;
 }
 
@@ -1442,10 +1447,19 @@ static SavePokerTable(idx)
 {
 	if(PokerTable[idx][pkrSQL] == -1)
 	{
-		mysql_pquery( SQL_Handle(), 
+		inline OnPokerTableInsert()
+		{
+			PokerTable[idx][pkrSQL] = cache_insert_id();
+			return 1;
+		}
+		MySQL_PQueryInline( SQL_Handle(), 
+			using inline OnPokerTableInsert,
 			va_fquery(SQL_Handle(), 
-				"INSERT INTO poker_tables (X, Y, Z, RX, RY, RZ, virtualworld, interior) \n\
-					VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d')",
+				"INSERT INTO \n\
+					poker_tables \n\
+				(X, Y, Z, RX, RY, RZ, virtualworld, interior) \n\
+				VALUES \n\
+					('%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d')",
 				PokerTable[idx][pkrX],
 				PokerTable[idx][pkrY],
 				PokerTable[idx][pkrZ],
@@ -1455,7 +1469,6 @@ static SavePokerTable(idx)
 				PokerTable[idx][pkrVW],
 				PokerTable[idx][pkrInt]
 			), 
-			"OnPokerTableInsert", 
 			"i", 
 			idx
 		);
@@ -1479,12 +1492,6 @@ static SavePokerTable(idx)
 	return 1;
 }
 
-forward OnPokerTableInsert(tableid);
-public OnPokerTableInsert(tableid)
-{
-	PokerTable[tableid][pkrSQL] = cache_insert_id();
-	return 1;
-}
 
 static ResetPokerRound(tableid)
 {

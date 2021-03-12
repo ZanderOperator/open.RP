@@ -291,64 +291,64 @@ stock IsAt247(playerid)
 
 stock LoadBizzes()
 {
-    Iter_Init(Business);
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM bizzes WHERE 1"), 
-        "OnServerBizzesLoad", 
+    Iter_Init(Business); 
+
+    inline OnServerBizzesLoad()
+    {
+        new 
+            num_rows = cache_num_rows();
+        if(!num_rows)
+        {
+            printf("MySQL Report: No bizes exist to load.");
+            return 0;
+        }
+
+        for (new b = 0; b < num_rows; b++)
+        {
+            cache_get_value_name_int  (b,    "id"            , BizzInfo[b][bSQLID]);
+            cache_get_value_name_int  (b,    "ownerid"       , BizzInfo[b][bOwnerID]);
+            cache_get_value_name      (b,    "message"       , BizzInfo[b][bMessage], 16);
+            cache_get_value_name_int  (b,    "canenter"      , BizzInfo[b][bCanEnter]);
+            cache_get_value_name_float(b,    "entrancex"     , BizzInfo[b][bEntranceX]);
+            cache_get_value_name_float(b,    "entrancey"     , BizzInfo[b][bEntranceY]);
+            cache_get_value_name_float(b,    "entrancez"     , BizzInfo[b][bEntranceZ]);
+            cache_get_value_name_float(b,    "exitx"         , BizzInfo[b][bExitX]);
+            cache_get_value_name_float(b,    "exity"         , BizzInfo[b][bExitY]);
+            cache_get_value_name_float(b,    "exitz"         , BizzInfo[b][bExitZ]);
+            cache_get_value_name_int  (b,    "levelneeded"   , BizzInfo[b][bLevelNeeded]);
+            cache_get_value_name_int  (b,    "buyprice"      , BizzInfo[b][bBuyPrice]);
+            cache_get_value_name_int  (b,    "till"          , BizzInfo[b][bTill]);
+            cache_get_value_name_int  (b,    "locked"        , BizzInfo[b][bLocked]);
+            cache_get_value_name_int  (b,    "interior"      , BizzInfo[b][bInterior]);
+            cache_get_value_name_int  (b,    "maxproducts"   , BizzInfo[b][bMaxProducts]);
+            cache_get_value_name_int  (b,    "priceprod"     , BizzInfo[b][bPriceProd]);
+            cache_get_value_name_int  (b,    "virtualworld"  , BizzInfo[b][bVirtualWorld]);
+            cache_get_value_name_int  (b,    "type"          , BizzInfo[b][bType]);
+            cache_get_value_name_int  (b,    "entrancecost"  , BizzInfo[b][bEntranceCost]);
+            cache_get_value_name_int  (b,    "destroyed"     , BizzInfo[b][bDestroyed]);
+            cache_get_value_name_int  (b,    "fur_slots"     , BizzInfo[b][bFurSlots]);
+            cache_get_value_name_int  (b,    "gasprice"      , BizzInfo[b][bGasPrice]);
+
+            LoadBiznisProducts(b);
+            LoadBiznisVips(b);
+            LoadBiznisFurnitureObjects(b);
+            CreateBizzEnter(b);
+
+            if(BizzInfo[b][bVipEnter][0] != 0.0 && BizzInfo[b][bVipEnter][1] != 0.0)
+                BizzInfo[b][bVipCP] = CreateDynamicCP(BizzInfo[b][bVipEnter][0], BizzInfo[b][bVipEnter][1], BizzInfo[b][bVipEnter][2]-1, 3.0, BizzInfo[b][bVirtualWorld], BizzInfo[b][bInterior], -1, 5.0);
+
+            BizzInfo[b][bEnterPickup] = CreateDynamicPickup(1272, 2, BizzInfo[b][bEntranceX], BizzInfo[b][bEntranceY], BizzInfo[b][bEntranceZ], -1, -1, -1, 100.0);
+            Iter_Add(Business, b);
+        }
+
+        printf("MySQL Report: Businesses Loaded. [%d/%d]", Iter_Count(Business), MAX_BIZZES);
+        return 1;
+    }  
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnServerBizzesLoad,
+        va_fquery(SQL_Handle(), "SELECT * FROM bizzes WHERE 1"),  
         ""
-   );
-    return 1;
-}
-
-forward OnServerBizzesLoad();
-public OnServerBizzesLoad()
-{
-    new num_rows = cache_num_rows();
-    if(!num_rows)
-    {
-        printf("MySQL Report: No bizes exist to load.");
-        return 0;
-    }
-
-    for (new b = 0; b < num_rows; b++)
-    {
-        cache_get_value_name_int  (b,    "id"            , BizzInfo[b][bSQLID]);
-        cache_get_value_name_int  (b,    "ownerid"       , BizzInfo[b][bOwnerID]);
-        cache_get_value_name      (b,    "message"       , BizzInfo[b][bMessage], 16);
-        cache_get_value_name_int  (b,    "canenter"      , BizzInfo[b][bCanEnter]);
-        cache_get_value_name_float(b,    "entrancex"     , BizzInfo[b][bEntranceX]);
-        cache_get_value_name_float(b,    "entrancey"     , BizzInfo[b][bEntranceY]);
-        cache_get_value_name_float(b,    "entrancez"     , BizzInfo[b][bEntranceZ]);
-        cache_get_value_name_float(b,    "exitx"         , BizzInfo[b][bExitX]);
-        cache_get_value_name_float(b,    "exity"         , BizzInfo[b][bExitY]);
-        cache_get_value_name_float(b,    "exitz"         , BizzInfo[b][bExitZ]);
-        cache_get_value_name_int  (b,    "levelneeded"   , BizzInfo[b][bLevelNeeded]);
-        cache_get_value_name_int  (b,    "buyprice"      , BizzInfo[b][bBuyPrice]);
-        cache_get_value_name_int  (b,    "till"          , BizzInfo[b][bTill]);
-        cache_get_value_name_int  (b,    "locked"        , BizzInfo[b][bLocked]);
-        cache_get_value_name_int  (b,    "interior"      , BizzInfo[b][bInterior]);
-        cache_get_value_name_int  (b,    "maxproducts"   , BizzInfo[b][bMaxProducts]);
-        cache_get_value_name_int  (b,    "priceprod"     , BizzInfo[b][bPriceProd]);
-        cache_get_value_name_int  (b,    "virtualworld"  , BizzInfo[b][bVirtualWorld]);
-        cache_get_value_name_int  (b,    "type"          , BizzInfo[b][bType]);
-        cache_get_value_name_int  (b,    "entrancecost"  , BizzInfo[b][bEntranceCost]);
-        cache_get_value_name_int  (b,    "destroyed"     , BizzInfo[b][bDestroyed]);
-        cache_get_value_name_int  (b,    "fur_slots"     , BizzInfo[b][bFurSlots]);
-        cache_get_value_name_int  (b,    "gasprice"      , BizzInfo[b][bGasPrice]);
-
-        LoadBiznisProducts(b);
-        LoadBiznisVips(b);
-        LoadBiznisFurnitureObjects(b);
-        CreateBizzEnter(b);
-
-        if(BizzInfo[b][bVipEnter][0] != 0.0 && BizzInfo[b][bVipEnter][1] != 0.0)
-            BizzInfo[b][bVipCP] = CreateDynamicCP(BizzInfo[b][bVipEnter][0], BizzInfo[b][bVipEnter][1], BizzInfo[b][bVipEnter][2]-1, 3.0, BizzInfo[b][bVirtualWorld], BizzInfo[b][bInterior], -1, 5.0);
-
-        BizzInfo[b][bEnterPickup] = CreateDynamicPickup(1272, 2, BizzInfo[b][bEntranceX], BizzInfo[b][bEntranceY], BizzInfo[b][bEntranceZ], -1, -1, -1, 100.0);
-        Iter_Add(Business, b);
-    }
-
-    printf("MySQL Report: Businesses Loaded. [%d/%d]", Iter_Count(Business), MAX_BIZZES);
+    );
     return 1;
 }
 
@@ -357,9 +357,26 @@ stock LoadBiznisProducts(bizz_id)
     if(!Iter_Contains(Business, bizz_id))
         return 0;
 
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]), 
-        "OnServerBiznisProductsLoad", 
+    inline OnServerBiznisProductsLoad()
+    {
+        new num_rows = cache_num_rows();
+        if(!num_rows)
+        {
+            return 0;
+        }
+
+        for (new i = 0; i < num_rows; i++)
+        {
+            cache_get_value_name_int(i,    "id"        , BiznisProducts[bizz_id][bpSQLID][i]);
+            cache_get_value_name_int(i,    "type"      , BiznisProducts[bizz_id][bpType][i]);
+            cache_get_value_name_int(i,    "price"     , BiznisProducts[bizz_id][bpPrice][i]);
+            cache_get_value_name_int(i,    "amount"    , BiznisProducts[bizz_id][bpAmount][i]);
+        }
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnServerBiznisProductsLoad,
+        va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),  
         "i", 
         bizz_id
    );
@@ -371,49 +388,26 @@ stock LoadBiznisVips(bizz_id)
     if(!Iter_Contains(Business, bizz_id))
         return 1;
 
-    mysql_pquery(SQL_Handle(),
-        va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
-        "OnServerVipsLoad",
-        "i",
-        bizz_id
-   );
-    return 1;
-}
-
-forward OnServerBiznisProductsLoad(bizz_id);
-public OnServerBiznisProductsLoad(bizz_id)
-{
-    new num_rows = cache_num_rows();
-    if(!num_rows)
+    inline OnServerVipsLoad()
     {
-        return 0;
-    }
+        if(!cache_num_rows())
+            return 1;
 
-    for (new i = 0; i < num_rows; i++)
-    {
-        cache_get_value_name_int(i,    "id"        , BiznisProducts[bizz_id][bpSQLID][i]);
-        cache_get_value_name_int(i,    "type"      , BiznisProducts[bizz_id][bpType][i]);
-        cache_get_value_name_int(i,    "price"     , BiznisProducts[bizz_id][bpPrice][i]);
-        cache_get_value_name_int(i,    "amount"    , BiznisProducts[bizz_id][bpAmount][i]);
-    }
-    return 1;
-}
-
-forward OnServerVipsLoad(bizz_id);
-public OnServerVipsLoad(bizz_id)
-{
-    if(!cache_num_rows())
-    {
+        cache_get_value_name_int  (0,    "type"    , BizzInfo[bizz_id][bVipType]);
+        cache_get_value_name_float(0,    "x"       , BizzInfo[bizz_id][bVipEnter][0]);
+        cache_get_value_name_float(0,    "y"       , BizzInfo[bizz_id][bVipEnter][1]);
+        cache_get_value_name_float(0,    "z"       , BizzInfo[bizz_id][bVipEnter][2]);
+        cache_get_value_name_float(0,    "exit_x"  , BizzInfo[bizz_id][bVipExit][0]);
+        cache_get_value_name_float(0,    "exit_y"  , BizzInfo[bizz_id][bVipExit][1]);
+        cache_get_value_name_float(0,    "exit_z"  , BizzInfo[bizz_id][bVipExit][2]);
         return 1;
     }
-
-    cache_get_value_name_int  (0,    "type"    , BizzInfo[bizz_id][bVipType]);
-    cache_get_value_name_float(0,    "x"       , BizzInfo[bizz_id][bVipEnter][0]);
-    cache_get_value_name_float(0,    "y"       , BizzInfo[bizz_id][bVipEnter][1]);
-    cache_get_value_name_float(0,    "z"       , BizzInfo[bizz_id][bVipEnter][2]);
-    cache_get_value_name_float(0,    "exit_x"  , BizzInfo[bizz_id][bVipExit][0]);
-    cache_get_value_name_float(0,    "exit_y"  , BizzInfo[bizz_id][bVipExit][1]);
-    cache_get_value_name_float(0,    "exit_z"  , BizzInfo[bizz_id][bVipExit][2]);
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnServerVipsLoad,
+        va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
+        "i",
+        bizz_id
+    );
     return 1;
 }
 
@@ -801,15 +795,23 @@ static stock SetStoreProductOnSale(bizz, product, price)
     BiznisProducts[bizz][bpPrice][id]  = price;
     BiznisProducts[bizz][bpAmount][id] = 100;
 
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "INSERT INTO server_bizz_products(biznis_id, type, price, amount) \n\
-            VALUES ('%d', '%d', '%d', '%d')",
+    inline OnBizzProductInsert()
+    {
+        BiznisProducts[bizz][bpSQLID][id] = cache_insert_id();
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnBizzProductInsert, 
+        va_fquery(SQL_Handle(), 
+            "INSERT INTO \n\
+                server_bizz_products(biznis_id, type, price, amount) \n\
+            VALUES \n\
+                ('%d', '%d', '%d', '%d')",
             BizzInfo[bizz][bSQLID],
             BiznisProducts[bizz][bpType][id],
             BiznisProducts[bizz][bpPrice][id],
             BiznisProducts[bizz][bpAmount][id]
-       ), 
-        "OnBiznisProductInsert", 
+        ),  
         "ii", 
         bizz, 
         id
@@ -829,15 +831,6 @@ static stock UpdateBizzProduct(bizz, productid)
         BiznisProducts[bizz][bpAmount][productid],
         BiznisProducts[bizz][bpSQLID][productid]
    );
-    return 1;
-}
-
-Public:OnBiznisProductInsert(bizz, id)
-{
-    if(!Bizz_Exists(bizz)) 
-        return 0;
-
-    BiznisProducts[bizz][bpSQLID][id] = cache_insert_id();
     return 1;
 }
 
@@ -979,11 +972,31 @@ stock InsertNewBizz(playerid, bizz)
 {
     if(!Bizz_Exists(bizz)) 
         return 0;
+    
+    inline OnBizzInsertQuery()
+    {
+        if(!Bizz_Exists(bizz)) 
+            return 0;
 
-    mysql_pquery(SQL_Handle(), 
+        BizzInfo[bizz][bSQLID] = cache_insert_id();
+
+        va_SendClientMessage(playerid, COLOR_RED, "[!]  Uspjesno ste stvorili biznis tipa %s pod nazivom %s[ID: %d | SQLID: %d].",
+            GetBiznisType(BizzInfo[bizz][bType]),
+            BizzInfo[bizz][bMessage],
+            bizz,
+            BizzInfo[bizz][bSQLID]
+        );
+        SendClientMessage(playerid, COLOR_YELLOW, "[!]  Da bi ste postavili interijer biznisu, koristite /bizint | /custombizint.");
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnBizzInsertQuery, 
         va_fquery(SQL_Handle(), 
-            "INSERT INTO bizzes(id, message, canenter,entrancex, entrancey, entrancez,\n\
-            levelneeded, buyprice, type, fur_slots) VALUES (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
+            "INSERT INTO \n\
+                bizzes \n\
+            (id, message, canenter,entrancex, entrancey, entrancez, levelneeded, buyprice, type, fur_slots) \n\
+            VALUES \n\
+                (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
             BizzInfo[bizz][bMessage],
             BizzInfo[bizz][bCanEnter],
             BizzInfo[bizz][bEntranceX],
@@ -994,29 +1007,11 @@ stock InsertNewBizz(playerid, bizz)
             BizzInfo[bizz][bType],
             BizzInfo[bizz][bFurSlots],
             BizzInfo[bizz][bGasPrice]
-       ),
-        "OnBizzInsertQuery", 
+        ),
         "ii", 
         playerid, 
         bizz
-   );
-    return 1;
-}
-
-Public:OnBizzInsertQuery(playerid, bizz)
-{
-    if(!Bizz_Exists(bizz)) 
-        return 0;
-
-    BizzInfo[bizz][bSQLID] = cache_insert_id();
-
-    va_SendClientMessage(playerid, COLOR_RED, "[!]  Uspjesno ste stvorili biznis tipa %s pod nazivom %s[ID: %d | SQLID: %d].",
-        GetBiznisType(BizzInfo[bizz][bType]),
-        BizzInfo[bizz][bMessage],
-        bizz,
-        BizzInfo[bizz][bSQLID]
-   );
-    SendClientMessage(playerid, COLOR_YELLOW, "[!]  Da bi ste postavili interijer biznisu, koristite /bizint | /custombizint.");
+    );
     return 1;
 }
 
@@ -3373,8 +3368,11 @@ CMD:createvip(playerid, params[])
         }
     }
     mysql_fquery_ex(SQL_Handle(), 
-        "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\
-            VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
+        "INSERT INTO \n\
+            server_biznis_vips \n\
+        (biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\
+        VALUES \n\
+            ('%d','%d','%f','%f','%f','%f','%f','%f')",
         BizzInfo[bizz][bSQLID],
         BizzInfo[bizz][bVipType],
         BizzInfo[bizz][bVipEnter][0],

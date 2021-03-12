@@ -161,11 +161,14 @@ Public:OnPlayerLoadExperience(playerid)
 	}
 	else
 	{
-		return mysql_fquery(SQL_Handle(), 
-					"INSERT INTO experience (sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) \n\
-						VALUES ('%d', '0', '0', '0', '0', '0', '0')",
-					PlayerInfo[playerid][pSQLID]
-				);
+		return mysql_fquery_ex(SQL_Handle(), 
+			"INSERT INTO \n\
+				experience \n\
+			(sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) \n\
+			VALUES \n\
+				('%d', '0', '0', '0', '0', '0', '0')",
+			PlayerInfo[playerid][pSQLID]
+		);
 	}
 }
 

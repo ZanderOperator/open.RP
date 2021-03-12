@@ -341,9 +341,12 @@ stock SavePlayerMobile(playerid, type=1)
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery(SQL_Handle(), 
-			"INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time) \n\
-				VALUES ('%d','%d','%d','%d','%d','%d','%d','%d')",
+		mysql_fquery_ex(SQL_Handle(), 
+			"INSERT INTO \n\
+				player_phones \n\
+			(player_id, type, model, number, money, background, mask, time) \n\
+			VALUES \n\
+				('%d','%d','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			type,
 			PlayerMobile[playerid][pMobileModel],
@@ -360,9 +363,11 @@ stock SavePlayerMobile(playerid, type=1)
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery(SQL_Handle(), 
-			"INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time, cryptonumber) \n\
-				VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+		mysql_fquery_ex(SQL_Handle(), 
+			"INSERT INTO \n\
+				player_phones(player_id, type, model, number, money, background, mask, time, cryptonumber) \n\
+			VALUES \n\
+				('%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			type,
 			0,
@@ -570,8 +575,11 @@ stock CreateTower(towerid)
 	MySQL_PQueryInline(SQL_Handle(), 
 		using inline OnTowerCreated,
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO signaltowers (network,posx,posy,posz,posrx,posry,posrz,radius) \n\
-				VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",
+			"INSERT INTO \n\
+				signaltowers \n\
+			(network, posx, posy, posz, posrx, posry, posrz, radius) \n\
+			VALUES \n\
+				('%e', '%f', '%f', '%f', '%f', '%f', '%f', '%f')",
 			TowerInfo[towerid][twNetwork],
 			TowerInfo[towerid][twPosX],
 			TowerInfo[towerid][twPosY],

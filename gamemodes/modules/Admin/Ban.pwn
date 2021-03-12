@@ -99,8 +99,11 @@ stock HOOK_Ban(playerid, adminid, const reason[], days = -1)
 	);
 
 	mysql_fquery_ex(SQL_Handle(), 
-		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
-			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
+		"INSERT INTO \n\
+			bans \n\
+		(player_id, name, player_ip, forumname, reason, date, unban) \n\
+		VALUES \n\
+			('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
 		GetName(playerid, false),
 		ReturnPlayerIP(playerid),
@@ -165,8 +168,11 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 		);
 
 		mysql_fquery_ex(SQL_Handle(), 
-			"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
-				VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
+			"INSERT INTO \n\
+				bans \n\
+			(player_id, name, player_ip, forumname, reason, date, unban) \n\
+			VALUES \n\
+			('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 			sqlid,
 			playername,
 			playerip,

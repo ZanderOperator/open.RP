@@ -207,14 +207,38 @@ static ExteriorMisc[][E_EXTERIOR_MISC_DATA] =
     ##        #######  ##    ##  ######   ######  
 */
 
-stock LoadHouseExterior(houseid)
+LoadHouseExterior(houseid)
 {
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]), 
-        "OnHouseExteriorLoad", 
+    inline OnHouseExteriorLoad()
+    {
+        new 
+            rows = cache_num_rows();
+        if(!rows) 
+            return 0;
+
+        for (new i = 0; i < rows; i++)
+        {
+            cache_get_value_name_int  (i,    "id"     ,    ExteriorInfo[houseid][heSQLID][i]);
+            cache_get_value_name_int  (i,    "modelid",    ExteriorInfo[houseid][heModelId][i]);
+            cache_get_value_name_float(i,    "pos_x"  ,    ExteriorInfo[houseid][hePosX][i]);
+            cache_get_value_name_float(i,    "pos_y"  ,    ExteriorInfo[houseid][hePosY][i]);
+            cache_get_value_name_float(i,    "pos_z"  ,    ExteriorInfo[houseid][hePosZ][i]);
+            cache_get_value_name_float(i,    "rot_x"  ,    ExteriorInfo[houseid][heRotX][i]);
+            cache_get_value_name_float(i,    "rot_y"  ,    ExteriorInfo[houseid][heRotY][i]);
+            cache_get_value_name_float(i,    "rot_z"  ,    ExteriorInfo[houseid][heRotZ][i]);
+
+            ExteriorInfo[houseid][heObjectId][i] = CreateDynamicObject(ExteriorInfo[houseid][heModelId][i], ExteriorInfo[houseid][hePosX][i], ExteriorInfo[houseid][hePosY][i], ExteriorInfo[houseid][hePosZ][i], ExteriorInfo[houseid][heRotX][i], ExteriorInfo[houseid][heRotY][i], ExteriorInfo[houseid][heRotZ][i], 0, 0, -1, EXTERIOR_DRAW_DISTANCE, EXTERIOR_DRAW_DISTANCE);
+            Iter_Add(HouseFurExt[houseid], i);
+        }
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnHouseExteriorLoad,
+        va_fquery(SQL_Handle(), "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]),
         "i", 
         houseid
-   );
+    );
+    return 1;
 }
 
 stock ReloadHouseExterior(houseid)
@@ -287,20 +311,7 @@ static CreateExteriorObject(playerid)
         return 1;
     }
 
-    ExteriorInfo[houseid][heObjectId][index] = CreateDynamicObject(
-                                                    PlayerExteriorInfo[playerid][peModelId],
-                                                    PlayerExteriorInfo[playerid][pePosX],
-                                                    PlayerExteriorInfo[playerid][pePosY],
-                                                    PlayerExteriorInfo[playerid][pePosZ],
-                                                    PlayerExteriorInfo[playerid][peRotX],
-                                                    PlayerExteriorInfo[playerid][peRotY],
-                                                    PlayerExteriorInfo[playerid][peRotZ],
-                                                    0,
-                                                    0,
-                                                    -1,
-                                                    EXTERIOR_DRAW_DISTANCE,
-                                                    EXTERIOR_DRAW_DISTANCE
-                                               );
+    ExteriorInfo[houseid][heObjectId][index] = CreateDynamicObject(PlayerExteriorInfo[playerid][peModelId], PlayerExteriorInfo[playerid][pePosX], PlayerExteriorInfo[playerid][pePosY], PlayerExteriorInfo[playerid][pePosZ], PlayerExteriorInfo[playerid][peRotX], PlayerExteriorInfo[playerid][peRotY], PlayerExteriorInfo[playerid][peRotZ], 0, 0, -1, EXTERIOR_DRAW_DISTANCE, EXTERIOR_DRAW_DISTANCE);
 
     ExteriorInfo[houseid][heHouseId][index]     = HouseInfo[houseid][hSQLID];
     ExteriorInfo[houseid][heModelId][index]     = PlayerExteriorInfo[playerid][peModelId];
@@ -311,11 +322,21 @@ static CreateExteriorObject(playerid)
     ExteriorInfo[houseid][heRotY][index]        = PlayerExteriorInfo[playerid][peRotY];
     ExteriorInfo[houseid][heRotZ][index]        = PlayerExteriorInfo[playerid][peRotZ];
 
-    mysql_pquery(SQL_Handle(), 
+    inline OnExteriorObjectInsert()
+    {
+        ExteriorInfo[houseid][heSQLID][index] = cache_insert_id();
+        Iter_Add(HouseFurExt[houseid], index);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnExteriorObjectInsert, 
         va_fquery(SQL_Handle(), 
-            "INSERT INTO house_exteriors(house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) \n\
-                VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-            HouseInfo[PlayerKeys[playerid][pHouseKey]][hSQLID],
+            "INSERT INTO \n\
+                house_exteriors \n\
+            (house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) \n\
+            VALUES \n\
+                ('%d','%d','%f','%f','%f','%f','%f','%f')",
+            HouseInfo[houseid][hSQLID],
             PlayerExteriorInfo[playerid][peModelId],
             PlayerExteriorInfo[playerid][pePosX],
             PlayerExteriorInfo[playerid][pePosY],
@@ -323,10 +344,9 @@ static CreateExteriorObject(playerid)
             PlayerExteriorInfo[playerid][peRotX],
             PlayerExteriorInfo[playerid][peRotY],
             PlayerExteriorInfo[playerid][peRotZ]
-       ), 
-        "OnExteriorObjectsInsert", 
+        ),  
         "ii", 
-        playerid, 
+        houseid, 
         index
    );
 
@@ -498,48 +518,6 @@ static stock FindExteriorObjectId(playerid, Float:radius)
         }
     }
     return objid;
-}
-
-Public:OnHouseExteriorLoad(houseid)
-{
-    new rows = cache_num_rows();
-    if(!rows) return 0;
-
-    for (new i = 0; i < rows; i++)
-    {
-        cache_get_value_name_int  (i,    "id"     ,    ExteriorInfo[houseid][heSQLID][i]);
-        cache_get_value_name_int  (i,    "modelid",    ExteriorInfo[houseid][heModelId][i]);
-        cache_get_value_name_float(i,    "pos_x"  ,    ExteriorInfo[houseid][hePosX][i]);
-        cache_get_value_name_float(i,    "pos_y"  ,    ExteriorInfo[houseid][hePosY][i]);
-        cache_get_value_name_float(i,    "pos_z"  ,    ExteriorInfo[houseid][hePosZ][i]);
-        cache_get_value_name_float(i,    "rot_x"  ,    ExteriorInfo[houseid][heRotX][i]);
-        cache_get_value_name_float(i,    "rot_y"  ,    ExteriorInfo[houseid][heRotY][i]);
-        cache_get_value_name_float(i,    "rot_z"  ,    ExteriorInfo[houseid][heRotZ][i]);
-
-        ExteriorInfo[houseid][heObjectId][i] = CreateDynamicObject(ExteriorInfo[houseid][heModelId][i],
-                                                                   ExteriorInfo[houseid][hePosX][i],
-                                                                   ExteriorInfo[houseid][hePosY][i],
-                                                                   ExteriorInfo[houseid][hePosZ][i],
-                                                                   ExteriorInfo[houseid][heRotX][i],
-                                                                   ExteriorInfo[houseid][heRotY][i],
-                                                                   ExteriorInfo[houseid][heRotZ][i],
-                                                                   0,
-                                                                   0,
-                                                                   -1,
-                                                                   EXTERIOR_DRAW_DISTANCE,
-                                                                   EXTERIOR_DRAW_DISTANCE
-                                              );
-        Iter_Add(HouseFurExt[houseid], i);
-    }
-    return 1;
-}
-
-forward OnExteriorObjectsInsert(playerid, index);
-public OnExteriorObjectsInsert(playerid, index)
-{
-    ExteriorInfo[PlayerKeys[playerid][pHouseKey]][heSQLID][index] = cache_insert_id();
-    Iter_Add(HouseFurExt[PlayerKeys[playerid][pHouseKey]], index);
-    return 1;
 }
 
 /*

@@ -101,12 +101,6 @@ Player_SetGarageArea(playerid, v)
     GarageAreaID[playerid] = v;
 }
 
-Public:OnGarageCreates(garageid)
-{
-    GarageInfo[garageid][gSQLID] = cache_insert_id();
-    return 1;
-}
-
 stock DestroyGarageInfoTD(playerid)
 {
     PlayerTextDrawDestroy(playerid, GarageBcg1[playerid]);
@@ -221,39 +215,39 @@ stock CreateGarageInfoTD(playerid, garage)
 
 stock LoadHouseGarages()
 {
-    mysql_pquery(SQL_Handle(), 
+    inline OnHouseGaragesLoad()
+    {
+        new 
+            num_rows = cache_num_rows();
+        if(!num_rows) 
+            return printf("MySQL Report: No garages exist to load.");
+
+        for (new row = 0; row < num_rows; row++)
+        {
+            cache_get_value_name_int  (row,  "id"     ,    GarageInfo[row][gSQLID]);
+            cache_get_value_name_int  (row,  "ownerid",    GarageInfo[row][gOwnerID]);
+            cache_get_value_name      (row,  "adress" ,    GarageInfo[row][gAdress], 16);
+            cache_get_value_name_int  (row,  "price"  ,    GarageInfo[row][gPrice]);
+            cache_get_value_name_int  (row,  "locked" ,    GarageInfo[row][gLocked]);
+            cache_get_value_name_int  (row,  "houseid",    GarageInfo[row][gHouseID]);
+            cache_get_value_name_float(row,  "enterX" ,    GarageInfo[row][gEnterX]);
+            cache_get_value_name_float(row,  "enterY" ,    GarageInfo[row][gEnterY]);
+            cache_get_value_name_float(row,  "enterZ" ,    GarageInfo[row][gEnterZ]);
+            cache_get_value_name_float(row,  "exitX"  ,    GarageInfo[row][gExitX]);
+            cache_get_value_name_float(row,  "exitY"  ,    GarageInfo[row][gExitY]);
+            cache_get_value_name_float(row,  "exitZ"  ,    GarageInfo[row][gExitZ]);
+
+            CreateGarageEnter(row);
+            Iter_Add(Garage, row);
+        }
+        printf("MySQL Report: Garages Loaded. [%d/%d]", num_rows, MAX_GARAGES);
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnHouseGaragesLoad, 
         va_fquery(SQL_Handle(), "SELECT * FROM server_garages WHERE 1"), 
-        "OnHouseGaragesLoad", 
         ""
    );
-    return 1;
-}
-
-forward OnHouseGaragesLoad();
-public OnHouseGaragesLoad()
-{
-    new num_rows = cache_num_rows();
-    if(!num_rows) return printf("MySQL Report: No garages exist to load.");
-
-    for (new row = 0; row < num_rows; row++)
-    {
-        cache_get_value_name_int  (row,  "id"     ,    GarageInfo[row][gSQLID]);
-        cache_get_value_name_int  (row,  "ownerid",    GarageInfo[row][gOwnerID]);
-        cache_get_value_name      (row,  "adress" ,    GarageInfo[row][gAdress], 16);
-        cache_get_value_name_int  (row,  "price"  ,    GarageInfo[row][gPrice]);
-        cache_get_value_name_int  (row,  "locked" ,    GarageInfo[row][gLocked]);
-        cache_get_value_name_int  (row,  "houseid",    GarageInfo[row][gHouseID]);
-        cache_get_value_name_float(row,  "enterX" ,    GarageInfo[row][gEnterX]);
-        cache_get_value_name_float(row,  "enterY" ,    GarageInfo[row][gEnterY]);
-        cache_get_value_name_float(row,  "enterZ" ,    GarageInfo[row][gEnterZ]);
-        cache_get_value_name_float(row,  "exitX"  ,    GarageInfo[row][gExitX]);
-        cache_get_value_name_float(row,  "exitY"  ,    GarageInfo[row][gExitY]);
-        cache_get_value_name_float(row,  "exitZ"  ,    GarageInfo[row][gExitZ]);
-
-        CreateGarageEnter(row);
-        Iter_Add(Garage, row);
-    }
-    printf("MySQL Report: Garages Loaded. [%d/%d]", num_rows, MAX_GARAGES);
     return 1;
 }
 
@@ -313,7 +307,6 @@ hook function LoadServerData()
 {
     LoadHouseGarages();
 	return continue();
-
 }
 
 hook OnGameModeInit()
@@ -661,11 +654,19 @@ CMD:create_garage(playerid, params[])
     
     strcpy(GarageInfo[garage][gAdress], adress, 16);
     
-    mysql_pquery(SQL_Handle(), 
+    inline OnGarageCreated()
+    {
+        GarageInfo[garage][gSQLID] = cache_insert_id();
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnGarageCreated, 
         va_fquery(SQL_Handle(), 
-            "INSERT INTO server_garages (ownerid, adress, price, locked, houseid, enterX, enterY, enterZ,\n\
-                exitX, exitY, exitZ) \n\
-                VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
+            "INSERT INTO \n\
+                server_garages \n\
+            (ownerid, adress, price, locked, houseid, enterX, enterY, enterZ, exitX, exitY, exitZ) \n\
+            VALUES \n\
+                ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
             GarageInfo[garage][gAdress],
             GarageInfo[garage][gPrice],
             GarageInfo[garage][gHouseID],
@@ -675,8 +676,7 @@ CMD:create_garage(playerid, params[])
             GarageInfo[garage][gExitX],
             GarageInfo[garage][gExitY],
             GarageInfo[garage][gExitZ]
-       ), 
-        "OnGarageCreates", 
+        ), 
         "i", 
         garage
    );
@@ -761,7 +761,7 @@ CMD:garage(playerid, params[])
         mysql_fquery(SQL_Handle(), "UPDATE server_garages SET ownerid = '%d', locked = '1' WHERE id = '%d'",
             GarageInfo[nearGarage][gOwnerID],
             GarageInfo[nearGarage][gSQLID]
-       );
+        );
         va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili garazu za (%d$)", GarageInfo[nearGarage][gPrice]);
     }
     else if(!strcmp(param, "sell", true))

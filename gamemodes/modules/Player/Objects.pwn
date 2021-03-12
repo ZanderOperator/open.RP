@@ -753,7 +753,11 @@ stock InsertObjectSlot(playerid, slot)
 	MySQL_PQueryInline(SQL_Handle(),
 		using inline OnPlayerObjectInsert,
 		va_fquery(SQL_Handle(), 
-			"INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
+			"INSERT INTO \n\
+				player_objects \n\
+			(player_id, model, placed, bone) \n\
+			VALUES \n\
+				('%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerObject[playerid][slot][poModelid],
 			PlayerObject[playerid][slot][poPlaced],

@@ -114,10 +114,6 @@ static
     PlayerText:IntName [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:IntPrice[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
-// Forwards
-forward OnFurnitureObjectsLoad(houseid);
-forward OnFurnitureObjectCreates(houseid, index);
-
 /*
     ######## ##     ## ##    ##  ######   ######  
     ##       ##     ## ###   ## ##    ## ##    ## 
@@ -356,78 +352,23 @@ SetPlayerPremiumFurniture(playerid, houseid)
      Y88P'  Y8888P' Y8888P  Y88888P  Y88P'    YP    8888Y'
 */
 
-public OnFurnitureObjectsLoad(houseid)
+static InsertFurnitureObject(houseid, index)
 {
-    // TODO: houseid bounds check
-    if(!cache_num_rows())
-        return 0;
-
-    new objectCount = cache_num_rows();
-    if(objectCount > MAX_FURNITURE_SLOTS)
-        objectCount = MAX_FURNITURE_SLOTS;
-
-    new i;
-    for (i = 0; i < objectCount; i++)
+    inline OnFurnitureObjectCreated()
     {
-        HouseInfo[houseid][hExists][i] = 1; // 1 = created.
-        HouseInfo[houseid][hFurCounter]++;
-
-        cache_get_value_name_int  (i,    "sqlid"      ,    HouseInfo[houseid][hFurSQL][i]);
-        cache_get_value_name_int  (i,    "modelid"    ,    HouseInfo[houseid][hFurModelid][i]);
-        cache_get_value_name_int  (i,    "door"       ,    HouseInfo[houseid][hFurDoor][i]);
-        cache_get_value_name_float(i,    "door_z"     ,    HouseInfo[houseid][hFurDoorZ][i]);
-        cache_get_value_name_int  (i,    "locked_door",    HouseInfo[houseid][hFurDoorLckd][i]);
-        cache_get_value_name_float(i,    "pos_x"      ,    HouseInfo[houseid][hFurPosX][i]);
-        cache_get_value_name_float(i,    "pos_y"      ,    HouseInfo[houseid][hFurPosY][i]);
-        cache_get_value_name_float(i,    "pos_z"      ,    HouseInfo[houseid][hFurPosZ][i]);
-        cache_get_value_name_float(i,    "rot_x"      ,    HouseInfo[houseid][hFurRotX][i]);
-        cache_get_value_name_float(i,    "rot_y"      ,    HouseInfo[houseid][hFurRotY][i]);
-        cache_get_value_name_float(i,    "rot_z"      ,    HouseInfo[houseid][hFurRotZ][i]);
-        cache_get_value_name_int  (i,    "texture_1"  ,    HouseInfo[houseid][hFurTxtId][i][0]);
-        cache_get_value_name_int  (i,    "texture_2"  ,    HouseInfo[houseid][hFurTxtId][i][1]);
-        cache_get_value_name_int  (i,    "texture_3"  ,    HouseInfo[houseid][hFurTxtId][i][2]);
-        cache_get_value_name_int  (i,    "texture_4"  ,    HouseInfo[houseid][hFurTxtId][i][3]);
-        cache_get_value_name_int  (i,    "texture_5"  ,    HouseInfo[houseid][hFurTxtId][i][4]);
-        cache_get_value_name_int  (i,    "color_1"    ,    HouseInfo[houseid][hFurColId][i][0]);
-        cache_get_value_name_int  (i,    "color_2"    ,    HouseInfo[houseid][hFurColId][i][1]);
-        cache_get_value_name_int  (i,    "color_3"    ,    HouseInfo[houseid][hFurColId][i][2]);
-        cache_get_value_name_int  (i,    "color_4"    ,    HouseInfo[houseid][hFurColId][i][3]);
-        cache_get_value_name_int  (i,    "color_5"    ,    HouseInfo[houseid][hFurColId][i][4]);
-        Iter_Add(HouseFurInt[houseid], i);
+        HouseInfo[houseid][hFurSQL][index] = cache_insert_id();
+        Iter_Add(HouseFurInt[houseid], index);
     }
-
-    for (i = 0; i < objectCount; i++)
-    {
-        HouseInfo[houseid][hFurObjectid][i] = CreateDynamicObject(HouseInfo[houseid][hFurModelid][i], HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i], HouseInfo[houseid][hFurRotX][i], HouseInfo[houseid][hFurRotY][i], HouseInfo[houseid][hFurRotZ][i], HouseInfo[houseid][hVirtualWorld], HouseInfo[houseid][hInt], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
-
-        // TODO: repetitive code
-        new
-            colorid;
-        for (new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
-        {
-            if(HouseInfo[houseid][hFurColId][i][colslot] > -1)
-            {
-                sscanf(ColorList[HouseInfo[houseid][hFurColId][i][colslot]][clRGB], "h", colorid);
-                SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tName], colorid);
-            }
-            else
-            {
-                SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tName], 0);
-            }
-        }
-    }
-    HouseInfo[houseid][hFurLoaded] = true;
-    return 1;
-}
-
-static stock InsertFurnitureObject(houseid, index)
-{
-    mysql_pquery(SQL_Handle(), 
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnFurnitureObjectCreated,
         va_fquery(SQL_Handle(), 
-            "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z,\n\
+            "INSERT INTO \n\
+                furniture \n\
+            (houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z,\n\
                 texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) \n\
-                VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d','%d',\n\
-                '%d', '%d', '%d', '%d', '%d')",
+            VALUES \n\
+                ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d','%d',\n\
+                    '%d', '%d', '%d', '%d', '%d')",
             HouseInfo[houseid][hSQLID],
             HouseInfo[houseid][hFurModelid][index],
             HouseInfo[houseid][hFurDoor][index],
@@ -449,32 +390,86 @@ static stock InsertFurnitureObject(houseid, index)
             HouseInfo[houseid][hFurColId][index][2],
             HouseInfo[houseid][hFurColId][index][3],
             HouseInfo[houseid][hFurColId][index][4]
-       ), 
-        "OnFurnitureObjectCreates", 
+        ), 
         "ii", 
         houseid, 
         index
-   );
+    );
     return 1;
-}
-
-public OnFurnitureObjectCreates(houseid, index)
-{
-    HouseInfo[houseid][hFurSQL][index] = cache_insert_id();
-    Iter_Add(HouseFurInt[houseid], index);
 }
 
 stock LoadHouseFurnitureObjects(houseid)
 {
     if(!House_Exists(houseid))
         return 1;
-   
-    mysql_pquery(SQL_Handle(), 
+    
+    inline OnFurnitureObjectsLoad()
+    {
+        if(!cache_num_rows())
+            return 0;
+
+        new 
+            objectCount = cache_num_rows();
+        if(objectCount > MAX_FURNITURE_SLOTS)
+            objectCount = MAX_FURNITURE_SLOTS;
+
+        for (new i = 0; i < objectCount; i++)
+        {
+            HouseInfo[houseid][hFurCounter]++;
+
+            cache_get_value_name_int  (i,    "sqlid"      ,    HouseInfo[houseid][hFurSQL][i]);
+            cache_get_value_name_int  (i,    "modelid"    ,    HouseInfo[houseid][hFurModelid][i]);
+            cache_get_value_name_int  (i,    "door"       ,    HouseInfo[houseid][hFurDoor][i]);
+            cache_get_value_name_float(i,    "door_z"     ,    HouseInfo[houseid][hFurDoorZ][i]);
+            cache_get_value_name_int  (i,    "locked_door",    HouseInfo[houseid][hFurDoorLckd][i]);
+            cache_get_value_name_float(i,    "pos_x"      ,    HouseInfo[houseid][hFurPosX][i]);
+            cache_get_value_name_float(i,    "pos_y"      ,    HouseInfo[houseid][hFurPosY][i]);
+            cache_get_value_name_float(i,    "pos_z"      ,    HouseInfo[houseid][hFurPosZ][i]);
+            cache_get_value_name_float(i,    "rot_x"      ,    HouseInfo[houseid][hFurRotX][i]);
+            cache_get_value_name_float(i,    "rot_y"      ,    HouseInfo[houseid][hFurRotY][i]);
+            cache_get_value_name_float(i,    "rot_z"      ,    HouseInfo[houseid][hFurRotZ][i]);
+            cache_get_value_name_int  (i,    "texture_1"  ,    HouseInfo[houseid][hFurTxtId][i][0]);
+            cache_get_value_name_int  (i,    "texture_2"  ,    HouseInfo[houseid][hFurTxtId][i][1]);
+            cache_get_value_name_int  (i,    "texture_3"  ,    HouseInfo[houseid][hFurTxtId][i][2]);
+            cache_get_value_name_int  (i,    "texture_4"  ,    HouseInfo[houseid][hFurTxtId][i][3]);
+            cache_get_value_name_int  (i,    "texture_5"  ,    HouseInfo[houseid][hFurTxtId][i][4]);
+            cache_get_value_name_int  (i,    "color_1"    ,    HouseInfo[houseid][hFurColId][i][0]);
+            cache_get_value_name_int  (i,    "color_2"    ,    HouseInfo[houseid][hFurColId][i][1]);
+            cache_get_value_name_int  (i,    "color_3"    ,    HouseInfo[houseid][hFurColId][i][2]);
+            cache_get_value_name_int  (i,    "color_4"    ,    HouseInfo[houseid][hFurColId][i][3]);
+            cache_get_value_name_int  (i,    "color_5"    ,    HouseInfo[houseid][hFurColId][i][4]);
+            Iter_Add(HouseFurInt[houseid], i);
+        }
+
+        for (new i = 0; i < objectCount; i++)
+        {
+            HouseInfo[houseid][hFurObjectid][i] = CreateDynamicObject(HouseInfo[houseid][hFurModelid][i], HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i], HouseInfo[houseid][hFurRotX][i], HouseInfo[houseid][hFurRotY][i], HouseInfo[houseid][hFurRotZ][i], HouseInfo[houseid][hVirtualWorld], HouseInfo[houseid][hInt], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
+
+            // TODO: repetitive code
+            new
+                colorid;
+            for (new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
+            {
+                if(HouseInfo[houseid][hFurColId][i][colslot] > -1)
+                {
+                    sscanf(ColorList[HouseInfo[houseid][hFurColId][i][colslot]][clRGB], "h", colorid);
+                    SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tName], colorid);
+                }
+                else
+                {
+                    SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][i], colslot, ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tModel], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tTXDName], ObjectTextures[HouseInfo[houseid][hFurTxtId][i][colslot]][tName], 0);
+                }
+            }
+        }
+        HouseInfo[houseid][hFurLoaded] = true;
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnFurnitureObjectsLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
-        "OnFurnitureObjectsLoad", 
         "i", 
         houseid
-   );
+    );
     return 1;
 }
 
@@ -490,7 +485,6 @@ stock ResetHouseFurnitureEnum(houseid)
         }
         HouseInfo[houseid][hFurSQL][index]        = 0;
         HouseInfo[houseid][hFurModelid][index]    = -1;
-        HouseInfo[houseid][hExists][index]        = 0;
         HouseInfo[houseid][hFurCounter]          = 0;
         HouseInfo[houseid][hFurObjectid][index]   = INVALID_OBJECT_ID;
         HouseInfo[houseid][hFurPosX][index]       = 0.0;
@@ -961,7 +955,6 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
     HouseInfo[houseid][hFurColId][index][2] = -1;
     HouseInfo[houseid][hFurColId][index][3] = -1;
     HouseInfo[houseid][hFurColId][index][4] = -1;
-    HouseInfo[houseid][hExists][index]      = 1;
     HouseInfo[houseid][hFurCounter]++;
 
     if(doors)
@@ -1018,7 +1011,6 @@ static stock CopyFurnitureObject(playerid, copyid)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 
     HouseInfo[houseid][hFurCounter]++;
-    HouseInfo[houseid][hExists][index]      = 1;
     HouseInfo[houseid][hFurModelid][index]  = HouseInfo[houseid][hFurModelid][copyid];
     HouseInfo[houseid][hFurPosX][index]     = HouseInfo[houseid][hFurPosX][copyid];
     HouseInfo[houseid][hFurPosY][index]     = HouseInfo[houseid][hFurPosY][copyid];
@@ -1231,7 +1223,6 @@ static stock DeleteFurnitureObject(houseid, playerid, index)
     HouseInfo[houseid][hFurColId][index][4]   = -1;
 
     HouseInfo[houseid][hFurCounter]--;
-    HouseInfo[houseid][hExists][index] = 0;
 
     Iter_Remove(HouseFurInt[houseid], index);
     return 1;
@@ -1252,7 +1243,6 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
             HouseInfo[houseid][hFurSQL][index]      = 0;
             HouseInfo[houseid][hFurModelid][index]  = -1;
-            HouseInfo[houseid][hExists][index]      = 0;
             HouseInfo[houseid][hFurCounter]         = 0;
             HouseInfo[houseid][hFurPosX][index]     = 0.0;
             HouseInfo[houseid][hFurPosY][index]     = 0.0;
@@ -1277,9 +1267,7 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
     Iter_Clear(HouseFurInt[houseid]);
 
-    mysql_pquery(SQL_Handle(), "BEGIN");
     mysql_fquery_ex(SQL_Handle(), "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_pquery(SQL_Handle(), "COMMIT");
 
     mysql_fquery(SQL_Handle(), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 

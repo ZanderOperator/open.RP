@@ -88,10 +88,6 @@ static
     PlayerText:IntName [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:IntPrice[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
-// Forwards
-forward OnBizzFurnitureObjectsLoad(biznisid);
-forward OnBizzFurnitureObjectCreate(biznisid, index);
-
 /*
      ######  ########  #######   ######  ##    ##  ######
     ##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
@@ -275,68 +271,25 @@ static stock ExitBlankInteriorPreview(playerid)
     88    88 88~~~b.     88  88~~~~~ 8b         88      Y8b.
     8b  d8' 88   8D db. 88  88.     Y8b  d8    88    db   8D
      Y88P'  Y8888P' Y8888P  Y88888P  Y88P'    YP    8888Y'
-*/
-public OnBizzFurnitureObjectsLoad(biznisid)
+*/ 
+
+static InsertBizzFurnitureObject(biznisid, index)
 {
-    new 
-        objectCount = cache_num_rows();
-    if(!objectCount) 
-        return 1;
-    if(objectCount > BIZZ_FURNITURE_VIP_GOLD_OBJCTS)
-        objectCount = BIZZ_FURNITURE_VIP_GOLD_OBJCTS;
-    
-    Iter_Init(BizzFurniture[biznisid]);
-    for (new i = 0; i < objectCount; i++)
+    inline OnBizzFurnitureObjectCreate()
     {
-        cache_get_value_name_int(i,     "sqlid"         , BizzInfo[biznisid][bFurSQL][i]);
-        cache_get_value_name_int(i,     "modelid"       , BizzInfo[biznisid][bFurModelid][i]);
-        cache_get_value_name_int(i,     "door"          , BizzInfo[biznisid][bFurDoor][i]);
-        cache_get_value_name_float(i,   "door_z"        , BizzInfo[biznisid][bFurDoorZ][i]);
-        cache_get_value_name_int(i,     "locked_door"   , BizzInfo[biznisid][bFurDoorLckd][i]);
-        cache_get_value_name_float(i,   "pos_x"         , BizzInfo[biznisid][bFurPosX][i]);
-        cache_get_value_name_float(i,   "pos_y"         , BizzInfo[biznisid][bFurPosY][i]);
-        cache_get_value_name_float(i,   "pos_z"         , BizzInfo[biznisid][bFurPosZ][i]);
-        cache_get_value_name_float(i,   "rot_x"         , BizzInfo[biznisid][bFurRotX][i]);
-        cache_get_value_name_float(i,   "rot_y"         , BizzInfo[biznisid][bFurRotY][i]);
-        cache_get_value_name_float(i,   "rot_z"         , BizzInfo[biznisid][bFurRotZ][i]);
-        cache_get_value_name_int(i,     "texture_1"     , BizzInfo[biznisid][bFurTxtId][i][0]);
-        cache_get_value_name_int(i,     "texture_2"     , BizzInfo[biznisid][bFurTxtId][i][1]);
-        cache_get_value_name_int(i,     "texture_3"     , BizzInfo[biznisid][bFurTxtId][i][2]);
-        cache_get_value_name_int(i,     "texture_4"     , BizzInfo[biznisid][bFurTxtId][i][3]);
-        cache_get_value_name_int(i,     "texture_5"     , BizzInfo[biznisid][bFurTxtId][i][4]);
-        cache_get_value_name_int(i,     "color_1"       , BizzInfo[biznisid][bFurColId][i][0]);
-        cache_get_value_name_int(i,     "color_2"       , BizzInfo[biznisid][bFurColId][i][1]);
-        cache_get_value_name_int(i,     "color_3"       , BizzInfo[biznisid][bFurColId][i][2]);
-        cache_get_value_name_int(i,     "color_4"       , BizzInfo[biznisid][bFurColId][i][3]);
-        cache_get_value_name_int(i,     "color_5"       , BizzInfo[biznisid][bFurColId][i][4]);
-
-        BizzInfo[biznisid][bFurObjectid][i] = CreateDynamicObject(BizzInfo[biznisid][bFurModelid][i], BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i], BizzInfo[biznisid][bFurRotX][i], BizzInfo[biznisid][bFurRotY][i], BizzInfo[biznisid][bFurRotZ][i], BizzInfo[biznisid][bVirtualWorld], BizzInfo[biznisid][bInterior], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
-
-        new colorid;
-        for (new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
-        {
-            if(BizzInfo[biznisid][bFurColId][i][slot] > -1)
-            {
-                sscanf(ColorList[BizzInfo[biznisid][bFurColId][i][slot]][clRGB], "h", colorid);
-                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tName], colorid);
-            }
-            else
-            {
-                SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tName], 0);
-            }
-        }
-        Iter_Add(BizzFurniture[biznisid], i);
+        BizzInfo[biznisid][bFurSQL][index] = cache_insert_id();
+        Iter_Add(BizzFurniture[biznisid], index);
+        return 1;
     }
-    return 1;
-}
-
-stock InsertBizzFurnitureObject(biznisid, index)
-{
-    mysql_pquery(SQL_Handle(), 
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnBizzFurnitureObjectCreate,
         va_fquery(SQL_Handle(), 
-            "INSERT INTO biznis_furniture (biznisid,modelid,door,door_z,locked_door,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,\n\
+            "INSERT INTO \n\
+                biznis_furniture \n\
+            (biznisid,modelid,door,door_z,locked_door,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,\n\
                 texture_1,texture_2,texture_3,texture_4,texture_5,color_1,color_2,color_3,color_4,color_5) \n\
-                VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+            VALUES \n\
+                ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
             BizzInfo[biznisid][bSQLID],
             BizzInfo[biznisid][bFurModelid][index],
             BizzInfo[biznisid][bFurDoor][index],
@@ -358,31 +311,74 @@ stock InsertBizzFurnitureObject(biznisid, index)
             BizzInfo[biznisid][bFurColId][index][2],
             BizzInfo[biznisid][bFurColId][index][3],
             BizzInfo[biznisid][bFurColId][index][4]
-       ), 
-        "OnBizzFurnitureObjectCreate", 
+        ), 
         "ii", 
         biznisid, 
         index
-   );
+    );
     return 1;
 }
 
-public OnBizzFurnitureObjectCreate(biznisid, index)
-{
-    BizzInfo[biznisid][bFurSQL][index] = cache_insert_id();
-    Iter_Add(BizzFurniture[biznisid], index);
-    return 1;
-}
-
-// Stocks
-stock LoadBiznisFurnitureObjects(biznisid)
+LoadBiznisFurnitureObjects(biznisid)
 {
     if(!Bizz_Exists(biznisid)) 
         return 1;
+    
+    inline OnBizzFurnitureObjectsLoad()
+    {
+        new 
+            objectCount = cache_num_rows();
+        if(!objectCount) 
+            return 1;
+        if(objectCount > BIZZ_FURNITURE_VIP_GOLD_OBJCTS)
+            objectCount = BIZZ_FURNITURE_VIP_GOLD_OBJCTS;
+        
+        Iter_Init(BizzFurniture[biznisid]);
+        for (new i = 0; i < objectCount; i++)
+        {
+            cache_get_value_name_int(i,     "sqlid"         , BizzInfo[biznisid][bFurSQL][i]);
+            cache_get_value_name_int(i,     "modelid"       , BizzInfo[biznisid][bFurModelid][i]);
+            cache_get_value_name_int(i,     "door"          , BizzInfo[biznisid][bFurDoor][i]);
+            cache_get_value_name_float(i,   "door_z"        , BizzInfo[biznisid][bFurDoorZ][i]);
+            cache_get_value_name_int(i,     "locked_door"   , BizzInfo[biznisid][bFurDoorLckd][i]);
+            cache_get_value_name_float(i,   "pos_x"         , BizzInfo[biznisid][bFurPosX][i]);
+            cache_get_value_name_float(i,   "pos_y"         , BizzInfo[biznisid][bFurPosY][i]);
+            cache_get_value_name_float(i,   "pos_z"         , BizzInfo[biznisid][bFurPosZ][i]);
+            cache_get_value_name_float(i,   "rot_x"         , BizzInfo[biznisid][bFurRotX][i]);
+            cache_get_value_name_float(i,   "rot_y"         , BizzInfo[biznisid][bFurRotY][i]);
+            cache_get_value_name_float(i,   "rot_z"         , BizzInfo[biznisid][bFurRotZ][i]);
+            cache_get_value_name_int(i,     "texture_1"     , BizzInfo[biznisid][bFurTxtId][i][0]);
+            cache_get_value_name_int(i,     "texture_2"     , BizzInfo[biznisid][bFurTxtId][i][1]);
+            cache_get_value_name_int(i,     "texture_3"     , BizzInfo[biznisid][bFurTxtId][i][2]);
+            cache_get_value_name_int(i,     "texture_4"     , BizzInfo[biznisid][bFurTxtId][i][3]);
+            cache_get_value_name_int(i,     "texture_5"     , BizzInfo[biznisid][bFurTxtId][i][4]);
+            cache_get_value_name_int(i,     "color_1"       , BizzInfo[biznisid][bFurColId][i][0]);
+            cache_get_value_name_int(i,     "color_2"       , BizzInfo[biznisid][bFurColId][i][1]);
+            cache_get_value_name_int(i,     "color_3"       , BizzInfo[biznisid][bFurColId][i][2]);
+            cache_get_value_name_int(i,     "color_4"       , BizzInfo[biznisid][bFurColId][i][3]);
+            cache_get_value_name_int(i,     "color_5"       , BizzInfo[biznisid][bFurColId][i][4]);
 
-    mysql_pquery(SQL_Handle(), 
+            BizzInfo[biznisid][bFurObjectid][i] = CreateDynamicObject(BizzInfo[biznisid][bFurModelid][i], BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i], BizzInfo[biznisid][bFurRotX][i], BizzInfo[biznisid][bFurRotY][i], BizzInfo[biznisid][bFurRotZ][i], BizzInfo[biznisid][bVirtualWorld], BizzInfo[biznisid][bInterior], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
+
+            new 
+                colorid;
+            for (new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
+            {
+                if(BizzInfo[biznisid][bFurColId][i][slot] > -1)
+                {
+                    sscanf(ColorList[BizzInfo[biznisid][bFurColId][i][slot]][clRGB], "h", colorid);
+                    SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tName], colorid);
+                }
+                else
+                    SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][i], slot, ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tModel], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tTXDName], ObjectTextures[BizzInfo[biznisid][bFurTxtId][i][slot]][tName], 0);
+            }
+            Iter_Add(BizzFurniture[biznisid], i);
+        }
+        return 1;
+    }
+    MySQL_PQueryInline(SQL_Handle(),
+        using inline OnBizzFurnitureObjectsLoad, 
         va_fquery(SQL_Handle(), "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]), 
-        "OnBizzFurnitureObjectsLoad", 
         "i", 
         biznisid
    );
@@ -1108,14 +1104,12 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
     }
     BizzInfo[biznisid][bFurSlots] = GetPlayerBizzFurSlots(playerid);
 
-    mysql_pquery(SQL_Handle(), "BEGIN");
-    mysql_fquery_ex(SQL_Handle(), "DELETE FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]);
-    mysql_pquery(SQL_Handle(), "COMMIT");
+    mysql_fquery(SQL_Handle(), "DELETE FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]);
 
     mysql_fquery(SQL_Handle(), "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
         BizzInfo[biznisid][bFurSlots], 
         BizzInfo[biznisid][bSQLID]
-   );
+    );
 
     Iter_Clear(BizzFurniture[biznisid]);
     return 1;

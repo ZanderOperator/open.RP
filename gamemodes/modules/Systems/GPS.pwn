@@ -85,36 +85,35 @@ Player_SetGpsActivated(playerid, bool:v)
 static GPS_Load()
 {
     Iter_Clear(GPS_location);
-    mysql_pquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM gps"), 
-        "GPS_Loaded", 
-        ""
-   );
-    return 1;
-}
 
-forward GPS_Loaded();
-public GPS_Loaded()
-{
-    new rows = cache_num_rows();
-    if(!rows) 
-        return print("MySQL Report: There are no GPS Locations in database to load!");
-
-    for (new i = 0; i < rows; i++)
+    inline GPS_Loaded()
     {
-        GPS_data[i][gpsExists] = true;
+        new rows = cache_num_rows();
+        if(!rows) 
+            return print("MySQL Report: There are no GPS Locations in database to load!");
 
-        cache_get_value_name_int  (i,    "id"        ,    GPS_data[i][gpsID]);
-        cache_get_value_name      (i,    "gpsName"   ,    GPS_data[i][gpsName], 32);
-        cache_get_value_name_float(i,    "gpsPosX"   ,    GPS_data[i][gpsPosX]);
-        cache_get_value_name_float(i,    "gpsPosY"   ,    GPS_data[i][gpsPosY]);
-        cache_get_value_name_float(i,    "gpsPosZ"   ,    GPS_data[i][gpsPosZ]);
-        cache_get_value_name_int  (i,    "gpsMapIcon",    GPS_data[i][gpsMapIcon]);
-        cache_get_value_name_int  (i,    "admin_gps" ,    GPS_data[i][gpsAdmin]);
+        for (new i = 0; i < rows; i++)
+        {
+            GPS_data[i][gpsExists] = true;
 
-        Iter_Add(GPS_location, i);
+            cache_get_value_name_int  (i,    "id"        ,    GPS_data[i][gpsID]);
+            cache_get_value_name      (i,    "gpsName"   ,    GPS_data[i][gpsName], 32);
+            cache_get_value_name_float(i,    "gpsPosX"   ,    GPS_data[i][gpsPosX]);
+            cache_get_value_name_float(i,    "gpsPosY"   ,    GPS_data[i][gpsPosY]);
+            cache_get_value_name_float(i,    "gpsPosZ"   ,    GPS_data[i][gpsPosZ]);
+            cache_get_value_name_int  (i,    "gpsMapIcon",    GPS_data[i][gpsMapIcon]);
+            cache_get_value_name_int  (i,    "admin_gps" ,    GPS_data[i][gpsAdmin]);
+
+            Iter_Add(GPS_location, i);
+        }
+        printf("MySQL Report: GPS Locations Loaded. [%d/%d]", Iter_Count(GPS_location), MAX_GPS_LOCATIONS);
+        return 1;
     }
-    printf("MySQL Report: GPS Locations Loaded. [%d/%d]", Iter_Count(GPS_location), MAX_GPS_LOCATIONS);
+    MySQL_PQueryInline(SQL_Handle(), 
+        using inline GPS_Loaded,
+        va_fquery(SQL_Handle(), "SELECT * FROM gps"),
+        ""
+    );
     return 1;
 }
 
