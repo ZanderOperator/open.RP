@@ -6,7 +6,7 @@ LoadPlayerInventory(playerid)
     {
         if(!cache_num_rows())
         {
-            mysql_fquery_ex(SQL_Handle(), 
+            mysql_fquery(SQL_Handle(), 
                 "INSERT INTO \n\
                     player_inventory \n\
                 (sqlid, mask, toolkit, watch, ciggaretes, lighter, parts, rope, boombox) \n\
@@ -26,7 +26,7 @@ LoadPlayerInventory(playerid)
         cache_get_value_name_int(0, "boombox"		, PlayerInventory[playerid][pBoomBox]);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline LoadingPlayerInventory,
         va_fquery(SQL_Handle(), "SELECT * FROM player_inventory WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
@@ -42,7 +42,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerInventory(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_inventory SET mask = '%d', toolkit = '%d', watch = '%d', ciggaretes = '%d', lighter = '%d', \n\
             parts = '%d', rope = '%d', boombox = '%d' WHERE sqlid = '%d'",
         PlayerInventory[playerid][pMaskID],

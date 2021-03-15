@@ -151,7 +151,7 @@ static SavePlayerWeaponSettings(playerid, weaponid)
 			RefreshPlayerWeaponSettings(playerid, weaponid);
 			return 1;
 		}
-        MySQL_PQueryInline(SQL_Handle(),
+        MySQL_TQueryInline(SQL_Handle(),
 			using inline OnWeaponSettingsInsert,
 			va_fquery(SQL_Handle(), "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
 				PlayerInfo[playerid][pSQLID], 
@@ -198,7 +198,7 @@ static LoadPlayerWeaponSettings(playerid)
 		}
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline OnWeaponSettingsLoaded,
 		va_fquery(SQL_Handle(), "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]),
 		"i", 
@@ -213,24 +213,24 @@ hook function LoadPlayerStats(playerid)
 	return continue(playerid);
 }
 
-
-Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, Float:foZ, Float:frX, Float:frY, Float:frZ, Float:fsX, Float:fsY, Float:fsZ)
+hook OnPlayerEditAttachedObj(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ)
 {
-	new weaponid = EditingWeapon[playerid];
+	new 
+		weaponid = EditingWeapon[playerid];
     if(weaponid)
     {
         if(response)
         {
             new enum_index = GetWeaponObjectEnum(weaponid);
 
-            WeaponSettings[playerid][enum_index][Position][0] = foX;
-            WeaponSettings[playerid][enum_index][Position][1] = foY;
-            WeaponSettings[playerid][enum_index][Position][2] = foZ;
-            WeaponSettings[playerid][enum_index][Position][3] = frX;
-            WeaponSettings[playerid][enum_index][Position][4] = frY;
-            WeaponSettings[playerid][enum_index][Position][5] = frZ;
+            WeaponSettings[playerid][enum_index][Position][0] = fOffsetX;
+            WeaponSettings[playerid][enum_index][Position][1] = fOffsetY;
+            WeaponSettings[playerid][enum_index][Position][2] = fOffsetZ;
+            WeaponSettings[playerid][enum_index][Position][3] = fRotX;
+            WeaponSettings[playerid][enum_index][Position][4] = fRotY;
+            WeaponSettings[playerid][enum_index][Position][5] = fRotZ;
 
-            SetPlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid), GetWeaponModel(weaponid), WeaponSettings[playerid][enum_index][Bone], foX, foY, foZ, frX, frY, frZ, 1.0, 1.0, 1.0);
+            SetPlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid), GetWeaponModel(weaponid), WeaponSettings[playerid][enum_index][Bone], fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, 1.0, 1.0, 1.0);
 
 			va_SendMessage(playerid, 
 				MESSAGE_TYPE_SUCCESS, 

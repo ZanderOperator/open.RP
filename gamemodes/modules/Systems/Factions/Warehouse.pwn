@@ -156,7 +156,7 @@ stock LoadFactionWarehouse(factionid)
         return 1;
     }
 
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnWarehouseLoaded, 
         va_fquery(SQL_Handle(), "SELECT * FROM server_warehouses WHERE fid = '%d'", FactionInfo[factionid][fID]),  
         "i",
@@ -187,7 +187,7 @@ static LoadWarehouseWeapons(factid)
         }
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnWarehouseWeaponsLoaded, 
         va_fquery(SQL_Handle(), "SELECT * FROM warehouse_weapons WHERE fid = '%d'", factid), 
         "i", 
@@ -214,7 +214,7 @@ static PutWeaponInWarehouse(playerid, weaponid, ammo)
         WarehouseWeapons[whid][wslot][whWeaponSQL] = cache_insert_id();
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnWarehouseWeaponInsert, 
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -453,7 +453,7 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
     WarehouseInfo[wh][whMoney] = 0;
     WarehouseInfo[wh][whPickupID] =  CreateDynamicPickup(1239, 1, WarehouseInfo[wh][whVault][0], WarehouseInfo[wh][whVault][1], WarehouseInfo[wh][whVault][2], WarehouseInfo[wh][whViwo], WarehouseInfo[wh][whInt], -1);
 
-    mysql_fquery_ex(SQL_Handle(), 
+    mysql_fquery(SQL_Handle(), 
         "INSERT INTO \n\
             server_warehouses \n\
         (fid, enterX, enterY, enterZ, exitX , exitY , exitZ, vaultX, vaultY, vaultZ, int, viwo, lock, money) \n\

@@ -21,7 +21,7 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
 	
-	mysql_fquery_ex(SQL_Handle(), 
+	mysql_fquery(SQL_Handle(), 
 		"INSERT INTO \n\
 			anamnesis \n\
 		(patient, disease, doctor, date) \n\
@@ -46,51 +46,55 @@ stock static DeletePlayerCarton(playerid, sqlid)
 
 stock CheckPlayerCarton(playerid, const name[])
 {
-	mysql_tquery(SQL_Handle(), 
+	new 
+		playername[MAX_PLAYER_NAME];
+	strcpy(playername, name);
+	inline OnPlayerCartonFinish()
+	{
+		new 
+			rows = cache_num_rows();
+		if(!rows) 
+			return SendClientMessage(playerid,COLOR_RED, "U bazi nije pronadjena trazena osoba.");
+
+		new 
+			buffer[2056],
+			motd[256],
+			sqlid,
+			doctor[MAX_PLAYER_NAME],
+			disease[128],
+			date[24];
+		
+		format(buffer, sizeof(buffer), "{DEA4A4}RBR.\tBOLEST\tDOKTOR\tDATUM"COL_WHITE"\n");
+		
+		for( new i = 0; i < cache_num_rows(); i++) 
+		{
+		
+			cache_get_value_name_int(i, "id"			, sqlid);
+			cache_get_value_name(i, 	"disease"		, disease,	128);
+			cache_get_value_name(i, 	"doctor"		, doctor,	30);
+			cache_get_value_name(i, 	"date"			, date, 24);
+			
+			format(motd, sizeof(motd), "%d\t%s\t%s\t%s\n",
+				sqlid,
+				disease,
+				doctor,
+				date
+			);
+			strcat(buffer, motd, sizeof(buffer));		
+		}
+		new 
+			tmpString[46];
+		format(tmpString, 46, "Anamnesis - Chart: %s", playername);
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline OnPlayerCartonFinish, 
     	va_fquery(SQL_Handle(), "SELECT * FROM anamnesis WHERE patient = '%e' ORDER BY id DESC", name), 
-        "OnPlayerCartonFinish", 
         "is", 
         playerid, 
         name
    );
-	return 1;
-}
-
-forward OnPlayerCartonFinish(playerid, const playername[]);
-public OnPlayerCartonFinish(playerid, const playername[])
-{
-	new rows = cache_num_rows();
-	if(!rows) return SendClientMessage(playerid,COLOR_RED, "U bazi nije pronadjena trazena osoba.");
-
-	new 
-		buffer[2056],
-		motd[256],
-		sqlid,
-		doctor[MAX_PLAYER_NAME],
-		disease[128],
-		date[24];
-	
-	format(buffer, sizeof(buffer), "{DEA4A4}RBR.\tBOLEST\tDOKTOR\tDATUM"COL_WHITE"\n");
-	
-	for( new i = 0; i < cache_num_rows(); i++) 
-	{
-	
-		cache_get_value_name_int(i, "id"			, sqlid);
-		cache_get_value_name(i, 	"disease"		, disease,	128);
-		cache_get_value_name(i, 	"doctor"		, doctor,	30);
-		cache_get_value_name(i, 	"date"			, date, 24);
-		
-		format(motd, sizeof(motd), "%d\t%s\t%s\t%s\n",
-			sqlid,
-			disease,
-			doctor,
-			date
-		);
-		strcat(buffer, motd, sizeof(buffer));		
-	}
-	new tmpString[46];
-	format(tmpString, 46, "anamnesis - Karton: %s", playername);
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	return 1;
 }
 

@@ -281,7 +281,7 @@ static InsertBizzFurnitureObject(biznisid, index)
         Iter_Add(BizzFurniture[biznisid], index);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzFurnitureObjectCreate,
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -376,7 +376,7 @@ LoadBiznisFurnitureObjects(biznisid)
         }
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzFurnitureObjectsLoad, 
         va_fquery(SQL_Handle(), "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]), 
         "i", 

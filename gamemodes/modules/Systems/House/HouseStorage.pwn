@@ -191,7 +191,7 @@ static LoadHouseStorages()
         printf("MySQL Report: House Storage Racks Loaded. [%d/%d]", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline HouseStorage_Load, 
         "SELECT * FROM house_storage WHERE 1", 
         ""
@@ -261,9 +261,7 @@ Storage_RackCreate(playerid, houseid)
         Float:angle;
 
     if(!IsPlayerConnected(playerid))
-    {
         return -1;
-    }
 
     GetPlayerPos(playerid, x, y, z);
     GetPlayerFacingAngle(playerid, angle);
@@ -285,7 +283,18 @@ Storage_RackCreate(playerid, houseid)
     Storage_RackRefresh(i);
     HouseStorage_Save(i);
     
-    mysql_tquery(SQL_Handle(), "INSERT INTO house_storage (storageCreated) VALUES(1)", "OnRackCreated", "d", i);
+    inline OnRackCreated()
+    {
+        HouseStorage[i][storageID] = cache_insert_id();
+        Iter_Add(HStorage_Iter, i);
+        return 1;
+    }
+    MySQL_TQueryInline(SQL_Handle(),
+        using inline OnRackCreated,
+        "INSERT INTO house_storage (storageCreated) VALUES(1)", 
+        "i", 
+        i
+    );
     return i;
 }
 
@@ -436,19 +445,6 @@ Storage_ListHouseStorage(storageid)
     }
     return winfo;
 }
-
-Public:OnRackCreated(storageid, playerid)
-{
-    if(!Storage_Exists(storageid))
-    {
-        return 0;
-    }
-
-    HouseStorage[storageid][storageID] = cache_insert_id();
-    Iter_Add(HStorage_Iter, storageid);
-    return 1;
-}
-
 
 /*
     ##     ##  #######   #######  ##    ##  ######

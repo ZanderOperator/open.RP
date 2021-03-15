@@ -422,7 +422,7 @@ BuyVehicle(playerid, bool:credit_activated = false)
 		return 1;
 	}
 	
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnVehicleBuy, 
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
@@ -941,7 +941,7 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		VehicleInfo[vehicleid][vWeaponSQLID][slot] = cache_insert_id();
 		return 1;
 	}
-   	MySQL_PQueryInline(SQL_Handle(),
+   	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnVehicleWeaponInsert,
 		va_fquery(SQL_Handle(), "INSERT INTO cocars_weapons(vehicle_id, weapon_id, ammo) VALUES ('%d', '%d', '%d')",
 			VehicleInfo[vehicleid][vSQLID],
@@ -1164,7 +1164,7 @@ stock LoadVehicleWeapons(vehicleid)
 		LoadVehicleWeaponPos(vehicleid);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(), 
+	MySQL_TQueryInline(SQL_Handle(), 
 		using inline LoadingVehicleWeapons,
 		va_fquery(SQL_Handle(), 
 			"SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7", 
@@ -1212,7 +1212,7 @@ stock LoadVehicleWeaponPos(vehicleid)
 		}
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(), 
+	MySQL_TQueryInline(SQL_Handle(), 
 		using inline LoadingVehicleWeaponPos,
 		va_fquery(SQL_Handle(), 
 			"SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d' LIMIT 0,7", 
@@ -2272,7 +2272,7 @@ stock ParkVehicleInfo(vehicleid)
 	GetVehicleHealth(vehicleid, vehHealth);
 	GetVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 
-	mysql_fquery_ex(SQL_Handle(),
+	mysql_fquery(SQL_Handle(),
 	 	"UPDATE cocars SET panels = '%d', doors = '%d', lights = '%d', tires = '%d', fuel = '%d', travel = '%f',\n\
 			batterylife = '%d', heat = '%f', overheated = '%d', enginelife = '%d', enginescrewed = '%d', health = '%f',\n\
 		 	destroys = '%d', batterytype = '%d', nos = '%d' WHERE id = '%d'",
@@ -2439,7 +2439,7 @@ stock SpawnVehicleInfo(playerid, pick)
 			// Extern Load
 			RemoveAllVehicleTuning(vehicleid);
 			LoadVehicleWeapons(vehicleid);
-			LoadVehiclePackage(vehicleid);
+			LoadVehiclePackages(vehicleid);
 			if(VehicleInfo[vehicleid][vTuned])
 				LoadVehicleTuning(vehicleid);
 			LoadVehicleTickets(vehicleid);
@@ -2450,7 +2450,7 @@ stock SpawnVehicleInfo(playerid, pick)
 		} 
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete vozilo na tome slotu!");
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline SpawningPlayerVehicle, 
 		va_fquery(SQL_Handle(), "SELECT * FROM cocars WHERE id = '%d'", pick),
 		"i", 
@@ -4351,7 +4351,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					VehicleInfo[AttachVehID][vWeaponObjectID][wslot] = CreateObject(model, 0, 0, 0, 0, 0, 0, 100.0);
 					AttachObjectToVehicle(VehicleInfo[AttachVehID][vWeaponObjectID][wslot], AttachVehID, finalx, finaly, ofz, fRotX, fRotY, ofaz);
 
-					mysql_fquery_ex(SQL_Handle(), 
+					mysql_fquery(SQL_Handle(), 
 						"INSERT INTO \n\
 							cocars_wobjects \n\
 						(model, weaponsql, vehicle_id, offsetx, offsety, offsetrx, offsetry, offsetrz) \n\

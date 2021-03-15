@@ -99,9 +99,7 @@ stock GetVehicleTicketReason(ticketsql)
 
 stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 {
-    mysql_tquery(SQL_Handle(), "BEGIN");
-
-    mysql_fquery_ex(SQL_Handle(), 
+    mysql_fquery(SQL_Handle(), 
         "INSERT INTO \n\
             tickets \n\
         (reciever, officer, money, reason, date) \n\
@@ -112,10 +110,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
         money,
         reason,
         ReturnDate()
-   );
-
-    mysql_tquery(SQL_Handle(), "COMMIT");
-
+    );
     va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", GetName(giveplayerid, false));
     return 1;
 }
@@ -128,24 +123,15 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
         va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);
 }
 
-stock LoadVehicleTickets(vehicleid)
+LoadVehicleTickets(vehicleid)
 {
-    mysql_tquery(SQL_Handle(), 
-        va_fquery(SQL_Handle(), "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
-            VehicleInfo[vehicleid][vSQLID],
-            MAX_VEHICLE_TICKETS
-       ), 
-        "LoadingVehicleTickets", 
-        "i", 
-        vehicleid
-   );
-    return 1;
-}
-
-Public:LoadingVehicleTickets(vehicleid)
-{
-    if(cache_num_rows())
+    inline LoadingVehicleTickets()
     {
+        new 
+            rows = cache_num_rows();
+        if(!rows)
+            return 1;
+
         for (new i = 0; i < cache_num_rows(); i++)
         {
             cache_get_value_name_int(i,  "id"       , VehicleInfo[vehicleid][vTicketSQLID][i]);
@@ -153,7 +139,17 @@ Public:LoadingVehicleTickets(vehicleid)
             cache_get_value_name_int(i,  "price"    , VehicleInfo[vehicleid][vTickets][i]);
             cache_get_value_name_int(i,  "time"     , VehicleInfo[vehicleid][vTicketStamp][i]);
         }
+        return 1;
     }
+    MySQL_TQueryInline(SQL_Handle(),
+        using inline LoadingVehicleTickets,
+        va_fquery(SQL_Handle(), "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
+            VehicleInfo[vehicleid][vSQLID],
+            MAX_VEHICLE_TICKETS
+        ), 
+        "i", 
+        vehicleid
+    );
     return 1;
 }
 
@@ -413,7 +409,7 @@ CMD:giveticket(playerid, params[])
                     VehicleInfo[vehicleid][vTicketSQLID][t] = cache_insert_id();
                     return 1;
                 }
-                MySQL_PQueryInline(SQL_Handle(), 
+                MySQL_TQueryInline(SQL_Handle(), 
                     using inline OnVehicleTicketInsert,
                     va_fquery(SQL_Handle(), 
                         "INSERT INTO \n\

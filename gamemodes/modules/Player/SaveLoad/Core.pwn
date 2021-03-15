@@ -267,7 +267,7 @@ public OnPlayerRequestClass(playerid, classid)
 			return 1;
 		}
 
-		MySQL_PQueryInline(SQL_Handle(),  
+		MySQL_TQueryInline(SQL_Handle(),  
 			using inline CheckPlayerInBase,
 			va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", tmpname), 
 			"i",
@@ -481,7 +481,7 @@ static RegisterPlayer(playerid)
 		SpawnPlayer(playerid);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline OnAccountFinish,
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
@@ -633,7 +633,7 @@ SavePlayerData(playerid)
 
 	mysql_pquery(SQL_Handle(), "START TRANSACTION");
 
-	mysql_fquery_ex(SQL_Handle(), 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE accounts SET lastlogin = '%e', lastloginstamp = '%d', lastip = '%e', forumname = '%e', \n\
 			lastupdatever = '%e', registered = '%d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
 			muted = '%d', respects = '%d', changenames = '%d', changetimes = '%d', \n\

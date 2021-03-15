@@ -29,7 +29,7 @@ LoadPlayerPayday(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_payday \n\
 				(sqlid, payday, paydaymoney, paydayhad, profit, dialog, date) \n\
@@ -47,7 +47,7 @@ LoadPlayerPayday(playerid)
 		cache_get_value_name(0, 	"date"	        , PaydayInfo[playerid][pPayDayDate], 32);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
 		using inline LoadingPlayerPayday,
 		va_fquery(SQL_Handle(), "SELECT * FROM player_payday WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
@@ -64,7 +64,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerPayday(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_payday SET payday = '%d', paydaymoney = '%d', paydayhad = '%d', profit = '%d',\n\
             dialog = '%e', date = '%e' WHERE sqlid = '%d'",
         PaydayInfo[playerid][pPayDay],

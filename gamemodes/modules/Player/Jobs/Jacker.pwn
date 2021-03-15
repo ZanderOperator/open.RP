@@ -155,7 +155,7 @@ static CreateIllegalGarage(garage)
 		InitIllegalGarage(garage);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnIllegalGarageCreated, 
 		va_fquery(SQL_Handle(),
 			"INSERT INTO \n\
@@ -201,7 +201,7 @@ static LoadIllegalGarages()
 		printf("MySQL Report: Illegal Garages Loaded. [%d/%d]", cache_num_rows(), MAX_ILLEGAL_GARAGES);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnIllegalGaragesLoad,
 		va_fquery(SQL_Handle(), "SELECT * FROM illegal_garages"),
 		""

@@ -89,7 +89,7 @@ stock LoadAmmunation()
         printf("MySQL Report: Ammunation Weapons Loaded. [%d/%d]", rows, MAX_AMMU_SLOTS);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnAmmuWeaponsLoaded,
         "SELECT * FROM ammunation_weapons WHERE 1", 
         ""
@@ -124,7 +124,7 @@ static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
         AmmuInfo[slotid][aiSQLID] = cache_insert_id();
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnAmmuWeaponInsert,
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\

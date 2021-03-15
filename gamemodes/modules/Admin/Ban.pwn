@@ -34,6 +34,21 @@ const MAX_REASON_LEN		= 22;
                                                       
 */
 
+forward OfflineBanPlayer(playerid, const playername[], const reason[], days);
+public OfflineBanPlayer(playerid, const playername[], const reason[], days)
+{
+	if(!cache_num_rows())
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account by that name doesn't exist!");
+
+	new 
+		playerip[MAX_PLAYER_IP];
+	cache_get_value_name(0, "lastip", playerip, 24);
+	#if defined MODULE_BANS
+	HOOK_BanEx(playerid, playername, playerip, playerid, reason, days);
+	#endif
+	return 1;
+}
+
 stock HOOK_Ban(playerid, adminid, const reason[], days = -1)
 {
 	new
@@ -98,7 +113,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days = -1)
 		PlayerInfo[playerid][pSQLID]
 	);
 
-	mysql_fquery_ex(SQL_Handle(), 
+	mysql_fquery(SQL_Handle(), 
 		"INSERT INTO \n\
 			bans \n\
 		(player_id, name, player_ip, forumname, reason, date, unban) \n\
@@ -155,6 +170,8 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 		if(!cache_num_rows())
 			return SendMessage(adminid, MESSAGE_TYPE_ERROR, "That account doesn't exist.");
 
+		new 
+			sqlid;
 		cache_get_value_name_int(0, "sqlid", sqlid);
 
 		mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE name = '%e'",
@@ -167,7 +184,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery_ex(SQL_Handle(), 
+		mysql_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
 				bans \n\
 			(player_id, name, player_ip, forumname, reason, date, unban) \n\
@@ -183,7 +200,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 		);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline BanAccount, 
 		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", playername),
 		""
@@ -207,7 +224,6 @@ stock UnbanPlayerName(const playername[], adminid)
 	#endif
 	return 1;
 }
-
 
 stock UnbanPlayerIP(const playerip[], adminid)
 {

@@ -6,7 +6,7 @@ LoadPlayerVIP(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_vip_status \n\
 				(sqlid, vipRank, vipTime, dvehperms) \n\
@@ -21,7 +21,7 @@ LoadPlayerVIP(playerid)
 		cache_get_value_name_int(0,	"dvehperms"		, PlayerVIP[playerid][pDonatorVehPerms]);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadingPlayerVIP, 
         va_fquery(SQL_Handle(), "SELECT * FROM player_vip_status WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
@@ -38,7 +38,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerVIP(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_vip_status SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
         PlayerVIP[playerid][pDonateRank],
         PlayerVIP[playerid][pDonateTime],

@@ -344,7 +344,7 @@ stock LoadBizzes()
         printf("MySQL Report: Businesses Loaded. [%d/%d]", Iter_Count(Business), MAX_BIZZES);
         return 1;
     }  
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnServerBizzesLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM bizzes WHERE 1"),  
         ""
@@ -374,7 +374,7 @@ stock LoadBiznisProducts(bizz_id)
         }
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnServerBiznisProductsLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),  
         "i", 
@@ -402,7 +402,7 @@ stock LoadBiznisVips(bizz_id)
         cache_get_value_name_float(0,    "exit_z"  , BizzInfo[bizz_id][bVipExit][2]);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnServerVipsLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
         "i",
@@ -800,7 +800,7 @@ static stock SetStoreProductOnSale(bizz, product, price)
         BiznisProducts[bizz][bpSQLID][id] = cache_insert_id();
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzProductInsert, 
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -989,7 +989,7 @@ stock InsertNewBizz(playerid, bizz)
         SendClientMessage(playerid, COLOR_YELLOW, "[!]  Da bi ste postavili interijer biznisu, koristite /bizint | /custombizint.");
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzInsertQuery, 
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -3367,7 +3367,7 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
     }
-    mysql_fquery_ex(SQL_Handle(), 
+    mysql_fquery(SQL_Handle(), 
         "INSERT INTO \n\
             server_biznis_vips \n\
         (biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\

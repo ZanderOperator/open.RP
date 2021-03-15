@@ -1435,7 +1435,7 @@ static LoadPokerTables()
 		printf("MySQL Report: Poker Tables Loaded. [%d/%d]", rows, MAX_POKERTABLES);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPokerTablesLoaded,
 		"SELECT * FROM poker_tables WHERE 1",  
 		""
@@ -1452,7 +1452,7 @@ static SavePokerTable(idx)
 			PokerTable[idx][pkrSQL] = cache_insert_id();
 			return 1;
 		}
-		MySQL_PQueryInline( SQL_Handle(), 
+		MySQL_TQueryInline( SQL_Handle(), 
 			using inline OnPokerTableInsert,
 			va_fquery(SQL_Handle(), 
 				"INSERT INTO \n\

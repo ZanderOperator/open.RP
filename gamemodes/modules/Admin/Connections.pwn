@@ -38,7 +38,7 @@ stock SaveAdminConnectionTime(playerid)
 	} 
 	else 
 	{
-		mysql_fquery_ex(SQL_Handle(), "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
+		mysql_fquery(SQL_Handle(), "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
 			PlayerInfo[playerid][pSQLID],
 			ExpInfo[playerid][eMonthPayDays]
 		);
@@ -56,32 +56,30 @@ stock static GetAdminConnectionTime(playerid, giveplayerid)
 	return 1;
 }
 
-stock static GetAdminConnectionTimeEx(playerid, sqlid)
+static GetAdminConnectionTimeEx(playerid, sqlid)
 {
-	mysql_tquery(SQL_Handle(), 
+	inline OnAdminConnectionTimeExLoad()
+	{
+		if(cache_num_rows())
+		{
+			new
+				hours;
+			cache_get_value_index_int(0, 0, hours);
+			va_SendClientMessage(playerid, COLOR_RED, "[!]: Game Admin spent %d hours of gameplay on server.",  hours);
+		}
+		else
+			SendClientMessage(playerid, COLOR_RED, "[!]: Game Admin doesn't exist/didn't spend time on server this month!");
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OnAdminConnectionTimeExLoad,
 		va_fquery(SQL_Handle(), 
 			"SELECT * FROM stats_admins WHERE sqlid = '%d' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())",
 			 sqlid
 		), 
-		"OnAdminConnectionTimeExLoad", 
 		"i", 
 		playerid
 	);
-	return 1;
-}
-
-
-Public:OnAdminConnectionTimeExLoad(playerid)
-{
-	if(cache_num_rows())
-	{
-		new
-			hours;
-		cache_get_value_index_int(0, 0, hours);
-		va_SendClientMessage(playerid, COLOR_RED, "[!]: Game Admin spent %d hours of gameplay on server.",  hours);
-	}
-	else
-		SendClientMessage(playerid, COLOR_RED, "[!]: Game Admin doesn't exist/didn't spend time on server this month!");
 	return 1;
 }
 
@@ -114,11 +112,12 @@ CMD:admactivity(playerid, params[])
 CMD:admactivityex(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 4)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin Level 4+!");
-		
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin Level 4+!");	
 	new
 		sqlid;
-	if(sscanf( params, "s[24]", sqlid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivityex [sqlid]");
+	if(sscanf( params, "s[24]", sqlid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivityex [sqlid]");
+	
 	GetAdminConnectionTimeEx(playerid, sqlid);
 	return 1;
 }

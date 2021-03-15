@@ -418,7 +418,7 @@ stock LoadHouses()
         printf("MySQL Report: Houses Loaded. [%d/%d]", Iter_Count(House), MAX_HOUSES);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnServerHousesLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM houses WHERE 1"), 
         ""
@@ -449,7 +449,7 @@ static InsertHouseInDB(houseid, playerid)
         }
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
         using inline OnHouseInsertInDB,
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\

@@ -109,7 +109,7 @@ Player_SetNeedHelp(playerid, bool:v)
 InitFly(playerid)
 {
 	OnFly[playerid] = false;
-	return;
+	return 1;
 }
 
 bool:StartFly(playerid)
@@ -219,49 +219,6 @@ IsValidInactivity(sqlid)
 	return value;
 }
 
-ShowPlayerCars(playerid, playersqlid, player_name[])
-{
-	new 
-		owner_name[MAX_PLAYER_NAME];
-	strcpy(owner_name, player_name, MAX_PLAYER_NAME);
-
-	inline OnLoadPlayerVehicles()
-	{
-		if(!cache_num_rows())
-		{
-			va_SendMessage(playerid, 
-				MESSAGE_TYPE_ERROR, 
-				"%s doesn't own any vehicles.",
-				owner_name
-			);
-			return 1;
-		}
-		new 
-			tmpModelID,
-			tmpCarMysqlID,
-			vehName[32];
-		
-		va_SendClientMessage(playerid, COLOR_RED, "[%s's Vehicle List]:", owner_name);	
-		for( new i = 0; i < cache_num_rows(); i++) 
-		{
-			cache_get_value_name_int(i, "id", tmpCarMysqlID);
-			cache_get_value_name_int(i, "modelid", tmpModelID);
-			
-			strunpack(vehName, Model_Name(tmpModelID));
-			va_SendClientMessage(playerid, COLOR_WHITE,"[slot %d] %s [MySQL ID: %d].", i+1, vehName, tmpCarMysqlID);
-		}
-	}
-	MySQL_TQueryInline(SQL_Handle(),  
-		using inline OnLoadPlayerVehicles,
-		va_fquery(SQL_Handle(), "SELECT id, modelid FROM cocars WHERE ownerid = '%d' LIMIT %d", 
-			playersqlid,
-			MAX_PLAYER_CARS
-		),
-		""
-	);
-	return 1;
-}
-
 stock ABroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
@@ -272,7 +229,7 @@ stock ABroadCast(color,const string[],level)
 	return 1;
 }
 
-va_ABroadCast(color, const string[], level, va_args<>)
+stock va_ABroadCast(color, const string[], level, va_args<>)
 {
 	foreach (new i : Player)
 	{
@@ -318,8 +275,6 @@ stock PmearsBroadCast(color,const string[], level)
 	return 1;
 }
 
-
-
 stock BhearsBroadCast(color,const string[], level)
 {
 	foreach (new i : Player)
@@ -331,7 +286,6 @@ stock BhearsBroadCast(color,const string[], level)
 	}
 	return 1;
 }
-
 
 stock AHBroadCast(color,const string[],level)
 {
@@ -357,28 +311,22 @@ stock HighAdminBroadCast(color,const string[],level)
 	return 1;
 }
 
-SendAdminMessage(color, string[], va_args<>)
+stock SendAdminMessage(color, const string[], va_args<>)
 {
-	new 
-		format_message[144];
-	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i))
-			SendClientMessage(i, color, format_message);
+		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get(a_AdminChat, i))
+			SendClientMessage(i, color, va_return(string, va_start<2>));
 	}
 	return 1;
 }
 
-SendHelperMessage(color, string[], va_args<>)
+stock SendHelperMessage(color, const string[], va_args<>)
 {
-	new 
-		format_message[144];
-	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
 		if(PlayerInfo[i][pHelper] >= 1)
-			SendClientMessage(i, color, format_message);
+			SendClientMessage(i, color, va_return(string, va_start<2>));
 	}
 	return 1;
 }
@@ -390,8 +338,8 @@ stock SendAdminNotification(color, string[])
 		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i))
 			SendMessage(i, color, string);
 	}
+	return 1;
 }
-
 
 stock DMERSBroadCast(color, const string[], level)
 {
@@ -428,28 +376,6 @@ stock ForbiddenWeapons(weaponid)
 		case 16,35,36,37,38,39,44,45,47: return 1;
 		default: 
 			return 0;
-	}
-	return 1;
-}
-
-stock split(const strsrc[], strdest[][], delimiter)
-{
-	new
-		i,
-	    li,
-		aNum,
-	    len;
-	    
-	while (i <= strlen(strsrc))
-	{
-	    if(strsrc[i] == delimiter || i == strlen(strsrc))
-		{
-			len = strmid(strdest[aNum], strsrc, li, i, 128);
-			strdest[aNum][len] = 0;
-			li = i+1;
-			aNum++;
-		}
-		i++;
 	}
 	return 1;
 }
@@ -495,7 +421,8 @@ ResetAdminVehVars(admin) {
 	return (true);
 }
 
-Public: OnHelperPINHashed(playerid, level)
+forward OnHelperPINHashed(playerid, level);
+public OnHelperPINHashed(playerid, level)
 {
 	new 
 		saltedPin[BCRYPT_HASH_LENGTH];
@@ -959,198 +886,14 @@ stock static UpdateTargetReconData(playerid, targetid)
 }
 
 /*
-	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
-	##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ## 
-	##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##       
-	######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######  
-	##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ## 
-	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
-	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
+	######## #### ##     ## ######## ########   ######  
+	   ##     ##  ###   ### ##       ##     ## ##    ## 
+	   ##     ##  #### #### ##       ##     ## ##       
+	   ##     ##  ## ### ## ######   ########   ######  
+	   ##     ##  ##     ## ##       ##   ##         ## 
+	   ##     ##  ##     ## ##       ##    ##  ##    ## 
+	   ##    #### ##     ## ######## ##     ##  ######  
 */
-
-/*
-Public:OnCreatedBusinessFinish(playerid, bizzid, level, price, canenter, exitX, exitY, exitZ, interior, viwo, bname[])
-{
-	BizzInfo[bizzid][bSQLID] = cache_insert_id();
-	BizzInfo[bizzid][bOwnerID] = 0;
-	format(BizzInfo[bizzid][bMessage], 16, bname);
-	
-	return 1;
-}
-*/
-
-forward OfflineBanPlayer(playerid, playername[], reason[], days);
-public OfflineBanPlayer(playerid, playername[], reason[], days)
-{
-	new rows;
-    cache_get_row_count(rows);
-	if(rows)
-	{
-		new playerip[MAX_PLAYER_IP];
-		cache_get_value_name(0, "lastip", playerip, 24);
-		
-		#if defined MODULE_BANS
-		HOOK_BanEx(playerid, playername, playerip, playerid, reason, days);
-		#endif
-	}
-	else return SendClientMessage(playerid, COLOR_RED, "[ERROR - MySQL]: There's no player with that nickname!");
-	return 1;
-}
-
-forward OfflineJailPlayer(playerid, jailtime);
-public OfflineJailPlayer(playerid, jailtime)
-{
-	new rows;
-    cache_get_row_count(rows);
-	if(rows)
-	{
-		new sqlid;
-		cache_get_value_name_int(0,  "sqlid", sqlid);
-  		mysql_fquery(SQL_Handle(), "UPDATE player_jail SET jailed = '1', jailtime = '%d' WHERE sqlid = '%d'", 
-		  	jailtime, 
-			sqlid
-		);
-	}
-	else return SendClientMessage(playerid, COLOR_RED, "[ERROR - MySQL]: There's no player with that nickname!");
-	return 1;
-}
-
-stock CheckInactivePlayer(playerid, sql)
-{
-	inline OnInactivePlayerLoad()
-	{	
-		new 
-			sqlid,
-			startstamp,
-			endstamp,
-			startdate[12],
-			starttime[12],
-			enddate[12],
-			endtime[12],
-			reason[64],
-			motd[150],
-			playername[MAX_PLAYER_NAME],
-			dialogstring[2056];
-
-		
-		cache_get_value_name_int(0, "sqlid"				, sqlid);
-		cache_get_value_name(0, 	"name"				, playername, 24);
-
-		cache_get_value_name_int(0, "startstamp"		, startstamp);
-		cache_get_value_name_int(0, "endstamp"			, endstamp);
-		cache_get_value_name(0, 	"reason"			, reason, 64);
-
-		TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
-		TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
-
-		TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
-		TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
-		
-		format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
-			playername,
-			sqlid,
-			startdate,
-			starttime,
-			enddate,
-			endtime,
-			reason
-		);
-		strcat(dialogstring, motd, sizeof(dialogstring));
-
-		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Checking player inactivity:", dialogstring, "Close", "");
-		return 1;
-	}
-	MySQL_TQueryInline(SQL_Handle(),  
-		using inline OnInactivePlayerLoad,
-		va_fquery(SQL_Handle(), 
-			"SELECT \n\
-				accounts.name, \n\
-				inactive_accounts.* \n\
-			FROM  \n\
-				accounts, \n\
-				inactive_accounts \n\
-			WHERE \n\
-				accounts.sqlid = inactive_accounts.sqlid = '%d'", 
-			sql
-		),
-		"i", 
-		playerid
-	);
-	return 1;
-}
-
-stock ListInactivePlayers(playerid)
-{
-	inline OnInactiveAccountsList()
-	{
-		new rows;
-		cache_get_row_count(rows);
-		if(rows)
-		{
-			new 
-				sqlid,
-				startstamp,
-				endstamp,
-				startdate[12],
-				starttime[12],
-				enddate[12],
-				endtime[12],
-				reason[64],
-				motd[150],
-				dialogstring[2056],
-				playername[MAX_PLAYER_NAME];
-				
-			for( new i = 0; i < rows; i++) 
-			{				
-				// inactivity table
-				cache_get_value_name_int(i, "sqlid"				, sqlid);
-				cache_get_value_name_int(i, "startstamp"		, startstamp);
-				cache_get_value_name_int(i, "endstamp"			, endstamp);
-				cache_get_value_name(i, 	"reason"			, reason, 64);
-
-				cache_get_value_name(i, 	"playername"		, playername, 24);
-
-				TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
-				TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
-
-				TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
-				TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
-				
-				format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
-					playername,
-					sqlid,
-					startdate,
-					starttime,
-					enddate,
-					endtime,
-					reason
-				);
-				strcat(dialogstring, motd, sizeof(dialogstring));
-			}
-			ShowPlayerDialog(playerid, DIALOG_INACTIVITY_LIST, DIALOG_STYLE_MSGBOX, "Recent inactivities:", dialogstring, "Close", "");
-			return 1;
-		}
-		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "There are currently no reported inactivity in the database!");
-	}
-	MySQL_TQueryInline(SQL_Handle(),  
-		using inline OnInactiveAccountsList,
-		va_fquery(SQL_Handle(), 
-			"SELECT \n\
-				inactive_accounts*, \n\
-				accounts.name \n\
-			FROM  \n\
-				inactive_accounts \n\
-				accounts \n\
-			WHERE \n\
-				inactive_accounts.sqlid = accounts.sqlid \n\
-			ORDER BY inactive_accounts.id \n\
-			DESC \n\
-			LIMIT 0 , 30"),
-		"i", 
-		playerid
-	);
-	return 1;
-}
 
 timer OnAdminCountDown[1000]()
 {
@@ -1174,217 +917,6 @@ timer OnAdminCountDown[1000]()
 	}
 	return 1;
 }
-
-forward CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const reason[]);
-public CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const reason[]) 
-{
-    new 
-		rows;
-    cache_get_row_count(rows);
-    if(!rows) return SendClientMessage(playerid,COLOR_RED, "That player's not in base!");
-    
-	new
-		prisoned;
-	cache_get_value_name_int(0, "jailed", prisoned);
-    if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "That player's already in area/prison!");
-	
-	mysql_fquery(SQL_Handle(), "UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", minutes, sqlid);
-		
-	va_SendClientMessage(playerid,COLOR_RED, "[!] You have successfully placed the offline player %s in the arena for %d minutes.",targetname, minutes);
-	return 1;
-}
-
-forward LoadPlayerWarns(playerid, targetname[],reason[]);
-public LoadPlayerWarns(playerid, targetname[],reason[])
-{
-	new
-		rows;
-	cache_get_row_count(rows);
-	if(!rows) return SendClientMessage(playerid,COLOR_RED,"[MySQL]: Taj igrac nije u bazi!");
-	
-	new
-		currentwarns;
-	cache_get_value_name_int(0, "playaWarns", currentwarns);
-    new 
-		warns = currentwarns + 1;
-		
-    if(warns == 3) 
-	{
-		OfflineBanPlayer(playerid, targetname, "3. Warn", 10);
-        SendClientMessage(playerid,COLOR_RED, "[!] That player had 3 warns and he's automatically banned!");
-        va_SendClientMessageToAll(COLOR_RED,"AdmCMD: %s [Offline] got banned from Game Admin %s, reason: 3. Warn",targetname,GetName(playerid,false));
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
-		#endif
-		mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaWarns = '0' WHERE name = '%e'", targetname);
-    } 
-	else 
-	{
-		va_SendClientMessage(playerid,COLOR_RED, "[!] You have successfully warned player %s and that's his %d warn!",targetname,warns);
-        mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
-    }
-	return 1;
-}
-
-forward OfflinePlayerVehicles(playerid, giveplayerid);
-public OfflinePlayerVehicles(playerid, giveplayerid)
-{
-	new
-	    cars = cache_num_rows(),
-	    vehicleid = PlayerKeys[giveplayerid][pVehicleKey],
-		price = cars * 150;
-		
-    if(cars == 0)
-		return SendClientMessage(playerid, COLOR_RED, "Player has no car!");
-	else
-	{
-	    if(GetPlayerMoney(giveplayerid) < price) return SendClientMessage(playerid, COLOR_RED, "Player does not have enough money.");
-		va_SendClientMessage(playerid, COLOR_RED, "[!] You have successfully moved the parking lot of all vehicles to the player "COL_WHITE"%s"COL_YELLOW" - (%i$). ", GetName(giveplayerid, true), price);
-		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Admin %s has moved the parking of all your vehicles(%i$).", GetName(playerid, true), price);
-		PlayerToBudgetMoney(giveplayerid, price);
-	}
-	new
-	    Float:x,
-		Float:y,
-		Float:z,
-		Float:angle;
-
-	if(IsPlayerInAnyVehicle(playerid))
-	{
-	    GetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
-		GetVehicleZAngle(GetPlayerVehicleID(playerid), angle);
-	}
-	else
-	{
-		GetPlayerPos(playerid, x, y, z);
-		GetPlayerFacingAngle(playerid, angle);
-	}
-	
-	mysql_fquery(SQL_Handle(), 
-		"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', viwo = '0' WHERE ownerid = '%d'",
-		x,
-		y,
-		z,
-		angle,
-		PlayerInfo[giveplayerid][pSQLID]
-	);
-	
-	if(vehicleid != -1) {
-	    VehicleInfo[vehicleid][vParkX]	= x;
-		VehicleInfo[vehicleid][vParkY]	= y;
-		VehicleInfo[vehicleid][vParkZ]	= z;
-		VehicleInfo[vehicleid][vAngle] 	= angle;
-	}
-	return 1;
-}
-
-forward LoadNamesFromIp(playerid, const ip[]);
-public LoadNamesFromIp(playerid, const ip[])
-{
-	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "No one logged in with an IP address: %s (DATABASE)!", ip);
-
-	new
-		dialogString[1024];
-	format(dialogString, 1024, "Ime\tIP Adresa\tOnline\n");
-	for(new i = 0; i < cache_num_rows(); i++) 
-	{
-		new
-			tmpName[MAX_PLAYER_NAME],
-			tmpIp[MAX_PLAYER_IP],
-			tmpOnline;
-		
-		cache_get_value_name(i, "name", tmpName, sizeof(tmpName));
-		cache_get_value_name(i, "lastip", tmpIp, sizeof(tmpIp));
-		cache_get_value_name_int(i, "online", tmpOnline);
-		
-		format(dialogString, 1024, "%s%s\t%s\t%s\n", dialogString, tmpName, tmpIp,tmpOnline);
-	}
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST_HEADERS, "IP Address to nickname", dialogString, "Ok", "");
-	return 1;
-}
-
-forward CountFactionMembers(playerid, orgid);
-public CountFactionMembers(playerid, orgid)
-{
-	if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_RED, "[!] Faction %s has 0 members (0 is online)!", FactionInfo[orgid][fName]);
-	
-	new activeMembers = 0;
-	foreach(new i : Player)
-	{
-		if(PlayerFaction[i][pMember] == orgid || PlayerFaction[i][pLeader] == orgid)
-			activeMembers++;
-	}
-	
-	va_SendClientMessage(playerid, COLOR_RED, "[!] Faction %s has %d members (%d is online)!", FactionInfo[orgid][fName], cache_num_rows(), activeMembers);
-	return 1;
-}
-
-forward CheckPlayerData(playerid, const name[]);
-public CheckPlayerData(playerid, const name[])
-{
-	if(cache_num_rows()) 
-	{
-		new sqlid;
-		cache_get_value_name_int(0, "sqlid", sqlid);
-		
-		mysql_tquery(SQL_Handle(), 
-			va_fquery(SQL_Handle(), "SELECT * FROM player_connects WHERE player_id = '%d' ORDER BY time DESC LIMIT 1", sqlid), 
-			"CheckLastLogin", 
-			"is", 
-			playerid, 
-			name
-		);
-	}
-	else SendClientMessage(playerid, COLOR_RED, "That nickname does not exist in database.");
-	
-	return 1;
-}
-
-forward CheckLastLogin(playerid, const name[]);
-public CheckLastLogin(playerid, const name[])
-{
-	if(!cache_num_rows()) return SendClientMessage(playerid, COLOR_RED, "Player never logged in!");
-	
-	new lastip[MAX_PLAYER_IP], lastdate, date[12], time[12];
-	cache_get_value_name_int(0, 	"time"	, lastdate);
-	cache_get_value_name(0,			"aip"	, lastip, MAX_PLAYER_IP);
-
-	TimeFormat(Timestamp:lastdate, HUMAN_DATE, date);
-	TimeFormat(Timestamp:lastdate, ISO6801_TIME, time);
-	
-	if(PlayerInfo[playerid][pAdmin])
-	{
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Last time player %s was online: %s - %s, with an IP: %s.", 
-			name,
-			date,
-			time,
-			lastip
-		);
-	}
-	else
-	{
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Last time player %s was online: %d.%d.%d - %d:%d:%d", 
-			name,
-			date[2],
-			date[1],
-			date[0],
-			date[3],
-			date[4],
-			date[5]
-		);
-	}
-	return 1;
-}
-
-/*
-	######## #### ##     ## ######## ########   ######  
-	   ##     ##  ###   ### ##       ##     ## ##    ## 
-	   ##     ##  #### #### ##       ##     ## ##       
-	   ##     ##  ## ### ## ######   ########   ######  
-	   ##     ##  ##     ## ##       ##   ##         ## 
-	   ##     ##  ##     ## ##       ##    ##  ##    ## 
-	   ##    #### ##     ## ######## ##     ##  ######  
-*/
 
 timer OnPlayerReconing[1000](playerid, targetid)
 {

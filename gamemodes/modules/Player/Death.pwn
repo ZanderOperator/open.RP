@@ -325,28 +325,27 @@ stock CreateDeathInfos(playerid, situation = 0)
 }
 stock LoadPlayerDeath(playerid)
 {
-	mysql_tquery(SQL_Handle(), 
+	inline LoadingPlayerDeaths()
+	{
+		if(!cache_num_rows())
+			return 0;
+
+		cache_get_value_name_int(0, "killed", PlayerDeath[playerid][pKilled]);
+		cache_get_value_name_float(0, "pos_x", PlayerDeath[playerid][pDeathX]);
+		cache_get_value_name_float(0, "pos_y", PlayerDeath[playerid][pDeathY]);
+		cache_get_value_name_float(0, "pos_z", PlayerDeath[playerid][pDeathZ]);
+		cache_get_value_name_int(0, "interior", PlayerDeath[playerid][pDeathInt]);
+		cache_get_value_name_int(0, "viwo", PlayerDeath[playerid][pDeathVW]);
+
+		mysql_fquery(SQL_Handle(), "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline LoadingPlayerDeaths, 
 		va_fquery(SQL_Handle(), "SELECT * FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]),
-		"LoadingPlayerDeaths", 
 		"i", 
 		playerid
 	);
-	return 1;
-}
-forward LoadingPlayerDeaths(playerid);
-public LoadingPlayerDeaths(playerid)
-{
-	if(!cache_num_rows())
-		return 0;
-
-	cache_get_value_name_int(0, "killed", PlayerDeath[playerid][pKilled]);
-	cache_get_value_name_float(0, "pos_x", PlayerDeath[playerid][pDeathX]);
-	cache_get_value_name_float(0, "pos_y", PlayerDeath[playerid][pDeathY]);
-	cache_get_value_name_float(0, "pos_z", PlayerDeath[playerid][pDeathZ]);
-	cache_get_value_name_int(0, "interior", PlayerDeath[playerid][pDeathInt]);
-	cache_get_value_name_int(0, "viwo", PlayerDeath[playerid][pDeathVW]);
-
-	mysql_fquery(SQL_Handle(), "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	return 1;
 }
 

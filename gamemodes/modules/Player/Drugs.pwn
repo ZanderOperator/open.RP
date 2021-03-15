@@ -95,53 +95,43 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 	
-Public:LoadVehicleDrugs(vehicleid)
+LoadVehicleDrugs(vehicleid)
 {	
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]), 
-		"LoadingVehicleDrugs", 
-		"i", 
-		vehicleid
-	);
-	return 1;
-}
-
-forward LoadingVehicleDrugs(vehicleid);
-public LoadingVehicleDrugs(vehicleid)
-{
-	if(cache_num_rows()) 
+	inline LoadingVehicleDrugs()
 	{
-	    for(new i = 0; i < cache_num_rows(); i++) 
+		new 
+			rows = cache_num_rows();
+		if(!rows)
+			return 1;
+
+		for(new i = 0; i < rows; i++) 
 		{
 			cache_get_value_name_int(i, "id", VehicleDrugs[vehicleid][vsqlid][i]);
 			cache_get_value_name_int(i, "code", VehicleDrugs[vehicleid][vtype][i]);
 			cache_get_value_name_float(i, "amount", VehicleDrugs[vehicleid][vamount][i]); 
 			cache_get_value_name_float(i, "quality", VehicleDrugs[vehicleid][vquality][i]);
 		}
+		return 1;
 	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline LoadingVehicleDrugs,
+		va_fquery(SQL_Handle(), "SELECT * FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]), 
+		"i", 
+		vehicleid
+	);
 	return 1;
 }
 
 LoadPlayerDrugs(playerid)
 {
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
-		"LoadingPlayerDrugs", 
-		"i", 
-		playerid
-	);
-	return 1;
-}
-
-forward LoadingPlayerDrugs(playerid);
-public LoadingPlayerDrugs(playerid)
-{
-	new
-		numrows = cache_num_rows();
-	
-	if(numrows) 
+	inline LoadingPlayerDrugs()
 	{
-	    for(new i = 0; i < numrows; i++) 
+		new
+			numrows = cache_num_rows();	
+		if(!numrows) 
+			return 1;
+
+		for(new i = 0; i < numrows; i++) 
 		{
 			cache_get_value_name_int(i, "id", PlayerDrugs[playerid][dSQLID][i]);
 			cache_get_value_name_int(i, "code", PlayerDrugs[playerid][dCode][i]);
@@ -149,13 +139,17 @@ public LoadingPlayerDrugs(playerid)
 			cache_get_value_name_float(i, "effect", PlayerDrugs[playerid][dEffect][i]);
 			cache_get_value_name_int(i, "timestamp", PlayerDrugs[playerid][dTimeStamp][i]);
 			
-			//if((gettime() - PlayerDrugs[playerid][dTimeStamp][i]) > 86400)
-			//	PlayerDrugs[playerid][dEffect][i] -= 10.0
-			
 			if(PlayerDrugs[playerid][dEffect][i] < 1.0 || PlayerDrugs[playerid][dAmount][i] < 0.01)
 				DeletePlayerDrug(playerid, i);
 		}
+		return 1;
 	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline LoadingPlayerDrugs,
+		va_fquery(SQL_Handle(), "SELECT * FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
@@ -165,7 +159,7 @@ LoadPlayerDrugStats(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_drug_stats \n\
 				(sqlid, drugused, drugseconds, drugorder) \n\
@@ -180,7 +174,7 @@ LoadPlayerDrugStats(playerid)
 		cache_get_value_name_int(0, "drugorder"		, PlayerDrugStatus[playerid][pDrugOrder]);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline LoadingPlayerDrugStats, 
 		va_fquery(SQL_Handle(), "SELECT * FROM player_drug_stats WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
 		"i", 
@@ -198,7 +192,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerDrugStats(playerid)
 {
-	mysql_fquery_ex(SQL_Handle(), 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE player_drug_stats SET drugused = '%d', drugseconds = '%d', drugorder = '%d' \n\
 			WHERE sqlid = '%d'",
 		PlayerDrugStatus[playerid][pDrugUsed],
@@ -1037,8 +1031,13 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 	PlayerDrugs[playerid][dEffect][emptyslot] = dq;
 	PlayerDrugs[playerid][dTimeStamp][emptyslot] = gettime();
 	
-	
-	mysql_tquery(SQL_Handle(), 
+	inline OnPlayerDrugInsert()
+	{
+		PlayerDrugs[playerid][dSQLID][emptyslot] = cache_insert_id();
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OnPlayerDrugInsert,
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
 				player_drugs \n\
@@ -1051,11 +1050,9 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 			dq,
 			gettimestamp()
 		), 
-		"GetDrugSQLID", 
-		"iii", 
+		"ii", 
 		playerid, 
-		emptyslot, 
-		0
+		emptyslot
 	);
 	
 	return emptyslot;
@@ -1077,7 +1074,13 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	VehicleDrugs[vehicleid][vamount][emptyslot] = damnt;
 	VehicleDrugs[vehicleid][vquality][emptyslot] = dqua;
 	
-	mysql_tquery(SQL_Handle(), 
+	inline OnVehicleDrugInsert()
+	{
+		VehicleDrugs[vehicleid][vsqlid][emptyslot] = cache_insert_id();
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OnVehicleDrugInsert,
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
 				cocars_drugs \n\
@@ -1090,13 +1093,10 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 			dqua,
 			gettimestamp()
 		), 
-		"GetDrugSQLID", 
-		"iii", 
+		"ii", 
 		vehicleid, 
-		emptyslot, 
-		1
+		emptyslot
 	);
-	
 	return emptyslot;
 }
 

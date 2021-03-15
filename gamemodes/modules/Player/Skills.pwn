@@ -76,7 +76,7 @@ static LoadPlayerSkills(playerid)
 		}
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPlayerSkillsLoad,
 		va_fquery(SQL_Handle(), "SELECT * FROM skill WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"i", 
@@ -135,7 +135,7 @@ static SavePlayerSkill(playerid, skillid)
 			PlayerSkills[playerid][sSQLID][skillid] = cache_insert_id();
 			return 1;
 		}
-		MySQL_PQueryInline(SQL_Handle(),
+		MySQL_TQueryInline(SQL_Handle(),
 			using inline OnPlayerSkillInsert,
 			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],

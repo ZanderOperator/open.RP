@@ -6,7 +6,7 @@ LoadPlayerAdminMessage(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_admin_msg \n\
 				(sqlid, AdminMessage, AdminMessageBy, AdmMessageConfirm) \n\
@@ -21,7 +21,7 @@ LoadPlayerAdminMessage(playerid)
 		cache_get_value_name_int(0, "AdmMessageConfirm", PlayerAdminMessage[playerid][pAdmMsgConfirm]);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadingPlayerAdminMessage, 
         va_fquery(SQL_Handle(), 
 			"SELECT * FROM player_admin_msg WHERE sqlid = '%d'", 
@@ -40,7 +40,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerAdminMessage(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '%d' \n\
             WHERE sqlid = '%d'",
         PlayerAdminMessage[playerid][pAdminMsg],
@@ -77,49 +77,66 @@ hook OnPlayerDisconnect(playerid, reason)
     return 1;
 }
 
-Public: AddAdminMessage(playerid, user_name[], reason[])
+InsertAdminMessage(playerid, const playerb[], const n_reason[])
 {
-	new rows;
+	new 
+		user_name[MAX_PLAYER_NAME],
+		reason[128];
 	
-    cache_get_row_count(rows);
-	if(!rows)
-	 	return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
-	
-	new
-		on,
-		sqlid;
-	
-	cache_get_value_name_int(0, "sqlid" , sqlid);
-	cache_get_value_name_int(0, "online" , on);
-	
-	if(on)
+	strcpy(user_name, playerb);
+	strcpy(reason, n_reason);
+	inline AddAdminMessage()
 	{
-		sscanf(user_name, "u", on);
+		new 
+			rows;
+		cache_get_row_count(rows);
+		if(!rows)
+			return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
 		
-		if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
+		new
+			on,
+			sqlid;
+		cache_get_value_name_int(0, "sqlid" , sqlid);
+		cache_get_value_name_int(0, "online" , on);
+		
+		if(on)
 		{
-			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s))", 
-				GetName(playerid, false), 
-				playerid, 
-				reason
-			);
-			va_SendClientMessage(playerid, COLOR_RED, "(( PM za %s[%d]: %s))", 
-				user_name, 
-				on, 
-				reason
-			);
-			SendClientMessage(playerid, COLOR_RED, "[!] Navedeni korisnik je bio in-game te mu je poslana poruka.");
-			return 1;
-		}
-	}	
-	mysql_fquery(SQL_Handle(),
-		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
-		reason, 
-		GetName(playerid, true), 
-		sqlid
-	);
+			sscanf(user_name, "u", on);
+			
+			if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
+			{
+				va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s))", 
+					GetName(playerid, false), 
+					playerid, 
+					reason
+				);
+				va_SendClientMessage(playerid, COLOR_RED, "(( PM za %s[%d]: %s))", 
+					user_name, 
+					on, 
+					reason
+				);
+				SendClientMessage(playerid, COLOR_RED, "[!] Navedeni korisnik je bio in-game te mu je poslana poruka.");
+				return 1;
+			}
+		}	
+		mysql_fquery(SQL_Handle(),
+			"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
+			reason, 
+			GetName(playerid, true), 
+			sqlid
+		);
 
-	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully left %s a message: %s", user_name, reason);
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully left %s a message: %s", user_name, reason);
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline AddAdminMessage,
+		va_fquery(SQL_Handle(), "SELECT sqlid, online FROM accounts WHERE name = '%e'", user_name), 
+		"iss", 
+		playerid, 
+		user_name, 
+		reason
+	);
 	return 1;
 }
 

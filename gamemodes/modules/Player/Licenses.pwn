@@ -112,7 +112,7 @@ LoadPlayerLicenses(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_licenses \n\
 				(sqlid, carlic, gunlic, boatlic, fishlic, flylic, passport) \n\
@@ -130,7 +130,7 @@ LoadPlayerLicenses(playerid)
 		cache_get_value_name_int(0,  "passport"		, LicenseInfo[playerid][pPassport]);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadingPlayerLicenses, 
         va_fquery(SQL_Handle(), "SELECT * FROM player_licenses WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
@@ -146,7 +146,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerLicenses(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_licenses SET carlic = '%d', gunlic = '%d', boatlic = '%d', fishlic = '%d', \n\
             flylic = '%d', passport = '%d' WHERE sqlid = '%d'",
         LicenseInfo[playerid][pCarLic],

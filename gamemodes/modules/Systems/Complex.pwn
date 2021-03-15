@@ -205,7 +205,7 @@ stock LoadComplexes()
         return 1;
     }
  
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnServerComplexLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM server_complex WHERE 1"), 
         "",
@@ -301,7 +301,7 @@ stock LoadComplexRooms()
         printf("MySQL Report: Complex Rooms Loaded. [%d/%d]", Iter_Count(ComplexRoom), MAX_COMPLEX_ROOMS);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnComplexRoomsLoad,
         va_fquery(SQL_Handle(),"SELECT * FROM server_complex_rooms WHERE 1"), 
         ""

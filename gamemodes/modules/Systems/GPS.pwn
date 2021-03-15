@@ -109,7 +109,7 @@ static GPS_Load()
         printf("MySQL Report: GPS Locations Loaded. [%d/%d]", Iter_Count(GPS_location), MAX_GPS_LOCATIONS);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
         using inline GPS_Loaded,
         va_fquery(SQL_Handle(), "SELECT * FROM gps"),
         ""
@@ -148,26 +148,25 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
     GPS_data[free_id][gpsAdmin]    = 0;
 
     strcpy(GPS_data[free_id][gpsName], gps_name);
-    mysql_tquery(SQL_Handle(), 
+
+    inline GPS_Created()
+    {
+        if(free_id == -1 || !GPS_data[free_id][gpsExists])
+            return 1;
+
+        GPS_data[free_id][gpsID] = cache_insert_id();
+        Iter_Add(GPS_location, free_id);
+
+        GPS_Save(free_id);
+        return 1;
+    }
+    MySQL_TQueryInline(SQL_Handle(),
+        using inline GPS_Created,
         "INSERT INTO gps (gpsCreated) VALUES(1)", 
-        "GPS_Created", 
         "i", 
         free_id
    );
     return free_id;
-}
-
-forward GPS_Created(gps_id);
-public GPS_Created(gps_id)
-{
-    if(gps_id == -1 || !GPS_data[gps_id][gpsExists])
-        return 1;
-
-    GPS_data[gps_id][gpsID] = cache_insert_id();
-    Iter_Add(GPS_location, gps_id);
-
-    GPS_Save(gps_id);
-    return 1;
 }
 
 static GPS_Delete(gpsid)

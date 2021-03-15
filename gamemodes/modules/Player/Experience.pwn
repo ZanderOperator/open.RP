@@ -59,7 +59,7 @@ stock ListBestTemporaryEXP(playerid)
 			return 1;
 		}
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnPlayerLoadTempBestEXP, 
 	 	va_fquery(SQL_Handle(),
 		 	"SELECT \n\
@@ -68,6 +68,8 @@ stock ListBestTemporaryEXP(playerid)
 			FROM \n\
 				experience, \n\
 				accounts \n\
+			WHERE \n\
+				accounts.sqlid = experience.sqlid \n\
 			ORDER BY experience.points DESC \n\
 			LIMIT 0 , 30"
 		),
@@ -117,7 +119,7 @@ stock ListBestOverallEXP(playerid)
 			return 1;
 		}
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnListOverallBestEXP, 
 	 	va_fquery(SQL_Handle(),
 		 	"SELECT \n\
@@ -126,6 +128,8 @@ stock ListBestOverallEXP(playerid)
 			FROM \n\
 				experience, \n\
 				accounts \n\
+			WHERE \n\
+				accounts.sqlid = experience.sqlid \n\
 			ORDER BY experience.allpoints DESC \n\
 			LIMIT 0 , 30"
 		 ),
@@ -136,40 +140,39 @@ stock ListBestOverallEXP(playerid)
 
 LoadPlayerExperience(playerid)
 {	
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
-		"OnPlayerLoadExperience", 
+	inline OnPlayerLoadExperience()
+	{
+		new 
+			rows = cache_num_rows();
+		if(rows)
+		{
+			cache_get_value_name_int(0, "givenexp"			, ExpInfo[playerid][eGivenEXP]);
+			cache_get_value_name_int(0, "allpoints"			, ExpInfo[playerid][eAllPoints]);
+			cache_get_value_name_int(0, "points"			, ExpInfo[playerid][ePoints]);
+			cache_get_value_name_int(0, "lastpayday"		, ExpInfo[playerid][eLastPayDayStamp]);
+			cache_get_value_name_int(0, "daypaydays"		, ExpInfo[playerid][eDayPayDays]);
+			cache_get_value_name_int(0, "monthpaydays"		, ExpInfo[playerid][eMonthPayDays]);
+		}
+		else
+		{
+			return mysql_fquery(SQL_Handle(), 
+				"INSERT INTO \n\
+					experience \n\
+				(sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) \n\
+				VALUES \n\
+					('%d', '0', '0', '0', '0', '0', '0')",
+				PlayerInfo[playerid][pSQLID]
+			);
+		}
+		return 1;
+	} 
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OnPlayerLoadExperience,
+		va_fquery(SQL_Handle(), "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),  
 		"i", 
 		playerid
 	);
 	return 1;
-}
-
-Public:OnPlayerLoadExperience(playerid)
-{
-	new rows;
-    cache_get_row_count(rows);
-    if(rows)
-	{
-		cache_get_value_name_int(0, "givenexp"			, ExpInfo[playerid][eGivenEXP]);
-		cache_get_value_name_int(0, "allpoints"			, ExpInfo[playerid][eAllPoints]);
-		cache_get_value_name_int(0, "points"			, ExpInfo[playerid][ePoints]);
-		cache_get_value_name_int(0, "lastpayday"		, ExpInfo[playerid][eLastPayDayStamp]);
-		cache_get_value_name_int(0, "daypaydays"		, ExpInfo[playerid][eDayPayDays]);
-		cache_get_value_name_int(0, "monthpaydays"		, ExpInfo[playerid][eMonthPayDays]);
-		return 1;
-	}
-	else
-	{
-		return mysql_fquery_ex(SQL_Handle(), 
-			"INSERT INTO \n\
-				experience \n\
-			(sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) \n\
-			VALUES \n\
-				('%d', '0', '0', '0', '0', '0', '0')",
-			PlayerInfo[playerid][pSQLID]
-		);
-	}
 }
 
 hook function LoadPlayerStats(playerid)

@@ -281,7 +281,7 @@ CheckAccountsForInactivity()
 	}
 	getdate(_, currentmonth, currentday);
 
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnInactiveAccsLoad, 
 		va_fquery(SQL_Handle(),
 			"SELECT \n\
@@ -459,7 +459,7 @@ CheckAccountsForInactivity()
 	}
 	if(currentday == 1)
 	{
-		MySQL_PQueryInline(SQL_Handle(),  
+		MySQL_TQueryInline(SQL_Handle(),  
 			using inline OnRewardActivePlayers, 
 			va_fquery(SQL_Handle(),
 				"SELECT \n\

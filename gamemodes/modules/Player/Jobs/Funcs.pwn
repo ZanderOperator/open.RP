@@ -57,7 +57,7 @@ LoadPlayerJob(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_job \n\
 				(sqlid, jobkey, contracttime, freeworks) \n\
@@ -72,7 +72,7 @@ LoadPlayerJob(playerid)
 		cache_get_value_name_int(0,  "freeworks"	, PlayerJob[playerid][pFreeWorks]);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadingPlayerJob, 
         va_fquery(SQL_Handle(), "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
@@ -89,7 +89,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerJob(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_job SET jobkey = '%d', contracttime = '%d', freeworks = '%d' WHERE sqlid = '%d'",
         PlayerJob[playerid][pJob],
         PlayerJob[playerid][pContractTime],
@@ -139,7 +139,7 @@ LoadServerJobs()
 		cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnServerJobsLoaded, 
 		va_fquery(SQL_Handle(), "SELECT * FROM server_jobs WHERE 1"), 
 		""

@@ -24,7 +24,7 @@
 
 /*
 native mysql_tquery_inline(MySQL:handle, const query[], callback:Callback, const format[], {Float,_}:...);
-native MySQL_PQueryInline(MySQL:handle, const query[], callback:Callback, const format[], {Float,_}:...);
+native MySQL_TQueryInline(MySQL:handle, const query[], callback:Callback, const format[], {Float,_}:...);
 */
 
 /*
@@ -114,7 +114,7 @@ stock mysql_tquery_inline(MySQL:handle, const query[], callback:inline_callback,
 	return return_val;
 }
 
-stock MySQL_PQueryInline(MySQL:handle, const query[], callback:inline_callback, const format[] = "", {Float,_}:...)
+stock MySQL_TQueryInline(MySQL:handle, const query[], callback:inline_callback, const format[] = "", {Float,_}:...)
 {
 	const num_const_args = 4;
 	const num_const_args_native = 7;

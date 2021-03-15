@@ -201,7 +201,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
         SelectTextDraw(playerid, 0x427AF4FF);
     }
         
-    MySQL_PQueryInline(SQL_Handle(),  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnPlayerMDCLoad, 
         va_fquery(SQL_Handle(), 
             "SELECT \n\
@@ -271,7 +271,7 @@ static OnPlayerArrestDataLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_PQueryInline(SQL_Handle(),  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnArrestLoad, 
 		va_fquery(SQL_Handle(), "SELECT * FROM jail WHERE suspect = '%e'", playername),
 		""
@@ -400,7 +400,7 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
         SelectTextDraw(playerid, 0x427AF4FF);
     }
 
-    MySQL_PQueryInline(SQL_Handle(),  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnCoVehicleLoad, 
 		va_fquery(SQL_Handle(), 
             "SELECT  \n\
@@ -659,7 +659,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
     JailInfo[giveplayerid][jTime] = jailtime;
     strcpy(JailInfo[giveplayerid][jDate], ReturnDate());
 
-    mysql_fquery_ex(SQL_Handle(), 
+    mysql_fquery(SQL_Handle(), 
         "INSERT INTO \n\
             jail \n\
         (suspect, policeman, reason, jailtime, date) \n\
@@ -683,7 +683,7 @@ static DeletePlayerMDCCrime(playerid, sqlid)
 
 static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "INSERT INTO \n\
             apb \n\
         (suspect, description, type, pdname) \n\
@@ -760,7 +760,7 @@ static GetPlayerMDCRecord(playerid, const playername[])
         format(string, sizeof(string), "%s-DOSJE", tmpJail[jSuspectName]);
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, string, buffer, "Close", "");
     }
-    MySQL_PQueryInline(SQL_Handle(),  
+    MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnSuspectLoad, 
 		va_fquery(SQL_Handle(),  "SELECT * FROM jail WHERE suspect = '%e'", playername),
 		""

@@ -28,7 +28,7 @@ LoadPlayerFishes(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_fishes \n\
 				(sqlid, fishworks, fishweight, fishingskill) \n\
@@ -43,7 +43,7 @@ LoadPlayerFishes(playerid)
 		cache_get_value_name_int(0,  "fishingskill"     , PlayerFish[playerid][pFishingSkill]);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadingPlayerFishes,
         va_fquery(SQL_Handle(), "SELECT * FROM player_fishes WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
         ""
@@ -59,7 +59,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerFishes(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_fishes SET fishworks = '%d', fishweight = '%d', fishingskill = '%d' WHERE sqlid = '%d'",
         PlayerFish[playerid][pFishWorks],
         PlayerFish[playerid][pFishWeight],

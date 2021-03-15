@@ -157,7 +157,29 @@ CreateGangZoneAroundPoint(Float:X, Float:Y, Float:width, Float:height)
 	return GangZoneCreate(minX, minY, maxX, maxY);
 }
 
-strtok(const string[], &index)
+stock split(const strsrc[], strdest[][], delimiter)
+{
+	new
+		i,
+	    li,
+		aNum,
+	    len;
+	    
+	while (i <= strlen(strsrc))
+	{
+	    if(strsrc[i] == delimiter || i == strlen(strsrc))
+		{
+			len = strmid(strdest[aNum], strsrc, li, i, 128);
+			strdest[aNum][len] = 0;
+			li = i+1;
+			aNum++;
+		}
+		i++;
+	}
+	return 1;
+}
+
+stock strtok(const string[], &index)
 {
 	new length = strlen(string);
 	while ((index < length) && (string[index] <= ' '))
@@ -214,7 +236,8 @@ stock IsValidEMail(email[])
 
 stock IsValidNick(name[])
 {
-	new length = strlen(name),
+	new 
+		length = strlen(name),
 		namesplit[2][MAX_PLAYER_NAME],
 		FirstLetterOfFirstname,
 		FirstLetterOfLastname,

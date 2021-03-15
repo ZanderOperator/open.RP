@@ -125,7 +125,7 @@ static LoadPickups()
 		printf("MySQL Report: Pickups Loaded. [%d/%d]", Iter_Count(PickupsIter), MAX_PICKUPS);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(), 
+	MySQL_TQueryInline(SQL_Handle(), 
 		using inline OnPickupsLoad,
 		"SELECT * FROM server_pickups WHERE 1", 
 		""
@@ -203,7 +203,7 @@ stock static CreateNewPickup(playerid, pickup)
 		PickupInfo[pickup][epSQLID] = cache_insert_id();
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPickupCreate,
 		va_fquery(SQL_Handle(),
 			"INSERT INTO \n\

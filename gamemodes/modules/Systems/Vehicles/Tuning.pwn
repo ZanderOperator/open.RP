@@ -455,12 +455,34 @@ stock DeletePlayerTuningTD(playerid)
 
 stock LoadVehicleTuning(vehicleid)
 {
-	mysql_tquery(SQL_Handle(), 
+	inline OnVehicleTuningLoad()
+	{
+		if(!cache_num_rows()) 
+			return 1;
+
+		cache_get_value_name_int(0, "spoiler"	, VehicleInfo[vehicleid][vSpoiler]);
+		cache_get_value_name_int(0, "hood"		, VehicleInfo[vehicleid][vHood]);
+		cache_get_value_name_int(0, "roof"		, VehicleInfo[vehicleid][vRoof]);
+		cache_get_value_name_int(0, "skirt"		, VehicleInfo[vehicleid][vSkirt]);
+		cache_get_value_name_int(0, "lamps"		, VehicleInfo[vehicleid][vLamps]);
+		cache_get_value_name_int(0, "nitro"		, VehicleInfo[vehicleid][vNitro]);
+		cache_get_value_name_int(0, "exhaust"	, VehicleInfo[vehicleid][vExhaust]);
+		cache_get_value_name_int(0, "wheels"	, VehicleInfo[vehicleid][vWheels]);
+		cache_get_value_name_int(0, "hydraulic"	, VehicleInfo[vehicleid][vHydraulics]);
+		cache_get_value_name_int(0, "fbumper"	, VehicleInfo[vehicleid][vFrontBumper]);
+		cache_get_value_name_int(0, "rbumper"	, VehicleInfo[vehicleid][vRearBumper]);
+		cache_get_value_name_int(0, "rvent"		, VehicleInfo[vehicleid][vRightVent]);
+		cache_get_value_name_int(0, "lvent"		, VehicleInfo[vehicleid][vLeftVent]);
+		cache_get_value_name_int(0, "paintjob"	, VehicleInfo[vehicleid][vPaintJob]);
+
+		SetVehicleTuning(vehicleid);
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline OnVehicleTuningLoad,
 		va_fquery(SQL_Handle(), "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]),
-	 	"OnVehicleTuningLoad", 
-	 	"ii", 
-		 vehicleid, 
-	 	false
+	 	"i", 
+		vehicleid
 	);
 	return 1;
 }
@@ -474,19 +496,7 @@ stock DeleteVehicleTuning(vehicleid)
 
 stock SaveVehicleTuning(vehicleid)
 {
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]), 
-		"OnVehicleTuningLoad", 
-		"ii", 
-		vehicleid, 
-		true
-	);
-	return 1;
-}
-
-Public:OnVehicleTuningLoad(vehicleid, bool:save)
-{
-	if(save) 
+	inline OnVehicleTuningSave()
 	{
 		if(cache_num_rows()) 
 		{
@@ -513,7 +523,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 		} 
 		else 
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					vehicle_tuning \n\
 				(vehid, spoiler, hood, roof, skirt, lamps, nitro, exhaust, wheels, hydraulic, \n\
@@ -542,29 +552,13 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 			VehicleInfo[vehicleid][vSQLID]
 		);
 		return 1;
-	} 
-	else 
-	{
-		if(!cache_num_rows()) 
-			return 1;
-
-		cache_get_value_name_int(0, "spoiler"	, VehicleInfo[vehicleid][vSpoiler]);
-		cache_get_value_name_int(0, "hood"		, VehicleInfo[vehicleid][vHood]);
-		cache_get_value_name_int(0, "roof"		, VehicleInfo[vehicleid][vRoof]);
-		cache_get_value_name_int(0, "skirt"		, VehicleInfo[vehicleid][vSkirt]);
-		cache_get_value_name_int(0, "lamps"		, VehicleInfo[vehicleid][vLamps]);
-		cache_get_value_name_int(0, "nitro"		, VehicleInfo[vehicleid][vNitro]);
-		cache_get_value_name_int(0, "exhaust"	, VehicleInfo[vehicleid][vExhaust]);
-		cache_get_value_name_int(0, "wheels"	, VehicleInfo[vehicleid][vWheels]);
-		cache_get_value_name_int(0, "hydraulic"	, VehicleInfo[vehicleid][vHydraulics]);
-		cache_get_value_name_int(0, "fbumper"	, VehicleInfo[vehicleid][vFrontBumper]);
-		cache_get_value_name_int(0, "rbumper"	, VehicleInfo[vehicleid][vRearBumper]);
-		cache_get_value_name_int(0, "rvent"		, VehicleInfo[vehicleid][vRightVent]);
-		cache_get_value_name_int(0, "lvent"		, VehicleInfo[vehicleid][vLeftVent]);
-		cache_get_value_name_int(0, "paintjob"	, VehicleInfo[vehicleid][vPaintJob]);
-
-		SetVehicleTuning(vehicleid);
 	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OnVehicleTuningSave,
+		va_fquery(SQL_Handle(), "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[vehicleid][vSQLID]), 
+		"i", 
+		vehicleid 
+	);
 	return 1;
 }
 

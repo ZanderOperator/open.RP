@@ -36,7 +36,7 @@ LoadPlayerRadio(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_radio \n\
 				(sqlid, HasRadio, MainSlot, Radio1, Slot1, Radio2, Slot2, Radio3, Slot3) \n\
@@ -56,7 +56,7 @@ LoadPlayerRadio(playerid)
 		cache_get_value_name_int(0, "Slot3"     , PlayerRadio[playerid][pRadioSlot][3]);
 		return 1;
 	}
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadingPlayerRadio,
         va_fquery(SQL_Handle(), "SELECT * FROM player_radio WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
@@ -73,7 +73,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerRadio(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_radio SET HasRadio = '%d', MainSlot = '%d', \n\
             Radio1 = '%d', Slot1 = '%d', \n\
             Radio2 = '%d', Slot2 = '%d', \n\

@@ -813,7 +813,7 @@ static LoadServerVehicles()
 		printf("MySQL Report: Vehicles Loaded. [%d/%d]", cache_num_rows(), MAX_VEHICLES);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnServerVehicleLoad,
 		"SELECT * FROM server_cars WHERE 1", 
 		""
@@ -823,7 +823,7 @@ static LoadServerVehicles()
 
 static SaveVehicle(vehicleid)
 {
-	mysql_fquery_ex(SQL_Handle(),
+	mysql_fquery(SQL_Handle(),
 		"UPDATE server_cars SET model = '%d', type = '%d', usage = '%d', parkX = '%f', parkY = '%f', parkZ = '%f',\n\
 			angle = '%f', color1 = '%d', color2 = '%d', respawn = '%d', sirenon = '%d', faction = '%d', job = '%d', locked = '%d',\n\
 	 		int = '%d', viwo = '%d', health = '%f', numberplate = '%e', paintjob = '%d', impounded = '%d', text = '%e',\n\
@@ -871,7 +871,7 @@ static CreateNewVehicle(playerid, vehicleid)
 		VehicleInfo[vehicleid][vSQLID] = cache_insert_id();
 		SaveVehicle(vehicleid);
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnServerVehicleCreate, 
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\

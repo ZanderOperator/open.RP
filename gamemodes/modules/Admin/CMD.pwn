@@ -257,7 +257,13 @@ CMD:makehelper(playerid, params[])
 
 CMD:inactivity(playerid, params[])
 {
-	new choice[12], playername[24], giveplayerid, bool:online=false, days, reason[64];
+	new 
+		choice[12], 
+		playername[24],
+		reason[64],
+		giveplayerid, 
+		bool:online = false, 
+		days;
 	
 	if(PlayerInfo[playerid][pAdmin] < 3)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin level 3+!");
@@ -275,19 +281,156 @@ CMD:inactivity(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, "[?]: /inactivity check [Player_Name]");
 			return 1;
 		}
-		new sqlid = ConvertNameToSQLID(playername);
-		if(sqlid == -1)
+		new 
+			player_sqlid = ConvertNameToSQLID(playername);
+		if(player_sqlid == -1)
 			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s does not exist in database.", playername);
 			
-		if(!IsValidInactivity(sqlid))
+		if(!IsValidInactivity(player_sqlid))
 			return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s has no registered inactivity in the database!", playername);
 			
-		CheckInactivePlayer(playerid, sqlid);
+		inline OnInactivePlayerLoad()
+		{	
+			new 
+				sqlid,
+				startstamp,
+				endstamp,
+				startdate[12],
+				starttime[12],
+				enddate[12],
+				endtime[12],
+				motd[150],
+				dialogstring[2056];
+			
+			cache_get_value_name_int(0, "sqlid"				, sqlid);
+			cache_get_value_name(0, 	"name"				, playername, 24);
+
+			cache_get_value_name_int(0, "startstamp"		, startstamp);
+			cache_get_value_name_int(0, "endstamp"			, endstamp);
+			cache_get_value_name(0, 	"reason"			, reason, 64);
+
+			TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
+			TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
+
+			TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
+			TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
+			
+			format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
+				playername,
+				sqlid,
+				startdate,
+				starttime,
+				enddate,
+				endtime,
+				reason
+			);
+			strcat(dialogstring, motd, sizeof(dialogstring));
+
+			ShowPlayerDialog(playerid, 
+				DIALOG_INACTIVITY_CHECK, 
+				DIALOG_STYLE_MSGBOX, 
+				"Inactivity", 
+				dialogstring, 
+				"Close", 
+				""
+			);
+			return 1;
+		}
+		MySQL_TQueryInline(SQL_Handle(),  
+			using inline OnInactivePlayerLoad,
+			va_fquery(SQL_Handle(), 
+				"SELECT \n\
+					accounts.name, \n\
+					inactive_accounts.* \n\
+				FROM  \n\
+					accounts, \n\
+					inactive_accounts \n\
+				WHERE \n\
+					accounts.sqlid = inactive_accounts.sqlid = '%d'", 
+				player_sqlid
+			),
+			"i", 
+			playerid
+		);
 	}		
 		
 	if(!strcmp(choice, "list", true))
-		ListInactivePlayers(playerid);
-		
+	{
+		inline OnInactiveAccountsList()
+		{
+			new 
+				rows = cache_num_rows();
+			if(!rows)
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "There are currently no reported inactivity in the database!");
+
+			new 
+				sqlid,
+				startstamp,
+				endstamp,
+				startdate[12],
+				starttime[12],
+				enddate[12],
+				endtime[12],
+				motd[150],
+				dialogstring[2056];
+				
+			for( new i = 0; i < rows; i++) 
+			{				
+				if(strlen(dialogstring) >= (2056 - 150)) // Prevent buffer overflow
+					break;
+
+				// inactivity table
+				cache_get_value_name_int(i, "sqlid"				, sqlid);
+				cache_get_value_name_int(i, "startstamp"		, startstamp);
+				cache_get_value_name_int(i, "endstamp"			, endstamp);
+				cache_get_value_name(i, 	"reason"			, reason, 64);
+
+				cache_get_value_name(i, 	"playername"		, playername, 24);
+
+				TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
+				TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
+
+				TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
+				TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
+				
+				format(motd, sizeof(motd), "%s - [SQLID: %d] | Start Time: %s %s | End Time: %s %s | Reason: %s\n",
+					playername,
+					sqlid,
+					startdate,
+					starttime,
+					enddate,
+					endtime,
+					reason
+				);
+				strcat(dialogstring, motd, sizeof(dialogstring));
+			}
+			ShowPlayerDialog(playerid, 
+				DIALOG_INACTIVITY_LIST, 
+				DIALOG_STYLE_MSGBOX, 
+				"Recent inactivities:", 
+				dialogstring, 
+				"Close", 
+				""
+			);
+			return 1;
+		}
+		MySQL_TQueryInline(SQL_Handle(),  
+			using inline OnInactiveAccountsList,
+			va_fquery(SQL_Handle(), 
+				"SELECT \n\
+					inactive_accounts*, \n\
+					accounts.name \n\
+				FROM  \n\
+					inactive_accounts \n\
+					accounts \n\
+				WHERE \n\
+					inactive_accounts.sqlid = accounts.sqlid \n\
+				ORDER BY inactive_accounts.id DESC \n\
+				LIMIT 0 , 30"),
+			"i", 
+			playerid
+		);
+	}		
 	if(!strcmp(choice, "add", true))
 	{
 		new startstamp, endstamp;
@@ -324,7 +467,8 @@ CMD:inactivity(playerid, params[])
 				}
 			}
 		}
-		mysql_fquery_ex(SQL_Handle(), 
+
+		mysql_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
 				inactive_accounts \n\
 			(sqlid, startstamp, endstamp, reason) \n\
@@ -337,7 +481,8 @@ CMD:inactivity(playerid, params[])
 		);
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] approved %s[SQLID: %d] %d days long inactivity. Reason: %s",
+		Log_Write("logfiles/a_inactive_players.txt", 
+			"(%s) %s[A%d] approved %s[SQLID: %d] %d days long inactivity. Reason: %s",
 			ReturnDate(),
 			GetName(playerid,false),
 			PlayerInfo[playerid][pAdmin],
@@ -350,10 +495,26 @@ CMD:inactivity(playerid, params[])
 		
 		if(online)
 		{
-			va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Game Admin %s has allowed you an inactivity of %d days, reason: %s.", GetName(playerid, false), days, reason);
-			SendClientMessage(giveplayerid, COLOR_LIGHTRED, "WARNING: If you log in to your account during inactivity, it is automatically canceled!");
+			va_SendClientMessage(giveplayerid, 
+				COLOR_LIGHTBLUE, 
+				"Game Admin %s has allowed you an inactivity of %d days, reason: %s.", 
+				GetName(playerid, false), 
+				days, 
+				reason
+			);
+			SendClientMessage(giveplayerid, 
+				COLOR_LIGHTRED, 
+				"WARNING: If you log in to your account during inactivity, it is automatically canceled!"
+			);
 		}
-		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "You have successfully registered %s[SQLID: %d] inactivity of %d days. Reason: %s", playername, sqlid, days, reason);
+		va_SendClientMessage(playerid, 
+			COLOR_LIGHTBLUE, 
+			"You have successfully registered %s[SQLID: %d] inactivity of %d days. Reason: %s", 
+			playername, 
+			sqlid, 
+			days, 
+			reason
+		);
 	}
 	if(!strcmp(choice, "remove", true))
 	{
@@ -407,17 +568,17 @@ CMD:hon(playerid, params[])
 {
 	if(Helper_OnDuty(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "You are already on Helper duty!");
-    if(PlayerInfo[playerid][pHelper] >= 1)
-	{
-		SendClientMessage(playerid,COLOR_RED, "[!] You're on Helper duty now!");
-		Helper_SetOnDuty(playerid, true);
-        SetPlayerColor(playerid, COLOR_HELPER);
-		SetPlayerHealth(playerid, 100);
-		SetPlayerArmour(playerid, 100);
-        foreach (new i : Player)
-			SetPlayerMarkerForPlayer(i, playerid, COLOR_HELPER);
-    }
-    else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pHelper] < 1)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	
+	SendClientMessage(playerid,COLOR_RED, "[!] You're on Helper duty now!");
+	Helper_SetOnDuty(playerid, true);
+	SetPlayerColor(playerid, COLOR_HELPER);
+	SetPlayerHealth(playerid, 100);
+	SetPlayerArmour(playerid, 100);
+	foreach (new i : Player)
+		SetPlayerMarkerForPlayer(i, playerid, COLOR_HELPER);
+
 	return 1;
 }
 
@@ -425,17 +586,17 @@ CMD:hoff(playerid, params[])
 {
     if(!Helper_OnDuty(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "You are not on Helper duty!");
-    if(PlayerInfo[playerid][pHelper] >= 1)
-	{
-		SendClientMessage(playerid,COLOR_RED, "[!] You are no longer on Helper duty!");
-		Helper_SetOnDuty(playerid, false);
-        SetPlayerColor(playerid,TEAM_HIT_COLOR);
-		SetPlayerArmour(playerid, 0);
-		SetPlayerHealth(playerid, 100);
-		foreach (new i : Player)
-  			SetPlayerMarkerForPlayer(i, playerid, TEAM_HIT_COLOR);
-    }
-    else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pHelper] < 1)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+
+	SendClientMessage(playerid,COLOR_RED, "[!] You are no longer on Helper duty!");
+	Helper_SetOnDuty(playerid, false);
+	SetPlayerColor(playerid,TEAM_HIT_COLOR);
+	SetPlayerArmour(playerid, 0);
+	SetPlayerHealth(playerid, 100);
+	foreach (new i : Player)
+		SetPlayerMarkerForPlayer(i, playerid, TEAM_HIT_COLOR);
+
     return 1;
 }
 
@@ -482,20 +643,56 @@ CMD:ach(playerid, params[])
 
 CMD:playercars(playerid, params[]) 
 {
-	new 
-		Cache: mysql_search,
-		player_sqlid,
+	new
 		player_nick[MAX_PLAYER_NAME];
+	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /playercars [Name_Surname].");
+	new 
+		player_sqlid = ConvertNameToSQLID(player_nick);
+	if(player_sqlid == -1)
+		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", player_nick);
+
+	inline OnLoadPlayerVehicles()
+	{
+		if(!cache_num_rows())
+		{
+			va_SendMessage(playerid, 
+				MESSAGE_TYPE_ERROR, 
+				"%s doesn't own any vehicles.",
+				player_nick
+			);
+			return 1;
+		}
+		new 
+			tmpModelID,
+			tmpCarMysqlID;
 		
-	if(!IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /playercars [Ime_Prezime].");
-	
-	mysql_search = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", player_nick));
-	cache_get_value_name_int(0, "sqlid"	, player_sqlid);
-	cache_delete(mysql_search);
-	
-	ShowPlayerCars(playerid, player_sqlid, player_nick);
-	return (true);
+		va_SendClientMessage(playerid, COLOR_RED, "[%s's Vehicle List]:", player_nick);	
+		for( new i = 0; i < cache_num_rows(); i++) 
+		{
+			cache_get_value_name_int(i, "id", tmpCarMysqlID);
+			cache_get_value_name_int(i, "modelid", tmpModelID);
+			
+			va_SendClientMessage(playerid, 
+				COLOR_WHITE,
+				"Slot %d - %s [MySQL ID: %d].", 
+				(i + 1), 
+				ReturnVehicleName(tmpModelID), 
+				tmpCarMysqlID
+			);
+		}
+	}
+	MySQL_TQueryInline(SQL_Handle(),  
+		using inline OnLoadPlayerVehicles,
+		va_fquery(SQL_Handle(), "SELECT id, modelid FROM cocars WHERE ownerid = '%d' LIMIT %d", 
+			player_sqlid,
+			MAX_PLAYER_CARS
+		),
+		""
+	);
+	return 1;
 }
 
 CMD:teampin(playerid, params[])
@@ -1541,14 +1738,41 @@ CMD:fuelcar(playerid, params[])
 CMD:factionmembers(playerid, params[])
 {
     
-    if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	new orgid;
-	if(sscanf(params, "i", orgid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /factionmembers [Orgid]");
-	if(orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
+    if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	new 
+		orgid;
+	if(sscanf(params, "i", orgid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /factionmembers [Orgid]");
+	if(orgid < 1 || orgid > 16) 
+		return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
 	
-    mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE facMemId = '%d'", orgid), 
-		"CountFactionMembers", 
+	inline CountFactionMembers()
+	{
+		if(!cache_num_rows())
+		{ 
+			va_SendClientMessage(playerid, COLOR_RED, "[!] Faction %s has 0 members (0 is online)!", FactionInfo[orgid][fName]);
+			return 0;
+		}
+		new 
+			activeMembers = 0;
+		foreach(new i : Player)
+		{
+			if(PlayerFaction[i][pMember] == orgid || PlayerFaction[i][pLeader] == orgid)
+				activeMembers++;
+		}
+		va_SendClientMessage(playerid, 
+			COLOR_RED, 
+			"[!] Faction %s has %d members (%d is online)!", 
+			FactionInfo[orgid][fName], 
+			cache_num_rows(), 
+			activeMembers
+		);
+		return 1;
+	}
+    MySQL_TQueryInline(SQL_Handle(),
+		using inline CountFactionMembers,
+		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE facMemId = '%d'", orgid),  
 		"ii", 
 		playerid, 
 		orgid
@@ -2730,26 +2954,99 @@ CMD:mark(playerid, params[])
 // Administrator Level 2
 CMD:jobids(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	SendClientMessage( playerid, COLOR_LIGHTBLUE, "*_____________________ POSLOVI _____________________*");
-	SendClientMessage( playerid, COLOR_GREY, "LEGALNI: 1 - Sweeper, 2 - Pizza Boy, 3 - Mehanicar, 4 - Kosac trave, 5 - Tvornicki Radnik, 6 - Taksist, 7 - Farmer, 8 - Rudar");
-	SendClientMessage( playerid, COLOR_GREY, "LEGALNI: 14 - Drvosjeca, 15 - Trucker, 16 - Smecar");
-	SendClientMessage( playerid, COLOR_GREY, "10 - Drug Dealer, 12 - Gun Dealer, 13 - Car Jacker");
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+
+	SendClientMessage( playerid, COLOR_LIGHTBLUE, "*_____________________ JOBS & IDs _____________________*");
+	for(new i = 0; i < MAX_JOBS; i++)
+	{
+		va_SendClientMessage(playerid, 
+			COLOR_YELLOW, 
+			"ID %d - "COL_LIGHTBLUE"%s",
+			i,
+			ReturnJob(i)
+		);
+	}
 	return 1;
 }
 CMD:buyparkall(playerid, params[])
 {
-	new giveplayerid;
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /buyparkall [playerid / Part of name]");
-	if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
+	new 
+		giveplayerid;
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /buyparkall [playerid / Part of name]");
+	if(!IsPlayerConnected(giveplayerid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	
-	mysql_tquery(SQL_Handle(), 
+	inline MovePlayerVehicleParks()
+	{
+		new
+			cars = cache_num_rows(),
+			vehicleid = PlayerKeys[giveplayerid][pVehicleKey],
+			price = cars * 150;
+			
+		if(cars == 0)
+			return SendClientMessage(playerid, COLOR_RED, "Player has no car!");
+		else
+		{
+			if(GetPlayerMoney(giveplayerid) < price) 
+				return SendClientMessage(playerid, COLOR_RED, "Player does not have enough money.");
+			va_SendClientMessage(playerid, 
+				COLOR_RED, 
+				"[!]: You have successfully moved the parking lot \n\
+					of all vehicles to the player "COL_WHITE"%s"COL_YELLOW" - (%s). ", 
+				GetName(giveplayerid, true), 
+				FormatNumber(price)
+			);
+			va_SendClientMessage(giveplayerid, 
+				COLOR_RED, 
+				"[!]: Game Admin %s has moved the parking of all your vehicles. Cost - %s.", 
+				GetName(playerid, true), 
+				FormatNumber(price)
+			);
+			PlayerToBudgetMoney(giveplayerid, price);
+		}
+		new
+			Float:x,
+			Float:y,
+			Float:z,
+			Float:angle;
+
+		if(IsPlayerInAnyVehicle(playerid))
+		{
+			GetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
+			GetVehicleZAngle(GetPlayerVehicleID(playerid), angle);
+		}
+		else
+		{
+			GetPlayerPos(playerid, x, y, z);
+			GetPlayerFacingAngle(playerid, angle);
+		}
+		
+		mysql_fquery(SQL_Handle(), 
+			"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', viwo = '0' WHERE ownerid = '%d'",
+			x,
+			y,
+			z,
+			angle,
+			PlayerInfo[giveplayerid][pSQLID]
+		);
+		
+		if(vehicleid != -1) 
+		{
+			VehicleInfo[vehicleid][vParkX]	= x;
+			VehicleInfo[vehicleid][vParkY]	= y;
+			VehicleInfo[vehicleid][vParkZ]	= z;
+			VehicleInfo[vehicleid][vAngle] 	= angle;
+		}
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline MovePlayerVehicleParks,
 		va_fquery(SQL_Handle(), "SELECT COUNT(ownerid) FROM cocars WHERE ownerid = '%d'", PlayerInfo[giveplayerid][pSQLID]), 
-		"OfflinePlayerVehicles", 
-		"ii", 
-		playerid, 
-		giveplayerid
+		""
 	);
 	return 1;
 }
@@ -2769,20 +3066,62 @@ CMD:getip(playerid, params[])
 }
 CMD:iptoname(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 		ip[MAX_PLAYER_IP];
-	if(sscanf(params, "s[24]", ip)) return SendClientMessage(playerid, COLOR_RED, "[?]: /iptoname [IP adresa]");
-	if(strcount(ip, ".") < 3) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli valjnu IP adresu!");
+	if(sscanf(params, "s[24]", ip)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /iptoname [IP adresa]");
+	if(strcount(ip, ".") < 3) 
+		return SendClientMessage(playerid, COLOR_RED, "Please enter valid IP adress!");
 
-	mysql_tquery(SQL_Handle(),
+	inline LoadNamesFromIp()
+	{
+		if(!cache_num_rows()) 
+			return va_SendClientMessage(playerid, COLOR_RED, "No one logged in with an IP address: %s!", ip);
+
+		new
+			dialogString[1024],
+			motd[64],
+			tmpName[MAX_PLAYER_NAME],
+			tmpIp[MAX_PLAYER_IP],
+			tmpOnline;
+		
+		format(dialogString, 1024, "Ime\tIP adress\tOnline\n");
+		for(new i = 0; i < cache_num_rows(); i++) 
+		{
+			if(strlen(dialogString) > (1024 - 64))
+				return 1;
+
+			cache_get_value_name(i, "name", tmpName, sizeof(tmpName));
+			cache_get_value_name(i, "lastip", tmpIp, sizeof(tmpIp));
+			cache_get_value_name_int(i, "online", tmpOnline);
+			
+			format(motd, 64, "%s\t%s\t%s\n", 
+				tmpName, 
+				tmpIp,
+				(!tmpOnline) ? (""COL_RED"No") : (""COL_GREEN"Yes")
+			);
+			strcat(dialogString, motd, 1024);
+		}
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST_HEADERS, "IP Address to nickname", dialogString, "Ok", "");
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline LoadNamesFromIp,
 		va_fquery(SQL_Handle(), 
-			"SELECT name,online,lastip FROM  player_connects INNER JOIN\n\
-				accounts ON accounts.sqlid = player_connects.player_id WHERE aip = '%e'", ip), 
-		"LoadNamesFromIp", 
-		"is", 
-		playerid, 
-		ip
+			"SELECT \n\
+				name,online,lastip \n\
+			FROM \n\
+				player_connects \n\
+			INNER JOIN\n\
+				accounts \n\
+			ON \n\
+				accounts.sqlid = player_connects.player_id \n\
+			WHERE aip = '%e'", 
+			ip
+		), 
+		""
 	);
 	return 1;
 }
@@ -2800,76 +3139,153 @@ CMD:lastdriver(playerid, params[])
 
 CMD:prisonex(playerid, params[])
 {
-    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    targetname[MAX_PLAYER_NAME],
-	    sati,
+	    hours,
 		reason[20];
-    if(sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /prisonex [Ime][minute][reason]");
-    if(strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
+    if(sscanf(params,"s[24]is[20]", targetname, hours, reason)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /prisonex [Ime][minute][reason]");
+    if(strlen(reason) < 1 || strlen(reason) > 20) 
+		return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
-	new sqlid = ConvertNameToSQLID(targetname);
+	new 
+		sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
 		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", targetname);
 
-    mysql_tquery(SQL_Handle(), 
+	inline CheckPlayerPrison() 
+	{
+		new 
+			rows;
+		cache_get_row_count(rows);
+		if(!rows) 
+			return SendClientMessage(playerid,COLOR_RED, "That player's not in base!");
+		
+		new
+			prisoned,
+			minutes = hours * 60;
+			
+		cache_get_value_name_int(0, "jailed", prisoned);
+
+		if(prisoned != 0) 
+			return SendClientMessage(playerid,COLOR_RED, "That player's already in area/prison!");
+		
+		mysql_fquery(SQL_Handle(), 
+			"UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", 
+			minutes, 
+			sqlid
+		);
+			
+		va_SendClientMessage(playerid,
+			COLOR_RED, 
+			"[!] You have successfully placed the offline player %s in the arena for %d minutes.",
+			targetname, 
+			minutes
+		);
+		return 1;
+	}
+    MySQL_TQueryInline(SQL_Handle(),
+		using inline CheckPlayerPrison,
 		va_fquery(SQL_Handle(), "SELECT jailed FROM player_jail WHERE sqlid = '%d'", sqlid), 
-		"CheckPlayerPrison", 
 		"iisis", 
 		playerid,
 		sqlid,
 		targetname, 
-		sati, 
+		hours, 
 		reason
 	);
 	return 1;
 }
 
 CMD:warnex(playerid, params[])
-{
-    
-    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+{   
+    if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    targetname[MAX_PLAYER_NAME],
-	    reason[20];
-    if(sscanf(params,"s[24]s[20]", targetname, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /warnex [Ime][reason]");
-	if(strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
+	    reason[64];
+    if(sscanf(params,"s[24]s[64]", targetname, reason)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /warnex [Name_Surname][reason]");
+	if(strlen(reason) < 1 || strlen(reason) > 64) 
+		return SendClientMessage(playerid, COLOR_RED, "Reason can't be shorter then 1, or longer then 64 char!");
    	
-    mysql_tquery(SQL_Handle(), 
+	inline LoadPlayerWarns()
+	{
+		new
+			rows;
+		cache_get_row_count(rows);
+		if(!rows) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That account doesn't exist in datrabase.");
+		
+		new
+			currentwarns;
+		cache_get_value_name_int(0, "playaWarns", currentwarns);
+		new 
+			warns = currentwarns + 1;
+		if(warns == 3) 
+		{
+			MySQL_TQueryInline(SQL_Handle(),
+				using public OfflineBanPlayer, 
+				va_fquery(SQL_Handle(), "SELECT lastip FROM accounts WHERE name = '%e'", targetname), 
+				"issi", 
+				playerid, 
+				targetname, 
+				"3. Warn", 
+				10
+			);
+			SendClientMessage(playerid,COLOR_RED, "[!] That player had 3 warns and he's automatically banned!");
+			va_SendClientMessageToAll(COLOR_RED,
+				"AdmCMD: %s [Offline] got banned from Game Admin %s, reason: 3. Warn",
+				targetname,
+				GetName(playerid,false)
+			);
+			#if defined MODULE_LOGS
+			Log_Write("/logfiles/a_ban.txt", 
+				"(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", 
+				ReturnDate(), 
+				targetname, 
+				GetName(playerid, false)
+			);
+			#endif
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaWarns = '0' WHERE name = '%e'", targetname);
+		} 
+		else 
+		{
+			va_SendClientMessage(playerid,
+				COLOR_RED, 
+				"[!]: You have successfully warned player %s and that's his %d warn!",
+				targetname,
+				warns
+			);
+			mysql_fquery(SQL_Handle(), "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
+		}
+		return 1;
+	}
+    MySQL_TQueryInline(SQL_Handle(),
+		using inline LoadPlayerWarns, 
 		va_fquery(SQL_Handle(), "SELECT playaWarns FROM accounts WHERE name = '%e'", targetname), 
-		"LoadPlayerWarns", 
 		"iss", 
 		playerid, 
 		targetname, 
 		reason
 	);
 	
-	new sqlid, 
-		Cache:result = mysql_query(SQL_Handle(), va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname));
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_delete(result);
-	
-	new year, month, day, date[32];
-	getdate(year, month, day);
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
-	
-	new
-		forumname[MAX_PLAYER_NAME],
-		tmp_reason[32];
-		
-	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
-	
-	mysql_fquery_ex(SQL_Handle(), 
+	new 
+		sqlid = ConvertNameToSQLID(targetname);
+			
+	mysql_fquery(SQL_Handle(), 
 		"INSERT INTO \n\
 			warns \n\
-		(player_id,name, forumname, reason, date) \n\
+		(player_id, name, forumname, reason, date) \n\
 		VALUES \n\
 			('%d', '%e', '%e', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
-		tmp_reason,
-		date
+		reason,
+		ReturnDate()
 	);
 	return 1;
 }
@@ -3022,7 +3438,7 @@ CMD:charge(playerid, params[])
 	getdate(year, month, day);
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	mysql_fquery_ex(SQL_Handle(), 
+	mysql_fquery(SQL_Handle(), 
 		"INSERT INTO \n\
 			charges \n\
 		(player_id,name, admin_name, money, reason, date) \n\
@@ -3187,18 +3603,22 @@ CMD:newbies(playerid, params[])
 
 CMD:banex(playerid, params[])
 {
-    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    targetname[MAX_PLAYER_NAME],
-	    reason[24], days;
-		
-    if(sscanf(params,"s[24]s[24]i", targetname, reason, days)) return SendClientMessage(playerid, COLOR_RED, "[?]: /banex [Ime][reason][Dana (-1 za 4life)]");
-	if(strlen(targetname) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
-    if(strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
-	
-	mysql_tquery(SQL_Handle(), 
+	    reason[24], 
+		days;
+    if(sscanf(params,"s[24]s[24]i", targetname, reason, days)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /banex [Name_Surname][reason][Days (-1 = 4life)]");
+	if(strlen(targetname) > 24) 
+		return SendClientMessage(playerid, COLOR_RED, "Max. nick length is 24 chars!");
+    if(strlen(reason) < 1 || strlen(reason) > 24) 
+		return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
+	 
+	MySQL_TQueryInline(SQL_Handle(),
+		using public OfflineBanPlayer, 
 		va_fquery(SQL_Handle(), "SELECT lastip FROM accounts WHERE name = '%e'", targetname), 
-		"OfflineBanPlayer", 
 		"issi", 
 		playerid, 
 		targetname, 
@@ -3212,30 +3632,48 @@ CMD:banex(playerid, params[])
 
 CMD:jailex(playerid, params[])
 {
-	new LoopName[MAX_PLAYER_NAME];
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new
 	    giveplayername[24],
 	    time;
-	if(sscanf(params, "s[24]i", giveplayername, time)) return SendClientMessage(playerid, COLOR_RED, "[?]: /jailex [Ime][Time(minutes)]");
-	if(strlen(giveplayername) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
-	if(time < 1) return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!");
-	
+	if(sscanf(params, "s[24]i", giveplayername, time)) 
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /jailex [Name_Surname][Time(minutes)]");
+	if(strlen(giveplayername) > 24) 
+		return SendClientMessage(playerid, COLOR_RED, "Max name length is 24!");
+	if(time < 1) 
+		return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!");
+	new 
+		LoopName[MAX_PLAYER_NAME];
 	foreach (new i : Player)
 	{
 	    GetPlayerName(i, LoopName, sizeof(LoopName));
-		if(!strcmp(giveplayername, LoopName)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè je online!");
+		if(!strcmp(giveplayername, LoopName)) 
+			return SendClientMessage(playerid, COLOR_RED, "That player is currently online!");
 	}
 
-	mysql_tquery(SQL_Handle(), 
+	inline OfflineJailPlayer()
+	{
+		if(!cache_num_rows())
+			return SendClientMessage(playerid, COLOR_RED, "[ERROR - MySQL]: There's no player with that nickname!");
+
+		new 
+			sqlid;
+		cache_get_value_name_int(0,  "sqlid", sqlid);
+		mysql_fquery(SQL_Handle(), "UPDATE player_jail SET jailed = '1', jailtime = '%d' WHERE sqlid = '%d'", 
+			time, 
+			sqlid
+		); 
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OfflineJailPlayer,
 		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", giveplayername), 
-		"OfflineJailPlayer", 
 		"ii", 
 		playerid, 
 		time
 	);
-
-	va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste zatvorili igraca %s!", giveplayername);
+	va_SendClientMessage(playerid, COLOR_RED, "[!]: You have sucessfully jailed %s for %d minutes!", giveplayername, time);
 	return 1;
 }
 
@@ -3414,32 +3852,17 @@ CMD:unban(playerid, params[])
 CMD:warn(playerid, params[])
 {
 
-    if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new
         giveplayerid,
-		reason[24],
-
-		year,
-		month,
-		day;
-    if(sscanf(params, "us[24]", giveplayerid, reason)) return SendClientMessage(playerid, COLOR_RED, "[?]: /warn [ID / Part of name][reason]");
-	if(strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
-    if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
-	
-	new
-	    hour,
-		minute,
-		second;
-
-	GetServerTime(hour, minute, second);
-	getdate(year, month, day);
-
-	new
-	    date[20],
-	    time[20];
-	format(date, sizeof(date), "%02d.%02d.%d", day, month, year);
-	format(time, sizeof(time), "%02d:%02d:%02d", hour, minute, second);
-
+		reason[24];
+	if(sscanf(params, "us[64]", giveplayerid, reason)) 	
+		return SendClientMessage(playerid, COLOR_RED, "[?]: /warn [ID / Part of name][reason]");
+	if(strlen(reason) < 1 || strlen(reason) > 64) 
+		return SendClientMessage(playerid, COLOR_RED, "Max. reason length is 64, and minimal is 1 char!");
+    if(!IsPlayerConnected(giveplayerid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online, try using /warnex if you have a name!");
 
 	PlayerInfo[giveplayerid][pWarns] += 1;
 
@@ -3451,33 +3874,37 @@ CMD:warn(playerid, params[])
 	{
 		PlayerInfo[giveplayerid][pWarns] = 0;
 		#if defined MODULE_BANS
-		HOOK_Ban(giveplayerid, playerid, "Tri warna", 10, false);
+		HOOK_Ban(giveplayerid, playerid, "3 warns", 10, false);
 		BanMessage(giveplayerid);
 		#endif
 		return 1;
 	}
-	va_SendClientMessage(playerid, COLOR_RED, "AdmCMD: Upozorili ste Igraca %s, razlog: %s", GetName(giveplayerid,false), reason);
-	va_SendClientMessage(giveplayerid, COLOR_RED, "AdmCMD: Upozorio vas je Admin %s, razlog: %s", PlayerInfo[playerid][pForumName], reason);
-	SendClientMessage(giveplayerid, COLOR_RED, "[!] Radi Admin Warna, izgubili ste 10 trenutnih i Overall EXP-ova.");
 
-	new
-		forumname[MAX_PLAYER_NAME],
-		playername[MAX_PLAYER_NAME];
+	va_SendClientMessage(playerid, 
+		COLOR_RED, 
+		"AdmCMD: You have warned player %s. Reason: %s", 
+		GetName(giveplayerid,false), 
+		reason
+	);
+	va_SendClientMessage(giveplayerid, 
+		COLOR_RED, 
+		"AdmCMD: You have been warned by Game Admin %s. Reason: %s", 
+		PlayerInfo[playerid][pForumName], 
+		reason
+	);
+	SendClientMessage(giveplayerid, COLOR_RED, "[!]: As a penalty to warn, you lost 10 EXP points.");
 
-	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
-	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
-
-	mysql_fquery_ex(SQL_Handle(),
+	mysql_fquery(SQL_Handle(),
 		 "INSERT INTO \n\
 			warns \n\
-		(player_id,name, forumname, reason, date) \n\
+		(player_id, name, forumname, reason, date) \n\
 		VALUES \n\
 			('%d', '%e', '%e', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
-		playername,
+		GetName(playerid, false),
 		PlayerInfo[playerid][pForumName],
 		reason,
-		date
+		ReturnDate()
 	);
 	return 1;
 }
@@ -3829,9 +4256,60 @@ CMD:checklastlogin(playerid, params[])
 	if(sscanf(params, "s[24]", targetname)) 
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /checklastlogin [Ime_Prezime]");
 	
-    mysql_tquery(SQL_Handle(), 
+	inline CheckPlayerData()
+	{
+		if(!cache_num_rows()) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That account doesn't exist in database.");
+		new sqlid;
+		cache_get_value_name_int(0, "sqlid", sqlid);
+		
+		inline CheckLastLogin()
+		{
+			if(!cache_num_rows()) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Player doesn't exist in database!");
+			
+			new lastip[MAX_PLAYER_IP], lastdate, date[12], time[12];
+			cache_get_value_name_int(0, 	"time"	, lastdate);
+			cache_get_value_name(0,			"aip"	, lastip, MAX_PLAYER_IP);
+
+			TimeFormat(Timestamp:lastdate, HUMAN_DATE, date);
+			TimeFormat(Timestamp:lastdate, ISO6801_TIME, time);
+			
+			if(PlayerInfo[playerid][pAdmin])
+			{
+				va_SendClientMessage(playerid, COLOR_RED, "[!] Last time player %s was online: %s - %s, with an IP: %s.", 
+					targetname,
+					date,
+					time,
+					lastip
+				);
+			}
+			else
+			{
+				va_SendClientMessage(playerid, COLOR_RED, "[!] Last time player %s was online: %d.%d.%d - %d:%d:%d", 
+					targetname,
+					date[2],
+					date[1],
+					date[0],
+					date[3],
+					date[4],
+					date[5]
+				);
+			}
+			return 1;
+		}
+		MySQL_TQueryInline(SQL_Handle(), 
+			using inline CheckLastLogin,
+			va_fquery(SQL_Handle(), "SELECT * FROM player_connects WHERE player_id = '%d' ORDER BY time DESC LIMIT 1", sqlid), 
+			"is", 
+			playerid, 
+			targetname
+		);
+		return 1;
+	}
+    MySQL_TQueryInline(SQL_Handle(), 
+		using inline CheckPlayerData,
 		va_fquery(SQL_Handle(), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname), 
-		"CheckPlayerData", 
 		"is", 
 		playerid, 
 		targetname
@@ -3990,7 +4468,7 @@ CMD:checkoffline(playerid, params[])
 		);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline CheckOffline, 
 		va_fquery(SQL_Handle(), 
 			"SELECT \n\
@@ -4814,20 +5292,17 @@ CMD:complex_id(playerid, params[])
 
 CMD:adminmsg(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	if(PlayerInfo[playerid][pAdmin] < 1)
+		 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 
-	new playerb[25], n_reason[128];
+	new 
+		playerb[25], 
+		n_reason[128];
 
 	if(sscanf(params, "s[25]s[128]", playerb, n_reason))
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /adminmsg [character name][message]");
 
-    mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT sqlid, online FROM accounts WHERE name = '%e'", playerb), 
-		"AddAdminMessage", "iss", 
-		playerid, 
-		playerb, 
-		n_reason
-	);
+	InsertAdminMessage(playerid, playerb, n_reason);
 	return 1;
 }
 

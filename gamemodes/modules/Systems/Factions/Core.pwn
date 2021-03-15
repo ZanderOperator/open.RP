@@ -134,7 +134,7 @@ LoadPlayerFaction(playerid)
     {
         if(!cache_num_rows())
         {
-            mysql_fquery_ex(SQL_Handle(), 
+            mysql_fquery(SQL_Handle(), 
                 "INSERT INTO \n\
                     player_faction \n\
                 (sqlid, facLeadId, facMemId, facRank) \n\
@@ -149,7 +149,7 @@ LoadPlayerFaction(playerid)
         cache_get_value_name_int(0,  "facRank"		, PlayerFaction[playerid][pRank]);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline LoadingPlayerFaction,
         va_fquery(SQL_Handle(), "SELECT * FROM player_faction WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
@@ -166,7 +166,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerFaction(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
         PlayerFaction[playerid][pLeader],
         PlayerFaction[playerid][pMember],
@@ -252,7 +252,7 @@ stock LoadFactions()
         printf("MySQL Report: Factions Loaded. [%d/%d]", Iter_Count(Faction), MAX_FACTIONS);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnFactionsLoaded,
         va_fquery(SQL_Handle(), "SELECT * FROM server_factions WHERE 1"), 
         ""
@@ -284,7 +284,7 @@ stock LoadFactionPermissions(factionid)
         cache_get_value_name_int(0,    "listensms"   ,    FactionInfo[factionid][rLstnSMS]);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnFactionPermissionsLoaded, 
         va_fquery(SQL_Handle(), "SELECT * FROM server_factions_permissions WHERE id = '%d'", FactionInfo[factionid][fID]), 
         "i", 
@@ -346,7 +346,7 @@ stock SaveFaction(orgid)
         FactionInfo[orgid][fID] = orgid;
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
         using inline OnAdminFactionCreate,
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -928,84 +928,6 @@ timer OnPlayerBackup[1000](playerid)
     }
     return 1;
 }
-
-forward UninvitePlayer(playerid, const targetname[]);
-public UninvitePlayer(playerid, const targetname[])
-{
-    new rows, string[128];
-    cache_get_row_count(rows);
-
-    if(!rows)
-    {
-        SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji korisnik s tim nickom!");
-        return 1;
-    }
-
-    new playerMember, playerLeader, playerSQLID;
-    cache_get_value_name_int(0, "sqlid", playerSQLID);
-    cache_get_value_name_int(0, "facLeadId", playerLeader);
-    cache_get_value_name_int(0, "facMemId", playerMember);   
-
-    if(playerMember != PlayerFaction[playerid][pMember] || playerLeader != PlayerFaction[playerid][pLeader])
-    {
-        SendClientMessage(playerid, COLOR_RED, "Igrac nije u tvojoj organizaciji! ");
-        return 1;
-    }
-
-    mysql_fquery(SQL_Handle(), 
-        "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
-        playerSQLID
-   );
-
-    mysql_fquery(SQL_Handle(), 
-        "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'", 
-        playerSQLID
-   );
-
-    mysql_fquery(SQL_Handle(), "DELETE FROM player_weapons WHERE player_id = '%d'", playerSQLID);
-
-    format(string, sizeof(string), "[!] Uspjesno ste izbacili igraca %s", targetname);
-    SendClientMessage(playerid, COLOR_GREEN, string);
-    return 1;
-}
-
-forward OnFactionMembersList(playerid);
-public OnFactionMembersList(playerid)
-{
-    if(!cache_num_rows())
-    {
-        SendClientMessage(playerid, COLOR_RED, "[!] Nema nikoga u trazenoj organizaciji!");
-        return 1;
-    }
-
-    new
-        memberRank, 
-        sqlid;
-
-    SendClientMessage(playerid, COLOR_LIGHTBLUE, "*__________________________[SVI CLANOVI]__________________________*");
-    for (new row = 0; row < cache_num_rows(); row++)
-    {
-        cache_get_value_name_int( row, "sqlid", sqlid);
-        cache_get_value_name_int( row, "facRank", memberRank);
-        va_SendClientMessage(playerid, COLOR_WHITE, "[IME]: %s | [RANK]: %d", ConvertSQLIDToName(sqlid), memberRank);
-    }
-    return 1;
-}
-
-forward OnFactionCountings(playerid);
-public OnFactionCountings(playerid)
-{
-    new num_rows = cache_num_rows();
-    if(!num_rows)
-    {
-        SendClientMessage(playerid, COLOR_RED, "[!] Nema nikoga u vasoj organizaciji!");
-        return 1;
-    }
-
-    va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Stanje organizacije (%d/%d)", CountMembers(PlayerFaction[playerid][pMember]), num_rows);
-    return 1;
-}
-
 
 /*
     ##     ##  #######   #######  ##    ##  ######  
@@ -1869,34 +1791,97 @@ CMD:faction(playerid, params[])
     }
     else if(!strcmp(option, "uninviteex", true))
     {
-        if(!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-
-        new targetname[MAX_PLAYER_NAME];
-        if(sscanf(params, "s[16]s[24]", option, targetname)) return SendClientMessage(playerid, COLOR_RED, "[?]: /faction uninviteex [ime]");
-        if(!IsValidNick(targetname)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti roleplay nick!");
-        new sqlid = ConvertNameToSQLID(targetname);
+        if(!PlayerFaction[playerid][pLeader]) 
+            return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        new 
+            targetname[MAX_PLAYER_NAME];
+        if(sscanf(params, "s[16]s[24]", option, targetname)) 
+            return SendClientMessage(playerid, COLOR_RED, "[?]: /faction uninviteex [ime]");
+        if(!IsValidNick(targetname)) 
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti roleplay nick!");
+        new 
+            sqlid = ConvertNameToSQLID(targetname);
         if(sqlid == -1)
             return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik %s ne postoji u bazi podataka.", targetname);
 
-        mysql_tquery(SQL_Handle(), 
+        inline  UninvitePlayer()
+        {
+            new 
+                rows;
+            cache_get_row_count(rows);
+
+            if(!rows)
+            {
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji korisnik s tim nickom!");
+                return 1;
+            }
+
+            new playerMember, playerLeader, playerSQLID;
+            cache_get_value_name_int(0, "sqlid", playerSQLID);
+            cache_get_value_name_int(0, "facLeadId", playerLeader);
+            cache_get_value_name_int(0, "facMemId", playerMember);   
+
+            if(playerMember != PlayerFaction[playerid][pMember] || playerLeader != PlayerFaction[playerid][pLeader])
+            {
+                SendClientMessage(playerid, COLOR_RED, "Igrac nije u tvojoj organizaciji! ");
+                return 1;
+            }
+
+            mysql_fquery(SQL_Handle(), 
+                "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
+                playerSQLID
+            );
+
+            mysql_fquery(SQL_Handle(), 
+                "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'", 
+                playerSQLID
+            );
+
+            mysql_fquery(SQL_Handle(), "DELETE FROM player_weapons WHERE player_id = '%d'", playerSQLID);
+
+            va_SendClientMessage(playerid, COLOR_GREEN,  "[!] Uspjesno ste izbacili igraca %s", targetname);
+            return 1;
+        }
+        MySQL_TQueryInline(SQL_Handle(), 
+            using inline UninvitePlayer,
             va_fquery(SQL_Handle(), "SELECT * FROM player_faction WHERE sqlid = '%d'", sqlid), 
-            "UninvitePlayer", 
             "is", 
             playerid, 
             targetname
-       );
+        );
         return 1;
     }
     else if(!strcmp(option, "allmembers", true))
     {
-        if(!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if(!PlayerFaction[playerid][pLeader]) 
+            return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         
-        mysql_tquery(SQL_Handle(), 
+        inline OnFactionMembersList()
+        {
+            if(!cache_num_rows())
+            {
+                SendClientMessage(playerid, COLOR_RED, "[!] Nema nikoga u trazenoj organizaciji!");
+                return 1;
+            }
+
+            new
+                memberRank, 
+                sqlid;
+            SendClientMessage(playerid, COLOR_LIGHTBLUE, "*__________________________[SVI CLANOVI]__________________________*");
+            for (new row = 0; row < cache_num_rows(); row++)
+            {
+                cache_get_value_name_int( row, "sqlid", sqlid);
+                cache_get_value_name_int( row, "facRank", memberRank);
+                va_SendClientMessage(playerid, COLOR_WHITE, "[Name]: %s | [Rank]: %d", ConvertSQLIDToName(sqlid), memberRank);
+            }
+            return 1;
+        }
+        MySQL_TQueryInline(SQL_Handle(), 
+            using inline OnFactionMembersList,
             va_fquery(SQL_Handle(),  "SELECT sqlid, facRank FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
                 PlayerFaction[playerid][pLeader], 
                 PlayerFaction[playerid][pLeader]
-           ), 
-            "OnFactionMembersList", 
+            ), 
             "i", 
             playerid
        );
@@ -1904,16 +1889,26 @@ CMD:faction(playerid, params[])
     }
     else if(!strcmp(option, "counts", true))
     {
-        mysql_tquery(SQL_Handle(), 
+        inline OnFactionCountings()
+        {
+            new 
+                num_rows = cache_num_rows();
+            if(!num_rows)
+                return SendClientMessage(playerid, COLOR_RED, "[!] Nema nikoga u vasoj organizaciji!");
+
+            va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Stanje organizacije (%d/%d)", CountMembers(PlayerFaction[playerid][pMember]), num_rows);
+            return 1;
+        }
+        MySQL_TQueryInline(SQL_Handle(), 
+            using inline OnFactionCountings,
             va_fquery(SQL_Handle(), 
                 "SELECT sqlid FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
                 PlayerFaction[playerid][pLeader], 
                 PlayerFaction[playerid][pLeader]
-           ), 
-            "OnFactionCountings",
+            ), 
             "i", 
             playerid
-       );
+        );
         return 1;
     }
     else if(!strcmp(option, "resetcars", true))

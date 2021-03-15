@@ -359,7 +359,7 @@ static InsertFurnitureObject(houseid, index)
         HouseInfo[houseid][hFurSQL][index] = cache_insert_id();
         Iter_Add(HouseFurInt[houseid], index);
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnFurnitureObjectCreated,
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -464,7 +464,7 @@ stock LoadHouseFurnitureObjects(houseid)
         HouseInfo[houseid][hFurLoaded] = true;
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnFurnitureObjectsLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
         "i", 
@@ -1267,7 +1267,7 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
     Iter_Clear(HouseFurInt[houseid]);
 
-    mysql_fquery_ex(SQL_Handle(), "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
+    mysql_fquery(SQL_Handle(), "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
 
     mysql_fquery(SQL_Handle(), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 

@@ -191,7 +191,7 @@ stock LoadGraffits()
         printf("MySQL Report: Graffitis Loaded. [%d/%d]", Iter_Count(Graffits), MAX_GRAFS);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnGraffitsLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM graffiti WHERE 1 LIMIT 0, %d", MAX_GRAFS), 
         ""
@@ -323,7 +323,7 @@ static InsertGraffitIntoDB(grafid)
         GraffitInfo[grafid][gId] = cache_insert_id();
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
         using inline OnGraffitCreate,
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
@@ -569,7 +569,7 @@ stock LoadTags()
         printf("MySQL Report: Spray Tags Loaded. [%d/%d]", Iter_Count(SprayTags), MAX_TAGS);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
         using inline OnTagsLoaded,
         va_fquery(SQL_Handle(), "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
         ""
@@ -659,7 +659,7 @@ stock GetOfficialGangTag(playerid)
 
 stock InsertSprayTagIntoDB(tagid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "INSERT INTO \n\
             spraytags \n\
         (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) \n\

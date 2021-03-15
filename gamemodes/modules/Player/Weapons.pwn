@@ -201,7 +201,7 @@ static AC_LoadPlayerWeapons(playerid)
 		}
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline LoadPlayerWeapons,
 		va_fquery(SQL_Handle(), "SELECT * FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"i", 
@@ -243,7 +243,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 			Iter_Add(P_Weapons[playerid], slotid);
 			return 1;
 		}
-		MySQL_PQueryInline(SQL_Handle(),
+		MySQL_TQueryInline(SQL_Handle(),
 			using inline OnWeaponInsertQuery, 
 			va_fquery(SQL_Handle(), 
 				"INSERT INTO \n\

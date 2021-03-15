@@ -6,7 +6,7 @@ LoadPlayerCooldowns(playerid)
     {
         if(!cache_num_rows())
         {
-            mysql_fquery_ex(SQL_Handle(), 
+            mysql_fquery(SQL_Handle(), 
                 "INSERT INTO \n\
                     player_cooldowns \n\
                 (sqlid, casinocooldown, jackercooldown, ammucooldown) \n\
@@ -21,7 +21,7 @@ LoadPlayerCooldowns(playerid)
         cache_get_value_name_int(0, "ammucooldown"		    , PlayerCoolDown[playerid][pAmmuCool]);  
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline LoadingPlayerCooldowns, 
         va_fquery(SQL_Handle(), "SELECT * FROM player_cooldowns WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         ""
@@ -37,7 +37,7 @@ hook function LoadPlayerStats(playerid)
 
 SavePlayerCoolDowns(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_cooldowns SET casinocooldown = '%d', jackercooldown = '%d', ammucooldown = '%d' \n\
             WHERE sqlid = '%d'",
         PlayerCoolDown[playerid][pCasinoCool],

@@ -692,25 +692,16 @@ stock HandlePlayerObjectSelection(playerid, item)
 	return 1;
 }
 
-stock LoadPlayerObjects(playerid)
+static LoadPlayerObjects(playerid)
 {
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
-			PlayerInfo[playerid][pSQLID]
-		), 
-		"OnPlayerObjectsLoad", 
-		"i", 
-		playerid
-	);
-	return 1;
-}
-
-forward OnPlayerObjectsLoad(playerid);
-public OnPlayerObjectsLoad(playerid)
-{
-	if(cache_num_rows()) 
+	inline OnPlayerObjectsLoad()
 	{
-	    for( new i = 0; i < cache_num_rows(); i++) 
+		new 
+			rows = cache_num_rows();
+		if(!rows)
+			return 1;
+
+		for( new i = 0; i < rows; i++) 
 		{
 			cache_get_value_name_int(i, 	"sqlid"	, PlayerObject[playerid][i][poSQLID]);
 			cache_get_value_name_int(i, 	"model"	, PlayerObject[playerid][i][poModelid]);
@@ -728,8 +719,17 @@ public OnPlayerObjectsLoad(playerid)
 			cache_get_value_name_int(i, 	"color1"	, PlayerObject[playerid][i][poColor1]);
 			cache_get_value_name_int(i, 	"color2"	, PlayerObject[playerid][i][poColor2]);
 		}
+		SetPlayerObjects(playerid);
+		return 1;
 	}
-	SetPlayerObjects(playerid);
+	MySQL_TQueryInline(SQL_Handle(), 
+		using inline OnPlayerObjectsLoad,
+		va_fquery(SQL_Handle(), "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
+			PlayerInfo[playerid][pSQLID]
+		), 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
@@ -750,7 +750,7 @@ stock InsertObjectSlot(playerid, slot)
 		SaveObjectSlot(playerid, slot);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPlayerObjectInsert,
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\

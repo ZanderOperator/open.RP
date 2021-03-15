@@ -67,7 +67,7 @@ stock LoadCityStuff()
         print("MySQL Report: City Info Loaded!");
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnCityLoaded, 
         "SELECT * FROM city WHERE 1", 
         ""
@@ -248,7 +248,7 @@ static CheckPlayerTransactions(playerid, const name[])
         ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnPlayerTransactionFinish,
         va_fquery(SQL_Handle(), 
             "SELECT \n\
@@ -327,7 +327,7 @@ static ListServerTransactions(playerid, type)
         ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnTransListQueryFinish,
         va_fquery(SQL_Handle(), "SELECT * FROM server_transactions WHERE logtype = '%d' ORDER BY id DESC", type), 
         "ii", 

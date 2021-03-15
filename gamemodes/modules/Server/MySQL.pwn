@@ -29,13 +29,6 @@ mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 	return mysql_tquery(connectionHandle, va_query);
 }
 
-// Formated mysql_pquery
-mysql_fquery_ex(MySQL:connectionHandle, const fquery[], va_args<>)
-{
-	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
-	return mysql_pquery(connectionHandle, va_query);
-}
-
 // Formated mysql_format with direct string returning
 va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {

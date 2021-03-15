@@ -252,7 +252,7 @@ static LoadTowerData()
 		printf("MySQL Report: Signal Towers Loaded. [%d/%d]", rows, MAX_TOWERS);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(), 
+	MySQL_TQueryInline(SQL_Handle(), 
 		using inline OnTowerLoaded,
 		va_fquery(SQL_Handle(), "SELECT * FROM signaltowers WHERE 1"), 
 		""
@@ -277,7 +277,7 @@ stock LoadPlayerContacts(playerid)
 		}
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPlayerContactsLoad,
 		va_fquery(SQL_Handle(), "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT %d", 
 			PlayerInfo[playerid][pSQLID],
@@ -312,7 +312,7 @@ static InsertMobileContact(playerid, slotid)
 		Iter_Add(MobileContacts[playerid], slotid);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),
+	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnMobileContactInsert,
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO player_mobile_contacts(player_id, title, number) VALUES ('%d', '%e', '%d')",
@@ -341,7 +341,7 @@ stock SavePlayerMobile(playerid, type=1)
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery_ex(SQL_Handle(), 
+		mysql_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
 				player_phones \n\
 			(player_id, type, model, number, money, background, mask, time) \n\
@@ -363,7 +363,7 @@ stock SavePlayerMobile(playerid, type=1)
 			PlayerInfo[playerid][pSQLID]
 		);
 
-		mysql_fquery_ex(SQL_Handle(), 
+		mysql_fquery(SQL_Handle(), 
 			"INSERT INTO \n\
 				player_phones(player_id, type, model, number, money, background, mask, time, cryptonumber) \n\
 			VALUES \n\
@@ -486,23 +486,16 @@ hook function SavePlayerStats(playerid)
 	return continue(playerid);
 }
 
-stock LoadPlayerMobile(playerid)
+static LoadPlayerMobile(playerid)
 {
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM player_phones WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
-		"OnPlayerMobileLoad", 
-		"i", 
-		playerid
-	);
-	return 1;
-}
-
-forward OnPlayerMobileLoad(playerid);
-public OnPlayerMobileLoad(playerid)
-{
-	if(cache_num_rows())
+	inline OnPlayerMobileLoad()
 	{
-	    for( new i = 0; i < cache_num_rows(); i++)
+		new
+			rows = cache_num_rows();
+		if(!rows)
+			return 1;
+
+		for( new i = 0; i < cache_num_rows(); i++)
 		{
 			new
 				mobileType;
@@ -519,14 +512,18 @@ public OnPlayerMobileLoad(playerid)
 				LoadPlayerContacts(playerid);
 			}
 			else if(mobileType == 2)
-			{
 				cache_get_value_name_int(i, "cryptonumber", PlayerMobile[playerid][pCryptoNumber]);
-			}
 		}
+		return 1;
 	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline OnPlayerMobileLoad, 
+		va_fquery(SQL_Handle(), "SELECT * FROM player_phones WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+		"i", 
+		playerid
+	);
 	return 1;
 }
-
 
 hook function LoadPlayerStats(playerid)
 {
@@ -572,7 +569,7 @@ stock CreateTower(towerid)
 		TowerInfo[towerid][twSQLID] = cache_insert_id();
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(), 
+	MySQL_TQueryInline(SQL_Handle(), 
 		using inline OnTowerCreated,
 		va_fquery(SQL_Handle(), 
 			"INSERT INTO \n\

@@ -243,7 +243,7 @@ stock LoadHouseGarages()
         printf("MySQL Report: Garages Loaded. [%d/%d]", num_rows, MAX_GARAGES);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnHouseGaragesLoad, 
         va_fquery(SQL_Handle(), "SELECT * FROM server_garages WHERE 1"), 
         ""
@@ -659,7 +659,7 @@ CMD:create_garage(playerid, params[])
         GarageInfo[garage][gSQLID] = cache_insert_id();
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnGarageCreated, 
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\

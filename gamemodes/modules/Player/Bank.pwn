@@ -35,7 +35,7 @@ LoadPlayerCredit(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_credits \n\
 				(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
@@ -53,7 +53,7 @@ LoadPlayerCredit(playerid)
 		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
 		return 1;
 	}
-	MySQL_PQueryInline(SQL_Handle(),  
+	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnPlayerCreditLoad, 
 		va_fquery(SQL_Handle(), "SELECT * FROM player_credits WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
 		"i", 
@@ -64,7 +64,7 @@ LoadPlayerCredit(playerid)
 
 SavePlayerCredit(playerid)
 {
-	mysql_fquery_ex(SQL_Handle(), 
+	mysql_fquery(SQL_Handle(), 
 		"UPDATE player_credits SET rate = '%d', type = '%d', amount = '%d',\n\
 			unpaid = '%d', used = '%d', timestamp = '%d' WHERE sqlid = '%d'",
 		CreditInfo[playerid][cRate],
@@ -84,7 +84,7 @@ LoadPlayerSavings(playerid)
 	{
 		if(!cache_num_rows())
 		{
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_savings \n\
 				(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
@@ -101,7 +101,7 @@ LoadPlayerSavings(playerid)
 		return 1;
 	}
 
-    MySQL_PQueryInline(SQL_Handle(), 
+    MySQL_TQueryInline(SQL_Handle(), 
 		using inline LoadingPlayerSavings,
         va_fquery(SQL_Handle(), "SELECT * FROM player_savings WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
@@ -113,7 +113,7 @@ LoadPlayerSavings(playerid)
 
 SavePlayerSavings(playerid)
 {
-    mysql_fquery_ex(SQL_Handle(),
+    mysql_fquery(SQL_Handle(),
         "UPDATE player_savings SET savings_cool = '%d', savings_time = '%d', savings_type = '%d',\n\
             savings_money = '%d' WHERE sqlid = '%d'",
         PlayerSavings[playerid][pSavingsCool],

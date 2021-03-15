@@ -76,25 +76,16 @@ new
 	- mySQL
 */
 
-LoadPlayerPackage(playerid) 
+static LoadPlayerPackage(playerid) 
 {
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM player_wpackages WHERE playerSQL = '%d' LIMIT %d",
-			PlayerInfo[playerid][pSQLID],
-			MAX_PLAYER_PACKAGES
-		),
-		"LoadingPlayerPackages", 
-		"i", 
-		playerid
-	);
-	return (true);
-}
-
-Public: LoadingPlayerPackages(playerid) 
-{
-	if(cache_num_rows()) 
+	inline LoadingPlayerPackages() 
 	{
-		for(new i = 0; i < cache_num_rows(); i++) 
+		new 
+			rows = cache_num_rows();
+		if(!rows) 
+			return 1;
+		
+		for(new i = 0; i < rows; i++) 
 		{
 			cache_get_value_name_int(i, "id", PlayerPackage[playerid][p_SQLID][i]);
 			cache_get_value_name_int(i, "weap", PlayerPackage[playerid][p_weapon][i]);
@@ -103,8 +94,18 @@ Public: LoadingPlayerPackages(playerid)
 			Iter_Add(P_PACKAGES[playerid], i);
 			PlayerPackage[playerid][packExists][i] = 1;
 		}
+		return 1;
 	}
-	return (true);
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline LoadingPlayerPackages,
+		va_fquery(SQL_Handle(), "SELECT * FROM player_wpackages WHERE playerSQL = '%d' LIMIT %d",
+			PlayerInfo[playerid][pSQLID],
+			MAX_PLAYER_PACKAGES
+		),
+		"i", 
+		playerid
+	);
+	return 1;
 }
 
 hook OnGameModeInit()
@@ -125,33 +126,35 @@ hook function LoadPlayerStats(playerid)
 	return continue(playerid);
 }
 
-stock LoadVehiclePackage(vehicleid) 
+LoadVehiclePackages(vehicleid) 
 {
-	mysql_tquery(SQL_Handle(), 
-		va_fquery(SQL_Handle(), "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT %d", 
-			VehicleInfo[vehicleid][vSQLID],
-			MAX_PACKAGE_VEHICLE
-		), 
-		"LoadingVehiclePackages", 
-		"i", 
-		vehicleid
-	);
-	return 1;
-}
-Public: LoadingVehiclePackages(vehicleid) 
-{
-	if(cache_num_rows()) 
+	inline LoadingVehiclePackages() 
 	{
-	    for(new i = 0; i < cache_num_rows(); i++)
-		 {
+		new 
+			rows = cache_num_rows();
+		if(!rows) 
+			return 1;
+
+		for(new i = 0; i < cache_num_rows(); i++)
+		{
 			cache_get_value_name_int(i, "id", VehicleInfo[vehicleid][packSQLID][i]);
 			cache_get_value_name_int(i, "weap", VehicleInfo[vehicleid][packWepID][i]);
 			cache_get_value_name_int(i, "ammo", VehicleInfo[vehicleid][packAmmo][i]);
 
 			Iter_Add(V_PACKAGES[vehicleid], i);
 		}
-	}
-	return (true);
+		return 1;
+ 	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline LoadingVehiclePackages, 
+		va_fquery(SQL_Handle(), "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT %d", 
+			VehicleInfo[vehicleid][vSQLID],
+			MAX_PACKAGE_VEHICLE
+		), 
+		"i", 
+		vehicleid
+	);
+	return 1;
 }
 
 /*
@@ -180,13 +183,18 @@ ListPlayerPackages(playerid, forplayerid)
 
 SavePlayerPackages(playerid, slot) 
 {
-	mysql_tquery(SQL_Handle(), 
+	inline StorePPackageInDB()
+	{
+		PlayerPackage[playerid][p_SQLID][slot] = cache_insert_id();
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline StorePPackageInDB, 
 		va_fquery(SQL_Handle(), "INSERT INTO player_wpackages(playerSQL, weap, ammo) VALUES ('%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerPackage[playerid][p_weapon][slot],
 			PlayerPackage[playerid][p_amount][slot]
 		), 
-		"StorePPackageInDB", 
 		"ii", 
 		playerid, 
 		slot
@@ -205,31 +213,24 @@ RemoveWeaponPackages(playerid)
 	return 1;
 }
 
-Public:StorePPackageInDB(playerid, slot) 
-{
-	PlayerPackage[playerid][p_SQLID][slot] = cache_insert_id();
-	return (true);
-}
-
 SaveVehiclePackages(vehicleid, slot) 
 {
-	mysql_tquery(SQL_Handle(), 
+	inline StoreVPackageInDB() 
+	{
+		VehicleInfo[vehicleid][packSQLID][slot] = cache_insert_id();
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline StoreVPackageInDB,
 		va_fquery(SQL_Handle(), "INSERT INTO cocars_wpackages(vehicleid, weap, ammo) VALUES ('%d','%d','%d')",
 			VehicleInfo[vehicleid][vSQLID],
 			VehicleInfo[vehicleid][packWepID][slot],
 			VehicleInfo[vehicleid][packAmmo][slot]
 		), 
-		"StorePackageInDB", 
 		"ii", 
 		vehicleid, 
 		slot
 	);
-	return (true);
-}
-
-Public:StorePackageInDB(vehicleid, slot) 
-{
-	VehicleInfo[vehicleid][packSQLID][slot] = cache_insert_id();
 	return (true);
 }
 

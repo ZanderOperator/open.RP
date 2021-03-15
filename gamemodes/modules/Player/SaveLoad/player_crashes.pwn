@@ -88,31 +88,30 @@ FinalPlayerCheck(playerid)
 
 static LoadPlayerCrashes(playerid)
 {
-	mysql_tquery(SQL_Handle(), 
+	inline LoadingPlayerCrashes()
+	{
+		if(!cache_num_rows()) 
+			return 0;
+		
+		cache_get_value_name_int(0,			"id"		, PlayerCrash[playerid][pCrashId]);
+		cache_get_value_name_float(0,		"pos_x"		, PlayerCrash[playerid][pCrashX]);
+		cache_get_value_name_float(0,		"pos_y"		, PlayerCrash[playerid][pCrashY]);
+		cache_get_value_name_float(0,		"pos_z"		, PlayerCrash[playerid][pCrashZ]);
+		cache_get_value_name_int(0, 		"interior"	, PlayerCrash[playerid][pCrashInt]);
+		cache_get_value_name_int(0, 		"viwo"		, PlayerCrash[playerid][pCrashVW]);
+		cache_get_value_name_int(0, 		"skin"		, PlayerAppearance[playerid][pTmpSkin]);
+		cache_get_value_name_float(0,		"armor"		, PlayerCrash[playerid][pCrashArmour]);
+		cache_get_value_name_float(0,		"health"	, PlayerCrash[playerid][pCrashHealth]);
+		return 1;
+	}
+	MySQL_TQueryInline(SQL_Handle(),
+		using inline LoadingPlayerCrashes,
 		va_fquery(SQL_Handle(), "SELECT * FROM player_crashes WHERE player_id = '%d'", 
-			PlayerInfo[playerid][pSQLID]), 
-		"LoadingPlayerCrashes", 
+			PlayerInfo[playerid][pSQLID]
+		), 
 		"i", 
 		playerid
 	);
-	return 1;
-}
-
-forward LoadingPlayerCrashes(playerid);
-public LoadingPlayerCrashes(playerid)
-{
-	if(!cache_num_rows()) 
-		return 0;
-	
-	cache_get_value_name_int(0,			"id"		, PlayerCrash[playerid][pCrashId]);
-	cache_get_value_name_float(0,		"pos_x"		, PlayerCrash[playerid][pCrashX]);
-	cache_get_value_name_float(0,		"pos_y"		, PlayerCrash[playerid][pCrashY]);
-	cache_get_value_name_float(0,		"pos_z"		, PlayerCrash[playerid][pCrashZ]);
-	cache_get_value_name_int(0, 		"interior"	, PlayerCrash[playerid][pCrashInt]);
-	cache_get_value_name_int(0, 		"viwo"		, PlayerCrash[playerid][pCrashVW]);
-	cache_get_value_name_int(0, 		"skin"		, PlayerAppearance[playerid][pTmpSkin]);
-	cache_get_value_name_float(0,		"armor"		, PlayerCrash[playerid][pCrashArmour]);
-	cache_get_value_name_float(0,		"health"	, PlayerCrash[playerid][pCrashHealth]);
 	return 1;
 }
 
@@ -141,7 +140,7 @@ CheckPlayerCrash(playerid, reason)
                 PlayerCrash[playerid][pCrashZ]
            	);
 
-			mysql_fquery_ex(SQL_Handle(), 
+			mysql_fquery(SQL_Handle(), 
 				"INSERT INTO \n\
 					player_crashes \n\
 				(player_id, pos_x, pos_y, pos_z, interior, viwo, armor, health, skin, time) \n\

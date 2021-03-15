@@ -232,7 +232,7 @@ LoadHouseExterior(houseid)
         }
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnHouseExteriorLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]),
         "i", 
@@ -328,7 +328,7 @@ static CreateExteriorObject(playerid)
         Iter_Add(HouseFurExt[houseid], index);
         return 1;
     }
-    MySQL_PQueryInline(SQL_Handle(),
+    MySQL_TQueryInline(SQL_Handle(),
         using inline OnExteriorObjectInsert, 
         va_fquery(SQL_Handle(), 
             "INSERT INTO \n\
