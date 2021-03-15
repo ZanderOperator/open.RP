@@ -151,7 +151,7 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,
 			sizeof(f_dialog), 
 			"\n{FA5555}[A 1338]: /exp, /custombizint, /createvehicle, /bizint, /houseint, /afaction\n\
-				/changepass, "COL_RED"/teampin - Promjena passworda/Team PIN-a."
+				/changepass, "COL_RED"/teampin - Changing password/Team PIN for /alogin."
 		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 
@@ -234,7 +234,19 @@ CMD:makehelper(playerid, params[])
 	
 	if(!strlen(PlayerInfo[giveplayerid][pTeamPIN])) 
 	{		
-		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Helper PIN kod", "Congrats on your Game Helper position!\nTeam PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\nDo not give your Team PIN to anyone and remember it well/write it down!\nYour Team PIN is:"COL_COMPADMIN"%s\n"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", "Okay", "", teamPIN);
+		va_ShowPlayerDialog(giveplayerid, 
+			0, 
+			DIALOG_STYLE_MSGBOX, 
+			"Helper PIN kod", 
+			"Congrats on your Game Helper position!\n\
+				Team PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\n\
+				Do not give your Team PIN to anyone and remember it well/write it down!\n\
+				Your Team PIN is:"COL_COMPADMIN"%s\n\
+				"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.",
+			"Okay",
+			"",
+			teamPIN
+		);
 		bcrypt_hash(teamPIN, BCRYPT_COST, "OnHelperPINHashed", "dd", giveplayerid, level);
 	}
 	
