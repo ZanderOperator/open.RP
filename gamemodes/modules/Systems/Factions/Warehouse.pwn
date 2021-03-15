@@ -131,7 +131,7 @@ stock LoadFactionWarehouse(factionid)
     inline OnWarehouseLoaded()
     {
         if(!cache_num_rows()) 
-            return print("MySQL Report: There are no Faction Warehouses to load from database.");
+            return 1;
 
         new 
             freeslot = Iter_Free(Warehouses);
