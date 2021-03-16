@@ -182,6 +182,7 @@
 
 
 new
+	bool:Registration_Enabled = false,
 	ghour 					= 0,
 	GMX 					= 0,
 	WeatherTimer 			= 0,
@@ -239,13 +240,15 @@ new
 	Bit16:	gr_ShakeOffer			<MAX_PLAYERS>  = Bit16: 0,
 	Bit16: 	gr_LastPMId				<MAX_PLAYERS>  = Bit16: 0;
 
-new
-    secquestattempt[MAX_PLAYERS] = 3,
-	EditingWeapon[MAX_PLAYERS] = 0,
-	ServicePrice[MAX_PLAYERS] = 0,
-	WeaponListID[MAX_PLAYERS],
-	WeaponToList[MAX_PLAYERS][MAX_WAREHOUSE_WEAPONS],
-	regenabled = false;
+bool:Reg_Enabled()
+{
+	return Registration_Enabled;
+}
+
+Reg_SetEnabled(bool:v)
+{
+	Registration_Enabled = v;
+}
 
 
 /*
@@ -485,8 +488,8 @@ public OnGameModeInit()
 
 	// Global config
 	WeatherSys 	= 10;
-	cseconds        = 0;
-	regenabled		= 1;
+	cseconds = 0;
+	Registration_Enabled = true;
 
 	// Alternative Commands
 	Command_AddAltNamed("whisper"		, 	"w");
@@ -863,10 +866,6 @@ hook function ResetPlayerVariables(playerid)
 	
 	// Previous Info(/learn, etc.)
 	ResetPlayerPreviousInfo(playerid);
-
-	// 32bit
-	ServicePrice[playerid]			= 0;
-
 	return continue(playerid);
 }
 

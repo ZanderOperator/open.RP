@@ -223,7 +223,8 @@ static
 	EditingTrunkWeaponModel[MAX_PLAYERS],
 	EditingTrunkWeaponObject[MAX_PLAYERS],
 	CarnisterLiters		[MAX_PLAYERS],
-	CarnisterType		[MAX_PLAYERS];
+	CarnisterType		[MAX_PLAYERS],
+	WeaponToList[MAX_PLAYERS][MAX_WAREHOUSE_WEAPONS];
 
 // Vehicle Vars
 static
@@ -1139,9 +1140,9 @@ stock CheckVehicleWeaponTrunkSpace(playerid, vehicleid)
 
 stock ResetPlayerWeaponList(playerid)
 {
-	WeaponListID[playerid] = -1;
 	for(new i=0; i < MAX_WAREHOUSE_WEAPONS; i++)
 		WeaponToList[playerid][i] = -1;
+		
 	return 1;
 }
 

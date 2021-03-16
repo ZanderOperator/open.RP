@@ -13,6 +13,7 @@
 static
 	bool: MechanicDuty[MAX_PLAYERS] = false,
 	bool: Repairing[MAX_PLAYERS] = false,
+	ServicePrice[MAX_PLAYERS],
 	vgate[4],
 	vgatestatus[4],
 	vrampa[5],
@@ -31,6 +32,7 @@ stock ResetMechanicVariables(playerid)
 {
 	Repairing[playerid] = (false);
 	MechanicDuty[playerid] = (false);
+	ServicePrice[playerid] = 0;
 	DestroyMechanicTextDraw(playerid);
 	Bit8_Set( gr_MechanicSecs, 		playerid, 0);
 	Bit16_Set( gr_IdMehanicara, playerid, INVALID_PLAYER_ID);

@@ -4,15 +4,19 @@
 #define MAX_WEAPON_OBJECT_SLOTS		(2) // Po igracu
 #define PRIMARY_WEAPON_SLOT 		(8)
 #define SECONDARY_WEAPON_SLOT		(7)
+
+static 
+	EditingWeapon[MAX_PLAYERS] = 0,
+	WeaponTick[MAX_PLAYERS];
+
 enum weaponSettings
 {
 	wsSQLID,
     Float:Position[6],
     Bone
 }
-new WeaponSettings[MAX_PLAYERS][MAX_WEAPON_OBJECT_SLOTS][weaponSettings],
-	WeaponTick[MAX_PLAYERS];
-
+static 
+	WeaponSettings[MAX_PLAYERS][MAX_WEAPON_OBJECT_SLOTS][weaponSettings];
 static stock GetWeaponObjectSlot(weaponid)
 {
     new objectslot;
@@ -274,7 +278,7 @@ hook OnPlayerConnect(playerid)
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
 	WeaponTick[playerid] = 0;
 	EditingWeapon[playerid] = 0;

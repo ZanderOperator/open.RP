@@ -27,17 +27,6 @@ static
     Iterator: Warehouses<MAX_FACTIONS>,
     Iterator: WhWeapons[MAX_FACTIONS]<MAX_WAREHOUSE_WEAPONS>,
     Iterator: Robbers<MAX_PLAYERS>;
-/*
-enum // U coarp.amx
-{
-    // Move to coarp.pwn
-    WAREHOUSE_PUT_MENU,
-    WAREHOUSE_TAKE_MENU,
-    WAREHOUSE_MONEY_PUT,
-    WAREHOUSE_MONEY_TAKE,
-    DIALOG_TAKE_WEAPON_LIST,
-    DIALOG_WAREHOUSE_INFO
-}; */
 
 enum whInfo
 {
@@ -75,6 +64,9 @@ enum E_ROBBERY_INFO
     whVictimWarehouse,
 }
 static RobberyInfo[E_ROBBERY_INFO];
+
+static
+    WeaponToList[MAX_PLAYERS][MAX_WAREHOUSE_WEAPONS];
 
 
 /*

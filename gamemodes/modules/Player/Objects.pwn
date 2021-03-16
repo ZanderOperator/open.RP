@@ -1273,11 +1273,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ)
 {
 	// Weapon Attachment System
-	if(EditingWeapon[playerid] != 0)
-	{
-		CallLocalFunction("OPEAW", "iiiiifffffffff", playerid, response, index, modelid, boneid, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ);
-		return 1;
-	}
 	if(response) {
 		if(Bit2_Get(gr_TipEdita, playerid) == 1) { //Kupnja	
 	        PlayerObject[playerid][index][poModelid] 	= modelid;

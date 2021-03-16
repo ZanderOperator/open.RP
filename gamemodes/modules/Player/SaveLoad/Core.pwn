@@ -23,7 +23,8 @@ static
 		Timer:LoginCheckTimer[MAX_PLAYERS],
 		bool:SigningIn[MAX_PLAYERS],
 		bool:FirstSaving[MAX_PLAYERS],
-		bool:SecurityBreach[MAX_PLAYERS];
+		bool:SecurityBreach[MAX_PLAYERS],
+		secquestattempt[MAX_PLAYERS] = 3;
 
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -232,7 +233,7 @@ public OnPlayerRequestClass(playerid, classid)
 			} 
 			else 
 			{
-				if(regenabled)
+				if(Reg_Enabled())
 				{				
 					#if defined COA_UCP
 						va_SendClientMessage(playerid, COLOR_RED, "You haven't registered your account on %s!",
@@ -923,6 +924,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 	SigningIn[playerid] = false;
 	FirstSaving[playerid] = false;
+	secquestattempt[playerid] = 3;
 
 	Player_SetSecurityBreach(playerid, false);
 	SetPlayerOnlineStatus(playerid, 0);

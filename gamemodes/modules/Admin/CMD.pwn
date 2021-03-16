@@ -5422,12 +5422,12 @@ CMD:togreg(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] != 1338)
 		return 0;
 		
-	if(regenabled)
-		regenabled = false;
+	if(Reg_Enabled())
+		Reg_SetEnabled(false);
 	else
-		regenabled = true;
+		Reg_SetEnabled(true);
 	
-	va_ABroadCast((regenabled) ? (COLOR_GREEN) : (COLOR_RED), "AdmWarn: %s je %s registraciju na serveru!", 1, GetName(playerid, false), (regenabled) ? ("ukljucio") : ("iskljucio"));
+	va_ABroadCast((Reg_Enabled()) ? (COLOR_GREEN) : (COLOR_RED), "AdmWarn: %s je %s registraciju na serveru!", 1, GetName(playerid, false), (Reg_Enabled()) ? ("ukljucio") : ("iskljucio"));
 	return 1;
 }
 CMD:setservertime(playerid, params[])
