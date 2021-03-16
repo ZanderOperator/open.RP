@@ -852,7 +852,7 @@ stock UpdateSprayTagProgress(playerid, tagid)
 
 ptask GraffitiTimer[1000](playerid)
 {
-    if(!SafeSpawned[playerid])
+    if(!Player_SafeSpawned(playerid))
         return 1;
         
     SprayingBarChecker(playerid);

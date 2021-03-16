@@ -93,6 +93,8 @@ static const HouseInts[][E_HOUSE_INTS] =
 };
 
 static
+    HouseSellingPlayerID[MAX_PLAYERS],
+    HouseSellingPrice[MAX_PLAYERS],
     GlobalMapIcon[MAX_PLAYERS],
     HouseAlarmZone[MAX_HOUSES],
     Timer:GlobalZoneT[MAX_HOUSES],
@@ -254,6 +256,9 @@ stock UpdateHouseVirtualWorld(houseid)
 
 stock ResetHouseVariables(playerid)
 {
+    HouseSellingPrice[playerid] = 0;
+    HouseSellingPlayerID[playerid] = INVALID_PLAYER_ID;
+
     tmpPos[playerid][0]     = 0.0;
     tmpPos[playerid][1]     = 0.0;
     tmpPos[playerid][2]     = 0.0;
@@ -1727,11 +1732,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
 
             if(!IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti blizu vase kuce!");
-            if(!IsPlayerConnected(pID) || !SafeSpawned[pID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
+            if(!IsPlayerConnected(pID) || !Player_SafeSpawned(pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
             if(!ProxDetectorS(5.0, playerid, pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
             if(PlayerKeys[pID][pHouseKey] != INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kucu!");
 
-            GlobalSellingPlayerID[playerid] = pID;
+            HouseSellingPlayerID[playerid] = pID;
             ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce", "Input", "Close");
             return 1;
         }
@@ -1744,14 +1749,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 housePrice = strval(inputtext),
-                pID = GlobalSellingPlayerID[playerid];
+                pID = HouseSellingPlayerID[playerid];
 
             if(housePrice > 9999999 || housePrice < 1000) return ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce\nCijena kuce ne moze biti manja od 10000$, a veca od 9999999$", "Input", "Close");
 
             if(AC_GetPlayerMoney(pID) < housePrice) return ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce\nIgrac nema dovoljno novca za kupovinu vase kuce", "Input", "Close");
 
-            GlobalSellingPrice[pID]    = housePrice;
-            GlobalSellingPlayerID[pID] = playerid;
+            HouseSellingPrice[pID] = housePrice;
+            HouseSellingPlayerID[pID] = playerid;
             va_SendClientMessage(playerid, COLOR_RED, "Uspjesno ste ponudili vasu kucu igracu %s za %d$", GetName(pID), housePrice);
 
             new string[85];
@@ -1766,8 +1771,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            new pID = GlobalSellingPlayerID[playerid],
-                housePrice = GlobalSellingPrice[playerid];
+            new pID = HouseSellingPlayerID[playerid],
+                housePrice = HouseSellingPrice[playerid];
 
             if(AC_GetPlayerMoney(playerid) < housePrice) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za kupovinu ove kuce.");
 
@@ -1802,8 +1807,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             va_SendClientMessage(playerid, COLOR_RED, "Uspjesno ste kupili kucu od %s za %d$", GetName(pID), housePrice);
             va_SendClientMessage(pID, COLOR_YELLOW, "Igrac %s je kupio od vas kucu za %d", "Ok", "", GetName(playerid), housePrice);
 
-            GlobalSellingPrice[playerid]    = 0;
-            GlobalSellingPlayerID[pID]      = INVALID_PLAYER_ID;
+            HouseSellingPrice[playerid] = 0;
+            HouseSellingPlayerID[pID] = INVALID_PLAYER_ID;
 
             #if defined MODULE_LOGS
             Log_Write("/logfiles/buy_house.txt", "(%s) %s(%s) bought a house on adress %s[SQLID:%d] from %s(%s) for %d$.",

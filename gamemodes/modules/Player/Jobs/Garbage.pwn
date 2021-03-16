@@ -46,8 +46,10 @@ static stock
 	};
 
 // onaj sto hoda
-new	garbageContainers[MAX_GARBAGE_CONTAINERS],
+static	
+	garbageContainers[MAX_GARBAGE_CONTAINERS],
 	garbageContainersTrash[MAX_GARBAGE_CONTAINERS],
+	WorkingPhase[MAX_PLAYERS],
 	bool:pTakedWC[MAX_PLAYERS],	
 	bool:gHasGarbage[MAX_PLAYERS],
 	tObject[MAX_PLAYERS],
@@ -109,7 +111,7 @@ stock static CheckGarbages(playerid)
 		PaydayInfo[playerid][pPayDayMoney] += money;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		UpgradePlayerSkill(playerid);
-		gStartedWork[playerid] = 0;
+		WorkingPhase[playerid] = 0;
 		gHasGarbage[playerid] = false;
 		DestroyPlayerObject(playerid, tObject[playerid]);
 		tObject[playerid] = INVALID_OBJECT_ID;
@@ -234,10 +236,10 @@ hook OnGameModeInit()
 	}
 	return 1;
 }
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
 	pTakedWC[playerid] = false;
-	gStartedWork[playerid] = 0;
+	WorkingPhase[playerid] = 0;
 	tObject[playerid] = 0;
     gHasGarbage[playerid] = false;
     gStartedCleaning[playerid] = false;
@@ -245,8 +247,9 @@ hook OnPlayerDisconnect(playerid, reason)
     pOnDepony[playerid] = 0;
     gDeponyEmpty[playerid] = 0;
     pBoxes[playerid] = 0;
+	WorkingPhase[playerid] = 0;
 	Bit8_Set( gr_TrashPickuped, playerid, 0);
-	return 1;
+	return continue(playerid);
 }
 
 
@@ -255,7 +258,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	if(PRESSED(KEY_FIRE))
 	{
 	    if(PlayerJob[playerid][pJob] != JOB_GARBAGE) return 1;
-		if(gHasGarbage[playerid] == true && gStartedWork[playerid] == 1)
+		if(gHasGarbage[playerid] == true && WorkingPhase[playerid] == 1)
 		{
 			new nContainer = GetNearestContainer(playerid);
 			if(nContainer != INVALID_OBJECT_ID)
@@ -268,7 +271,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				CheckGarbages(playerid);
 			}
 		}
-		else if(gGarbagePicked[playerid] == false && gStartedWork[playerid] == 2)
+		else if(gGarbagePicked[playerid] == false && WorkingPhase[playerid] == 2)
 		{
 			new nContainer = GetNearestContainer(playerid);
 			if(nContainer != INVALID_OBJECT_ID)
@@ -280,7 +283,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Pokupili ste smece, sada ga odnesite do vaseg kamiona. (( Lijevi klik misa kod kamiona)) ");
 			}
 		}
-		else if(gGarbagePicked[playerid] == true && gStartedWork[playerid] == 2)
+		else if(gGarbagePicked[playerid] == true && WorkingPhase[playerid] == 2)
 		{
 			new 
 				vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB);			
@@ -324,7 +327,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					PaydayInfo[playerid][pPayDayMoney] += money;
 					PlayerJob[playerid][pFreeWorks] -= 5;
 					UpgradePlayerSkill(playerid);
-					gStartedWork[playerid] = 0;
+					WorkingPhase[playerid] = 0;
 					pOnDepony[playerid] = 0;
 					gHasGarbage[playerid] = false;
 					DisablePlayerCheckpoint(playerid);
@@ -375,7 +378,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 {
 	if(PlayerJob[playerid][pJob] == JOB_GARBAGE) 
 	{	
-		if(gStartedWork[playerid] == 1) 
+		if(WorkingPhase[playerid] == 1) 
 		{
 	        if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
 			DisablePlayerCheckpoint(playerid);
@@ -387,7 +390,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 			GameTextForPlayer(playerid, "~g~Kupite smece pricekajte", 2500, 1);
 			TogglePlayerControllable(playerid, false);
 	    }
-	    else if(gStartedWork[playerid] == 2) 
+	    else if(WorkingPhase[playerid] == 2) 
 		{
 			new vID = GetPlayerVehicleID(playerid);
 			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne istovarujete smece iz TrashMastera!");
@@ -443,10 +446,10 @@ CMD:garbage(playerid, params[])
 	{
 		if(PlayerJob[playerid][pFreeWorks] < 1) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if(!pTakedWC[playerid]) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
-		if(gStartedWork[playerid] != 0) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
+		if(WorkingPhase[playerid] != 0) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
 		
 		new Pos = random(sizeof(randomTrashPos));
-		gStartedWork[playerid] = 1;
+		WorkingPhase[playerid] = 1;
 		Player_SetIsWorkingJob(playerid, true);
 		tObject[playerid] = CreatePlayerObject(playerid, 2672, randomTrashPos[Pos][0], randomTrashPos[Pos][1], randomTrashPos[Pos][2], 0.00000, 0.00000, 0.00000, 300.0);
 		SetPlayerCheckpoint(playerid, randomTrashPos[Pos][0], randomTrashPos[Pos][1], randomTrashPos[Pos][2], 2.0);
@@ -461,7 +464,8 @@ CMD:garbage(playerid, params[])
 		if(GetPlayerSkillLevel(playerid) < 1) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
 		new vID = GetPlayerVehicleID(playerid);
 		if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Niste u TrashMasteru!");
-		gStartedWork[playerid] = 2;
+		WorkingPhase[playerid] = 2;
+		Player_SetIsWorkingJob(playerid, true);
 		SendClientMessage( playerid, COLOR_RED, "[!] Krenite s praznjenjem kontenjera! Potrazite kotenjere sa smecem!");
 		return 1;
 	}
@@ -478,7 +482,7 @@ CMD:garbage(playerid, params[])
 		else if(pTakedWC[playerid] == true)
 		{
 			pTakedWC[playerid] = false;
-			gStartedWork[playerid] = false;
+			WorkingPhase[playerid] = false;
 			gHasGarbage[playerid] = false;
 			SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 			DestroyPlayerObject(playerid, tObject[playerid]);
@@ -493,7 +497,7 @@ CMD:garbage(playerid, params[])
 	if(!strcmp( pick, "stop", true)) 
 	{
 		pTakedWC[playerid] 			= false;
-		gStartedWork[playerid] 		= 0;
+		WorkingPhase[playerid] 		= 0;
 		tObject[playerid]			= 0;
 		gHasGarbage[playerid] 		= false;
 		gStartedCleaning[playerid] 	= false;

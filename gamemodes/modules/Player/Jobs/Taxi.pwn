@@ -39,7 +39,7 @@ static
 
 ptask TaxiMeter[1000](playerid)
 {
-	if(SafeSpawned[playerid] && TaxiData[playerid][eTaxiActive]) 
+	if(Player_SafeSpawned(playerid) && TaxiData[playerid][eTaxiActive]) 
 		_TaximeterCount(playerid);
 	return 1;
 }

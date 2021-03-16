@@ -1,5 +1,14 @@
 #include <YSI_Coding\y_hooks>
 
+static 
+	PlayerAction[MAX_PLAYERS],
+	bool:PlayerAnim[MAX_PLAYERS];
+
+bool:Player_IsPerformingAnim(playerid)
+{
+	return PlayerAnim[playerid];
+}
+
 static const AnimLibs[][] =
 {
     "BOMBER", "RAPPING", "SHOP", "BEACH", "SMOKING", "FOOD", "ON_LOOKERS",
@@ -14,14 +23,23 @@ stock PreloadAnimLibFor(playerid)
         ApplyAnimation(playerid, AnimLibs[i], "null", 0.0, 0, 0, 0, 0, 0, 0);
 }
 
-new
-	bool:PlayerAnim[MAX_PLAYERS];
+public OnPlayerActionChange(playerid, oldaction, newaction) // Callbacks.inc by Emmet
+{
+	switch(newaction)
+	{
+		case 0: PlayerAction[playerid] = PLAYER_ACTION_NONE;
+		case 1: PlayerAction[playerid] = PLAYER_ACTION_SHOOTING;
+		case 2:	PlayerAction[playerid] = PLAYER_ACTION_SWIMMING;
+		case 3:	PlayerAction[playerid] = PLAYER_ACTION_SKYDIVING;
+	}
+	return 1;
+}
 	
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if(newkeys & 128)
 	{
-        if(!Bit1_Get(PlayingBBall, playerid) && PlayerAnim[playerid] && (!PlayerWounded[playerid] && PlayerDeath[playerid][pKilled] == 0) && !IsPlayerAiming(playerid) && PlayerAction[playerid] == PLAYER_ACTION_NONE)
+        if(!Bit1_Get(PlayingBBall, playerid) && PlayerAnim[playerid] && (!Player_IsWounded(playerid) && PlayerDeath[playerid][pKilled] == 0) && !IsPlayerAiming(playerid) && PlayerAction[playerid] == PLAYER_ACTION_NONE)
 		{
 			if(GetPlayerAnimationIndex(playerid))
 			{
@@ -47,10 +65,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerAnim[playerid] = false;
-	//Frozen[playerid] = false;
+	PlayerAction[playerid] = 0;
 	return 1;
 }
 
@@ -63,7 +81,7 @@ hook OnPlayerSpawn(playerid)
 stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 1, toggleable = 1) // ReWrap
 {
 	forcesync = 1;
-	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0)
+	if(Player_IsWounded(playerid) || PlayerDeath[playerid][pKilled] > 0)
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
@@ -79,7 +97,7 @@ stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lock
 
 stock SetPlayerSpecialActionEx(playerid, actionid) // ReWrap
 {
-	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0)
+	if(Player_IsWounded(playerid) || PlayerDeath[playerid][pKilled] > 0)
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");

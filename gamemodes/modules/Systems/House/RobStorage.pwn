@@ -39,12 +39,16 @@
 
 static
     PlayerText:srobTD[MAX_PLAYERS][MAX_ROB_TDS],
+    bool:rob_started[MAX_PLAYERS] = false,
     rob_remaining[MAX_PLAYERS] = 0,
     rob_combinations[MAX_PLAYERS][MAX_COMBINATIONS],
     rob_counter[MAX_PLAYERS][MAX_COMBINATIONS],
     Timer:robs_timer[MAX_PLAYERS];
 
-
+bool:Player_StorageRobbing(playerid)
+{
+    return rob_started[playerid];
+}
 /*
     ######## ##     ## ##    ##  ######   ######  
     ##       ##     ## ###   ## ##    ## ##    ## 
@@ -456,10 +460,10 @@ timer PlayerRobTimer[1000](playerid, house_id)
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerStopRob(playerid);
-    return 1;
+    return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

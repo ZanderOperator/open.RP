@@ -183,7 +183,7 @@ hook function LoadPlayerStats(playerid)
 
 stock SavePlayerExperience(playerid)
 {
-	if(!SafeSpawned[playerid])	
+	if(!Player_SafeSpawned(playerid))	
 		return 1;
 	
 	mysql_fquery(SQL_Handle(), 
@@ -515,7 +515,7 @@ CMD:experience(playerid, params[])
 			return 1;
 		}
 		if(!IsPlayerConnected(giveplayerid)) va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
-		if(!SafeSpawned[giveplayerid]) va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
+		if(!Player_SafeSpawned(giveplayerid)) va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
 		ExpInfo[giveplayerid][ePoints] = exps;
 		ExpInfo[giveplayerid][eAllPoints] = exps;
 		SavePlayerExperience(giveplayerid);
@@ -540,7 +540,7 @@ CMD:experience(playerid, params[])
 		
 		foreach(new i : Player)
 		{
-			if(IsPlayerConnected(i) && SafeSpawned[playerid])
+			if(IsPlayerConnected(i) && Player_SafeSpawned(playerid))
 			{
 				new playername2[MAX_PLAYER_NAME];
 				GetPlayerName(i, playername2, sizeof(playername2));

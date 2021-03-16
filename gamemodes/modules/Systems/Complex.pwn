@@ -40,6 +40,8 @@ static
     Iterator: Complex <MAX_COMPLEX>;
 
 static
+    ComplexSellingPlayerID[MAX_PLAYERS],
+    ComplexSellingPrice[MAX_PLAYERS],
     SelectedRoom[MAX_PLAYERS],
     // Complex Vars
     InApartmentComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
@@ -151,6 +153,8 @@ hook function ResetPlayerVariables(playerid)
     Player_SetInfrontApartment(playerid, INVALID_COMPLEX_ID);
     Player_SetApartmentCP(playerid, INVALID_COMPLEX_ID);
 
+    ComplexSellingPrice[playerid] = 0;
+    ComplexSellingPlayerID[playerid] = INVALID_PLAYER_ID;
 	return continue(playerid);
 }
 
@@ -924,11 +928,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 pID = strval(inputtext),
                 complex_id = PlayerKeys[playerid][pComplexKey];
             if(!IsPlayerInRangeOfPoint(playerid, 8.0, ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti blizu vaseg kompleksa!");
-            if(!IsPlayerConnected(pID) || !SafeSpawned[pID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
+            if(!IsPlayerConnected(pID) || !Player_SafeSpawned(pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
             if(!ProxDetectorS(5.0, playerid, pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
             if(PlayerKeys[pID][pComplexKey] != INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kompleks!");
 
-            GlobalSellingPlayerID[playerid] = pID;
+            ComplexSellingPlayerID[playerid] = pID;
             ShowPlayerDialog(playerid, DIALOG_COMPLEX_SELL_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu za koju zelite prodati kompleks:", "Enter", "Close");
             return 1;
         }
@@ -945,12 +949,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 complexprice = value,
-                pID = GlobalSellingPlayerID[playerid];
+                pID = ComplexSellingPlayerID[playerid];
 
             if(AC_GetPlayerMoney(pID) < complexprice) return ShowPlayerDialog(playerid, DIALOG_COMPLEX_SELL_PRICE, DIALOG_STYLE_INPUT, "COMPLEX MENU", "Unesite cijenu za koju zelite prodati kompleks:\n{ed2a37}Igrac nema toliko novca!", "Enter", "Close");
 
-            GlobalSellingPrice[pID] = complexprice;
-            GlobalSellingPlayerID[pID] = playerid;
+            ComplexSellingPrice[pID] = complexprice;
+            ComplexSellingPlayerID[pID] = playerid;
             va_SendClientMessage(playerid, COLOR_RED, "Uspjesno ste ponudili vas kompleks igracu %s za %d$", GetName(pID), complexprice);
             // TODO: va_ShowPlayerDialog
             new string[85];
@@ -963,8 +967,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(response)
             {
                 new
-                    pID = GlobalSellingPlayerID[playerid],
-                    complexprice = GlobalSellingPrice[playerid];
+                    pID = ComplexSellingPlayerID[playerid],
+                    complexprice = ComplexSellingPrice[playerid];
 
                 PlayerKeys[playerid][pComplexKey]   = PlayerKeys[pID][pComplexKey];
                 PlayerKeys[pID][pComplexKey]        = INVALID_COMPLEX_ID;
@@ -999,8 +1003,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerInfo[pID][pSpawnChange] = 2;
                 else PlayerInfo[pID][pSpawnChange] = 0;
 
-                GlobalSellingPrice[playerid]    = 0;
-                GlobalSellingPlayerID[pID]      = INVALID_PLAYER_ID;
+                ComplexSellingPrice[playerid]    = 0;
+                ComplexSellingPlayerID[pID]      = INVALID_PLAYER_ID;
 
                 #if defined MODULE_LOGS
                 Log_Write("/logfiles/buy_complex.txt", "(%s) %s(%s) bought Complex %s[SQLID: %d] from %s(%s) for %d$.",

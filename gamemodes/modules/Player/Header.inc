@@ -10,6 +10,9 @@ forward bool:IsVehicleJackable(carid);
 forward bool:Player_SecurityBreach(playerid);
 forward Player_SetSecurityBreach(playerid, bool:v);
 
+// SaveLoad/player_crashes.pwn
+forward bool:Player_SafeSpawned(playerid);
+
 // Bank
 forward Player_SetBuyPrice(playerid, amount);
 
@@ -17,9 +20,15 @@ forward Player_SetBuyPrice(playerid, amount);
 forward bool:Player_Reward(playerid);
 forward Player_SetReward(playerid, bool:v);
 
+// Wounded
+forward bool:Player_IsWounded(playerid);
+forward bool:Player_WoundedAnim(playerid);
+
 // Miscelleneous
 forward bool:Player_ForbiddenPM(playerid);
 forward Player_SetForbiddenPM(playerid, bool:v);
+
+forward bool:Player_InTrunk(playerid);
 
 forward Player_GetLastVehicle(playerid);
 forward Player_SetLastVehicle(playerid, v);

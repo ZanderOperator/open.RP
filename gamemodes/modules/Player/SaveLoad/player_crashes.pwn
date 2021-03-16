@@ -1,7 +1,20 @@
 
 #include <YSI_Coding\y_hooks>
 
-timer SetPlayerCrash[6000](playerid)
+static
+	bool:SafeSpawned[MAX_PLAYERS];
+
+bool:Player_SafeSpawned(playerid)
+{
+	return SafeSpawned[playerid];
+}
+
+Player_SetSafeSpawned(playerid, bool:v)
+{
+	SafeSpawned[playerid] = v;
+}
+
+timer SetPlayerSafeSpawn[6000](playerid)
 {
 	if(PlayerDeath[playerid][pKilled] <= 0)
 		TogglePlayerControllable(playerid, true);
@@ -82,7 +95,7 @@ timer SetPlayerCrash[6000](playerid)
 
 FinalPlayerCheck(playerid)
 {
-    defer SetPlayerCrash(playerid);
+    defer SetPlayerSafeSpawn(playerid);
     return 1;
 }
 
@@ -119,7 +132,7 @@ CheckPlayerCrash(playerid, reason)
 {
     if((reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
 	{
-		if(SafeSpawned[playerid])
+		if(Player_SafeSpawned(playerid))
 		{
 			new
 				Float:health,
@@ -194,5 +207,6 @@ hook function LoadPlayerStats(playerid)
 hook function ResetPlayerVariables(playerid)
 {
     ResetPlayerCrash(playerid);
+	SafeSpawned[playerid] = false;
 	return continue(playerid);
 }

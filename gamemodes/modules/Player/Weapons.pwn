@@ -220,7 +220,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 {
 	if(PlayerWeapons[playerid][pwAmmo][slotid] <= 0 || PlayerWeapons[playerid][pwWeaponId][slotid] <= 0) 
 		return 1;
-	if(!SafeSpawned[playerid])  
+	if(!Player_SafeSpawned(playerid))  
 		return 1;
 
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
@@ -309,10 +309,10 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 	Iter_Add(P_Weapons[playerid], slot);
 
 	//Real Give Func
-	if(SafeSpawned[playerid])
+	if(Player_SafeSpawned(playerid))
 		GivePlayerWeapon(playerid, weaponid, ammo);
 
-	if(base_update && SafeSpawned[playerid])
+	if(base_update && Player_SafeSpawned(playerid))
 		AC_SavePlayerWeapon(playerid, slot);
 
 	return 1;

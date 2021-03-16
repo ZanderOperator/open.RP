@@ -48,6 +48,8 @@ static
 	MusicInfo[MAX_PLAYERS][E_BOOMBOX_DATA];
 
 static
+	bool:BoomBoxPlanted[MAX_PLAYERS],
+	BoomBoxObject[MAX_PLAYERS],
 	HouseMusicURL[MAX_HOUSES][256],
 	bool:HousePlayingMusic[MAX_HOUSES],
 	bool:VehiclePlayingMusic[MAX_VEHICLES],
@@ -231,12 +233,13 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 	return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetMusicVars(playerid);
 	if(BoomBoxPlanted[playerid] == true)
 	{
 		DestroyDynamicObject(BoomBoxObject[playerid]);
+		BoomBoxObject[playerid] = INVALID_OBJECT_ID;
 		StopAudioStreamForPlayer(playerid);
 		BoomBoxPlanted[playerid] = false;
 	}
@@ -244,7 +247,8 @@ hook OnPlayerDisconnect(playerid, reason)
 	    Bit1_Set( gr_AttachedBoombox, playerid, false);
 	if(Bit1_Get( gr_MusicPlaying, playerid))
 	    Bit1_Set( gr_MusicPlaying, playerid, false);
-	return 1;
+	
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
@@ -389,7 +393,8 @@ CMD:music(playerid, params[])
 	else if(!strcmp(option, "take"))
 	{
 		if(!PlayerInventory[playerid][pBoomBox]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
-		if(BoomBoxPlanted[playerid] == true) {
+		if(BoomBoxPlanted[playerid] == true) 
+		{
 			GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
 			foreach(new i : Player) {

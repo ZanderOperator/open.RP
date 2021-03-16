@@ -86,3 +86,17 @@ stock AC_MoneyDetect(playerid)
 	}
 	return 1;
 }
+
+hook OnPlayerUpdate(playerid)
+{
+	if(IsPlayerAlive(playerid))
+	{
+		if(PlayerTick[playerid][ptMoney] < gettimestamp()) 
+		{
+			PlayerTick[playerid][ptMoney] = gettimestamp();
+			AC_MoneyDetect(playerid);
+			return 1;
+		}
+	}
+	return 1;
+}

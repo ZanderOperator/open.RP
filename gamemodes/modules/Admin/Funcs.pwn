@@ -39,6 +39,7 @@ new
 	bool:AdminDuty[MAX_PLAYERS],
 	bool:HelperDuty[MAX_PLAYERS],
 	bool:NeedHelp[MAX_PLAYERS],
+	bool:Frozen[MAX_PLAYERS],
 	// Player
 	Bit1: 	a_PlayerReconed	<MAX_PLAYERS>,
     Bit1: 	a_AdminChat 	<MAX_PLAYERS>,
@@ -104,6 +105,16 @@ bool:Player_NeedsHelp(playerid)
 Player_SetNeedHelp(playerid, bool:v)
 {
 	NeedHelp[playerid] = v;
+}
+
+bool:Player_Frozen(playerid)
+{
+	return Frozen[playerid];
+}
+
+Player_SetFrozen(playerid, bool:v)
+{
+	Frozen[playerid] = v;
 }
 
 InitFly(playerid)
@@ -876,7 +887,8 @@ stock static UpdateTargetReconData(playerid, targetid)
 	);
 	PlayerTextDrawSetString(playerid, ReconText[playerid], tmpString);
 
-	if(ReconingVehicle[playerid] != GetPlayerVehicleID(targetid)) {
+	if(ReconingVehicle[playerid] != GetPlayerVehicleID(targetid)) 
+	{
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(targetid));
 		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH);
 		ReconingVehicle[playerid] = GetPlayerVehicleID(targetid);
@@ -969,7 +981,7 @@ hook OnPlayerConnect(playerid)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if(SafeSpawned[playerid])
+    if(Player_SafeSpawned(playerid))
     {
         mysql_fquery(SQL_Handle(), "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
             WHERE sqlid = '%d'", 
@@ -997,7 +1009,8 @@ hook function ResetPlayerVariables(playerid)
 
 	AdminDuty[playerid] = false;
 	HelperDuty[playerid] = false;
-	NeedHelp[playerid] = false;	
+	NeedHelp[playerid] = false;
+	Frozen[playerid] = false;
 
 	Bit1_Set(a_PlayerReconed, playerid, false);
     Bit1_Set(a_AdminChat, playerid, false);

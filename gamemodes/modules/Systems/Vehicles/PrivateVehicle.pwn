@@ -5053,7 +5053,7 @@ CMD:car(playerid, params[])
 		if(sscanf(params, "s[11]ui", pick, giveplayerid, vehiclePrice)) return SendClientMessage(playerid, COLOR_RED, "[?]: /car sell [playerid / Part of name][cijena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan unos igraceva ID-a!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete samom sebi prodati vozilo!");
-		if(!IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
+		if(!IsPlayerConnected(giveplayerid) || !Player_SafeSpawned(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
 		if(PlayerInfo[giveplayerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete prodavati vozila level 2 igracima (anti-abuse)!");
 		if(PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate spawnano vozilo!");
 		//if(IsABike(PlayerKeys[playerid][pVehicleKey]) && vehiclePrice < 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Minimalna cijena prodaje bicikla je 100$!");

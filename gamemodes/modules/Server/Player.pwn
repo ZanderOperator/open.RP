@@ -2,7 +2,7 @@
 
 ptask PackageLossCheck[500](playerid)
 {
-	if(!SafeSpawned[playerid])
+	if(!Player_SafeSpawned(playerid))
 		return 0;
 		
 	new Float:packetLoss;
@@ -53,9 +53,9 @@ stock GetPlayerPacketloss(playerid, &Float:packetloss)
 stock AC_TogglePlayerControllable(playerid, toggle)
 {
 	if(toggle == 0)
-		Frozen[playerid] = true;
+		Player_SetFrozen(playerid, true);
 	else
-		Frozen[playerid] = false;
+		Player_SetFrozen(playerid, false);
 	return TogglePlayerControllable(playerid, toggle);
 }
 #if defined _ALS_TogglePlayerControllable

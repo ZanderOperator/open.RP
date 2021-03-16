@@ -43,6 +43,9 @@ forward Player_SetHouseArea(playerid, v);
 forward Player_GetRammingDoor(playerid);
 forward Player_SetRammingDoor(playerid, v);
 
+// RobStorage
+forward bool:Player_StorageRobbing(playerid);
+
 // Complex
 forward bool: Complex_Exists(complex_id);
 

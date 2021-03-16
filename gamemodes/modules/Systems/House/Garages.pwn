@@ -783,7 +783,7 @@ CMD:garage(playerid, params[])
             price;
         if(sscanf(params, "s[10]ud", param, giveplayerid, price))
             return SendClientMessage(playerid, COLOR_RED, "[?]: /garage sell [playerid / Part of name][cijena]");
-        if(!IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid])
+        if(!IsPlayerConnected(giveplayerid) || !Player_SafeSpawned(giveplayerid))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
         if(!ProxDetectorS(5.0, playerid, giveplayerid))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");

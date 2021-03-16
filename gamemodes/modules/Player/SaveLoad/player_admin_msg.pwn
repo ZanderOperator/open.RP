@@ -67,7 +67,7 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if(SafeSpawned[playerid])
+    if(Player_SafeSpawned(playerid))
     {
         mysql_fquery(SQL_Handle(), "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
             WHERE sqlid = '%d'", 
@@ -103,7 +103,7 @@ InsertAdminMessage(playerid, const playerb[], const n_reason[])
 		{
 			sscanf(user_name, "u", on);
 			
-			if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
+			if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && Player_SafeSpawned(on))
 			{
 				va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s))", 
 					GetName(playerid, false), 

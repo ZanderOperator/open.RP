@@ -31,7 +31,8 @@ static
     gov_doors[11],
     gov_status[11];
 
-
+static 
+    VehicleEquipment[MAX_PLAYERS];
 /*
     ##     ##  #######   #######  ##    ##  ######
     ##     ## ##     ## ##     ## ##   ##  ##    ##
@@ -58,6 +59,12 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
         }
     }
     return 1;
+}
+
+hook function ResetPlayerVariables(playerid)
+{
+    VehicleEquipment[playerid] = INVALID_VEHICLE_ID;
+    return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

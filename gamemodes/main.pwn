@@ -59,15 +59,17 @@
 #define	MAX_IP_CONNECTS 			3
 #define FIX_file_inc 				0
 
-
 /*
-	#### ##    ##  ######  ##       ##     ## ########  ########  ######
-	 ##  ###   ## ##    ## ##       ##     ## ##     ## ##       ##    ##
-	 ##  ####  ## ##       ##       ##     ## ##     ## ##       ##
-	 ##  ## ## ## ##       ##       ##     ## ##     ## ######    ######
-	 ##  ##  #### ##       ##       ##     ## ##     ## ##             ##
-	 ##  ##   ### ##    ## ##       ##     ## ##     ## ##       ##    ##
-	#### ##    ##  ######	########  #######  ########  ########  ######
+																			
+	88                        88                      88                       
+	88                        88                      88                       
+	88                        88                      88                       
+	88 8b,dPPYba,   ,adPPYba, 88 88       88  ,adPPYb,88  ,adPPYba, ,adPPYba,  
+	88 88P'   `"8a a8"     "" 88 88       88 a8"    `Y88 a8P_____88 I8[    ""  
+	88 88       88 8b         88 88       88 8b       88 8PP"""""""  `"Y8ba,   
+	88 88       88 "8a,   ,aa 88 "8a,   ,a88 "8a,   ,d88 "8b,   ,aa aa    ]8I  
+	88 88       88  `"Ybbd8"' 88  `"YbbdP'Y8  `"8bbdP"Y8  `"Ybbd8"' `"YbbdP"'  
+																			
 */
 
 // Fixes
@@ -131,15 +133,17 @@
 // SHA-1 of latest commit - GIT_REV define
 #include "revision.inc"
 
-
 /*
-	########  ######## ######## #### ##    ## ########  ######
-	##     ## ##       ##        ##  ###   ## ##       ##    ##
-	##     ## ##       ##        ##  ####  ## ##       ##
-	##     ## ######   ######    ##  ## ## ## ######    ######
-	##     ## ##       ##        ##  ##  #### ##             ##
-	##     ## ##       ##        ##  ##   ### ##       ##    ##
-	########  ######## ##       #### ##    ## ########  ######
+																		
+	88888888ba,                 ad88 88                                   
+	88      `"8b               d8"   ""                                   
+	88        `8b              88                                         
+	88         88  ,adPPYba, MM88MMM 88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
+	88         88 a8P_____88   88    88 88P'   `"8a a8P_____88 I8[    ""  
+	88         8P 8PP"""""""   88    88 88       88 8PP"""""""  `"Y8ba,   
+	88      .a8P  "8b,   ,aa   88    88 88       88 "8b,   ,aa aa    ]8I  
+	88888888Y"'    `"Ybbd8"'   88    88 88       88  `"Ybbd8"' `"YbbdP"'  														
+                                                                      
 */
 
 
@@ -171,7 +175,7 @@
 	##     ##   ## ##   ##     ## ##    ##
 	##     ##  ##   ##  ##     ## ##
 	##     ## ##     ## ########   ######
-	 ##   ##  ######### ##   ##         ##
+	 ##   ##  ######### ##   ##         ##		// Which are getting deleted 1 by 1 and staticized.
 	  ## ##   ##     ## ##    ##  ##    ##
 	   ###    ##     ## ##     ##  ######
 */
@@ -184,34 +188,6 @@ new
 	WeatherSys 				= 10,
 	HappyHours				= 0,
 	HappyHoursLVL			= 0;
-
-// Players 32 bit
-new
-	Float:PlayerTrunkPos[MAX_PLAYERS][3],
-	GlobalSellingPlayerID[MAX_PLAYERS] = { 0, ... },
-	GlobalSellingPrice[MAX_PLAYERS] = { 0, ... },
-	PlayerExName[MAX_PLAYERS][MAX_PLAYER_NAME],
-	VehicleEquipment[MAX_PLAYERS],
-	VehicleTrunk[MAX_PLAYERS],
-	bool:BoomBoxPlanted[MAX_PLAYERS],
-	BoomBoxObject[MAX_PLAYERS],
-	PlayerAction[MAX_PLAYERS],
-	bool:PlayerWounded[MAX_PLAYERS],
-	PlayerWoundedSeconds[MAX_PLAYERS],
-	PlayerWTripTime[MAX_PLAYERS],
-	bool:SafeSpawned[MAX_PLAYERS],
-	bool:PlayerCrashed[MAX_PLAYERS],
-	bool:PlayerSyncs[MAX_PLAYERS],
-	bool:Frozen[MAX_PLAYERS],
-	bool:PlayerBlocked[MAX_PLAYERS],
-	bool:PlayerWoundedAnim[MAX_PLAYERS],
-	bool:rob_started[MAX_PLAYERS] = false,
-	KilledBy[MAX_PLAYERS],
-	WoundedBy[MAX_PLAYERS],
-	KilledReason[MAX_PLAYERS],
-	gStartedWork[MAX_PLAYERS],
-	InjectPlayer[MAX_PLAYERS];
-
 
 //Players Vars
 //(rBits)
@@ -228,8 +204,6 @@ new
 	Bit1:	gr_SmokingCiggy			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_HasRubber			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerRadio			<MAX_PLAYERS>  = Bit1: true,
-	Bit1:	gr_TrunkOffer			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerInTrunk		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerOnTutorial		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_animchat             <MAX_PLAYERS>  = Bit1: false,
     // TODO: should be part of Player/Char module
@@ -655,7 +629,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			if(!IsPlayerConnected(playerid))
 				return COMMAND_ZERO_RET;
 
-			if(!SafeSpawned[playerid] || Player_SecurityBreach(playerid))
+			if(Player_SafeSpawned(playerid) || Player_SecurityBreach(playerid))
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR,"You're not safely spawned, you can't use commands!");
 				return COMMAND_ZERO_RET;
@@ -747,20 +721,6 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     return 0;
 }
 
-hook OnPlayerDeath(playerid, killerid, reason)
-{
-	if(KilledBy[playerid] == INVALID_PLAYER_ID && killerid == INVALID_PLAYER_ID || playerid == INVALID_PLAYER_ID || !SafeSpawned[playerid])
-		return 1;
-
-	if(!SafeSpawned[KilledBy[playerid]]) 
-		return SendClientMessage(KilledBy[playerid], COLOR_RED, "[ANTI-CHEAT]: You are not safely spawned, therefore, banned!"), BanMessage(KilledBy[playerid]), 0;
-
-	if(IsPlayerInAnyVehicle(playerid))
-		RemovePlayerFromVehicle(playerid);
-	
-	return 1;
-}
-
 hook OnPlayerText(playerid, text[])
 {
 	if(!text[0])
@@ -782,7 +742,7 @@ hook OnPlayerText(playerid, text[])
 	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
 		return 0;
 
-	if(!SafeSpawned[playerid] || Player_SecurityBreach(playerid))
+	if(!Player_SafeSpawned(playerid) || Player_SecurityBreach(playerid))
 	{
 		SendMessage(playerid, MESSAGE_TYPE_ERROR,"You can't use chat if you're not safely spawned!");
 		return 0;
@@ -803,7 +763,7 @@ hook OnPlayerText(playerid, text[])
 			format(tmpString, sizeof(tmpString), "%s says%s: %s", GetName(playerid), PrintAccent(playerid), text);
 			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 		}
-		if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid])
+		if(Bit1_Get( gr_animchat, playerid) && !Player_IsPerformingAnim(playerid))
 		{
 			TogglePlayerControllable(playerid, 1);
 			if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
@@ -842,9 +802,7 @@ hook function ResetPlayerVariables(playerid)
 	Bit1_Set( gr_HasRubber				, playerid, false);
 	Bit1_Set( gr_animchat               , playerid, false);
 	Bit1_Set( gr_PlayerRadio			, playerid, true);
-	Bit1_Set( gr_TrunkOffer				, playerid, false);
 	Bit1_Set( gr_PlayerTrunkEdit        , playerid, false);
-	Bit1_Set( gr_PlayerInTrunk			, playerid, false);
 	// TODO: Player/Char module
 	Bit1_Set( gr_Blind					, playerid, false);
 	Bit1_Set( gr_BlindFold				, playerid, false);
@@ -903,62 +861,13 @@ hook function ResetPlayerVariables(playerid)
 	PlayerTick[playerid][ptKill]			= gettimestamp();
 	PlayerTick[playerid][ptMainTimer] 		= gettimestamp();
 	
-	
-	//Floats
-	PlayerTrunkPos[playerid][0] 			= 0.0;
-	PlayerTrunkPos[playerid][1] 			= 0.0;
-	PlayerTrunkPos[playerid][2] 			= 0.0;
-	
 	// Previous Info(/learn, etc.)
 	ResetPlayerPreviousInfo(playerid);
 
 	// 32bit
-	PlayerExName[playerid][0] 	= '\0';
-	VehicleEquipment[playerid]	= INVALID_VEHICLE_ID;
-	InjectPlayer[playerid]     	= INVALID_PLAYER_ID;
 	ServicePrice[playerid]			= 0;
-	KilledBy[playerid]				= INVALID_PLAYER_ID;
-	WoundedBy[playerid]				= INVALID_PLAYER_ID;
-	KilledReason[playerid]			= -1;
-
-	PlayerAction[playerid]			= 0;
-
-	// Bools
-	PlayerCrashed[playerid] 	= false;
-	SafeSpawned[playerid] 	= false;
-	PlayerSyncs[playerid] 	= false;
-	PlayerBlocked[playerid] 	= false;
 
 	return continue(playerid);
-}
-
-public OnPlayerActionChange(playerid, oldaction, newaction) // Callbacks.inc by Emmet
-{
-	switch(newaction)
-	{
-		case 0: PlayerAction[playerid] = PLAYER_ACTION_NONE;
-		case 1: PlayerAction[playerid] = PLAYER_ACTION_SHOOTING;
-		case 2:	PlayerAction[playerid] = PLAYER_ACTION_SWIMMING;
-		case 3:	PlayerAction[playerid] = PLAYER_ACTION_SKYDIVING;
-	}
-	return 1;
-}
-
-hook OnPlayerUpdate(playerid)
-{
-	if(IsPlayerAlive(playerid))
-	{
-		if(PlayerTick[playerid][ptMoney] < gettimestamp()) 
-		{
-			PlayerTick[playerid][ptMoney] = gettimestamp();
-			AC_MoneyDetect(playerid);
-			if(!PlayerSyncs[playerid]) {
-				PlayerSyncs[playerid] = true;
-			}
-			return 1;
-		}
-	}
-	return 1;
 }
 
 public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)

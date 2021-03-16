@@ -50,8 +50,15 @@ new
 	Bit8:r_PlayerWounded<MAX_PLAYERS>		= { Bit8:0, ... };
 	
 // 32bit
-static stock
-	Timer:PlayerBleedTimer[MAX_PLAYERS];
+static
+	bool:PlayerWounded[MAX_PLAYERS],
+	WoundedBy[MAX_PLAYERS],
+	bool:PlayerWoundedAnim[MAX_PLAYERS],
+	PlayerWoundedSeconds[MAX_PLAYERS],
+	Timer:PlayerBleedTimer[MAX_PLAYERS],
+	KilledBy[MAX_PLAYERS],
+	KilledReason[MAX_PLAYERS];
+	
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
@@ -61,6 +68,27 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
+
+bool:Player_IsWounded(playerid)
+{
+	return PlayerWounded[playerid];
+}
+
+Player_WoundedBy(playerid)
+{
+	return WoundedBy[playerid];
+}
+
+bool:Player_WoundedAnim(playerid)
+{
+	return PlayerWoundedAnim[playerid];
+}
+
+Player_SetWoundedAnim(playerid, bool:v)
+{
+	return PlayerWoundedAnim[playerid] = v;
+}
+
 /*
 	TTTTTT EEEE X   X TTTTTT DDD  RRRR   AA  W     W  SSS  
 	  TT   E     X X    TT   D  D R   R A  A W     W S     
@@ -94,11 +122,16 @@ stock ApplyWoundedAnimation(playerid, bodypart)
 		CreateDeathInfos(playerid, 2); // Wounded Situation
 		if(IsPlayerInAnyVehicle(playerid))
 		{
-			new vehicleid = GetPlayerVehicleID(playerid);
-			if(IsABike(GetVehicleModel(vehicleid)) || IsAMotorBike(GetVehicleModel(vehicleid)))
-				RemovePlayerFromVehicle(playerid), defer ApplyVehicleFallAnim(playerid);
+			new 
+				vehicleid = GetPlayerVehicleID(playerid);
+			if(IsABike(VehicleInfo[vehicleid][vModel]) || IsAMotorBike(VehicleInfo[vehicleid][vModel]))
+			{
+				RemovePlayerFromVehicle(playerid);
+				defer ApplyVehicleFallAnim(playerid);
+			}
 			else 
 				ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, 0, 1, 1, 1, 0);
+
 			return 1;
 		}
 		if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
@@ -140,10 +173,12 @@ stock ResetPlayerWounded(playerid)
 	SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 	999);
 	SetPlayerDrunkLevel(playerid, 0);
 	
-	PlayerWounded[playerid] 	= false;
-	PlayerWoundedAnim[playerid] = false;
+	PlayerWounded[playerid] = false;
+	WoundedBy[playerid] = INVALID_PLAYER_ID;
+ 	PlayerWoundedAnim[playerid] = false;
 	PlayerWoundedSeconds[playerid] = 0;
-	PlayerWTripTime[playerid] = 0;
+	KilledBy[playerid]	= INVALID_PLAYER_ID;
+	KilledReason[playerid]	= -1;
 	return 1;
 }
 
@@ -574,7 +609,7 @@ timer ApplyVehicleFallOutAnim[2600](playerid)
 
 ptask WoundedPlayerCheck[1000](playerid)
 {
-	if(!SafeSpawned[playerid])
+	if(!Player_SafeSpawned(playerid))
 		return 1;
 	if(!PlayerWoundedAnim[playerid] || PlayerDeath[playerid][pKilled] != 0)
 		return 1;
@@ -645,6 +680,29 @@ timer OnPlayerBleed[500](playerid)
 	##     ##  #######   #######  ##    ##  ######  
 */
 
+hook OnPlayerDeath(playerid, killerid, reason)
+{
+	if(KilledBy[playerid] == INVALID_PLAYER_ID && killerid == INVALID_PLAYER_ID || playerid == INVALID_PLAYER_ID || !Player_SafeSpawned(playerid))
+		return 1;
+
+	if(!Player_SafeSpawned(KilledBy[playerid])) 
+	{
+		SendClientMessage(KilledBy[playerid], 
+			COLOR_RED, 
+			"[ANTI-CHEAT]: You are not safely spawned, therefore, banned!"
+		); 
+		BanMessage(KilledBy[playerid]);
+	}
+	if(IsPlayerInAnyVehicle(playerid))
+		RemovePlayerFromVehicle(playerid);
+	
+	PlayerWoundedAnim[playerid] = false;
+	PlayerWoundedSeconds[playerid] = 0;
+	PlayerWounded[playerid] = false;
+	SetPlayerArmour(playerid, 0);
+	return 1;
+}
+
 hook OnPlayerUpdate(playerid)
 {
 	if(PlayerWounded[playerid])
@@ -658,15 +716,6 @@ hook OnPlayerUpdate(playerid)
 			SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, doors, bonnet, boot, objective);
 		}
 	}
-	return 1;
-}
-
-hook OnPlayerDeath(playerid, killerid, reason)
-{
-	PlayerWoundedAnim[playerid] = false;
-	PlayerWoundedSeconds[playerid] = 0;
-	PlayerWounded[playerid] = false;
-	SetPlayerArmour(playerid, 0);
 	return 1;
 }
 

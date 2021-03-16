@@ -137,6 +137,8 @@ static
 
 static
     VeronaSkinRectangle,
+    BizzSellingPlayerID[MAX_PLAYERS],
+    BizzSellingPrice[MAX_PLAYERS],
     bool:IsDJ[MAX_PLAYERS],
     DJBizzKey[MAX_PLAYERS],
     ArticleSlot[MAX_PLAYERS],
@@ -270,7 +272,7 @@ stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
 
 stock IsAt247(playerid)
 {
-    if(!SafeSpawned[playerid])
+    if(!Player_SafeSpawned(playerid))
     {
         return false;
     }
@@ -1214,6 +1216,9 @@ hook function ResetPlayerVariables(playerid)
 {
     DestroyBizzInfoTD(playerid);
 
+    BizzSellingPlayerID[playerid] = INVALID_PLAYER_ID;
+    BizzSellingPrice[playerid] = 0;
+
     FreeBizzID     [playerid] = INVALID_BIZNIS_ID;
     ArticleSlot    [playerid] = 0;
     ArticleIdInput [playerid] = 0;
@@ -1775,7 +1780,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(!ProxDetectorS(5.0, playerid, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas!");
             if(PlayerKeys[gplayerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Taj igrac vec ima biznis!");
 
-            GlobalSellingPlayerID[playerid] = gplayerid;
+            BizzSellingPlayerID[playerid] = gplayerid;
             ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa", "Input", "Close");
             return 1;
         }
@@ -1785,7 +1790,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 bizzPrice = strval(inputtext),
-                pID = GlobalSellingPlayerID[playerid];
+                pID = BizzSellingPlayerID[playerid];
             if(pID < 0 || pID == INVALID_PLAYER_ID)
             {
                 SendClientMessage(playerid, COLOR_RED, "Nitko vam nije ponudio prodaju biznisa!");
@@ -1794,8 +1799,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(bizzPrice < 1 || bizzPrice > 9999999) return ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa>\nCijena biznisa ne moze biti manja od 1$, a veca od 9.999.999$", "Input", "Close");
             if(AC_GetPlayerMoney(pID) < bizzPrice) return SendClientMessage(playerid, COLOR_RED, "Osoba nema toliko novaca kod sebe!");
 
-            GlobalSellingPrice   [pID] = bizzPrice;
-            GlobalSellingPlayerID[pID] = playerid;
+            BizzSellingPrice[pID] = bizzPrice;
+            BizzSellingPlayerID[pID] = playerid;
 
             va_SendClientMessage(playerid, COLOR_YELLOW, "[!]  Uspjesno ste ponudili vas biznis igracu %s za %d$", GetName(pID), bizzPrice);
             va_ShowPlayerDialog(pID, DIALOG_SELL_BIZ_2, DIALOG_STYLE_MSGBOX, "PONUDA ZA KUPOVINU BIZNISA", "Igrac %s vam je ponudio da kupite biznis za %d", "Buy", "Close", GetName(playerid), bizzPrice);
@@ -1808,8 +1813,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
             new
-                pID       = GlobalSellingPlayerID[playerid],
-                bizzPrice = GlobalSellingPrice[playerid];
+                pID       = BizzSellingPlayerID[playerid],
+                bizzPrice = BizzSellingPrice[playerid];
 
             if(pID < 0 || pID == INVALID_PLAYER_ID)
             {
@@ -1835,8 +1840,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             va_SendClientMessage(playerid, COLOR_YELLOW, "[!]  Uspjesno ste kupili biznis %s od %s za %d$", BizzInfo[bizz][bMessage], GetName(pID), bizzPrice);
             va_SendClientMessage(pID, COLOR_YELLOW, "[!]  Igrac %s je kupio od vas biznis %s za %d", GetName(playerid), BizzInfo[bizz][bMessage], bizzPrice);
 
-            GlobalSellingPlayerID[playerid] = INVALID_PLAYER_ID;
-            GlobalSellingPrice   [playerid] = 0;
+            BizzSellingPlayerID[playerid] = INVALID_PLAYER_ID;
+            BizzSellingPrice[playerid] = 0;
 
             #if defined MODULE_LOGS
             Log_Write("/logfiles/buy_biznis.txt", "(%s) %s(%s) bought business %s[SQLID: %d] from %s(%s) for %d$.",

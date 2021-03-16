@@ -1,5 +1,8 @@
 // Header file where functions should be declared that can be used/accessed from other modules
 
+// Animations
+forward bool:Player_IsPerformingAnim(playerid);
+
 // Burglar
 forward bool:Player_BreakingSafe(playerid);
 

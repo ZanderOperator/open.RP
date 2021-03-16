@@ -258,7 +258,7 @@ static GPS_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
 
 ptask NavigationTimer[1000](playerid)
 {
-    if(!SafeSpawned[playerid] || !Player_GpsActivated(playerid))
+    if(!Player_SafeSpawned(playerid) || !Player_GpsActivated(playerid))
         return 1;
 
     GPS_GetDistance(playerid, 

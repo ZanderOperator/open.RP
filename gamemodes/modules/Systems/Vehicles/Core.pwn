@@ -1223,7 +1223,8 @@ CMD:engine(playerid, params[])
 	if((enginet[playerid] > gettime()) && VehicleInfo[vehicleid][vDestroyed])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte prije ponovnog paljenja vozila!");
 	
-	if(PlayerWoundedAnim[playerid]) 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ranjeni ste, trenutno niste u stanju upravljati vozilom!");
+	if(Player_WoundedAnim(playerid)) 				
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ranjeni ste, trenutno niste u stanju upravljati vozilom!");
 	if(IsABike(GetVehicleModel(vehicleid))) 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilno vozilo!");
 	if(!IsPlayerInVehicle(playerid, vehicleid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
 	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste vozac auta!");

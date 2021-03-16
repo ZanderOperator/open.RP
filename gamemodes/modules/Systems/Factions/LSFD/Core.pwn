@@ -44,7 +44,9 @@ static
     StretcherObj          [MAX_PLAYERS] = {INVALID_OBJECT_ID, ...},
     bool:bHaveOxygen      [MAX_PLAYERS] = {false, ...},
     bool:bUsingStretcher  [MAX_PLAYERS] = {false, ...},
-    bool:bStretcherSpawned[MAX_PLAYERS] = {false, ...};
+    bool:bStretcherSpawned[MAX_PLAYERS] = {false, ...},
+    VehicleEquipment[MAX_PLAYERS],
+    InjectPlayer[MAX_PLAYERS];
 
 static fdskins_selection[] =
 {
@@ -103,7 +105,7 @@ stock Player_SetStretcherSpawned(playerid, bool:v)
 
 
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
     if(Player_StretcherSpawned(playerid))
     {
@@ -123,7 +125,10 @@ hook OnPlayerDisconnect(playerid, reason)
     Player_SetUsingStretcher  (playerid, false);
     Player_SetStretcherSpawned(playerid, false);
 
-    return 1;
+    VehicleEquipment[playerid] = INVALID_VEHICLE_ID;
+    InjectPlayer[playerid] = INVALID_PLAYER_ID;
+
+    return continue(playerid);
 }
 
 hook OnFSelectionResponse(playerid, fselectid, modelid, response)
@@ -502,7 +507,7 @@ CMD:recover(playerid, params[])
     new giveplayerid;
     if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /recover [dio imena/playerid]");
     if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
-    if(!PlayerDeath[giveplayerid][pKilled] && !PlayerWounded[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
+    if(!PlayerDeath[giveplayerid][pKilled] && !Player_IsWounded(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
     if(!ProxDetectorS(3.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
     if(DeathCountStarted_Get(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac je mrtav i ne moze se reviveati!");
 

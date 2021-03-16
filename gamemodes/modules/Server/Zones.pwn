@@ -5,7 +5,7 @@ static
 
 ptask MapZoneCheck[1000](playerid)
 {
-	if(!SafeSpawned[playerid])
+	if(!Player_SafeSpawned(playerid))
 		return 1;
 
 	new 

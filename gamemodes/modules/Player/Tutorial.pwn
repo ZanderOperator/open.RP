@@ -210,7 +210,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			SetPlayerInterior(playerid, 0); 
 			SetCameraBehindPlayer(playerid);
 			SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
-			SafeSpawned[playerid] = true;
+			Player_SetSafeSpawned(playerid, true);
 			SpawnPlayer(playerid);
 			TogglePlayerControllable(playerid, 1);
 			TutorialStep[playerid] = 0;

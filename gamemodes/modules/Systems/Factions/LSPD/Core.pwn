@@ -82,7 +82,7 @@ static
     bool:bHasTaser           [MAX_PLAYERS] = {false, ...},
     bool:bBeanbagBullets     [MAX_PLAYERS] = {false, ...},
     
-    Timer:TaserTimer               [MAX_PLAYERS],
+    Timer:TaserTimer         [MAX_PLAYERS],
     Timer:TaserAnimTimer     [MAX_PLAYERS],
     //
     bool:PDApprovedUndercover[MAX_PLAYERS] = {false, ...},
@@ -94,7 +94,10 @@ static
     PDLockedSeat             [MAX_PLAYERS],
     PDLockedVeh              [MAX_PLAYERS] = {INVALID_VEHICLE_ID, ...},
 
-    bool:AllowedGovVehRepair [MAX_PLAYERS] = {false, ...};
+    bool:AllowedGovVehRepair [MAX_PLAYERS] = {false, ...},
+    
+    UndercoverName[MAX_PLAYERS][MAX_PLAYER_NAME],
+    VehicleEquipment[MAX_PLAYERS];
 
 
 /*
@@ -324,6 +327,9 @@ SendFDChannelMessage(color = COLOR_WHITE, message[], fdchannel_id)
 // Also called on OnPlayerDisconnect
 hook function ResetPlayerVariables(playerid)
 {
+    UndercoverName[playerid][0] = EOS;
+    VehicleEquipment[playerid] = INVALID_VEHICLE_ID;
+
     Player_SetIsCuffed(playerid, false);
     Player_SetIsTased(playerid, false);
     Player_SetHasTaserGun(playerid, false);
@@ -2785,25 +2791,28 @@ CMD:cleartrunk(playerid, params[])
 CMD:undercover(playerid, params[])
 {
     // TODO: reduce level of nesting
-    if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSPDa/USMSa!");
+    if(!IsACop(playerid) && !IsASD(playerid)) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSPDa/USMSa!");
     if(!IsPlayerInRangeOfPoint(playerid, 6.0, 2877.2317,-843.6631,-21.6994) && !IsPlayerInRangeOfPoint(playerid,6.0,2040.6858,1260.2460,-11.1115) && !IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) && !IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar LSPD/SASD armorya da bi ste mogli koristiti ovu komandu.");
 
-    if(!isnull(PlayerExName[playerid]))
+    if(!isnull(UndercoverName[playerid]))
     {
         SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj pravi nick!");
-        SetPlayerName(playerid, PlayerExName[playerid]);
-        PlayerExName[playerid][0] = EOS;
+        SetPlayerName(playerid, UndercoverName[playerid]);
+        UndercoverName[playerid][0] = EOS;
         return 1;
     }
 
-    if(!Player_ApprovedUndercover(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati odobrenje za undercover!");
+    if(!Player_ApprovedUndercover(playerid)) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati odobrenje za undercover!");
 
     new
         param[8],
         item;
 
-    if(sscanf( params, "s[8] ", param)) return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover [skins/name/mask]");
+    if(sscanf( params, "s[8] ", param)) 
+        return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover [skins/name/mask]");
     if(!strcmp(param, "skins", true))
     {
         if(sscanf( params, "s[8]i", param, item)) return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover skins [skinid]");
@@ -2812,7 +2821,8 @@ CMD:undercover(playerid, params[])
         {
             switch (item)
             {
-                case 147, 277, 278, 289, 286, 285, 287, 282, 283, 274, 275, 276: return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan Skin ID!");
+                case 147, 277, 278, 289, 286, 285, 287, 282, 283, 274, 275, 276: 
+                    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan Skin ID!");
             }
 
             new
@@ -2827,11 +2837,11 @@ CMD:undercover(playerid, params[])
     }
     if(!strcmp(param, "name", true))
     {
-        if(!isnull(PlayerExName[playerid]))
+        if(!isnull(UndercoverName[playerid]))
         {
-            SetPlayerName(playerid, PlayerExName[playerid]);
+            SetPlayerName(playerid, UndercoverName[playerid]);
             SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj prijasnji nick!");
-            PlayerExName[playerid][0] = EOS;
+            UndercoverName[playerid][0] = EOS;
             return 1;
         }
 
@@ -2840,21 +2850,19 @@ CMD:undercover(playerid, params[])
         if(sscanf(params, "s[7]s[24]", param, newName)) return SendClientMessage(playerid, COLOR_RED, "[?]: /undercover name [novi nick]");
         if(!IsValidName(newName)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilan roleplay nick!");
 
-        format(PlayerExName[playerid], MAX_PLAYER_NAME, GetName(playerid, false));
-
-        new status = SetPlayerName(playerid, newName);
-        if(status == -1)
+        format(UndercoverName[playerid], MAX_PLAYER_NAME, GetName(playerid, false));
+        
+        switch(SetPlayerName(playerid, newName)) 
         {
-            SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
-        }
-        else if(status == 0)
-        {
-            SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete taj nick!");
-        }
-        else if(status == 1)
-        {
-            va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName);
-            Player_SetApprovedUndercover(playerid, false);
+            case -1: 
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
+            case 0: 
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete taj nick!");
+            case 1:
+            { 
+                va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName); 
+                Player_SetApprovedUndercover(playerid, false);
+            }
         }
     }
     if(!strcmp(param, "mask", true))

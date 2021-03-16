@@ -156,7 +156,7 @@ public OnPlayerRequestSpawn(playerid)
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	if(IsPlayerLogged(playerid) || SafeSpawned[playerid])
+	if(IsPlayerLogged(playerid) || Player_SafeSpawned(playerid))
 		return 1;
 
 	if(GMX == 1) 
@@ -628,7 +628,7 @@ Public: SafeSpawnPlayer(playerid)
 SavePlayerData(playerid)
 {
 	// When newly registered player isn't safely spawned, FirstSaving it is.
-    if(!SafeSpawned[playerid] && !FirstSaving[playerid])	
+    if(!Player_SafeSpawned(playerid) && !FirstSaving[playerid])	
 		return 1;
 
 	mysql_pquery(SQL_Handle(), "START TRANSACTION");
@@ -1034,7 +1034,7 @@ hook OnPlayerSpawn(playerid)
 			TogglePlayerControllable(playerid, 0);
 			CreateDeathInfos(playerid);
 			SetPlayerHealth(playerid,10.0);
-			PlayerWoundedAnim[playerid] = true;
+			Player_SetWoundedAnim(playerid, true);
 			ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0,1);
 			return 1;
 		}
@@ -1058,7 +1058,7 @@ hook OnPlayerSpawn(playerid)
 			TogglePlayerControllable(playerid, 0);
 			CreateDeathInfos(playerid);
 			SetPlayerHealth(playerid,10.0);
-   			PlayerWoundedAnim[playerid] = true;
+   			Player_SetWoundedAnim(playerid, true);
 			ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0,1);
 			return 1;
 		}
@@ -1072,7 +1072,7 @@ hook OnPlayerSpawn(playerid)
 			}
 			else 
 			{
-				if(SafeSpawned[playerid])
+				if(Player_SafeSpawned(playerid))
 					AC_SetPlayerWeapons(playerid);
 					
 				switch( PlayerInfo[playerid][pSpawnChange])
@@ -1161,16 +1161,6 @@ hook OnPlayerSpawn(playerid)
 						SetPlayerVirtualWorld(playerid, 0);
 						SetPlayerHealth(playerid, 100);
 					}
-				}
-				if(Bit1_Get( gr_PlayerInTrunk, playerid))
-				{
-					Bit1_Set( gr_PlayerInTrunk, playerid, false);
-					VehicleTrunk[playerid] = INVALID_VEHICLE_ID;
-
-					SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
-					TogglePlayerControllable( playerid, 1);
-					SendClientMessage( playerid, COLOR_RED, "[!]: You exited the trunk.");
-					SetPlayerHealth(playerid, 100);
 				}
 			}
 		}

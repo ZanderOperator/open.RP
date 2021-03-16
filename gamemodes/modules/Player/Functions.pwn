@@ -416,13 +416,12 @@ PlayerMinuteTask(playerid)
 
 timer PlayerGlobalTask[1000](playerid)
 {
-	if(!SafeSpawned[playerid] || !IsPlayerConnected(playerid)) 
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) 
 		return 1;
 	
 	if(gettimestamp() >= PlayerTick[playerid][ptMainTimer])
 		PlayerMinuteTask(playerid);	
 	
-	PlayerSyncs[playerid] = false;
 	new tmphour,tmpmins,tmpsecs;
 	GetServerTime(tmphour,tmpmins,tmpsecs);
 	SetPlayerTime(playerid,tmphour,tmpmins);
@@ -534,7 +533,7 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 
 static HungerCheck(playerid)
 {
-	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0)
+	if(Player_IsWounded(playerid) || PlayerDeath[playerid][pKilled] > 0)
 		return 1;
 		
 	new 
@@ -1132,7 +1131,7 @@ PlaySoundForPlayersInRange(soundid, Float:range, Float:x, Float:y, Float:z)
 {
 	foreach(new i: Player)
 	{
-	    if(SafeSpawned[i] && IsPlayerInRangeOfPoint(i,range,x,y,z))
+	    if(Player_SafeSpawned(i) && IsPlayerInRangeOfPoint(i,range,x,y,z))
 		    PlayerPlaySound(i, soundid, x, y, z);
 	}
 }
@@ -1154,6 +1153,16 @@ hook OnGameModeInit()
 	return 1;
 }
 
+hook OnPlayerDeath(playerid, reason)
+{
+	if(Player_InTrunk(playerid))
+	{
+		Player_SetInTrunk(playerid, false);
+		Player_SetVehicleTrunk(playerid, INVALID_VEHICLE_ID);
+	}
+	return 1;
+}
+
 hook function ResetPlayerVariables(playerid)
 {
 	PlayerGlobalTaskTimer[playerid] = false;
@@ -1166,7 +1175,7 @@ hook function ResetPlayerVariables(playerid)
     FakeGunLic[playerid] = false;
     PlayerGroceries[playerid] = 0;
 
-	if(SafeSpawned[playerid])
+	if(Player_SafeSpawned(playerid))
 	{
 		stop PlayerTask[playerid];
 		PlayerGlobalTaskTimer[playerid] = false;
@@ -1270,7 +1279,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerUpdate(playerid) 
 {
-	if(!PlayerGlobalTaskTimer[playerid] && SafeSpawned[playerid])
+	if(!PlayerGlobalTaskTimer[playerid] && Player_SafeSpawned(playerid))
 	{
 		PlayerGlobalTaskTimer[playerid] = true;
 		PlayerTask[playerid] = repeat PlayerGlobalTask(playerid);

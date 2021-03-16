@@ -1,7 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
-static 
+static
 	globalstring[144],
+	PlayerExName[MAX_PLAYERS][MAX_PLAYER_NAME],
 	bool:KillRequest[MAX_PLAYERS],
 	bool:AdminFly[MAX_PLAYERS],
 	Float:AdminMark1[MAX_PLAYERS][3],
@@ -467,7 +468,7 @@ CMD:inactivity(playerid, params[])
 		
 		foreach(new i : Player)
 		{
-			if(IsPlayerConnected(i) && SafeSpawned[playerid])
+			if(IsPlayerConnected(i) && Player_SafeSpawned(playerid))
 			{
 				new playername2[MAX_PLAYER_NAME];
 				GetPlayerName(i, playername2, sizeof(playername2));
@@ -544,7 +545,7 @@ CMD:inactivity(playerid, params[])
 		
 		foreach(new i : Player)
 		{
-			if(IsPlayerConnected(i) && SafeSpawned[playerid])
+			if(IsPlayerConnected(i) && Player_SafeSpawned(playerid))
 			{
 				new playername2[MAX_PLAYER_NAME];
 				GetPlayerName(i, playername2, sizeof(playername2));
@@ -719,7 +720,7 @@ CMD:teampin(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /teampin [Playerid / Part of name][Novi Team PIN za /alogin]");
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online!");
-	if(!SafeSpawned[giveplayerid])
+	if(!Player_SafeSpawned(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
 	if(!PlayerInfo[giveplayerid][pTempRank][0] && !PlayerInfo[giveplayerid][pTempRank][1] && !PlayerInfo[giveplayerid][pAdmin] && !PlayerInfo[giveplayerid][pHelper]) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije Team Staff!");
@@ -1041,7 +1042,7 @@ CMD:aname(playerid, params[])
 	
 	strcpy(PlayerExName[playerid], GetName(playerid, false), MAX_PLAYER_NAME);
 		
-	switch( SetPlayerName(playerid, newName)) 
+	switch(SetPlayerName(playerid, newName)) 
 	{
 		case -1: 
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
@@ -1096,7 +1097,7 @@ CMD:giveallmoney(playerid, params[])
 	
 	foreach(new giveplayerid : Player)
 	{
-		if(!SafeSpawned[giveplayerid]) 
+		if(!Player_SafeSpawned(giveplayerid)) 
 			continue;
 
 		BudgetToPlayerMoney(giveplayerid, amount); 		
@@ -1278,7 +1279,7 @@ CMD:asellbiz(playerid, params[])
 
 	foreach(new i : Player)
 	{
-		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
+		if(Player_SafeSpawned(playerid) && PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
 		{
 			PlayerKeys[i][pBizzKey] = INVALID_BIZNIS_ID;
 			va_SendClientMessage(i, COLOR_RED, "[!]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
@@ -1359,7 +1360,7 @@ CMD:asellgarage(playerid, params[])
 		
 	foreach(new i : Player)
 	{
-		if(SafeSpawned[playerid] && PlayerKeys[i][pGarageKey] == garage)
+		if(Player_SafeSpawned(playerid) && PlayerKeys[i][pGarageKey] == garage)
 		{
 			PlayerKeys[i][pGarageKey] = -1;
 			va_SendClientMessage(i, COLOR_RED, "[!]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
@@ -1439,7 +1440,7 @@ CMD:asellhouse(playerid, params[])
    
 	foreach(new i : Player)
 	{
-		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
+		if(Player_SafeSpawned(playerid) && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
 		{
 			PlayerKeys[i][pHouseKey] = INVALID_HOUSE_ID;
 
@@ -1534,7 +1535,7 @@ CMD:asellcomplex(playerid, params[])
    
 	foreach(new i : Player)
 	{
-		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
+		if(Player_SafeSpawned(playerid) && PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
 		{
 			PlayerKeys[i][pComplexKey] = INVALID_COMPLEX_ID;
 			va_SendClientMessage(i, COLOR_RED, 
@@ -1617,7 +1618,7 @@ CMD:asellcomplexroom(playerid, params[])
 		
 	foreach(new i : Player)
 	{
-		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
+		if(Player_SafeSpawned(playerid) && PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
 		{
 			PlayerKeys[i][pComplexRoomKey] = INVALID_COMPLEX_ID;
 
@@ -1829,7 +1830,7 @@ CMD:setstat(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "(13 - Casino cool), (14 - Fishing skill)");
 		return 1;
     }
-    if(!SafeSpawned[playerid])
+    if(!Player_SafeSpawned(playerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player is not online!");
 	
 	switch (stat)
@@ -2485,7 +2486,8 @@ CMD:unfreezearound(playerid, params[])
 	{
         if(IsPlayerConnected(i))
 	    {
-    	    if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) TogglePlayerControllable(i, 1); Frozen[i] = false;
+    	    if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) 
+				TogglePlayerControllable(i, 1);
 		}
 	}
 	return 1;
@@ -2501,7 +2503,8 @@ CMD:freezearound(playerid, params[])
 	{
         if(IsPlayerConnected(i))
 	    {
-    	    if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) TogglePlayerControllable(i, 0); Frozen[i] = true;
+    	    if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) 
+				TogglePlayerControllable(i, 0); 
 	    }
 	}
 	return 1;
@@ -2519,7 +2522,7 @@ CMD:setarmoraround(playerid, params[])
 	GetPlayerPos(playerid, X, Y, Z);
     foreach (new i : Player)
 	{
-	    if(SafeSpawned[i])
+	    if(Player_SafeSpawned(i))
 	    {
 	        if(IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) 
 				SetPlayerArmour(i, amount); 
@@ -4630,7 +4633,6 @@ CMD:freeze(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Team Staff can't be frozen");
 
 	TogglePlayerControllable(giveplayerid, 0);
-	Frozen[giveplayerid] = true;
 	
 	SendAdminMessage(COLOR_RED, 
 		"AdmCMD: %s is frozen by %s.",
@@ -4652,7 +4654,6 @@ CMD:unfreeze(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
 
 	TogglePlayerControllable(giveplayerid, 1);
-	Frozen[giveplayerid] = false;
 
 	SendAdminMessage(COLOR_RED, 
 		"AdmCMD: %s is unfrozen by %s.", 
@@ -4827,7 +4828,8 @@ CMD:recon(playerid, params[])
 	SetPlayerInterior(playerid, 	GetPlayerInterior(giveplayerid));
 	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(giveplayerid));
 	
-	if(IsPlayerInAnyVehicle(giveplayerid)) {
+	if(IsPlayerInAnyVehicle(giveplayerid)) 
+	{
 		TogglePlayerSpectating(playerid, 1);
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(giveplayerid));
 		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH);
@@ -5448,6 +5450,8 @@ CMD:setservertime(playerid, params[])
 
 hook function ResetPlayerVariables(playerid)
 {
+	PlayerExName[playerid][0] = EOS;
+	
 	KillRequest[playerid] = false;
 	AdminFly[playerid] = false;
 

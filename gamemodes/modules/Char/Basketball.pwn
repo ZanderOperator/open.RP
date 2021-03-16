@@ -744,7 +744,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {			
 	if(Bit1_Get(PlayingBBall, playerid))
 	{		
-		if(PlayerWounded[playerid] || AC_GetPlayerWeapon(playerid) != 0)
+		if(Player_IsWounded(playerid) || AC_GetPlayerWeapon(playerid) != 0)
 			return 1;
 		new Float:X, Float:Y, Float:Z, Float:pX, Float:pY, Float:pX2, Float:pY2, Float:pZ2;
 		if(BasketInfo[BasketID[playerid]][hasball] == playerid)

@@ -3,7 +3,11 @@
 static
 	bool:ForbiddenPM[MAX_PLAYERS],
 	bool:Entering[MAX_PLAYERS],
-	bool:Exiting[MAX_PLAYERS];
+	bool:Exiting[MAX_PLAYERS],
+	bool:TrunkOffer[MAX_PLAYERS],
+	bool:InTrunk[MAX_PLAYERS],
+	VehicleTrunk[MAX_PLAYERS],
+	Float:PlayerTrunkPos[MAX_PLAYERS][3];
 
 bool: Player_ForbiddenPM(playerid)
 {
@@ -15,12 +19,34 @@ Player_SetForbiddenPM(playerid, bool:v)
 	ForbiddenPM[playerid] = v;
 }
 
+bool:Player_InTrunk(playerid)
+{
+	return InTrunk[playerid];
+}
+
+Player_SetInTrunk(playerid, bool:v)
+{
+	InTrunk[playerid] = v;
+}
+
+Player_SetVehicleTrunk(playerid, vehicleid)
+{
+	VehicleTrunk[playerid] = vehicleid;
+}
+
 hook function ResetPlayerVariables(playerid)
 {
 	RemovePlayerScreenFade(playerid);
 	ForbiddenPM[playerid] = false;
 	Entering[playerid] = false;
 	Exiting[playerid] = false;
+	TrunkOffer[playerid] = false;
+	InTrunk[playerid] = false;
+	VehicleTrunk[playerid] = INVALID_VEHICLE_ID;
+	PlayerTrunkPos[playerid][0] = 0.0;
+	PlayerTrunkPos[playerid][1]	= 0.0;
+	PlayerTrunkPos[playerid][2] = 0.0;
+
 	return continue(playerid);
 }
 
@@ -231,7 +257,7 @@ CMD:enter(playerid, params[])
         TogglePlayerControllable(playerid, false);
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
 
-		if(rob_started[playerid] == true)
+		if(Player_StorageRobbing(playerid))
         	PlayStorageAlarm(playerid, false);
     }
 	else if(IsPlayerInDynamicArea(playerid, Player_GarageArea(playerid)))
@@ -1122,7 +1148,8 @@ CMD:refresh(playerid, params[])
 	if(!IsPlayerAlive(playerid))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Mrtvi ste, ne mozete koristit ovu komandu.");
         
-    if(Frozen[playerid]) return SendClientMessage(playerid, COLOR_RED, "Freezani ste, ne mozete koristi ovu komandu");
+    if(Player_Frozen(playerid))
+	 	return SendClientMessage(playerid, COLOR_RED, "Freezani ste, ne mozete koristi ovu komandu");
 		
 	new
 		houseid = Player_InHouse(playerid),
@@ -1718,7 +1745,7 @@ CMD:give(playerid, params[])
 		if(PlayerInfo[playerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
 		if(sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /give weapon [Playerid / Part of name]");
 		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online");
-		if(!SafeSpawned[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan");
+		if(!Player_SafeSpawned(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan");
 		if(PlayerInfo[giveplayerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
 		if(Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0) {
 		    if(giveplayerid != INVALID_PLAYER_ID) {
@@ -1782,7 +1809,7 @@ CMD:give(playerid, params[])
 			return 1;
 		}
 		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online");
-		if(!SafeSpawned[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan");
+		if(!Player_SafeSpawned(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan");
 		if(PlayerInfo[giveplayerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi davati oruzje!");
 		if(Bit1_Get(gr_PlayerLoggedIn, giveplayerid)) {
@@ -1924,7 +1951,7 @@ CMD:give(playerid, params[])
 			return 1;
 		}
 		
-		if(SafeSpawned[giveplayerid])
+		if(Player_SafeSpawned(giveplayerid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
 		if(giveplayerid != INVALID_PLAYER_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't give yourself a job!");
@@ -2269,6 +2296,7 @@ CMD:tow(playerid, params[])
 	if(!found) SendClientMessage(playerid,COLOR_RED, "Nema automobila okolo.");
 	return 1;
 }
+
 CMD:putintrunk(playerid, params[])
 {
 	new
@@ -2289,7 +2317,7 @@ CMD:putintrunk(playerid, params[])
 	if(!ProxDetectorS(5.0, playerid, giveplayerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca.");
 
-	Bit1_Set( gr_TrunkOffer, giveplayerid, true);
+	TrunkOffer[giveplayerid] = true;
 	VehicleTrunk[giveplayerid] = vehicleid;
 	
 	SendClientMessage( giveplayerid, COLOR_RED, "[!]: Sada mozes koristiti /entertrunk.");
@@ -2299,11 +2327,10 @@ CMD:putintrunk(playerid, params[])
 
 CMD:entertrunk(playerid, params[])
 {
-	if(!Bit1_Get( gr_TrunkOffer, playerid)) 
+	if(!TrunkOffer[playerid])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko ti nije ponudio ulaz u gepek!");
 	new 
 		vehicleid = VehicleTrunk[playerid];
-    
 	if(!IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0)) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu vozila.");
     if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 	
@@ -2312,8 +2339,8 @@ CMD:entertrunk(playerid, params[])
 	SendClientMessage(playerid,COLOR_RED, "[!]: Usao si u prtljaznik, mozes izaci sa /exittrunk ukoliko je otvoren.");
 	SendClientMessage(playerid,COLOR_ORANGE, "[NAPOMENA]: Ukoliko se zbugas sa spectateom, re-konektuj se na server.");
 	
-	Bit1_Set(gr_TrunkOffer, 	playerid, false);
-	Bit1_Set(gr_PlayerInTrunk, playerid, true);
+	TrunkOffer[playerid] = false;
+	InTrunk[playerid] = true;
 	
 	TogglePlayerSpectating(playerid, 1);
 	PlayerSpectateVehicle(playerid, vehicleid);
@@ -2324,8 +2351,10 @@ CMD:exittrunk(playerid, params[])
 {
 	new
 		vehicleid = VehicleTrunk[playerid];
-	if(!Bit1_Get( gr_PlayerInTrunk, playerid)) 	return SendClientMessage(playerid,COLOR_RED, "Nisi u prtljazniku.");
-    if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 	return SendClientMessage(playerid,COLOR_RED, "Prtljaznik tog auta je zatvoren.");
+	if(!TrunkOffer[playerid]) 	
+		return SendClientMessage(playerid,COLOR_RED, "Nisi u prtljazniku.");
+    if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 	
+		return SendClientMessage(playerid,COLOR_RED, "Prtljaznik tog auta je zatvoren.");
     
 	GetVehiclePos(vehicleid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2]);
 	
@@ -2443,7 +2472,7 @@ CMD:marry(playerid, params[])
 #if defined MODULE_DEATH
 CMD:acceptdeath(playerid, params[])
 {
-	if(!PlayerWounded[playerid] && WoundedBy[playerid] == INVALID_PLAYER_ID)
+	if(!Player_IsWounded(playerid) && Player_WoundedBy(playerid) == INVALID_PLAYER_ID)
 		return SendClientMessage(playerid, COLOR_GREY, "Niste u wounded stanju.");
 
 	SetPlayerDrunkLevel(playerid, 0);

@@ -435,7 +435,7 @@ CMD:channel(playerid, params[])
 
 		if(giveplayerid == INVALID_PLAYER_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi ID igraca!");
-		if(!SafeSpawned[giveplayerid])
+		if(!Player_SafeSpawned(giveplayerid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac %s se nalazi na frekvencijama %d, %d, %d.",

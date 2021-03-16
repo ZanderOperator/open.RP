@@ -352,7 +352,7 @@ CMD:weapon(playerid, params[])
 
 		if(HiddenWeapon[playerid][pwWeaponId] != 0)
 		{
-			if(!SafeSpawned[playerid])
+			if(!Player_SafeSpawned(playerid))
 				return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Pricekajte dok zavrsi spawn te da dobijete unfreeze!");
 
 			if(!CheckPlayerWeapons(playerid, HiddenWeapon[playerid][pwWeaponId], true))

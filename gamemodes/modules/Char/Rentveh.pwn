@@ -279,8 +279,8 @@ CMD:rentveh(playerid, params[])
 	}
 	else if(!strcmp(param, "locate", true))
 	{
-		if(Player_IsWorkingJob(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
-		if(gStartedWork[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete to koristiti dok radite!");
+		if(Player_IsWorkingJob(playerid)) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
 	    if(locatedRentedVeh[playerid] == false)
 		{
 			new rvID = Player_RentVehicle(playerid);
