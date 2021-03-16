@@ -452,8 +452,8 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog, f_dialog, sizeof(p_dialog));
 		}
 	}
-	if(HappyHours)
-		PlayerInfo[playerid][pRespects] += ( PlayerInfo[playerid][pLevel] < HappyHoursLVL) ? 2 : 1;
+	if(HappyHours_Get())
+		PlayerInfo[playerid][pRespects] += ( PlayerInfo[playerid][pLevel] < HappyHoursLvl_Get()) ? 2 : 1;
 	else 
 	{
 	    if(ExpInfo[playerid][eDayPayDays] > 5)
@@ -571,7 +571,8 @@ GivePlayerPayCheck(playerid)
 		ExpInfo[playerid][eGivenEXP] = false;
 		ExpInfo[playerid][eDayPayDays] = 1;
 	}
-	if(HappyHours && PlayerInfo[playerid][pLevel] >= HappyHoursLVL && ExpInfo[playerid][eDayPayDays] >= MIN_GIVER_EXP_PAYDAYS 
+	if(HappyHours_Get() && PlayerInfo[playerid][pLevel] >= HappyHoursLvl_Get() 
+		&& ExpInfo[playerid][eDayPayDays] >= MIN_GIVER_EXP_PAYDAYS 
 		&& ExpInfo[playerid][eGivenEXP])
 	{
 		ExpInfo[playerid][eGivenEXP] = false;

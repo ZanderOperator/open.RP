@@ -168,6 +168,8 @@
 #include "modules\Preincludes/Header.inc"
 // Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
 #include "modules\Preincludes/CustomHooks.inc"
+// Global Variables that are used via Getter/Setter functions
+#include "modules\Preincludes/GlobalVars.inc"
 	
 
 /*
@@ -180,15 +182,9 @@
 	   ###    ##     ## ##     ##  ######
 */
 
+static
+		WeatherTimer 			= 0;
 
-new
-	bool:Registration_Enabled = false,
-	ghour 					= 0,
-	GMX 					= 0,
-	WeatherTimer 			= 0,
-	WeatherSys 				= 10,
-	HappyHours				= 0,
-	HappyHoursLVL			= 0;
 
 //Players Vars
 //(rBits)
@@ -240,16 +236,6 @@ new
 	Bit16:	gr_ShakeOffer			<MAX_PLAYERS>  = Bit16: 0,
 	Bit16: 	gr_LastPMId				<MAX_PLAYERS>  = Bit16: 0;
 
-bool:Reg_Enabled()
-{
-	return Registration_Enabled;
-}
-
-Reg_SetEnabled(bool:v)
-{
-	Registration_Enabled = v;
-}
-
 
 /*
 	##     ##  #######  ########  ##     ## ##       ########  ######
@@ -300,7 +286,7 @@ StartGMX()
 		InterpolateCameraLookAt(i, 1431.8031, -894.1859, 74.0085, 1431.8031, -894.1859, 74.0085, 100000, CAMERA_MOVE);
 		cseconds += 3;
 	}
-	GMX = 1;
+	GMX_Set(1);
 	new rconstring[100];
 	format(rconstring, sizeof(rconstring), "hostname %s [Database Saving in Process]", SERVER_NAME);
 	SendRconCommand(rconstring);
@@ -330,16 +316,16 @@ Public:GlobalServerTimer()
 		tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 
-	if((tmphour > ghour) || (tmphour == 0 && ghour == 23))
+	if((tmphour > Hour_Get()) || (tmphour == 0 && Hour_Get() == 23))
 	{
 		SetWorldTime(tmphour);
-		ghour = tmphour;
+		Hour_Set(tmphour);
 	}
-	if(GMX != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)
+	if(GMX_Get() != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)
 	{
 		CheckAccountsForInactivity();
 		#if defined AUTO_RESTART_SEQ
-		GMX = 1;
+		GMX_Set(1);
 		StartGMX();
 		#endif
 	}
@@ -366,44 +352,44 @@ Public:DynamicWeather()
 				case 0:
 				{
 					SetWeather(1);
-					WeatherSys = 1;
+					Weather_Set(1);
 				}
 				case 1:
 				{
 					SetWeather(7);
-					WeatherSys = 7;
+					Weather_Set(7);
 				}
 				case 2:
 				{
 					SetWeather(8);
-					WeatherSys = 8;
+					Weather_Set(8);
 				}
 				case 3:
 				{
 					SetWeather(13);
-					WeatherSys = 13;
+					Weather_Set(13);
 				}
 				case 4:
 				{
 					SetWeather(15);
-					WeatherSys = 15;
+					Weather_Set(15);
 				}
 				case 5:
 				{
 					SetWeather(17);
-					WeatherSys = 17;
+					Weather_Set(17);
 				}
 				case 6:
 				{
 					SetWeather(10);
-					WeatherSys = 10;
+					Weather_Set(10);
 				}
 			}
 		}
 		else if(tmphour >= 21 && tmphour <= 5)
 		{
 			SetWeather(10);
-			WeatherSys = 10;
+			Weather_Set(10);
 		}
 	}
 	return 1;
@@ -412,7 +398,7 @@ Public:DynamicWeather()
 Public:GMXTimer()
 {
 	#if defined AUTO_RESTART_SEQ
-	if(GMX == 1)
+	if(GMX_Get() == 1)
 	{
 		cseconds--;
 		new string[10];
@@ -420,7 +406,7 @@ Public:GMXTimer()
 		GameTextForAll(string, 1000, 4);
 		if(cseconds < 1)
 		{
-			GMX = 0;
+			GMX_Set(0);
 			stop CountingTimer;
 			foreach(new i : Player) 
 			{
@@ -435,12 +421,12 @@ Public:GMXTimer()
 		}
 	}
 	#endif
-	if(GMX == 2)
+	if(GMX_Get() == 2)
 	{
 		cseconds--;
 		if(cseconds < 1)
 		{
-			GMX = 0;
+			GMX_Set(0);
 			cseconds = 0;
 			SendRconCommand("password 0");
 			return 1;
@@ -487,9 +473,11 @@ public OnGameModeInit()
 	print("Report: Streamer Configuration Complete.");
 
 	// Global config
-	WeatherSys 	= 10;
+	Weather_Set(10);
+	SetWeather(10);
+
 	cseconds = 0;
-	Registration_Enabled = true;
+	Reg_SetEnabled(true); // Enable Account Registration
 
 	// Alternative Commands
 	Command_AddAltNamed("whisper"		, 	"w");
@@ -538,7 +526,7 @@ public OnGameModeInit()
 	print("Report: Server Info Loaded.");
 
 	// Auto Unlock Settings
-	GMX = 2;
+	GMX_Set(2);
 	cseconds = SERVER_UNLOCK_TIME; 
 
 	printf("Report: GameMode Time Set on %s", 

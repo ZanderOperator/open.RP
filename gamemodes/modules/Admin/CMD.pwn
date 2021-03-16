@@ -825,10 +825,12 @@ CMD:happyhours(playerid, params[])
 	new
 		happy;
 	if(sscanf( params, "i ", happy)) return SendClientMessage(playerid, COLOR_RED, "[?]: /happyhours [0-makni/1-stavi]");
-	if(0 <= happy <= 1) {
+	if(0 <= happy <= 1) 
+	{
 		new
 			gstring[64];
-		if(happy) {
+		if(happy) 
+		{
 			new
 				level;
 			if(sscanf( params, "ii", happy, level)) return SendClientMessage(playerid, COLOR_RED, "[?]: /happyhours 1-stavi [level]");
@@ -836,12 +838,14 @@ CMD:happyhours(playerid, params[])
 				SERVER_NAME,
 				level);
 			SendRconCommand(gstring);
-			HappyHoursLVL = level;
-		} else {
+			HappyHoursLvl_Set(level);
+		} 
+		else 
+		{
 			format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
 			SendRconCommand(gstring);
 		}
-		HappyHours = happy;
+		HappyHours_Set(happy);
 		
 	} else SendClientMessage(playerid, COLOR_RED, "Morate staviti 0 za skidanje happy hoursa i 1 za stavljanje!");
 	return 1;
@@ -3557,7 +3561,7 @@ CMD:weatherall(playerid, params[])
 	if(weather < 0 || weather > 50) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Weather ID can be below 0 or above 50!");
 	
-	WeatherSys = weather;
+	Weather_Set(weather);
 	SetWeather(weather);
 	
 	foreach (new i : Player)

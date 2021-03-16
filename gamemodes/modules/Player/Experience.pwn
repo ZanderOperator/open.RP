@@ -323,7 +323,7 @@ stock GivePlayerExperience(playerid, playername[])
 	);
 	
 	va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
-	if(HappyHours)
+	if(HappyHours_Get())
 	{
 		ExpInfo[playerid][eGivenEXP] = false;
 		ExpInfo[playerid][eDayPayDays] = 0;
@@ -560,7 +560,7 @@ CMD:experience(playerid, params[])
 			if(!CanPlayerTakeExp(playerid, giveplayerid))
 				return 1;
 			
-			if(HappyHours)
+			if(HappyHours_Get())
 			{
 				ExpInfo[playerid][eGivenEXP] = false;
 				ExpInfo[playerid][eDayPayDays] = 0;

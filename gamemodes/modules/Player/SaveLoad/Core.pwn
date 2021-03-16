@@ -160,7 +160,7 @@ public OnPlayerRequestClass(playerid, classid)
 	if(IsPlayerLogged(playerid) || Player_SafeSpawned(playerid))
 		return 1;
 
-	if(GMX == 1) 
+	if(GMX_Get() == 1) 
 	{
 		va_SendClientMessage(playerid,
 			COLOR_RED, 
@@ -194,8 +194,8 @@ public OnPlayerRequestClass(playerid, classid)
 			hour, minute;
 		GetServerTime(hour, minute);
 		SetPlayerTime(playerid,hour,minute);
-		SetPlayerColor(playerid, 	COLOR_PLAYER);
-		SetPlayerWeather(playerid, 	WeatherSys);
+		SetPlayerColor(playerid, COLOR_PLAYER);
+		SetPlayerWeather(playerid, 	Weather_Get());
 		TogglePlayerSpectating(playerid, true);
 		SetPlayerVirtualWorld(playerid, playerid);
 		SetPlayerInterior(playerid, 0);
@@ -946,7 +946,7 @@ hook OnPlayerDisconnect(playerid, reason)
 			"Kick/Ban"
 		};
 
-	if(!IsPlayerReconing(playerid) && GMX == 0) 
+	if(!IsPlayerReconing(playerid) && GMX_Get() == 0) 
 	{
 		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s) ))",
 			GetName(playerid, false),
@@ -962,7 +962,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	SavePlayerData(playerid);
 	
 	// Player Sets
-	if(GMX == 1) 
+	if(GMX_Get() == 1) 
 	{
 		SendClientMessage(playerid, COLOR_RED, "[!]: Your data has been saved. Server has automatically kicked you out.");
 		KickMessage(playerid);

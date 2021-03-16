@@ -130,7 +130,7 @@ static LoadPlayerCrashes(playerid)
 
 CheckPlayerCrash(playerid, reason)
 {
-    if((reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
+    if((reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX_Get() == 0)
 	{
 		if(Player_SafeSpawned(playerid))
 		{
