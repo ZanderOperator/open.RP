@@ -2,6 +2,7 @@
 #include "modules/Server/MySQL.pwn"
 #include "modules/Server/ModelDialog.pwn"
 #include "modules/Server/Color.pwn"
+#include "modules/Server/Weather.pwn"
 #include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/PopupMessage.pwn"
 #include "modules/Server/Streets.pwn"
