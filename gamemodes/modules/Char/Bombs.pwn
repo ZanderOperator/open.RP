@@ -69,8 +69,7 @@ stock CreateBomb(playerid, bomb_type = BOMB_TYPE_C4_TIME, bomb_time = MIN_BOMB_T
 	BombInfo[playerid][bPlanted]	= true;
 	BombInfo[playerid][bTime	]		= bomb_time;
 	BombInfo[playerid][bVehicleid]	= bomb_veh;
-	if(bomb_type == BOMB_TYPE_CAR)
-		Bit1_Set( gr_VehicleAttachedBomb, bomb_veh, true);
+
 	if(bomb_veh == INVALID_VEHICLE_ID) {
 		GetPlayerPos(playerid, BombInfo[playerid][bPos][0], BombInfo[playerid][bPos][1], BombInfo[playerid][bPos][2]);
 		BombInfo[playerid][bObject] = CreateDynamicObject(1252, BombInfo[playerid][bPos][0], BombInfo[playerid][bPos][1], BombInfo[playerid][bPos][2], 0.0, 0.0, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);

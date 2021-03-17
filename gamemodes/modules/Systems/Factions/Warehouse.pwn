@@ -1248,7 +1248,7 @@ CMD:warehouse(playerid, params[])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa fakcija ne posjeduje warehouse!");
         if(PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea / niste leader organizacije.");
-        if(!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
+        if(!Player_SafeSpawned(giveplayerid) || !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
         if(PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pMember])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije clan vase organizacije da bi mu mogli dati svoje kljuceve skladista!");
 

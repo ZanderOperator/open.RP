@@ -381,9 +381,6 @@ hook function ResetVehicleInfo(vehicleid)
 		DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vFactionText]);
 		VehicleInfo[vehicleid][vFactionText] = Text3D:INVALID_3DTEXT_ID;
 	}
-	
-	Bit1_Set( gr_VehicleAttachedBomb, vehicleid, false);
-
 	return continue(vehicleid);
 }
 
@@ -949,7 +946,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 	if(vehicleid == INVALID_VEHICLE_ID) return 0;
 	if(!Iter_Contains(ServerVehicle[VehicleInfo[vehicleid][vUsage]], vehicleid)) return 0;
 	if(killerid == INVALID_PLAYER_ID) return SetVehicleToRespawn(vehicleid);
-	if(!IsPlayerLogged(killerid) || !IsPlayerConnected(killerid)) 
+	if(!Player_SafeSpawned(killerid) || !IsPlayerConnected(killerid)) 
 		return SetVehicleToRespawn(vehicleid);
 	
 	new

@@ -3,6 +3,9 @@
 // Animations
 forward bool:Player_IsPerformingAnim(playerid);
 
+// Basketball
+forward bool:Player_PlayingBasketball(playerid);
+
 // Burglar
 forward bool:Player_BreakingSafe(playerid);
 

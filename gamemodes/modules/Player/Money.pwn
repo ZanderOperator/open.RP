@@ -89,7 +89,7 @@ stock AC_MoneyDetect(playerid)
 
 hook OnPlayerUpdate(playerid)
 {
-	if(IsPlayerAlive(playerid))
+	if(PlayerDeath[playerid][pKilled] == 0)
 	{
 		if(PlayerTick[playerid][ptMoney] < gettimestamp()) 
 		{

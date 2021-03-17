@@ -599,7 +599,7 @@ stock PlayHouseAlarm(houseid)
                 }
             }
             if(ownerid == INVALID_PLAYER_ID) return 1;
-            if(!IsPlayerAlive(ownerid)) return 1;
+            if(PlayerDeath[ownerid][pKilled] != 0) return 1;
 
             SendClientMessage(ownerid, COLOR_YELLOW, "[SMS] Netko obija Vasu kucu! Pozurite se do nje i sprijecite provalu, poslao: Kucni alarm");
         }
@@ -632,7 +632,7 @@ stock PlayHouseAlarm(houseid)
                 }
             }
             if(ownerid == INVALID_PLAYER_ID) return 1;
-            if(!IsPlayerAlive(ownerid)) return 1;
+            if(PlayerDeath[ownerid][pKilled] != 0) return 1;
 
             SendClientMessage(ownerid, COLOR_YELLOW, "[SMS] Netko obija Vasu kucu! Pozurite se do nje i sprijecite provalu, poslao: Kucni alarm");
         }
@@ -679,7 +679,7 @@ stock PlayHouseAlarm(houseid)
                 }
             }
             if(ownerid == INVALID_PLAYER_ID) return 1;
-            if(!IsPlayerAlive(ownerid)) return 1;
+            if(PlayerDeath[ownerid][pKilled] != 0) return 1;
 
             SendClientMessage(ownerid, COLOR_YELLOW, "[SMS] Netko obija Vasu kucu! Pozurite se do nje i sprijecite provalu, poslao: Kucni alarm");
         }
@@ -736,7 +736,7 @@ stock PlayHouseAlarm(houseid)
                 }
             }
             if(ownerid == INVALID_PLAYER_ID) return 1;
-            if(!IsPlayerAlive(ownerid)) return 1;
+            if(PlayerDeath[ownerid][pKilled] != 0) return 1;
 
             SendClientMessage(ownerid, COLOR_YELLOW, "[SMS] Netko obija Vasu kucu! Pozurite se do nje i sprijecite provalu, poslao: Kucni alarm");
         }

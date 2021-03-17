@@ -4222,8 +4222,8 @@ CMD:goto(playerid, params[])
 		new giveplayerid;
 		if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /goto [ID / Part of name]");
 		if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
-		if(IsPlayerReconing(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate iskljuciti reconing!");
-		if(IsPlayerReconing(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac recona drugog igraca!");
+		if(Player_SpectateID(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate iskljuciti reconing!");
+		if(Player_SpectateID(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac recona drugog igraca!");
 
 		new
 			Float:plocx,
@@ -4802,7 +4802,7 @@ CMD:onrecon(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	foreach (new h : Player) 
 	{
-		if(IsPlayerReconing(h)) 		
+		if(Player_SpectateID(h)) 		
 			va_SendClientMessage(playerid, 0x7A93BCFF, "RECON: Admin %s [%s] -> %s", GetName(h,false), PlayerInfo[h][pForumName] ,GetName(ReconingPlayer[h],false));
 	}
 	return 1;
@@ -4816,15 +4816,15 @@ CMD:recon(playerid, params[])
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /recon [ID / Part of name]");
     if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
     if(PlayerInfo[giveplayerid][pAdmin] >= 3 && PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid,COLOR_RED, "Ne mozes reconati admina level3+.");
-	if(IsPlayerReconing(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac vec recona nekoga!");
+	if(Player_SpectateID(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac vec recona nekoga!");
 
 	oldskin[playerid] = GetPlayerSkin(playerid);
 
-	if(IsPlayerReconing(playerid)) 
+	if(Player_SpectateID(playerid)) 
 	{
 		stop ReconTimer[playerid];
 		DestroyReconTextDraws(playerid);
-		Bit4_Set(gr_SpecateId, playerid, 0);
+		Player_SetSpectateID(playerid, INVALID_PLAYER_ID);
 	}
 	
 	ReconingPlayer[playerid] = giveplayerid;
@@ -4836,10 +4836,12 @@ CMD:recon(playerid, params[])
 	{
 		TogglePlayerSpectating(playerid, 1);
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(giveplayerid));
-		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH);
-	} else {
+		Player_SetSpectateID(playerid, PLAYER_SPECTATE_VEH);
+	} 
+	else 
+	{
 		TogglePlayerSpectating(playerid, 1);
-		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_PLAYER);
+		Player_SetSpectateID(playerid, PLAYER_SPECTATE_PLAYER);
 		PlayerSpectatePlayer(playerid, giveplayerid);	
 	}
 	SetPlayerReconTarget(playerid, giveplayerid);
@@ -4848,11 +4850,11 @@ CMD:recon(playerid, params[])
 
 CMD:reconoff(playerid, params[])
 {
-	if(!IsPlayerReconing(playerid)) return SendClientMessage(playerid, COLOR_RED, "Ne reconate nikoga!");	
+	if(!Player_SpectateID(playerid)) return SendClientMessage(playerid, COLOR_RED, "Ne reconate nikoga!");	
 	
 	stop ReconTimer[playerid];
 	DestroyReconTextDraws(playerid);
-	Bit4_Set(gr_SpecateId, playerid, 0);
+	Player_SetSpectateID(playerid, 0);
 	TogglePlayerSpectating(playerid, 0);
 	
 	ReconingPlayer[playerid] = -1;
@@ -4918,7 +4920,7 @@ CMD:pweapons(playerid, params[])
     if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new giveplayerid;
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /pweapons [ID / Part of name]");
-	if(!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(playerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije ulogiran!");
+	if(!Player_SafeSpawned(giveplayerid) || !IsPlayerConnected(playerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije ulogiran!");
 	
 	new
 	    weapon[13],
@@ -5109,7 +5111,7 @@ CMD:apm(playerid, params[])
 		name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid, name, MAX_PLAYER_NAME);
 	if(!IsValidNick(name)) return Ban(playerid);
-	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return SendErrorMessage(playerid, "Igrac nije ulogiran/connectan!");
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) return SendErrorMessage(playerid, "Igrac nije ulogiran/connectan!");
 	new 
 		result[160], pmString[256],
 		giveplayerid;
@@ -5140,7 +5142,6 @@ CMD:apm(playerid, params[])
 			result
 		);
 		PmearsBroadCast(0xFFD1D1FF,pmString, 1337);
-		Bit16_Set( gr_LastPMId, giveplayerid, playerid);
 	}
 	else if(PlayerInfo[playerid][pHelper] >= 1) {
 		va_SendClientMessage(giveplayerid, 0x82FFB4FF, "[PM] Helper %s: %s", 
@@ -5165,7 +5166,6 @@ CMD:apm(playerid, params[])
 			result
 		);
 		PmearsBroadCast(0xFFD1D1FF,pmString, 1337);
-		Bit16_Set( gr_LastPMId, giveplayerid, playerid);
 	}
 	
 	if(Player_ReportID(giveplayerid) != -1)

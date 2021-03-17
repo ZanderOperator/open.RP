@@ -13,6 +13,7 @@ const REMOVE_PRICE	= 200;
 static 
 	PlayerText:TuningBuy[MAX_PLAYERS][14] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	bool:ClickedTuningTD[MAX_PLAYERS] = false,
+	bool:TuningVehicle[MAX_PLAYERS] = false,
 	PlayerTuningVehicle[MAX_PLAYERS] = INVALID_VEHICLE_ID;
 
 enum vPaintjobInfo 
@@ -447,7 +448,7 @@ stock DeletePlayerTuningTD(playerid)
 		PlayerTextDrawDestroy( playerid, TuningBuy[playerid][i]);
 		TuningBuy[playerid][i] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	Bit1_Set( gr_PlayerInTuningMode, playerid, false);
+	TuningVehicle[playerid] = false;
 	ClickedTuningTD[playerid] = false;
 	PlayerTuningVehicle[playerid] = INVALID_VEHICLE_ID;
 	return 1;
@@ -696,7 +697,7 @@ stock AddComponentToVehicle( vehicleid, componentid) {
 
 stock RemoveComponentFromVehicle(playerid, vehicleid, listitem) 
 {	
-	Bit1_Set( gr_PlayerInTuningMode, playerid, false);
+	TuningVehicle[playerid] = false;
 	if(VehicleInfo[vehicleid][vTuned]) 
 	{
 		if(AC_GetPlayerMoney(playerid) < REMOVE_PRICE)
@@ -957,7 +958,7 @@ ResetTuningInfo( playerid)
 	TPInfo[playerid][tID] = -1;
 	TPInfo[playerid][tType] = -1;
 	TPInfo[playerid][tPaintjob] = false;
-	Bit1_Set( gr_PlayerInTuningMode, playerid, false);
+ 	TuningVehicle[playerid] = false;
 	PlayerTuningVehicle[playerid] = INVALID_VEHICLE_ID;
 }
 
@@ -995,7 +996,7 @@ stock ResetVehicleTuning(vehid)
 
 hook OnPlayerDisconnect(playerid)
 {
-	if(Bit1_Get( gr_PlayerInTuningMode	, playerid))
+	if(TuningVehicle[playerid])
 		SetVehicleToRespawn(PlayerTuningVehicle[playerid]);
 
 	return 1;
@@ -1003,7 +1004,7 @@ hook OnPlayerDisconnect(playerid)
 
 hook function ResetPlayerVariables( playerid) 
 {
-    ResetTuningInfo( playerid);
+    ResetTuningInfo(playerid);
 	return continue(playerid);
 }
 
@@ -1456,7 +1457,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(!response)
 			{
-				Bit1_Set( gr_PlayerInTuningMode, playerid, false);
+				TuningVehicle[playerid] = false;
 				return 1;
 			}
 			else
@@ -1698,8 +1699,10 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	        if(GetPlayerState( playerid) != PLAYER_STATE_DRIVER) 
 				return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 
-			Bit1_Set(gr_PlayerInTuningMode, playerid, false);
-            new Float:Pos[6], vehicleid = GetPlayerVehicleID( playerid);
+			TuningVehicle[playerid] = false;
+            new 
+				Float:Pos[6], 
+				vehicleid = GetPlayerVehicleID( playerid);
 
 			if(TPInfo[playerid][tPaintjob] == false) 
 			{
@@ -1738,15 +1741,16 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 
 hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if(Text:INVALID_TEXT_DRAW == clickedid && Bit1_Get(gr_PlayerInTuningMode, playerid) && ClickedTuningTD[playerid] == true)
+	if(Text:INVALID_TEXT_DRAW == clickedid && TuningVehicle[playerid] && ClickedTuningTD[playerid] == true)
 	{
 		if(!IsPlayerInAnyVehicle( playerid)) 
 			return SendErrorMessage( playerid, "Morate biti u vozilu.");
 		if(GetPlayerState( playerid) != PLAYER_STATE_DRIVER) 
 			return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 
-		Bit1_Set(gr_PlayerInTuningMode, playerid, false);
-		new vehicleid = GetPlayerVehicleID( playerid);
+		TuningVehicle[playerid] = false;
+		new 
+			vehicleid = GetPlayerVehicleID(playerid);
 
 		if(TPInfo[playerid][tPaintjob] == false) 
 		{
@@ -1800,19 +1804,19 @@ CMD:tuning(playerid, params[])
 		 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");
 	if(GetPlayerState( playerid) != PLAYER_STATE_DRIVER) 
 		return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
-	if(Bit1_Get(gr_PlayerInTuningMode, playerid)) 
+	if(TuningVehicle[playerid]) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec namjestate tuning na svom vozilu!");
 	
 	if(!strcmp(pick, "buy", true)) 
 	{
-		Bit1_Set( gr_PlayerInTuningMode, playerid, true);
+		TuningVehicle[playerid] = true;
 		PlayerTuningVehicle[playerid] = vehicleid;
 		CreatePlayerTuningTextDraws(playerid);
 		ShowPlayerDialog( playerid, DIALOG_TUNING, DIALOG_STYLE_LIST, D_TOP, D_TEXT, D_OK, D_CANCEL);
 	}
 	else if(!strcmp(pick, "remove", true)) 
 	{
-		Bit1_Set( gr_PlayerInTuningMode, playerid, true);
+		TuningVehicle[playerid] = true;
 		PlayerTuningVehicle[playerid] = vehicleid;
 		ShowPlayerDialog( playerid, DIALOG_TUNING_REMOVE, DIALOG_STYLE_LIST, "Odaberite komponentu koju zelite maknuti", D_TEXT, D_OK, D_CANCEL);
 	}

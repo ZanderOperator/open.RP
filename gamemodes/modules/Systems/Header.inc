@@ -82,6 +82,9 @@ forward Player_SetInfrontGarage(playerid, v);
 forward Player_InGarage(playerid);
 forward Player_SetInGarage(playerid, v);
 
+// Vehicle
+forward bool:Vehicle_Windows(vehicleid);
+
 // Events
 #include "modules/Systems\Events/Header.inc"
 

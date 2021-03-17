@@ -170,70 +170,6 @@
 #include "modules\Preincludes/CustomHooks.inc"
 // Global Variables that are used via Getter/Setter functions
 #include "modules\Preincludes/GlobalVars.inc"
-	
-
-/*
-	##     ##    ###    ########   ######
-	##     ##   ## ##   ##     ## ##    ##
-	##     ##  ##   ##  ##     ## ##
-	##     ## ##     ## ########   ######
-	 ##   ##  ######### ##   ##         ##		// Which are getting deleted 1 by 1 and staticized.
-	  ## ##   ##     ## ##    ##  ##    ##
-	   ###    ##     ## ##     ##  ######
-*/
-
-
-
-//Players Vars
-//(rBits)
-new
-	Bit1: 	gr_PlayerLoggedIn 		<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_PlayerLoggingIn 		<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_NewUser				<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_VehicleWindows 		<MAX_VEHICLES> = Bit1: false,
-	Bit1:	gr_VehicleAttachedBomb	<MAX_VEHICLES> = Bit1: false,
-	Bit1: 	gr_PlayerTimeOut		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_BlockedPM			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerAlive			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_MobileSpeaker		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_SmokingCiggy			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_HasRubber			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerRadio			<MAX_PLAYERS>  = Bit1: true,
-	Bit1:	gr_PlayerOnTutorial		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:   gr_animchat             <MAX_PLAYERS>  = Bit1: false,
-    // TODO: should be part of Player/Char module
-	Bit1:   gr_Blind                <MAX_PLAYERS>  = Bit1: false,
-	Bit1:   gr_BlindFold            <MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerTrunkEdit		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:   gr_ImpoundApproval      <MAX_PLAYERS>  = Bit1: false,
-	Bit1:   gr_HaveOffer        	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_UsingMechanic 		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_MallPreviewActive	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	r_ColorSelect			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerInTuningMode	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	PlayingBBall			<MAX_PLAYERS>  = Bit1: false,
-	//Bit1: 	gr_DrivingStarted		<MAX_PLAYERS>  = Bit1: false,
-	Bit2:	gr_BikeBunnyHop			<MAX_PLAYERS>  = Bit2: 0,
-	Bit2:	gr_TipEdita				<MAX_PLAYERS>  = Bit2: 0,
-	Bit2:	gr_PlayerJumps			<MAX_PLAYERS>  = Bit2: 0,
-	Bit4:	gr_WeaponTrunkEditSlot	<MAX_PLAYERS>  = Bit4: 0,
-	Bit4:	gr_MusicCircle			<MAX_PLAYERS>  = Bit4: 0,
-	Bit4:	r_ColorSlotId			<MAX_PLAYERS>  = Bit4: 0,
-	Bit4:	gr_AttachmentIndexSel	<MAX_PLAYERS>  = Bit4: 0,
-	Bit4:	gr_TipUsluge			<MAX_PLAYERS>  = Bit4: 0,
-    // TODO: misspelled, SpectateId
-	Bit4: 	gr_SpecateId 			<MAX_PLAYERS>  = Bit4: 0,
-	Bit8:	gr_MechanicSecs			<MAX_PLAYERS>  = Bit8: 0,
-	Bit8:	gr_HandleItem			<MAX_PLAYERS>  = Bit8: 0,
-	Bit8: 	gr_ObjectPrice			<MAX_PLAYERS>  = Bit8: 0,
-	Bit8:	gr_MallType				<MAX_PLAYERS>  = Bit8: 0,
-	Bit8: 	gr_LoginInputs			<MAX_PLAYERS>  = Bit8: 0,
-	Bit8: 	gr_RegisterInputs		<MAX_PLAYERS>  = Bit8: 0,
-	Bit8:	gr_ShakeStyle			<MAX_PLAYERS>  = Bit8: 0,
-	Bit16:	gr_IdMehanicara			<MAX_PLAYERS>  = Bit16: INVALID_PLAYER_ID,
-	Bit16:	gr_ShakeOffer			<MAX_PLAYERS>  = Bit16: 0,
-	Bit16: 	gr_LastPMId				<MAX_PLAYERS>  = Bit16: 0;
-
 
 /*
 	##     ##  #######  ########  ##     ## ##       ########  ######
@@ -302,7 +238,7 @@ Public:SaveAll()
 	{
 		foreach (new i : Player) 
 		{
-			if(Bit1_Get(gr_PlayerLoggedIn, i) != 0)
+			if(Player_SafeSpawned(i))
 				Kick(i);
 		}
 	}
@@ -643,103 +579,10 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     return 0;
 }
 
-hook OnPlayerText(playerid, text[])
-{
-	if(!text[0])
-		return Kick(playerid);
-	
-	if(strlen(text) > 128)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Chatbox input can't be longer than 128 chars!");
-
-	if(DeathCountStarted_Get(playerid))
-	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk, you are dead!");
-		return 0;
-	}
-	if(PlayerInfo[playerid][pMuted]) 
-	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while being muted!");
-		return 0;
-	}
-	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
-		return 0;
-
-	if(!Player_SafeSpawned(playerid) || Player_SecurityBreach(playerid))
-	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR,"You can't use chat if you're not safely spawned!");
-		return 0;
-	}
-	
-	new tmpString[180];
-	text[0] = toupper(text[0]);
-	
-	if(!Player_MobileSpeaking(playerid))
-	{
-		
-		if(IsPlayerInAnyVehicle(playerid)) {
-			format(tmpString, sizeof(tmpString), "%s says%s(vehicle): %s", GetName(playerid), PrintAccent(playerid), text);
-			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-		}
-		else
-		{
-			format(tmpString, sizeof(tmpString), "%s says%s: %s", GetName(playerid), PrintAccent(playerid), text);
-			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-		}
-		if(Bit1_Get( gr_animchat, playerid) && !Player_IsPerformingAnim(playerid))
-		{
-			TogglePlayerControllable(playerid, 1);
-			if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
-			else if(strlen(text) >= 10 && strlen(text) < 20) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1000,1,0);
-			else if(strlen(text) >= 20 && strlen(text) < 30) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1500,1,0);
-			else if(strlen(text) >= 30 && strlen(text) < 40) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2000,1,0);
-			else if(strlen(text) >= 40 && strlen(text) < 50) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2500,1,0);
-			else if(strlen(text) >= 50 && strlen(text) < 61) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3000,1,0);
-			else if(strlen(text) >= 61 && strlen(text) < 71) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3500,1,0);
-			else if(strlen(text) >= 71 && strlen(text) < 81) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4000,1,0);
-			else if(strlen(text) >= 81 && strlen(text) < 91) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4500,1,0);
-			else if(strlen(text) >= 91 && strlen(text) < 101) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5000,1,0);
-			else if(strlen(text) >= 101 && strlen(text) < 111) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5500,1,0);
-			else if(strlen(text) >= 111 && strlen(text) < 121) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6000,1,0);
-			else if(strlen(text) >= 121 && strlen(text) < 131) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6500,1,0);
-			else if(strlen(text) >= 131 && strlen(text) < 141) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7000,1,0);
-			else if(strlen(text) >= 141 && strlen(text) < 151) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7500,1,0);
-		}
-	}
-	return 0;
-}
-
 // TODO: should be a part of Player module
 #include <YSI_Coding\y_hooks>
 hook function ResetPlayerVariables(playerid)
 {	
-	//rBits
-	Bit1_Set( gr_PlayerLoggingIn 		, playerid, false);
-	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false);
-	Bit1_Set( gr_NewUser				, playerid, false);
-	Bit1_Set( gr_PlayerTimeOut			, playerid, false);
-	Bit1_Set( gr_BlockedPM				, playerid, false);
-	Bit1_Set( gr_PlayerAlive			, playerid, true );
-	Bit1_Set( gr_MobileSpeaker			, playerid, false);
-	Bit1_Set( gr_SmokingCiggy			, playerid, false);
-	Bit1_Set( gr_HasRubber				, playerid, false);
-	Bit1_Set( gr_animchat               , playerid, false);
-	Bit1_Set( gr_PlayerRadio			, playerid, true);
-	Bit1_Set( gr_PlayerTrunkEdit        , playerid, false);
-	// TODO: Player/Char module
-	Bit1_Set( gr_Blind					, playerid, false);
-	Bit1_Set( gr_BlindFold				, playerid, false);
-	Bit1_Set( gr_ImpoundApproval		, playerid, false);
-	Bit2_Set( gr_BikeBunnyHop			, playerid, 0);
-	Bit2_Set( gr_PlayerJumps			, playerid, 0);
-	Bit4_Set( gr_WeaponTrunkEditSlot	, playerid, 0);
-	Bit4_Set( gr_MusicCircle			, playerid, 0);
-	Bit4_Set( gr_SpecateId				, playerid, 0);
-	Bit8_Set( gr_LoginInputs			, playerid, 0);
-	Bit8_Set( gr_RegisterInputs			, playerid, 0);
-	Bit8_Set( gr_ShakeStyle				, playerid, 0);
-	Bit16_Set( gr_ShakeOffer			, playerid, 999);
-	Bit16_Set( gr_LastPMId				, playerid, 999);
-
 	// Exiting Vars
 	PlayerSafeExit[playerid][giX] = 0;
 	PlayerSafeExit[playerid][giY] = 0;
@@ -768,13 +611,6 @@ hook function ResetPlayerVariables(playerid)
 	AntiSpamInfo[playerid][asHouseWeapon] 	= 0;
 	AntiSpamInfo[playerid][asBuying] 		= 0;
 	AntiSpamInfo[playerid][asDoorShout] 	= 0;
-
-	// Tut
-	if(Bit1_Get( gr_PlayerOnTutorial, playerid)) 
-	{
-		Bit1_Set(gr_PlayerOnTutorial, playerid, false);
-		stop TutTimer[playerid];
-	}
 
 	// Ticks
 	PlayerTick[playerid][ptReport]			= gettimestamp();

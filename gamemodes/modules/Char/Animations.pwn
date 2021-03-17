@@ -39,7 +39,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if(newkeys & 128)
 	{
-        if(!Bit1_Get(PlayingBBall, playerid) && PlayerAnim[playerid] && (!Player_IsWounded(playerid) && PlayerDeath[playerid][pKilled] == 0) && !IsPlayerAiming(playerid) && PlayerAction[playerid] == PLAYER_ACTION_NONE)
+        if(!Player_PlayingBasketball(playerid) && PlayerAnim[playerid] 
+			&& (!Player_IsWounded(playerid) && PlayerDeath[playerid][pKilled] == 0) 
+			&& !IsPlayerAiming(playerid) && PlayerAction[playerid] == PLAYER_ACTION_NONE)
 		{
 			if(GetPlayerAnimationIndex(playerid))
 			{

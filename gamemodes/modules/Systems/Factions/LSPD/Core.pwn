@@ -1527,7 +1527,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
         Kick(playerid);
         return 0;
     }
-    if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
+    if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid))
     {
         return 0;
     }
@@ -1555,7 +1555,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
     {
         return 0;
     }
-    if(!IsPlayerLogged(playerid))
+    if(!Player_SafeSpawned(playerid))
     {
         return 1; // TODO: decide what to do for not logged in players, shall they take damage?
     }
@@ -1630,7 +1630,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 hook OnPlayerTargetPlayer(playerid, targetid, weaponid)
 {
     if(targetid != INVALID_PLAYER_ID) return 0;
-    if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
+    if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) return 0;
     if(!IsACop(playerid) || !IsASD(playerid)) return 1;
 
     if(weaponid == WEAPON_SILENCED && Player_HasTaserGun(playerid) && !ProxDetectorS(6.0, playerid, targetid))

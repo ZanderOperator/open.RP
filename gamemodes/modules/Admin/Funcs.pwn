@@ -1,8 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
-// Admin Modules included at the bottom
-#define PLAYER_SPECATE_VEH		(1)
-#define PLAYER_SPECATE_PLAYER	(2)
+const PLAYER_SPECTATE_VEH = 1;
+const PLAYER_SPECTATE_PLAYER = 2;
 
 #define MAX_ADMIN_VEHICLES 		(5) // Koliko admin moze maximalno admin vozila spawnat. (/veh) 
 
@@ -36,6 +35,8 @@ new
 	AdminLoginTry[MAX_PLAYERS],
     oldskin[MAX_PLAYERS],
 	PortedPlayer[MAX_PLAYERS],
+	SpectateID[MAX_PLAYERS],
+
 	bool:AdminDuty[MAX_PLAYERS],
 	bool:HelperDuty[MAX_PLAYERS],
 	bool:NeedHelp[MAX_PLAYERS],
@@ -115,6 +116,16 @@ bool:Player_Frozen(playerid)
 Player_SetFrozen(playerid, bool:v)
 {
 	Frozen[playerid] = v;
+}
+
+Player_SpectateID(playerid)
+{
+	return SpectateID[playerid];
+}
+
+Player_SetSpectateID(playerid, value)
+{
+	SpectateID[playerid] = value;
 }
 
 InitFly(playerid)
@@ -890,7 +901,7 @@ stock static UpdateTargetReconData(playerid, targetid)
 	if(ReconingVehicle[playerid] != GetPlayerVehicleID(targetid)) 
 	{
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(targetid));
-		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH);
+		SpectateID[playerid] = PLAYER_SPECTATE_VEH;
 		ReconingVehicle[playerid] = GetPlayerVehicleID(targetid);
 	}
 	ReconingPlayer[playerid] = targetid;
@@ -932,16 +943,20 @@ timer OnAdminCountDown[1000]()
 
 timer OnPlayerReconing[1000](playerid, targetid)
 {
-	if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_VEH) {
-		if(!IsPlayerInAnyVehicle(targetid)) {
+	if(SpectateID[playerid] == PLAYER_SPECTATE_VEH) 
+	{
+		if(!IsPlayerInAnyVehicle(targetid)) 
+		{
 			SetPlayerInterior(playerid, GetPlayerInterior(targetid));
 			SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(targetid));
 			PlayerSpectatePlayer(playerid, targetid);
-			Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_PLAYER);
+			SpectateID[playerid] = PLAYER_SPECTATE_PLAYER;
 		}
 	}
-	else if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_PLAYER) {		
-		if(GetPlayerInterior(playerid) != GetPlayerInterior(targetid)) {
+	else if(SpectateID[playerid] == PLAYER_SPECTATE_PLAYER) 
+	{		
+		if(GetPlayerInterior(playerid) != GetPlayerInterior(targetid)) 
+		{
 			SetPlayerInterior(playerid		, GetPlayerInterior(targetid));
 			SetPlayerVirtualWorld(playerid	, GetPlayerVirtualWorld(targetid));
 			PlayerSpectatePlayer(playerid, targetid);
@@ -1022,11 +1037,11 @@ hook function ResetPlayerVariables(playerid)
 	Bit1_Set(a_BlockedHChat, playerid, false);
 	Bit1_Set(a_TogReports, playerid, false);
 
-	if(IsPlayerReconing(playerid)) 
+	if(Player_SpectateID(playerid)) 
 	{
 		stop ReconTimer[playerid];
 		DestroyReconTextDraws(playerid);
-		Bit4_Set(gr_SpecateId, playerid, 0);
+		SpectateID[playerid] = 0;
 	}
 	return continue(playerid);
 }

@@ -2538,7 +2538,7 @@ stock PhoneCall(playerid, callnumber)
 
 				if(PlayerJail[gplayerid][pJailed] != 0) 
 					return va_SendMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
-				if(GetPlayerSignal(gplayerid) < 1 || IsPlayerReconing(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Player_MobileOn(gplayerid))
+				if(GetPlayerSignal(gplayerid) < 1 || Player_SpectateID(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Player_MobileOn(gplayerid))
 				{
 					format(PTDTextString, sizeof(PTDTextString), "~r~ZAUZETO");
 					PlayerTextDrawSetString(playerid, PhoneTD[playerid][37], PTDTextString);
@@ -3151,7 +3151,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new CallNo = strval(inputtext);
 			PhoneCall(playerid, CallNo);
 	    }
-		case DIALOG_MOBILE_MAIN: {
+		case DIALOG_MOBILE_MAIN: 
+		{
 			if(!response) return 1;
 			switch( listitem) {
 				case 0:
@@ -3169,16 +3170,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 1:
 				{
 				    if(!Player_MobileOn(playerid))
-      					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "VaS mobitel je trenutno iskljucen!");
+      					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas mobitel je trenutno iskljucen!");
 
-
-					if(Bit1_Get( gr_MobileSpeaker, playerid)) {
-						GameTextForPlayer( playerid, "~r~Zvucnik iskljucen!", 1000, 1);
-						Bit1_Set( gr_MobileSpeaker, playerid, false);
-					} else {
-						GameTextForPlayer( playerid, "~g~Zvucnik ukljucen!", 1000, 1);
-						Bit1_Set( gr_MobileSpeaker, playerid, true);
-					}
+					SpeakerPhone[playerid] = !SpeakerPhone[playerid];
+					va_SendMessage(playerid,
+						MESSAGE_TYPE_INFO, 
+						"You have sucessfully %s speakerphone on your mobile!",
+						(SpeakerPhone[playerid]) ? ("turned on") : ("turned off")
+					);
 				}
 				case 2:
 				{
@@ -3192,16 +3191,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			return 1;
 		}
-		case DIALOG_MOBILE_BACKGROUND: {
+		case DIALOG_MOBILE_BACKGROUND: 
+		{
 		    if(!response)
 		    {
-			    new
-					tmpString[52];
-				if(Bit1_Get( gr_MobileSpeaker, playerid))
-					format( tmpString, sizeof( tmpString), "Stanje racuna\nZvucnik: "COL_GREEN"On\nPozadina");
-				else
-					format( tmpString, sizeof( tmpString), "Stanje racuna\nZvucnik: "COL_RED"Off\nPozadina");
-				return ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", tmpString, "Choose", "Abort");
+				return va_ShowPlayerDialog(playerid, 
+					DIALOG_MOBILE_MAIN, 
+					DIALOG_STYLE_LIST, 
+					"MOBITEL - MENU", 
+					"Stanje racuna\nZvucnik: %s\nPozadina", 
+					"Choose", 
+					"Abort",
+					(SpeakerPhone[playerid]) ? (""COL_GREEN"On") : (""COL_RED"Off")
+				);
 			}
 			if(listitem == 0) PlayerMobile[playerid][pPhoneBG] = -1263225696;
 			else PlayerMobile[playerid][pPhoneBG] = BackgroundColors[listitem][0];
@@ -3414,7 +3416,7 @@ hook OnPlayerUpdate(playerid)
 {
 	if(Player_PhoneStatus(playerid) == PHONE_SHOW)
 	{
-		if(IsPlayerAlive(playerid) && PhoneUpdateTick[playerid] < gettimestamp())
+		if(PlayerDeath[playerid][pKilled] == 0 && PhoneUpdateTick[playerid] < gettimestamp())
 		{
 			SetTDTime(playerid);
 			SetTDSignal(playerid);
@@ -3460,8 +3462,14 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	if(playertextid == PhoneTD[playerid][26] && PlayerTextDrawCreated[playerid][26] == 1) //MENU
 	{
 		CancelSelectTextDraw(playerid);
-		va_ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", "Stanje racuna\nZvucnik: %s\nPozadina", "Choose", "Abort",
-		Bit1_Get( gr_MobileSpeaker, playerid) ? (""COL_GREEN"On") : (""COL_RED"Off")
+		va_ShowPlayerDialog(playerid, 
+			DIALOG_MOBILE_MAIN, 
+			DIALOG_STYLE_LIST, 
+			"MOBITEL - MENU", 
+			"Stanje racuna\nZvucnik: %s\nPozadina", 
+			"Choose", 
+			"Abort",
+			(SpeakerPhone[playerid]) ? (""COL_GREEN"On") : (""COL_RED"Off")
 		);
 	}
 	else if(playertextid == PhoneTD[playerid][23] && PlayerTextDrawCreated[playerid][23] == 1) //SMS
@@ -3914,7 +3922,7 @@ CMD:pickup(playerid, params[])
 
 	foreach(new i : Player)
 	{
-		if(IsPlayerLogged( i)  && IsPlayerConnected(playerid))
+		if(Player_SafeSpawned( i)  && IsPlayerConnected(playerid))
 		{
 			if(PlayerCallPlayer[i] == playerid)
 			{

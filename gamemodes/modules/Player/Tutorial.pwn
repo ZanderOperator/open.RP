@@ -9,7 +9,8 @@
 	  ## ##   ##     ## ##    ##  ##    ## 
 	   ###    ##     ## ##     ##  ######  
 */
-new
+static
+	bool:OnTutorial[MAX_PLAYERS],
 	TutorialStep[MAX_PLAYERS],
 	Timer: TutTimer[MAX_PLAYERS];
 
@@ -38,9 +39,9 @@ ClearChatBox(playerid)
 
 SendPlayerOnFirstTimeTutorial(playerid, step)
 {
-	if(!Bit1_Get(gr_PlayerOnTutorial, playerid))
+	if(!OnTutorial[playerid])
 	{
-		Bit1_Set( gr_PlayerOnTutorial, playerid, true);
+		OnTutorial[playerid] = true;
 		OnPlayerFirstTimeEnter(playerid, step);
 	}
 }
@@ -179,8 +180,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 		case 11:
 		 { 
 			stop TutTimer[playerid];
-			PlayerNewUser_Set(playerid, false);
-			Bit1_Set( gr_PlayerOnTutorial, playerid, false);
+			OnTutorial[playerid] = false;
 			ClearChatBox(playerid);
 
 			AC_GivePlayerMoney(playerid, 			NEW_PLAYER_MONEY);
@@ -221,9 +221,13 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 	return 1;
 }
 
-hook OnPlayerConnect(playerid)
+hook function ResetPlayerVariables(playerid)
 {
-	stop TutTimer[playerid];
-	TutorialStep[playerid] = 0;
-	return 1;
+	if(OnTutorial[playerid]) 
+	{
+		TutorialStep[playerid] = 0;
+		OnTutorial[playerid] = false;
+		stop TutTimer[playerid];
+	}
+	return continue(playerid);
 }

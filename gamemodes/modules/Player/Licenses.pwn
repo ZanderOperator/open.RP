@@ -14,8 +14,8 @@
 	   ###    ##     ## ##     ##  ###### 
 */
 new
-	Bit1:gr_DrivingStarted<MAX_PLAYERS> = { Bit1:false, ... },
-	Bit1:gr_TookDriving<MAX_PLAYERS> = { Bit1:false, ... },
+	bool:DrivingStarted[MAX_PLAYERS],
+	bool:TookDriving[MAX_PLAYERS],
 	DrivingCP[MAX_PLAYERS] = { -1, ... },
 	DrivingCPPos[MAX_PLAYERS] = { 0, ... },
 	DrivingBoatCP[MAX_PLAYERS] = { -1, ... },
@@ -56,8 +56,8 @@ stock const Float:BoatDrivingCP[8][3] =
 
 stock ResetPlayerDrivingVars(playerid)
 {
-	Bit1_Set( gr_DrivingStarted, 	playerid, false);
-	Bit1_Set( gr_TookDriving, 		playerid, false);
+	DrivingStarted[playerid] = false;
+	TookDriving[playerid] = false;
 	
 	stop DrivingTimer[playerid];
 	
@@ -87,8 +87,8 @@ timer OnPlayerDrivingLesson[1000](playerid)
 		
 		SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 		RemovePlayerFromVehicle(playerid);
-		Bit1_Set( gr_DrivingStarted, playerid, false);
-		Bit1_Set( gr_TookDriving, playerid, false);
+		DrivingStarted[playerid] = false;
+		TookDriving[playerid] = false;
 	}
 }
 
@@ -194,18 +194,21 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	{
 		if(VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] == VEHICLE_USAGE_LICENSE)
 		{
-			if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 410) {
-				if(LicenseInfo[playerid][pCarLic])	{
+			if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 410) 
+			{
+				if(LicenseInfo[playerid][pCarLic])
+					{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete vozacku dozvolu!");
 					RemovePlayerFromVehicle(playerid);
 				}
-				else if(!Bit1_Get( gr_TookDriving, playerid)) {
+				else if(!TookDriving[playerid]) 
+				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste uzeli papire u zgradi!");
 					RemovePlayerFromVehicle(playerid);
 				}
 				else {
 					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
-					Bit1_Set( gr_DrivingStarted, playerid, true);
+					DrivingStarted[playerid] = true;
 				}
 			}
 			else if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 446) 
@@ -222,7 +225,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 					
 					DrivingBoatCP[playerid] = 1;
 					DrivingCPPos[playerid] 	= 1;
-					Bit1_Set( gr_DrivingStarted, playerid, true);
+					DrivingStarted[playerid] = true;
 				}
 			}
 		}
@@ -232,7 +235,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if(Bit1_Get( gr_DrivingStarted, playerid))
+	if(DrivingStarted[playerid])
 	{
 		if(DrivingBoatCP[playerid] == 1)
 		{
@@ -260,7 +263,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 					PlayerInfo[playerid][pSQLID]
 				);
 				
-				Bit1_Set( gr_DrivingStarted, playerid, false);
+				DrivingStarted[playerid] = false;
 				stop DrivingTimer[playerid];
 			}
 			return 1;
@@ -291,7 +294,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 					PlayerInfo[playerid][pSQLID]
 				);
 				
-				Bit1_Set( gr_DrivingStarted, playerid, false);
+				DrivingStarted[playerid] = false;
 				stop DrivingTimer[playerid];			
 			}
 			return 1;
@@ -302,15 +305,15 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
-	if(Bit1_Get( gr_DrivingStarted, playerid)) 
+	if(DrivingStarted[playerid]) 
 	{
 		DisablePlayerCheckpoint(playerid);
 		stop DrivingTimer[playerid];
 		
 		SetVehicleToRespawn(vehicleid);
 		RemovePlayerFromVehicle(playerid);
-		Bit1_Set( gr_DrivingStarted, playerid, false);
-		Bit1_Set( gr_TookDriving, playerid, false);		
+		DrivingStarted[playerid] = false;
+		TookDriving[playerid] = false;	
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pali ste vozacki. Ne smijete izlaziti iz vozila dok polazete!");
 	}
 	return 1;
@@ -325,7 +328,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) 
 			{
 				SendClientMessage( playerid, COLOR_RED, "[!] Izasli ste iz ispita za polaganje vozacke dozvole!");
-				Bit1_Set( gr_DrivingStarted, playerid, false);
+				DrivingStarted[playerid] = false;
 				return 1;
 			}
 			
@@ -412,7 +415,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					DrivingCP[playerid] = 1;
 					SetPlayerCheckpoint(playerid, CarDrivingCP[0][0],CarDrivingCP[0][1],CarDrivingCP[0][2], 5.0);
 					DrivingCPPos[playerid] = 1;
-					Bit1_Set( gr_DrivingStarted, playerid, true);
+					DrivingStarted[playerid] = true;
 					
 					stop DrivingTimer[playerid];
 					DrivingTimer[playerid] = repeat OnPlayerDrivingLesson(playerid);
@@ -448,18 +451,18 @@ CMD:takedriving(playerid, params[])
 {
 	if(LicenseInfo[playerid][pCarLic]) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete vozacku dozvolu!");
-	if(Bit1_Get( gr_DrivingStarted, playerid)) 	
+	if(DrivingStarted[playerid]) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec polazete vozacki!");
 	if(AC_GetPlayerMoney(playerid) < CAR_LICENSE_PRICE) 		
 		return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %s!", FormatNumber(CAR_LICENSE_PRICE));
-	if(Bit1_Get( gr_TookDriving, playerid)) 		
+	if(TookDriving[playerid]) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste uzeli papire i krenuli s polaganjem!");
 	if(!IsPlayerInRangeOfPoint( playerid, 5.0, 1779.8975, -1721.5961, 12.5387)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu auto skole!");
 	
 	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "~Uzeli ste papire za polaganje.~n~Idite u vozilo iza i krenite sa ispitom!");
 	PlayerToBudgetMoney(playerid, CAR_LICENSE_PRICE);
-	Bit1_Set( gr_TookDriving, playerid, true);
+	TookDriving[playerid] = true;
 	return 1;
 }
 

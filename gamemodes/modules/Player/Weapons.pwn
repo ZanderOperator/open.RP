@@ -525,7 +525,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
         Kick(playerid);
         return 0;
     }
-    if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
+    if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid))
     {
         return 0;
     }

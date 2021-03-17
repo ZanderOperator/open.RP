@@ -12,8 +12,6 @@
 
 //Igrac je novi na serveru ili je stari
 #define MAX_ADO_LABELS  200
-#define PlayerNewUser_Set(%0,%1) \
-		Bit1_Set(gr_NewUser,%0,%1)
 
 // Player Module Includes at the bottom
 
@@ -738,7 +736,7 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 				tempposy = (oldposy -posy);
 				tempposz = (oldposz -posz);
 
-				if(IsPlayerInAnyVehicle(playerid) && !IsACabrio(modelid) && !Bit1_Get( gr_VehicleWindows, vehicleid))
+				if(IsPlayerInAnyVehicle(playerid) && !IsACabrio(modelid) && !Vehicle_Windows(vehicleid))
 				{
 					if(IsPlayerInVehicle(i, vehicleid))
 					{
@@ -750,7 +748,8 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 					vehicleid2 = GetPlayerVehicleID(i);
 					modelid2 = GetVehicleModel(vehicleid2);
 
-					if(!IsPlayerInAnyVehicle(i) || IsACabrio(modelid2) || Bit1_Get( gr_VehicleWindows, vehicleid2)) {
+					if(!IsPlayerInAnyVehicle(i) || IsACabrio(modelid2) || Vehicle_Windows(vehicleid2)) 
+					{
 						if(((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
 						{
 							SendClientMessage(i, col1, string);
@@ -1151,6 +1150,86 @@ hook OnGameModeInit()
 {
 	ResetPlayerEnumerator();
 	return 1;
+}
+
+hook OnPlayerText(playerid, text[])
+{
+	if(!text[0])
+		return Kick(playerid);
+	
+	if(strlen(text) > 128)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Chatbox input can't be longer than 128 chars!");
+
+	if(DeathCountStarted_Get(playerid))
+	{
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk, you are dead!");
+		return 0;
+	}
+	if(PlayerInfo[playerid][pMuted]) 
+	{
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while being muted!");
+		return 0;
+	}
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid))
+		return 0;
+
+	if(!Player_SafeSpawned(playerid) || Player_SecurityBreach(playerid))
+	{
+		SendMessage(playerid, MESSAGE_TYPE_ERROR,"You can't use chat if you're not safely spawned!");
+		return 0;
+	}
+	
+	new 
+		tmpString[144];
+	text[0] = toupper(text[0]);
+	
+	if(!Player_MobileSpeaking(playerid))
+	{
+		if(IsPlayerInAnyVehicle(playerid)) 
+		{
+			format(tmpString, sizeof(tmpString), "%s says%s(vehicle): %s", GetName(playerid), PrintAccent(playerid), text);
+			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+		}
+		else
+		{
+			format(tmpString, sizeof(tmpString), "%s says%s: %s", GetName(playerid), PrintAccent(playerid), text);
+			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+		}
+		if(Player_AnimChat(playerid) && !Player_IsPerformingAnim(playerid))
+		{
+			if(strlen(text) > 0 && strlen(text) < 10) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,500,1,0);
+			else if(strlen(text) >= 10 && strlen(text) < 20) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,1000,1,0);
+			else if(strlen(text) >= 20 && strlen(text) < 30) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,1500,1,0);
+			else if(strlen(text) >= 30 && strlen(text) < 40) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,2000,1,0);
+			else if(strlen(text) >= 40 && strlen(text) < 50) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,2500,1,0);
+			else if(strlen(text) >= 50 && strlen(text) < 61) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,3000,1,0);
+			else if(strlen(text) >= 61 && strlen(text) < 71) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,1,1,0,3500,1,0);
+			else if(strlen(text) >= 71 && strlen(text) < 81) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,4000,1,0);
+			else if(strlen(text) >= 81 && strlen(text) < 91) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,4500,1,0);
+			else if(strlen(text) >= 91 && strlen(text) < 101) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,5000,1,0);
+			else if(strlen(text) >= 101 && strlen(text) < 111) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,5500,1,0);
+			else if(strlen(text) >= 111 && strlen(text) < 121) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,6000,1,0);
+			else if(strlen(text) >= 121 && strlen(text) < 131) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,6500,1,0);
+			else if(strlen(text) >= 131 && strlen(text) < 141) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,7000,1,0);
+			else if(strlen(text) >= 141 && strlen(text) < 151) 
+				ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,1,1,0,7500,1,0);
+		}
+	}
+	return 0;
 }
 
 hook OnPlayerDeath(playerid, reason)

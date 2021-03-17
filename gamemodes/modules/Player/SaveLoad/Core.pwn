@@ -9,6 +9,9 @@
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_cooldowns.pwn"
 
+const MAX_LOGIN_TRIES = 3;
+const MAX_REGISTER_TRIES = 3;
+
 /*
 	##     ##    ###    ########   ######  
 	##     ##   ## ##   ##     ## ##    ## 
@@ -19,12 +22,16 @@
 	  ###    ##     ##  ##     ##  ######  
 */
 static  
-		dialogtext[MAX_DIALOG_TEXT],
-		Timer:LoginCheckTimer[MAX_PLAYERS],
-		bool:SigningIn[MAX_PLAYERS],
-		bool:FirstSaving[MAX_PLAYERS],
-		bool:SecurityBreach[MAX_PLAYERS],
-		secquestattempt[MAX_PLAYERS] = 3;
+	dialogtext[MAX_DIALOG_TEXT],
+	Timer:LoginCheckTimer[MAX_PLAYERS],
+	Timer:CrashTimer[MAX_PLAYERS],
+	bool:SigningIn[MAX_PLAYERS],
+	bool:LoggingIn[MAX_PLAYERS],
+	bool:FirstSaving[MAX_PLAYERS],
+	bool:SecurityBreach[MAX_PLAYERS],
+	LoginInputs[MAX_PLAYERS],
+	RegisterInputs[MAX_PLAYERS],
+	secquestattempt[MAX_PLAYERS] = 3;
 
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -49,7 +56,7 @@ stock Player_SetSecurityBreach(playerid, bool:v)
 // Timers
 timer LoginCheck[60000](playerid)
 {
-	if(!IsPlayerLogged(playerid) && IsPlayerConnected(playerid))
+	if(!Player_SafeSpawned(playerid) && IsPlayerConnected(playerid))
 	{
 		va_SendClientMessage(playerid, 
 			COLOR_RED, 
@@ -63,9 +70,7 @@ timer LoginCheck[60000](playerid)
 
 timer FinishPlayerSpawn[5000](playerid)
 {
-	if(Bit1_Get(gr_PlayerLoggedIn, playerid))
-		SafeSpawnPlayer(playerid);
-	
+	SafeSpawnPlayer(playerid);
 	return 1;
 }
 
@@ -116,8 +121,8 @@ Public: OnPasswordChecked(playerid)
 	}
 	else
 	{
-		Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
-		if(!( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)))
+		LoginInputs[playerid]++;
+		if(!( MAX_LOGIN_TRIES - LoginInputs[playerid]))
 		{
 			va_SendClientMessage(playerid, COLOR_RED, 
 				"[%s]: You have reached maximum(%d) attempts, you got an IP ban!",
@@ -127,14 +132,14 @@ Public: OnPasswordChecked(playerid)
 			BanMessage(playerid);
 			return 1;
 		}
-		if(Bit8_Get(gr_LoginInputs, playerid) < 3) 
+		if(LoginInputs[playerid] < MAX_LOGIN_TRIES) 
 		{
 			format(dialogtext, sizeof(dialogtext), 
 				""COL_RED"You have entered wrong password!\n\
 					"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
 					You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
 					"COL_RED"If you exceed max attempt limit, you will be kicked!", 
-				MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)
+				(MAX_LOGIN_TRIES - LoginInputs[playerid])
 			);
 
 			ShowPlayerDialog(playerid, 
@@ -157,7 +162,7 @@ public OnPlayerRequestSpawn(playerid)
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	if(IsPlayerLogged(playerid) || Player_SafeSpawned(playerid))
+	if(Player_SafeSpawned(playerid) || Player_SafeSpawned(playerid))
 		return 1;
 
 	if(GMX_Get() == 1) 
@@ -170,7 +175,7 @@ public OnPlayerRequestClass(playerid, classid)
 		KickMessage(playerid);
 		return 1;
 	}
-	if(!IsPlayerLogged(playerid) || IsPlayerConnected(playerid))
+	if(!Player_SafeSpawned(playerid) || IsPlayerConnected(playerid))
 	{
 		ResetPlayerVariables(playerid);
 
@@ -227,7 +232,7 @@ public OnPlayerRequestClass(playerid, classid)
 					SERVER_NAME
 				);
 				
-				Bit8_Set(gr_LoginInputs, playerid, 0);
+				LoginInputs[playerid] = 0;
 				SigningIn[playerid] = true;
 				LoginCheckTimer[playerid] = defer LoginCheck(playerid);
 			} 
@@ -399,7 +404,7 @@ public LoadPlayerData(playerid)
 		PlayerKeys[playerid][pComplexRoomKey] = GetComplexRoomFromSQL(PlayerInfo[playerid][pSQLID]);
 		PlayerKeys[playerid][pVehicleKey] = GetPlayerPrivateVehicle(playerid);
 		
-		Bit1_Set( gr_PlayerLoggingIn, playerid, true);
+		LoggingIn[playerid] = true;
   		SetPlayerSpawnInfo(playerid);
 
         if(!isnull(PlayerInfo[playerid][pSAMPid]) && PlayerInfo[playerid][pSecQuestion] != 1 
@@ -431,10 +436,8 @@ public LoadPlayerData(playerid)
                 return 1;
             }
         }
-
-        Bit1_Set(gr_PlayerLoggedIn, playerid, true);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Please wait for 5 seconds. Loading in progres...");
-		defer FinishPlayerSpawn(playerid);
+		CrashTimer[playerid] = defer FinishPlayerSpawn(playerid);
     }
     return 1;
 }
@@ -472,10 +475,7 @@ static RegisterPlayer(playerid)
 		TogglePlayerSpectating(playerid, 0);
 		SetCameraBehindPlayer(playerid);
 		SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
-		
-		PlayerNewUser_Set(playerid,true);
-		Bit1_Set(gr_PlayerLoggedIn, playerid, true);
-		
+				
 		DestroyLoginTextdraws(playerid);
 		CreateWebTD(playerid);
 		
@@ -564,9 +564,6 @@ Public: SafeSpawnPlayer(playerid)
 	if(PlayerJob[playerid][pJob] == JOB_JACKER 
 		&& (!PlayerFaction[playerid][pMember] && !PlayerFaction[playerid][pLeader]))
 		PlayerJob[playerid][pJob] = 0;
-
-	if(!PlayerInfo[playerid][pRegistered])
-		PlayerNewUser_Set(playerid, true);
 		
 	if(PlayerVIP[playerid][pDonateTime] < gettimestamp() && PlayerVIP[playerid][pDonateRank] > 0) 
 	{
@@ -610,8 +607,7 @@ Public: SafeSpawnPlayer(playerid)
 	FinalPlayerCheck(playerid); // Crash, Private Vehicle, Mask, Interiors and Inactivity Check 
 
 	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, playerid);
-	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
-	Bit1_Set(gr_PlayerLoggingIn, playerid, false);
+	LoggingIn[playerid] = false;
 	TogglePlayerSpectating(playerid, 0);
 	SetCameraBehindPlayer(playerid);
 	SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
@@ -922,6 +918,8 @@ hook OnPlayerDisconnect(playerid, reason)
 	if(SigningIn[playerid])
 		stop LoginCheckTimer[playerid];
 
+	LoginInputs[playerid] = 0;
+	RegisterInputs[playerid] = 0;
 	SigningIn[playerid] = false;
 	FirstSaving[playerid] = false;
 	secquestattempt[playerid] = 3;
@@ -929,8 +927,10 @@ hook OnPlayerDisconnect(playerid, reason)
 	Player_SetSecurityBreach(playerid, false);
 	SetPlayerOnlineStatus(playerid, 0);
 
-	if(IsPlayerLogging(playerid))
-		stop FinishPlayerSpawn(playerid);
+	if(LoggingIn[playerid])
+		stop CrashTimer[playerid];
+	
+	LoggingIn[playerid] = false;
 
 	strcpy(PlayerInfo[playerid][pLastLogin], ReturnDate());
 	PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
@@ -946,7 +946,7 @@ hook OnPlayerDisconnect(playerid, reason)
 			"Kick/Ban"
 		};
 
-	if(!IsPlayerReconing(playerid) && GMX_Get() == 0) 
+	if(!Player_SpectateID(playerid) && GMX_Get() == 0) 
 	{
 		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s) ))",
 			GetName(playerid, false),
@@ -1005,7 +1005,7 @@ hook OnPlayerSpawn(playerid)
 
 	SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 
-    if(IsANewUser(playerid))
+    if(!PlayerInfo[playerid][pRegistered])
 	{
         // Tutorial
         SendPlayerOnFirstTimeTutorial(playerid, 1);
@@ -1014,8 +1014,7 @@ hook OnPlayerSpawn(playerid)
 	else
 	{
         TogglePlayerSpectating(playerid, 0);
-        Bit1_Set(gr_PlayerAlive, playerid, true);
-
+		
 		if(PlayerDeath[playerid][pKilled] == 1)
 		{
 			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
@@ -1186,7 +1185,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
 						You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
 						"COL_RED"If you exceed max attempt limit, you will be kicked!", 
-					MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)
+					(MAX_LOGIN_TRIES - LoginInputs[playerid])
 				);
 
 				ShowPlayerDialog(playerid, 
@@ -1197,10 +1196,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Proceed", 
 					"Abort"
 				);
-				Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
+				LoginInputs[playerid]++;
 				return 1;
 			}
-			if(!( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)))
+			if(!(MAX_LOGIN_TRIES - LoginInputs[playerid]))
 			{
 				//Kick
 				va_SendClientMessage(playerid, COLOR_RED, 
@@ -1273,7 +1272,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ABroadCast(COLOR_LIGHTRED, log_gpci, 1);
 				gpci(playerid, PlayerInfo[playerid][pSAMPid], 128);
 				
-				Bit1_Set(gr_PlayerLoggedIn, playerid, true);
 				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Please wait for 5 seconds. Loading in progres...");
 				defer FinishPlayerSpawn(playerid);
 				return 1;
@@ -1419,7 +1417,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
 			if(strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || 
@@ -1445,7 +1443,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
 			if(6 <= strlen(inputtext) <= 12) 
@@ -1464,10 +1462,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Abort"
 				);
 				format(PlayerInfo[playerid][pPassword], BCRYPT_HASH_LENGTH, inputtext);
-				Bit8_Set(gr_RegisterInputs, playerid, 0);
+				RegisterInputs[playerid] = 0;
 				return 1;
 			}
-			if((Bit8_Get(gr_RegisterInputs, playerid)) > 3)
+			if(RegisterInputs[playerid] > MAX_REGISTER_TRIES)
 			{
 				SendClientMessage(playerid, COLOR_RED, 
 					"[!]: You have reached a maximal limit of wrong register inputs. You have been kicked from server.");
@@ -1490,7 +1488,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
 		}
@@ -1530,7 +1528,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
 			if(strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 
@@ -1555,7 +1553,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
 			if(!IsValidEMail(inputtext)) 
@@ -1574,7 +1572,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
 			if(IsEMailInDB(inputtext)) 
@@ -1593,10 +1591,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					"Input", 
 					"Abort"
 				);
-				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				RegisterInputs[playerid]++;
 				return 1;
 			}
-			if((Bit8_Get(gr_RegisterInputs, playerid)) > 3)
+			if(RegisterInputs[playerid] > MAX_REGISTER_TRIES)
 			{
 				SendClientMessage(playerid, COLOR_RED,
 					"[!]: You have reach maximal limit of wrong inputs on registration. You have been kicked."
@@ -1605,7 +1603,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			format(PlayerInfo[playerid][pEmail], MAX_PLAYER_MAIL, "%s", inputtext);
-			Bit8_Set(gr_RegisterInputs, playerid, 0);
+			RegisterInputs[playerid] = 0;
 			ShowPlayerDialog(playerid, 
 				DIALOG_REG_SEX, 
 				DIALOG_STYLE_LIST, 

@@ -3,10 +3,6 @@
 #define Public:%0(%1) \
 		forward %0(%1); \
 		public %0(%1)
-
-#define IsANewUser(%0) \
-	Bit1_Get(gr_NewUser,%0)
-
 // KickEx
 #define KickMessage(%0) \
 	KickPlayer(%0)
@@ -22,18 +18,11 @@
 #define RELEASED(%0) \
 	(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
-// rBits
-#define IsPlayerLogged(%0) 						Bit1_Get(gr_PlayerLoggedIn,%0)
-#define IsPlayerLogging(%0) 					Bit1_Get(gr_PlayerLoggingIn,%0)
-#define IsPlayerAlive(%0) 						Bit1_Get(gr_PlayerAlive, %0)
-#define IsPlayerReconing(%0) 					Bit4_Get(gr_SpecateId, %0)
-
 // Limits - https://www.open.mp/docs/scripting/resources/limits
 #define EX_SPLITLENGTH 							(90) // Define when to split SendClientMessage into another line!
 #define DIALOG_UPDATE_LIST_CHAR					(1280) // How many chars can fit into 1/4 pages of Update Info Dialog
 
 #define MAX_DIALOG_TEXT                 		(756)
-#define MAX_LOGIN_TRIES							(3)
 #define MAX_PLAYER_MAIL							(32)
 #define MAX_PLAYER_IP							(24)
 #define MAX_ZONE_NAME                   		(28)

@@ -2104,7 +2104,7 @@ CMD:d(playerid, params[])
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
     }
 
-    if(!IsPlayerReconing(playerid))
+    if(!Player_SpectateID(playerid))
     {
         format(string, sizeof(string), "** %s [radio]: %s", GetName(playerid, true), params);
         ProxDetector(4.0, playerid, string, COLOR_FADE1, COLOR_FADE2, COLOR_FADE3, COLOR_FADE4, COLOR_FADE5, true);

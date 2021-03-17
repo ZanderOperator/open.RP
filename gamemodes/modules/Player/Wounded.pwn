@@ -278,8 +278,6 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	KilledReason[playerid] = -1;
 
 	PlayerDeath[playerid][pKilled] = 0;
-
-	Bit1_Set(gr_PlayerAlive, 	playerid, true);
 	return 1;
 }
 
@@ -722,7 +720,7 @@ hook OnPlayerUpdate(playerid)
 /* LOGAN DAMAGE SYSTEM
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 {
-	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) return 0;
 	
     new Float:health, Float:armour, Float:rnd;
 	
@@ -932,7 +930,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 // Fixano sve za update V18 by Khawaja
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 {
-	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid)) return 0;
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) return 0;
 	
     new Float:health, Float:armour, Float:damage,
 		Float:dX, Float:dY, Float: dZ;

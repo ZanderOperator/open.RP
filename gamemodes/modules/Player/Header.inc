@@ -25,6 +25,8 @@ forward bool:Player_IsWounded(playerid);
 forward bool:Player_WoundedAnim(playerid);
 
 // Miscelleneous
+forward bool:Player_AnimChat(playerid);
+
 forward bool:Player_ForbiddenPM(playerid);
 forward Player_SetForbiddenPM(playerid, bool:v);
 

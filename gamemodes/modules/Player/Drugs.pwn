@@ -367,7 +367,7 @@ CMD:drug(playerid, params[])
 			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /drug give [playerid][slot][kolicina]");
 			return 1;
 		}
-		if(!IsPlayerConnected(giveplayerid) && !Bit1_Get(gr_PlayerLoggedIn, giveplayerid))
+		if(!IsPlayerConnected(giveplayerid) && !Player_SafeSpawned(giveplayerid))
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nepravilan ID igraca!");
 
 		if(!ProxDetectorS(5.0, playerid, giveplayerid))

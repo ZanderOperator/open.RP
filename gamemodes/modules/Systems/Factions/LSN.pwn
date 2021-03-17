@@ -160,10 +160,8 @@ stock CreateNewsTextDraws()
 
 hook OnPlayerSpawn(playerid)
 {
-    if(IsANewUser(playerid))
-    {
+    if(!PlayerInfo[playerid][pRegistered])
         return 1;
-    }
 
     for (new i = 0; i < MAX_NEWS_LINES; i++)
     {

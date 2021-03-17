@@ -925,7 +925,7 @@ CMD:govmdc(playerid, params[])
 
     new giveplayerid;
     if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /govmdc [ID / Part of name]");
-    if(giveplayerid == INVALID_PLAYER_ID || !IsPlayerLogged(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
+    if(giveplayerid == INVALID_PLAYER_ID || !Player_SafeSpawned(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
 
     GovMDC[playerid] = giveplayerid;
     ShowGovMDC(playerid, giveplayerid);

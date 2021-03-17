@@ -53,9 +53,15 @@ enum Baskets
 new BasketInfo[MAX_BASKET][Baskets];
 
 static 
-	BasketID[MAX_PLAYERS];
+	BasketID[MAX_PLAYERS],
+	bool:PlayingBasketball[MAX_PLAYERS];
 
 new Text3D:PlayerBasketTeam[MAX_PLAYERS] = Text3D:INVALID_3DTEXT_ID;
+
+bool:Player_PlayingBasketball(playerid)
+{
+	return PlayingBasketball[playerid];
+}
 
 timer ApplyBallAnimation[650](playerid)
 {
@@ -109,7 +115,7 @@ timer BasketBallPickup[650](playerid)
 		ApplyAnimation(playerid,"BSKTBALL","BBALL_idleloop",4.1,1,1,1,1,1,1);
 		ApplyAnimation(playerid,"BSKTBALL","BBALL_idleloop",4.1,1,1,1,1,1,1);
 		MoveObject(BasketInfo[BasketID[playerid]][lopta], pX, pY, Z-0.8, BasketInfo[BasketID[playerid]][BallSpeed]);
-		Bit1_Set(PlayingBBall, playerid, true);
+		PlayingBasketball[playerid] = true;
 		BasketInfo[BasketID[playerid]][LoptaState] = LOPTAGORE;
 	}
 	return 1;
@@ -330,10 +336,8 @@ hook OnObjectMoved(objectid)
 					{
 						if(IsPlayerConnected(i))
 						{
-							if(BasketID[i] == basketid && Bit1_Get(PlayingBBall, i))
-							{
+							if(BasketID[i] == basketid && PlayingBasketball[i])
 								GameTextForPlayer(i, "KOS!!!", 2500, 4);
-							}
 						}
 					}
 				}
@@ -398,7 +402,7 @@ hook OnObjectMoved(objectid)
 						{
 							if(IsPlayerConnected(i))
 							{
-								if(BasketID[i] == basketid && Bit1_Get(PlayingBBall, i))
+								if(BasketID[i] == basketid && PlayingBasketball[i])
 								{
 									GameTextForPlayer(i, "PROMASAJ!!!", 2500, 4);
 								}
@@ -432,7 +436,7 @@ stock ClearBasketAnim(basketid)
 		animname[32];
 	foreach(new i: Player)
 	{
-		if(Bit1_Get(PlayingBBall, i) && BasketID[i] == basketid)
+		if(PlayingBasketball[i] && BasketID[i] == basketid)
 		{
 			GetAnimationName(GetPlayerAnimationIndex(i), animlib, 32, animname, 32);
 			if(strcmp(animlib, "BSKTBALL", true) == 0)
@@ -487,11 +491,11 @@ stock SetBasket(basketid)
 	BasketInfo[basketid][Dodavac] = NONE;
 	for(new i=0; i < MAX_BASKET_PLAYERS; i++)
 	{
-		if(Bit1_Get(PlayingBBall, BasketInfo[basketid][Player][i]))
+		if(PlayingBasketball[BasketInfo[basketid][Player][i]])
 		{
 			ClearAnim(BasketInfo[basketid][Player][i]);
 			BasketID[BasketInfo[basketid][Player][i]] = NONE;
-			Bit1_Set(PlayingBBall, BasketInfo[basketid][Player][i], false);
+			PlayingBasketball[BasketInfo[basketid][Player][i]] = false;
 			if(PlayerBasketTeam[BasketInfo[basketid][Player][i]] != Text3D:INVALID_3DTEXT_ID)
 				DestroyDynamic3DTextLabel(PlayerBasketTeam[BasketInfo[basketid][Player][i]]);
 			PlayerBasketTeam[BasketInfo[basketid][Player][i]] = Text3D:INVALID_3DTEXT_ID;
@@ -627,7 +631,7 @@ stock IsPlayerFacingPoint(playerid, Float:dOffset, Float:pX, Float:pY, Float:pZ)
 
 hook function ResetPlayerVariables(playerid)
 {
-	if(Bit1_Get(PlayingBBall, playerid))
+	if(PlayingBasketball[playerid])
 	{
 		if(PlayerBasketTeam[playerid] != Text3D:INVALID_3DTEXT_ID)
 			DestroyDynamic3DTextLabel(PlayerBasketTeam[playerid]);
@@ -646,7 +650,7 @@ hook function ResetPlayerVariables(playerid)
 		        BasketInfo[i][hasball] = NONE;
 		}
 		BasketID[playerid] = NONE;
-		Bit1_Set(PlayingBBall, playerid, false);
+		PlayingBasketball[playerid] = false;
 	}
 	return continue(playerid);
 }
@@ -679,7 +683,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 			}
 			BasketInfo[basket][Players] ++;
-			Bit1_Set(PlayingBBall, playerid, true);
+			PlayingBasketball[playerid] = true;
 			BasketID[playerid] = basket;
 			if(IsValidDynamic3DTextLabel(PlayerBasketTeam[playerid]))
 				DestroyDynamic3DTextLabel(PlayerBasketTeam[playerid]);
@@ -729,7 +733,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, PlayerBasketTeam[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);
 					}
 					BasketInfo[i][Players] ++;
-					Bit1_Set(PlayingBBall, playerid, true);
+					PlayingBasketball[playerid] = true;
 					BasketID[playerid] = i;
 					va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste stvorili Team pod nazivom %s!", inputtext);
 					return 1;
@@ -742,7 +746,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {			
-	if(Bit1_Get(PlayingBBall, playerid))
+	if(PlayingBasketball[playerid])
 	{		
 		if(Player_IsWounded(playerid) || AC_GetPlayerWeapon(playerid) != 0)
 			return 1;
@@ -787,7 +791,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				new basketid = BasketID[playerid];
 				foreach(new i: Player)
 				{
-					if(Bit1_Get(PlayingBBall, i) && BasketID[i] == basketid)
+					if(PlayingBasketball[i] && BasketID[i] == basketid)
 					{
 						GetPlayerPos(i, pX2, pY2, pZ2);
 						if(IsPlayerFacingPlayer(playerid, i, 12.5) && IsPlayerFacingPlayer(i, playerid, 80.0) && IsPlayerInRangeOfPoint(playerid, 9.0, pX2, pY2, pZ2))
@@ -814,7 +818,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				new basketid = BasketID[playerid];
 				foreach(new i: Player)
 				{
-					if(Bit1_Get(PlayingBBall, i) && BasketID[i] == basketid)
+					if(PlayingBasketball[i] && BasketID[i] == basketid)
 					{
 						GetPlayerPos(i, pX2, pY2, pZ2);
 						if(IsPlayerFacingPlayer(playerid, i, 12.5) && IsPlayerFacingPlayer(i, playerid, 80.0) && IsPlayerInRangeOfPoint(playerid, 18.0, pX2, pY2, pZ2))
@@ -1131,7 +1135,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 CMD:playbasket(playerid, params[])
 {
-	if(Bit1_Get(PlayingBBall, playerid)) return SendErrorMessage(playerid, "Vec igrate kosarku, upisite /quitbasket!");
+	if(PlayingBasketball[playerid]) return SendErrorMessage(playerid, "Vec igrate kosarku, upisite /quitbasket!");
     for(new i = 0; i < MAX_BASKET; i++)
 	{
 	    if(IsPlayerInRangeOfPoint(playerid, 10.0, BasketInfo[i][KosX],BasketInfo[i][KosY],BasketInfo[i][KosZ]))
@@ -1158,7 +1162,7 @@ CMD:playbasket(playerid, params[])
 					}
 				}
 				BasketInfo[i][Players] ++;
-				Bit1_Set(PlayingBBall, playerid, true);
+				PlayingBasketball[playerid] = true;
 				BasketID[playerid] = i;
 				SendClientMessage(playerid,-1,""COL_RED"[!] Mozete igrati "COL_ORANGE"kosarku "COL_LIGHTBLUE"1vs1!");
 				return 1;
@@ -1169,7 +1173,7 @@ CMD:playbasket(playerid, params[])
 }
 CMD:quitbasket(playerid, params[])
 {
-	if(!Bit1_Get(PlayingBBall, playerid)) return SendClientMessage(playerid, COLOR_RED, "Vi ne igrate kosarku!");
+	if(!PlayingBasketball[playerid]) return SendClientMessage(playerid, COLOR_RED, "Vi ne igrate kosarku!");
 	
 	for(new p=0; p < MAX_BASKET_PLAYERS; p++)
 	{
@@ -1184,7 +1188,7 @@ CMD:quitbasket(playerid, params[])
 		BasketInfo[BasketID[playerid]][hasball] = NONE;
 		
 	ClearAnim(playerid);
-	Bit1_Set(PlayingBBall, playerid, false);
+	PlayingBasketball[playerid] = false;
 	BasketID[playerid] = NONE;
 	if(PlayerBasketTeam[playerid] != Text3D:INVALID_3DTEXT_ID)
 		DestroyDynamic3DTextLabel(PlayerBasketTeam[playerid]);
@@ -1212,7 +1216,7 @@ CMD:getball(playerid, params[])
 {
 	new Float:X, Float:Y, Float:Z;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return 1;
-	if(!Bit1_Get(PlayingBBall, playerid)) return SendClientMessage(playerid, COLOR_RED, "Vi ne igrate kosarku!");
+	if(!PlayingBasketball[playerid]) return SendClientMessage(playerid, COLOR_RED, "Vi ne igrate kosarku!");
 	GetPlayerPos(playerid, X, Y, Z);
 	MoveObject(BasketInfo[BasketID[playerid]][lopta], X, Y, Z-0.8, 8);
 	return 1;

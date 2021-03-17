@@ -220,6 +220,8 @@ static
 	PlayerCarSeller		[MAX_PLAYERS],
 	PlayerModel			[MAX_PLAYERS],
 	PlayerEngine		[MAX_PLAYERS],
+	bool:EditingTrunk	[MAX_PLAYERS],
+	EditingTrunkWeaponSlot	[MAX_PLAYERS],
 	EditingTrunkWeaponModel[MAX_PLAYERS],
 	EditingTrunkWeaponObject[MAX_PLAYERS],
 	CarnisterLiters		[MAX_PLAYERS],
@@ -229,6 +231,7 @@ static
 // Vehicle Vars
 static
 	LastVehicleDriver[MAX_VEHICLES],
+	bool:VehicleWindows[MAX_VEHICLES],
 	Text3D:DoorHealth3DText[MAX_VEHICLES],
 	Text3D:TrunkHealth3DText[MAX_VEHICLES],
 	Float:vOldPos[MAX_VEHICLES][3];
@@ -301,6 +304,16 @@ static
 	VehicleLightsBlinker[MAX_VEHICLES],
 	bool:VehicleBlinking[MAX_VEHICLES];
 
+
+bool:Vehicle_Windows(vehicleid)
+{
+	return VehicleWindows[vehicleid];
+}
+
+Vehicle_SetWindows(vehicleid, bool:v)
+{
+	VehicleWindows[vehicleid] = v;
+}
 /*
 	 ######  ########  #######   ######  ##    ##  ######
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
@@ -896,8 +909,8 @@ stock PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid)
 		GetVehicleZAngle(vehicleid, rz);
 		GetPlayerPos(playerid, x, y, z);
 		EditingTrunkWeaponModel[playerid] = WeaponModels(weaponid);
-		Bit1_Set(gr_PlayerTrunkEdit, playerid, true);
-		Bit4_Set(gr_WeaponTrunkEditSlot, playerid, slot);
+		EditingTrunk[playerid] = true;
+		EditingTrunkWeaponSlot[playerid] = slot;
 		VehicleInfo[vehicleid][vWeaponObjectID][slot] = CreatePlayerObject(playerid, model, x, y, z, 0.0, 0.0, 0.0, 80.0);
 		EditPlayerObject(playerid, VehicleInfo[vehicleid][vWeaponObjectID][slot]);
 		EditingTrunkWeaponObject[playerid] = VehicleInfo[vehicleid][vWeaponObjectID][slot];
@@ -3152,18 +3165,18 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Krivi unos zica!");
 			if(!endtick) return 1;
-		} else {
+		} 
+		else 
+		{
 			new
-				tmpString[44];
-			if(!Bit1_Get(gr_VehicleWindows, vehicleid)) {
-    			Bit1_Set(gr_VehicleWindows, vehicleid, true);
-				format(tmpString, sizeof(tmpString), "* %s otvara prozore.", GetName(playerid, true));
-				ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			} else {
-		 		Bit1_Set(gr_VehicleWindows, vehicleid, false);
-				format(tmpString, sizeof(tmpString), "* %s zatvara prozore.", GetName(playerid, true));
-				ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			}
+				tmpString[80];
+			
+			VehicleWindows[vehicleid] = !VehicleWindows[vehicleid];
+			format(tmpString, sizeof(tmpString), "* %s %s the windows on %s.", 
+				GetName(playerid, true),
+				(VehicleWindows[vehicleid]) ? ("opens") : ("closes"),
+				ReturnVehicleName(VehicleInfo[vehicleid][vModel])
+			);
 		}
 	}
 	else if(PlayerInputHotWire[playerid][0] == HOT_BATTERY && PlayerInputHotWire[playerid][1] == HOT_LIGHTS ||
@@ -3366,8 +3379,10 @@ hook function ResetPlayerVariables(playerid)
 	CarnisterLiters[playerid] = 0;
 	CarnisterType[playerid] = -1;
 
+	EditingTrunkWeaponSlot[playerid] = 0;
 	EditingTrunkWeaponObject[playerid] = 0;
 	EditingTrunkWeaponModel[playerid] = 0;
+	EditingTrunk[playerid] = false;
 	
 	PlayerParkLocation[playerid] = 0;
 	DisablePlayerCheckpoint(playerid);
@@ -4301,7 +4316,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
-	if(Bit1_Get(gr_PlayerTrunkEdit, playerid))
+	if(EditingTrunk[playerid])
 	{
 		switch(response)
 		{
@@ -4312,11 +4327,11 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 				EditPlayerObject(playerid, EditingTrunkWeaponObject[playerid]);
 			}
 			case 1:
-			{
-					
-				Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
-				new model = EditingTrunkWeaponModel[playerid],
-					wslot = Bit4_Get(gr_WeaponTrunkEditSlot, playerid),
+			{		
+				EditingTrunk[playerid] = false;
+				new 
+					model = EditingTrunkWeaponModel[playerid],
+					wslot = EditingTrunkWeaponSlot[playerid],
 					AttachVehID = INVALID_VEHICLE_ID;
 					
 				AttachVehID = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
@@ -4371,7 +4386,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 
 					EditingTrunkWeaponObject[playerid] = 0;
 					EditingTrunkWeaponModel[playerid] = 0;
-					Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
+					EditingTrunk[playerid] = false;
 					Streamer_Update(playerid);
 					
 					va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, 
