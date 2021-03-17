@@ -1152,6 +1152,16 @@ hook OnGameModeInit()
 	return 1;
 }
 
+public OnPlayerCommandText(playerid, cmdtext[])
+{
+    if(!cmdtext[0])
+    {
+        Kick(playerid); // because it's impossible to send valid NULL command
+        return 0;
+    }
+    return 1;
+}
+
 hook OnPlayerText(playerid, text[])
 {
 	if(!text[0])
@@ -1276,7 +1286,40 @@ hook function ResetPlayerVariables(playerid)
 		    }
 		}
 	}
+	ResetPlayerPreviousInfo(playerid);
 	return continue(playerid);
+}
+
+hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+    if(ispassenger)
+    {
+        if(VehicleInfo[vehicleid][vLocked])
+        {
+            RemovePlayerFromVehicle(playerid);
+            if(GetPlayerAnimationIndex(playerid))
+            {
+                new
+                    animlib[32],
+                    animname[32];
+
+                GetAnimationName(GetPlayerAnimationIndex(playerid), animlib,
+                                 sizeof(animlib), animname, sizeof(animname));
+
+                if(strfind(animname, "fall", true) != -1)
+                    return 1;
+            }
+
+            new
+                Float:x,
+                Float:y,
+                Float:z;
+
+            GetPlayerPos(playerid, x, y, z);
+            SetPlayerPos(playerid, x, y, z);
+        }
+    }
+    return 1;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)

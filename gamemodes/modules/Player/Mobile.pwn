@@ -150,10 +150,10 @@ static
     bool:MobileOn[MAX_PLAYERS] = {true, ...};
 
 // rBits
-new
+static
 	Bit1:	gr_CanHangup			<MAX_PLAYERS>  	= { Bit1: true, ...},
 	Bit1: 	gr_PlayerTakingSelfie 	<MAX_PLAYERS>	= { Bit1: false, ... },
-	Bit1:	gr_PlayerUsingPhonebooth		<MAX_PLAYERS>	= { Bit1: false, ... },
+	Bit1:	gr_PlayerUsingPhonebooth<MAX_PLAYERS>	= { Bit1: false, ... },
 	Bit8: 	gr_RingingTime			<MAX_PLAYERS>	= { Bit8: 0, ... },
 	Bit8:	gr_MobileContactSlot 	<MAX_PLAYERS> 	= { Bit8: 0, ... };
 
@@ -2211,10 +2211,12 @@ stock ResetMobileVariables(playerid)
 	ReloadSMS(playerid);
 
     Player_SetMobileOn(playerid, true);
+	
 	Bit1_Set( gr_PlayerTakingSelfie , playerid, false);
 	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false);
 	Bit8_Set( gr_RingingTime		, playerid, 0);
 	Bit8_Set( gr_MobileContactSlot 	, playerid, 0);
+
 	return 1;
 }
 
@@ -2563,7 +2565,8 @@ stock PhoneCall(playerid, callnumber)
 					format(tmpString, 70, "Vas mobitel zvoni, ukucajte (/Pickup) Broj: Govornica");
 					SendClientMessage(gplayerid, COLOR_YELLOW, tmpString);
 				}
-				else {
+				else 
+				{
 					format(tmpString, 70, "* %s vadi mobitel i stavlja ga na uho.", GetName( playerid, true));
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					format(tmpString, 70, "Vas mobitel zvoni, ukucajte (/Pickup) | Kontakt: %s", GetContactNumberNameEx(gplayerid, PlayerMobile[playerid][pMobileNumber]));

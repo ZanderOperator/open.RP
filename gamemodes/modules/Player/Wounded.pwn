@@ -930,7 +930,16 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 // Fixano sve za update V18 by Khawaja
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 {
-	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) return 0;
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) 
+		return 0;
+	
+	if(weaponid == WEAPON_FIREEXTINGUISHER)
+    {
+        new Float: oldHealth;
+        GetPlayerHealth(playerid, oldHealth);
+        SetPlayerHealth(playerid, oldHealth);
+        return 0;
+    }
 	
     new Float:health, Float:armour, Float:damage,
 		Float:dX, Float:dY, Float: dZ;

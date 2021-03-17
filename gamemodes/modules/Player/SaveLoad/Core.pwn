@@ -54,6 +54,12 @@ stock Player_SetSecurityBreach(playerid, bool:v)
 }
 
 // Timers
+timer SafeResetPlayerVariables[3000](playerid)
+{
+	ResetPlayerVariables(playerid);
+	return 1;
+}
+
 timer LoginCheck[60000](playerid)
 {
 	if(!Player_SafeSpawned(playerid) && IsPlayerConnected(playerid))
@@ -703,6 +709,27 @@ hook function ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 	PlayerKeys[playerid][pWarehouseKey] 	= -1;
+
+	// Exiting Vars
+	PlayerSafeExit[playerid][giX] = 0;
+	PlayerSafeExit[playerid][giY] = 0;
+	PlayerSafeExit[playerid][giZ] = 0;
+	PlayerSafeExit[playerid][giRZ] = 0;
+
+	// Anti Spam
+	AntiSpamInfo[playerid][asPrivateMsg] 	= 0;
+	AntiSpamInfo[playerid][asCreditPay] 	= 0;
+	AntiSpamInfo[playerid][asCarTrunk] 		= 0;
+	AntiSpamInfo[playerid][asHouseWeapon] 	= 0;
+	AntiSpamInfo[playerid][asBuying] 		= 0;
+	AntiSpamInfo[playerid][asDoorShout] 	= 0;
+
+	// Ticks
+	PlayerTick[playerid][ptReport]			= gettimestamp();
+	PlayerTick[playerid][ptMoney]			= gettimestamp();
+	PlayerTick[playerid][ptHelperHelp]		= gettimestamp();
+	PlayerTick[playerid][ptKill]			= gettimestamp();
+	PlayerTick[playerid][ptMainTimer] 		= gettimestamp();
 	
 	return continue(playerid);
 }

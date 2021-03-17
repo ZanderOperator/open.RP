@@ -16,9 +16,16 @@
 #include <a_http>
 
 /*
-==============================================================================
-	Preinclude defines
-==============================================================================
+
+	88888888ba                                 88               ad88 88                                   
+	88      "8b                                88              d8"   ""                                   
+	88      ,8P                                88              88                                         
+	88aaaaaa8P' 8b,dPPYba,  ,adPPYba,  ,adPPYb,88  ,adPPYba, MM88MMM 88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
+	88""""""'   88P'   "Y8 a8P_____88 a8"    `Y88 a8P_____88   88    88 88P'   `"8a a8P_____88 I8[    ""  
+	88          88         8PP""""""" 8b       88 8PP"""""""   88    88 88       88 8PP"""""""  `"Y8ba,   
+	88          88         "8b,   ,aa "8a,   ,d88 "8b,   ,aa   88    88 88       88 "8b,   ,aa aa    ]8I  
+	88          88          `"Ybbd8"'  `"8bbdP"Y8  `"Ybbd8"'   88    88 88       88  `"Ybbd8"' `"YbbdP"'  
+
 */
 
 // Server Players, NPC's and Vehicle Config
@@ -172,13 +179,16 @@
 #include "modules\Preincludes/GlobalVars.inc"
 
 /*
-	##     ##  #######  ########  ##     ## ##       ########  ######
-	###   ### ##     ## ##     ## ##     ## ##       ##       ##    ##
-	#### #### ##     ## ##     ## ##     ## ##       ##       ##
-	## ### ## ##     ## ##     ## ##     ## ##       ######    ######
-	##     ## ##     ## ##     ## ##     ## ##       ##             ##
-	##     ## ##     ## ##     ## ##     ## ##       ##       ##    ##
-	##     ##  #######  ########   #######  ######## ########  ######
+
+	88b           d88                      88             88                       
+	888b         d888                      88             88                       
+	88`8b       d8'88                      88             88                       
+	88 `8b     d8' 88  ,adPPYba,   ,adPPYb,88 88       88 88  ,adPPYba, ,adPPYba,  
+	88  `8b   d8'  88 a8"     "8a a8"    `Y88 88       88 88 a8P_____88 I8[    ""  
+	88   `8b d8'   88 8b       d8 8b       88 88       88 88 8PP"""""""  `"Y8ba,   
+	88    `888'    88 "8a,   ,a8" "8a,   ,d88 "8a,   ,a88 88 "8b,   ,aa aa    ]8I  
+	88     `8'     88  `"YbbdP"'   `"8bbdP"Y8  `"YbbdP'Y8 88  `"Ybbd8"' `"YbbdP"'  
+                                                                               
 */
 
 #include "modules/Server/Core.inc"
@@ -189,146 +199,23 @@
 
 
 /*
-	########    ###     ######  ##    ##  ######
-	   ##      ## ##   ##    ## ##   ##  ##    ##
-	   ##     ##   ##  ##       ##  ##   ##
-	   ##    ##     ##  ######  #####     ######
-	   ##    #########       ## ##  ##         ##
-	   ##    ##     ## ##    ## ##   ##  ##    ##
-	   ##    ##     ##  ######  ##    ##  ######
+
+	88888888888                                        88                                    
+	88                                           ,d    ""                                    
+	88                                           88                                          
+	88aaaaa 88       88 8b,dPPYba,   ,adPPYba, MM88MMM 88  ,adPPYba,  8b,dPPYba,  ,adPPYba,  
+	88""""" 88       88 88P'   `"8a a8"     ""   88    88 a8"     "8a 88P'   `"8a I8[    ""  
+	88      88       88 88       88 8b           88    88 8b       d8 88       88  `"Y8ba,   
+	88      "8a,   ,a88 88       88 "8a,   ,aa   88,   88 "8a,   ,a8" 88       88 aa    ]8I  
+	88       `"YbbdP'Y8 88       88  `"Ybbd8"'   "Y888 88  `"YbbdP"'  88       88 `"YbbdP"'  
+	
 */
 
-
-#if defined AUTO_RESTART_SEQ
-StartGMX()
-{
-	for (new a = 1; a <= 20; a++)
-	{
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-	}
-	cseconds = 30;
-	foreach (new i : Player) 
-	{
-		// Player Camera
-		TogglePlayerControllable(i, false);
-		SetPlayerPos(i, 1433.4633, -974.7463, 58.0000);
-		InterpolateCameraPos(i, 1431.9108, -895.1843, 73.9480, 1431.9108, -895.1843, 73.9480, 100000, CAMERA_MOVE);
-		InterpolateCameraLookAt(i, 1431.8031, -894.1859, 74.0085, 1431.8031, -894.1859, 74.0085, 100000, CAMERA_MOVE);
-		cseconds += 3;
-	}
-	GMX_Set(1);
-	new rconstring[100];
-	format(rconstring, sizeof(rconstring), "hostname %s [Database Saving in Process]", SERVER_NAME);
-	SendRconCommand(rconstring);
-	SendRconCommand("password devtest");
-	SendClientMessageToAll(COLOR_RED, "[SERVER]: Server Restart procedure initiated. Please stay in game until server stores your data...");
-	SaveAll();
-	return 1;
-}
-#endif
-
-Public:SaveAll()
-{
-	printf("[SERVER]: Automatic scheduled restart initiated. Storing data into MySQL database.");
-	if(Iter_Count(Player) > 0)
-	{
-		foreach (new i : Player) 
-		{
-			if(Player_SafeSpawned(i))
-				Kick(i);
-		}
-	}
-}
-
-Public:GlobalServerTimer()
-{
-	new
-		tmphour, tmpmins, tmpsecs;
-	GetServerTime(tmphour, tmpmins, tmpsecs);
-
-	if((tmphour > Hour_Get()) || (tmphour == 0 && Hour_Get() == 23))
-	{
-		SetWorldTime(tmphour);
-		Hour_Set(tmphour);
-	}
-	if(GMX_Get() != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)
-	{
-		CheckAccountsForInactivity();
-		#if defined AUTO_RESTART_SEQ
-		GMX_Set(1);
-		StartGMX();
-		#endif
-	}
-	return 1;
-}
-
-Public:GMXTimer()
-{
-	#if defined AUTO_RESTART_SEQ
-	if(GMX_Get() == 1)
-	{
-		cseconds--;
-		new string[10];
-		format(string, sizeof(string), "%d", cseconds);
-		GameTextForAll(string, 1000, 4);
-		if(cseconds < 1)
-		{
-			GMX_Set(0);
-			stop CountingTimer;
-			foreach(new i : Player) 
-			{
-				if(PlayerInfo[i][pAdmin] >= 1338) 
-				{
-					SendClientMessage(i, COLOR_RED, "[INFO]: Storing the data in server is done. Restarting Server...");
-					KickMessage(i);
-				}
-			}
-			HTTP(0, HTTP_HEAD, HTTP_RESTART_REQUEST, "", "ServerRestartRequest");
-			return 1;
-		}
-	}
-	#endif
-	if(GMX_Get() == 2)
-	{
-		cseconds--;
-		if(cseconds < 1)
-		{
-			GMX_Set(0);
-			cseconds = 0;
-			SendRconCommand("password 0");
-			return 1;
-		}
-	}
-	return 1;
-}
-
-forward ServerRestartRequest(index, response_code, data[]);
-public ServerRestartRequest(index, response_code, data[])
-{
-    if(response_code != 200)
-        printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
-}
-
-
-/*
-	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
-	##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
-	##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
-	######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######
-	##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ##
-	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
-	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
-*/
 
 main()
 {
 	
 }
-
 
 public OnGameModeInit()
 {
@@ -404,19 +291,6 @@ public OnGameModeInit()
 	return 1;
 }
 
-task GlobalServerTask[1000]() // izvodi se svakih sekundu
-{
-	GMXTimer();
-	GlobalServerTimer();
-	return 1;
-}
-
-timer SafeResetPlayerVariables[3000](playerid)
-{
-	ResetPlayerVariables(playerid);
-	return 1;
-}
-
 hook OnGameModeExit()
 {
     for (new i; i < MAX_OBJECTS; i++)
@@ -430,47 +304,124 @@ hook OnGameModeExit()
     return 1;
 }
 
-hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+task GlobalServerTask[1000]()
 {
-    if(ispassenger)
-    {
-        if(VehicleInfo[vehicleid][vLocked])
-        {
-            RemovePlayerFromVehicle(playerid);
-
-            if(GetPlayerAnimationIndex(playerid))
-            {
-                new
-                    animlib[32],
-                    animname[32];
-
-                GetAnimationName(GetPlayerAnimationIndex(playerid), animlib,
-                                 sizeof(animlib), animname, sizeof(animname));
-
-                if(strfind(animname, "fall", true) != -1)
-                    return 1;
-            }
-
-            new
-                Float:x,
-                Float:y,
-                Float:z;
-
-            GetPlayerPos(playerid, x, y, z);
-            SetPlayerPos(playerid, x, y, z);
-        }
-    }
-    return 1;
+	GMXTimer();
+	GlobalServerTimer();
+	return 1;
 }
 
-public OnPlayerCommandText(playerid, cmdtext[])
+#if defined AUTO_RESTART_SEQ
+StartGMX()
 {
-    if(!cmdtext[0])
-    {
-        Kick(playerid); // because it's impossible to send valid NULL command
-        return 0;
-    }
-    return 1;
+	for (new a = 1; a <= 20; a++)
+	{
+		SendClientMessageToAll(-1, "\n");
+		SendClientMessageToAll(-1, "\n");
+		SendClientMessageToAll(-1, "\n");
+		SendClientMessageToAll(-1, "\n");
+		SendClientMessageToAll(-1, "\n");
+	}
+	cseconds = 30;
+	foreach (new i : Player) 
+	{
+		// Player Camera
+		TogglePlayerControllable(i, false);
+		SetPlayerPos(i, 1433.4633, -974.7463, 58.0000);
+		InterpolateCameraPos(i, 1431.9108, -895.1843, 73.9480, 1431.9108, -895.1843, 73.9480, 100000, CAMERA_MOVE);
+		InterpolateCameraLookAt(i, 1431.8031, -894.1859, 74.0085, 1431.8031, -894.1859, 74.0085, 100000, CAMERA_MOVE);
+		cseconds += 3;
+	}
+	GMX_Set(1);
+	new rconstring[100];
+	format(rconstring, sizeof(rconstring), "hostname %s [Database Saving in Process]", SERVER_NAME);
+	SendRconCommand(rconstring);
+	SendRconCommand("password devtest");
+	SendClientMessageToAll(COLOR_RED, "[SERVER]: Server Restart procedure initiated. Please stay in game until server stores your data...");
+	SaveAll();
+	return 1;
+}
+SaveAll()
+{
+	printf("[SERVER]: Automatic scheduled restart initiated. Storing data into MySQL database.");
+	if(Iter_Count(Player) > 0)
+	{
+		foreach (new i : Player) 
+		{
+			if(Player_SafeSpawned(i))
+				Kick(i);
+		}
+	}
+}
+#endif
+
+GlobalServerTimer()
+{
+	new
+		tmphour, tmpmins, tmpsecs;
+	GetServerTime(tmphour, tmpmins, tmpsecs);
+
+	if((tmphour > Hour_Get()) || (tmphour == 0 && Hour_Get() == 23))
+	{
+		SetWorldTime(tmphour);
+		Hour_Set(tmphour);
+	}
+	if(GMX_Get() != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)
+	{
+		CheckAccountsForInactivity();
+		#if defined AUTO_RESTART_SEQ
+		GMX_Set(1);
+		StartGMX();
+		#endif
+	}
+	return 1;
+}
+
+GMXTimer()
+{
+	#if defined AUTO_RESTART_SEQ
+	if(GMX_Get() == 1)
+	{
+		cseconds--;
+		new string[10];
+		format(string, sizeof(string), "%d", cseconds);
+		GameTextForAll(string, 1000, 4);
+		if(cseconds < 1)
+		{
+			GMX_Set(0);
+			stop CountingTimer;
+			foreach(new i : Player) 
+			{
+				if(PlayerInfo[i][pAdmin] >= 1338) 
+				{
+					SendClientMessage(i, COLOR_RED, "[INFO]: Storing the data in server is done. Restarting Server...");
+					KickMessage(i);
+				}
+			}
+			HTTP(0, HTTP_HEAD, HTTP_RESTART_REQUEST, "", "ServerRestartRequest");
+			return 1;
+		}
+	}
+	#endif
+	if(GMX_Get() == 2)
+	{
+		cseconds--;
+		if(cseconds < 1)
+		{
+			GMX_Set(0);
+			cseconds = 0;
+			SendRconCommand("password 0");
+			return 1;
+		}
+	}
+	return 1;
+}
+
+forward ServerRestartRequest(index, response_code, data[]);
+public ServerRestartRequest(index, response_code, data[])
+{
+    if(response_code != 200)
+        printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
 }
 
 public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success)
@@ -501,7 +452,8 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			#if defined MODULE_LOGS
 			if(!IsPlayerAdmin(playerid))
 			{
-				Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s[%d]{%d}(%s) used command '%s'.",
+				Log_Write("logfiles/cmd_timestamp.txt", 
+					"(%s)Player %s[%d]{%d}(%s) used command '%s'.",
 					ReturnDate(),
 					GetName(playerid, false),
 					playerid,
@@ -519,7 +471,8 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "Command '%s' does not exist!", cmdtext);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/cmd_unknown.txt", "(%s)Player %s[%d]{%d}(%s) used non-existing command '%s'.",
+			Log_Write("logfiles/cmd_unknown.txt", 
+				"(%s)Player %s[%d]{%d}(%s) used non-existing command '%s'.",
 				ReturnDate(),
 				GetName(playerid, false),
 				playerid,
@@ -534,7 +487,8 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		case COMMAND_NO_PLAYER:
 		{
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s unsucessfuly used command %s [Error: He shouldn't exist?].",
+			Log_Write("logfiles/cmd_timestamp.txt",
+				 "(%s)Player %s unsucessfuly used command %s [Error: He shouldn't exist?].",
 				ReturnDate(),
 				GetName(playerid, false),
 				cmdtext
@@ -551,7 +505,8 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	if(!success)
 	{
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s used a command %s and it wasn't executed.",
+		Log_Write("logfiles/cmd_timestamp.txt", 
+			"(%s)Player %s used a command %s and it wasn't executed.",
 			ReturnDate(),
 			GetName(playerid, false),
 			cmdtext
@@ -560,71 +515,4 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		return COMMAND_ZERO_RET;
 	}
 	return COMMAND_OK;
-}
-
-public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
-{
-    if(weaponid == WEAPON_FIREEXTINGUISHER)
-    {
-        new Float: oldHealth;
-        GetPlayerHealth(playerid, oldHealth);
-        SetPlayerHealth(playerid, oldHealth);
-        return 0;
-    }
-    return 0;
-}
-
-public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
-{
-    return 0;
-}
-
-// TODO: should be a part of Player module
-#include <YSI_Coding\y_hooks>
-hook function ResetPlayerVariables(playerid)
-{	
-	// Exiting Vars
-	PlayerSafeExit[playerid][giX] = 0;
-	PlayerSafeExit[playerid][giY] = 0;
-	PlayerSafeExit[playerid][giZ] = 0;
-	PlayerSafeExit[playerid][giRZ] = 0;
-
-	Bit1_Set( gr_PlayerUsingPhonebooth			, playerid, false);
-	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false);
-	Bit8_Set( gr_RingingTime			, playerid, 0);
-
-	// Administrator
-	Bit1_Set(a_AdminChat, 		playerid, true);
-	Bit1_Set(a_PlayerReconed,	playerid, false);
-	Bit1_Set(a_PMears, 			playerid, false);
-	Bit1_Set(a_AdNot, 			playerid, true);
-	Bit1_Set(a_DMCheck, 		playerid, true);
-	
-	Bit1_Set(a_BlockedHChat, 	playerid, false);
-	Bit1_Set(a_TogReports, 		playerid, false);
-	
-
-	// Anti Spam
-	AntiSpamInfo[playerid][asPrivateMsg] 	= 0;
-	AntiSpamInfo[playerid][asCreditPay] 	= 0;
-	AntiSpamInfo[playerid][asCarTrunk] 		= 0;
-	AntiSpamInfo[playerid][asHouseWeapon] 	= 0;
-	AntiSpamInfo[playerid][asBuying] 		= 0;
-	AntiSpamInfo[playerid][asDoorShout] 	= 0;
-
-	// Ticks
-	PlayerTick[playerid][ptReport]			= gettimestamp();
-	PlayerTick[playerid][ptMoney]			= gettimestamp();
-	PlayerTick[playerid][ptHelperHelp]		= gettimestamp();
-	PlayerTick[playerid][ptKill]			= gettimestamp();
-	PlayerTick[playerid][ptMainTimer] 		= gettimestamp();
-	
-	// Previous Info(/learn, etc.)
-	ResetPlayerPreviousInfo(playerid);
-	return continue(playerid);
-}
-
-public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
-{
-	return 1;
 }
