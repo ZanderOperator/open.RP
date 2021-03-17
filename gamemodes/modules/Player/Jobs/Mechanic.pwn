@@ -1,5 +1,14 @@
 #include <YSI_Coding\y_hooks>
 
+
+const SERVICE_ENGINE_FIX = 1;
+const SERVICE_BODYKIT_REPAIR = 2;
+const SERVICE_REMOVE_DESTROY = 3;
+const SERVICE_STEREO_BUILDIN = 4;
+const SERVICE_TIRE_ARMORING = 5;
+const SERVICE_BODYKIT_ARMORING = 6;
+const SERVICE_GPS_REPAIR = 7;
+
 /*
 	##     ##    ###    ########   ######
 	##     ##   ## ##   ##     ## ##    ##
@@ -96,7 +105,7 @@ StartMechanicService(playerid)
 	
 	switch(ServiceType[playerid]) 
 	{
-		case 1: 
+		case SERVICE_ENGINE_FIX: 
 		{
 			if(PlayerInventory[repairman][pParts] < 3) 
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
@@ -110,16 +119,15 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
 			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 1);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
 			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
-		case 2: 
+		case SERVICE_BODYKIT_REPAIR: 
 		{
 			if(PlayerInventory[repairman][pParts] < 3)
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
@@ -133,7 +141,7 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
 			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 2);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
@@ -142,7 +150,7 @@ StartMechanicService(playerid)
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
-		case 3: 
+		case SERVICE_REMOVE_DESTROY: 
 		{
 			if(PlayerInventory[repairman][pParts] < 3) 
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
@@ -156,16 +164,15 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
 			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 3);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
 			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
-		case 4: 
+		case SERVICE_STEREO_BUILDIN: 
 		{
 			if(PlayerInventory[repairman][pParts] < 3) 
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
@@ -179,16 +186,15 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
 			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 4);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
 			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
-		case 6: 
+		case SERVICE_TIRE_ARMORING: 
 		{
 			if(PlayerInventory[repairman][pParts] < 2000) 
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
@@ -202,16 +208,15 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 
 			RepairTime[playerid] = 300;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 6);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
 			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
-		case 7: 
+		case SERVICE_BODYKIT_ARMORING: 
 		{
 			if(PlayerInventory[repairman][pParts] < 3500) 
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
@@ -225,18 +230,17 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 
 			RepairTime[playerid] = 500;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 7);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
 			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
-		case 8: 
+		case SERVICE_GPS_REPAIR: 
 		{
-			if(PlayerInventory[repairman][pParts] < 5) 
+			if(PlayerInventory[repairman][pParts] < 10) 
 				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
 
 			CreateMechanicTextDraw(playerid);
@@ -248,12 +252,11 @@ StartMechanicService(playerid)
 			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 
 			RepairTime[playerid] = 300;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 8);
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
 			UsingMechanic[repairman] = true;
 			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
 			MechanicID[playerid] = INVALID_PLAYER_ID;
 			Repairing[repairman] = true;
 		}
@@ -271,7 +274,7 @@ StartMechanicService(playerid)
 	##     ##  #######   #######  ##    ##  ######
 */
 
-timer MechCountForPlayer[1000](playerid, giveplayerid, service)
+timer MechCountForPlayer[1000](playerid, giveplayerid)
 {
 	new Float:X, Float:Y, Float:Z;
 	GetVehiclePos( PlayerMechanicVehicle[giveplayerid] , X, Y, Z);
@@ -318,9 +321,9 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-		switch(service) 
+		switch(ServiceType[playerid]) 
 		{
-			case 1: 
+			case SERVICE_ENGINE_FIX: 
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 3) 
 				{
@@ -328,6 +331,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
+				ServiceType[playerid] = 0;
 				VehicleInfo[vehicleid][vCanStart] = 1;
 				if(VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor] == 1) AC_SetVehicleHealth(vehicleid, 1600.0);
 				else AC_SetVehicleHealth(vehicleid, 1000.0);
@@ -355,7 +359,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInventory[giveplayerid][pParts] -= 3;
 			}
-			case 2: 
+			case SERVICE_BODYKIT_REPAIR: 
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 3)
 				{
@@ -363,8 +367,9 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
-				UpdateVehicleDamageStatus(GetPlayerVehicleID(playerid), 0, 0, 0, 0);
+				ServiceType[playerid] = 0;
 
+				UpdateVehicleDamageStatus(GetPlayerVehicleID(playerid), 0, 0, 0, 0);
 				SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
 				new
@@ -378,7 +383,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInventory[giveplayerid][pParts] -= 3;
 			}
-			case 3: 
+			case SERVICE_REMOVE_DESTROY: 
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 5)
 				{
@@ -386,6 +391,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
+				ServiceType[playerid] = 0;
 				new
 					destroyString[92];
 				format(destroyString, sizeof(destroyString), "[!] Skinuta vam je jedna steta na vozilu od strane mehanicara %s.",
@@ -404,7 +410,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
 			}
-			case 4:
+			case SERVICE_STEREO_BUILDIN:
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 2)
 				{
@@ -412,6 +418,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
+				ServiceType[playerid] = 0;
 				VehicleInfo[GetPlayerVehicleID(playerid)][vStereo] = 1086;
 
 				new
@@ -429,7 +436,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
 			}
-			case 6: 
+			case SERVICE_TIRE_ARMORING: 
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 4000)
 				{
@@ -437,6 +444,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
+				ServiceType[playerid] = 0;
 				VehicleInfo[GetPlayerVehicleID(playerid)][vTireArmor] = 1;
 				vTireHP[GetPlayerVehicleID(playerid)][0] = 100;
 				vTireHP[GetPlayerVehicleID(playerid)][1] = 100;
@@ -462,7 +470,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
 			}
-			case 7: 
+			case SERVICE_BODYKIT_ARMORING: 
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 7000)
 				{
@@ -470,8 +478,9 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
-				VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor] = 1;
+				ServiceType[playerid] = 0;
 
+				VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor] = 1;
 				AC_SetVehicleHealth(vehicleid, 1600.0);
 
 				new
@@ -489,7 +498,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
 			}
-			case 8: 
+			case SERVICE_GPS_REPAIR: 
 			{
 			    if(PlayerInventory[giveplayerid][pParts] < 5)
 				{
@@ -497,6 +506,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
 					return 1;
 				}
+				ServiceType[playerid] = 0;
 				VehicleInfo[GetPlayerVehicleID(playerid)][vGPS] = true;
 				new
 					bodyaString[100];
@@ -676,7 +686,7 @@ CMD:armorcar(playerid, params[]) {
 			price
 		);
 		ServicePrice[playa] = price;
-		ServiceType[playa] = 6;
+		ServiceType[playa] = SERVICE_TIRE_ARMORING;
 		MechanicID[playa] = playerid;
 	}
 	else if(strcmp(item,"body",true) == 0) {
@@ -699,7 +709,7 @@ CMD:armorcar(playerid, params[]) {
 		);
 
 		ServicePrice[playa] = price;
-		ServiceType[playa] = 7;
+		ServiceType[playa] = SERVICE_BODYKIT_ARMORING;
 		MechanicID[playa] = playerid;
 	}
 	return 1;
@@ -746,7 +756,7 @@ CMD:repair(playerid, params[])
 
 		ServicePrice[playa] = price;
 		MechanicID[playa] = playerid;
-		ServiceType[playa] = 1;
+		ServiceType[playa] = SERVICE_ENGINE_FIX;
 	}
     else if(strcmp(item,"bodykit",true) == 0)
 	{
@@ -772,7 +782,7 @@ CMD:repair(playerid, params[])
 		);
 
 		ServicePrice[playa] = price;
-		ServiceType[playa] = 2;
+		ServiceType[playa] = SERVICE_BODYKIT_REPAIR;
 		MechanicID[playa] = playerid;
     }
     else if(strcmp(item,"destroys",true) == 0)
@@ -803,7 +813,7 @@ CMD:repair(playerid, params[])
 		);
 		MechanicOffer[playa] = true;
 		ServicePrice[playa] = price;
-		ServiceType[playa] = 3;
+		ServiceType[playa] = SERVICE_REMOVE_DESTROY;
 		MechanicID[playa] = playerid;
     }
 	 else if(strcmp(item,"gps",true) == 0)
@@ -833,7 +843,7 @@ CMD:repair(playerid, params[])
 		);
 		MechanicOffer[playa] = true;
 		ServicePrice[playa] = price;
-		ServiceType[playa] = 8;
+		ServiceType[playa] = SERVICE_GPS_REPAIR;
 		MechanicID[playa] = playerid;
     }
 	return 1;

@@ -46,7 +46,7 @@
 #define GMT_ZONE_DIFFERENCE						(0)
 
 // 0.3DL
-#define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
+#define NEGATIVE_MODEL_ID 						-40000 
 
 // Server Restart Configuration
 //#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart API on your VPS/server
@@ -122,7 +122,7 @@
 #include <YSI_Extra\y_inline_bcrypt>
 #define BCRYPT_COST 12
 
-// Other pre-includes
+// Other includes
 #include <OnPlayerSlowUpdate>
 #include <animsfix> // legacy
 #include <rBits> // legacy
