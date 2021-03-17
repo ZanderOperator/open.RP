@@ -22,7 +22,6 @@ const MAX_REGISTER_TRIES = 3;
 	  ###    ##     ##  ##     ##  ######  
 */
 static  
-	dialogtext[MAX_DIALOG_TEXT],
 	Timer:LoginCheckTimer[MAX_PLAYERS],
 	Timer:CrashTimer[MAX_PLAYERS],
 	bool:SigningIn[MAX_PLAYERS],
@@ -140,21 +139,17 @@ Public: OnPasswordChecked(playerid)
 		}
 		if(LoginInputs[playerid] < MAX_LOGIN_TRIES) 
 		{
-			format(dialogtext, sizeof(dialogtext), 
-				""COL_RED"You have entered wrong password!\n\
-					"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
-					You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
-					"COL_RED"If you exceed max attempt limit, you will be kicked!", 
-				(MAX_LOGIN_TRIES - LoginInputs[playerid])
-			);
-
-			ShowPlayerDialog(playerid, 
+			va_ShowPlayerDialog(playerid, 
 				DIALOG_LOGIN, 
 				DIALOG_STYLE_PASSWORD, 
 				""COL_WHITE"Login", 
-				dialogtext, 
+				""COL_RED"You have entered wrong password!\n\
+					"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
+					You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
+					"COL_RED"If you exceed max attempt limit, you will be kicked!",
 				"Proceed", 
-				"Abort"
+				"Abort",
+				(MAX_LOGIN_TRIES - LoginInputs[playerid])
 			);
 		}
 	}
@@ -252,20 +247,17 @@ public OnPlayerRequestClass(playerid, classid)
 						);
 						KickMessage(playerid);
 					#else
-						format(dialogtext, 
-							sizeof(dialogtext), 
-							""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
-								"COL_WHITE"Your account isn't registered on our server.\n\
-								If you want to Sign Up, please press \"Register\".\n\
-								Otherwise, you'll be kicked out of the server!",GetName(playerid)
-						);
-						ShowPlayerDialog(playerid, 
+						va_ShowPlayerDialog(playerid, 
 							DIALOG_REGISTER, 
 							DIALOG_STYLE_MSGBOX, 
 							""COL_WHITE"Sign Up (1/6)", 
-							dialogtext, 
+							""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
+								"COL_WHITE"Your account isn't registered on our server.\n\
+								If you want to Sign Up, please press \"Register\".\n\
+								Otherwise, you'll be kicked out of the server!", 
 							"Register", 
-							"Abort"
+							"Abort",
+							GetName(playerid)
 						);
 					#endif
 				}
@@ -1207,21 +1199,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			if(isnull(inputtext))
 			{
-				format(dialogtext, sizeof(dialogtext), 
+				va_ShowPlayerDialog(playerid, 
+					DIALOG_LOGIN, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Login", 
 					""COL_RED"You have left empty input password field!\n\
 						"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
 						You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
 						"COL_RED"If you exceed max attempt limit, you will be kicked!", 
-					(MAX_LOGIN_TRIES - LoginInputs[playerid])
-				);
-
-				ShowPlayerDialog(playerid, 
-					DIALOG_LOGIN, 
-					DIALOG_STYLE_PASSWORD, 
-					""COL_WHITE"Login", 
-					dialogtext, 
 					"Proceed", 
-					"Abort"
+					"Abort",
+					(MAX_LOGIN_TRIES - LoginInputs[playerid])
 				);
 				LoginInputs[playerid]++;
 				return 1;
@@ -1371,36 +1359,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(!response) 
 			{
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
-						"COL_WHITE"Your account isn't registered on our server.\n\
-						If you want to Sign Up, please press \"Register\".\n\
-						Otherwise, you'll be kicked out of the server!",GetName(playerid)
-				);
-
-				ShowPlayerDialog(playerid, 
+				va_ShowPlayerDialog(playerid, 
 					DIALOG_REGISTER, 
 					DIALOG_STYLE_MSGBOX, 
 					""COL_WHITE"Sign Up (1/6)", 
-					dialogtext, 
+					""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
+						"COL_WHITE"Your account isn't registered on our server.\n\
+						If you want to Sign Up, please press \"Register\".\n\
+						Otherwise, you'll be kicked out of the server!", 
 					"Register", 
-					"Abort"
+					"Abort",
+					GetName(playerid)
 				);
 				return 1;
 			}
-
-			format(dialogtext, sizeof(dialogtext), 
-				""COL_WHITE"Please enter a password for your account.\n\
-					Don't share your account password with anyone!\n\
-					\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long."
-			);
-
 			ShowPlayerDialog(playerid, 
 				DIALOG_REG_PASS, 
 				DIALOG_STYLE_PASSWORD, 
 				""COL_WHITE"Sign Up - Password(3/6)", 
-				dialogtext, 
+				""COL_WHITE"Please enter a password for your account.\n\
+					Don't share your account password with anyone!\n\
+					\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.", 
 				"Input", 
 				"Abort"
 			);
@@ -1429,18 +1408,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			if(isnull(inputtext) || !strlen(inputtext))
 			{
-				format(dialogtext, sizeof(dialogtext), 
-					""COL_WHITE"Please enter a password for your account.\n\
-						Don't share your account password with anyone!\n\
-						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.\n\
-						"COL_RED"\nYour input password field was empty!\""
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_PASS, 
 					DIALOG_STYLE_PASSWORD, 
 					""COL_WHITE"Sign Up - Password(3/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.\n\
+						"COL_RED"\nYour input password field was empty!\"", 
 					"Input", 
 					"Abort"
 				);
@@ -1455,18 +1430,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || 
 				strfind(inputtext, "$", true) != -1)
 			{
-				format(dialogtext, sizeof(dialogtext), 
-					""COL_WHITE"Please enter a password for your account.\n\
-						Don't share your account password with anyone!\n\
-						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.\n\
-						"COL_RED"\nYour input can't contain: "COL_WHITE"%+^|?*#!$>' "COL_RED"in password!\""
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_PASS, 
 					DIALOG_STYLE_PASSWORD, 
 					""COL_WHITE"Sign Up - Password(3/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.\n\
+						"COL_RED"\nYour input can't contain: "COL_WHITE"%+^|?*#!$>' "COL_RED"in password!\"", 
 					"Input", 
 					"Abort"
 				);
@@ -1475,16 +1446,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(6 <= strlen(inputtext) <= 12) 
 			{
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:"
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_MAIL, 
 					DIALOG_STYLE_INPUT, 
 					""COL_WHITE"Sign Up - E-Mail(4/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:", 
 					"Input", 
 					"Abort"
 				);
@@ -1501,17 +1467,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else 
 			{
-				format(dialogtext, sizeof(dialogtext), 
-					""COL_WHITE"Please enter a password for your account.\n\
-						Don't share your account password with anyone!\n\
-						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long."
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_PASS, 
 					DIALOG_STYLE_PASSWORD, 
 					""COL_WHITE"Sign Up - Password(3/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.", 
 					"Input", 
 					"Abort"
 				);
@@ -1523,17 +1485,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(!response) 
 			{
-				format(dialogtext, sizeof(dialogtext), 
-					""COL_WHITE"Please enter a password for your account.\n\
-						Don't share your account password with anyone!\n\
-						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long."
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_PASS, 
 					DIALOG_STYLE_PASSWORD, 
 					""COL_WHITE"Sign Up - Password(3/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.", 
 					"Input", 
 					"Abort"
 				);
@@ -1541,17 +1499,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(!strlen(inputtext) || isnull(inputtext)) 
 			{
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
-						\n"COL_RED"Your input field was empty!"
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_MAIL, 
 					DIALOG_STYLE_INPUT, 
 					""COL_WHITE"Sign Up - E-Mail(4/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						\n"COL_RED"Your input field was empty!", 
 					"Input", 
 					"Abort"
 				);
@@ -1566,17 +1519,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				|| strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 
 				|| strfind(inputtext, "$", true) != -1)
 			{	
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
-						"COL_RED"\nYour input can't contain: "COL_WHITE"%+^|?*#!$>' "COL_RED"in E-Mail adress!"
-				);
-				
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_MAIL, 
 					DIALOG_STYLE_INPUT, 
 					""COL_WHITE"Sign Up - E-mail(4/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						"COL_RED"\nYour input can't contain: "COL_WHITE"%+^|?*#!$>' "COL_RED"in E-Mail adress!", 
 					"Input", 
 					"Abort"
 				);
@@ -1585,17 +1533,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(!IsValidEMail(inputtext)) 
 			{
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
-						\n"COL_RED"E-Mail adress you entered isn't valid!"
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_MAIL, 
 					DIALOG_STYLE_INPUT, 
 					""COL_WHITE"Sign Up - E-Mail(4/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						\n"COL_RED"E-Mail adress you entered isn't valid!", 
 					"Input", 
 					"Abort"
 				);
@@ -1604,17 +1547,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if(IsEMailInDB(inputtext)) 
 			{
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
-						\n"COL_RED"E-Mail is already registered in database!"
-				);
-
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_MAIL, 
 					DIALOG_STYLE_INPUT, 
 					""COL_WHITE"Sign Up - E-Mail(4/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						\n"COL_RED"E-Mail is already registered in database!", 
 					"Input", 
 					"Abort"
 				);
@@ -1643,16 +1581,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_REG_SEX:
 		{
 			if(!response) 
-			{
-				format(dialogtext, 
-					sizeof(dialogtext), 
-					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:"
-				);
+			{				
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_MAIL, 
 					DIALOG_STYLE_INPUT, 
 					""COL_WHITE"Sign Up - E-Mail(4/6)", 
-					dialogtext, 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:", 
 					"Input", 
 					"Abort"
 				);
