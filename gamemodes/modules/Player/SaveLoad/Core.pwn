@@ -9,18 +9,35 @@
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_cooldowns.pwn"
 
+/*
+
+  ,ad8888ba,                                                       
+ d8"'    `"8b                                     ,d               
+d8'                                               88               
+88             ,adPPYba,  8b,dPPYba,  ,adPPYba, MM88MMM ,adPPYba,  
+88            a8"     "8a 88P'   `"8a I8[    ""   88    I8[    ""  
+Y8,           8b       d8 88       88  `"Y8ba,    88     `"Y8ba,   
+ Y8a.    .a8P "8a,   ,a8" 88       88 aa    ]8I   88,   aa    ]8I  
+  `"Y8888Y"'   `"YbbdP"'  88       88 `"YbbdP"'   "Y888 `"YbbdP"'  
+
+*/
+
 const MAX_LOGIN_TRIES = 3;
 const MAX_REGISTER_TRIES = 3;
 
 /*
-	##     ##    ###    ########   ######  
-	##     ##   ## ##   ##     ## ##    ## 
-	##     ##  ##   ##  ##     ## ##       
-	##     ## ##     ## ########   ######  
-	##   ##  #########  ##   ##         ## 
-	 ## ##   ##     ##  ##    ##  ##    ## 
-	  ###    ##     ##  ##     ##  ######  
+                                               
+8b           d8                                
+`8b         d8'                                
+ `8b       d8'                                 
+  `8b     d8' ,adPPYYba, 8b,dPPYba, ,adPPYba,  
+   `8b   d8'  ""     `Y8 88P'   "Y8 I8[    ""  
+    `8b d8'   ,adPPPPP88 88          `"Y8ba,   
+     `888'    88,    ,88 88         aa    ]8I  
+      `8'     `"8bbdP"Y8 88         `"YbbdP"'  
+
 */
+                                               
 static  
 	Timer:LoginCheckTimer[MAX_PLAYERS],
 	Timer:CrashTimer[MAX_PLAYERS],
@@ -33,13 +50,16 @@ static
 	secquestattempt[MAX_PLAYERS] = 3;
 
 /*
-	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
-	##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ## 
-	##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##       
-	######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######  
-	##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ## 
-	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
-	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
+
+88888888888                                           
+88                                                    
+88                                                    
+88aaaaa 88       88 8b,dPPYba,   ,adPPYba, ,adPPYba,  
+88""""" 88       88 88P'   `"8a a8"     "" I8[    ""  
+88      88       88 88       88 8b          `"Y8ba,   
+88      "8a,   ,a88 88       88 "8a,   ,aa aa    ]8I  
+88       `"YbbdP'Y8 88       88  `"Ybbd8"' `"YbbdP"'  
+
 */
 
 stock bool:Player_SecurityBreach(playerid)
@@ -85,9 +105,6 @@ timer SafeHealPlayer[250](playerid)
 	return 1;
 }
 
-
-forward LoadPlayerData(playerid);
-
 CheckPlayerInactivity(playerid)
 {
 	inline OnPlayerInactivityCheck()
@@ -114,7 +131,8 @@ CheckPlayerInactivity(playerid)
 
 Public: OnPasswordChecked(playerid)
 {
-	new bool:match = bcrypt_is_equal();
+	new 
+		bool:match = bcrypt_is_equal();
 	if(match)
 	{
 		mysql_pquery(SQL_Handle(), 
@@ -282,7 +300,7 @@ public OnPlayerRequestClass(playerid, classid)
 }
 
 
-
+forward LoadPlayerData(playerid);
 public LoadPlayerData(playerid)
 {
 	new 
@@ -527,7 +545,7 @@ stock IsEMailInDB(const email[])
 	return counts;
 }
 
-Public: SafeSpawnPlayer(playerid)
+SafeSpawnPlayer(playerid)
 {
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
@@ -983,7 +1001,10 @@ hook OnPlayerDisconnect(playerid, reason)
 	// Player Sets
 	if(GMX_Get() == 1) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "[!]: Your data has been saved. Server has automatically kicked you out.");
+		SendClientMessage(playerid, 
+			COLOR_RED, 
+			"[!]: Your data has been saved. Server has automatically kicked you out.")
+		;
 		KickMessage(playerid);
 	}
 	defer SafeResetPlayerVariables(playerid);
@@ -1042,7 +1063,10 @@ hook OnPlayerSpawn(playerid)
 			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
-			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
+			SendMessage(playerid, 
+				MESSAGE_TYPE_ERROR, 
+				"** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **"
+			);
 
 			Player_SetUsingMask(playerid, false);
 			if(PlayerInventory[playerid][pMaskID])
@@ -1065,9 +1089,14 @@ hook OnPlayerSpawn(playerid)
 			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ]);
 			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
-			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
-			va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
-
+			SendClientMessage(playerid, 
+				COLOR_LIGHTRED, 
+				"You are in Death Mode. You have been returned to location of your death.**"
+			);
+			SendMessage(playerid, 
+				MESSAGE_TYPE_ERROR, 
+				"** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **"
+			);
 			Player_SetUsingMask(playerid, false);
 			if(PlayerInventory[playerid][pMaskID])
 			{
@@ -1107,7 +1136,9 @@ hook OnPlayerSpawn(playerid)
 					}
 					case 1: 
 					{
-						if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID) {
+						if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID 
+							|| PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID) 
+						{
 							new
 								house;
 							if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
