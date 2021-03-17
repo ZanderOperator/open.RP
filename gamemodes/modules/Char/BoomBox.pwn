@@ -253,8 +253,7 @@ hook function ResetPlayerVariables(playerid)
 	}
 	AttachedBoombox[playerid] = false;
 	MusicApproved[playerid] = false;
-	MusicPlaying[playerid] = false;
-	
+	MusicPlaying[playerid] = false;	
 	return continue(playerid);
 }
 

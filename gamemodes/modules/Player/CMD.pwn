@@ -65,7 +65,6 @@ hook function ResetPlayerVariables(playerid)
 	PlayerTrunkPos[playerid][0] = 0.0;
 	PlayerTrunkPos[playerid][1]	= 0.0;
 	PlayerTrunkPos[playerid][2] = 0.0;
-
 	return continue(playerid);
 }
 

@@ -71,7 +71,7 @@ hook function ResetPlayerVariables(playerid)
 {
     PlayerAnim[playerid] = false;
 	PlayerAction[playerid] = 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerSpawn(playerid)

@@ -2198,7 +2198,7 @@ stock ResetMobileVariables(playerid)
 	stop PlayerMobileRingTimer[playerid];
 
 	SelfieAngle[playerid]		= 0.0;
-	SelfieHeight[playerid]	= 0.0;
+	SelfieHeight[playerid]		= 0.0;
 	CallingId[playerid] 		= 999;
 	StartCallTimestamp[playerid] = 0;
 	PlayerCallPlayer[playerid] 	= INVALID_PLAYER_ID;

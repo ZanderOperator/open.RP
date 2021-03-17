@@ -14,7 +14,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			if(!IsPlayerConnected(playerid))
 				return COMMAND_ZERO_RET;
 
-			if(Player_SafeSpawned(playerid) || Player_SecurityBreach(playerid))
+			if(!Player_SafeSpawned(playerid) || Player_SecurityBreach(playerid))
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR,"You're not safely spawned, you can't use commands!");
 				return COMMAND_ZERO_RET;

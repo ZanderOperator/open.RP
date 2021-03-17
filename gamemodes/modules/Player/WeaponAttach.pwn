@@ -282,7 +282,7 @@ hook function ResetPlayerVariables(playerid)
 {
 	WeaponTick[playerid] = 0;
 	EditingWeapon[playerid] = 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
