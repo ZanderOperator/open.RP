@@ -328,7 +328,7 @@ Vehicle_SetWindows(vehicleid, bool:v)
 BuyVehicle(playerid, bool:credit_activated = false)
 {
 	//Car
-	AC_DestroyVehicle(PreviewCar[playerid]);
+	DestroyVehicle(PreviewCar[playerid]);
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 	Streamer_UpdateEx(playerid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2]);
 
@@ -443,9 +443,9 @@ BuyVehicle(playerid, bool:credit_activated = false)
 				cocars \n\
 			(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,\n\
 				interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,\n\
-				batterylife, insurance, panels, doors, tires, lights, travel, lock, alarm, immob,\n\
-				audio, canstart, parts, destroys, health, batterytype, hydraulics,\n\
-				impounded, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) \n\
+				batterylife, insurance, panels, doors, tires, lights, travel, v_lock, alarm, immob,\n\
+				audio, canstart, parts, destroys, health, batterytype,\n\
+				impounded, tuned, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) \n\
 			VALUES \n\
 				('%d','%d','%d','%e','%.2f','%.2f','%.2f','%.2f','%d','%d','%d','%d','%d','%d','%f',\n\
 					'%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f',\n\
@@ -636,6 +636,9 @@ stock DeleteVehicleFromBase(vsqlid)
 
 stock RemoveTrunkObjects(vehicleid)
 {
+	if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid))
+		return 1;
+
 	foreach(new wslot: VehWeaponObject[vehicleid])
 	{
 		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][wslot]))
@@ -1676,7 +1679,7 @@ stock static CreatePreviewScene(playerid, dealer)
 	Bit1_Set(gr_PreviewCar, 	playerid, 	true);
 
 	//Destroying old vehicle
-	AC_DestroyVehicle(PreviewCar[playerid]);
+	DestroyVehicle(PreviewCar[playerid]);
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 
 	//Creating textdraws
@@ -1826,7 +1829,7 @@ Y8    8P 88ooooo 88ooo88    88    8P      88      88ooooo
 stock static NextVehicle(playerid)
 {
 	//Destroying old car
-	AC_DestroyVehicle(PreviewCar[playerid]);
+	DestroyVehicle(PreviewCar[playerid]);
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 
 	//Dodjeljivanje modela vozila varijabli modelid
@@ -1882,7 +1885,7 @@ stock static NextVehicle(playerid)
 stock static PreviouseVehicle(playerid)
 {
 	//Destroying old car
-	AC_DestroyVehicle(PreviewCar[playerid]);
+	DestroyVehicle(PreviewCar[playerid]);
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 
 	//Dodjeljivanje modela vozila varijabli modelid
@@ -1989,7 +1992,7 @@ stock static PrevVehColor(playerid, type)
 stock static CreateTestCar(playerid)
 {
 	//Brisanje preview auta
-	AC_DestroyVehicle(PreviewCar[playerid]);
+	DestroyVehicle(PreviewCar[playerid]);
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 
 	//Koristi li dealera?
@@ -2287,9 +2290,12 @@ stock ParkVehicleInfo(vehicleid)
 	GetVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 
 	mysql_fquery(SQL_Handle(),
-	 	"UPDATE cocars SET panels = '%d', doors = '%d', lights = '%d', tires = '%d', fuel = '%d', travel = '%f',\n\
+	 	"UPDATE \n\
+			cocars \n\
+		SET \n\
+			panels = '%d', doors = '%d', lights = '%d', tires = '%d', fuel = '%d', travel = '%f',\n\
 			batterylife = '%d', heat = '%f', overheated = '%d', enginelife = '%d', enginescrewed = '%d', health = '%f',\n\
-		 	destroys = '%d', batterytype = '%d', nos = '%d' WHERE id = '%d'",
+		 	destroys = '%d', batterytype = '%d', tuned = '%d', nos = '%d' WHERE id = '%d'",
 		VehicleInfo[vehicleid][vPanels],
 		VehicleInfo[vehicleid][vDoors],
 		VehicleInfo[vehicleid][vLights],
@@ -2305,6 +2311,7 @@ stock ParkVehicleInfo(vehicleid)
 		VehicleInfo[vehicleid][vDestroys],
 		VehicleInfo[vehicleid][vBatteryType],
 		VehicleInfo[vehicleid][vNOSCap],
+		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);
 	AC_DestroyVehicle(vehicleid);
@@ -2422,7 +2429,6 @@ stock SpawnVehicleInfo(playerid, pick)
 			cache_get_value_name_int(0,  	"canstart"			, VehicleInfo[vehicleid][vCanStart]);
 			cache_get_value_name_int(0,  	"parts"				, VehicleInfo[vehicleid][vParts]);
 			cache_get_value_name_int(0,  	"destroys"			, VehicleInfo[vehicleid][vDestroys]);
-			cache_get_value_name_int(0,  	"hydraulics"		, VehicleInfo[vehicleid][vHydraulics]);
 			cache_get_value_name_int(0,  	"impounded"			, VehicleInfo[vehicleid][vImpounded]);
 			cache_get_value_name_int(0,  	"tuned"				, VehicleInfo[vehicleid][vTuned]);
 			cache_get_value_name_int(0,  	"nos"				, VehicleInfo[vehicleid][vNOSCap]);
@@ -3338,8 +3344,9 @@ timer VehicleTestTimer[1000](playerid)
 
 timer VehicleTestBackTimer[CAR_GIVEBACK_MIL](playerid)
 {
-	if(PlayerGiveBackCP[playerid] == 1) {
-		AC_DestroyVehicle(TestCar[playerid]);
+	if(PlayerGiveBackCP[playerid] == 1) 
+	{
+		DestroyVehicle(TestCar[playerid]);
 		TestCar[playerid] = INVALID_VEHICLE_ID;
 
 		SendClientMessage(playerid, COLOR_RED, "[!] Niste vratili vozilo unutar 5 minuta te ste respawnani!");
@@ -3463,7 +3470,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 		DisablePlayerCheckpoint(driverid);
 
 		//Vehicle
-		AC_DestroyVehicle(TestCar[driverid]);
+		DestroyVehicle(TestCar[driverid]);
 		TestCar[driverid] 	= INVALID_VEHICLE_ID;
 
 		//Pos
@@ -3539,7 +3546,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		DisablePlayerCheckpoint(playerid);
 
 		//Vehicle
-		AC_DestroyVehicle(TestCar[playerid]);
+		DestroyVehicle(TestCar[playerid]);
 		TestCar[playerid] 	= INVALID_VEHICLE_ID;
 
 		//Pos
@@ -3581,7 +3588,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 			DisablePlayerCheckpoint(playerid);
 
 			//Vehicle
-			AC_DestroyVehicle(TestCar[playerid]);
+			DestroyVehicle(TestCar[playerid]);
 			TestCar[playerid] 	= INVALID_VEHICLE_ID;
 
 			//Pos
@@ -4126,7 +4133,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			// Query
-			mysql_fquery(SQL_Handle(), "UPDATE cocars SET lock = '%d' WHERE id = '%d'",
+			mysql_fquery(SQL_Handle(), "UPDATE cocars SET v_lock = '%d' WHERE id = '%d'",
 				VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vLock],
 				VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]
 			);
@@ -4417,19 +4424,17 @@ hook OnVehicleSpawn(vehicleid)
 
 hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if(Bit2_Get(gr_PlayerLockBreaking, playerid) != 0)
+	if(clickedid == Text:INVALID_TEXT_DRAW)
 	{
-		if(clickedid == Text:INVALID_TEXT_DRAW)
+		if(Bit1_Get( gr_PlayerHotWiring, playerid)) 
 		{
-			if(Bit1_Get( gr_PlayerHotWiring, playerid)) 
-			{
-				ResetHotWireVars(playerid);
-				PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
-			}
-			else if(Bit1_Get( gr_PreviewCar, playerid)) {
-				DestroyPreviewScene(playerid);
-				PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
-			}
+			ResetHotWireVars(playerid);
+			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
+		}
+		else if(Bit1_Get( gr_PreviewCar, playerid)) 
+		{
+			DestroyPreviewScene(playerid);
+			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
 		}
 	}
 	return 1;

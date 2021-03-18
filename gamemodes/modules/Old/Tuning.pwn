@@ -664,7 +664,8 @@ stock RemoveVehicleTuning(vehicleid)
 
 stock RemoveAllVehicleTuning(vehicleid)
 {
-	new componentid;
+	new 
+		componentid;
 	for (new i; i < 14; i++)
 	{
 		componentid = GetVehicleComponentInSlot(vehicleid, i);

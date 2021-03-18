@@ -395,7 +395,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	return id;
 }
 
-hook AC_DestroyVehicle(vehicleid)
+hook function AC_DestroyVehicle(vehicleid)
 {
 	if(vehicleid == INVALID_VEHICLE_ID) 		
 		return 0;

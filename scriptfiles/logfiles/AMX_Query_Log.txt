@@ -650,3 +650,32 @@ Query: SELECT * FROM city WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
 #1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f74 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f40 "OnCityLoaded", query[]=@0a0b6ed4 "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
+[18/03/2021, 23:06:56] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'lock, alarm, immob,
+audio, canstart, parts, destroys, health, batterytype, hy...' at line 5: Callback Indirect_FromCallback
+Query: INSERT INTO 
+cocars 
+(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,
+interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,
+batterylife, insurance, panels, doors, tires, lights, travel, lock, alarm, immob,
+audio, canstart, parts, destroys, health, batterytype, hydraulics,
+impounded, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) 
+VALUES 
+('426','0','0','','563.59','-1289.49','17.55','2.82','0','0','5','1','130000','0','0.000000',
+'0','100','1184645120','0','0','0','0','0','0.000000','1','1','1','1','1','0','0','1000.000000',
+'0','0','0','0','-1','-1','0','0','0')
+[18/03/2021, 23:25:16] - MySQL Error ID: 1064
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'lock, alarm, immob,
+audio, canstart, parts, destroys, health, batterytype,
+im...' at line 5: Callback Indirect_FromCallback
+Query: INSERT INTO 
+cocars 
+(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,
+interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,
+batterylife, insurance, panels, doors, tires, lights, travel, lock, alarm, immob,
+audio, canstart, parts, destroys, health, batterytype,
+impounded, tuned, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) 
+VALUES 
+('560','0','0','','563.59','-1289.49','17.55','2.82','0','0','5','2','130000','0','0.000000',
+'0','100','1184645120','0','0','0','0','0','0.000000','1','1','1','1','1','0','0','1000.000000',
+'0','0','0','0','-1','-1','0','0','0')
