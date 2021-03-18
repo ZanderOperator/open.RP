@@ -1,0 +1,6 @@
+#include "modules\Systems\House\House.pwn"
+#include "modules\Systems\House\Furniture.pwn"
+#include "modules\Systems\House\ExteriorFurniture.pwn"
+#include "modules\Systems\House\HouseStorage.pwn"
+#include "modules\Systems\House\RobStorage.pwn"
+#include "modules\Systems\House\Garages.pwn"

@@ -85,7 +85,15 @@
 				"-d3"
 			],
 			"includes": [
-				"legacy/"
+				"legacy/",
+				"gamemodes/modules",
+				"gamemodes/modules/Admin",
+				"gamemodes/modules/Arrays",
+				"gamemodes/modules/Char",
+				"gamemodes/modules/Player",
+				"gamemodes/modules/Preincludes",
+				"gamemodes/modules/Server",
+				"gamemodes/modules/Systems"
 			],
 			"compiler": {}
 		},

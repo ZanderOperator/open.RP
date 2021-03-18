@@ -158,21 +158,21 @@ Error You have an error in your SQL syntax; check the manual that corresponds to
 Query: SELECT sql FROM accounts WHERE name = 'Jason_Logan'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 000935a8 in public OnQueryError (errorid=1064, error[]=@0a0b6df4 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6d9c "Indirect_FromCallback", query[]=@0a0b6ccc "SELECT sql FROM accounts WHERE name = 'Jason_Logan'", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 000935a8 in public OnQueryError (errorid=1064, error[]=@0a0b6df4 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6d9c "Indirect_FromCallback", query[]=@0a0b6ccc "SELECT sql FROM accounts WHERE name = 'Jason_Logan'", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 23:26:23] - MySQL Error ID: 1146
 Error Table 'open_rp.player_job' doesn't exist: Callback LoadingPlayerPayday
 Query: SELECT * FROM player_job WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1146, error[]=@0a0b653c "Table 'open_rp.player_job' doesn't exist", callback[]=@0a0b64ec "LoadingPlayerPayday", query[]=@0a0b6440 "SELECT * FROM player_job WHERE sqlid = '1'", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1146, error[]=@0a0b653c "Table 'open_rp.player_job' doesn't exist", callback[]=@0a0b64ec "LoadingPlayerPayday", query[]=@0a0b6440 "SELECT * FROM player_job WHERE sqlid = '1'", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 23:26:23] - MySQL Error ID: 1146
 Error Table 'open_rp.player_job' doesn't exist: Callback LoadingPlayerJob
 Query: SELECT * FROM player_job WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1146, error[]=@0a0b6530 "Table 'open_rp.player_job' doesn't exist", callback[]=@0a0b64ec "LoadingPlayerJob", query[]=@0a0b6440 "SELECT * FROM player_job WHERE sqlid = '1'", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1146, error[]=@0a0b6530 "Table 'open_rp.player_job' doesn't exist", callback[]=@0a0b64ec "LoadingPlayerJob", query[]=@0a0b6440 "SELECT * FROM player_job WHERE sqlid = '1'", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 23:26:23] - MySQL Error ID: 1054
 Error Unknown column 'drugsecond' in 'field list': Callback 
@@ -180,7 +180,7 @@ Query: INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder)
 VALUES ('1', '0', '0', '0')
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b65d0 "Unknown column 'drugsecond' in 'field list'", callback[]=@0a0b65cc "", query[]=@0a0b6440 "INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder) ", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b65d0 "Unknown column 'drugsecond' in 'field list'", callback[]=@0a0b65cc "", query[]=@0a0b6440 "INSERT INTO player_drug_stats(sqlid, drugused, drugsecond, drugorder) ", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 23:45:31] - MySQL Error ID: 1054
 Error Unknown column 'payday' in 'field list': Callback 
@@ -188,7 +188,7 @@ Query: INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dia
 VALUES('1', '0', '0', '0', '0', ' ', ' ')
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6644 "Unknown column 'payday' in 'field list'", callback[]=@0a0b6640 "", query[]=@0a0b6444 "INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dialog, da...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6644 "Unknown column 'payday' in 'field list'", callback[]=@0a0b6640 "", query[]=@0a0b6444 "INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dialog, da...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '', playaWarns = '0', levels = '6', connecttime = '1', 
@@ -199,7 +199,7 @@ muted = '0', respects = '1', changenames = '0', changetimes = '0',
 mustread = '0' WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b69a8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b69a4 "", query[]=@0a0b645c "UPDATE accounts SET lastlogin = '07/02/2021, 00:10:36', lastloginstamp = '161273...", MySQL:handle=1) at modules/Server/MySQL.
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b69a8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b69a4 "", query[]=@0a0b645c "UPDATE accounts SET lastlogin = '07/02/2021, 00:10:36', lastloginstamp = '161273...", MySQL:handle=1) at modules\Server/MySQL.
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1054
 Error Unknown column 'casinocooldown' in 'field list': Callback 
@@ -207,28 +207,28 @@ Query: UPDATE player_inventory SET casinocooldown = '0', jackercooldown = '0', a
 WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6618 "Unknown column 'casinocooldown' in 'field list'", callback[]=@0a0b6614 "", query[]=@0a0b645c "UPDATE player_inventory SET casinocooldown = '0', jackercooldown = '0', ammucool...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6618 "Unknown column 'casinocooldown' in 'field list'", callback[]=@0a0b6614 "", query[]=@0a0b645c "UPDATE player_inventory SET casinocooldown = '0', jackercooldown = '0', ammucool...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1'' at line 1: Callback 
 Query: UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice = '0 WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b65f8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b65f4 "", query[]=@0a0b645c "UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice =...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b65f8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b65f4 "", query[]=@0a0b645c "UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice =...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1'' at line 1: Callback 
 Query: UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice = '0 WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b65f8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b65f4 "", query[]=@0a0b645c "UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice =...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b65f8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b65f4 "", query[]=@0a0b645c "UPDATE player_jail SET jailed = '0', jailtime = '0', arrested = '0', bailprice =...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1'' at line 1: Callback 
 Query: UPDATE player_vip_status SET vipRank = '0', vipTime = '0', donateveh = '0', dvehperms = '0 WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b6614 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6610 "", query[]=@0a0b645c "UPDATE player_vip_status SET vipRank = '0', vipTime = '0', donateveh = '0', dveh...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b6614 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6610 "", query[]=@0a0b645c "UPDATE player_vip_status SET vipRank = '0', vipTime = '0', donateveh = '0', dveh...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '0', 
@@ -237,14 +237,14 @@ Query: UPDATE player_inventory SET mask = '0', toolkit = '0', watch = '0', cigga
 parts = '0', rope = '0', boombox = '0' WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b66d8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b66d4 "", query[]=@0a0b645c "UPDATE player_inventory SET mask = '0', toolkit = '0', watch = '0', ciggaretes =...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b66d8 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b66d4 "", query[]=@0a0b645c "UPDATE player_inventory SET mask = '0', toolkit = '0', watch = '0', ciggaretes =...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [07/02/2021, 00:10:36] - MySQL Error ID: 1054
 Error Unknown column 'facLeadId' in 'field list': Callback 
 Query: UPDATE player_savings SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b65cc "Unknown column 'facLeadId' in 'field list'", callback[]=@0a0b65c8 "", query[]=@0a0b645c "UPDATE player_savings SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE s...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b65cc "Unknown column 'facLeadId' in 'field list'", callback[]=@0a0b65c8 "", query[]=@0a0b645c "UPDATE player_savings SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE s...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 01:14:05] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '', playaWarns = '0', levels = '6', connecttime = '1', 
@@ -255,133 +255,133 @@ muted = '0', respects = '1', changenames = '0', changetimes = '0',
 mustread = '0' WHERE sqlid = '1'
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b6638 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6634 "", query[]=@0a0b60ec "UPDATE accounts SET lastlogin = '08/02/2021, 01:14:05', lastloginstamp = '161274...", MySQL:handle=1) at modules/Server/MySQL.
+#1 00093314 in public OnQueryError (errorid=1064, error[]=@0a0b6638 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@0a0b6634 "", query[]=@0a0b60ec "UPDATE accounts SET lastlogin = '08/02/2021, 01:14:05', lastloginstamp = '161274...", MySQL:handle=1) at modules\Server/MySQL.
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerJobsLoaded
 Query: SELECT * FROM server_jobs WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6154 "OnServerJobsLoaded", query[]=@0a0b60cc "SELECT * FROM server_jobs WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6154 "OnServerJobsLoaded", query[]=@0a0b60cc "SELECT * FROM server_jobs WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback Indirect_FromCallback
 Query: SELECT * FROM illegal_garages
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b619c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6144 "Indirect_FromCallback", query[]=@0a0b60cc "SELECT * FROM illegal_garages", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b619c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6144 "Indirect_FromCallback", query[]=@0a0b60cc "SELECT * FROM illegal_garages", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnTowerLoaded
 Query: SELECT * FROM signaltowers WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b6190 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6158 "OnTowerLoaded", query[]=@0a0b60cc "SELECT * FROM signaltowers WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b6190 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6158 "OnTowerLoaded", query[]=@0a0b60cc "SELECT * FROM signaltowers WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnFactionLoaded
 Query: SELECT * FROM server_factions WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6164 "OnFactionLoaded", query[]=@0a0b60cc "SELECT * FROM server_factions WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6164 "OnFactionLoaded", query[]=@0a0b60cc "SELECT * FROM server_factions WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback GPS_Loaded
 Query: SELECT * FROM gps
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b6140 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6114 "GPS_Loaded", query[]=@0a0b60cc "SELECT * FROM gps", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b6140 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6114 "GPS_Loaded", query[]=@0a0b60cc "SELECT * FROM gps", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnGraffitsLoad
 Query: SELECT * FROM graffiti WHERE 1 LIMIT 0,500
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61b4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6178 "OnGraffitsLoad", query[]=@0a0b60cc "SELECT * FROM graffiti WHERE 1 LIMIT 0,500", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61b4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6178 "OnGraffitsLoad", query[]=@0a0b60cc "SELECT * FROM graffiti WHERE 1 LIMIT 0,500", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnTagsLoaded
 Query: SELECT * FROM spraytags WHERE 1 LIMIT 0,100
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61b0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b617c "OnTagsLoaded", query[]=@0a0b60cc "SELECT * FROM spraytags WHERE 1 LIMIT 0,100", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61b0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b617c "OnTagsLoaded", query[]=@0a0b60cc "SELECT * FROM spraytags WHERE 1 LIMIT 0,100", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerComplexLoad
 Query: SELECT * FROM server_complex WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61b0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6160 "OnServerComplexLoad", query[]=@0a0b60cc "SELECT * FROM server_complex WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61b0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6160 "OnServerComplexLoad", query[]=@0a0b60cc "SELECT * FROM server_complex WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnComplexRoomsLoad
 Query: SELECT * FROM server_complex_rooms WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61c4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6178 "OnComplexRoomsLoad", query[]=@0a0b60cc "SELECT * FROM server_complex_rooms WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61c4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6178 "OnComplexRoomsLoad", query[]=@0a0b60cc "SELECT * FROM server_complex_rooms WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnAmmuWeaponsLoaded
 Query: SELECT * FROM ammunation_weapons WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61c0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6170 "OnAmmuWeaponsLoaded", query[]=@0a0b60cc "SELECT * FROM ammunation_weapons WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61c0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6170 "OnAmmuWeaponsLoaded", query[]=@0a0b60cc "SELECT * FROM ammunation_weapons WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnPickupsLoad
 Query: SELECT * FROM server_pickups WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b6198 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6160 "OnPickupsLoad", query[]=@0a0b60cc "SELECT * FROM server_pickups WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b6198 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6160 "OnPickupsLoad", query[]=@0a0b60cc "SELECT * FROM server_pickups WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnPokerTablesLoaded
 Query: SELECT * FROM poker_tables WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6158 "OnPokerTablesLoaded", query[]=@0a0b60cc "SELECT * FROM poker_tables WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6158 "OnPokerTablesLoaded", query[]=@0a0b60cc "SELECT * FROM poker_tables WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerBizzesLoad
 Query: SELECT * FROM bizzes WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b618c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6140 "OnServerBizzesLoad", query[]=@0a0b60cc "SELECT * FROM bizzes WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b618c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6140 "OnServerBizzesLoad", query[]=@0a0b60cc "SELECT * FROM bizzes WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnHouseGaragesLoad
 Query: SELECT * FROM server_garages WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61ac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6160 "OnHouseGaragesLoad", query[]=@0a0b60cc "SELECT * FROM server_garages WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61ac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6160 "OnHouseGaragesLoad", query[]=@0a0b60cc "SELECT * FROM server_garages WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback HouseStorage_Load
 Query: SELECT * FROM house_storage WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b615c "HouseStorage_Load", query[]=@0a0b60cc "SELECT * FROM house_storage WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b615c "HouseStorage_Load", query[]=@0a0b60cc "SELECT * FROM house_storage WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerHousesLoad
 Query: SELECT * FROM houses WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b618c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6140 "OnServerHousesLoad", query[]=@0a0b60cc "SELECT * FROM houses WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b618c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6140 "OnServerHousesLoad", query[]=@0a0b60cc "SELECT * FROM houses WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerVehicleLoad
 Query: SELECT * FROM server_cars WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6154 "OnServerVehicleLoad", query[]=@0a0b60cc "SELECT * FROM server_cars WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b61a4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6154 "OnServerVehicleLoad", query[]=@0a0b60cc "SELECT * FROM server_cars WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 16:49:10] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnCityLoaded
 Query: SELECT * FROM city WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b616c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6138 "OnCityLoaded", query[]=@0a0b60cc "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=2002, error[]=@0a0b616c "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6138 "OnCityLoaded", query[]=@0a0b60cc "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 22:53:19] - MySQL Error ID: 1054
 Error Unknown column 'wantedlevel' in 'field list': Callback Indirect_FromCallback
@@ -389,7 +389,7 @@ Query: INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtext
 VALUES ('0', 'Mrtva Kara', '0', '0', '1238.442505', '-1389.500854', '10.909504', '160.299942')
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6434 "Unknown column 'wantedlevel' in 'field list'", callback[]=@0a0b63dc "Indirect_FromCallback", query[]=@0a0b60cc "INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtextX, 3dte...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6434 "Unknown column 'wantedlevel' in 'field list'", callback[]=@0a0b63dc "Indirect_FromCallback", query[]=@0a0b60cc "INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtextX, 3dte...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [08/02/2021, 22:54:16] - MySQL Error ID: 1054
 Error Unknown column 'wantedlevel' in 'field list': Callback Indirect_FromCallback
@@ -397,256 +397,256 @@ Query: INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtext
 VALUES ('0', 'Kurcina', '0', '0', '1232.979858', '-1395.461792', '11.036880', '0.000000')
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6420 "Unknown column 'wantedlevel' in 'field list'", callback[]=@0a0b63c8 "Indirect_FromCallback", query[]=@0a0b60cc "INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtextX, 3dte...", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093314 in public OnQueryError (errorid=1054, error[]=@0a0b6420 "Unknown column 'wantedlevel' in 'field list'", callback[]=@0a0b63c8 "Indirect_FromCallback", query[]=@0a0b60cc "INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtextX, 3dte...", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerJobsLoaded
 Query: SELECT * FROM server_jobs WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fc8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f7c "OnServerJobsLoaded", query[]=@0a0b6ef4 "SELECT * FROM server_jobs WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fc8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f7c "OnServerJobsLoaded", query[]=@0a0b6ef4 "SELECT * FROM server_jobs WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback Indirect_FromCallback
 Query: SELECT * FROM illegal_garages
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fc4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f6c "Indirect_FromCallback", query[]=@0a0b6ef4 "SELECT * FROM illegal_garages", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fc4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f6c "Indirect_FromCallback", query[]=@0a0b6ef4 "SELECT * FROM illegal_garages", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnTowerLoaded
 Query: SELECT * FROM signaltowers WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fb8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnTowerLoaded", query[]=@0a0b6ef4 "SELECT * FROM signaltowers WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fb8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnTowerLoaded", query[]=@0a0b6ef4 "SELECT * FROM signaltowers WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnGraffitsLoad
 Query: SELECT * FROM graffiti WHERE 1 LIMIT 0,500
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fdc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6fa0 "OnGraffitsLoad", query[]=@0a0b6ef4 "SELECT * FROM graffiti WHERE 1 LIMIT 0,500", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fdc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6fa0 "OnGraffitsLoad", query[]=@0a0b6ef4 "SELECT * FROM graffiti WHERE 1 LIMIT 0,500", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnFactionLoaded
 Query: SELECT * FROM server_factions WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f8c "OnFactionLoaded", query[]=@0a0b6ef4 "SELECT * FROM server_factions WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f8c "OnFactionLoaded", query[]=@0a0b6ef4 "SELECT * FROM server_factions WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback GPS_Loaded
 Query: SELECT * FROM gps
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6f68 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f3c "GPS_Loaded", query[]=@0a0b6ef4 "SELECT * FROM gps", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6f68 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f3c "GPS_Loaded", query[]=@0a0b6ef4 "SELECT * FROM gps", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnTagsLoaded
 Query: SELECT * FROM spraytags WHERE 1 LIMIT 0,100
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6fa4 "OnTagsLoaded", query[]=@0a0b6ef4 "SELECT * FROM spraytags WHERE 1 LIMIT 0,100", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6fa4 "OnTagsLoaded", query[]=@0a0b6ef4 "SELECT * FROM spraytags WHERE 1 LIMIT 0,100", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:39] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerComplexLoad
 Query: SELECT * FROM server_complex WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f88 "OnServerComplexLoad", query[]=@0a0b6ef4 "SELECT * FROM server_complex WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f88 "OnServerComplexLoad", query[]=@0a0b6ef4 "SELECT * FROM server_complex WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnComplexRoomsLoad
 Query: SELECT * FROM server_complex_rooms WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fec "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6fa0 "OnComplexRoomsLoad", query[]=@0a0b6ef4 "SELECT * FROM server_complex_rooms WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fec "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6fa0 "OnComplexRoomsLoad", query[]=@0a0b6ef4 "SELECT * FROM server_complex_rooms WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnAmmuWeaponsLoaded
 Query: SELECT * FROM ammunation_weapons WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fe8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f98 "OnAmmuWeaponsLoaded", query[]=@0a0b6ef4 "SELECT * FROM ammunation_weapons WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fe8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f98 "OnAmmuWeaponsLoaded", query[]=@0a0b6ef4 "SELECT * FROM ammunation_weapons WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnPickupsLoad
 Query: SELECT * FROM server_pickups WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fc0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f88 "OnPickupsLoad", query[]=@0a0b6ef4 "SELECT * FROM server_pickups WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fc0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f88 "OnPickupsLoad", query[]=@0a0b6ef4 "SELECT * FROM server_pickups WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnPokerTablesLoaded
 Query: SELECT * FROM poker_tables WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnPokerTablesLoaded", query[]=@0a0b6ef4 "SELECT * FROM poker_tables WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnPokerTablesLoaded", query[]=@0a0b6ef4 "SELECT * FROM poker_tables WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerBizzesLoad
 Query: SELECT * FROM bizzes WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fb4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnServerBizzesLoad", query[]=@0a0b6ef4 "SELECT * FROM bizzes WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fb4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnServerBizzesLoad", query[]=@0a0b6ef4 "SELECT * FROM bizzes WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnHouseGaragesLoad
 Query: SELECT * FROM server_garages WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f88 "OnHouseGaragesLoad", query[]=@0a0b6ef4 "SELECT * FROM server_garages WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fd4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f88 "OnHouseGaragesLoad", query[]=@0a0b6ef4 "SELECT * FROM server_garages WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback HouseStorage_Load
 Query: SELECT * FROM house_storage WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f84 "HouseStorage_Load", query[]=@0a0b6ef4 "SELECT * FROM house_storage WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f84 "HouseStorage_Load", query[]=@0a0b6ef4 "SELECT * FROM house_storage WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerHousesLoad
 Query: SELECT * FROM houses WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fb4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnServerHousesLoad", query[]=@0a0b6ef4 "SELECT * FROM houses WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fb4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnServerHousesLoad", query[]=@0a0b6ef4 "SELECT * FROM houses WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerVehicleLoad
 Query: SELECT * FROM server_cars WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f7c "OnServerVehicleLoad", query[]=@0a0b6ef4 "SELECT * FROM server_cars WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f7c "OnServerVehicleLoad", query[]=@0a0b6ef4 "SELECT * FROM server_cars WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [10/02/2021, 20:53:40] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnCityLoaded
 Query: SELECT * FROM city WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6f94 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f60 "OnCityLoaded", query[]=@0a0b6ef4 "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 00093494 in public OnQueryError (errorid=2002, error[]=@0a0b6f94 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f60 "OnCityLoaded", query[]=@0a0b6ef4 "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerJobsLoaded
 Query: SELECT * FROM server_jobs WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fa8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f5c "OnServerJobsLoaded", query[]=@0a0b6ed4 "SELECT * FROM server_jobs WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fa8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f5c "OnServerJobsLoaded", query[]=@0a0b6ed4 "SELECT * FROM server_jobs WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback Indirect_FromCallback
 Query: SELECT * FROM illegal_garages
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fa4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f4c "Indirect_FromCallback", query[]=@0a0b6ed4 "SELECT * FROM illegal_garages", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fa4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f4c "Indirect_FromCallback", query[]=@0a0b6ed4 "SELECT * FROM illegal_garages", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnTowerLoaded
 Query: SELECT * FROM signaltowers WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f98 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f60 "OnTowerLoaded", query[]=@0a0b6ed4 "SELECT * FROM signaltowers WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f98 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f60 "OnTowerLoaded", query[]=@0a0b6ed4 "SELECT * FROM signaltowers WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnFactionLoaded
 Query: SELECT * FROM server_factions WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f6c "OnFactionLoaded", query[]=@0a0b6ed4 "SELECT * FROM server_factions WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f6c "OnFactionLoaded", query[]=@0a0b6ed4 "SELECT * FROM server_factions WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback GPS_Loaded
 Query: SELECT * FROM gps
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f48 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f1c "GPS_Loaded", query[]=@0a0b6ed4 "SELECT * FROM gps", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f48 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f1c "GPS_Loaded", query[]=@0a0b6ed4 "SELECT * FROM gps", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnGraffitsLoad
 Query: SELECT * FROM graffiti WHERE 1 LIMIT 0,500
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fbc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnGraffitsLoad", query[]=@0a0b6ed4 "SELECT * FROM graffiti WHERE 1 LIMIT 0,500", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fbc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnGraffitsLoad", query[]=@0a0b6ed4 "SELECT * FROM graffiti WHERE 1 LIMIT 0,500", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnTagsLoaded
 Query: SELECT * FROM spraytags WHERE 1 LIMIT 0,100
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f84 "OnTagsLoaded", query[]=@0a0b6ed4 "SELECT * FROM spraytags WHERE 1 LIMIT 0,100", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f84 "OnTagsLoaded", query[]=@0a0b6ed4 "SELECT * FROM spraytags WHERE 1 LIMIT 0,100", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerComplexLoad
 Query: SELECT * FROM server_complex WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnServerComplexLoad", query[]=@0a0b6ed4 "SELECT * FROM server_complex WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnServerComplexLoad", query[]=@0a0b6ed4 "SELECT * FROM server_complex WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnComplexRoomsLoad
 Query: SELECT * FROM server_complex_rooms WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnComplexRoomsLoad", query[]=@0a0b6ed4 "SELECT * FROM server_complex_rooms WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fcc "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f80 "OnComplexRoomsLoad", query[]=@0a0b6ed4 "SELECT * FROM server_complex_rooms WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnAmmuWeaponsLoaded
 Query: SELECT * FROM ammunation_weapons WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fc8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f78 "OnAmmuWeaponsLoaded", query[]=@0a0b6ed4 "SELECT * FROM ammunation_weapons WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fc8 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f78 "OnAmmuWeaponsLoaded", query[]=@0a0b6ed4 "SELECT * FROM ammunation_weapons WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnPickupsLoad
 Query: SELECT * FROM server_pickups WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fa0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnPickupsLoad", query[]=@0a0b6ed4 "SELECT * FROM server_pickups WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fa0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnPickupsLoad", query[]=@0a0b6ed4 "SELECT * FROM server_pickups WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnPokerTablesLoaded
 Query: SELECT * FROM poker_tables WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f60 "OnPokerTablesLoaded", query[]=@0a0b6ed4 "SELECT * FROM poker_tables WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb0 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f60 "OnPokerTablesLoaded", query[]=@0a0b6ed4 "SELECT * FROM poker_tables WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerBizzesLoad
 Query: SELECT * FROM bizzes WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f94 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f48 "OnServerBizzesLoad", query[]=@0a0b6ed4 "SELECT * FROM bizzes WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f94 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f48 "OnServerBizzesLoad", query[]=@0a0b6ed4 "SELECT * FROM bizzes WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnHouseGaragesLoad
 Query: SELECT * FROM server_garages WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnHouseGaragesLoad", query[]=@0a0b6ed4 "SELECT * FROM server_garages WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fb4 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f68 "OnHouseGaragesLoad", query[]=@0a0b6ed4 "SELECT * FROM server_garages WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback HouseStorage_Load
 Query: SELECT * FROM house_storage WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f64 "HouseStorage_Load", query[]=@0a0b6ed4 "SELECT * FROM house_storage WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f64 "HouseStorage_Load", query[]=@0a0b6ed4 "SELECT * FROM house_storage WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerHousesLoad
 Query: SELECT * FROM houses WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f94 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f48 "OnServerHousesLoad", query[]=@0a0b6ed4 "SELECT * FROM houses WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f94 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f48 "OnServerHousesLoad", query[]=@0a0b6ed4 "SELECT * FROM houses WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnServerVehicleLoad
 Query: SELECT * FROM server_cars WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f5c "OnServerVehicleLoad", query[]=@0a0b6ed4 "SELECT * FROM server_cars WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6fac "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f5c "OnServerVehicleLoad", query[]=@0a0b6ed4 "SELECT * FROM server_cars WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44
 
 [14/02/2021, 15:39:51] - MySQL Error ID: 2002
 Error Can't connect to MySQL server on '127.0.0.1' (10061): Callback OnCityLoaded
 Query: SELECT * FROM city WHERE 1
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.DLL
-#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f74 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f40 "OnCityLoaded", query[]=@0a0b6ed4 "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules/Server/MySQL.pwn:44
+#1 0009c780 in public OnQueryError (errorid=2002, error[]=@0a0b6f74 "Can't connect to MySQL server on '127.0.0.1' (10061)", callback[]=@0a0b6f40 "OnCityLoaded", query[]=@0a0b6ed4 "SELECT * FROM city WHERE 1", MySQL:handle=1) at modules\Server/MySQL.pwn:44

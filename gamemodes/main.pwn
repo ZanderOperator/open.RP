@@ -49,7 +49,9 @@
 #define NEGATIVE_MODEL_ID 						-40000 
 
 // Server Restart Configuration
-//#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart API on your VPS/server
+//#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart
+// 														API on your VPS/server
+												
 #define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
 
 // Server Afterload Unlock
@@ -165,18 +167,18 @@
 #define WEB_URL									"https://open.mp/"
 #define SCRIPT_VERSION							#SERVER_NAME" v0.5.0.-"#GIT_REV
 
-// The rest of the defines
-#include "modules\Preincludes/Defines.inc"
-// Enumerator Declarations
-#include "modules\Preincludes/Enumerators.inc"
+/*
+	The rest of the defines
+ 	Main Header file - purpose is bypassing the include order
+	Enumerator Declarations
+	Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
+	Global Variables that are used via Getter/Setter functions
+*/
+#include <Preincludes>
+
 // Globally used Arrays declarations
-#include "modules\Arrays/Core.inc"
-// Main Header file - purpose is bypassing the include order
-#include "modules\Preincludes/Header.inc"
-// Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
-#include "modules\Preincludes/CustomHooks.inc"
-// Global Variables that are used via Getter/Setter functions
-#include "modules\Preincludes/GlobalVars.inc"
+#include <Arrays>
+
 
 /*
 
@@ -191,12 +193,11 @@
                                                                                
 */
 
-#include "modules/Server/Core.inc"
-#include "modules/Systems/Core.inc"
-#include "modules/Admin/Core.inc"
-#include "modules/Player/Core.inc"
-#include "modules/Char/Core.inc"
-
+#include <Server>
+#include <Systems>
+#include <Admin>
+#include <Player>
+#include <Char>
 
 /*
 

@@ -11,7 +11,7 @@ forward bool:Player_OnLawDuty(playerid);
 forward Player_SetLawDuty(playerid, bool:v);
 
 // LSPD
-#include "modules/Systems/Factions\LSPD/Header.inc"
+#include "modules\Systems/Factions\LSPD\LSPD_Header.inc"
 
 // Bizz
 forward bool: Bizz_Exists(bizzid);
@@ -86,7 +86,7 @@ forward Player_SetInGarage(playerid, v);
 forward bool:Vehicle_Windows(vehicleid);
 
 // Events
-#include "modules/Systems\Events/Header.inc"
+#include "modules\Systems\Events\Events_Header.inc"
 
 // GPS
 forward bool:Player_GpsActivated(playerid);
