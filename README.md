@@ -1,13 +1,28 @@
 # open.RP
-Open sourced server codes & files for upcoming open.mp modification of GTA San Andreas, written mostly in pawn and SQL.
+Open sourced server codes(including maps & custom models) & files of RP server, up to programming standards, 
+for upcoming open.mp modification of GTA San Andreas, written mostly in embedded C(pawn) and database in SQL.
 
 ## Installation
 To take full advantage of developing experience, please download and install sampctl by Southclaws.
 
-1. Clone this repository on your PC
-2. Ensure all the needed dependencies(plugins, includes, libraries, ...) in Visual Studio Code Terminal command - /sampctl p ensure --platform (windows/linux)
-3. Install wamp/xampp and start MySQL services after installation
-4. Import open_rp SQL database - easiest way is via phpMyAdmin
-5. For local use - enter /sampctl p run in Code Terminal, exit for termination of local server
+Paste this:
+```
+git clone https://github.com/ZanderOperator/open.RP
+sampctl p ensure --platform windows or linux
+sampctl p build
+```
+in your Code Terminal on Visual Studio Code. 
 
-In case of usage files on public server - transfer all server files on server AFTER ensuring(plugins, server.cfg, samp-server, samp-npc, gamemodes, scriptfiles, filterscripts, ...)
+Import the open_RP.sql database on your server(easiest way: phpMyAdmin) - xampp or wamp
+
+Use ```sampctl p run``` to start your server localy, ```exit``` to terminate it.
+
+
+## Dependencies
+
+[sampctl](https://github.com/Southclaws/sampctl)
+
+Rest of the dependencies for the server itself are managed by sampctl.
+
+
+In case of usage files on public server - transfer all server files on server AFTER ensuring(plugins, server.cfg, samp-server, samp-npc, gamemodes, scriptfiles, filterscripts, models)
