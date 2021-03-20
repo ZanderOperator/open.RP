@@ -1,6 +1,6 @@
 {
-	"user": "\u003cnone\u003e",
-	"repo": "\u003clocal\u003e",
+	"user": "ZanderOperator",
+	"repo": "open.RP",
 	"entry": "gamemodes/main.pwn",
 	"output": "gamemodes/main.amx",
 	"dependencies": [
@@ -18,10 +18,8 @@
 		"RIDE-2DAY/vSync",
 		"MySekwel/New-SA-MP-callbacks",
 		"kristoisberg/samp-map-zones",
-		"roesanne26/fSelection"
-	],
-	"dev_dependencies": [
-		"pawn-lang/YSI-Includes"
+		"roesanne26/fSelection",
+		"pawn-lang/YSI-Includes@5.x"
 	],
 	"local": true,
 	"runtime": {
@@ -93,7 +91,8 @@
 				"gamemodes/modules/Player",
 				"gamemodes/modules/Preincludes",
 				"gamemodes/modules/Server",
-				"gamemodes/modules/Systems"
+				"gamemodes/modules/Systems",
+				"gamemodes/modules/time"
 			],
 			"compiler": {}
 		},

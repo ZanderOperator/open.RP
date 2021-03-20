@@ -81,6 +81,14 @@
 																			
 */
 
+// MySQL & Inline Query Callbacks/Funcs
+#include <a_mysql>
+
+
+// bcrypt encription & inline support
+#include <bcrypt>
+#define BCRYPT_COST 12
+
 // Fixes
 #include <fixes>
 
@@ -119,10 +127,6 @@
 #include <YSI_Visual\y_commands>
 #include <YSI_Game\y_vehicledata>
 
-// bcrypt encription & inline support
-#include <bcrypt>
-#include <YSI_Extra\y_inline_bcrypt>
-#define BCRYPT_COST 12
 
 // Other includes
 #include <OnPlayerSlowUpdate>
@@ -135,9 +139,6 @@
 
 #include <vSync>
 
-// MySQL & Inline Query Callbacks/Funcs
-#include <a_mysql>
-#include <YSI_Extra\y_inline_mysql>
 
 // SHA-1 of latest commit - GIT_REV define
 #include "revision.inc"
@@ -175,6 +176,7 @@
 	Global Variables that are used via Getter/Setter functions
 */
 #include <Preincludes>
+#include <times>
 
 // Globally used Arrays declarations
 #include <Arrays>
