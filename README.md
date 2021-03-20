@@ -1,6 +1,5 @@
 # open.RP
-Open sourced server codes & files for upcoming open.mp modification of GTA San Andreas, written mostly in pawn and SQL, 
-Written for over 8 years by dozen developers.
+Open sourced server codes & files for upcoming open.mp modification of GTA San Andreas, written mostly in pawn and SQL.
 
 ## Installation
 To take full advantage of developing experience, please download and install sampctl by Southclaws.
