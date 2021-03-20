@@ -2,7 +2,7 @@
 Open sourced server codes & files for upcoming open.mp modification of GTA San Andreas, written mostly in pawn and SQL, 
 Written for over 8 years by dozen developers.
 
-##Installation
+## Installation
 To take full advantage of developing experience, please download and install sampctl by Southclaws.
 
 1. Clone this repository on your PC
