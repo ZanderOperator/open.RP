@@ -395,7 +395,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	return id;
 }
 
-hook function AC_DestroyVehicle(vehicleid)
+hook function DestroyVehicle(vehicleid)
 {
 	if(vehicleid == INVALID_VEHICLE_ID) 		
 		return 0;
@@ -403,12 +403,12 @@ hook function AC_DestroyVehicle(vehicleid)
 		return 0;
 
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
-	DestroyVehicle(vehicleid);
+	
 	if(Iter_Contains(ServerVehicle[VehicleInfo[vehicleid][vUsage]], vehicleid))
 		Iter_Remove(ServerVehicle[VehicleInfo[vehicleid][vUsage]], vehicleid);
 	
 	ResetVehicleInfo(vehicleid);
-	return continue(vehicleid);
+	return DestroyVehicle(vehicleid);
 }
 
 stock SetRespawnedVehicleParams(vehicleid)

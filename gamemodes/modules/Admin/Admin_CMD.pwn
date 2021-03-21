@@ -1232,7 +1232,7 @@ CMD:edit(playerid, params[])
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLock] = proplev;
-				mysql_fquery(SQL_Handle(), "UPDATE houses SET lock = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_fquery(SQL_Handle(), "UPDATE houses SET h_lock = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"doorlevel",true) == 0)
 			{

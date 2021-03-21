@@ -3168,7 +3168,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(SQL_Handle(), "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'",
                 PlayerAppearance[playerid][pSkin],
                 PlayerInfo[playerid][pSQLID]
-           );
+            );
 
             return 1;
         }

@@ -83,7 +83,7 @@ Player_SetRentVehicle(playerid, vehicleid)
 	rentedVehID[playerid] = vehicleid;
 }
 
-hook function AC_DestroyVehicle(vehicleid)
+hook function DestroyVehicle(vehicleid)
 {
 	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
 	{

@@ -11,8 +11,11 @@ LoadPlayerHealth(playerid)
                     player_health \n\
                 (sqlid, health, armour, hunger) \n\
                 VALUES \n\
-                    ('%d', '100.0', '0.0', '5.0')",
-                PlayerInfo[playerid][pSQLID]
+                    ('%d', '%d', '%d', '%d')",
+                PlayerInfo[playerid][pSQLID],
+                PlayerHealth[playerid][pHealth],
+                PlayerHealth[playerid][pArmour],
+                PlayerHealth[playerid][pHunger]
             );
             return 1;
         }
@@ -38,7 +41,7 @@ hook function LoadPlayerStats(playerid)
 SavePlayerHealth(playerid)
 {
     mysql_fquery(SQL_Handle(),
-        "UPDATE player_health SET health = '%d', armour = '%d', hunger = '%d' WHERE sqlid = '%d'",
+        "UPDATE player_health SET health = '%.4f', armour = '%.4f', hunger = '%.4f' WHERE sqlid = '%d'",
         PlayerHealth[playerid][pHealth],
         PlayerHealth[playerid][pArmour],
         PlayerHealth[playerid][pHunger],

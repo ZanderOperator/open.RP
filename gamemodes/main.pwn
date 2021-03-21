@@ -81,10 +81,6 @@
 																			
 */
 
-// MySQL & Inline Query Callbacks/Funcs
-#include <a_mysql>
-
-
 // bcrypt encription & inline support
 #include <bcrypt>
 #define BCRYPT_COST 12
@@ -127,7 +123,6 @@
 #include <YSI_Visual\y_commands>
 #include <YSI_Game\y_vehicledata>
 
-
 // Other includes
 #include <OnPlayerSlowUpdate>
 #include <animsfix> // legacy
@@ -139,6 +134,9 @@
 
 #include <vSync>
 
+// MySQL & Inline Query Callbacks/Funcs
+#include <a_mysql>
+#include <YSI_Extra\y_inline_mysql>
 
 // SHA-1 of latest commit - GIT_REV define
 #include "revision.inc"

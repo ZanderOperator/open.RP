@@ -390,7 +390,7 @@ stock LoadHouses()
             cache_get_value_name_int(row,       "value"     ,   HouseInfo[row][hValue]);
             cache_get_value_name_int(row,       "int"       ,   HouseInfo[row][hInt]);
             cache_get_value_name_int(row,       "viwo"      ,   HouseInfo[row][hVirtualWorld]);
-            cache_get_value_name_int(row,       "lock"      ,   HouseInfo[row][hLock]);
+            cache_get_value_name_int(row,       "h_lock"      ,   HouseInfo[row][hLock]);
             cache_get_value_name_int(row,       "rentabil"  ,   HouseInfo[row][hRentabil]);
             cache_get_value_name_int(row,       "takings"   ,   HouseInfo[row][hTakings]);
             cache_get_value_name_int(row,       "level"     ,   HouseInfo[row][hLevel]);
@@ -427,7 +427,7 @@ stock LoadHouses()
         using inline OnServerHousesLoad,
         va_fquery(SQL_Handle(), "SELECT * FROM houses WHERE 1"), 
         ""
-   );
+    );
     return 1;
 }
 

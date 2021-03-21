@@ -52,7 +52,7 @@ LoadPlayerPayday(playerid)
 		va_fquery(SQL_Handle(), "SELECT * FROM player_payday WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
         "i", 
         playerid
-   );
+   	);
     return 1;
 }
 

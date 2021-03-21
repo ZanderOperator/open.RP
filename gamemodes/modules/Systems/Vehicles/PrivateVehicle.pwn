@@ -688,8 +688,7 @@ stock GetPlayerVehicleList(playerid)
 			PlayerInfo[playerid][pSQLID],
 			MAX_PLAYER_CARS
 		), 
-		"i", 
-		playerid
+		""	
 	);
 	return 1;
 }
@@ -2420,7 +2419,7 @@ stock SpawnVehicleInfo(playerid, pick)
 			cache_get_value_name_int(0,  	"tires"				, VehicleInfo[vehicleid][vTires]);
 			cache_get_value_name_int(0,  	"lights"			, VehicleInfo[vehicleid][vLights]);
 			cache_get_value_name_float(0,  	"travel"			, VehicleInfo[vehicleid][vTravel]);
-			cache_get_value_name_int(0,  	"lock"				, VehicleInfo[vehicleid][vLock]);
+			cache_get_value_name_int(0,  	"v_lock"				, VehicleInfo[vehicleid][vLock]);
 			cache_get_value_name_int(0,  	"alarm"				, VehicleInfo[vehicleid][vAlarm]);
 			cache_get_value_name_int(0,  	"immob"				, VehicleInfo[vehicleid][vImmob]);
 			cache_get_value_name_int(0,  	"audio"				, VehicleInfo[vehicleid][vAudio]);
@@ -3505,7 +3504,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 */
 ///////////////////////////////////////////////////////////////////
 
-hook function AC_DestroyVehicle(vehicleid)
+hook function DestroyVehicle(vehicleid)
 {
 	RemoveAllVehicleTuning(vehicleid);
 	ResetVehicleAlarm(vehicleid);
