@@ -270,11 +270,15 @@ stock GetFreeObjectSlot( playerid)
 
 hook function ResetPlayerVariables(playerid)
 {
-	foreach(new cobjid: PlayerCreateObjects[playerid])
+	if(Iter_Count(PlayerCreateObjects[playerid]) != 0)
 	{
-		if(IsValidDynamicObject( PlayerObjectsInfo[playerid][cobjid][poObjectid]) && PlayerObjectsInfo[playerid][cobjid][poPlaced]) 
-			DeletePlayerObjectsObject(playerid, cobjid, false);
+		foreach(new cobjid: PlayerCreateObjects[playerid])
+		{
+			if(IsValidDynamicObject( PlayerObjectsInfo[playerid][cobjid][poObjectid]) && PlayerObjectsInfo[playerid][cobjid][poPlaced]) 
+				DeletePlayerObjectsObject(playerid, cobjid, false);
+		}
 	}
+	
 	
 	Bit4_Set(r_PlayerObjectEditState, playerid, 0);
 	

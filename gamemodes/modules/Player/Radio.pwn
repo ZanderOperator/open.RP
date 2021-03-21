@@ -89,7 +89,7 @@ SavePlayerRadio(playerid)
         PlayerRadio[playerid][pRadio][2], PlayerRadio[playerid][pRadioSlot][2],
         PlayerRadio[playerid][pRadio][3], PlayerRadio[playerid][pRadioSlot][3],
         PlayerInfo[playerid][pSQLID]
-   );
+   	);
     return 1;
 }
 

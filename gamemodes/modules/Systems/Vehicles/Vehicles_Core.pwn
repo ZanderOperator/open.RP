@@ -395,6 +395,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	return id;
 }
 
+/*
 hook function DestroyVehicle(vehicleid)
 {
 	if(vehicleid == INVALID_VEHICLE_ID) 		
@@ -410,6 +411,7 @@ hook function DestroyVehicle(vehicleid)
 	ResetVehicleInfo(vehicleid);
 	return DestroyVehicle(vehicleid);
 }
+*/
 
 stock SetRespawnedVehicleParams(vehicleid)
 {

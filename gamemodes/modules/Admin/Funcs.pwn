@@ -976,18 +976,6 @@ timer OnPlayerReconing[1000](playerid, targetid)
 	##     ##  #######   #######  ##    ## 
 */
 
-hook function LoadPlayerStats(playerid)
-{
-    LoadPlayerAdminMessage(playerid);
-	return continue(playerid);
-}
-
-hook function SavePlayerStats(playerid)
-{
-    SavePlayerAdminMessage(playerid);
-	return continue(playerid);
-}
-
 hook OnPlayerConnect(playerid)
 {
 	InitFly(playerid);

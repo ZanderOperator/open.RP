@@ -104,7 +104,7 @@ static LoadPlayerCrashes(playerid)
 	inline LoadingPlayerCrashes()
 	{
 		if(!cache_num_rows()) 
-			return 0;
+			return 1;
 		
 		cache_get_value_name_int(0,			"id"		, PlayerCrash[playerid][pCrashId]);
 		cache_get_value_name_float(0,		"pos_x"		, PlayerCrash[playerid][pCrashX]);

@@ -3504,6 +3504,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 */
 ///////////////////////////////////////////////////////////////////
 
+/*
 hook function DestroyVehicle(vehicleid)
 {
 	RemoveAllVehicleTuning(vehicleid);
@@ -3511,6 +3512,7 @@ hook function DestroyVehicle(vehicleid)
 	RemoveTrunkObjects(vehicleid);
 	return continue(vehicleid);
 }
+*/
 
 hook function ResetPrivateVehicleInfo(vehicleid)
 {
@@ -3669,35 +3671,29 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
 	if(playertextid != PlayerText:INVALID_TEXT_DRAW)
 	{
-		if(playertextid == DenyButton[playerid]) {
+		if(playertextid == DenyButton[playerid]) 
+		{
 			DestroyPreviewScene(playerid);
 			CancelSelectTextDraw(playerid);
 		}
-		if(playertextid == CarLeft[playerid]) {
+		else if(playertextid == CarLeft[playerid]) 
 			PreviouseVehicle(playerid);
-		}
-		if(playertextid == CarRight[playerid]) {
+		else if(playertextid == CarRight[playerid]) 
 			NextVehicle(playerid);
-		}
-		if(playertextid == Color1Left[playerid]) {
+		else if(playertextid == Color1Left[playerid]) 
 			PrevVehColor(playerid, 1);
-		}
-		if(playertextid == Color1Right[playerid]) {
+		else if(playertextid == Color1Right[playerid]) 
 			NextVehColor(playerid, 1);
-		}
-		if(playertextid == Color2Left[playerid]) {
+		else if(playertextid == Color2Left[playerid]) 
 			PrevVehColor(playerid, 2);
-		}
-		if(playertextid == Color2Right[playerid]) {
+		else if(playertextid == Color2Right[playerid])
 			NextVehColor(playerid, 2);
-		}
-		if(playertextid == CameraRight[playerid]) {
+		else if(playertextid == CameraRight[playerid])
 			NextShopCamera(playerid);
-		}
-		if(playertextid == CameraLeft[playerid]) {
+		else if(playertextid == CameraLeft[playerid])
 			LastShopCamera(playerid);
-		}
-		if(playertextid == BuyButton[playerid]) {
+		else if(playertextid == BuyButton[playerid])
+		{
 			new buyprice = 0;
 			switch(PlayerDealer[playerid]) 
 			{
@@ -3745,7 +3741,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			GetPlayerPaymentOption(playerid, BUY_TYPE_VEHICLE);
 			CancelSelectTextDraw(playerid);
 		}
-		if(playertextid == TryButton[playerid]) 
+		else if(playertextid == TryButton[playerid]) 
 		{
 			switch(PlayerDealer[playerid]) 
 			{
@@ -3777,27 +3773,32 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			CreateTestCar(playerid);
 			CancelSelectTextDraw(playerid);
 		}
-		if(playertextid == HotWireRed[playerid])	{
+		else if(playertextid == HotWireRed[playerid])	
+		{
 			Bit2_Set(gr_HotWireClicks, playerid, Bit2_Get(gr_HotWireClicks, playerid) + 1);
 			SetPlayerHotWireInput(playerid, 1, (Bit2_Get(gr_HotWireClicks, playerid) - 1));
 			if(Bit2_Get(gr_HotWireClicks, playerid) == 2) CheckHotWireInput(playerid, false);
 		}
-		if(playertextid == HotWireBlue[playerid])	{
+		else if(playertextid == HotWireBlue[playerid])	
+		{
 			Bit2_Set(gr_HotWireClicks, playerid, Bit2_Get(gr_HotWireClicks, playerid) + 1);
 			SetPlayerHotWireInput(playerid, 2, (Bit2_Get(gr_HotWireClicks, playerid) - 1));
 			if(Bit2_Get(gr_HotWireClicks, playerid) == 2) CheckHotWireInput(playerid, false);
 		}
-		if(playertextid == HotWireYell[playerid])	{
+		else if(playertextid == HotWireYell[playerid])	
+		{
 			Bit2_Set(gr_HotWireClicks, playerid, Bit2_Get(gr_HotWireClicks, playerid) + 1);
 			SetPlayerHotWireInput(playerid, 3, (Bit2_Get(gr_HotWireClicks, playerid) - 1));
 			if(Bit2_Get(gr_HotWireClicks, playerid) == 2) CheckHotWireInput(playerid, false);
 		}
-		if(playertextid == HotWireBrown[playerid]) {
+		else if(playertextid == HotWireBrown[playerid]) 
+		{
 			Bit2_Set(gr_HotWireClicks, playerid, Bit2_Get(gr_HotWireClicks, playerid) + 1);
 			SetPlayerHotWireInput(playerid, 4, (Bit2_Get(gr_HotWireClicks, playerid) - 1));
 			if(Bit2_Get(gr_HotWireClicks, playerid) == 2) CheckHotWireInput(playerid, false);
 		}
-		if(playertextid == HotWireBlack[playerid]) {
+		else if(playertextid == HotWireBlack[playerid]) 
+		{
 			Bit2_Set(gr_HotWireClicks, playerid, Bit2_Get(gr_HotWireClicks, playerid) + 1);
 			SetPlayerHotWireInput(playerid, 5, (Bit2_Get(gr_HotWireClicks, playerid) - 1));
 			if(Bit2_Get(gr_HotWireClicks, playerid) == 2) CheckHotWireInput(playerid, false);

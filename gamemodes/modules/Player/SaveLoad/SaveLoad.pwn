@@ -1,5 +1,3 @@
-#include <YSI_Coding\y_hooks>
-
 // Save/Load Player related func. modules - named after adjacent database tables
 #include "modules\Player\SaveLoad\player_admin_msg.pwn"
 #include "modules\Player\SaveLoad\player_inventory.pwn"
@@ -8,6 +6,8 @@
 #include "modules\Player\SaveLoad\player_appearance.pwn"
 #include "modules\Player\SaveLoad\player_jail.pwn"
 #include "modules\Player\SaveLoad\player_cooldowns.pwn"
+
+#include <YSI_Coding\y_hooks>
 
 /*
 
@@ -135,7 +135,7 @@ Public: OnPasswordChecked(playerid)
 		bool:match = bcrypt_is_equal();
 	if(match)
 	{
-		mysql_pquery(SQL_Handle(), 
+		mysql_tquery(SQL_Handle(), 
 			va_fquery(SQL_Handle(), "SELECT * FROM accounts WHERE name = '%e'", GetName(playerid, false)),
 			"LoadPlayerData", 
 			"i", 
@@ -675,7 +675,7 @@ SavePlayerData(playerid)
 	return 1;
 }
 
-#include <YSI_Coding\y_hooks>
+//#include <YSI_Coding\y_hooks>
 hook function ResetPlayerVariables(playerid)
 {
 	PlayerInfo[playerid][pForumName] 		= EOS;

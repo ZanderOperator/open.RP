@@ -82,7 +82,7 @@ Player_SetRentVehicle(playerid, vehicleid)
 {
 	rentedVehID[playerid] = vehicleid;
 }
-
+/*
 hook function DestroyVehicle(vehicleid)
 {
 	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
@@ -97,7 +97,7 @@ hook function DestroyVehicle(vehicleid)
 		}
 	}
 	return continue(vehicleid);
-}
+}*/
 
 stock static PlayerRentVehicle(playerid, modelid, price)
 {

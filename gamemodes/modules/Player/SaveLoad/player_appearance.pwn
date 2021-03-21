@@ -46,7 +46,7 @@ SavePlayerAppearance(playerid)
         PlayerAppearance[playerid][pAccent],
         PlayerAppearance[playerid][pLook],
         PlayerInfo[playerid][pSQLID]
-   );
+    );
     return 1;
 }
 
