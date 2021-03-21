@@ -34,7 +34,7 @@ static const
 ResetImpoundVars(playerid)
 {
 	if(ImpounderJob[playerid][cc] != 0)
-		AC_DestroyVehicle(ImpounderJob[playerid][cc]);
+		DestroyVehicle(ImpounderJob[playerid][cc]);
 		
 	DisablePlayerCheckpoint(playerid);
 	
@@ -195,7 +195,7 @@ OPUnTowIV(playerid, veh)
 		
 	if(ImpounderJob[playerid][cc] == ImpounderJob[playerid][ivID])
 	{
-		AC_DestroyVehicle(ImpounderJob[playerid][cc]);
+		DestroyVehicle(ImpounderJob[playerid][cc]);
 	}
 	else if(ImpounderJob[playerid][cc] == 0 && ImpounderJob[playerid][ivID] == veh)
 	{

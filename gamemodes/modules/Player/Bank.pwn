@@ -968,7 +968,7 @@ TakePlayerProperty(playerid)
 			#endif
 
 			DestroyFarmerObjects(playerid);
-			AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
+			DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
 			PlayerKeys[playerid][pVehicleKey] = -1;
 
 			ResetVehicleList(playerid);

@@ -75,9 +75,3 @@ public ResetVehicleInfo(vehicleid)
 {
     return 1;
 }
-
-forward AC_DestroyVehicle(vehicleid);
-public AC_DestroyVehicle(vehicleid)
-{
-    return 1;
-}

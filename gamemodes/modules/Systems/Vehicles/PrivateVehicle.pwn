@@ -2313,7 +2313,7 @@ stock ParkVehicleInfo(vehicleid)
 		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);
-	AC_DestroyVehicle(vehicleid);
+	DestroyVehicle(vehicleid);
 	return 1;
 }
 
@@ -3446,7 +3446,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 					DeleteVehicleFromBase(VehicleInfo[PlayerKeys[driverid][pVehicleKey]][vSQLID]);
 					
 					DestroyFarmerObjects(driverid);
-					AC_DestroyVehicle(PlayerKeys[driverid][pVehicleKey]);
+					DestroyVehicle(PlayerKeys[driverid][pVehicleKey]);
 					PlayerKeys[driverid][pVehicleKey] = -1;
 
 					ResetVehicleList(driverid);
@@ -3504,15 +3504,22 @@ hook OnVehicleDeath(vehicleid, killerid)
 */
 ///////////////////////////////////////////////////////////////////
 
-/*
-hook function DestroyVehicle(vehicleid)
+
+stock COVeh_DestroyVehicle(vehicleid)
 {
-	RemoveAllVehicleTuning(vehicleid);
-	ResetVehicleAlarm(vehicleid);
-	RemoveTrunkObjects(vehicleid);
-	return continue(vehicleid);
+	if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE)
+	{
+		RemoveAllVehicleTuning(vehicleid);
+		ResetVehicleAlarm(vehicleid);
+		RemoveTrunkObjects(vehicleid);
+	}
 }
-*/
+#if defined _ALS_DestroyVehicle
+    #undef DestroyVehicle
+#else
+    #define _ALS_DestroyVehicle
+#endif
+#define DestroyVehicle COVeh_DestroyVehicle
 
 hook function ResetPrivateVehicleInfo(vehicleid)
 {
@@ -4175,7 +4182,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			#endif
 
 			DestroyFarmerObjects(playerid);
-			AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
+			DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
 
 			PlayerKeys[playerid][pVehicleKey] = -1;
 
@@ -4309,7 +4316,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
 			
 			DestroyFarmerObjects(playerid);
-			AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
+			DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
 
 			PlayerKeys[playerid][pVehicleKey] = -1;
 			

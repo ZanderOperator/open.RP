@@ -565,6 +565,9 @@ stock SaveVehicleTuning(vehicleid)
 
 stock RemoveAllVehicleTuning(vehicleid)
 {
+	if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid))
+		return 1;
+		
 	new 
 		componentid;
 	for (new i; i < 14; i++)

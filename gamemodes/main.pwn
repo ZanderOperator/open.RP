@@ -55,7 +55,7 @@
 #define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
 
 // Server Afterload Unlock
-#define SERVER_UNLOCK_TIME						(60)
+#define SERVER_UNLOCK_TIME						(15)
 
 // Fixes.inc
 #define FIXES_GetMaxPlayersMsg 		0

@@ -2270,7 +2270,8 @@ CMD:veh(playerid, params[])
 		Float:X, Float:Y, Float:Z, Float:ang;
 	GetPlayerPos(playerid, X,Y,Z);
 	GetPlayerFacingAngle(playerid, ang);
-	new carid = AC_CreateVehicle(car, X, Y+4, Z+3, ang, color1, color2, 60000,0);
+	new 
+		carid = AC_CreateVehicle(car, X, Y+4, Z+3, ang, color1, color2, 60000,0);
 
 	VehicleInfo[carid][vModel] 		= car;
 	VehicleInfo[carid][vColor1] 	= color1;
@@ -2315,7 +2316,7 @@ CMD:deletevehicle(playerid, params[])
 		case 1: 
 		{
 			DestroyFarmerObjects(playerid); // TODO:farmer
-			AC_DestroyVehicle(vehicleid);
+			DestroyVehicle(vehicleid);
 			DestroyAdminVehicle(playerid, vehicleid);
 			va_SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
 		}
@@ -2333,7 +2334,7 @@ CMD:deletevehicle(playerid, params[])
 			);
 
 			DestroyFarmerObjects(playerid); // TODO: farmer
-			AC_DestroyVehicle(vehicleid);
+			DestroyVehicle(vehicleid);
 		}
 		case 3: 
 		{
@@ -2347,7 +2348,7 @@ CMD:deletevehicle(playerid, params[])
 				VehicleInfo[vehicleid][vSQLID]
 			);
 			DestroyFarmerObjects(playerid); // TODO: Farmer
-			AC_DestroyVehicle(vehicleid);
+			DestroyVehicle(vehicleid);
 		}
 	}
 	return 1;

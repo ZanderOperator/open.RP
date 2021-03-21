@@ -82,8 +82,8 @@ Player_SetRentVehicle(playerid, vehicleid)
 {
 	rentedVehID[playerid] = vehicleid;
 }
-/*
-hook function DestroyVehicle(vehicleid)
+
+stock RentVeh_DestroyVehicle(vehicleid)
 {
 	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
 	{
@@ -96,8 +96,14 @@ hook function DestroyVehicle(vehicleid)
 			}
 		}
 	}
-	return continue(vehicleid);
-}*/
+}
+
+#if defined _ALS_DestroyVehicle
+    #undef DestroyVehicle
+#else
+    #define _ALS_DestroyVehicle
+#endif
+#define DestroyVehicle RentVeh_DestroyVehicle
 
 stock static PlayerRentVehicle(playerid, modelid, price)
 {
@@ -155,7 +161,7 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if(rentedVehicle[playerid] == true)
- 		AC_DestroyVehicle(Player_RentVehicle(playerid));
+ 		DestroyVehicle(Player_RentVehicle(playerid));
 
 	Player_SetRentVehicle(playerid, INVALID_VEHICLE_ID);
 	rentedVehicle[playerid] 	= false;
@@ -227,7 +233,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 				PlayerToBusinessMoneyTAX(playerid, 76, 250); // TODO: ???
 				
 				DestroyFarmerObjects(playerid);
-				AC_DestroyVehicle(Player_RentVehicle(playerid));
+				DestroyVehicle(Player_RentVehicle(playerid));
 				
 				rentedVehicle[playerid] 	= false;
 				Player_SetRentVehicle(playerid, INVALID_VEHICLE_ID);
@@ -311,7 +317,7 @@ CMD:rentveh(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti u iznajmljenom vozilu!");
 		
 		rentedVehicle[playerid] = false;
-		AC_DestroyVehicle(Player_RentVehicle(playerid));
+		DestroyVehicle(Player_RentVehicle(playerid));
 		Player_SetRentVehicle(playerid, INVALID_VEHICLE_ID);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili rentano vozilo!");
 	}

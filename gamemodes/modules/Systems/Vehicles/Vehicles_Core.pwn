@@ -270,7 +270,8 @@ FindImpoundableVehicle()
 
 hook function ResetVehicleInfo(vehicleid)
 {	
-	ResetPrivateVehicleInfo(vehicleid);
+	if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE)
+		ResetPrivateVehicleInfo(vehicleid);
 
 	// Ints
 	VehicleInfo[vehicleid][vSQLID]					= -1;
@@ -395,23 +396,26 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	return id;
 }
 
-/*
-hook function DestroyVehicle(vehicleid)
+stock VehCore_DestroyVehicle(vehicleid)
 {
 	if(vehicleid == INVALID_VEHICLE_ID) 		
-		return 0;
-	if(!IsValidVehicle(vehicleid))	
-		return 0;
+		return 1;
+	if(!Iter_Contains(Vehicle, vehicleid))	
+		return 1;
 
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
 	
 	if(Iter_Contains(ServerVehicle[VehicleInfo[vehicleid][vUsage]], vehicleid))
 		Iter_Remove(ServerVehicle[VehicleInfo[vehicleid][vUsage]], vehicleid);
 	
-	ResetVehicleInfo(vehicleid);
 	return DestroyVehicle(vehicleid);
 }
-*/
+#if defined _ALS_DestroyVehicle
+    #undef DestroyVehicle
+#else
+    #define _ALS_DestroyVehicle
+#endif
+#define DestroyVehicle VehCore_DestroyVehicle
 
 stock SetRespawnedVehicleParams(vehicleid)
 {
