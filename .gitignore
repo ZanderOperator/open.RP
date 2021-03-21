@@ -3,7 +3,7 @@
 #
 
 # Compiled Bytecode, precompiled output and assembly
-*.amx
+
 *.lst
 *.asm
 
@@ -24,16 +24,8 @@ pawn.lock
 # you can use the environment variable `SAMP_RCON_PASSWORD` to do this.
 #server.cfg
 
-# Plugins directory
-plugins/
-
-# Old Modules directory
-gamemodes/modules\Old
-
 # Binaries
 *.exe
-*.dll
-*.so
 announce
 samp03svr
 samp-npc
