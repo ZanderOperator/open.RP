@@ -181,9 +181,10 @@ public OnPlayerRequestSpawn(playerid)
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	if(Player_SafeSpawned(playerid) || Player_SafeSpawned(playerid))
+	if(Player_SafeSpawned(playerid))
+	{
 		return 1;
-
+	}
 	if(GMX_Get() == 1) 
 	{
 		va_SendClientMessage(playerid,
@@ -207,15 +208,20 @@ public OnPlayerRequestClass(playerid, classid)
 		
 		new
 			tmpname[24];
+
 		GetPlayerName(playerid, tmpname, MAX_PLAYER_NAME);
+
 		if(!IsValidNick(tmpname))
 		 {
 			SendClientMessage(playerid, COLOR_SAMP_GREEN, "ERROR: Invalid RolePlay nickname, please visit "WEB_URL" for more info!");
 			KickMessage(playerid);
 			return 0;
 		}
+
 		new
-			hour, minute;
+			hour, 
+			minute;
+
 		GetServerTime(hour, minute);
 		SetPlayerTime(playerid,hour,minute);
 		SetPlayerColor(playerid, COLOR_PLAYER);
@@ -395,6 +401,7 @@ public LoadPlayerData(playerid)
 			new 
 				date[12], 
 				time[12];
+				
 			TimeFormat(Timestamp:unban_time, HUMAN_DATE, date);
 			TimeFormat(Timestamp:unban_time, ISO6801_TIME, time);
 	

@@ -865,7 +865,7 @@ CMD:pm(playerid, params[])
 	
 		foreach (new i : Player)
 		{
-			if(PlayerInfo[i][pAdmin] >= 2 && Bit1_Get(a_PMears, i))
+			if(PlayerInfo[i][pAdmin] >= 2 && Player_PMEars(i))
 			{
 				va_SendClientMessage(i, 0xFFD1D1FF, "%s[%i] PM za %s[%i]: %s", GetName(playerid, false), playerid, GetName(giveplayerid, false), giveplayerid, text);
 			}
@@ -898,7 +898,7 @@ CMD:pm(playerid, params[])
 	
  	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= 2 && Bit1_Get(a_PMears, i))
+		if(PlayerInfo[i][pAdmin] >= 2 && Player_PMEars(i))
 		{
 			va_SendClientMessage(i, 0xFFD1D1FF, "[PM] %s[%i] za %s[%i]: %s", GetName(playerid, false), playerid, GetName(giveplayerid, false), giveplayerid, text);
 		}

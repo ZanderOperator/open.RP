@@ -321,12 +321,14 @@ CMD:reportsx(playerid, params[])
 
 	for(new i = 1; i < sizeof ReportData; i++) if(ReportData[i][reportExists])
 	{
-		if(strlen(ReportData[i][reportReason]) > 70)
-		{
-			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Wait Time: %i Minutes | Report: %.70s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
-			va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] ...%s", ReportData[i][reportReason][70]);
-		}
-		else va_SendClientMessage(playerid, COLOR_SKYBLUE, "[!] %s | {FA5656}Report ID: %i | Wait Time: %i Minutes | Report: %s", ReportData[i][reportBy], i, SecondsToMinute(gettime() - ReportData[i][reportTime]), ReportData[i][reportReason]);
+		va_SendClientMessage(playerid, 
+			COLOR_SKYBLUE, 
+			"[!] %s | {FA5656}Report ID: %i | Wait Time: %i Minutes | Report: %s", 
+			ReportData[i][reportBy], 
+			i, 
+			SecondsToMinute(gettimestamp() - ReportData[i][reportTime]), 
+			ReportData[i][reportReason]
+		);
 	}
 
 	return 1;

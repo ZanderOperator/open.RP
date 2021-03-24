@@ -36,7 +36,7 @@ CMD:ahelp(playerid, params[])
 	{
 		format(f_dialog,
 			sizeof(f_dialog), 
-			"\n{FF9933}[A 1]: /alogin, /forumname, /lastdriver, /toga, /bhears, /a, /houseo, /bizo, /complexo, /checknetstats"
+			"\n{FF9933}[A 1]: /alogin, /forumname, /lastdriver, /toga, /a, /houseo, /bizo, /complexo, /checknetstats"
 		);
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 
@@ -3771,20 +3771,14 @@ CMD:toga(playerid, params[])
 {
 	#pragma unused params
     
-	if(PlayerInfo[playerid][pAdmin] || IsPlayerAdmin(playerid))
-	{
-		if(!Bit1_Get(a_AdminChat, playerid))
-		{
-			Bit1_Set(a_AdminChat, playerid, true);
-			SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost Admin chat-a!");
-		} else {
-			Bit1_Set(a_AdminChat, playerid, false);
-			SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost Admin chat-a!");
-		}
-	}
-	else 
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    
+	if(!PlayerInfo[playerid][pAdmin] && !IsPlayerAdmin(playerid))
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+
+	Player_SetAdminChat(playerid, !Player_AdminChat(playerid));
+
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have %s Admin Chat (/a)!",
+		(Player_AdminChat(playerid)) ? ("turned on") : ("turned off")
+	);
 	return 1;
 }
 
@@ -3792,14 +3786,14 @@ CMD:togreport(playerid, params[])
 {
 	#pragma unused params
 	
-	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni!");
-	if(!Bit1_Get( a_TogReports, playerid)) {
-		SendClientMessage( playerid, COLOR_RED, "[!] Iskljucili ste reportove!");
-		Bit1_Set( a_TogReports, playerid, true);
-	} else {
-		Bit1_Set( a_TogReports, playerid, false);
-		SendClientMessage( playerid, COLOR_RED, "[!] Ukljucili ste reportove!");
-	}
+	if(PlayerInfo[playerid][pAdmin] < 4) 
+		return SendClientMessage( playerid, COLOR_RED, "You are not authorised to use this command!");
+
+	Player_SetTogReport(playerid, !Player_TogReport(playerid));
+	
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have %s report visibility!",
+		(Player_TogReport(playerid)) ? ("turned on") : ("turned off")
+	);
 	return 1;
 }
 
@@ -3933,14 +3927,14 @@ CMD:pmears(playerid, params[])
 {
 	#pragma unused params
     
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(!Bit1_Get(a_PMears, playerid)) {
-		Bit1_Set(a_PMears, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost svih PM-ova!");
-	} else {
-		Bit1_Set(a_PMears, playerid, false);
-  		SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost svih PM-ova!");
-	}
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	
+	Player_SetPMEars(playerid, !Player_PMEars(playerid));
+
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have %s visibility of all PM's.",
+		(Player_PMEars(playerid)) ? ("turned on") : ("turned off")
+	);
 	return 1;
 }
 
@@ -3948,14 +3942,14 @@ CMD:togadnot(playerid, params[])
 {
 	#pragma unused params
 
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(!Bit1_Get(a_AdNot, playerid)) {
-		Bit1_Set(a_AdNot, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost oglas reporta!");
-	} else {
-		Bit1_Set(a_AdNot, playerid, false);
-  		SendClientMessage(playerid, COLOR_RED, "[!] Iskljucili ste vidljivost oglas reporta!");
-	}
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+
+	Player_SetAdWarning(playerid, !Player_AdWarning(playerid));
+
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have %s visibility of advertisement warnings.",
+		(Player_AdWarning(playerid)) ? ("turned on") : ("turned off")
+	);
 	return 1;
 }
 
@@ -3963,29 +3957,14 @@ CMD:rears(playerid, params[])
 {
 	#pragma unused params
 
-	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(!Bit1_Get(a_REars, playerid)) {
-		Bit1_Set(a_REars, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost svih radio komunikacija!");
-	} else {
-		Bit1_Set(a_REars, playerid, false);
-  		SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost svih radio komunikacija!");
-	}
-	return 1;
-}
+	if(PlayerInfo[playerid][pAdmin] < 2) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	
+	Player_SetRadioEars(playerid, !Player_RadioEars(playerid));
 
-CMD:bhears(playerid, params[])
-{
-	#pragma unused params
-    
-	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(!Bit1_Get(a_BHears, playerid)) {
-		Bit1_Set(a_BHears, playerid, true);
- 		SendClientMessage(playerid, COLOR_RED, "[!] Ukljucili ste vidljivost svih BH-ova!");
-	} else {
-		Bit1_Set(a_BHears, playerid, false);
-  		SendClientMessage(playerid, COLOR_RED, "Iskljucili ste vidljivost svih BH-ova!");
-	}
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have %s visibility of radio communications.",
+		(Player_RadioEars(playerid)) ? ("turned on") : ("turned off")
+	);
 	return 1;
 }
 
@@ -4534,7 +4513,7 @@ CMD:count(playerid, params[])
 	);
 
 	count_started = true;
-	cseconds = seconds + 1;
+	CountSeconds_Set(seconds + 1);
 	CountingTimer = repeat OnAdminCountDown();
 	return 1;
 }
@@ -4746,18 +4725,14 @@ CMD:clearchat(playerid, params[])
 CMD:dmers(playerid, params[])
 {
 
-	if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-    if(!Bit1_Get(a_DMCheck, playerid))
-	{
-		Bit1_Set(a_DMCheck, playerid, true);
-		SendClientMessage(playerid, COLOR_RED, "[!] Sad cete dobivati dojave o ubojstvima igraca!");
-		
-	}
-	else
-	{
-  		Bit1_Set(a_DMCheck, playerid, false);
-   		SendClientMessage(playerid, COLOR_RED, "[!] Vise necete dobivati dojave o ubojstvima igraca!");
-	}
+	if(PlayerInfo[playerid][pAdmin] < 1) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+    
+	Player_SetDMCheck(playerid, !Player_DMCheck(playerid));
+
+	va_SendMessage(playerid, MESSAGE_TYPE_INFO, "You have %s notifications about player deaths!",
+		(Player_DMCheck(playerid)) ? ("turned on") : ("turned off")
+	);
     return 1;
 }
 
@@ -4872,13 +4847,13 @@ CMD:return(playerid, params[])
 {
 	#pragma unused params
     if(PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(!Bit1_Get( a_PlayerReconed, playerid)) return SendClientMessage(playerid, COLOR_RED, "Ovu komandu mozete koristiti samo jednom!");
+	if(!Player_Reconing(playerid)) return SendClientMessage(playerid, COLOR_RED, "Ovu komandu mozete koristiti samo jednom!");
 	SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste vratili oruzja i objekte koje ste imali.");
 	SetPlayerObjects(playerid);
 	AC_SetPlayerWeapons(playerid);
 	SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
 	SetPlayerSkin(playerid, oldskin[playerid]);
-	Bit1_Set( a_PlayerReconed, playerid, false);
+	Player_SetReconing(playerid, false);
 	return 1;
 }
 

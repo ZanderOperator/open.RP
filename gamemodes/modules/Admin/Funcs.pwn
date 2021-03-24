@@ -26,7 +26,6 @@ new
 	Timer:CountingTimer,
 	Admin_Vehicle[MAX_PLAYERS][MAX_ADMIN_VEHICLES],
 	Admin_vCounter[MAX_PLAYERS],
-	cseconds,
 	Timer:LearnTimer[MAX_PLAYERS],
 	LastDriver[MAX_VEHICLES][MAX_PLAYER_NAME],
 	ReconingVehicle[MAX_PLAYERS],
@@ -36,21 +35,17 @@ new
     oldskin[MAX_PLAYERS],
 	PortedPlayer[MAX_PLAYERS],
 	SpectateID[MAX_PLAYERS],
-
 	bool:AdminDuty[MAX_PLAYERS],
 	bool:HelperDuty[MAX_PLAYERS],
 	bool:NeedHelp[MAX_PLAYERS],
 	bool:Frozen[MAX_PLAYERS],
-	// Player
-	Bit1: 	a_PlayerReconed	<MAX_PLAYERS>,
-    Bit1: 	a_AdminChat 	<MAX_PLAYERS>,
-    Bit1: 	a_PMears 		<MAX_PLAYERS>,
-    Bit1:   a_AdNot         <MAX_PLAYERS>,
-    Bit1: 	a_REars 		<MAX_PLAYERS>,
-	Bit1: 	a_BHears 		<MAX_PLAYERS>,
-    Bit1: 	a_DMCheck 		<MAX_PLAYERS>,
-	Bit1:	a_BlockedHChat	<MAX_PLAYERS>,
-	Bit1:	a_TogReports	<MAX_PLAYERS>;
+	bool:PlayerReconing[MAX_PLAYERS],
+	bool:AdminChat[MAX_PLAYERS],
+	bool:PM_Ears[MAX_PLAYERS],
+	bool:Radio_Ears[MAX_PLAYERS],
+	bool:AdWarning[MAX_PLAYERS],
+	bool:TogReport[MAX_PLAYERS],
+	bool:DMCheck[MAX_PLAYERS];
 	
 // TextDraws
 static stock 
@@ -126,6 +121,76 @@ Player_SpectateID(playerid)
 Player_SetSpectateID(playerid, value)
 {
 	SpectateID[playerid] = value;
+}
+
+bool:Player_Reconing(playerid)
+{
+	return PlayerReconing[playerid];
+}
+
+Player_SetReconing(playerid, bool:v)
+{
+	PlayerReconing[playerid] = v;
+}
+
+bool:Player_AdminChat(playerid)
+{
+	return AdminChat[playerid];
+}
+
+Player_SetAdminChat(playerid, bool:v)
+{
+	AdminChat[playerid] = v;
+}
+
+bool:Player_PMEars(playerid)
+{
+	return PM_Ears[playerid];
+}
+
+Player_SetPMEars(playerid, bool:v)
+{
+	PM_Ears[playerid] = v;
+}
+
+bool:Player_RadioEars(playerid)
+{
+	return Radio_Ears[playerid];
+}
+
+Player_SetRadioEars(playerid, bool:v)
+{
+	Radio_Ears[playerid] = v;
+}
+
+bool:Player_AdWarning(playerid)
+{
+	return AdWarning[playerid];
+}
+
+Player_SetAdWarning(playerid, bool:v)
+{
+	AdWarning[playerid] = v;
+}
+
+bool:Player_DMCheck(playerid)
+{
+	return DMCheck[playerid];
+}
+
+Player_SetDMCheck(playerid, bool:v)
+{
+	DMCheck[playerid] = v;
+}
+
+bool:Player_TogReport(playerid)
+{
+	return TogReport[playerid];
+}
+
+Player_SetTogReport(playerid, bool:v)
+{
+	TogReport[playerid] = v;
 }
 
 InitFly(playerid)
@@ -265,7 +330,7 @@ stock REarsBroadCast(color,const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_REars, i))
+		if(PlayerInfo[i][pAdmin] >= level && Radio_Ears[i])
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -289,19 +354,7 @@ stock PmearsBroadCast(color,const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_PMears, i))
-		{
-			SendClientMessage(i, color, string);
-		}
-	}
-	return 1;
-}
-
-stock BhearsBroadCast(color,const string[], level)
-{
-	foreach (new i : Player)
-	{
-		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_BHears, i))
+		if(PlayerInfo[i][pAdmin] >= level && PM_Ears[i])
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -313,7 +366,7 @@ stock AHBroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if(( PlayerInfo[i][pAdmin] >= level || PlayerInfo[i][pHelper] >= level || IsPlayerAdmin(i)) && Bit1_Get( a_AdminChat, i))
+		if((PlayerInfo[i][pAdmin] >= level || PlayerInfo[i][pHelper] >= level || IsPlayerAdmin(i)) && AdminChat[i])
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -325,7 +378,7 @@ stock HighAdminBroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get( a_AdminChat, i))
+		if(PlayerInfo[i][pAdmin] >= level && AdminChat[i])
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -337,7 +390,7 @@ stock SendAdminMessage(color, const string[], va_args<>)
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get(a_AdminChat, i))
+		if(PlayerInfo[i][pAdmin] >= 1 && AdminChat[i])
 			SendClientMessage(i, color, va_return(string, va_start<2>));
 	}
 	return 1;
@@ -357,7 +410,7 @@ stock SendAdminNotification(color, string[])
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i))
+		if(PlayerInfo[i][pAdmin] >= 1 && AdminChat[i])
 			SendMessage(i, color, string);
 	}
 	return 1;
@@ -367,7 +420,7 @@ stock DMERSBroadCast(color, const string[], level)
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get(a_DMCheck, i))
+		if(PlayerInfo[i][pAdmin] >= level && DMCheck[i])
 		{
 			SendClientMessage(i, color, string);
 		}
@@ -643,7 +696,7 @@ SetPlayerReconTarget(playerid, targetid)
 	PlayerTextDrawSetString(playerid, ReconText[playerid], tmpString);
 	format(tmpString, sizeof(tmpString), "%s(%d)", GetName(targetid, false), targetid);
 	PlayerTextDrawSetString(playerid, ReconTitle[playerid], tmpString);
-	Bit1_Set( a_PlayerReconed, playerid, true);
+	PlayerReconing[playerid] = true;
 	ReconTimer[playerid] = repeat OnPlayerReconing(playerid, targetid);
 	return 1;
 }
@@ -920,14 +973,14 @@ stock static UpdateTargetReconData(playerid, targetid)
 
 timer OnAdminCountDown[1000]()
 {
-	va_GameTextForAll("~w~%d", 1000, 4, cseconds - 1);
+	CountSeconds_Set(CountSeconds_Get() - 1);
+	va_GameTextForAll("~w~%d", 1000, 4, CountSeconds_Get());
 	
 	foreach(new playerid : Player) 
 	{
 		PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 	}
-	cseconds--;
-	if(!cseconds) 
+	if(!CountSeconds_Get()) 
 	{
 		count_started = false;
 		GameTextForAll("~g~GO GO GO", 2500, 4);
@@ -1014,16 +1067,13 @@ hook function ResetPlayerVariables(playerid)
 	HelperDuty[playerid] = false;
 	NeedHelp[playerid] = false;
 	Frozen[playerid] = false;
-
-	Bit1_Set(a_PlayerReconed, playerid, false);
-    Bit1_Set(a_AdminChat, playerid, false);
-    Bit1_Set(a_PMears, playerid, false);
-    Bit1_Set(a_AdNot, playerid, false);
-    Bit1_Set(a_REars, playerid, false);
-	Bit1_Set(a_BHears, playerid, false);
-    Bit1_Set(a_DMCheck, playerid, false);
-	Bit1_Set(a_BlockedHChat, playerid, false);
-	Bit1_Set(a_TogReports, playerid, false);
+	PlayerReconing[playerid] = false;
+	AdminChat[playerid] = false;
+	PM_Ears[playerid] = false;
+	Radio_Ears[playerid] = false;
+	AdWarning[playerid] = false;
+	DMCheck[playerid] = false;
+	TogReport[playerid] = false;
 
 	if(Player_SpectateID(playerid)) 
 	{
@@ -1090,8 +1140,8 @@ hook OnPlayerSpawn(playerid)
 {
 	if(PlayerInfo[playerid][pAdmin] > 0)
 	{
-		Bit1_Set(a_AdminChat, playerid, true);
-		Bit1_Set(a_TogReports, playerid, false);
+		AdminChat[playerid] = true;
+		TogReport[playerid] = false;
 	}
 }
 

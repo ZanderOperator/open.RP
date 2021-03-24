@@ -231,7 +231,6 @@ public OnGameModeInit()
 	Streamer_SetVisibleItems(STREAMER_TYPE_3D_TEXT_LABEL, 1000, -1);
 	print("Report: Streamer Configuration Complete.");
 
-	cseconds = 0;
 	Reg_SetEnabled(true); // Enable Account Registration
 
 	// Alternative Commands
@@ -283,7 +282,7 @@ public OnGameModeInit()
 
 	// Auto Unlock Settings
 	GMX_Set(2);
-	cseconds = SERVER_UNLOCK_TIME; 
+	CountSeconds_Set(SERVER_UNLOCK_TIME);
 
 	printf("Report: GameMode Time Set on %s", 
 		ReturnTime(),
@@ -292,135 +291,3 @@ public OnGameModeInit()
 	return 1;
 }
 
-hook OnGameModeExit()
-{
-    for (new i; i < MAX_OBJECTS; i++)
-    {
-        if(IsValidDynamicObject(i))
-            DestroyDynamicObject(i);
-
-        if(IsValidObject(i))
-            DestroyObject(i);
-    }
-    return 1;
-}
-
-task GlobalServerTask[1000]()
-{
-	GMXTimer();
-	GlobalServerTimer();
-	return 1;
-}
-
-#if defined AUTO_RESTART_SEQ
-StartGMX()
-{
-	for (new a = 1; a <= 20; a++)
-	{
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-		SendClientMessageToAll(-1, "\n");
-	}
-	cseconds = 30;
-	foreach (new i : Player) 
-	{
-		// Player Camera
-		TogglePlayerControllable(i, false);
-		SetPlayerPos(i, 1433.4633, -974.7463, 58.0000);
-		InterpolateCameraPos(i, 1431.9108, -895.1843, 73.9480, 1431.9108, -895.1843, 73.9480, 100000, CAMERA_MOVE);
-		InterpolateCameraLookAt(i, 1431.8031, -894.1859, 74.0085, 1431.8031, -894.1859, 74.0085, 100000, CAMERA_MOVE);
-		cseconds += 3;
-	}
-	GMX_Set(1);
-	new rconstring[100];
-	format(rconstring, sizeof(rconstring), "hostname %s [Database Saving in Process]", SERVER_NAME);
-	SendRconCommand(rconstring);
-	SendRconCommand("password devtest");
-	SendClientMessageToAll(COLOR_RED, "[SERVER]: Server Restart procedure initiated. Please stay in game until server stores your data...");
-	SaveAll();
-	return 1;
-}
-SaveAll()
-{
-	printf("[SERVER]: Automatic scheduled restart initiated. Storing data into MySQL database.");
-	if(Iter_Count(Player) > 0)
-	{
-		foreach (new i : Player) 
-		{
-			if(Player_SafeSpawned(i))
-				Kick(i);
-		}
-	}
-}
-#endif
-
-GlobalServerTimer()
-{
-	new
-		tmphour, tmpmins, tmpsecs;
-	GetServerTime(tmphour, tmpmins, tmpsecs);
-
-	if((tmphour > Hour_Get()) || (tmphour == 0 && Hour_Get() == 23))
-	{
-		SetWorldTime(tmphour);
-		Hour_Set(tmphour);
-	}
-	if(GMX_Get() != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)
-	{
-		CheckAccountsForInactivity();
-		#if defined AUTO_RESTART_SEQ
-		GMX_Set(1);
-		StartGMX();
-		#endif
-	}
-	return 1;
-}
-
-GMXTimer()
-{
-	#if defined AUTO_RESTART_SEQ
-	if(GMX_Get() == 1)
-	{
-		cseconds--;
-		new string[10];
-		format(string, sizeof(string), "%d", cseconds);
-		GameTextForAll(string, 1000, 4);
-		if(cseconds < 1)
-		{
-			GMX_Set(0);
-			stop CountingTimer;
-			foreach(new i : Player) 
-			{
-				if(PlayerInfo[i][pAdmin] >= 1338) 
-				{
-					SendClientMessage(i, COLOR_RED, "[INFO]: Storing the data in server is done. Restarting Server...");
-					KickMessage(i);
-				}
-			}
-			HTTP(0, HTTP_HEAD, HTTP_RESTART_REQUEST, "", "ServerRestartRequest");
-			return 1;
-		}
-	}
-	#endif
-	if(GMX_Get() == 2)
-	{
-		cseconds--;
-		if(cseconds < 1)
-		{
-			GMX_Set(0);
-			cseconds = 0;
-			SendRconCommand("password 0");
-			return 1;
-		}
-	}
-	return 1;
-}
-
-forward ServerRestartRequest(index, response_code, data[]);
-public ServerRestartRequest(index, response_code, data[])
-{
-    if(response_code != 200)
-        printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
-}
