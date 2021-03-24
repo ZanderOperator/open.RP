@@ -60,9 +60,6 @@
 // Fixes.inc
 #define FIXES_GetMaxPlayersMsg 		0
 #define FIXES_ServerVarMsg 			0
-#define FIX_OnPlayerEnterVehicle 	0
-#define FIX_OnPlayerEnterVehicle_2 	0
-#define FIX_OnPlayerEnterVehicle_3 	0
 #define FIX_OnDialogResponse		0
 #define FIX_GetPlayerDialog			0
 #define	MAX_IP_CONNECTS 			3
@@ -199,95 +196,8 @@
 #include <Player>
 #include <Char>
 
-/*
-
-	88888888888                                        88                                    
-	88                                           ,d    ""                                    
-	88                                           88                                          
-	88aaaaa 88       88 8b,dPPYba,   ,adPPYba, MM88MMM 88  ,adPPYba,  8b,dPPYba,  ,adPPYba,  
-	88""""" 88       88 88P'   `"8a a8"     ""   88    88 a8"     "8a 88P'   `"8a I8[    ""  
-	88      88       88 88       88 8b           88    88 8b       d8 88       88  `"Y8ba,   
-	88      "8a,   ,a88 88       88 "8a,   ,aa   88,   88 "8a,   ,a8" 88       88 aa    ]8I  
-	88       `"YbbdP'Y8 88       88  `"Ybbd8"'   "Y888 88  `"YbbdP"'  88       88 `"YbbdP"'  
-	
-*/
-
-
+//
 main()
 {
 	
 }
-
-public OnGameModeInit()
-{
-	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads	
-
-	MapAndreas_Init(MAP_ANDREAS_MODE_FULL, "scriptfiles/SAfull.hmap");
-	print("Report: MapAndreas Initialised.");
-
-	// Streamer config
-	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, -1);
-	Streamer_SetVisibleItems(STREAMER_TYPE_PICKUP, 3900, -1);
-	Streamer_SetVisibleItems(STREAMER_TYPE_3D_TEXT_LABEL, 1000, -1);
-	print("Report: Streamer Configuration Complete.");
-
-	Reg_SetEnabled(true); // Enable Account Registration
-
-	// Alternative Commands
-	Command_AddAltNamed("whisper"		, 	"w");
-	Command_AddAltNamed("hangup"		, 	"h");
-	Command_AddAltNamed("speakerphone"	, 	"sf");
-	Command_AddAltNamed("doorshout"		, 	"ds");
-	Command_AddAltNamed("close"			, 	"c");
-	Command_AddAltNamed("shout"			, 	"s");
-	Command_AddAltNamed("carwhisper"	, 	"cw");
-	Command_AddAltNamed("backup"		, 	"bk");
-	Command_AddAltNamed("admin"			, 	"a");
-    Command_AddAltNamed("clearchat"		, 	"cc");
-	Command_AddAltNamed("pocketsteal"	, 	"psteal");
-	Command_AddAltNamed("animations"	, 	"anims");
-	Command_AddAltNamed("cryptotext"	, 	"ct");
-    Command_AddAltNamed("experience"	, 	"exp");
-	Command_AddAltNamed("radio"			, 	"r");
-	Command_AddAltNamed("radiolow"		, 	"rlow");
-	Command_AddAltNamed("beanbag"		, 	"bb");
-	Command_AddAltNamed("tazer"			, 	"ta");
-	Command_AddAltNamed("acceptreport"	, 	"ar");
-	Command_AddAltNamed("disregardreport", 	"dr");
-	Command_AddAltNamed("unblacklist"	, 	"unbl");
-	Command_AddAltNamed("blacklist"		, 	"bl");
-	print("Report: Alternative Commands Added.");
-
-	// SA-MP gamemode settings
-	ShowNameTags(1);
-    SetNameTagDrawDistance(15.0);
-	AllowInteriorWeapons(1);
-	DisableInteriorEnterExits();
-	EnableStuntBonusForAll(0);
-	ShowPlayerMarkers(1);
-	ManualVehicleEngineAndLights();
-	SetMaxConnections(3, e_FLOOD_ACTION_GHOST);
-	SendRconCommand("cookielogging 0");
-	SendRconCommand("messageholelimit 9000");
-	SendRconCommand("ackslimit 11000");
-	print("Report: GameMode Settings Loaded.");
-
-	// Server Informations
-	new 	
-		gstring[64];
-	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
-	SendRconCommand(gstring);
- 	SetGameModeText(SCRIPT_VERSION);
-	print("Report: Server Info Loaded.");
-
-	// Auto Unlock Settings
-	GMX_Set(2);
-	CountSeconds_Set(SERVER_UNLOCK_TIME);
-
-	printf("Report: GameMode Time Set on %s", 
-		ReturnTime(),
-		SERVER_NAME
-	);
-	return 1;
-}
-

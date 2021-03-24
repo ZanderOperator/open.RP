@@ -92,3 +92,33 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	}
 	return COMMAND_OK;
 }
+
+hook OnGameModeInit()
+{
+		// Alternative Commands
+	Command_AddAltNamed("whisper"		, 	"w");
+	Command_AddAltNamed("hangup"		, 	"h");
+	Command_AddAltNamed("speakerphone"	, 	"sf");
+	Command_AddAltNamed("doorshout"		, 	"ds");
+	Command_AddAltNamed("close"			, 	"c");
+	Command_AddAltNamed("shout"			, 	"s");
+	Command_AddAltNamed("carwhisper"	, 	"cw");
+	Command_AddAltNamed("backup"		, 	"bk");
+	Command_AddAltNamed("admin"			, 	"a");
+    Command_AddAltNamed("clearchat"		, 	"cc");
+	Command_AddAltNamed("pocketsteal"	, 	"psteal");
+	Command_AddAltNamed("animations"	, 	"anims");
+	Command_AddAltNamed("cryptotext"	, 	"ct");
+    Command_AddAltNamed("experience"	, 	"exp");
+	Command_AddAltNamed("radio"			, 	"r");
+	Command_AddAltNamed("radiolow"		, 	"rlow");
+	Command_AddAltNamed("beanbag"		, 	"bb");
+	Command_AddAltNamed("tazer"			, 	"ta");
+	Command_AddAltNamed("acceptreport"	, 	"ar");
+	Command_AddAltNamed("disregardreport", 	"dr");
+	Command_AddAltNamed("unblacklist"	, 	"unbl");
+	Command_AddAltNamed("blacklist"		, 	"bl");
+	
+	print("Report: Alternative Commands Added.");
+	return 1;
+}

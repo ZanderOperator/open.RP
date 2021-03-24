@@ -1,3 +1,4 @@
+#include "modules\Server\GameModeInit.pwn"
 #include "modules\Server\0.3.DL.pwn" // & artconfig
 #include "modules\Server\MySQL.pwn"
 #include "modules\Server\GMX.pwn"
