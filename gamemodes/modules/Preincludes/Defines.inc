@@ -19,7 +19,6 @@
 	(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
 // Limits - https://www.open.mp/docs/scripting/resources/limits
-#define EX_SPLITLENGTH 							(90) // Define when to split SendClientMessage into another line!
 #define DIALOG_UPDATE_LIST_CHAR					(1280) // How many chars can fit into 1/4 pages of Update Info Dialog
 
 #define MAX_DIALOG_TEXT                 		(756)

@@ -3,14 +3,14 @@
 // Server Updates Dialog by Logan - Last Updated November 2020.
 
 static 	
-		page1[1280],
-		page2[1280],
-		page3[1280],
-		page4[1280],
-		updatestring[1280*4],
-		updateCaption[80],
-		PlayerUpdatePage[MAX_PLAYERS],
-		bool:PlayerReward[MAX_PLAYERS];
+	page1[1280],
+	page2[1280],
+	page3[1280],
+	page4[1280],
+	updatestring[1280*4],
+	updateCaption[80],
+	PlayerUpdatePage[MAX_PLAYERS],
+	bool:PlayerReward[MAX_PLAYERS];
 
 stock bool:Player_Reward(playerid)
 {

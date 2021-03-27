@@ -78,8 +78,7 @@ static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 {
     new 
 		len = strlen(message),
-		format_message[192],
-		final_msg[192];
+		final_msg[256];
 	
 	if(_PopUpActivated[playerid] == true)
 		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
@@ -87,8 +86,9 @@ static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 	CreateMessage(playerid, true);	
     if(len >= MAX_LINE_MESSAGE_LENGTH)
     {
-		new buffer[MAX_LINE_MESSAGE_LENGTH+10],	
-			buffer2[128], spacepos = 0, bool:broken = false;
+		new	
+			spacepos = 0, 
+			broken = false;
 			
 		for(new j = MAX_LINE_MESSAGE_LENGTH - 20; j < len; j++)
 		{
@@ -98,10 +98,6 @@ static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 			if(j >= MAX_LINE_MESSAGE_LENGTH && spacepos >= MAX_LINE_MESSAGE_LENGTH - 20)
 			{
 				broken = true;
-				strmid(buffer, message, 0, spacepos);
-				format(buffer, sizeof(buffer), "%s", buffer);
-				strmid(buffer2, message, spacepos+1, len);
-				format(buffer2, sizeof(buffer2), "%s", buffer2);
 				break;
 			}
 		}
@@ -109,19 +105,17 @@ static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 		{			
 			format(final_msg, 
 				sizeof(final_msg), 
-				"%s: ~w~%s~n~%s~n~", 
-				GetMessagePrefix(MESSAGE_TYPE), 
-				buffer, 
-				buffer2
+				"%s: ~w~%.%d%s~n~%s~n~", 
+				GetMessagePrefix(MESSAGE_TYPE),
+				spacepos,
+				message, 
+				message[spacepos + 1]
 			);
 		}
 	}
-    else
-	{
-		format(format_message, sizeof(format_message), "%s\n", message);
-		format(final_msg, sizeof(final_msg), "%s: ~w~%s", GetMessagePrefix(MESSAGE_TYPE), message);
-	}
+    else format(final_msg, sizeof(final_msg), "%s: ~w~%s", GetMessagePrefix(MESSAGE_TYPE), message);
 	stop PopUpTimer[playerid];
+
 	new 
 		messagetime = DetermineMessageDuration(message);
 	PopUpTimer[playerid] = defer RemoveMessage[messagetime](playerid);
@@ -134,7 +128,7 @@ stock va_SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[]
 		return 1;
 
 	new 
-		format_message[192];
+		format_message[256];
 	_PopUpActivated[playerid] = true;
 	va_format(format_message, sizeof (format_message), message, va_start<3>);
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, format_message);

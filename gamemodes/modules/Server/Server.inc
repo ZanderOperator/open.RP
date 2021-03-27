@@ -2,6 +2,7 @@
 #include "modules\Server\0.3.DL.pwn" // & artconfig
 #include "modules\Server\MySQL.pwn"
 #include "modules\Server\GMX.pwn"
+#include "modules\Server\ChatBreaker.pwn"
 #include "modules\Server\ModelDialog.pwn"
 #include "modules\Server\Color.pwn"
 #include "modules\Server\Weather.pwn"
