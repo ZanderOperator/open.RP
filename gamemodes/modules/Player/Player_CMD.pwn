@@ -882,19 +882,8 @@ CMD:pm(playerid, params[])
 		#endif
 	}
 
-	if(strlen(text) > 75)
-	{
-		va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: %.75s...))", GetName(giveplayerid, false), giveplayerid, text);
-		va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: ...%s))", GetName(giveplayerid, false), giveplayerid, text[75]);
-
-		va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW, "(( PM od %s[%i]: %.75s...))", GetName(playerid, false), playerid, text);
-		va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW, "(( PM od %s[%i]: ...%s))", GetName(playerid, false), playerid, text[75]);
-	}
-	else
-	{
-		va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: %s))", GetName(giveplayerid, false), giveplayerid, text);
-		va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW, "(( PM od %s[%i]: %s))", GetName(playerid, false), playerid, text);
-	}
+	va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: %s))", GetName(giveplayerid, false), giveplayerid, text);
+	va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW, "(( PM od %s[%i]: %s))", GetName(playerid, false), playerid, text);
 	
  	foreach (new i : Player)
 	{

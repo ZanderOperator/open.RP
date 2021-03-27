@@ -13,8 +13,7 @@ task GlobalServerTimer[1000]()
 	{
 		CheckAccountsForInactivity();
 		#if defined AUTO_RESTART_SEQ
-		GMX_Set(1);
-		CountSeconds_Set(30);
+		StartGMX();
 		#endif
 	}
 	return 1;

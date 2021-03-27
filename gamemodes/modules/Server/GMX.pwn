@@ -58,7 +58,6 @@ task GMXTimer[1000]()
 		if(CountSeconds_Get() < 1)
 		{
 			GMX_Set(0);
-			stop CountingTimer;
 			foreach(new i : Player) 
 			{
 				if(PlayerInfo[i][pAdmin] >= 1338) 

@@ -105,7 +105,7 @@ static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 		{			
 			format(final_msg, 
 				sizeof(final_msg), 
-				"%s: ~w~%.%d%s~n~%s~n~", 
+				"%s: ~w~%.*s~n~%s~n~", 
 				GetMessagePrefix(MESSAGE_TYPE),
 				spacepos,
 				message, 

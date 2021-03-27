@@ -1,4 +1,5 @@
 // ChatBreaker include v1.3 by Zander Operator 
+#include <YSI_Coding\y_va>
 
 const LINE_BREAKING_LENGTH = 90;
 
@@ -33,7 +34,7 @@ stock SendSplitMessage(playerid, color, const msgstring[])
 				if(colorstart != 0 && colorend != 0)
 					strmid(colorstring, msgstring, colorstart, colorend, sizeof(colorstring));
 
-				va_SendClientMessage(playerid, color, "%.%d%s...", spacepos, msgstring);
+				va_SendClientMessage(playerid, color, "%.*s...", spacepos, msgstring);
 				va_SendClientMessage(playerid, color, "%s...%s", colorstring, msgstring[spacepos+1]);
 				return 1;
 			}
@@ -88,7 +89,7 @@ stock SendSplitMessageToAll(color, const msgstring[])
 				if(colorstart != 0 && colorend != 0)
 					strmid(colorstring, msgstring, colorstart, colorend, sizeof(colorstring));
 
-				va_SendClientMessageToAll(color, "%.%d%s...", spacepos, msgstring);
+				va_SendClientMessageToAll(color, "%.*s...", spacepos, msgstring);
 				va_SendClientMessageToAll(color, "%s...%s", colorstring, msgstring[spacepos+1]);
 				return 1;
 			}

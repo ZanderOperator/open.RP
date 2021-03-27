@@ -49,11 +49,9 @@
 #define NEGATIVE_MODEL_ID 						-40000 
 
 // Server Restart Configuration
-//#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart
+#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart
 // 														API on your VPS/server
 												
-#define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
-
 // Server Afterload Unlock
 #define SERVER_UNLOCK_TIME						(15)
 
@@ -106,6 +104,8 @@
 
 // YSI by Y_Less
 #define YSI_NO_HEAP_MALLOC
+#define YSI_NO_MODE_CACHE
+#define YSI_NO_OPTIMISATION_MESSAGE
 
 // After sampctl p ensure check: CGEN_MEMORY(needs to be 90000) and MAX_COMMANDS(needs to be 1024) 
 #define CGEN_MEMORY				(90000)		// Internal Define - code parser/generator memory
