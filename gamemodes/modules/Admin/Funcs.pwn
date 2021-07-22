@@ -3,7 +3,7 @@
 const PLAYER_SPECTATE_VEH = 1;
 const PLAYER_SPECTATE_PLAYER = 2;
 
-#define MAX_ADMIN_VEHICLES 		(5) // Koliko admin moze maximalno admin vozila spawnat. (/veh) 
+#define MAX_ADMIN_VEHICLES 		(5) // Maximum number of summoned vehicles using admin command /veh.
 
 // Premium VIP Extra EXP
 #define BRONZE_EXP_POINTS		(13)
@@ -807,13 +807,13 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to PowerGaming(PG)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ What is PowerGaming(PG)? â€˘");
 			SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Powergaming je odradjivanje radnje koju u stvarnom zivotu ne mozete odraditi. ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Naime, radnja koju ne mozete izvrsiti ili u odredjenom momentu ili uopce ne mozete izvrsiti tu radnju. ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Najbolji opis Powergaminga se moze vidjeti ukoliko Vas netko zeli opljackati, prijeti oruzjem - Vi skocite iz auta i krente bjezati.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer, ukoliko padnete sa odredjene visine i nastavite se normalno kretati.");
-	        SendClientMessage(playerid, COLOR_WHITE, "PowerGaming je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
+	        	SendClientMessage (playerid, COLOR_WHITE, "Powergaming is doing an action that you can't do in real life.");
+			SendClientMessage (playerid, COLOR_WHITE, "Namely, an action that you cannot perform either at a particular time or you cannot perform that action at all.");
+			SendClientMessage (playerid, COLOR_WHITE, "The best description of Powergaming can be seen if someone wants to rob you, threaten you with a weapon - you jump out of the car and start running.");
+			SendClientMessage (playerid, COLOR_WHITE, "Also, if you fall from a certain height and continue to move normally.");
+			SendClientMessage (playerid, COLOR_WHITE, "PowerGaming is as severely punishable as any other RolePlay policy violation.");
 		  	stop LearnTimer[playerid];
 			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 6);
 		}
@@ -828,11 +828,11 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to Bunnyhop(BH)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ What is Bunnyhop(BH)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je ucestalo skakanje prilikom Vasega kretanja.");
-			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop se koristi kako bi se ubrzali, sto nikako nije RolePlay.");
-			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
+	        	SendClientMessage (playerid, COLOR_WHITE, "Bunnyhop is frequent jumps when you move.");
+			SendClientMessage (playerid, COLOR_WHITE, "Bunnyhop is used to speed up, which is not RolePlay.");
+			SendClientMessage (playerid, COLOR_WHITE, "Bunnyhop is as severely punishable as any other RolePlay policy violation.");
 			stop LearnTimer[playerid];
 			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 7);
 		}
@@ -847,13 +847,13 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to Revenge Kill(RK)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ What is Revenge Kill(RK)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Revenge Kill je ubojstvo iz osvete.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer Revenge Killa je kada Vas netko ubije, Vi se usredotocite na to da nabavite oruzje i ubijete natrag tu osobu.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Kada se dogodi PK, Vi zaboravljate situaciju u kojoj ste se nasli, te ljude koji su Vas ubili!");
-			SendClientMessage(playerid, COLOR_WHITE, "Revenge Kill je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
-		    stop LearnTimer[playerid];
+		        SendClientMessage (playerid, COLOR_WHITE, "Revenge Kill is revenge murder.");
+			SendClientMessage (playerid, COLOR_WHITE, "An example of Revenge Kill is when someone kills you, you focus on getting a weapon and killing that person back.");
+			SendClientMessage (playerid, COLOR_WHITE, "When a RK happens, you forget the situation you found yourself in, and the people who killed you!");
+			SendClientMessage (playerid, COLOR_WHITE, "Revenge Kill is as severely punishable as any other RolePlay policy violation.");
+		    	stop LearnTimer[playerid];
 			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 8);
 		}
 		else if(learnid == 8)
@@ -867,17 +867,17 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ /me i /ame /do komanda? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ /me and /ame /do commands? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, "");
-	        SendClientMessage(playerid, COLOR_RED, "[!] /me - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera koja se dogodila u trenutku. ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Naravno, /me komanda ne smije biti koristena kako bi se izvukli iz nekog RolePlaya.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer: /me uzima sok sa stola te ispija gutljaj.");
-			SendClientMessage(playerid, COLOR_RED, "[!] /ame - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera i koja poslje odredjenog vremena i dalje traje.");
-			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /ame se osmjehuje, /ame klima glavom potvrdno, /ame se naslanja na zid.");
-			SendClientMessage(playerid, COLOR_RED, "[!] /do - komanda kojom se opisuje trenutna IC situacija.");
-			SendClientMessage(playerid, COLOR_WHITE, " /do se pise u trecem licu odnosno u pogledu posmatraca, moze opisivati i okolinu.");
-			SendClientMessage(playerid, COLOR_WHITE, "Primjer: Sta bi se nalazilo ispred Johnnya na stolu? (( Patricia Vargas))");
-		    stop LearnTimer[playerid];
+	        	SendClientMessage (playerid, COLOR_RED, "[!] / Me - command used for the current action of your IC character that occurred in an instant.");
+			SendClientMessage (playerid, COLOR_WHITE, "Of course, the / me command must not be used to get out of a RolePlay.");
+			SendClientMessage (playerid, COLOR_WHITE, "Example: / takes a juice from the table and takes a sip.");
+			SendClientMessage (playerid, COLOR_RED, "[!] / Ame - a command used for the current action of your IC character and which still lasts after a certain time.");
+			SendClientMessage (playerid, COLOR_WHITE, "Example: / ame smiles, / ame nods, / ame leans against the wall.");
+			SendClientMessage (playerid, COLOR_RED, "[!] / Do - command describing the current IC situation.");
+			SendClientMessage (playerid, COLOR_WHITE, "/ do is written in the third person or in terms of the viewer, it can also describe the environment.");
+			SendClientMessage (playerid, COLOR_WHITE, "Example: What would be in front of Johnny on the table? ((Patricia Vargas))");
+		    	stop LearnTimer[playerid];
 			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 9);
 		}
 		else if(learnid == 9)
@@ -891,12 +891,12 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ Sto je to Drive By(DB)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[!] â€˘ What is Drive By(DB)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je pucanje oruzjem s mjesta vozaca iz bilo kojeg mjesta u vozilu na civile, motore ili bicikle.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer je zabranjeno ubijanje propelerom helikoptera i gazenje igraca vozilom.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
-		    stop LearnTimer[playerid];
+	        	SendClientMessage (playerid, COLOR_WHITE, "Drive By is firing a weapon from the driver's seat from anywhere in the vehicle on civilians, motorcycles or bicycles.");
+			SendClientMessage (playerid, COLOR_WHITE, "It is also forbidden to kill a helicopter with a propeller and trample players with a vehicle.");
+			SendClientMessage (playerid, COLOR_WHITE, "Drive By is as severely punishable as any other RolePlay policy violation.");
+		    	stop LearnTimer[playerid];
 			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 10);
 		}
 		else if(learnid == 10)
@@ -911,10 +911,10 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-	   		SendClientMessage(playerid, COLOR_RED, "[!] â€˘ KRAJ TUTORIALA â€˘");
+	   		SendClientMessage(playerid, COLOR_RED, "[!] â€˘ END OF TUTORIAL â€˘");
 	        SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Nadamo se da ste naucili nesto iz nasega tutoriala!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer se nadamo, da vise necete krsiti RolePlay pravila.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Hope you learned something new from this RolePlay tutorial.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Also, we hope you won't break Roleplay rules again.");
 			SetPlayerPreviousInfo(playerid);
 		}
 	}

@@ -741,28 +741,28 @@ enum E_CHOUCH_OBJECT_DATA
 }
 new const ObjectsCouch[][E_CHOUCH_OBJECT_DATA] =
 {
-    {1702,     "Svijetlo smedi kauc"   ,    100},
-    {1703,     "Crni kauc"             ,    100},
-    {1706,     "Ljubicasti kauc"       ,    100},
-    {1707,     "Lazybag kauc"          ,    100},
-    {1709,     "Ugaona garnitura"      ,    150},
-    {1710,     "Cetvorosed"            ,    100},
-    {1712,     "Dvosjed"               ,    100},
-    {1713,     "Plavi kauc"            ,    100},
+    {1702,     "Light brown couch"     ,    100},
+    {1703,     "Black couch"           ,    100},
+    {1706,     "Purple couch"          ,    100},
+    {1707,     "Lazybag couch"         ,    100},
+    {1709,     "Corner sofa"           ,    150},
+    {1710,     "Four-seater"           ,    100},
+    {1712,     "Two-seater"            ,    100},
+    {1713,     "Blue couch"            ,    100},
     {1723,     "Crni kauc"             ,    150},
-    {1726,     "Kauc - crna koza"      ,    250},
-    {1728,     "Krem dvosed"           ,    100},
-    {1753,     "Smedi trosed - koza"   ,    200},
-    {1756,     "Ukraseni dvosed"       ,    100},
-    {1757,     "Rozi dvosed"           ,    150},
-    {1760,     "Plavi trosed"          ,    250},
-    {1761,     "Smedi drveni trosed"   ,    100},
-    {1763,     "Rozi dvosed - mali"    ,    100},
-    {1764,     "Braon sofa"            ,    100},
-    {1766,     "Siva sofa"             ,    100},
-    {1768,     "Plavi trosed"          ,    100},
-    {2290,     "Smedi sofa - trosed"   ,    150},
-    {11685,    "Smedi kauc sa naslonom",    150}
+    {1726,     "Couch - black skin"    ,    250},
+    {1728,     "Cream two-seater"      ,    100},
+    {1753,     "Brown couch - skin"    ,    200},
+    {1756,     "Decorated two-seater"  ,    100},
+    {1757,     "Purple two-seater"     ,    150},
+    {1760,     "Blue three-seater"     ,    250},
+    {1761,     "Brown wooden sofa"     ,    100},
+    {1763,     "Pink two-seater - small",    100},
+    {1764,     "Brown sofa"            ,    100},
+    {1766,     "Gray sofa"             ,    100},
+    {1768,     "Blue three-seater"     ,    100},
+    {2290,     "Brown sofa - three-seater",    150},
+    {11685,    "Brown sofa with backrest",    150}
 };
 
 enum E_ARMCHAIR_OBJECT_DATA
@@ -771,26 +771,26 @@ enum E_ARMCHAIR_OBJECT_DATA
     armName[33],
     armPrice
 }
-new const ObjectsArmChair[][E_ARMCHAIR_OBJECT_DATA] =
+new const ObjectsArmChair [] [E_ARMCHAIR_OBJECT_DATA] =
 {
-    {1704,    "Crna fotelja"               ,    100},
-    {1705,    "Braon fotelja"              ,    100},
-    {1708,    "Plava fotelja"              ,    100},
-    {1711,    "Braon fotelja, garnitura"   ,    80},
-    {1724,    "Crna fotelja, koza (drvena)",    100},
-    {1727,    "Crna fotelja, koza"         ,    150},
-    {1735,    "Visoka bela stolica"        ,    80},
-    {1754,    "Braon garnitura"            ,    150},
-    {1755,    "Svetloplava fotelja"        ,    100},
-    {1758,    "Roza fotelja"               ,    100},
-    {1765,    "Zuta garnitura"             ,    100},
-    {1769,    "Plava fotelja, drvene drske",    120},
-    {2096,    "Stolica za ljuljanje"       ,    75},
-    {2292,    "Smedja kutna garnitura"     ,    200},
-    {2295,    "Bagchair"                   ,    200},
-    {2617,    "Bijele hotelske fotelje"    ,    200},
-    {2571,    "Smedja hotelska fotelja"    ,    200},
-    {2572,    "Bijele hotelske fotelje1"   ,    200}
+    {1704, "Black Armchair", 100},
+    {1705, "Brown Armchair", 100},
+    {1708, "Blue Armchair", 100},
+    {1711, "Brown armchair, set", 80},
+    {1724, "Black armchair, goat (wooden)", 100},
+    {1727, "Black Armchair, Goat", 150},
+    {1735, "High White Chair," 80},
+    {1754, "Brown Set", 150},
+    {1755, "Light Blue Armchair", 100},
+    {1758, "Pink Armchair", 100},
+    {1765, "Yellow set", 100},
+    {1769, "Blue armchair, wooden handles", 120},
+    {2096, "Rocking Chair", 75},
+    {2292, "Brown corner sofa", 200},
+    {2295, "Bagchair", 200},
+    {2617, "White Hotel Armchairs", 200},
+    {2571, "Brown Hotel Armchair", 200},
+    {2572, "White Hotel Armchairs1", 200}
 };
 
 enum E_CABINETS_OBJECT_DATA
@@ -799,20 +799,20 @@ enum E_CABINETS_OBJECT_DATA
     cabName[41],
     cabPrice
 }
-new const ObjectsCabinets[][E_CABINETS_OBJECT_DATA] =
+new const ObjectsCabinets [] [E_CABINETS_OBJECT_DATA] =
 {
-    {2046,    "Orman za puske"                  ,    100},
-    {2078,    "Starinski drveni orman"          ,    225},
-    {2089,    "Drvena polica"                   ,    150},
-    {2161,    "Puna niska polica za knjige"     ,    100},
-    {2162,    "Prazna niska polica za knjige"   ,    100},
-    {2163,    "Zatvoreni kancelarijski orman"   ,    150},
-    {2164,    "Ormar sa policom za knjige"      ,    200},
-    {2167,    "Uski kancelarijski orman"        ,    120},
-    {2191,    "Plava polica za knjige"          ,    215},
-    {2200,    "Veliki zatvoreni orman"          ,    225},
-    {2204,    "Drvani ormar i policom za knjige",    225},
-    {2063,    "Stare police"                    ,    225}
+     {2046, "Rifle Cabinet", 100},
+     {2078, "Antique Wooden Cabinet", 225},
+     {2089, Wooden Shelf, 150},
+     {2161, "Full low bookshelf", 100},
+     {2162, "Empty Low Bookcase", 100},
+     {2163, "Closed Office Cabinet", 150},
+     {2164, "Bookcase", 200},
+     {2167, "Narrow Office Cabinet", 120},
+     {2191, "Blue Bookshelf," 215},
+     {2200, "Large Closed Cabinet," 225},
+     {2204, "Wooden closet and bookshelf," 225},
+     {2063, "Old Shelves," 225}
 };
 
 enum E_TELEVISION_OBJECT_DATA
@@ -821,29 +821,29 @@ enum E_TELEVISION_OBJECT_DATA
     tvName[40],
     tvPrice
 }
-new const ObjectsTelevision[][E_TELEVISION_OBJECT_DATA] =
+new const ObjectsTelevision [] [E_TELEVISION_OBJECT_DATA] =
 {
-    {1429 ,    "Stari televizor"               ,    200},
-    {1518 ,    "Stari televizor, crni"         ,    225},
-    {1717 ,    "Televizor i stakleni stol"     ,    550},
-    {1747 ,    "Stari televizor, drvena kutija",    250},
-    {1748 ,    "Moderniji televizor"           ,    250},
-    {1749 ,    "Camera TV"                     ,    250},
-    {1750 ,    "Beli televizor"                ,    250},
-    {1751 ,    "Moderniji beli televizor"      ,    300},
-    {1752 ,    "Crni televizor"                ,    300},
-    {1781 ,    "Kancelarijski televizor"       ,    280},
-    {1791 ,    "Stariji crni televizor"        ,    280},
-    {2091 ,    "Orman sa televizorom"          ,    550},
-    {2093 ,    "Police sa televizorom"         ,    550},
-    {2224 ,    "Moderan beli televizor"        ,    650},
-    {2296 ,    "Orman sa televizorom i CD"     ,    550},
-    {2297 ,    "Mali ormar sa televizorom i CD",    650},
-    {2700 ,    "Zidni televizor"               ,    500},
-    {-2038,    "LCD Televizor"                 ,    650},
-    {1792 ,    "Moderni TV"                    ,    650},
-    {19786,    "Velika plazma"                 ,    750},
-    {19787,    "Plazma"                        ,    500}
+    {1429, "Old TV", 200},
+    {1518, "Old TV, Black", 225},
+    {1717, "TV and Glass Table", 550},
+    {1747, "Old TV, wooden box", 250},
+    {1748, "Modern TV", 250},
+    {1749, "Camera TV", 250},
+    {1750, White TV, 250},
+    {1751, "Modern White TV," 300},
+    {1752, Black TV, 300},
+    {1781, Office TV, 280},
+    {1791, "Older Black TV," 280},
+    {2091, "TV Cabinet", 550},
+    {2093, "TV Shelves," 550},
+    {2224, "Modern White TV", 650},
+    {2296, "Cabinet with TV and CD", 550},
+    {2297, "Small closet with TV and CD", 650},
+    {2700, Wall TV, 500},
+    {-2038, "LCD TV", 650},
+    {1792, "Modern TV", 650},
+    {19786, "Great Plasma", 750},
+    {19787, "Plasma", 500}
 };
 
 enum E_HIFI_OBJECT_DATA
@@ -852,21 +852,21 @@ enum E_HIFI_OBJECT_DATA
     hfName[45],
     hfPrice
 }
-new const ObjectsHiFi[][E_HIFI_OBJECT_DATA] =
+new const ObjectsHiFi [] [E_HIFI_OBJECT_DATA] =
 {
-    {1809 ,    "Kucno kino"                    ,    450},
-    {2099 ,    "Drveni ormaric i tehnika1"     ,    550},
-    {2010 ,    "Drveni ormaric i tehnika2"     ,    550},
-    {2102 ,    "Crni zvucnici"                 ,    200},
-    {2103 ,    "Beli radio"                    ,    150},
-    {2104 ,    "Recording studio oprema"       ,    700},
-    {2225 ,    "CD player i stakleni stol"     ,    350},
-    {2226 ,    "Crveno-crni radio"             ,    300},
-    {2227 ,    "Sound recorder i stakleni stol",    350},
-    {1958 ,    "DJ set"                        ,    300},
-    {14820,    "DJ mikseta"                    ,    350},
-    {19920,    "Daljinski upravljac"           ,     80},
-    {19808,    "Tastatura"                     ,     90}
+     {1809, Home Theater, 450},
+     {2099, "Wooden cabinet and appliances1", 550},
+     {2010, "Wooden cabinet and technique2", 550},
+     {2102, "Black Speakers", 200},
+     {2103, White Radio, 150},
+     {2104, "Recording studio equipment", 700},
+     {2225, "CD Player and Glass Table", 350},
+     {2226, Red-Black Radio, 300},
+     {2227, "Sound recorder and glass table", 350},
+     {1958, "DJ Set", 300},
+     {14820, "DJ Mixer", 350},
+     {19920, "Remote control", 80},
+     {19808, Keyboard, 90}
 };
 
 enum E_VIDEO_OBJECT_DATA
@@ -875,32 +875,32 @@ enum E_VIDEO_OBJECT_DATA
     vidName[20],
     vidPrice
 }
-new const ObjectsVideo[][E_VIDEO_OBJECT_DATA] =
+new const ObjectsVideo [] [E_VIDEO_OBJECT_DATA] =
 {
-    {1782 ,    "iBox 65"            ,    300},
-    {1783 ,    "Playhouse 4"        ,    250},
-    {1785 ,    "Playhouse 3"        ,    200},
-    {1787 ,    "Iomy CD player"     ,    250},
-    {1788 ,    "Iomy sound recorder",    200},
-    {1790 ,    "CD player"          ,    200},
-    {19893,    "Otvoren laptop"     ,    400},
-    {19894,    "Zatvoren laptop"    ,    400}
+     {1782, "iBox 65", 300},
+     {1783, "Playhouse 4", 250},
+     {1785, Playhouse 3, 200},
+     {1787, "Iomy CD player", 250},
+     {1788, "Iomy sound recorder", 200},
+     {1790, "CD player", 200},
+     {19893, Laptop Open, 400},
+     {19894, Laptop Closed, 400}
 };
 
 enum E_STEREO_OBJECT_DATA
 {
-    stId,
-    stName[34],
-    stPrice
+     stId,
+     stName [34],
+     stPrice
 }
-new const ObjectsStereo[][E_STEREO_OBJECT_DATA] =
+new const ObjectsStereo [] [E_STEREO_OBJECT_DATA] =
 {
-    {1840,    "Beli zvucnik"                     ,    250},
-    {2229,    "Visoki crni zvucnik"              ,    350},
-    {2230,    "Visoki zvucnik sa drvenom kutijom",    400},
-    {2231,    "Niski zvucnik sa drvenom kutijom" ,    300},
-    {2232,    "Niski crni zvucni"                ,    250},
-    {2233,    "Moderni beli zvucnik"             ,    350}
+     {1840, White Speaker, 250},
+     {2229, "High Black Speaker", 350},
+     {2230, "Tall Speaker with Wooden Box", 400},
+     {2231, "Low speaker with wooden box", 300},
+     {2232, "Low Black Sound", 250},
+     {2233, "Modern White Speaker", 350}
 };
 
 enum E_RUG_OBJECT_DATA

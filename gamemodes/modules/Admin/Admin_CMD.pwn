@@ -883,7 +883,7 @@ CMD:removewarn(playerid, params[])
 CMD:explode(playerid, params[])
 {
 	new giveplayerid;
- 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda /explode ne postoji!");
+ 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Command /explode doesn't exist!);
   	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, 0xFFFFFFFF, "[?]: [ID / Part of name]");
   	if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac� nije online!");
 
@@ -896,7 +896,7 @@ CMD:explode(playerid, params[])
 
 CMD:fakekick(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda '/fakekick' ne postoji!");
+	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Command '/fakekick' doesn't exist!);
 	new giveplayerid;
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /fakekick [ID / Part of name]");
     if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
@@ -905,7 +905,7 @@ CMD:fakekick(playerid, params[])
 }
 CMD:crash(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Komanda '/crash' ne postoji!");
+	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Command '/crash' doesn't exist!);
 	new giveplayerid;
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /crash [ID / Part of name]");
     if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac� nije online!");
@@ -4040,7 +4040,7 @@ CMD:houseo(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[?]:  /houseo [houseid]");
 	
 	if(HouseInfo[house][hEnterX] == 0.0)
-		return SendClientMessage(playerid, COLOR_RED, "Taj kuca ne postoji!");
+		return SendClientMessage(playerid, COLOR_RED, "That house doesn't exist!);
 
 	SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, true);
 	return 1;
@@ -4071,7 +4071,7 @@ CMD:complexo(playerid, params[])
 	if(0 <= complex || complex <= MAX_COMPLEX-1) 
 	{
 		if(ComplexInfo[complex][cEnterX] == 0.0)
-			return SendClientMessage(playerid, COLOR_RED, "Taj complex ne postoji!");
+			return SendClientMessage(playerid, COLOR_RED, "That complex doesn't exist!);
 			
 		SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ], 0, 0, true);
 	} 
