@@ -49,7 +49,7 @@ stock SaveAdminConnectionTime(playerid)
 
 stock static GetAdminConnectionTime(playerid, giveplayerid)
 {
-	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Nevaljan unos playerid!");
+	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalid player id submitted.");
 	va_SendClientMessage(playerid, COLOR_RED, "[!] Game Admin spent %d hours of gameplay on server this month.",  
 		ExpInfo[playerid][eMonthPayDays]
 	);
@@ -105,7 +105,7 @@ CMD:admactivity(playerid, params[])
 		
 	new
 		giveplayerid;
-	if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivity [dio imena/playerid]");
+	if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivity [ID / part of player name]");
 	GetAdminConnectionTime(playerid, giveplayerid);
 	return 1;
 }
