@@ -4040,7 +4040,7 @@ CMD:houseo(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[?]:  /houseo [houseid]");
 	
 	if(HouseInfo[house][hEnterX] == 0.0)
-		return SendClientMessage(playerid, COLOR_RED, "Taj kuca doesn't exist!);
+		return SendClientMessage(playerid, COLOR_RED, "That house doesn't exist!);
 
 	SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, true);
 	return 1;
@@ -4071,7 +4071,7 @@ CMD:complexo(playerid, params[])
 	if(0 <= complex || complex <= MAX_COMPLEX-1) 
 	{
 		if(ComplexInfo[complex][cEnterX] == 0.0)
-			return SendClientMessage(playerid, COLOR_RED, "Taj complex doesn't exist!);
+			return SendClientMessage(playerid, COLOR_RED, "That complex doesn't exist!);
 			
 		SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ], 0, 0, true);
 	} 
