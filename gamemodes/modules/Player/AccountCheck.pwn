@@ -12,8 +12,11 @@ CheckAccountsForInactivity()
 		currentday, 
 		currentmonth, 
 		logString[1536],
-		inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
-	
+		inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME,
+		min_month_predicate[80];
+
+	format(min_month_predicate, 80, "OR exp.monthpaydays < %d", MIN_MONTH_PAYDAYS);
+
 	// Inactivity check based on last login timestamp
 	inline OnInactiveAccsLoad()
 	{
@@ -285,30 +288,31 @@ CheckAccountsForInactivity()
 		using inline OnInactiveAccsLoad, 
 		va_fquery(SQL_Handle(),
 			"SELECT \n\
-				accounts.sqlid, accounts.name, accounts.lastloginstamp, \n\
-				player_vip_status.vipRank, \n\
-				player_job.jobkey, player_job.contracttime, \n\
-				experience.monthpaydays, \n\
-				player_admin_msg.AdminMessage \n\
+				acc.sqlid, acc.name, acc.lastloginstamp, \n\
+				pvs.vipRank, \n\
+				pj.jobkey, pj.contracttime, \n\
+				exp.monthpaydays, \n\
+				pam.AdminMessage \n\
 			FROM \n\
-				accounts, \n\
-				player_vip_status, \n\
-				player_job, \n\
-				experience, \n\
-				player_admin_msg \n\
+				accounts AS acc \n\
+					INNER JOIN player_vip_status AS pvs \n\
+						ON acc.sqlid = pvs.sqlid \n\
+					INNER JOIN player_job AS pj \n\
+						ON acc.sqlid = pvs.sqlid \n\
+					INNER JOIN player_admin_msg AS pam \n\
+						ON acc.sqlid = pam.sqlid \n\
+					INNER JOIN experience AS exp \n\
+						ON acc.sqlid = exp.sqlid \n\
 			WHERE \n\
-				accounts.lastloginstamp <= '%d' \n\
+				acc.lastloginstamp <= '%d' \n\
 			%s \n\
-			AND \n\
-				accounts.sqlid = player_vip_status.sqlid = player_job.sqlid = experience.sqlid = player_admin_msg.sqlid \n\
-			AND \n\
-				(SELECT COUNT(*) \n\
+			AND NOT EXISTS\n\
+				(SELECT * \n\
 				FROM \n\
-					inactive_accounts \n\
-				WHERE accounts.sqlid = inactive_accounts.sqlid) = 0",
-			MIN_MONTH_PAYDAYS,
+					inactive_accounts AS ia\n\
+				WHERE acc.sqlid = ia.sqlid)",
 			inactivetimestamp,
-			(currentday == 1) ? ("OR experience.monthpaydays < '%d'") : ""
+			(currentday == 1) ? min_month_predicate : ""
 		),
 		""
 	);
@@ -317,12 +321,12 @@ CheckAccountsForInactivity()
 	inline OnRewardActivePlayers()
 	{
 		new  
-			rewarded = 0, 
+			rewardEXP = 0, 
 			sql,
 			playername[MAX_PLAYER_NAME],
 			monthpaydays;
 
-		for(new i = 0; i < 5; i++)
+		for(new i = 1; i < 6; i++)
 		{
 			logString[0] = EOS;
 			
@@ -333,126 +337,32 @@ CheckAccountsForInactivity()
 			// experience table
 			cache_get_value_name_int(i, "monthpaydays", monthpaydays);
 
-			rewarded++;
-			switch(rewarded)
-			{
-				case 1: 
-				{
-					RewardPlayerForActivity(sql, PREMIUM_GOLD_EXP);
-					Log_Write("logfiles/rewarded_players.txt", 
-						"(%s) - %s got awarded with %d EXP as most active player of %d. month with %d paydays.", 
-						ReturnDate(),
-						playername,
-						PREMIUM_GOLD_EXP,
-						(currentmonth - 1),
-						monthpaydays
-					);
-					format(logString, sizeof(logString), 
-						"\n[%s] - You got %d EXP as 1. most active player of %d. month with %d PayDays.\n\
-							With this award you can buy various possesions \n\
-							which server offers you with command /exp buy.\n\
-							Congrats from %s Team!",
-						ReturnDate(),
-						PREMIUM_GOLD_EXP,
-						(currentmonth - 1),
-						monthpaydays, 
-						SERVER_NAME
-					);
-					SendServerMessage(sql, logString);
-				}
-				case 2: 
-				{
-					RewardPlayerForActivity(sql, 100);
-					Log_Write("logfiles/rewarded_players.txt", 
-						"(%s) - %s got awarded 100 EXP (2. most active player of %d. month with %d paydays)", 
-						ReturnDate(),
-						playername,
-						(currentmonth - 1),
-						monthpaydays
-					);
-					format(logString, sizeof(logString), 
-						"\n[%s] - You got %d EXP as 2. most active player of %d. month with %d PayDays.\n\
-							With this award you can buy various possesions \n\
-							which server offers you with command /exp buy.\n\
-							Congrats from %s Team!",
-						ReturnDate(),
-						100,
-						(currentmonth - 1),
-						monthpaydays, 
-						SERVER_NAME
-					);
-					SendServerMessage(sql, logString);
-				}
-				case 3: 
-				{
-					RewardPlayerForActivity(sql, 75);
-					Log_Write("logfiles/rewarded_players.txt", 
-						"(%s) - %s got awarded with 75 EXP (3. most active player of %d. month with %d paydays)", 
-						ReturnDate(),
-						playername,
-						(currentmonth - 1),
-						monthpaydays
-					);
-					format(logString, sizeof(logString), 
-						"\n[%s] - You got %d EXP as 3. most active player of %d. month with %d PayDays.\n\
-							With this award you can buy various possesions \n\
-							which server offers you with command /exp buy.\n\
-							Congrats from %s Team!",
-						ReturnDate(),
-						75,
-						(currentmonth - 1),
-						monthpaydays, 
-						SERVER_NAME
-					);
-					SendServerMessage(sql, logString);
-				}
-				case 4: 
-				{
-					RewardPlayerForActivity(sql, 50);
-					Log_Write("logfiles/rewarded_players.txt", 
-						"(%s) - %s got awarded with 50 EXP (4. most active player of %d. month with %d paydays)", 
-						ReturnDate(),
-						playername,
-						(currentmonth - 1),
-						monthpaydays
-					);
-					format(logString, sizeof(logString), 
-						"\n[%s] - You got %d EXP as 4. most active player of %d. month with %d PayDays.\n\
-							With this award you can buy various possesions \n\
-							which server offers you with command /exp buy.\n\
-							Congrats from %s Team!",
-						ReturnDate(),
-						50,
-						(currentmonth - 1),
-						monthpaydays, 
-						SERVER_NAME
-					);
-					SendServerMessage(sql, logString);
-				}
-				case 5: 
-				{
-					RewardPlayerForActivity(sql, 25);
-					Log_Write("logfiles/rewarded_players.txt", 
-						"(%s) - %s got awarded with 25 EXP (5. most active player of %d. month with %d paydays)", 
-						ReturnDate(),
-						playername,
-						(currentmonth - 1),
-						monthpaydays
-					);
-					format(logString, sizeof(logString), 
-						"\n[%s] - You got %d EXP as 5. most active player of %d. month with %d PayDays.\n\
-							With this award you can buy various possesions \n\
-							which server offers you with command /exp buy.\n\
-							Congrats from %s Team!",
-						ReturnDate(),
-						25,
-						(currentmonth - 1),
-						monthpaydays, 
-						SERVER_NAME
-					);
-					SendServerMessage(sql, logString);
-				}
-			}
+			rewardEXP = PREMIUM_GOLD_EXP / i;
+
+			RewardPlayerForActivity(sql, rewardEXP);
+
+			Log_Write("logfiles/rewarded_players.txt", 
+				"(%s) - %s got awarded with %d EXP as %d. most active player of %d. month with %d paydays.", 
+				ReturnDate(),
+				playername,
+				rewardEXP,
+				i,
+				(currentmonth - 1),
+				monthpaydays
+			);
+			format(logString, sizeof(logString), 
+				"\n[%s] - You got %d EXP as %d. most active player of %d. month with %d PayDays.\n\
+					With this award you can buy various possesions \n\
+					which server offers you with command /exp buy.\n\
+					Congrats from %s Team!",
+				ReturnDate(),
+				rewardEXP,
+				i,
+				(currentmonth - 1),
+				monthpaydays, 
+				SERVER_NAME
+			);
+			SendServerMessage(sql, logString);
 		}
 		ResetMonthPaydays();
 		return 1;
@@ -463,18 +373,18 @@ CheckAccountsForInactivity()
 			using inline OnRewardActivePlayers, 
 			va_fquery(SQL_Handle(),
 				"SELECT \n\
-					accounts.sqlid, \n\
-					accounts.name, \n\
-					experience.monthpaydays\n\
+					acc.sqlid, \n\
+					acc.name, \n\
+					exp.monthpaydays\n\
 				FROM \n\
-					accounts, \n\
-					experience \n\
+					accounts AS acc, \n\
+					INNER JOIN experience AS exp \n\
+						ON acc.sqlid = exp.sqlid \n\
 				WHERE \n\
-					accounts.playaBanTime == '0' \n\
-				AND (accounts.adminLvl = '0' AND accounts.helper = '0')\n\
-				AND accounts.sqlid = monthpaydays.sqlid \n\
-				ORDER BY experience.monthpaydays DESC \n\
-				LIMIT 0 , 30"
+					acc.playaBanTime == '0' \n\
+				AND (acc.adminLvl = '0' AND acc.helper = '0')\n\
+				ORDER BY exp.monthpaydays DESC \n\
+				LIMIT 5"
 			),
 			""
 		);
