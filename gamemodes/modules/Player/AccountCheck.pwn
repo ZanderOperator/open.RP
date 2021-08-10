@@ -6,8 +6,16 @@ static ResetMonthPaydays()
 	return 1;
 }
 
+static DeleteExpiredInactivities()
+{
+	mysql_fquery(SQL_Handle(), "DELETE FROM inactive_accounts WHERE endstamp < '%d'", gettimestamp());
+	return 1;
+}
+
 CheckAccountsForInactivity()
-{	
+{
+	DeleteExpiredInactivities();
+
 	new 
 		currentday, 
 		currentmonth, 
@@ -306,10 +314,10 @@ CheckAccountsForInactivity()
 			WHERE \n\
 				acc.lastloginstamp <= '%d' \n\
 			%s \n\
-			AND NOT EXISTS\n\
+			AND NOT EXISTS \n\
 				(SELECT * \n\
 				FROM \n\
-					inactive_accounts AS ia\n\
+					inactive_accounts AS ia \n\
 				WHERE acc.sqlid = ia.sqlid)",
 			inactivetimestamp,
 			(currentday == 1) ? min_month_predicate : ""

@@ -431,7 +431,7 @@ CMD:inactivity(playerid, params[])
 			using inline OnInactiveAccountsList,
 			va_fquery(SQL_Handle(), 
 				"SELECT \n\
-					inactive_accounts*, \n\
+					inactive_accounts.*, \n\
 					accounts.name \n\
 				FROM  \n\
 					inactive_accounts \n\
