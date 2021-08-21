@@ -874,6 +874,9 @@ static CreateNewVehicle(playerid, vehicleid)
 		VehicleInfo[vehicleid][vSQLID] = cache_insert_id();
 		SaveVehicle(vehicleid);
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnServerVehicleCreate, 
 		va_fquery(SQL_Handle(), 
@@ -909,6 +912,8 @@ static CreateNewVehicle(playerid, vehicleid)
 		"i", 
 		vehicleid
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 
 	printf("Script Report: Game Admin %s created %s[Vehicle ID: %d]",
 		GetName(playerid, false),

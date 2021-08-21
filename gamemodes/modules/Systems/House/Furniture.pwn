@@ -359,6 +359,9 @@ static InsertFurnitureObject(houseid, index)
         HouseInfo[houseid][hFurSQL][index] = cache_insert_id();
         Iter_Add(HouseFurInt[houseid], index);
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnFurnitureObjectCreated,
         va_fquery(SQL_Handle(), 
@@ -395,6 +398,8 @@ static InsertFurnitureObject(houseid, index)
         houseid, 
         index
     );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 

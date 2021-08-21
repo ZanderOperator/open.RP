@@ -328,6 +328,9 @@ static CreateExteriorObject(playerid)
         Iter_Add(HouseFurExt[houseid], index);
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnExteriorObjectInsert, 
         va_fquery(SQL_Handle(), 
@@ -348,7 +351,9 @@ static CreateExteriorObject(playerid)
         "ii", 
         houseid, 
         index
-   );
+    );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
 
     ResetPlayerExteriorVars(playerid);
     return 1;

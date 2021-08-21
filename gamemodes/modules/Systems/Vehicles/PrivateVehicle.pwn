@@ -436,6 +436,8 @@ BuyVehicle(playerid, bool:credit_activated = false)
 		return 1;
 	}
 	
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnVehicleBuy, 
 		va_fquery(SQL_Handle(), 
@@ -496,6 +498,8 @@ BuyVehicle(playerid, bool:credit_activated = false)
 		playerid,
 		vehicleid
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 	
 	SetVehicleNumberPlate(vehicleid, "");
 
@@ -957,6 +961,9 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		VehicleInfo[vehicleid][vWeaponSQLID][slot] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
    	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnVehicleWeaponInsert,
 		va_fquery(SQL_Handle(), "INSERT INTO cocars_weapons(vehicle_id, weapon_id, ammo) VALUES ('%d', '%d', '%d')",
@@ -969,6 +976,8 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		slot
 	);
 
+	mysql_tquery(SQL_Handle(), "COMMIT");
+	
 	#if defined MODULE_LOGS	
 	Log_Write("logfiles/weapon_trunkput.txt", "(%s) %s [Vehicle SQLID:%d] stored %s with %d bullets in %s(Slot %d).", 
 		ReturnDate(), 

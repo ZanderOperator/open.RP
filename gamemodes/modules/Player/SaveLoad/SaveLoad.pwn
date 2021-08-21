@@ -505,6 +505,9 @@ static RegisterPlayer(playerid)
 		SpawnPlayer(playerid);
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
 		using inline OnAccountFinish,
 		va_fquery(SQL_Handle(), 
@@ -527,6 +530,8 @@ static RegisterPlayer(playerid)
 		"i", 
 		playerid
 	);
+	
+	mysql_tquery(SQL_Handle(), "COMMIT");
 	return 1;
 }
 
@@ -651,8 +656,6 @@ SavePlayerData(playerid)
     if(!Player_SafeSpawned(playerid) && !FirstSaving[playerid])	
 		return 1;
 
-	mysql_pquery(SQL_Handle(), "START TRANSACTION");
-
 	mysql_fquery(SQL_Handle(), 
 		"UPDATE accounts SET lastlogin = '%e', lastloginstamp = '%d', lastip = '%e', forumname = '%e', \n\
 			lastupdatever = '%e', registered = '%d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
@@ -677,7 +680,6 @@ SavePlayerData(playerid)
 
 	SavePlayerStats(playerid); // Saving data non-related to 'accounts' table.
 
-	mysql_pquery(SQL_Handle(), "COMMIT");
 	FirstSaving[playerid] = false;
 	return 1;
 }

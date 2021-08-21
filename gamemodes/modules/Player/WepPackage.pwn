@@ -188,6 +188,9 @@ SavePlayerPackages(playerid, slot)
 		PlayerPackage[playerid][p_SQLID][slot] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline StorePPackageInDB, 
 		va_fquery(SQL_Handle(), "INSERT INTO player_wpackages(playerSQL, weap, ammo) VALUES ('%d', '%d', '%d')",
@@ -199,7 +202,9 @@ SavePlayerPackages(playerid, slot)
 		playerid, 
 		slot
 	);
-	return (true);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
+	return 1;
 }
 
 RemoveWeaponPackages(playerid)
@@ -220,6 +225,9 @@ SaveVehiclePackages(vehicleid, slot)
 		VehicleInfo[vehicleid][packSQLID][slot] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline StoreVPackageInDB,
 		va_fquery(SQL_Handle(), "INSERT INTO cocars_wpackages(vehicleid, weap, ammo) VALUES ('%d','%d','%d')",
@@ -231,7 +239,9 @@ SaveVehiclePackages(vehicleid, slot)
 		vehicleid, 
 		slot
 	);
-	return (true);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
+	return 1;
 }
 
 ResetPlayerPackages(playerid) 
@@ -243,7 +253,7 @@ ResetPlayerPackages(playerid)
 		PlayerPackage[playerid][p_amount][slots] = 0;
 	}
 	Iter_Clear(P_PACKAGES[playerid]);
-	return (true);
+	return 1;
 }
 
 ResetVehiclePackages(vehicleid) 
@@ -277,7 +287,7 @@ PutPackageVehicle(playerid, vehicleid, vslot, pslot)
 	Iter_Add(V_PACKAGES[vehicleid], vslot);
 	DeletePlayerPackage(playerid, pslot);
 	Iter_Remove(P_PACKAGES[playerid], pslot);
-	return (true);
+	return 1;
 }
 
 TakePackageVehicle(playerid, vehicleid, vslot, pslot) 
@@ -299,7 +309,7 @@ TakePackageVehicle(playerid, vehicleid, vslot, pslot)
 
 	Iter_Add(P_PACKAGES[playerid], pslot);
 	DeleteVehiclePackage(vehicleid, vslot);
-	return (true);
+	return 1;
 }
 
 DeleteVehiclePackage(vehicleid, slot) 
@@ -310,7 +320,7 @@ DeleteVehiclePackage(vehicleid, slot)
 	mysql_fquery(SQL_Handle(), "DELETE FROM cocars_wpackages WHERE id = '%d'",VehicleInfo[vehicleid][packSQLID][slot]);
 
 	Iter_Remove(V_PACKAGES[vehicleid], slot);
-	return (true);
+	return 1;
 }
 
 DeletePlayerPackage(playerid, package_id) 
@@ -320,7 +330,7 @@ DeletePlayerPackage(playerid, package_id)
 	PlayerPackage[playerid][packExists][package_id] = 0;
 
 	mysql_fquery(SQL_Handle(), "DELETE FROM player_wpackages WHERE id = '%d'", PlayerPackage[playerid][p_SQLID][package_id]);
-	return (true);
+	return 1;
 }
 
 ResetPackageSettings(playerid) 
@@ -328,7 +338,7 @@ ResetPackageSettings(playerid)
 
 	DisablePlayerCheckpoint(playerid);
 	stop timer_Package[playerid];
-	PackageOrdered[playerid] = (false);
+	PackageOrdered[playerid] = false;
 
 	get_PackageWeapon[playerid] = 0;
 	get_PackageID[playerid] = INVALID_PACKAGE_ID;
@@ -337,7 +347,7 @@ ResetPackageSettings(playerid)
 
 	DestroyDynamicObject(WarehousePackage[playerid][0]);
 	DestroyActor(WarehouseActor[playerid]);
-	return (true);
+	return 1;
 }
 
 GivePlayerPackage(playerid, targetid, package_id, wep, amount) 
@@ -358,7 +368,7 @@ GivePlayerPackage(playerid, targetid, package_id, wep, amount)
 		GetWeaponNameEx(wep),
 		amount
 	);
-	return (true);
+	return 1;
 }
 
 /*
@@ -392,7 +402,7 @@ timer UnpackPackage[1000](playerid, package_id)
 
 	DeletePlayerPackage(playerid, package_id);
 	Iter_Remove(P_PACKAGES[playerid], package_id);
-	return (true);
+	return 1;
 }
 
 timer CreatePackage[1000](playerid) 
@@ -425,7 +435,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	if(PackageOrdered[playerid] == true)
  	{
 		if(!IsPlayerInRangeOfPoint(playerid, 5.0, PossibleDropSpots[WeaponOrderSpot[playerid]][LocationX], PossibleDropSpots[WeaponOrderSpot[playerid]][LocationY], PossibleDropSpots[WeaponOrderSpot[playerid]][LocationZ]))
-			return (true);
+			return 1;
 
 		new buffer[300],
 			package_id = get_PackageID[playerid];
@@ -441,7 +451,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		);
 		ShowPlayerDialog(playerid, DIALOG_TAKE_PACKAGE, DIALOG_STYLE_MSGBOX, "{FA5656}* PACKAGE - Confirmation", buffer, "Confirm", "Close");
 	}
-	return (true);
+	return 1;
 }
 
 hook OnPlayerDeath(playerid, killerid, reason) 
@@ -452,7 +462,7 @@ hook OnPlayerDeath(playerid, killerid, reason)
 			DeletePlayerPackage(playerid, i);
 	}
 	Iter_Clear(P_PACKAGES[playerid]);
-	return (true);
+	return 1;
 }
 
 
@@ -474,7 +484,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format(buffer, sizeof(buffer), "\nSada unesite koliko metaka zalite da dobijete u paketu.\n{3C95C2}[NAPOMENA]:Maximalno mozete naruciti %d metaka.", MAX_PACKAGE_AMOUNT);
 				ShowPlayerDialog(playerid, DIALOG_PACKAGE_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* Package - Ammo", buffer, "Order", "Close");
 			}
-			return (true);
+			return 1;
 		}
 		case DIALOG_PACKAGE_AMOUNT: 
 		{
@@ -636,18 +646,18 @@ hook OnPlayerUpdate(playerid)
 			stop timer_unpacking[playerid];
 		}
 	}
-	return (true);
+	return 1;
 }
 
 hook OnPlayerDisconnect(playerid, reason) 
 {
-	if(PackageOrdered[playerid] == (true)) 
+	if(PackageOrdered[playerid] == true) 
 	{
 		Iter_Remove(PACKAGES, get_PackageID[playerid]);
 		ResetPackageSettings(playerid);
 	}
 	ResetPlayerPackages(playerid);
-	return (true);
+	return 1;
 }
 
 /*
@@ -664,7 +674,7 @@ CMD:package(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "(vehicle): vehstats, vehput, vehtake");
 		if(PlayerInfo[playerid][pAdmin] != 0)
 			SendClientMessage(playerid, COLOR_RED, "(admin): checkplayer, resetpackages, givepackage, checkveh, vresetpackages");
-		return (true);
+		return 1;
 	}
 	if(strcmp(action, "givepackage", true) == 0) 
 	{
@@ -674,7 +684,7 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]iii", action, targetid, weapon_id, ammo_amount)) {
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package givepackage [targetid][weapon_id](Armour ID: 60) [ammo_amount].");
-			return (true);
+			return 1;
 		}
 		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES)
 			return va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac vec ima maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
@@ -709,7 +719,7 @@ CMD:package(playerid, params[])
 		if(sscanf(params, "s[25]i", action, vehicleid)) 
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package vresetpackages [vehicleid].");
-			return (true);
+			return 1;
 		}
 		foreach(new i : V_PACKAGES[vehicleid]) 
 		{
@@ -735,7 +745,7 @@ CMD:package(playerid, params[])
 		if(sscanf(params, "s[25]i", action, vehicleid)) 
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package checkveh [vehicleid].");
-			return (true);
+			return 1;
 		}
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "The vehicle must be private!");
@@ -783,7 +793,7 @@ CMD:package(playerid, params[])
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package vehtake [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package vehstats.");
-			return (true);
+			return 1;
 		}
 		if(vehicleid == INVALID_VEHICLE_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
@@ -814,7 +824,7 @@ CMD:package(playerid, params[])
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package vehput [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package stats.");
-			return (true);
+			return 1;
 		}
 		if(vehicleid == INVALID_VEHICLE_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
@@ -845,7 +855,7 @@ CMD:package(playerid, params[])
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package give [playerid][package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package stats.");
-			return (true);
+			return 1;
 		}
 		if(!Iter_Contains(P_PACKAGES[playerid], package_id))
 			return SendClientMessage(playerid, COLOR_RED, "[!]Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
@@ -893,7 +903,7 @@ CMD:package(playerid, params[])
 		if(sscanf(params, "s[25]i", action, package_id)) {
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package unpackage [package_id].");
 			SendClientMessage(playerid, COLOR_GRAD2, "[=>] package_id provjeravate na /package stats.");
-			return (true);
+			return 1;
 		}
 		if(!Iter_Contains(P_PACKAGES[playerid], package_id) || PlayerPackage[playerid][packExists][package_id] == 0)
 			return SendClientMessage(playerid, COLOR_RED, "[!] Unijeli ste pogresan package_id, na /package stats provjeravate vase pakete.");
@@ -953,7 +963,7 @@ CMD:package(playerid, params[])
 		if(sscanf(params, "s[25]i", action, targetid)) 
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package checkplayer [targetid].");
-			return (true);
+			return 1;
 		}
 		va_SendClientMessage(playerid, COLOR_RED, "[!] |________ [%s - Weapon Packages] ________|", GetName(targetid));
 		foreach(new i : P_PACKAGES[targetid]) 
@@ -978,7 +988,7 @@ CMD:package(playerid, params[])
 
 		if(sscanf(params, "s[25]i", action, targetid)) {
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package resetpackages [targetid].");
-			return (true);
+			return 1;
 		}
 		foreach(new i : P_PACKAGES[targetid])
 		{
@@ -1006,5 +1016,5 @@ CMD:package(playerid, params[])
 			}
 		}
 	}
-	return (true);
+	return 1;
 }

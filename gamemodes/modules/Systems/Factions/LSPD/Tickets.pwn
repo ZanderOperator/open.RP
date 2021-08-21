@@ -409,6 +409,9 @@ CMD:giveticket(playerid, params[])
                     VehicleInfo[vehicleid][vTicketSQLID][t] = cache_insert_id();
                     return 1;
                 }
+
+                mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
                 MySQL_TQueryInline(SQL_Handle(), 
                     using inline OnVehicleTicketInsert,
                     va_fquery(SQL_Handle(), 
@@ -426,14 +429,24 @@ CMD:giveticket(playerid, params[])
                     vehicleid, 
                     t
                 );
+
+                mysql_tquery(SQL_Handle(), "COMMIT");
                 
                 tkts = t;
                 break;
             }
         }
         if(tkts == -1)
-            return va_SendMessage(playerid, MESSAGE_TYPE_ERROR, "%s already has %d tickets!", ReturnVehicleName(VehicleInfo[vehicleid][vModel]), MAX_VEHICLE_TICKETS);
-        
+        {
+            va_SendMessage(playerid, 
+                MESSAGE_TYPE_ERROR, 
+                "%s already has %d tickets!", 
+                ReturnVehicleName(VehicleInfo[vehicleid][vModel]), 
+                MAX_VEHICLE_TICKETS
+            );
+            return 1;
+        }
+
         new
             tmpString[144];
 
@@ -444,7 +457,7 @@ CMD:giveticket(playerid, params[])
             ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
             VehicleInfo[vehicleid][vOwner],
             FormatNumber(moneys) 
-       );
+        );
         SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         format(tmpString, sizeof(tmpString), "*[HQ] Reason: %s.", reason);

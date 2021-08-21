@@ -243,6 +243,9 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 			Iter_Add(P_Weapons[playerid], slotid);
 			return 1;
 		}
+
+		mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 		MySQL_TQueryInline(SQL_Handle(),
 			using inline OnWeaponInsertQuery, 
 			va_fquery(SQL_Handle(), 
@@ -260,6 +263,8 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 			playerid, 
 			slotid
 		);
+
+		mysql_tquery(SQL_Handle(), "COMMIT");
 	}
 	return 1;
 }

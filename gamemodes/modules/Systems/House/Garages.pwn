@@ -659,6 +659,9 @@ CMD:create_garage(playerid, params[])
         GarageInfo[garage][gSQLID] = cache_insert_id();
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnGarageCreated, 
         va_fquery(SQL_Handle(), 
@@ -679,7 +682,10 @@ CMD:create_garage(playerid, params[])
         ), 
         "i", 
         garage
-   );
+    );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
+    
     GarageInfo[garage][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], -1, -1, -1, 100.0);
     Iter_Add(Garage, garage);
     return 1;

@@ -1036,6 +1036,9 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 		PlayerDrugs[playerid][dSQLID][emptyslot] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(), 
 		using inline OnPlayerDrugInsert,
 		va_fquery(SQL_Handle(), 
@@ -1055,6 +1058,8 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 		emptyslot
 	);
 	
+	mysql_tquery(SQL_Handle(), "COMMIT");
+
 	return emptyslot;
 }
 
@@ -1079,6 +1084,9 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 		VehicleDrugs[vehicleid][vsqlid][emptyslot] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(), 
 		using inline OnVehicleDrugInsert,
 		va_fquery(SQL_Handle(), 
@@ -1097,6 +1105,9 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 		vehicleid, 
 		emptyslot
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
+	
 	return emptyslot;
 }
 

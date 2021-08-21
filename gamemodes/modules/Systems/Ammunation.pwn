@@ -124,6 +124,9 @@ static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
         AmmuInfo[slotid][aiSQLID] = cache_insert_id();
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnAmmuWeaponInsert,
         va_fquery(SQL_Handle(), 
@@ -140,7 +143,9 @@ static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
         ), 
         "i", 
         slotid
-   );
+    );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 

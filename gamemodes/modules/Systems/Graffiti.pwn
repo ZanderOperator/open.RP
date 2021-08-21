@@ -323,6 +323,9 @@ static InsertGraffitIntoDB(grafid)
         GraffitInfo[grafid][gId] = cache_insert_id();
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(), 
         using inline OnGraffitCreate,
         va_fquery(SQL_Handle(), 
@@ -345,7 +348,9 @@ static InsertGraffitIntoDB(grafid)
         ), 
         "i", 
         grafid
-    );    
+    );
+    
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 

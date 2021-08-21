@@ -155,6 +155,9 @@ static SavePlayerWeaponSettings(playerid, weaponid)
 			RefreshPlayerWeaponSettings(playerid, weaponid);
 			return 1;
 		}
+
+		mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
         MySQL_TQueryInline(SQL_Handle(),
 			using inline OnWeaponSettingsInsert,
 			va_fquery(SQL_Handle(), "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
@@ -166,6 +169,8 @@ static SavePlayerWeaponSettings(playerid, weaponid)
 			playerid, 
 			weaponid
 		);
+
+		mysql_tquery(SQL_Handle(), "COMMIT");
 	}
 	else RefreshPlayerWeaponSettings(playerid, weaponid);
 	return 1;

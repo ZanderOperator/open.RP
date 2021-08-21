@@ -802,6 +802,9 @@ static stock SetStoreProductOnSale(bizz, product, price)
         BiznisProducts[bizz][bpSQLID][id] = cache_insert_id();
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzProductInsert, 
         va_fquery(SQL_Handle(), 
@@ -817,7 +820,9 @@ static stock SetStoreProductOnSale(bizz, product, price)
         "ii", 
         bizz, 
         id
-   );
+    );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 
@@ -991,6 +996,9 @@ stock InsertNewBizz(playerid, bizz)
         SendClientMessage(playerid, COLOR_YELLOW, "[!]  Da bi ste postavili interijer biznisu, koristite /bizint | /custombizint.");
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzInsertQuery, 
         va_fquery(SQL_Handle(), 
@@ -1014,6 +1022,8 @@ stock InsertNewBizz(playerid, bizz)
         playerid, 
         bizz
     );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 

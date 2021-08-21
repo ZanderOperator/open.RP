@@ -1452,6 +1452,9 @@ static SavePokerTable(idx)
 			PokerTable[idx][pkrSQL] = cache_insert_id();
 			return 1;
 		}
+
+		mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 		MySQL_TQueryInline( SQL_Handle(), 
 			using inline OnPokerTableInsert,
 			va_fquery(SQL_Handle(), 
@@ -1472,6 +1475,8 @@ static SavePokerTable(idx)
 			"i", 
 			idx
 		);
+
+		mysql_tquery(SQL_Handle(), "COMMIT");
 	}
 	else
 	{

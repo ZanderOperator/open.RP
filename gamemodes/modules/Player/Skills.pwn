@@ -135,6 +135,9 @@ static SavePlayerSkill(playerid, skillid)
 			PlayerSkills[playerid][sSQLID][skillid] = cache_insert_id();
 			return 1;
 		}
+
+		mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 		MySQL_TQueryInline(SQL_Handle(),
 			using inline OnPlayerSkillInsert,
 			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
@@ -145,6 +148,8 @@ static SavePlayerSkill(playerid, skillid)
 			playerid,
 			skillid
 		);
+
+		mysql_tquery(SQL_Handle(), "COMMIT");
 	}
 	return 1;
 }

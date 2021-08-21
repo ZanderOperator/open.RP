@@ -155,6 +155,9 @@ static CreateIllegalGarage(garage)
 		InitIllegalGarage(garage);
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),  
 		using inline OnIllegalGarageCreated, 
 		va_fquery(SQL_Handle(),
@@ -172,6 +175,8 @@ static CreateIllegalGarage(garage)
 		"i",
 		garage
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 	return 1;
 }
 

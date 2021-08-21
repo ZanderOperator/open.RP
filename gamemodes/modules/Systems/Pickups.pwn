@@ -203,6 +203,9 @@ stock static CreateNewPickup(playerid, pickup)
 		PickupInfo[pickup][epSQLID] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPickupCreate,
 		va_fquery(SQL_Handle(),
@@ -231,6 +234,8 @@ stock static CreateNewPickup(playerid, pickup)
 		"i", 
 		pickup
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 		
     PickupInfo[pickup][epID] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
 	

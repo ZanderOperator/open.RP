@@ -346,6 +346,9 @@ stock SaveFaction(orgid)
         FactionInfo[orgid][fID] = orgid;
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(), 
         using inline OnAdminFactionCreate,
         va_fquery(SQL_Handle(), 
@@ -381,6 +384,8 @@ stock SaveFaction(orgid)
         "i", 
         orgid
     );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 

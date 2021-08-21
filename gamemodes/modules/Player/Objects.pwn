@@ -768,6 +768,9 @@ stock InsertObjectSlot(playerid, slot)
 		SaveObjectSlot(playerid, slot);
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnPlayerObjectInsert,
 		va_fquery(SQL_Handle(), 
@@ -785,6 +788,8 @@ stock InsertObjectSlot(playerid, slot)
 		playerid, 
 		slot
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 	return 1;
 }
 

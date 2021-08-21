@@ -312,6 +312,9 @@ static InsertMobileContact(playerid, slotid)
 		Iter_Add(MobileContacts[playerid], slotid);
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(),
 		using inline OnMobileContactInsert,
 		va_fquery(SQL_Handle(), 
@@ -324,6 +327,8 @@ static InsertMobileContact(playerid, slotid)
 		playerid,
 		slotid
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 	return 1;
 }
 
@@ -569,6 +574,9 @@ stock CreateTower(towerid)
 		TowerInfo[towerid][twSQLID] = cache_insert_id();
 		return 1;
 	}
+
+	mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
 	MySQL_TQueryInline(SQL_Handle(), 
 		using inline OnTowerCreated,
 		va_fquery(SQL_Handle(), 
@@ -589,6 +597,8 @@ stock CreateTower(towerid)
 		"i", 
 		towerid
 	);
+
+	mysql_tquery(SQL_Handle(), "COMMIT");
 	return 1;
 }
 

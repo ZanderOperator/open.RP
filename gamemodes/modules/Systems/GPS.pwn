@@ -160,12 +160,16 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
         GPS_Save(free_id);
         return 1;
     }
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline GPS_Created,
         "INSERT INTO gps (gpsCreated) VALUES(1)", 
         "i", 
         free_id
-   );
+    );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return free_id;
 }
 

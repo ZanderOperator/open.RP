@@ -22,11 +22,16 @@ MySQL:SQL_Handle()
     return g_SQL;
 }
 
-// Formated mysql_tquery
+// Formated mysql_tquery - DML SQL(UPDATE, DELETE, INSERT)
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
-	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
-	return mysql_tquery(connectionHandle, va_query);
+    mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+	mysql_tquery(connectionHandle, va_query);
+    mysql_tquery(SQL_Handle(), "COMMIT");
+
+    return 1;
 }
 
 // Formated mysql_format with direct string returning

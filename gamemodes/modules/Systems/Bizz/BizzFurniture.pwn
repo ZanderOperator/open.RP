@@ -281,6 +281,9 @@ static InsertBizzFurnitureObject(biznisid, index)
         Iter_Add(BizzFurniture[biznisid], index);
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnBizzFurnitureObjectCreate,
         va_fquery(SQL_Handle(), 
@@ -316,6 +319,8 @@ static InsertBizzFurnitureObject(biznisid, index)
         biznisid, 
         index
     );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return 1;
 }
 

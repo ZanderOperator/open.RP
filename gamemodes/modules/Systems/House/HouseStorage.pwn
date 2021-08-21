@@ -289,12 +289,17 @@ Storage_RackCreate(playerid, houseid)
         Iter_Add(HStorage_Iter, i);
         return 1;
     }
+
+    mysql_tquery(SQL_Handle(), "START TRANSACTION");
+
     MySQL_TQueryInline(SQL_Handle(),
         using inline OnRackCreated,
         "INSERT INTO house_storage (storageCreated) VALUES(1)", 
         "i", 
         i
     );
+
+    mysql_tquery(SQL_Handle(), "COMMIT");
     return i;
 }
 
