@@ -13,7 +13,7 @@ sampctl p build
 ```
 in your Code Terminal on Visual Studio Code. 
 
-Import the open_RP.sql database on your server(easiest way: phpMyAdmin) - xampp or wamp
+Import the open_RP.sql database on your MySQL server(easiest way: phpMyAdmin) - xampp or wamp
 
 Use ```sampctl p run``` to start your server localy, ```exit``` to terminate it.
 
