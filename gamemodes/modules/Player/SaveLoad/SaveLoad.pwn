@@ -428,7 +428,6 @@ public LoadPlayerData(playerid)
 		PlayerKeys[playerid][pVehicleKey] = GetPlayerPrivateVehicle(playerid);
 		
 		LoggingIn[playerid] = true;
-  		SetPlayerSpawnInfo(playerid);
 
         if(!isnull(PlayerInfo[playerid][pSAMPid]) && PlayerInfo[playerid][pSecQuestion] != 1 
 			&& !isnull(PlayerInfo[playerid][pSecQuestAnswer]))
@@ -559,6 +558,8 @@ stock IsEMailInDB(const email[])
 
 SafeSpawnPlayer(playerid)
 {
+	SetPlayerSpawnInfo(playerid);
+	
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
 	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
