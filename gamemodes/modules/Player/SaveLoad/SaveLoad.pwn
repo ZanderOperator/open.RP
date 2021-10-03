@@ -559,7 +559,7 @@ stock IsEMailInDB(const email[])
 SafeSpawnPlayer(playerid)
 {
 	SetPlayerSpawnInfo(playerid);
-	
+
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
 	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
@@ -959,7 +959,6 @@ hook OnPlayerConnect(playerid)
 	return 1;
 }
 
-//#include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if(SigningIn[playerid])
@@ -1613,7 +1612,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ShowPlayerDialog(playerid, 
 				DIALOG_REG_SEX, 
 				DIALOG_STYLE_LIST, 
-				""COL_WHITE"Sign Up - Spol(5/6)", 
+				""COL_WHITE"Sign Up - Sex(5/6)", 
 				"Male\nFemale", 
 				"Input", 
 				"Abort"
