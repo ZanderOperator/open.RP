@@ -318,6 +318,58 @@ CMD:enter(playerid, params[])
     return 1;
 }
 
+CMD:getgarageid(playerid, params[])
+{
+  new str[128];
+  valstr(str, Player_InGarage(playerid));
+  printf(str);
+  return 1;
+}
+
+CMD:exitgarage(playerid, params[]) // Alt exit garage CMD
+{
+    new 
+      garage = Player_InGarage(playerid);
+
+    if(Garage_Exists(Player_InGarage(playerid)))
+    {
+        if(IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
+        {
+            StopAudioStreamForPlayer(playerid);
+            if(!IsPlayerInAnyVehicle(playerid) || GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+            {
+                SetPlayerPosEx(playerid, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], 0, 0, true);
+            }
+            else if(IsPlayerInAnyVehicle(playerid) || GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+            {
+                new vehicleid = GetPlayerVehicleID(playerid);
+
+                SetVehiclePos(vehicleid, PlayerSafeExit[playerid][giX],PlayerSafeExit[playerid][giY],PlayerSafeExit[playerid][giZ]);
+                SetVehicleZAngle(vehicleid, PlayerSafeExit[playerid][giRZ]);
+                foreach(new i : Player)
+                {
+                    if(IsPlayerInVehicle(i, vehicleid))
+                    {
+                        SetPlayerVirtualWorld(i, 0);
+                    }
+                }
+
+                PlayerSafeExit[playerid][giX] = 0;
+                PlayerSafeExit[playerid][giY] = 0;
+                PlayerSafeExit[playerid][giZ] = 0;
+                PlayerSafeExit[playerid][giRZ] = 0;
+
+                SetVehicleVirtualWorld(vehicleid, 0);
+                LinkVehicleToInterior(vehicleid, 0);
+
+                SetPlayerInterior(playerid, 0);
+                SetPlayerVirtualWorld(playerid, 0);
+            }
+            Player_SetInGarage(playerid, INVALID_HOUSE_ID);
+        }
+    }
+    return 1;
+}
 CMD:exit(playerid, params[])
 {
     if(IsPlayerInRangeOfPoint(playerid, 10.0, 1122.9961, -2036.8920, 1701.0578))
@@ -766,7 +818,7 @@ CMD:admins(playerid, params[])
 		);
 		strcat(buffer, motd, 768);
 	}
-	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "\tADMINS ONLINE", buffer, "Close","");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "\tADMINS ONLINE", (!strlen(buffer) ? "No admins online." : buffer), "Close","");
 	return 1;
 }
 
@@ -789,7 +841,7 @@ CMD:helpers(playerid, params[])
 		);
 		strcat(buffer, motd, 768);
 	}
-	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", buffer, "Close","");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", buffer, "Close","");
 	return 1;
 }
 

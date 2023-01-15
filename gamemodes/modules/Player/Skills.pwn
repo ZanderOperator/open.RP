@@ -266,7 +266,7 @@ CMD:skills(playerid, params[])
 		strcat(dstring, motd, 512);
 		tabtag = true;
 	}
-	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Acquired job skills", dstring, "Close", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Acquired job skills", (!strlen(dstring) ? "You got no skills. Go to work!" : dstring), "Close", "");
 	return 1;
 }
 

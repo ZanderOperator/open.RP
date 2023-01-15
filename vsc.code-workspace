@@ -3,5 +3,10 @@
         {
             "path": "."
         }
-   ]
+  ],
+  "settings": {
+    "files.associations": {
+      "veronamall2": "cpp"
+    }
+  }
 }

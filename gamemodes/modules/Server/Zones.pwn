@@ -30,7 +30,7 @@ stock CreateZonesTD(playerid)
 	PlayerTextDrawLetterSize(playerid, ZoneInfoTextDraw[playerid], 0.249, 1.040);
 	PlayerTextDrawSetShadow(playerid, ZoneInfoTextDraw[playerid], 0);
 	PlayerTextDrawSetOutline(playerid, ZoneInfoTextDraw[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, ZoneInfoTextDraw[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, ZoneInfoTextDraw[playerid], true);
 	PlayerTextDrawAlignment(playerid, ZoneInfoTextDraw[playerid], 2);
 	PlayerTextDrawShow(playerid, ZoneInfoTextDraw[playerid]);
 }

@@ -1164,7 +1164,7 @@ CMD:afaction(playerid, params[])
     }
 
     new option[16], otext[128], string[1024];
-    if(sscanf(params, "s[16]",option))
+    if(sscanf(params, "s[16] ",option))
     {
         SendClientMessage(playerid, COLOR_RED, "[?]: /afaction [OPCIJA]");
         SendClientMessage(playerid, COLOR_RED, "[!] create, list, type, changename, ranks, rankname, checkranks");
@@ -1333,11 +1333,11 @@ CMD:afaction(playerid, params[])
         new 
             targetid, 
             fid;
+
         if(sscanf(params, "s[16]ui", option, targetid, fid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /afaction makeleader [ID / Part of name][ID Organizacije]");
         if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if(fid < 1 || fid > MAX_FACTIONS) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID fakcije");
 
-        fid--;
         PlayerFaction[targetid][pLeader]   = fid;
         PlayerFaction[targetid][pMember]   = fid;
         PlayerFaction[targetid][pRank]     = FactionInfo[fid][fRanks];

@@ -495,8 +495,7 @@ stock DestroyGraffit(grafid)
     new tmpobject[E_GRAFFITI_DATA];
     GraffitInfo[grafid] = tmpobject;
 
-    new next;
-    Iter_SafeRemove(Graffits, grafid, next);
+    Iter_Remove(Graffits, grafid);
     return 1;
 }
 
@@ -972,8 +971,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if(!response)
             {
-                new next;
-                Iter_SafeRemove(Graffits, GraffitiID[playerid], next);
+                Iter_Remove(Graffits, GraffitiID[playerid]);
                 GraffitiID[playerid] = -1;
                 return 1;
             }

@@ -76,204 +76,6 @@ stock CreateMechanicTextDraw(playerid)
 	return 1;
 }
 
-StartMechanicService(playerid)
-{
-	new
-		repairman 		= MechanicID[playerid],
-		givevehicleid 	= GetPlayerVehicleID(repairman),
-		price 			= ServicePrice[playerid];
-	
-	if(repairman == INVALID_PLAYER_ID) 							
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio mehanicarsku uslugu!");
-	if(UsingMechanic[playerid]) 	
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec koristite mehanicarsku uslugu!");
-	if(UsingMechanic[repairman]) 	
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mehanicar je vec u poslu!");
-	if(!IsPlayerInAnyVehicle(playerid)) 			
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
-	if(!IsPlayerConnected(repairman)) 				
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru!");
-	if(!ProxDetectorS(5.0, playerid, repairman)) 	
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mehanicara!");
-	if(!ServiceType[playerid]) 		
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio uslugu!");
-	if(AC_GetPlayerMoney(playerid) < price)		
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
-	
-	PlayerToPlayerMoneyTAX(playerid, repairman, price, false);
-	PaydayInfo[repairman][pPayDayMoney] += price; 
-	
-	switch(ServiceType[playerid]) 
-	{
-		case SERVICE_ENGINE_FIX: 
-		{
-			if(PlayerInventory[repairman][pParts] < 3) 
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-			
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-			
-			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-		case SERVICE_BODYKIT_REPAIR: 
-		{
-			if(PlayerInventory[repairman][pParts] < 3)
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-			
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-			
-			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			ServiceType[playerid] = 0;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-		case SERVICE_REMOVE_DESTROY: 
-		{
-			if(PlayerInventory[repairman][pParts] < 3) 
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-			
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-			
-			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-		case SERVICE_STEREO_BUILDIN: 
-		{
-			if(PlayerInventory[repairman][pParts] < 3) 
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-			
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
-			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-			
-			RepairTime[playerid] = 15;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-		case SERVICE_TIRE_ARMORING: 
-		{
-			if(PlayerInventory[repairman][pParts] < 2000) 
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-			
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
-
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-
-			RepairTime[playerid] = 300;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-		case SERVICE_BODYKIT_ARMORING: 
-		{
-			if(PlayerInventory[repairman][pParts] < 3500) 
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-			
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~500");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~500");
-
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-
-			RepairTime[playerid] = 500;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-		case SERVICE_GPS_REPAIR: 
-		{
-			if(PlayerInventory[repairman][pParts] < 10) 
-				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
-
-			CreateMechanicTextDraw(playerid);
-			CreateMechanicTextDraw(repairman);
-
-			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
-			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
-
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
-
-			RepairTime[playerid] = 300;
-			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
-			PlayerRepairVehicle[playerid] = givevehicleid;
-			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			UsingMechanic[repairman] = true;
-			UsingMechanic[playerid] = true;
-			MechanicID[playerid] = INVALID_PLAYER_ID;
-			Repairing[repairman] = true;
-		}
-	}
-	return 1;
-}
-
-/*
-	##     ##  #######   #######  ##    ##  ######
-	##     ## ##     ## ##     ## ##   ##  ##    ##
-	##     ## ##     ## ##     ## ##  ##   ##
-	######### ##     ## ##     ## #####     ######
-	##     ## ##     ## ##     ## ##  ##         ##
-	##     ## ##     ## ##     ## ##   ##  ##    ##
-	##     ##  #######   #######  ##    ##  ######
-*/
-
 timer MechCountForPlayer[1000](playerid, giveplayerid)
 {
 	new Float:X, Float:Y, Float:Z;
@@ -523,6 +325,204 @@ timer MechCountForPlayer[1000](playerid, giveplayerid)
 	}
 	return 1;
 }
+
+StartMechanicService(playerid)
+{
+	new
+		repairman 		= MechanicID[playerid],
+		givevehicleid 	= GetPlayerVehicleID(repairman),
+		price 			= ServicePrice[playerid];
+	
+	if(repairman == INVALID_PLAYER_ID) 							
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio mehanicarsku uslugu!");
+	if(UsingMechanic[playerid]) 	
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec koristite mehanicarsku uslugu!");
+	if(UsingMechanic[repairman]) 	
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mehanicar je vec u poslu!");
+	if(!IsPlayerInAnyVehicle(playerid)) 			
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
+	if(!IsPlayerConnected(repairman)) 				
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru!");
+	if(!ProxDetectorS(5.0, playerid, repairman)) 	
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mehanicara!");
+	if(!ServiceType[playerid]) 		
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio uslugu!");
+	if(AC_GetPlayerMoney(playerid) < price)		
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+	
+	PlayerToPlayerMoneyTAX(playerid, repairman, price, false);
+	PaydayInfo[repairman][pPayDayMoney] += price; 
+	
+	switch(ServiceType[playerid]) 
+	{
+		case SERVICE_ENGINE_FIX: 
+		{
+			if(PlayerInventory[repairman][pParts] < 3) 
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+			
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+			
+			RepairTime[playerid] = 15;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+		case SERVICE_BODYKIT_REPAIR: 
+		{
+			if(PlayerInventory[repairman][pParts] < 3)
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+			
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+			
+			RepairTime[playerid] = 15;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			ServiceType[playerid] = 0;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+		case SERVICE_REMOVE_DESTROY: 
+		{
+			if(PlayerInventory[repairman][pParts] < 3) 
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+			
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+			
+			RepairTime[playerid] = 15;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+		case SERVICE_STEREO_BUILDIN: 
+		{
+			if(PlayerInventory[repairman][pParts] < 3) 
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+			
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
+			
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+			
+			RepairTime[playerid] = 15;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+		case SERVICE_TIRE_ARMORING: 
+		{
+			if(PlayerInventory[repairman][pParts] < 2000) 
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
+
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+
+			RepairTime[playerid] = 300;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+		case SERVICE_BODYKIT_ARMORING: 
+		{
+			if(PlayerInventory[repairman][pParts] < 3500) 
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~500");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~500");
+
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+
+			RepairTime[playerid] = 500;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+		case SERVICE_GPS_REPAIR: 
+		{
+			if(PlayerInventory[repairman][pParts] < 10) 
+				return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+
+			CreateMechanicTextDraw(playerid);
+			CreateMechanicTextDraw(repairman);
+
+			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
+			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
+
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
+
+			RepairTime[playerid] = 300;
+			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman);
+			PlayerRepairVehicle[playerid] = givevehicleid;
+			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
+			UsingMechanic[repairman] = true;
+			UsingMechanic[playerid] = true;
+			MechanicID[playerid] = INVALID_PLAYER_ID;
+			Repairing[repairman] = true;
+		}
+	}
+	return 1;
+}
+
+/*
+	##     ##  #######   #######  ##    ##  ######
+	##     ## ##     ## ##     ## ##   ##  ##    ##
+	##     ## ##     ## ##     ## ##  ##   ##
+	######### ##     ## ##     ## #####     ######
+	##     ## ##     ## ##     ## ##  ##         ##
+	##     ## ##     ## ##     ## ##   ##  ##    ##
+	##     ##  #######   #######  ##    ##  ######
+*/
 
 hook function ResetPlayerVariables(playerid)
 {

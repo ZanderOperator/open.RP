@@ -2098,6 +2098,40 @@ public PhoneAction(playerid, phaction)
 	return 1;
 }
 
+timer MobileRinging[15000](playerid)
+{
+	if(CallingId[playerid] == 999) {
+		Bit8_Set( gr_RingingTime, playerid, 0);
+		stop PlayerMobileRingTimer[playerid];
+		return;
+	}
+	Bit8_Set( gr_RingingTime, playerid, Bit8_Get( gr_RingingTime, playerid) - 1);
+
+	new
+		tmpString[70];
+	format( tmpString, 70, "** Mobitel bi zvonio u djepu od hlaca (( %s))", GetName(playerid,true));
+	ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
+	static
+		Float:mobPos[3];
+	GetPlayerPos(playerid, mobPos[0], mobPos[1], mobPos[2]);
+	PlayerPlaySound(playerid, 20600, mobPos[0], mobPos[1], mobPos[2]);
+
+	if(Bit8_Get( gr_RingingTime, playerid) <= 0) {
+		Bit8_Set( gr_RingingTime, playerid, 0);
+		new
+			gplayerid = CallingId[playerid];
+		stop PlayerMobileRingTimer[playerid];
+		stop PlayerMobileRingTimer[gplayerid];
+
+		SendClientMessage( gplayerid, COLOR_RED, "** (mobitel) Ne javlja se.**");
+		SetPlayerSpecialAction( gplayerid, SPECIAL_ACTION_STOPUSECELLPHONE);
+		CallingId[gplayerid] = 999;
+		if(IsPlayerAttachedObjectSlotUsed(gplayerid, MOBILE_OBJECT_SLOT))
+			RemovePlayerAttachedObject( gplayerid, MOBILE_OBJECT_SLOT);
+		return;
+	}
+}
+
 stock GetContactNumberName(playerid, numberstring[])
 {
     new 
@@ -3721,40 +3755,6 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	##    ## ##     ## ##       ##       ##     ## ##     ## ##    ## ##   ##  ##    ##
 	 ######  ##     ## ######## ######## ########  ##     ##  ######  ##    ##  ######
 */
-
-timer MobileRinging[15000](playerid)
-{
-	if(CallingId[playerid] == 999) {
-		Bit8_Set( gr_RingingTime, playerid, 0);
-		stop PlayerMobileRingTimer[playerid];
-		return;
-	}
-	Bit8_Set( gr_RingingTime, playerid, Bit8_Get( gr_RingingTime, playerid) - 1);
-
-	new
-		tmpString[70];
-	format( tmpString, 70, "** Mobitel bi zvonio u djepu od hlaca (( %s))", GetName(playerid,true));
-	ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
-	static
-		Float:mobPos[3];
-	GetPlayerPos(playerid, mobPos[0], mobPos[1], mobPos[2]);
-	PlayerPlaySound(playerid, 20600, mobPos[0], mobPos[1], mobPos[2]);
-
-	if(Bit8_Get( gr_RingingTime, playerid) <= 0) {
-		Bit8_Set( gr_RingingTime, playerid, 0);
-		new
-			gplayerid = CallingId[playerid];
-		stop PlayerMobileRingTimer[playerid];
-		stop PlayerMobileRingTimer[gplayerid];
-
-		SendClientMessage( gplayerid, COLOR_RED, "** (mobitel) Ne javlja se.**");
-		SetPlayerSpecialAction( gplayerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-		CallingId[gplayerid] = 999;
-		if(IsPlayerAttachedObjectSlotUsed(gplayerid, MOBILE_OBJECT_SLOT))
-			RemovePlayerAttachedObject( gplayerid, MOBILE_OBJECT_SLOT);
-		return;
-	}
-}
 
 stock HexBoja( hexsstring[])
 {

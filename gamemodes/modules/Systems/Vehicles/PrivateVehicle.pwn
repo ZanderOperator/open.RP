@@ -314,6 +314,132 @@ Vehicle_SetWindows(vehicleid, bool:v)
 {
 	VehicleWindows[vehicleid] = v;
 }
+
+/*
+	######## #### ##     ## ######## ########   ######
+	   ##     ##  ###   ### ##       ##     ## ##    ##
+	   ##     ##  #### #### ##       ##     ## ##
+	   ##     ##  ## ### ## ######   ########   ######
+	   ##     ##  ##     ## ##       ##   ##         ##
+	   ##     ##  ##     ## ##       ##    ##  ##    ##
+	   ##    #### ##     ## ######## ##     ##  ######
+*/
+///////////////////////////////////////////////////////////////////
+timer VehicleTowTimer[VEHICLE_TOW_TIME](vehicleid, playerid)
+{
+	if(PlayerKeys[playerid][pVehicleKey] == -1)
+		return 1;
+	
+	PlayerCarTow[playerid] = false;
+	PlayerTowTimer[playerid] = 0;
+	SetVehiclePos(vehicleid, VehicleInfo[vehicleid][vParkX], VehicleInfo[vehicleid][vParkY], VehicleInfo[vehicleid][vParkZ]);
+	SetVehicleZAngle(vehicleid, VehicleInfo[vehicleid][vAngle]);
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vase vozilo je dostavljeno na zeljenu lokaciju!");
+	return 1;
+}
+
+timer DisableVehicleAlarm[20000](vehicleid)
+{
+	new engine, lights, alarm, doors, bonnet, boot, objective;
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	SetVehicleParamsEx(vehicleid, engine, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, doors, bonnet, boot, objective);
+
+	foreach(new playerid : Player)
+	{
+		if(CopStreamVeh[playerid] != INVALID_VEHICLE_ID) 
+		{
+			CopStreamVeh[playerid] = INVALID_VEHICLE_ID;
+			SetVehicleParamsForPlayer(vehicleid, playerid, VEHICLE_PARAMS_OFF, doors);
+		}
+	}
+}
+
+timer VehicleLightsBlink[500](vehicleid)
+{
+	VehicleLightsBlinker[vehicleid]--;
+	new param[4];
+	if(!VehicleLightsBlinker[vehicleid]) 
+	{
+		GetVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
+		param[2] = encode_lights(0, 0, 0, 0);
+		UpdateVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
+		VehicleLightsBlinker[vehicleid] = 0;
+		stop VehicleLightsTimer[vehicleid];
+	} 
+	else 
+	{
+		GetVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
+		if(!VehicleBlinking[vehicleid])
+		{
+			param[2] = encode_lights(1, 1, 0, 0);
+			VehicleBlinking[vehicleid] = true;
+		}
+		else
+		{
+			param[2] = encode_lights(0, 0, 1, 1);
+			VehicleBlinking[vehicleid] = false;
+		}
+		UpdateVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
+	}
+}
+
+timer PlayerHotWiring[1000](playerid)
+{
+	HotWiringSeconds[playerid]--;
+
+	new gmTxt[33];
+	format(gmTxt, sizeof(gmTxt),"~w~Preostalo sekundi: ~g~%d", HotWiringSeconds[playerid]);
+	GameTextForPlayer(playerid, gmTxt, 1100, 4);
+	PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
+
+	if(!HotWiringSeconds[playerid])
+	{
+		if(!CheckHotWireInput(playerid, true))
+			GameTextForPlayer(playerid, "~r~Nisi uspio upaliti motor!", 2000, 1);
+	}
+	return 1;
+}
+
+timer VehicleTestBackTimer[CAR_GIVEBACK_MIL](playerid)
+{
+	if(PlayerGiveBackCP[playerid] == 1) 
+	{
+		DestroyVehicle(TestCar[playerid]);
+		TestCar[playerid] = INVALID_VEHICLE_ID;
+
+		SendClientMessage(playerid, COLOR_RED, "[!] Niste vratili vozilo unutar 5 minuta te ste respawnani!");
+
+		stop PlayerTestBackTimer[playerid];
+		PlayerGiveBackCP[playerid] = 0;
+		DisablePlayerCheckpoint(playerid);
+	}
+	return 1;
+}
+
+timer VehicleTestTimer[1000](playerid)
+{
+	Bit16_Set(gr_PlayerTestSeconds, playerid, Bit16_Get(gr_PlayerTestSeconds, playerid) - 1);
+	if(!Bit16_Get(gr_PlayerTestSeconds, playerid)) 
+	{
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "Vase testiranje autmobila je zavrsilo, molimo vratite vozilo inace cete platiti punu cijenu vozila. Imate 5 minuta za vracanje vozila!");
+		PlayerGiveBackCP[playerid] = 1;
+		SetPlayerCheckpoint(playerid, GiveBackPos[PlayerDealer[playerid]][0],GiveBackPos[PlayerDealer[playerid]][1],GiveBackPos[PlayerDealer[playerid]][2], 10.0);
+		Bit16_Set(gr_PlayerTestSeconds, playerid, 0);
+		stop PlayerTestTimer[playerid];
+		PlayerTestBackTimer[playerid] = defer VehicleTestBackTimer(playerid);
+	}
+}
+
+timer ParkPlayerVehicle[5000](playerid, vehicleid)
+{
+	ParkVehicleInfo(vehicleid);
+	DestroyFarmerObjects(playerid);
+	PlayerKeys[playerid][pVehicleKey] = -1;
+	TogglePlayerControllable(playerid, 1);
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste parkirali vozilo!");
+	return 1;
+}
+
 /*
 	 ######  ########  #######   ######  ##    ##  ######
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
@@ -2318,8 +2444,8 @@ stock ParkVehicleInfo(vehicleid)
 		vehHealth,
 		VehicleInfo[vehicleid][vDestroys],
 		VehicleInfo[vehicleid][vBatteryType],
+		VehicleInfo[vehicleid][vTuned],  // Zander smoked too much weed and missplaced these two :DD - Runner
 		VehicleInfo[vehicleid][vNOSCap],
-		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);
 	DestroyVehicle(vehicleid);
@@ -3248,131 +3374,6 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 
 	// Player Sets
 	CancelSelectTextDraw(playerid);
-	return 1;
-}
-
-/*
-	######## #### ##     ## ######## ########   ######
-	   ##     ##  ###   ### ##       ##     ## ##    ##
-	   ##     ##  #### #### ##       ##     ## ##
-	   ##     ##  ## ### ## ######   ########   ######
-	   ##     ##  ##     ## ##       ##   ##         ##
-	   ##     ##  ##     ## ##       ##    ##  ##    ##
-	   ##    #### ##     ## ######## ##     ##  ######
-*/
-///////////////////////////////////////////////////////////////////
-timer VehicleTowTimer[VEHICLE_TOW_TIME](vehicleid, playerid)
-{
-	if(PlayerKeys[playerid][pVehicleKey] == -1)
-		return 1;
-	
-	PlayerCarTow[playerid] = false;
-	PlayerTowTimer[playerid] = 0;
-	SetVehiclePos(vehicleid, VehicleInfo[vehicleid][vParkX], VehicleInfo[vehicleid][vParkY], VehicleInfo[vehicleid][vParkZ]);
-	SetVehicleZAngle(vehicleid, VehicleInfo[vehicleid][vAngle]);
-	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vase vozilo je dostavljeno na zeljenu lokaciju!");
-	return 1;
-}
-
-timer DisableVehicleAlarm[20000](vehicleid)
-{
-	new engine, lights, alarm, doors, bonnet, boot, objective;
-	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	SetVehicleParamsEx(vehicleid, engine, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, doors, bonnet, boot, objective);
-
-	foreach(new playerid : Player)
-	{
-		if(CopStreamVeh[playerid] != INVALID_VEHICLE_ID) 
-		{
-			CopStreamVeh[playerid] = INVALID_VEHICLE_ID;
-			SetVehicleParamsForPlayer(vehicleid, playerid, VEHICLE_PARAMS_OFF, doors);
-		}
-	}
-}
-
-timer VehicleLightsBlink[500](vehicleid)
-{
-	VehicleLightsBlinker[vehicleid]--;
-	new param[4];
-	if(!VehicleLightsBlinker[vehicleid]) 
-	{
-		GetVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
-		param[2] = encode_lights(0, 0, 0, 0);
-		UpdateVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
-		VehicleLightsBlinker[vehicleid] = 0;
-		stop VehicleLightsTimer[vehicleid];
-	} 
-	else 
-	{
-		GetVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
-		if(!VehicleBlinking[vehicleid])
-		{
-			param[2] = encode_lights(1, 1, 0, 0);
-			VehicleBlinking[vehicleid] = true;
-		}
-		else
-		{
-			param[2] = encode_lights(0, 0, 1, 1);
-			VehicleBlinking[vehicleid] = false;
-		}
-		UpdateVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
-	}
-}
-
-timer PlayerHotWiring[1000](playerid)
-{
-	HotWiringSeconds[playerid]--;
-
-	new gmTxt[33];
-	format(gmTxt, sizeof(gmTxt),"~w~Preostalo sekundi: ~g~%d", HotWiringSeconds[playerid]);
-	GameTextForPlayer(playerid, gmTxt, 1100, 4);
-	PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
-
-	if(!HotWiringSeconds[playerid])
-	{
-		if(!CheckHotWireInput(playerid, true))
-			GameTextForPlayer(playerid, "~r~Nisi uspio upaliti motor!", 2000, 1);
-	}
-	return 1;
-}
-
-timer VehicleTestTimer[1000](playerid)
-{
-	Bit16_Set(gr_PlayerTestSeconds, playerid, Bit16_Get(gr_PlayerTestSeconds, playerid) - 1);
-	if(!Bit16_Get(gr_PlayerTestSeconds, playerid)) 
-	{
-		SendMessage(playerid, MESSAGE_TYPE_INFO, "Vase testiranje autmobila je zavrsilo, molimo vratite vozilo inace cete platiti punu cijenu vozila. Imate 5 minuta za vracanje vozila!");
-		PlayerGiveBackCP[playerid] = 1;
-		SetPlayerCheckpoint(playerid, GiveBackPos[PlayerDealer[playerid]][0],GiveBackPos[PlayerDealer[playerid]][1],GiveBackPos[PlayerDealer[playerid]][2], 10.0);
-		Bit16_Set(gr_PlayerTestSeconds, playerid, 0);
-		stop PlayerTestTimer[playerid];
-		PlayerTestBackTimer[playerid] = defer VehicleTestBackTimer(playerid);
-	}
-}
-
-timer VehicleTestBackTimer[CAR_GIVEBACK_MIL](playerid)
-{
-	if(PlayerGiveBackCP[playerid] == 1) 
-	{
-		DestroyVehicle(TestCar[playerid]);
-		TestCar[playerid] = INVALID_VEHICLE_ID;
-
-		SendClientMessage(playerid, COLOR_RED, "[!] Niste vratili vozilo unutar 5 minuta te ste respawnani!");
-
-		stop PlayerTestBackTimer[playerid];
-		PlayerGiveBackCP[playerid] = 0;
-		DisablePlayerCheckpoint(playerid);
-	}
-	return 1;
-}
-
-timer ParkPlayerVehicle[5000](playerid, vehicleid)
-{
-	ParkVehicleInfo(vehicleid);
-	DestroyFarmerObjects(playerid);
-	PlayerKeys[playerid][pVehicleKey] = -1;
-	TogglePlayerControllable(playerid, 1);
-	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste parkirali vozilo!");
 	return 1;
 }
 

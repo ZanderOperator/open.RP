@@ -386,6 +386,85 @@ static const Float:deer[][] =
 };
 
 /*
+                      _______ _____ __  __ ______ _____   _____
+                     |__   __|_   _|  \/  |  ____|  __ \ / ____|
+                        | |    | | | \  / | |__  | |__) | (___
+                        | |    | | | |\/| |  __| |  _  / \___ \
+                        | |   _| |_| |  | | |____| | \ \ ____) |
+                        |_|  |_____|_|  |_|______|_|  \_\_____/
+
+*/
+
+timer CheckDeer[DEER_RESPAWN_TIME * 60 * 1000]()
+{
+    if(!DeerInfo[Dead])
+        return 0;
+
+    DestroyDynamicObject(DeerInfo[id]);
+    ResetDeerVars();
+    return StartDeer((random(20) > 10) ? (true) : (false));
+}
+
+timer DestroyDeerIcon[1500](dmid)
+{
+    if(IsValidDynamicMapIcon(dmid))
+        return DestroyDynamicMapIcon(dmid);
+
+    return 0;
+}
+
+timer SoundDeer[6000](wrand)
+{
+    if(!wrand || DeerInfo[Dead])
+        return 0;
+
+    GetDynamicObjectPos(DeerInfo[id], DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ]);
+
+    new
+        dmapid = CreateDynamicMapIcon(DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ], 37, 0, -1, -1, -1, 75.0, MAPICON_LOCAL);
+
+    foreach(new i : Player)
+    {
+        if(IsPlayerInRangeOfPoint(i, 75.0, DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ]))
+        {
+            StopAudioStreamForPlayer(i);
+            PlayAudioStreamForPlayer(i, "http://k003.kiwi6.com/hotlink/ktqboi8wsp/deer.mp3", DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ], 75.0, 1);
+        }
+    }
+    defer DestroyDeerIcon(dmapid);
+    return 1;
+}
+
+timer CutDeer[1000](playerid)
+{
+    new
+        drstr[33];
+
+    CutTime --;
+
+    format(drstr, sizeof(drstr), "~w~Preostalo ~g~%d ~w~sekundi!", CutTime);
+    GameTextForPlayer(playerid, drstr, 999, 3);
+    ApplyAnimationEx(playerid, "KNIFE", "Knife_G", 4.2, 0, 0, 0, 0, 999, 1, 0);
+
+    if(!CutTime)
+    {
+        pMeat[playerid] += DeerInfo[Meat];
+
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "ZavrSili ste sa rezanjem mesa! Odnesite meso u 24/7 kako bi ga prodali.");
+
+		stop CutTimer;
+
+		ClearAnimations(playerid, 1);
+        TogglePlayerControllable(playerid, 1);
+
+		CutTime = 0;
+		DeerInfo[Meat] = 0;
+        DeerInfo[pCutting] = -1;
+    }
+    return 1;
+}
+
+/*
                 ##     ##  #######   #######  ##    ##  ######
                 ##     ## ##     ## ##     ## ##   ##  ##    ##
                 ##     ## ##     ## ##     ## ##  ##   ##
@@ -710,84 +789,6 @@ stock RemoveOldForrest(playerid)
     RemoveBuildingForPlayer(playerid, 696, 2647.3750, -123.9844, 46.5234, 0.25);
 }
 
-/*
-                      _______ _____ __  __ ______ _____   _____
-                     |__   __|_   _|  \/  |  ____|  __ \ / ____|
-                        | |    | | | \  / | |__  | |__) | (___
-                        | |    | | | |\/| |  __| |  _  / \___ \
-                        | |   _| |_| |  | | |____| | \ \ ____) |
-                        |_|  |_____|_|  |_|______|_|  \_\_____/
-
-*/
-
-timer CheckDeer[DEER_RESPAWN_TIME * 60 * 1000]()
-{
-    if(!DeerInfo[Dead])
-        return 0;
-
-    DestroyDynamicObject(DeerInfo[id]);
-    ResetDeerVars();
-    return StartDeer((random(20) > 10) ? (true) : (false));
-}
-
-timer SoundDeer[6000](wrand)
-{
-    if(!wrand || DeerInfo[Dead])
-        return 0;
-
-    GetDynamicObjectPos(DeerInfo[id], DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ]);
-
-    new
-        dmapid = CreateDynamicMapIcon(DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ], 37, 0, -1, -1, -1, 75.0, MAPICON_LOCAL);
-
-    foreach(new i : Player)
-    {
-        if(IsPlayerInRangeOfPoint(i, 75.0, DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ]))
-        {
-            StopAudioStreamForPlayer(i);
-            PlayAudioStreamForPlayer(i, "http://k003.kiwi6.com/hotlink/ktqboi8wsp/deer.mp3", DeerInfo[PosX], DeerInfo[PosY], DeerInfo[PosZ], 75.0, 1);
-        }
-    }
-    defer DestroyDeerIcon(dmapid);
-    return 1;
-}
-
-timer DestroyDeerIcon[1500](dmid)
-{
-    if(IsValidDynamicMapIcon(dmid))
-        return DestroyDynamicMapIcon(dmid);
-
-    return 0;
-}
-
-timer CutDeer[1000](playerid)
-{
-    new
-        drstr[33];
-
-    CutTime --;
-
-    format(drstr, sizeof(drstr), "~w~Preostalo ~g~%d ~w~sekundi!", CutTime);
-    GameTextForPlayer(playerid, drstr, 999, 3);
-    ApplyAnimationEx(playerid, "KNIFE", "Knife_G", 4.2, 0, 0, 0, 0, 999, 1, 0);
-
-    if(!CutTime)
-    {
-        pMeat[playerid] += DeerInfo[Meat];
-
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "ZavrSili ste sa rezanjem mesa! Odnesite meso u 24/7 kako bi ga prodali.");
-
-		stop CutTimer;
-
-		ClearAnimations(playerid, 1);
-        TogglePlayerControllable(playerid, 1);
-
-		CutTime = 0;
-		DeerInfo[Meat] = 0;
-        DeerInfo[pCutting] = -1;
-    }
-    return 1;
-}
 /*
                          ######  ##     ## ########   ######
                         ##    ## ###   ### ##     ## ##    ##

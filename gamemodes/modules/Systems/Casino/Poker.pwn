@@ -588,7 +588,7 @@ task PokerPulse[1000]()
 								if(ActionChoice[playerid]) 
 								{
 									ActionChoice[playerid] = false;
-									ShowPlayerDialog(playerid, -1, DIALOG_STYLE_LIST, "Close", "Close", "Close", "Close");
+									ShowPlayerDialog(playerid, 0, DIALOG_STYLE_LIST, "Close", "Close", "Close", "Close");
 								}
 
 								PokerFoldHand(playerid);

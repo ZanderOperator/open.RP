@@ -144,6 +144,67 @@ stock bool:IsDakarVehicle(carid)
     return false;
 }
 
+/*
+    ######## #### ##     ## ######## ########   ######  
+       ##     ##  ###   ### ##       ##     ## ##    ## 
+       ##     ##  #### #### ##       ##     ## ##       
+       ##     ##  ## ### ## ######   ########   ######  
+       ##     ##  ##     ## ##       ##   ##         ## 
+       ##     ##  ##     ## ##       ##    ##  ##    ## 
+       ##    #### ##     ## ######## ##     ##  ######  
+*/
+
+timer OnDakarCountDown[1000]()
+{
+    if(!DakarStarted)
+    {
+        stop DakarCountTimer;
+    }
+
+    DakarCountdown--;
+    if(DakarCountdown != 0)
+    {
+        foreach(new i : Player)
+        {
+            if(!DakarPlayer[i]) continue;
+
+            va_GameTextForPlayer(i, "~g~DAKAR - START~n~~w~%d", 1000, 4, DakarCountdown - 1);
+            PlayerPlaySound(i, 1056, 0.0, 0.0, 0.0);
+        }
+    }
+    else
+    {
+        MoveDynamicObject(dakar_fence[0], 378.345764, 2489.771484, 14.467930, 50.000);
+        MoveDynamicObject(dakar_fence[1], 378.744781, 2515.375977, 14.459570, 50.000);
+        FirstDakarWinner  = INVALID_PLAYER_ID;
+        SecondDakarWinner = INVALID_PLAYER_ID;
+        ThirdDakarWinner  = INVALID_PLAYER_ID;
+
+        foreach(new i : Player)
+        {
+            if(!DakarPlayer[i]) continue;
+
+            new cp = DakarPlayerCP[i];
+            SetPlayerRaceCheckpoint(i, 0,
+                DakarCheckpoints[cp][0],   DakarCheckpoints[cp][1],   DakarCheckpoints[cp][2],
+                DakarCheckpoints[cp+1][0], DakarCheckpoints[cp+1][1], DakarCheckpoints[cp+1][2],
+                DAKAR_CP_SIZE
+           );
+            DakarPlayerCP[i]++;
+
+            PlayerPlaySound(i, 1057, 0.0, 0.0, 0.0);
+            GameTextForPlayer(i, "~g~GO GO GO", 2500, 4);
+        }
+        stop DakarCountTimer;
+    }
+    return 1;
+}
+
+timer StopFinishSound[7000](playerid)
+{
+    PlayerPlaySound(playerid, 1186, 0.0, 0.0, 0.0);
+    return 1;
+}
 
 /*
     ##     ##  #######   #######  ##    ##  ######
@@ -301,69 +362,6 @@ hook OnVehicleDeath(vehicleid, killerid)
         DakarPlayerCP[killerid] = 0;
         SendClientMessage(killerid, COLOR_ORANGE, "[DAKAR EVENT]: Izbaceni ste iz eventa jer ste unistili vozilo!");
     }
-    return 1;
-}
-
-
-/*
-    ######## #### ##     ## ######## ########   ######  
-       ##     ##  ###   ### ##       ##     ## ##    ## 
-       ##     ##  #### #### ##       ##     ## ##       
-       ##     ##  ## ### ## ######   ########   ######  
-       ##     ##  ##     ## ##       ##   ##         ## 
-       ##     ##  ##     ## ##       ##    ##  ##    ## 
-       ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer OnDakarCountDown[1000]()
-{
-    if(!DakarStarted)
-    {
-        stop DakarCountTimer;
-    }
-
-    DakarCountdown--;
-    if(DakarCountdown != 0)
-    {
-        foreach(new i : Player)
-        {
-            if(!DakarPlayer[i]) continue;
-
-            va_GameTextForPlayer(i, "~g~DAKAR - START~n~~w~%d", 1000, 4, DakarCountdown - 1);
-            PlayerPlaySound(i, 1056, 0.0, 0.0, 0.0);
-        }
-    }
-    else
-    {
-        MoveDynamicObject(dakar_fence[0], 378.345764, 2489.771484, 14.467930, 50.000);
-        MoveDynamicObject(dakar_fence[1], 378.744781, 2515.375977, 14.459570, 50.000);
-        FirstDakarWinner  = INVALID_PLAYER_ID;
-        SecondDakarWinner = INVALID_PLAYER_ID;
-        ThirdDakarWinner  = INVALID_PLAYER_ID;
-
-        foreach(new i : Player)
-        {
-            if(!DakarPlayer[i]) continue;
-
-            new cp = DakarPlayerCP[i];
-            SetPlayerRaceCheckpoint(i, 0,
-                DakarCheckpoints[cp][0],   DakarCheckpoints[cp][1],   DakarCheckpoints[cp][2],
-                DakarCheckpoints[cp+1][0], DakarCheckpoints[cp+1][1], DakarCheckpoints[cp+1][2],
-                DAKAR_CP_SIZE
-           );
-            DakarPlayerCP[i]++;
-
-            PlayerPlaySound(i, 1057, 0.0, 0.0, 0.0);
-            GameTextForPlayer(i, "~g~GO GO GO", 2500, 4);
-        }
-        stop DakarCountTimer;
-    }
-    return 1;
-}
-
-timer StopFinishSound[7000](playerid)
-{
-    PlayerPlaySound(playerid, 1186, 0.0, 0.0, 0.0);
     return 1;
 }
 

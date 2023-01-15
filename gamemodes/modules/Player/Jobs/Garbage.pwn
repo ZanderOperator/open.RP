@@ -374,6 +374,30 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	return 1;
 }
 
+/*
+	######## #### ##     ## ######## ########   ######  
+	   ##     ##  ###   ### ##       ##     ## ##    ## 
+	   ##     ##  #### #### ##       ##     ## ##       
+	   ##     ##  ## ### ## ######   ########   ######  
+	   ##     ##  ##     ## ##       ##   ##         ## 
+	   ##     ##  ##     ## ##       ##    ##  ##    ## 
+	   ##    #### ##     ## ######## ##     ##  ######  
+*/
+timer CleanTimer[3500](playerid)
+{
+	SendMessage(playerid, MESSAGE_TYPE_INFO, "Pokupili ste smece sada ga mozete odnijeti do najblizeg kontenjera.");
+	DestroyPlayerObject(playerid, tObject[playerid]);
+	TogglePlayerControllable(playerid, true);
+	ClearAnimations(playerid);
+	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
+	return 1;
+}
+timer AnimTimer[150](playerid)
+{
+    ApplyAnimation(playerid, "BOMBER", "BOM_PLANT", 4.0, 0, 0, 0, 0, 0);
+	return 1;
+}
+
 hook OnPlayerEnterCheckpoint(playerid)
 {
 	if(PlayerJob[playerid][pJob] == JOB_GARBAGE) 
@@ -400,30 +424,6 @@ hook OnPlayerEnterCheckpoint(playerid)
 	    }
     }
     return 1;
-}
-
-/*
-	######## #### ##     ## ######## ########   ######  
-	   ##     ##  ###   ### ##       ##     ## ##    ## 
-	   ##     ##  #### #### ##       ##     ## ##       
-	   ##     ##  ## ### ## ######   ########   ######  
-	   ##     ##  ##     ## ##       ##   ##         ## 
-	   ##     ##  ##     ## ##       ##    ##  ##    ## 
-	   ##    #### ##     ## ######## ##     ##  ######  
-*/
-timer CleanTimer[3500](playerid)
-{
-	SendMessage(playerid, MESSAGE_TYPE_INFO, "Pokupili ste smece sada ga mozete odnijeti do najblizeg kontenjera.");
-	DestroyPlayerObject(playerid, tObject[playerid]);
-	TogglePlayerControllable(playerid, true);
-	ClearAnimations(playerid);
-	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
-	return 1;
-}
-timer AnimTimer[150](playerid)
-{
-    ApplyAnimation(playerid, "BOMBER", "BOM_PLANT", 4.0, 0, 0, 0, 0, 0);
-	return 1;
 }
 
 /*

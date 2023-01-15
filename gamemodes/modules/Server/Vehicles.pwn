@@ -443,7 +443,7 @@ SetVehiclePosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:up
 	PutPlayerInVehicle(playerid, vehicleid, 0);
 
 	if(update)
-		defer InstantStreamerUpdate(playerid);
+		CallInstantStreamerUpdate(playerid);
 	else InstantStreamerUpdate(playerid);
 	return 1;
 }

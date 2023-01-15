@@ -37,6 +37,49 @@ hook OnGameModeInit(){
     return (true);
 }
 
+timer SprayDone[5000]( playerid, sprayid, price) 
+{
+    new vehicleid = GetPlayerVehicleID( playerid);
+    if(GetPlayerState( playerid) == PLAYER_STATE_DRIVER) {
+		switch( sprayid) 
+		{
+		    case 0: {
+		        SetVehiclePos( vehicleid, 2076.5461, -1832.5647, 13.5545);
+		    }
+		    case 1: {
+		        SetVehiclePos( vehicleid, 1025.4225, -1033.1587, 31.8380);
+		    }
+		    case 2: {
+		        SetVehiclePos( vehicleid, 488.3767, -1731.1235, 11.2469);
+		    }
+		    case 3: {
+		        SetVehiclePos( vehicleid, 720.2908, -467.6113, 16.3437);
+		    }
+		    case 4: {
+		        SetVehiclePos( vehicleid, 2077.0647,-1831.5833,13.1703);
+		        SetVehicleZAngle( vehicleid, 180);
+		    }
+	    }
+		AC_RepairVehicle(vehicleid);
+		
+		if(VehicleInfo[vehicleid][vNitro] != -1)
+		{
+			VehicleInfo[vehicleid][vNOSCap] = 100;
+			ShowNosCap(playerid);
+		}
+		if(VehicleInfo[vehicleid][vBodyArmor] == 1)
+			AC_SetVehicleHealth(vehicleid, 1600.0);		
+		
+		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste popravili vase vozilo za %s.", FormatNumber(price));
+		BizzInfo[110][bTill] += floatround(price / 7); 
+		ChangeVehicleColor(vehicleid, pnscolor1, pnscolor2);
+		
+		/*if(aprilfools[playerid])
+			UpdateVehicleDamageStatus(vehicleid, 16909060, 16909060, 5, 0);*/
+	}
+	return (true);
+}
+
 CMD:enterspray( playerid, params[]) 
 {
 	if(pns_garages == false) 
@@ -96,48 +139,5 @@ CMD:enterspray( playerid, params[])
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
 	else return SendMessage( playerid, MESSAGE_TYPE_ERROR, "Morate biti pored ulaza u payspray garazu.");
-	return (true);
-}
-
-timer SprayDone[5000]( playerid, sprayid, price) 
-{
-    new vehicleid = GetPlayerVehicleID( playerid);
-    if(GetPlayerState( playerid) == PLAYER_STATE_DRIVER) {
-		switch( sprayid) 
-		{
-		    case 0: {
-		        SetVehiclePos( vehicleid, 2076.5461, -1832.5647, 13.5545);
-		    }
-		    case 1: {
-		        SetVehiclePos( vehicleid, 1025.4225, -1033.1587, 31.8380);
-		    }
-		    case 2: {
-		        SetVehiclePos( vehicleid, 488.3767, -1731.1235, 11.2469);
-		    }
-		    case 3: {
-		        SetVehiclePos( vehicleid, 720.2908, -467.6113, 16.3437);
-		    }
-		    case 4: {
-		        SetVehiclePos( vehicleid, 2077.0647,-1831.5833,13.1703);
-		        SetVehicleZAngle( vehicleid, 180);
-		    }
-	    }
-		AC_RepairVehicle(vehicleid);
-		
-		if(VehicleInfo[vehicleid][vNitro] != -1)
-		{
-			VehicleInfo[vehicleid][vNOSCap] = 100;
-			ShowNosCap(playerid);
-		}
-		if(VehicleInfo[vehicleid][vBodyArmor] == 1)
-			AC_SetVehicleHealth(vehicleid, 1600.0);		
-		
-		va_SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste popravili vase vozilo za %s.", FormatNumber(price));
-		BizzInfo[110][bTill] += floatround(price / 7); 
-		ChangeVehicleColor(vehicleid, pnscolor1, pnscolor2);
-		
-		/*if(aprilfools[playerid])
-			UpdateVehicleDamageStatus(vehicleid, 16909060, 16909060, 5, 0);*/
-	}
 	return (true);
 }

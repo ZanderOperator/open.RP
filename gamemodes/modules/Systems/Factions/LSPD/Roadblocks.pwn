@@ -154,9 +154,7 @@ static DeleteClosestRoadblock(playerid)
         if(IsPlayerInRangeOfPoint(playerid, 5.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
         {
             DeleteRoadblock(i);
-            new 
-                next;
-            Iter_SafeRemove(Roadblock, i, next);
+            Iter_Remove(Roadblock, i);
             return 1;
         }
     }

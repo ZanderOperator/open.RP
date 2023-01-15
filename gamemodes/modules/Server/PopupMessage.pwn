@@ -42,7 +42,7 @@ static CreateMessage(playerid, bool: status)
 		PlayerTextDrawSetOutline(playerid, MessageTextdraw[playerid], 0);
 		PlayerTextDrawBackgroundColor(playerid, MessageTextdraw[playerid], 255);
 		PlayerTextDrawFont(playerid, MessageTextdraw[playerid], 1);
-		PlayerTextDrawSetProportional(playerid, MessageTextdraw[playerid], 1);
+		PlayerTextDrawSetProportional(playerid, MessageTextdraw[playerid], true);
 		PlayerTextDrawShow(playerid, MessageTextdraw[playerid]);
 	}
 	return 1;
@@ -72,6 +72,17 @@ static DetermineMessageDuration(const message[])
 		bonus = 2500;  // Extra time
 
     return delay + words_time + bonus;
+}
+
+timer RemoveMessage[1000](playerid) 
+{
+	if(_PopUpActivated[playerid] == true)
+		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
+		
+	_PopUpActivated[playerid] = false;
+	CreateMessage(playerid, false);
+	stop PopUpTimer[playerid];
+	return 1;
 }
 
 static SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
@@ -141,17 +152,6 @@ stock SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])
 	
 	_PopUpActivated[playerid] = true;	
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, message);
-}
-
-timer RemoveMessage[1000](playerid) 
-{
-	if(_PopUpActivated[playerid] == true)
-		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
-		
-	_PopUpActivated[playerid] = false;
-	CreateMessage(playerid, false);
-	stop PopUpTimer[playerid];
-	return 1;
 }
 
 /*

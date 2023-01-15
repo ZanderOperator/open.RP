@@ -288,6 +288,76 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	return 1;
 }
 
+timer CombineCheck[200](playerid)
+{
+	new 
+		Float:X, Float:Y, Float:Z,
+		Float:vx, Float:vy, Float:vz,
+		string[50];
+	
+	if(!IsPlayerInAnyVehicle(playerid)) 
+	 {
+	    stop CombineInfo[playerid][cTimer];
+	    if(IsValidDynamicArea(CombineInfo[playerid][cZone]))
+	        DestroyDynamicArea(CombineInfo[playerid][cZone]);
+	    
+	    CombineInfo[playerid][cWork] = 0;
+	    for(new i=0;i<90;i++) 
+		{
+			if(IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
+	        	DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
+		}
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Izasli ste iz vozila te ste automatski prestali raditi posao.");
+	}
+	if(CombineInfo[playerid][cPlantNumber] == 0) 
+	{
+		stop CombineInfo[playerid][cTimer];
+		if(IsValidDynamicArea(CombineInfo[playerid][cZone]))
+			DestroyDynamicArea(CombineInfo[playerid][cZone]);
+		
+		if(CombineInfo[playerid][cCP] == 1)
+			CombineInfo[playerid][cCP] = 0;
+		
+		DisablePlayerCheckpoint(playerid);
+		CombineInfo[playerid][cWork] = 0;
+		new Profit = (random(650) + 505) + (GetPlayerSkillLevel(playerid) * 20);
+		va_SendClientMessage(playerid, COLOR_RED, "[!] Zaradio si $%d, placa ti je sjela na racun.", Profit);
+		ResetFarmerVars(playerid);
+		UpgradePlayerSkill(playerid);
+		BudgetToPlayerBankMoney(playerid, Profit);
+		PaydayInfo[playerid][pPayDayMoney] += Profit;
+		PlayerJob[playerid][pFreeWorks] -= 5;
+	} else {
+		if(IsPlayerInAnyVehicle(playerid)) 
+		{
+	    	if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 532) 
+			{
+            	GetVehicleVelocity(GetPlayerVehicleID(playerid), vx, vy, vz);
+            	if(( floatsqroot( ( ( vx * vx) + ( vy * vy)) + ( vz * vz)) * 181.5) >= 40.0) 
+				{
+					GameTextForPlayer(playerid, "~r~Vozite Prebrzo!", 500, 6);
+					return 1;
+				}
+				for(new j=0;j<90;j++) {
+					GetDynamicObjectPos(CombineInfo[playerid][cPlant][j], X, Y, Z);
+	            
+	            	if(GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 4.0) {
+						if(IsValidDynamicObject(CombineInfo[playerid][cPlant][j]))
+							DestroyDynamicObject(CombineInfo[playerid][cPlant][j]);
+							
+						CombineInfo[playerid][cPlantNumber] = CombineInfo[playerid][cPlantNumber] - 1;
+						CombineInfo[playerid][cHarvested] = CombineInfo[playerid][cHarvested] + 1;
+						PlayerPlaySound(playerid, 1056, 0.0, 0.0 , 10.0);
+						format(string, sizeof(string), "~w~%i/90", CombineInfo[playerid][cHarvested]);
+						return GameTextForPlayer(playerid, string, 400, 1);
+					}
+				}
+			}
+		}
+	}
+	return 1;
+}
+
 hook OnPlayerEnterDynArea(playerid, areaid)
 {
 	if(areaid == CombineInfo[playerid][cZone]) 
@@ -394,75 +464,6 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 
 //*****CUSTOM CALLBACKS*****
 
-timer CombineCheck[200](playerid)
-{
-	new 
-		Float:X, Float:Y, Float:Z,
-		Float:vx, Float:vy, Float:vz,
-		string[50];
-	
-	if(!IsPlayerInAnyVehicle(playerid)) 
-	 {
-	    stop CombineInfo[playerid][cTimer];
-	    if(IsValidDynamicArea(CombineInfo[playerid][cZone]))
-	        DestroyDynamicArea(CombineInfo[playerid][cZone]);
-	    
-	    CombineInfo[playerid][cWork] = 0;
-	    for(new i=0;i<90;i++) 
-		{
-			if(IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
-	        	DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
-		}
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Izasli ste iz vozila te ste automatski prestali raditi posao.");
-	}
-	if(CombineInfo[playerid][cPlantNumber] == 0) 
-	{
-		stop CombineInfo[playerid][cTimer];
-		if(IsValidDynamicArea(CombineInfo[playerid][cZone]))
-			DestroyDynamicArea(CombineInfo[playerid][cZone]);
-		
-		if(CombineInfo[playerid][cCP] == 1)
-			CombineInfo[playerid][cCP] = 0;
-		
-		DisablePlayerCheckpoint(playerid);
-		CombineInfo[playerid][cWork] = 0;
-		new Profit = (random(650) + 505) + (GetPlayerSkillLevel(playerid) * 20);
-		va_SendClientMessage(playerid, COLOR_RED, "[!] Zaradio si $%d, placa ti je sjela na racun.", Profit);
-		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid);
-		BudgetToPlayerBankMoney(playerid, Profit);
-		PaydayInfo[playerid][pPayDayMoney] += Profit;
-		PlayerJob[playerid][pFreeWorks] -= 5;
-	} else {
-		if(IsPlayerInAnyVehicle(playerid)) 
-		{
-	    	if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 532) 
-			{
-            	GetVehicleVelocity(GetPlayerVehicleID(playerid), vx, vy, vz);
-            	if(( floatsqroot( ( ( vx * vx) + ( vy * vy)) + ( vz * vz)) * 181.5) >= 40.0) 
-				{
-					GameTextForPlayer(playerid, "~r~Vozite Prebrzo!", 500, 6);
-					return 1;
-				}
-				for(new j=0;j<90;j++) {
-					GetDynamicObjectPos(CombineInfo[playerid][cPlant][j], X, Y, Z);
-	            
-	            	if(GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 4.0) {
-						if(IsValidDynamicObject(CombineInfo[playerid][cPlant][j]))
-							DestroyDynamicObject(CombineInfo[playerid][cPlant][j]);
-							
-						CombineInfo[playerid][cPlantNumber] = CombineInfo[playerid][cPlantNumber] - 1;
-						CombineInfo[playerid][cHarvested] = CombineInfo[playerid][cHarvested] + 1;
-						PlayerPlaySound(playerid, 1056, 0.0, 0.0 , 10.0);
-						format(string, sizeof(string), "~w~%i/90", CombineInfo[playerid][cHarvested]);
-						return GameTextForPlayer(playerid, string, 400, 1);
-					}
-				}
-			}
-		}
-	}
-	return 1;
-}
 timer HarvestingSeed[30000](playerid)
 {
 	new

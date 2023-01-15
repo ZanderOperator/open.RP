@@ -8552,20 +8552,6 @@ CMD:jailjob(playerid,params[])
 	return true;
 }
 
-CMD:runaway(playerid, params[]){
-
-    if(!IsPlayerInRangeOfPoint(playerid, 1.5, 1179.6763,1562.2493,2093.5093)) return false;
-	SetPlayerPos(playerid, 218.0549, -400.3850, 1.2720);
-	SetPlayerInterior(playerid, 0);
-	SetPlayerVirtualWorld(playerid, 0);
- 	SendMessage(playerid, COLOR_RED,"Uspjesno ste pobjegli iz zatvora!");
- 	
- 	if(PlayerJail[playerid][pJailed] == 1)
-		defer RunAwayTimer();
-
-	return 1;
-}
-
 timer RunAwayTimer[120000]()
 {
 	foreach(new playerid : Player)
@@ -8581,5 +8567,19 @@ timer RunAwayTimer[120000]()
 			SendRadioMessage(1, COLOR_LIGHTBLUE, "*_______________________________________________________________________________*");
 		}
 	}
+	return 1;
+}
+
+CMD:runaway(playerid, params[]){
+
+    if(!IsPlayerInRangeOfPoint(playerid, 1.5, 1179.6763,1562.2493,2093.5093)) return false;
+	SetPlayerPos(playerid, 218.0549, -400.3850, 1.2720);
+	SetPlayerInterior(playerid, 0);
+	SetPlayerVirtualWorld(playerid, 0);
+ 	SendMessage(playerid, COLOR_RED,"Uspjesno ste pobjegli iz zatvora!");
+ 	
+ 	if(PlayerJail[playerid][pJailed] == 1)
+		defer RunAwayTimer();
+
 	return 1;
 }
