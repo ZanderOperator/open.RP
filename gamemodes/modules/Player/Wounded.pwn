@@ -58,6 +58,90 @@ static
 	Timer:PlayerBleedTimer[MAX_PLAYERS],
 	KilledBy[MAX_PLAYERS],
 	KilledReason[MAX_PLAYERS];
+
+
+/*
+	TTTTTT III M   M EEEE RRRR   SSS  
+	  TT    I  MM MM E    R   R S     
+	  TT    I  M M M EEE  RRRR   SSS  
+	  TT    I  M   M E    R R       S 
+	  TT   III M   M EEEE R  RR SSSS 
+*/
+
+timer ApplyVehicleFallAnim[200](playerid)
+{
+	ApplyAnimation(playerid, "PED","BIKE_fall_off", 4.1,0,1,1,1,0);
+	return 1;
+}
+
+timer ApplyVehicleFallOutAnim[2600](playerid)
+{
+	ApplyAnimationEx(playerid, "SWEET", "LaFin_Sweet", 4.0999, 0, 1, 1, 1, 0, 0);
+	return 1;
+}
+
+ptask WoundedPlayerCheck[1000](playerid)
+{
+	if(!Player_SafeSpawned(playerid))
+		return 1;
+	if(!PlayerWoundedAnim[playerid] || PlayerDeath[playerid][pKilled] != 0)
+		return 1;
+	
+	if(gettimestamp() >= PlayerWoundedSeconds[playerid])
+	{
+		PlayerWoundedSeconds[playerid] = 0;
+		PlayerWoundedAnim[playerid] = false;
+	}
+	return 1;
+}
+
+// timer OnPlayerBleed[500](playerid)
+// {
+// 	new
+// 		Float:health;
+// 	GetPlayerHealth(playerid, health);
+	
+// 	switch(Bit8_Get(r_PlayerWounded, playerid)) 
+// 	{
+// 		case PLAYER_WOUNDED_ARMS: 
+// 		{
+// 			if(( health - WOUND_ARMS_AMOUNT) <= 10.0) 
+// 			{
+// 				stop PlayerBleedTimer[playerid];
+// 				Bit8_Set(r_PlayerWounded, playerid, 0);
+				
+// 				SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,				999);
+// 				SetPlayerSkillLevel(playerid, WEAPONSKILL_M4, 				999);
+// 				SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 				999);
+// 				SetPlayerSkillLevel(playerid, WEAPONSKILL_SHOTGUN, 			999);
+// 				SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 	999);
+// 				return 1;
+// 			}
+// 			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
+// 		}
+// 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: 
+// 		{			
+// 			if(( health - WOUND_BODY_AMOUNT) <= 10.0) 
+// 			{
+// 				stop PlayerBleedTimer[playerid];
+// 				Bit8_Set(r_PlayerWounded, playerid, 0);
+// 				return 1;
+// 			}
+// 			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT);
+// 		}
+// 		case PLAYER_WOUNDED_HEAD: 
+// 		{
+// 			if(( health - WOUND_HEAD_AMOUNT) <= 10.0) 
+// 			{
+// 				stop PlayerBleedTimer[playerid];
+// 				Bit8_Set(r_PlayerWounded, playerid, 0);
+// 				return 1;
+// 			}
+// 			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT);
+// 		}
+// 	}
+// 	return 1;
+// }
 	
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
@@ -97,11 +181,11 @@ Player_SetWoundedAnim(playerid, bool:v)
 	  TT   EEEE X   X   TT   DDD  R  RR A  A   W W   SSSS
 */
 
-timer HidePlayerWoundedTDs[10000](playerid)
-{
-	DestroyPlayerWoundedTDs(playerid);
-	return 1;
-}
+// timer HidePlayerWoundedTDs[10000](playerid)
+// {
+// 	DestroyPlayerWoundedTDs(playerid);
+// 	return 1;
+// }
 
 stock ApplyWoundedAnimation(playerid, bodypart)
 {
@@ -524,34 +608,34 @@ stock static DestroyPlayerWoundedTDs(playerid)
 	return 1;
 }
 
-stock static CreatePlayerWoundedTDs(playerid)
-{
-	DestroyPlayerWoundedTDs(playerid);
-	WndedBcg[playerid] = CreatePlayerTextDraw(playerid, 310.450714, 364.491943, "usebox");
-	PlayerTextDrawLetterSize(playerid, WndedBcg[playerid], 0.000000, 4.070552);
-	PlayerTextDrawTextSize(playerid, WndedBcg[playerid], 135.099548, 0.000000);
-	PlayerTextDrawAlignment(playerid, WndedBcg[playerid], 1);
-	PlayerTextDrawColor(playerid, WndedBcg[playerid], 0);
-	PlayerTextDrawUseBox(playerid, WndedBcg[playerid], true);
-	PlayerTextDrawBoxColor(playerid, WndedBcg[playerid], 102);
-	PlayerTextDrawSetShadow(playerid, WndedBcg[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, WndedBcg[playerid], 0);
-	PlayerTextDrawFont(playerid, WndedBcg[playerid], 0);
-	PlayerTextDrawShow(playerid, WndedBcg[playerid]);
+// stock static CreatePlayerWoundedTDs(playerid)
+// {
+// 	DestroyPlayerWoundedTDs(playerid);
+// 	WndedBcg[playerid] = CreatePlayerTextDraw(playerid, 310.450714, 364.491943, "usebox");
+// 	PlayerTextDrawLetterSize(playerid, WndedBcg[playerid], 0.000000, 4.070552);
+// 	PlayerTextDrawTextSize(playerid, WndedBcg[playerid], 135.099548, 0.000000);
+// 	PlayerTextDrawAlignment(playerid, WndedBcg[playerid], 1);
+// 	PlayerTextDrawColor(playerid, WndedBcg[playerid], 0);
+// 	PlayerTextDrawUseBox(playerid, WndedBcg[playerid], true);
+// 	PlayerTextDrawBoxColor(playerid, WndedBcg[playerid], 102);
+// 	PlayerTextDrawSetShadow(playerid, WndedBcg[playerid], 0);
+// 	PlayerTextDrawSetOutline(playerid, WndedBcg[playerid], 0);
+// 	PlayerTextDrawFont(playerid, WndedBcg[playerid], 0);
+// 	PlayerTextDrawShow(playerid, WndedBcg[playerid]);
 	
-	WndedText[playerid] = CreatePlayerTextDraw(playerid, 144.090072, 372.623840, "~n~                        ~n~");
-	PlayerTextDrawLetterSize(playerid, WndedText[playerid], 0.219200, 0.966078);
-	PlayerTextDrawAlignment(playerid, WndedText[playerid], 1);
-	PlayerTextDrawColor(playerid, WndedText[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, WndedText[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, WndedText[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, WndedText[playerid], 51);
-	PlayerTextDrawFont(playerid, WndedText[playerid], 2);
-	PlayerTextDrawSetProportional(playerid, WndedText[playerid], 1);
-	PlayerTextDrawShow(playerid, WndedText[playerid]);
+// 	WndedText[playerid] = CreatePlayerTextDraw(playerid, 144.090072, 372.623840, "~n~                        ~n~");
+// 	PlayerTextDrawLetterSize(playerid, WndedText[playerid], 0.219200, 0.966078);
+// 	PlayerTextDrawAlignment(playerid, WndedText[playerid], 1);
+// 	PlayerTextDrawColor(playerid, WndedText[playerid], -1);
+// 	PlayerTextDrawSetShadow(playerid, WndedText[playerid], 0);
+// 	PlayerTextDrawSetOutline(playerid, WndedText[playerid], 1);
+// 	PlayerTextDrawBackgroundColor(playerid, WndedText[playerid], 51);
+// 	PlayerTextDrawFont(playerid, WndedText[playerid], 2);
+// 	PlayerTextDrawSetProportional(playerid, WndedText[playerid], 1);
+// 	PlayerTextDrawShow(playerid, WndedText[playerid]);
 	
-	defer HidePlayerWoundedTDs(playerid);
-}
+// 	defer HidePlayerWoundedTDs(playerid);
+// }
 /*
 	 SSS  Y   Y  SSS  
 	S      Y Y  S     
@@ -559,114 +643,31 @@ stock static CreatePlayerWoundedTDs(playerid)
 		S   Y       S 
 	SSSS    Y   SSSS
 */
-stock static SetPlayerBleeding(playerid, type)
-{
-	if(playerid == INVALID_PLAYER_ID) return 0;
-	new
-		Float:health;
-	GetPlayerHealth(playerid, health);
-	switch(type) {
-		case PLAYER_WOUNDED_LEG: {
-			SetPlayerHealth(playerid, health - WOUND_LEGS_AMOUNT);
-		}
-		case PLAYER_WOUNDED_ARMS: {
-			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
-			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[3500](playerid);
-		}
-		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {
-			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT);
-			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[2200](playerid);
-		}
-		 case PLAYER_WOUNDED_HEAD: {
-			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT);
-			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[1500](playerid);
-		}
-	}
-	return 1;
-}
-
-/*
-	TTTTTT III M   M EEEE RRRR   SSS  
-	  TT    I  MM MM E    R   R S     
-	  TT    I  M M M EEE  RRRR   SSS  
-	  TT    I  M   M E    R R       S 
-	  TT   III M   M EEEE R  RR SSSS 
-*/
-
-timer ApplyVehicleFallAnim[200](playerid)
-{
-	ApplyAnimation(playerid, "PED","BIKE_fall_off", 4.1,0,1,1,1,0);
-	return 1;
-}
-
-timer ApplyVehicleFallOutAnim[2600](playerid)
-{
-	ApplyAnimationEx(playerid, "SWEET", "LaFin_Sweet", 4.0999, 0, 1, 1, 1, 0, 0);
-	return 1;
-}
-
-ptask WoundedPlayerCheck[1000](playerid)
-{
-	if(!Player_SafeSpawned(playerid))
-		return 1;
-	if(!PlayerWoundedAnim[playerid] || PlayerDeath[playerid][pKilled] != 0)
-		return 1;
-	
-	if(gettimestamp() >= PlayerWoundedSeconds[playerid])
-	{
-		PlayerWoundedSeconds[playerid] = 0;
-		PlayerWoundedAnim[playerid] = false;
-	}
-	return 1;
-}
-
-timer OnPlayerBleed[500](playerid)
-{
-	new
-		Float:health;
-	GetPlayerHealth(playerid, health);
-	
-	switch(Bit8_Get(r_PlayerWounded, playerid)) 
-	{
-		case PLAYER_WOUNDED_ARMS: 
-		{
-			if(( health - WOUND_ARMS_AMOUNT) <= 10.0) 
-			{
-				stop PlayerBleedTimer[playerid];
-				Bit8_Set(r_PlayerWounded, playerid, 0);
-				
-				SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,				999);
-				SetPlayerSkillLevel(playerid, WEAPONSKILL_M4, 				999);
-				SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 				999);
-				SetPlayerSkillLevel(playerid, WEAPONSKILL_SHOTGUN, 			999);
-				SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 	999);
-				return 1;
-			}
-			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
-		}
-		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: 
-		{			
-			if(( health - WOUND_BODY_AMOUNT) <= 10.0) 
-			{
-				stop PlayerBleedTimer[playerid];
-				Bit8_Set(r_PlayerWounded, playerid, 0);
-				return 1;
-			}
-			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT);
-		}
-		case PLAYER_WOUNDED_HEAD: 
-		{
-			if(( health - WOUND_HEAD_AMOUNT) <= 10.0) 
-			{
-				stop PlayerBleedTimer[playerid];
-				Bit8_Set(r_PlayerWounded, playerid, 0);
-				return 1;
-			}
-			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT);
-		}
-	}
-	return 1;
-}
+// stock static SetPlayerBleeding(playerid, type)
+// {
+// 	if(playerid == INVALID_PLAYER_ID) return 0;
+// 	new
+// 		Float:health;
+// 	GetPlayerHealth(playerid, health);
+// 	switch(type) {
+// 		case PLAYER_WOUNDED_LEG: {
+// 			SetPlayerHealth(playerid, health - WOUND_LEGS_AMOUNT);
+// 		}
+// 		case PLAYER_WOUNDED_ARMS: {
+// 			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
+// 			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[3500](playerid);
+// 		}
+// 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {
+// 			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT);
+// 			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[2200](playerid);
+// 		}
+// 		 case PLAYER_WOUNDED_HEAD: {
+// 			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT);
+// 			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[1500](playerid);
+// 		}
+// 	}
+// 	return 1;
+// }
 
 /*
 	##     ##  #######   #######  ##    ##  ######  

@@ -929,6 +929,44 @@ timer FadeRouletteTD[2000](playerid)
 	return 1;
 }
 
+timer RouletteTimer[500](playerid)
+{
+	new
+		number = minrand(0, 36);
+	ShowRouletteTD(playerid, number);
+	RouletteCount[playerid]++;
+	
+	PlayerPlaySound(playerid, 1063, 0.0, 0.0, 0.0);
+	PlayerPlaySound(playerid, 33400, 0.0, 0.0, 0.0);
+	
+	if(RouletteCount[playerid] == 23)
+	{
+		PlayerPlaySound(playerid, 33401, 0.0, 0.0, 0.0);
+	}
+	else if(RouletteCount[playerid] == 25)
+	{
+		DestroyRuletPotTDs(playerid);
+		stop GlobalRoulette[playerid];
+		defer FadeRouletteTD(playerid);
+		
+		PlayRouletteNumberSound(playerid, number);
+		if(!IsPlayerWinner(playerid, number))
+		{
+			va_GameTextForPlayer( playerid, "~r~Loser~n~~w~%d$", 1500, 6, RoulettWholeBet[playerid]);
+		}
+		else
+		{
+			PlayerPlaySound(playerid, 5449, 0.0, 0.0, 0.0); 
+			//AC_GivePlayerMoney(playerid, RoulettWholeBet[playerid]);
+			va_SendClientMessage(playerid, 0xF4D942AA, "RULET: %d", number);
+		}
+		ResetRuletArrays(playerid, true);
+		ResetRuletTable(playerid);
+		RouletteCount[playerid] = 0;
+	}
+	return 1;
+}
+
 timer RuletWaitingTimer[1000](playerid)
 {
 	RuletWaitingTime[playerid]--;
@@ -1002,44 +1040,6 @@ static stock PlayRouletteNumberSound(playerid, number)
 		case 35: 	PlayerPlaySound( playerid, 5436, 0.0, 0.0, 0.0);  // Black, 35
 		case 36: 	PlayerPlaySound( playerid, 5437, 0.0, 0.0, 0.0);  // Red - 36
 	}
-}
-
-timer RouletteTimer[500](playerid)
-{
-	new
-		number = minrand(0, 36);
-	ShowRouletteTD(playerid, number);
-	RouletteCount[playerid]++;
-	
-	PlayerPlaySound(playerid, 1063, 0.0, 0.0, 0.0);
-	PlayerPlaySound(playerid, 33400, 0.0, 0.0, 0.0);
-	
-	if(RouletteCount[playerid] == 23)
-	{
-		PlayerPlaySound(playerid, 33401, 0.0, 0.0, 0.0);
-	}
-	else if(RouletteCount[playerid] == 25)
-	{
-		DestroyRuletPotTDs(playerid);
-		stop GlobalRoulette[playerid];
-		defer FadeRouletteTD(playerid);
-		
-		PlayRouletteNumberSound(playerid, number);
-		if(!IsPlayerWinner(playerid, number))
-		{
-			va_GameTextForPlayer( playerid, "~r~Loser~n~~w~%d$", 1500, 6, RoulettWholeBet[playerid]);
-		}
-		else
-		{
-			PlayerPlaySound(playerid, 5449, 0.0, 0.0, 0.0); 
-			//AC_GivePlayerMoney(playerid, RoulettWholeBet[playerid]);
-			va_SendClientMessage(playerid, 0xF4D942AA, "RULET: %d", number);
-		}
-		ResetRuletArrays(playerid, true);
-		ResetRuletTable(playerid);
-		RouletteCount[playerid] = 0;
-	}
-	return 1;
 }
 
 timer FadeRuletWagesTD[5000](playerid)

@@ -26,6 +26,43 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 
+timer CalcNitroCap[800](playerid, vehicleid)
+{
+	if(IsPlayerInRangeOfPoint(playerid, 2.0, nospos[playerid][0], nospos[playerid][1], nospos[playerid][2])) // AFK CHECK da se ne trosi kad se alt taba
+	{
+		stop NosTimer[playerid];
+		RemoveVehicleComponent(vehicleid, 1010);
+		return 0;
+	}
+
+	nospos[playerid][0] = 0.0;
+	nospos[playerid][1] = 0.0;
+	nospos[playerid][2] = 0.0;
+	
+	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+	{
+		stop NosTimer[playerid];
+		return 0;
+	}
+	if(VehicleInfo[vehicleid][vNOSCap] > 0)
+	{
+		if(!IsPlayerAdmin(playerid))
+			VehicleInfo[vehicleid][vNOSCap] -= 5;
+		else
+			VehicleInfo[vehicleid][vNOSCap] -= 1;
+		
+		ShowNosCap(playerid);
+	}
+	else
+	{
+		stop NosTimer[playerid];
+		RemoveVehicleComponent(vehicleid, 1010);
+		VehicleInfo[vehicleid][vNOSCap] = 0;
+		ShowNosCap(playerid);
+	}
+	return 1;
+}
+
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
@@ -82,43 +119,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	{
 		stop NosTimer[playerid];
 		DestroyNOSTD(playerid);
-	}
-	return 1;
-}
-
-timer CalcNitroCap[800](playerid, vehicleid)
-{
-	if(IsPlayerInRangeOfPoint(playerid, 2.0, nospos[playerid][0], nospos[playerid][1], nospos[playerid][2])) // AFK CHECK da se ne trosi kad se alt taba
-	{
-		stop NosTimer[playerid];
-		RemoveVehicleComponent(vehicleid, 1010);
-		return 0;
-	}
-
-	nospos[playerid][0] = 0.0;
-	nospos[playerid][1] = 0.0;
-	nospos[playerid][2] = 0.0;
-	
-	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
-	{
-		stop NosTimer[playerid];
-		return 0;
-	}
-	if(VehicleInfo[vehicleid][vNOSCap] > 0)
-	{
-		if(!IsPlayerAdmin(playerid))
-			VehicleInfo[vehicleid][vNOSCap] -= 5;
-		else
-			VehicleInfo[vehicleid][vNOSCap] -= 1;
-		
-		ShowNosCap(playerid);
-	}
-	else
-	{
-		stop NosTimer[playerid];
-		RemoveVehicleComponent(vehicleid, 1010);
-		VehicleInfo[vehicleid][vNOSCap] = 0;
-		ShowNosCap(playerid);
 	}
 	return 1;
 }

@@ -32,6 +32,14 @@ new
 	Bit1:r_BombAccept<MAX_PLAYERS>		= { Bit1:false, ... },
 	Bit4:r_BombType<MAX_PLAYERS>		= { Bit4:0, ... };	
 
+timer OnTimerBombTicks[1000](playerid)
+{
+	if(--BombInfo[playerid][bTime] <= 0) {
+		DetonateBomb(playerid);
+		stop BombInfo[playerid][bTimer];
+	}
+}
+
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
@@ -116,14 +124,6 @@ stock DetonateBomb(playerid)
 	#endif
 	ResetBombArrays(playerid);
 	return 1;
-}
-
-timer OnTimerBombTicks[1000](playerid)
-{
-	if(--BombInfo[playerid][bTime] <= 0) {
-		DetonateBomb(playerid);
-		stop BombInfo[playerid][bTimer];
-	}
 }
 
 /*

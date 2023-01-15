@@ -298,7 +298,7 @@ minrand(min, max)
     return random(max - min) + min;
 }
 
-IsNumeric(const string[])
+stock IsNumeric(const string[])
 {
 	for(new i = 0, j = strlen(string); i < j; i++)
 	{

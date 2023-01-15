@@ -132,6 +132,113 @@ static const Float:trees[][] =
 };
 // MAYBE
 
+/*
+					  _______ _____ __  __ ______ _____   _____
+					 |__   __|_   _|  \/  |  ____|  __ \ / ____|
+					    | |    | | | \  / | |__  | |__) | (___
+					    | |    | | | |\/| |  __| |  _  / \___ \
+					    | |   _| |_| |  | | |____| | \ \ ____) |
+					    |_|  |_____|_|  |_|______|_|  \_\_____/
+
+*/
+
+timer RespawnTree[TREE_RESPAWN_TIME * 60 * 1000](treeid)
+{
+	if(TreeeInfo[treeid][cut] != true)
+	    return 0;
+		
+	TreeeInfo[treeid][objid] = CreateDynamicObject(617, trees[treeid][0], trees[treeid][1], trees[treeid][2], 0.0, 0.0, trees[treeid][3], -1, -1, -1, TREE_RENDER_DIST);
+
+	TreeeInfo[treeid][cut] = false;
+	TreeeInfo[treeid][w_type] = minrand(1, 5);
+	TreeeInfo[treeid][height] = 9 + random(20 - 9);
+	return 1;
+}
+
+timer CutTree[1000](playerid, id, bool:situation)
+{
+	if(CuttingTree[playerid] != id)
+	{
+	    stop TreeT[playerid];
+	    return 0;
+	}
+	    
+    static
+		cstr[34];
+		
+	format(cstr, sizeof(cstr), "~w~Preostalo %s%d ~w~sekundi.", (situation) ? ("~r~") : ("~g~"), CutTreeSec[playerid]);
+	GameTextForPlayer(playerid, cstr, 1000, 3);
+
+	switch(situation)
+	{
+	    case false:
+		{
+			if(-- CutTreeSec[playerid] <= 0)
+			{
+  				MoveDynamicObject(TreeeInfo[id][objid], trees[id][0] + 0.1, trees[id][1] + 0.1, trees[id][2], 0.1, 76.0, 0.0, trees[id][3]);
+
+				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prerezali ste drvo!");
+				
+				ClearAnimations(playerid, 1);
+				
+				TogglePlayerControllable(playerid, 1);
+				
+				RemovePlayerAttachedObject(playerid, 8);
+				RemovePlayerAttachedObject(playerid, 9);
+				
+				defer RespawnTree(id);
+				
+				stop TreeT[playerid];
+			    return 1;
+			}
+			CreateLeaves(id);
+	    }
+	    case true:
+	    {
+	        if(IsPlayerInRangeOfPoint(playerid, 20.0, trees[id][0], trees[id][1], trees[id][2]))
+	        {
+				if(-- CutTreeSec[playerid] <= 0)
+				{
+				    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prerezali ste drva na komade! Utovarite drva u vase vozilo.");
+				    stop TreeT[playerid];
+
+                    ClearAnimations(playerid, 1);
+
+					TogglePlayerControllable(playerid, 1);
+                    
+                    pWood[playerid] = TreeeInfo[id][height] * 10;
+                    pWoodT[playerid] = TreeeInfo[id][w_type];
+                    
+                    TreeeInfo[id][cut] = true;
+                    
+					if(IsValidDynamicCP(TreeeInfo[id][cpid]))
+	    				DestroyDynamicCP(TreeeInfo[id][cpid]);
+	    				
+                    if(IsValidDynamicObject(TreeeInfo[id][objid]))
+	 					DestroyDynamicObject(TreeeInfo[id][objid]);
+
+					ResetTreeVars(playerid);
+					
+					RemovePlayerAttachedObject(playerid, 8);
+					RemovePlayerAttachedObject(playerid, 9);
+
+					SetPlayerAttachedObject(playerid, 9, 1463, 6, 0.093999, 0.148000, -0.175000, -106.200126, -3.499998, 81.799995, 0.528000, 0.406000, 0.534999);
+					ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.1, 0, 1, 1, 1, 1, 1, 0);
+					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
+					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
+		
+					return 1;
+				}
+	        }
+	        else
+	        {
+	            SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prekinuli ste posao!");
+	            cmd_stopcuttree2(playerid);
+	        }
+	    }
+	}
+	return 0;
+}
 
 /*
 				##     ##  #######   #######  ##    ##  ######
@@ -302,7 +409,7 @@ DropWood(playerid)
 			    l_str[76];
 			    
 			format(l_str, sizeof(l_str), "Kucajte /pickupwood da bi pokupili drva!\n\n%s[%d]", GetWoodName(DroppedWoodInfo[w][wood]), DroppedWoodInfo[w][wamount]);
-			DroppedWoodInfo[w][l_id] = Create3DTextLabel(l_str, COLOR_LIGHTBLUE, DroppedWoodInfo[w][dwx], DroppedWoodInfo[w][dwy], DroppedWoodInfo[w][dwz], 10.0, 0, 0);
+			DroppedWoodInfo[w][l_id] = Create3DTextLabel(l_str, COLOR_LIGHTBLUE, DroppedWoodInfo[w][dwx], DroppedWoodInfo[w][dwy], DroppedWoodInfo[w][dwz], 10.0, false, false);
 
 			pWood[playerid] = 0;
 			pWoodT[playerid] = 0;
@@ -496,113 +603,6 @@ CreateLeaves(lid)
 	    DestroyObject(lobj);
 
 	lobj = CreateObject(18734, trees[lid][0], trees[lid][1], trees[lid][2] + 4, 0.0, 0.0, trees[lid][3], TREE_RENDER_DIST);
-	return 1;
-}
-/*
-					  _______ _____ __  __ ______ _____   _____
-					 |__   __|_   _|  \/  |  ____|  __ \ / ____|
-					    | |    | | | \  / | |__  | |__) | (___
-					    | |    | | | |\/| |  __| |  _  / \___ \
-					    | |   _| |_| |  | | |____| | \ \ ____) |
-					    |_|  |_____|_|  |_|______|_|  \_\_____/
-
-*/
-
-timer CutTree[1000](playerid, id, bool:situation)
-{
-	if(CuttingTree[playerid] != id)
-	{
-	    stop TreeT[playerid];
-	    return 0;
-	}
-	    
-    static
-		cstr[34];
-		
-	format(cstr, sizeof(cstr), "~w~Preostalo %s%d ~w~sekundi.", (situation) ? ("~r~") : ("~g~"), CutTreeSec[playerid]);
-	GameTextForPlayer(playerid, cstr, 1000, 3);
-
-	switch(situation)
-	{
-	    case false:
-		{
-			if(-- CutTreeSec[playerid] <= 0)
-			{
-  				MoveDynamicObject(TreeeInfo[id][objid], trees[id][0] + 0.1, trees[id][1] + 0.1, trees[id][2], 0.1, 76.0, 0.0, trees[id][3]);
-
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prerezali ste drvo!");
-				
-				ClearAnimations(playerid, 1);
-				
-				TogglePlayerControllable(playerid, 1);
-				
-				RemovePlayerAttachedObject(playerid, 8);
-				RemovePlayerAttachedObject(playerid, 9);
-				
-				defer RespawnTree(id);
-				
-				stop TreeT[playerid];
-			    return 1;
-			}
-			CreateLeaves(id);
-	    }
-	    case true:
-	    {
-	        if(IsPlayerInRangeOfPoint(playerid, 20.0, trees[id][0], trees[id][1], trees[id][2]))
-	        {
-				if(-- CutTreeSec[playerid] <= 0)
-				{
-				    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prerezali ste drva na komade! Utovarite drva u vase vozilo.");
-				    stop TreeT[playerid];
-
-                    ClearAnimations(playerid, 1);
-
-					TogglePlayerControllable(playerid, 1);
-                    
-                    pWood[playerid] = TreeeInfo[id][height] * 10;
-                    pWoodT[playerid] = TreeeInfo[id][w_type];
-                    
-                    TreeeInfo[id][cut] = true;
-                    
-					if(IsValidDynamicCP(TreeeInfo[id][cpid]))
-	    				DestroyDynamicCP(TreeeInfo[id][cpid]);
-	    				
-                    if(IsValidDynamicObject(TreeeInfo[id][objid]))
-	 					DestroyDynamicObject(TreeeInfo[id][objid]);
-
-					ResetTreeVars(playerid);
-					
-					RemovePlayerAttachedObject(playerid, 8);
-					RemovePlayerAttachedObject(playerid, 9);
-
-					SetPlayerAttachedObject(playerid, 9, 1463, 6, 0.093999, 0.148000, -0.175000, -106.200126, -3.499998, 81.799995, 0.528000, 0.406000, 0.534999);
-					ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.1, 0, 1, 1, 1, 1, 1, 0);
-					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-		
-					return 1;
-				}
-	        }
-	        else
-	        {
-	            SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prekinuli ste posao!");
-	            cmd_stopcuttree2(playerid);
-	        }
-	    }
-	}
-	return 0;
-}
-
-timer RespawnTree[TREE_RESPAWN_TIME * 60 * 1000](treeid)
-{
-	if(TreeeInfo[treeid][cut] != true)
-	    return 0;
-		
-	TreeeInfo[treeid][objid] = CreateDynamicObject(617, trees[treeid][0], trees[treeid][1], trees[treeid][2], 0.0, 0.0, trees[treeid][3], -1, -1, -1, TREE_RENDER_DIST);
-
-	TreeeInfo[treeid][cut] = false;
-	TreeeInfo[treeid][w_type] = minrand(1, 5);
-	TreeeInfo[treeid][height] = 9 + random(20 - 9);
 	return 1;
 }
 

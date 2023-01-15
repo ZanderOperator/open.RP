@@ -10,7 +10,7 @@
 	   ###    ##     ## ##     ##  ######
 */
 
-#define MALL_MED_DD			200.0
+#define MALL_MED_DD			350.0
 #define MALL_SMALL_DD		150.0
 
 /*

@@ -31,6 +31,28 @@ static
 
 
 /*
+	######## #### ##     ## ######## ########   ######  
+	   ##     ##  ###   ### ##       ##     ## ##    ## 
+	   ##     ##  #### #### ##       ##     ## ##       
+	   ##     ##  ## ### ## ######   ########   ######  
+	   ##     ##  ##     ## ##       ##   ##         ## 
+	   ##     ##  ##     ## ##       ##    ##  ##    ## 
+	   ##    #### ##     ## ######## ##     ##  ######  
+*/
+timer ClearFlashEffect[2000](playerid)
+{
+    DestroyFlashTD(playerid);
+    return 1;
+}
+
+timer ResetPlayerDrunkLevel[7500](playerid)
+{
+    SetPlayerDrunkLevel(playerid, 0);
+    return 1;
+}
+
+
+/*
     ##     ##  #######   #######  ##    ## 
     ##     ## ##     ## ##     ## ##   ##  
     ##     ## ##     ## ##     ## ##  ##   
@@ -79,18 +101,6 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
-
-timer ClearFlashEffect[2000](playerid)
-{
-    DestroyFlashTD(playerid);
-    return 1;
-}
-
-timer ResetPlayerDrunkLevel[7500](playerid)
-{
-    SetPlayerDrunkLevel(playerid, 0);
-    return 1;
-}
 
 stock DestroyFlashTD(playerid)
 {

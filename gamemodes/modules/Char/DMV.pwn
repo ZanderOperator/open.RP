@@ -104,7 +104,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(GetPlayerMoney(playerid) < 3000) 
 						return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 					
-					ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za letenje!\nZelimo vam siguran i ugodan let.", "Exit", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za letenje!\nZelimo vam siguran i ugodan let.", "Exit", "");
 					LicenseInfo[playerid][pFlyLic] = 1;
 					
 					PlayerToBudgetMoney(playerid, 3000);
@@ -114,7 +114,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(GetPlayerMoney(playerid) < 3000) 
 						return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 					
-					ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Kupio si dozvolu za brod!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Kupio si dozvolu za brod!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
 					LicenseInfo[playerid][pBoatLic] = 1;
 					
 					PlayerToBudgetMoney(playerid, 3000);
@@ -124,7 +124,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(GetPlayerMoney(playerid) < 800) 
 						return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (800$).");
 					
-					ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za ribolov!.", "Exit", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za ribolov!.", "Exit", "");
 					LicenseInfo[playerid][pFishLic] = 1;
 					
 					PlayerToBudgetMoney(playerid, 800);
@@ -152,7 +152,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					else
 					{
-						ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Cestitamo, prosli ste ispit za vozacku dozvolu!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
+						ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Cestitamo, prosli ste ispit za vozacku dozvolu!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
 						
 						LicenseInfo[playerid][pCarLic] = 1;
 						

@@ -62,6 +62,59 @@ static
     bool:RaceCreated[MAX_PLAYERS];
 
 /*
+    ######## #### ##     ## ######## ########   ######  
+       ##     ##  ###   ### ##       ##     ## ##    ## 
+       ##     ##  #### #### ##       ##     ## ##       
+       ##     ##  ## ### ## ######   ########   ######  
+       ##     ##  ##     ## ##       ##   ##         ## 
+       ##     ##  ##     ## ##       ##    ##  ##    ## 
+       ##    #### ##     ## ######## ##     ##  ######  
+*/
+
+timer StopRacingSound[8000](playerid)
+{
+    PlayerPlaySound(playerid, 1098, 0.0, 0.0, 0.0);
+    return 1;
+}
+
+timer RacingCounter[1000](playerid)
+{
+    RacingInfo[playerid][rdCounter]--;
+    if(RacingInfo[playerid][rdCounter] != 0)
+    {
+        for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
+        {
+            new racer = RacingInfo[playerid][rdContesters][i];
+            if(racer == -1) continue;
+
+            va_GameTextForPlayer(racer, "~y~%d", 1000, 4, RacingInfo[playerid][rdCounter]);
+            PlayerPlaySound(racer, 1056, 0.0, 0.0, 0.0);
+        }
+    }
+    else
+    {
+        RacingInfo[playerid][rdFinished][0] = -1;
+        RacingInfo[playerid][rdFinished][1] = -1;
+        RacingInfo[playerid][rdFinished][2] = -1;
+        RacingInfo[playerid][rdFinished][3] = -1;
+
+        for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
+        {
+            new racer = RacingInfo[playerid][rdContesters][i];
+            if(racer == -1) continue;
+
+            GameTextForPlayer(racer, "~g~GO GO GO", 2500, 4);
+            PlayerPlaySound(racer, 1057, 0.0, 0.0, 0.0);
+            CurrentRaceCP[racer] = 0;
+            SetPlayerRaceCheckpoint(racer, 0, RacingInfo[playerid][rdPosX][0], RacingInfo[playerid][rdPosY][0], RacingInfo[playerid][rdPosZ][0], RacingInfo[playerid][rdPosX][1], RacingInfo[playerid][rdPosY][1], RacingInfo[playerid][rdPosZ][1], RACING_CP_SIZE);
+        }
+
+        stop RacingInfo[playerid][rdTimer];
+    }
+    return 1;
+}
+
+/*
     ######## ##     ## ##    ##  ######   ######  
     ##       ##     ## ###   ## ##    ## ##    ## 
     ##       ##     ## ####  ## ##       ##       
@@ -245,60 +298,6 @@ stock ResetRacerVars(playerid)
     RacerSlot     [playerid] = -1;
     CurrentRaceCP [playerid] = -1;
     InRace        [playerid] = false;
-    return 1;
-}
-
-
-/*
-    ######## #### ##     ## ######## ########   ######  
-       ##     ##  ###   ### ##       ##     ## ##    ## 
-       ##     ##  #### #### ##       ##     ## ##       
-       ##     ##  ## ### ## ######   ########   ######  
-       ##     ##  ##     ## ##       ##   ##         ## 
-       ##     ##  ##     ## ##       ##    ##  ##    ## 
-       ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer StopRacingSound[8000](playerid)
-{
-    PlayerPlaySound(playerid, 1098, 0.0, 0.0, 0.0);
-    return 1;
-}
-
-timer RacingCounter[1000](playerid)
-{
-    RacingInfo[playerid][rdCounter]--;
-    if(RacingInfo[playerid][rdCounter] != 0)
-    {
-        for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
-        {
-            new racer = RacingInfo[playerid][rdContesters][i];
-            if(racer == -1) continue;
-
-            va_GameTextForPlayer(racer, "~y~%d", 1000, 4, RacingInfo[playerid][rdCounter]);
-            PlayerPlaySound(racer, 1056, 0.0, 0.0, 0.0);
-        }
-    }
-    else
-    {
-        RacingInfo[playerid][rdFinished][0] = -1;
-        RacingInfo[playerid][rdFinished][1] = -1;
-        RacingInfo[playerid][rdFinished][2] = -1;
-        RacingInfo[playerid][rdFinished][3] = -1;
-
-        for (new i = 0; i < MAX_RACING_CONTESTERS; i++)
-        {
-            new racer = RacingInfo[playerid][rdContesters][i];
-            if(racer == -1) continue;
-
-            GameTextForPlayer(racer, "~g~GO GO GO", 2500, 4);
-            PlayerPlaySound(racer, 1057, 0.0, 0.0, 0.0);
-            CurrentRaceCP[racer] = 0;
-            SetPlayerRaceCheckpoint(racer, 0, RacingInfo[playerid][rdPosX][0], RacingInfo[playerid][rdPosY][0], RacingInfo[playerid][rdPosZ][0], RacingInfo[playerid][rdPosX][1], RacingInfo[playerid][rdPosY][1], RacingInfo[playerid][rdPosZ][1], RACING_CP_SIZE);
-        }
-
-        stop RacingInfo[playerid][rdTimer];
-    }
     return 1;
 }
 

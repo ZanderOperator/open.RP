@@ -57,11 +57,13 @@
 
 // Fixes.inc
 #define FIXES_GetMaxPlayersMsg 		0
-#define FIXES_ServerVarMsg 			0
-#define FIX_OnDialogResponse		0
-#define FIX_GetPlayerDialog			0
-#define	MAX_IP_CONNECTS 			3
-#define FIX_file_inc 				0
+#define FIXES_ServerVarMsg 			  0
+#define FIX_OnDialogResponse		  0
+#define FIX_GetPlayerDialog			  0
+#define	MAX_IP_CONNECTS 			    3
+#define FIX_file_inc 				      0
+#define FIX_bool_tags             0   // Ignore bool fixes
+//#define FIX_vehicles_inc          0
 
 /*
 																			
@@ -110,6 +112,11 @@
 // After sampctl p ensure check: CGEN_MEMORY(needs to be 90000) and MAX_COMMANDS(needs to be 1024) 
 #define CGEN_MEMORY				(90000)		// Internal Define - code parser/generator memory
 #define MAX_COMMANDS			(1024)		// Internal Define - y_commands
+
+
+// FSelection custom setting //
+#define FSELECTION_AUTO_HIDE  // Hide the fSelection menu after model selection!
+///////////////////////////////
 
 #include <YSI_Coding\y_hooks>
 #include <YSI_Coding\y_inline>

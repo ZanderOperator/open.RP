@@ -113,8 +113,8 @@ stock GetNearDroppedWeapon(playerid)
 			new string[80];
 			format(string, sizeof(string), "%s uzima nesto sa poda.", GetName(playerid));
 			ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
-			new next;
-			Iter_SafeRemove(WeaponsDropped, slotid, next);
+			
+			Iter_Remove(WeaponsDropped, slotid);
 			return 1;
 		}
 	}

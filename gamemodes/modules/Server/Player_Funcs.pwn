@@ -125,12 +125,12 @@ stock AC_TogglePlayerSpectating(playerid, yon)
 #endif
 #define TogglePlayerSpectating AC_TogglePlayerSpectating
 
-va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>)
-{
-	new d_string[4096];
-	va_format(d_string, sizeof(d_string), fmat, va_start<7>);
-	return ShowPlayerDialog(playerid, dialogid, style, caption, d_string, button1, button2);
-}
+// va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>) // STATUS_ACCESS_VIOLATION FIX
+// {
+// 	new d_string[1024];
+// 	va_format(d_string, sizeof(d_string), fmat, va_start<7>);
+// 	return ShowPlayerDialog(playerid, dialogid, style, caption, d_string, button1, button2);
+// }
 
 SendErrorMessage(playerid, smsgstring[])
 {

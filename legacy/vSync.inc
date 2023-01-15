@@ -40,8 +40,14 @@
 #define MAX_VEHICLE_NAME			27
 #define MAX_VEHICLE_NUMBERPLATE		32
 #define INVALID_PAINTJOB_ID 		3
-#define CARMODTYPE_FRONT_BULLBAR 	14
-#define CARMODTYPE_REAR_BULLBAR 	15
+
+#if !defined CARMODTYPE_FRONT_BULLBAR // Fix for already defined stuff
+  #define CARMODTYPE_FRONT_BULLBAR 	14
+#endif
+
+#if !defined CARMODTYPE_REAR_BULLBAR // Fix for already defined stuff
+  #define CARMODTYPE_REAR_BULLBAR 	15
+#endif
 
 #define IsComponentRearBullbar(%0)	(%0 == 1109 || %0 == 1110)
 
@@ -600,18 +606,18 @@ static Float:vSync_gPaynSprayPos[10][3] = {
 
 
 // ================================== [HOOKED FUNCTIONS] ================================== //
-stock vSync_CreateVehicle(modelid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren=0)
+stock vSync_CreateVehicle(modelid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, siren=0)
 {
 	// Check vehicle's model ID.
 	if(!(400 <= modelid <= 611))
 	{
 		return INVALID_VEHICLE_ID;
 	}
-	
+	new bool:addsiren = (siren ? true : false);
 	// Add siren to the Firetruck (ladder variant), by default it's disabled.
 	if(modelid == 544)
 	{
-		addsiren = 1;
+		addsiren = true;
 	}
 
 	// Generate random colors (if it proceeds)
@@ -635,7 +641,6 @@ stock vSync_CreateVehicle(modelid, Float:x, Float:y, Float:z, Float:rotation, co
 			color2 = vSync_gVehDefaultColors[modelid - 400][rand_col + 1];
 		}
 	}
-
 	new vehicleid = CreateVehicle(modelid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren);
 
 	// Check vehicle's ID (to avoid using INVALID_VEHICLE_ID as array index).
@@ -739,18 +744,18 @@ stock vSync_AddStaticVehicle(modelid, Float:x, Float:y, Float:z, Float:rotation,
 #endif
 #define AddStaticVehicle vSync_AddStaticVehicle
 
-stock vSync_AddStaticVehicleEx(modelid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren=0)
+stock vSync_AddStaticVehicleEx(modelid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, siren=0)
 {
 	// Check vehicle's model ID.
 	if(!(400 <= modelid <= 611))
 	{
 		return INVALID_VEHICLE_ID;
 	}
-	
+	new bool:addsiren = (siren ? true : false);
 	// Add siren to the Firetruck (ladder variant), by default it's disabled.
 	if(modelid == 544)
 	{
-		addsiren = 1;
+		addsiren = true;
 	}
 
 	// Generate random colors (if it proceeds)
@@ -1448,7 +1453,7 @@ stock GetVehicleSiren(vehicleid)
 	return 0;
 }
 
-stock GetVehicleSeats(modelid)
+hook GetVehicleSeats(modelid)  // Cause the newest fixes.inc implemented the GetVehicleSeats function
 {
 	if(400 <= modelid <= 611)
 	{

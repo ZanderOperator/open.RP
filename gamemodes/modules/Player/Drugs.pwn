@@ -41,7 +41,7 @@ enum e_V_DRUGS
 new
 	VehicleDrugs[MAX_VEHICLES][e_V_DRUGS];
 	
-	
+
 enum pckg_Drugs
 {	
 	pcDrug,
@@ -237,15 +237,14 @@ ListPlayerDrugs(playerid, owner)
 	new
 		dstring[59],
 		drugall[274],
-		titled[MAX_PLAYER_NAME + 10],
+		titled[37],
 		d = 0;
 		
 	for(new s = 0; s < MAX_PLAYER_DRUGS; ++s)
-	{
+	{ 
 		if(PlayerDrugs[owner][dCode][s] != 0)
 		{
 			format(dstring, sizeof(dstring), "%sSLOT %d: %s [%.2f %s]", (!d) ? ("") : ("\n"), s+1, drugs[PlayerDrugs[owner][dCode][s]][dName], PlayerDrugs[owner][dAmount][s], (drugs[PlayerDrugs[owner][dCode][s]][dEffect] < 4) ? ("grama") : ("tableta"));
-
 			strcat(drugall, dstring, sizeof(drugall));
 			
 			++d;
@@ -258,7 +257,7 @@ ListPlayerDrugs(playerid, owner)
 		return SendClientMessage(playerid, COLOR_RED, "Igrac nema droge!");
 		
 	format(titled, 37, "Droga od %s", GetName(owner));
-	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
 	
 	return 1;
 }
@@ -268,7 +267,7 @@ ListVehicleDrugs(playerid, vehicleid)
 	new
 		dstring[79],
 		drugall[79 * 10],
-		titled[MAX_PLAYER_NAME + 10],
+		titled[37],
 		y = 0;
 		
 	for(new d = 0; d < MAX_VEHICLE_DRUGS; ++d)
@@ -294,7 +293,7 @@ ListVehicleDrugs(playerid, vehicleid)
 	GetVehicleNameByModel(GetVehicleModel(vehicleid), vName, MAX_VEHICLE_NAME);
 	
 	format(titled, 37, "Droga u %s[%d]{%d}", vName, vehicleid, VehicleInfo[vehicleid][vSQLID]);
-	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
 	return 1;
 }
 

@@ -355,10 +355,12 @@ public LoadPlayerData(playerid)
 		if(unban_time == -1)
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
-				"[%s]: You have been banned for life on this server!\n\
+				"[%s]: You have been permanently banned from this server!\n\
+          Reason: %s\n\
 					If you think your ban was unfair/a mistake, please post an unban request on\n\
 					\n%s",
 				SERVER_NAME,
+        ban_reason,
 				WEB_URL
 			);
 			BanMessage(playerid);
@@ -378,7 +380,7 @@ public LoadPlayerData(playerid)
 		else if(unban_time == -3)
 		{
 		    va_SendClientMessage( playerid, COLOR_RED, 
-				"[%s]: Your account has been locked by security system!",
+				"[%s]: Your account has been locked by the security system!",
 				SERVER_NAME
 			);
 		    va_SendClientMessage( playerid, COLOR_RED,
@@ -441,8 +443,8 @@ public LoadPlayerData(playerid)
                 
 				va_SendClientMessage(playerid, 
 					COLOR_RED, 
-					"[%s]: Semms to be you are using unknown computer to log in to our server! \n\
-						Please input security answer to continue.",
+					"[%s]: Seems to be you are using unknown computer to log in to our server! \n\
+						Please input your security answer to continue.",
 					SERVER_NAME
 				);
 
@@ -458,7 +460,7 @@ public LoadPlayerData(playerid)
                 return 1;
             }
         }
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Please wait for 5 seconds. Loading in progres...");
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Please wait for 5 seconds. Loading in progress...");
 		CrashTimer[playerid] = defer FinishPlayerSpawn(playerid);
     }
     return 1;
@@ -489,7 +491,16 @@ static RegisterPlayer(playerid)
 		PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
 		PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
 		PlayerKeys[playerid][pVehicleKey]		= -1;
-		
+
+		mysql_fquery(SQL_Handle(), // Inserting the players appearance inside the db
+		  "INSERT INTO \n\
+		      player_appearance \n\
+		  (sqlid, skin, walkstyle, accent, look) \n\
+		  VALUES \n\
+		      ('%d', '29', '0', '', '')",
+		  PlayerInfo[playerid][pSQLID]
+		);		
+
 		UpdateRegisteredPassword(playerid);
 		FirstSaving[playerid] = true; 
 		SavePlayerData(playerid);
@@ -610,7 +621,7 @@ SafeSpawnPlayer(playerid)
 		SavePlayerVIP(playerid);
 	}
 
-	if(isnull(PlayerInfo[playerid][pSecQuestAnswer]) && isnull(PlayerInfo[playerid][pEmail]))
+	if(isnull(PlayerInfo[playerid][pSecQuestAnswer]) || isnull(PlayerInfo[playerid][pEmail]))
 	{
 		SendClientMessage(playerid, COLOR_RED, 
 			"[!]: Your account is unprotected. Please setup your e-mail and security question & answer! (/account)");
@@ -661,7 +672,7 @@ SavePlayerData(playerid)
 		"UPDATE accounts SET lastlogin = '%e', lastloginstamp = '%d', lastip = '%e', forumname = '%e', \n\
 			lastupdatever = '%e', registered = '%d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
 			muted = '%d', respects = '%d', changenames = '%d', changetimes = '%d', \n\
-			mustread = '%d' WHERE sqlid = '%d'",
+			mustread = '%d', SAMPid = '%e' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pLastLogin],
 		PlayerInfo[playerid][pLastLoginTimestamp],
 		PlayerInfo[playerid][pIP],
@@ -676,6 +687,7 @@ SavePlayerData(playerid)
 		PlayerInfo[playerid][pChangenames],
 		PlayerInfo[playerid][pChangeTimes],
 		PlayerInfo[playerid][pMustRead],
+    PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pSQLID]
 	);
 

@@ -11,7 +11,7 @@ LoadPlayerAppearance(playerid)
                     player_appearance \n\
                 (sqlid, skin, walkstyle, accent, look) \n\
                 VALUES \n\
-                    ('%d', '21', '0', '', '')",
+                    ('%d', '29', '0', '', '')",
                 PlayerInfo[playerid][pSQLID]
             );
             return 1;

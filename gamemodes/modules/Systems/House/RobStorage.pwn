@@ -352,55 +352,6 @@ PlayerStopRob(playerid)
     return 1;
 }
 
-PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
-{
-    rob_combinations[playerid][0] = minrand(2, 98);
-    rob_combinations[playerid][1] = minrand(2, 98);
-    rob_combinations[playerid][2] = minrand(2, 98);
-
-    rob_counter[playerid][0] = 0;
-    rob_counter[playerid][1] = 0;
-    rob_counter[playerid][2] = 0;
-
-    // TODO: move rob_started to this module, make a static bool variable and make a getter/setter for it
-    rob_started[playerid] = true;
-    PlayerJob[playerid][pFreeWorks] -= 15;
-    TogglePlayerControllable(playerid, false);
-
-    
-    SendAdminMessage(COLOR_YELLOW, 
-        "AdmWarn: %s has just started storage rob, storage ID: %d.", 
-        GetName(playerid, false), 
-        storage_id
-   );
-
-    new 
-        buffer[35+5];
-    PlayerTextDrawSetString(playerid, srobTD[playerid][8], "~y~(COMBINATION):~w~_??_??_??");
-    format(buffer, sizeof(buffer), "~y~(time)~w~_%d_seconds_remain...", rob_timer);
-    PlayerTextDrawSetString(playerid, srobTD[playerid][13], buffer);
-
-    PlayerTextDrawHide(playerid, srobTD[playerid][6]);
-    PlayerTextDrawHide(playerid, srobTD[playerid][7]);
-
-    robs_timer[playerid] = repeat PlayerRobTimer(playerid, house_id);
-    return 1;
-}
-
-PlayStorageAlarm(playerid, bool: activated)
-{
-    if(activated)
-    {
-        PlayAudioStreamForPlayer(playerid, "http://k007.kiwi6.com/hotlink/0zdonr7uhx/house_alarm.mp3");
-    }
-    else
-    {
-        StopAudioStreamForPlayer(playerid);
-    }
-    return 1;
-}
-
-
 /*
     ######## #### ##     ## ######## ########   ######  
        ##     ##  ###   ### ##       ##     ## ##    ## 
@@ -449,6 +400,53 @@ timer PlayerRobTimer[1000](playerid, house_id)
     return 1;
 }
 
+PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
+{
+    rob_combinations[playerid][0] = minrand(2, 98);
+    rob_combinations[playerid][1] = minrand(2, 98);
+    rob_combinations[playerid][2] = minrand(2, 98);
+
+    rob_counter[playerid][0] = 0;
+    rob_counter[playerid][1] = 0;
+    rob_counter[playerid][2] = 0;
+
+    // TODO: move rob_started to this module, make a static bool variable and make a getter/setter for it
+    rob_started[playerid] = true;
+    PlayerJob[playerid][pFreeWorks] -= 15;
+    TogglePlayerControllable(playerid, false);
+
+    
+    SendAdminMessage(COLOR_YELLOW, 
+        "AdmWarn: %s has just started storage rob, storage ID: %d.", 
+        GetName(playerid, false), 
+        storage_id
+   );
+
+    new 
+        buffer[35+5];
+    PlayerTextDrawSetString(playerid, srobTD[playerid][8], "~y~(COMBINATION):~w~_??_??_??");
+    format(buffer, sizeof(buffer), "~y~(time)~w~_%d_seconds_remain...", rob_timer);
+    PlayerTextDrawSetString(playerid, srobTD[playerid][13], buffer);
+
+    PlayerTextDrawHide(playerid, srobTD[playerid][6]);
+    PlayerTextDrawHide(playerid, srobTD[playerid][7]);
+
+    robs_timer[playerid] = repeat PlayerRobTimer(playerid, house_id);
+    return 1;
+}
+
+PlayStorageAlarm(playerid, bool: activated)
+{
+    if(activated)
+    {
+        PlayAudioStreamForPlayer(playerid, "http://k007.kiwi6.com/hotlink/0zdonr7uhx/house_alarm.mp3");
+    }
+    else
+    {
+        StopAudioStreamForPlayer(playerid);
+    }
+    return 1;
+}
 
 /*
     ##     ##  #######   #######  ##    ##  ######

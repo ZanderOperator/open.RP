@@ -1123,10 +1123,12 @@ CMD:bank(playerid, params[])
 			rest = 250 - CreditInfo[playerid][cRate];
 		va_SendMessage(playerid, 
 			MESSAGE_TYPE_INFO, 
-			"[BANK]: You have %d(%d in debt/owed) rates of credit(Total %d) to pay off credit.~n~Credit amount: %s.", 
+			"[BANK]: You have %d(%d in debt/owed) rates of credit(1 rate = %s) to pay off credit.~n~Credit amount: %s. Amount left to pay: %s!", 
 			rest, 
 			CreditInfo[playerid][cUnpaid], 
-			FormatNumber(CreditInfo[playerid][cAmount])
+      FormatNumber((CreditInfo[playerid][cAmount] / 250)),
+			FormatNumber(CreditInfo[playerid][cAmount]),
+      FormatNumber(((CreditInfo[playerid][cAmount] / 250) * rest))
 		);
 		return 1;
 	}

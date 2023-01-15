@@ -480,8 +480,8 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 				
 			PlayerWeapons[playerid][pwWeaponId][i] 	= 0;
 			PlayerWeapons[playerid][pwAmmo][i] 		= 0;
-			new next;
-			Iter_SafeRemove(P_Weapons[playerid], i, next);
+			
+			Iter_Remove(P_Weapons[playerid], i);
 		}
 		else 
 		{

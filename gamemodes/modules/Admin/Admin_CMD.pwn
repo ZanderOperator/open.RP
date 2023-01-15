@@ -2190,6 +2190,18 @@ CMD:rac(playerid, params[])
 	return 1;
 }
 
+timer TimeoutPlayer[2000](playerid)
+{
+	new
+		string[44];
+
+	format(string, sizeof(string), "unbanip %s", ReturnPlayerIP(playerid));
+ 	SendRconCommand(string);
+	
+	SendRconCommand("reloadbans");
+ 	return 1;
+}
+
 CMD:timeout(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337)
@@ -2210,18 +2222,6 @@ CMD:timeout(playerid, params[])
 	//BlockIpAdress(
 	
 	return 1;
-}
-
-timer TimeoutPlayer[2000](playerid)
-{
-	new
-		string[44];
-
-	format(string, sizeof(string), "unbanip %s", ReturnPlayerIP(playerid));
- 	SendRconCommand(string);
-	
-	SendRconCommand("reloadbans");
- 	return 1;
 }
 
 CMD:sethp(playerid, params[])

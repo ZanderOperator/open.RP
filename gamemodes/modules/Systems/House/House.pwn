@@ -148,6 +148,82 @@ static
     PlayerText:FootKickingText  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};   
 
 /*
+    ######## #### ##     ## ######## ########   ######
+       ##     ##  ###   ### ##       ##     ## ##    ##
+       ##     ##  #### #### ##       ##     ## ##
+       ##     ##  ## ### ## ######   ########   ######
+       ##     ##  ##     ## ##       ##   ##         ##
+       ##     ##  ##     ## ##       ##    ##  ##    ##
+       ##    #### ##     ## ######## ##     ##  ######
+*/
+
+timer PickLockTimerFunction[800](playerid)
+{
+    if(!PickingLock[playerid])
+        stop PlayerPickLockTimer[playerid];
+
+    new slot = PickLockSlot[playerid];
+    if(GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) < 0.0) return 1;
+    if(GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) >= PickLockMaxValue[playerid][slot]) return 1;
+
+    SetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot], GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) - 0.15);
+
+    new result = floatround(PickLockMaxValue[playerid][slot] - GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]));
+    UpdatePickLockTD(playerid, slot, result);
+    return 1;
+}
+
+timer ClosedPlayerTimer[2000](playerid)
+{
+    ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINSURE, DIALOG_STYLE_MSGBOX, "ODABIR SKINA", "Zelite li obuci ovaj skin?", "Pick", "Abort");
+    return 1;
+}
+
+timer PicklockTime[1000](playerid, houseid)
+{
+    new string[10];
+    valstr(string, PickLockTimeC[playerid] - 1, false);
+    PlayerTextDrawSetString(playerid, PickLockTime[playerid], string);
+
+    if(--PickLockTimeC[playerid] == 0)
+    {
+        ResetLockPickVars(playerid);
+
+        // Setting of HouseAlarmOff was never implemented
+        /*
+        if(!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
+        {
+            PlayHouseAlarm(houseid);
+        }*/
+        PlayHouseAlarm(houseid);
+    }
+}
+
+timer DestroyGlobalZone[480000](houseid)
+{
+    foreach(new i : Player)
+    {
+        if(PlayerKeys[i][pHouseKey] == houseid || IsACop(i))
+        {
+            GangZoneDestroy(HouseAlarmZone[houseid]);
+            HouseAlarmZone[houseid] = -1;
+            break;
+        }
+    }
+    return 1;
+}
+
+timer DestroyGlobalMapIcon[480000]()
+{
+    foreach(new i : Player)
+    {
+        if(IsValidDynamicMapIcon(GlobalMapIcon[i]))
+            DestroyDynamicMapIcon(GlobalMapIcon[i]);
+    }
+    return 1;
+}
+
+/*
     ######## ##     ## ##    ##  ######   ######  
     ##       ##     ## ###   ## ##    ## ##    ## 
     ##       ##     ## ####  ## ##       ##       
@@ -1253,84 +1329,6 @@ stock CancelCrowbarBreaking(playerid)
     TogglePlayerControllable(playerid, true);
     Player_SetRammingDoor(playerid, DOOR_RAM_NONE);
 }
-
-
-/*
-    ######## #### ##     ## ######## ########   ######
-       ##     ##  ###   ### ##       ##     ## ##    ##
-       ##     ##  #### #### ##       ##     ## ##
-       ##     ##  ## ### ## ######   ########   ######
-       ##     ##  ##     ## ##       ##   ##         ##
-       ##     ##  ##     ## ##       ##    ##  ##    ##
-       ##    #### ##     ## ######## ##     ##  ######
-*/
-
-timer PickLockTimerFunction[800](playerid)
-{
-    if(!PickingLock[playerid])
-        stop PlayerPickLockTimer[playerid];
-
-    new slot = PickLockSlot[playerid];
-    if(GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) < 0.0) return 1;
-    if(GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) >= PickLockMaxValue[playerid][slot]) return 1;
-
-    SetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot], GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) - 0.15);
-
-    new result = floatround(PickLockMaxValue[playerid][slot] - GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]));
-    UpdatePickLockTD(playerid, slot, result);
-    return 1;
-}
-
-timer ClosedPlayerTimer[2000](playerid)
-{
-    ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINSURE, DIALOG_STYLE_MSGBOX, "ODABIR SKINA", "Zelite li obuci ovaj skin?", "Pick", "Abort");
-    return 1;
-}
-
-timer PicklockTime[1000](playerid, houseid)
-{
-    new string[10];
-    valstr(string, PickLockTimeC[playerid] - 1, false);
-    PlayerTextDrawSetString(playerid, PickLockTime[playerid], string);
-
-    if(--PickLockTimeC[playerid] == 0)
-    {
-        ResetLockPickVars(playerid);
-
-        // Setting of HouseAlarmOff was never implemented
-        /*
-        if(!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
-        {
-            PlayHouseAlarm(houseid);
-        }*/
-        PlayHouseAlarm(houseid);
-    }
-}
-
-timer DestroyGlobalZone[480000](houseid)
-{
-    foreach(new i : Player)
-    {
-        if(PlayerKeys[i][pHouseKey] == houseid || IsACop(i))
-        {
-            GangZoneDestroy(HouseAlarmZone[houseid]);
-            HouseAlarmZone[houseid] = -1;
-            break;
-        }
-    }
-    return 1;
-}
-
-timer DestroyGlobalMapIcon[480000]()
-{
-    foreach(new i : Player)
-    {
-        if(IsValidDynamicMapIcon(GlobalMapIcon[i]))
-            DestroyDynamicMapIcon(GlobalMapIcon[i]);
-    }
-    return 1;
-}
-
 
 /*
     ##     ##  #######   #######  ##    ##  ######

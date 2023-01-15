@@ -11,7 +11,7 @@
 
 #include <YSI_Coding\y_hooks>
 
-#define GARAGE_PARAMETER_SIZE               (7.5)
+#define GARAGE_PARAMETER_SIZE               (5.5)
 
 /*
     ##     ##    ###    ########   ######
@@ -121,11 +121,12 @@ static CreateGarageEnter(g_id)
 {
     if(IsValidDynamicPickup(GarageInfo[g_id][gEnterPck]))
         DestroyDynamicPickup(GarageInfo[g_id][gEnterPck]);
-    GarageInfo[g_id][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GarageInfo[g_id][gEnterZ], -1, -1, -1, 100.0);
+    GarageInfo[g_id][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GarageInfo[g_id][gEnterZ], 0, 0, -1, 100.0);
 
     if(IsValidDynamicArea(GarageInfo[g_id][gAreaID]))
         DestroyDynamicArea(GarageInfo[g_id][gAreaID]);
-    GarageInfo[g_id][gAreaID] = CreateDynamicCircle(GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GARAGE_PARAMETER_SIZE);
+    //GarageInfo[g_id][gAreaID] = CreateDynamicCircle(GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GARAGE_PARAMETER_SIZE);
+    GarageInfo[g_id][gAreaID] = CreateDynamicSphere(GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GarageInfo[g_id][gEnterZ], GARAGE_PARAMETER_SIZE, 0, 0);
     return 1;
 }
 
@@ -555,6 +556,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 {
     new 
         garage = Area_GetGarageID(areaid);
+
     if(!Iter_Contains(Garage, garage))
         return 1;
 

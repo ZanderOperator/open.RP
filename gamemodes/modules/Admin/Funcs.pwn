@@ -64,6 +64,64 @@ forward Fly(playerid);								// timer
 forward bool:StopFly(playerid);						// stop flying
 
 /*
+	######## #### ##     ## ######## ########   ######  
+	   ##     ##  ###   ### ##       ##     ## ##    ## 
+	   ##     ##  #### #### ##       ##     ## ##       
+	   ##     ##  ## ### ## ######   ########   ######  
+	   ##     ##  ##     ## ##       ##   ##         ## 
+	   ##     ##  ##     ## ##       ##    ##  ##    ## 
+	   ##    #### ##     ## ######## ##     ##  ######  
+*/
+
+timer OnAdminCountDown[1000]()
+{
+	CountSeconds_Set(CountSeconds_Get() - 1);
+	va_GameTextForAll("~w~%d", 1000, 4, CountSeconds_Get());
+	
+	foreach(new playerid : Player) 
+	{
+		PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
+	}
+	if(!CountSeconds_Get()) 
+	{
+		count_started = false;
+		GameTextForAll("~g~GO GO GO", 2500, 4);
+		foreach(new playerid : Player) 
+		{
+			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
+		}
+		stop CountingTimer;
+		return 1;
+	}
+	return 1;
+}
+
+timer OnPlayerReconing[1000](playerid, targetid)
+{
+	if(SpectateID[playerid] == PLAYER_SPECTATE_VEH) 
+	{
+		if(!IsPlayerInAnyVehicle(targetid)) 
+		{
+			SetPlayerInterior(playerid, GetPlayerInterior(targetid));
+			SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(targetid));
+			PlayerSpectatePlayer(playerid, targetid);
+			SpectateID[playerid] = PLAYER_SPECTATE_PLAYER;
+		}
+	}
+	else if(SpectateID[playerid] == PLAYER_SPECTATE_PLAYER) 
+	{		
+		if(GetPlayerInterior(playerid) != GetPlayerInterior(targetid)) 
+		{
+			SetPlayerInterior(playerid		, GetPlayerInterior(targetid));
+			SetPlayerVirtualWorld(playerid	, GetPlayerVirtualWorld(targetid));
+			PlayerSpectatePlayer(playerid, targetid);
+		}
+	}
+	UpdateTargetReconData(playerid, targetid);
+	return 1;
+}
+
+/*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	##          ##    ##     ## ##       ##  ##   ##       
@@ -958,64 +1016,6 @@ stock static UpdateTargetReconData(playerid, targetid)
 		ReconingVehicle[playerid] = GetPlayerVehicleID(targetid);
 	}
 	ReconingPlayer[playerid] = targetid;
-	return 1;
-}
-
-/*
-	######## #### ##     ## ######## ########   ######  
-	   ##     ##  ###   ### ##       ##     ## ##    ## 
-	   ##     ##  #### #### ##       ##     ## ##       
-	   ##     ##  ## ### ## ######   ########   ######  
-	   ##     ##  ##     ## ##       ##   ##         ## 
-	   ##     ##  ##     ## ##       ##    ##  ##    ## 
-	   ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer OnAdminCountDown[1000]()
-{
-	CountSeconds_Set(CountSeconds_Get() - 1);
-	va_GameTextForAll("~w~%d", 1000, 4, CountSeconds_Get());
-	
-	foreach(new playerid : Player) 
-	{
-		PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
-	}
-	if(!CountSeconds_Get()) 
-	{
-		count_started = false;
-		GameTextForAll("~g~GO GO GO", 2500, 4);
-		foreach(new playerid : Player) 
-		{
-			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-		}
-		stop CountingTimer;
-		return 1;
-	}
-	return 1;
-}
-
-timer OnPlayerReconing[1000](playerid, targetid)
-{
-	if(SpectateID[playerid] == PLAYER_SPECTATE_VEH) 
-	{
-		if(!IsPlayerInAnyVehicle(targetid)) 
-		{
-			SetPlayerInterior(playerid, GetPlayerInterior(targetid));
-			SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(targetid));
-			PlayerSpectatePlayer(playerid, targetid);
-			SpectateID[playerid] = PLAYER_SPECTATE_PLAYER;
-		}
-	}
-	else if(SpectateID[playerid] == PLAYER_SPECTATE_PLAYER) 
-	{		
-		if(GetPlayerInterior(playerid) != GetPlayerInterior(targetid)) 
-		{
-			SetPlayerInterior(playerid		, GetPlayerInterior(targetid));
-			SetPlayerVirtualWorld(playerid	, GetPlayerVirtualWorld(targetid));
-			PlayerSpectatePlayer(playerid, targetid);
-		}
-	}
-	UpdateTargetReconData(playerid, targetid);
 	return 1;
 }
 

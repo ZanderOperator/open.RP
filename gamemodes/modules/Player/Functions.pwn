@@ -64,6 +64,153 @@ new
     PlayerFPSUnix[MAX_PLAYERS];
 
 
+/*
+	######## #### ##     ## ######## ########   ######  
+	   ##     ##  ###   ### ##       ##     ## ##    ## 
+	   ##     ##  #### #### ##       ##     ## ##       
+	   ##     ##  ## ### ## ######   ########   ######  
+	   ##     ##  ##     ## ##       ##   ##         ## 
+	   ##     ##  ##     ## ##       ##    ##  ##    ## 
+	   ##    #### ##     ## ######## ##     ##  ######  
+*/
+
+timer KickTimer[50](playerid)
+{
+	Kick(playerid);
+	return 1;
+}
+
+timer BanTimer[50](playerid)
+{
+	Kick(playerid);
+	return 1;
+}
+
+timer StopPlayerTrackSound[5000](playerid)
+{
+	PlayerPlaySound(playerid, 1069, 0.0, 0.0, 0.0);
+}
+
+timer InstantStreamerUpdate[4000](playerid)
+{
+	Streamer_ToggleIdleUpdate(playerid, 0);
+	TogglePlayerControllable(playerid, 1);
+}
+
+CallInstantStreamerUpdate(playerid) // Creating a function to call the timer cause the 'Vehicles.pwn' script loads a long time before 'Functions.pwn' and throws reparse warnings..
+  defer InstantStreamerUpdate(playerid);
+
+
+PlayerMinuteTask(playerid)
+{
+	PlayerTick[playerid][ptMainTimer] = gettimestamp() + 60;
+	
+	if((CreditInfo[playerid][cCreditType] == 5 || CreditInfo[playerid][cCreditType] == 6 || CreditInfo[playerid][cCreditType] == 7) && !CreditInfo[playerid][cUsed] && gettimestamp() >= CreditInfo[playerid][cTimestamp]) 
+	{
+		ResetCreditVars(playerid);
+		SavePlayerCredit(playerid);
+		SendClientMessage(playerid, COLOR_YELLOW, "[SMS]: Automatski vam je ponisten namjenski kredit radi neobavljanja kupovne obveze.");
+	}
+	PaydayInfo[playerid][pPayDay] += 1;
+	if(PaydayInfo[playerid][pPayDay] >= 60)
+		GivePlayerPayCheck(playerid);
+		
+	if(PlayerJail[playerid][pJailTime] > 0)
+		PlayerJail[playerid][pJailTime] -= 1;
+	else if(PlayerJail[playerid][pJailTime] == 0)
+	{
+		if(PlayerJail[playerid][pJailed] == 1)
+		{
+			SetPlayerPosEx(playerid, 90.6552, -236.3789, 1.5781, 0, 0, false);
+			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
+			SetPlayerColor(playerid, COLOR_PLAYER);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
+		}
+		else if(PlayerJail[playerid][pJailed] == 2)
+		{
+			SetPlayerPosEx(playerid, 1482.7426, -1740.1372, 13.7500, 0, 0, false);
+			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
+			SetPlayerColor(playerid, COLOR_PLAYER);
+			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Pusten si iz Fort DeMorgana, pripazi na ponasanje i server pravila!");
+		}
+		else if(PlayerJail[playerid][pJailed] == 3)
+		{
+			SetPlayerPosEx(playerid, 636.7744,-601.3240,16.3359, 0, 0, false);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
+		}
+		else if(PlayerJail[playerid][pJailed] == 5) // Treatment
+		{
+			TogglePlayerControllable(playerid, 1);
+			ClearAnim(playerid);
+			SetPlayerPosEx(playerid, 1185.4681,-1323.8542,13.5720, 0, 0, false);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zavrsilo je vase lijecenje, otpusteni ste iz bolnice!");
+		}
+		PlayerJail[playerid][pJailed] = 0;
+		PlayerJail[playerid][pJailTime] = 0;
+	}
+	else if(PlayerJail[playerid][pJailTime] < 0)
+		PlayerJail[playerid][pJailTime] = 0;
+		
+		
+	if(PlayerDrugStatus[playerid][pDrugUsed] != 0)
+	{
+		if(-- PlayerDrugStatus[playerid][pDrugSeconds] <= 0)
+		{
+			PlayerDrugStatus[playerid][pDrugSeconds] = 0;
+			PlayerDrugStatus[playerid][pDrugUsed] = 0;
+		}
+	}
+	if(PlayerDrugStatus[playerid][pDrugOrder] > 0)
+	{
+		-- PlayerDrugStatus[playerid][pDrugOrder];
+	}
+	
+	HungerCheck(playerid);
+	AFKCheck(playerid);
+	AC_SavePlayerWeapons(playerid);
+	return 1;	
+}
+
+timer PlayerGlobalTask[1000](playerid)
+{
+	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) 
+		return 1;
+	
+	if(gettimestamp() >= PlayerTick[playerid][ptMainTimer])
+		PlayerMinuteTask(playerid);	
+	
+	new tmphour,tmpmins,tmpsecs;
+	GetServerTime(tmphour,tmpmins,tmpsecs);
+	SetPlayerTime(playerid,tmphour,tmpmins);
+	
+	static
+		pcar = INVALID_VEHICLE_ID;
+	
+	if((pcar = GetPlayerVehicleID(playerid)) != INVALID_VEHICLE_ID && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+	{
+		static
+			Float:vhealth;
+
+		GetVehicleHealth(pcar, vhealth);
+		
+		if(vhealth < 250.0)
+		{
+			AC_SetVehicleHealth(pcar, 260.0);
+			CallLocalFunction("OnPlayerCrashVehicle", "idf", playerid, pcar, 0.0);
+			
+			new
+				engine, lights, alarm, doors, bonnet, boot, objective;
+			
+			GetVehicleParamsEx(pcar, engine, lights, alarm, doors, bonnet, boot, objective);
+			SetVehicleParamsEx(pcar, 0, lights, alarm, doors, bonnet, boot, objective);
+			
+			VehicleInfo[pcar][vEngineRunning] = false;
+		}
+	}	
+	return 1;
+}
+
+
 	
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -307,148 +454,6 @@ ConvertSQLIDToName(id)
 		cache_delete(result);
 	}
 	return nick;
-}
-
-/*
-	######## #### ##     ## ######## ########   ######  
-	   ##     ##  ###   ### ##       ##     ## ##    ## 
-	   ##     ##  #### #### ##       ##     ## ##       
-	   ##     ##  ## ### ## ######   ########   ######  
-	   ##     ##  ##     ## ##       ##   ##         ## 
-	   ##     ##  ##     ## ##       ##    ##  ##    ## 
-	   ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer KickTimer[50](playerid)
-{
-	Kick(playerid);
-	return 1;
-}
-
-timer BanTimer[50](playerid)
-{
-	Kick(playerid);
-	return 1;
-}
-
-timer StopPlayerTrackSound[5000](playerid)
-{
-	PlayerPlaySound(playerid, 1069, 0.0, 0.0, 0.0);
-}
-
-timer InstantStreamerUpdate[4000](playerid)
-{
-	Streamer_ToggleIdleUpdate(playerid, 0);
-	TogglePlayerControllable(playerid, 1);
-}
-
-PlayerMinuteTask(playerid)
-{
-	PlayerTick[playerid][ptMainTimer] = gettimestamp() + 60;
-	
-	if((CreditInfo[playerid][cCreditType] == 5 || CreditInfo[playerid][cCreditType] == 6 || CreditInfo[playerid][cCreditType] == 7) && !CreditInfo[playerid][cUsed] && gettimestamp() >= CreditInfo[playerid][cTimestamp]) 
-	{
-		ResetCreditVars(playerid);
-		SavePlayerCredit(playerid);
-		SendClientMessage(playerid, COLOR_YELLOW, "[SMS]: Automatski vam je ponisten namjenski kredit radi neobavljanja kupovne obveze.");
-	}
-	PaydayInfo[playerid][pPayDay] += 1;
-	if(PaydayInfo[playerid][pPayDay] >= 60)
-		GivePlayerPayCheck(playerid);
-		
-	if(PlayerJail[playerid][pJailTime] > 0)
-		PlayerJail[playerid][pJailTime] -= 1;
-	else if(PlayerJail[playerid][pJailTime] == 0)
-	{
-		if(PlayerJail[playerid][pJailed] == 1)
-		{
-			SetPlayerPosEx(playerid, 90.6552, -236.3789, 1.5781, 0, 0, false);
-			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
-			SetPlayerColor(playerid, COLOR_PLAYER);
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
-		}
-		else if(PlayerJail[playerid][pJailed] == 2)
-		{
-			SetPlayerPosEx(playerid, 1482.7426, -1740.1372, 13.7500, 0, 0, false);
-			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
-			SetPlayerColor(playerid, COLOR_PLAYER);
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Pusten si iz Fort DeMorgana, pripazi na ponasanje i server pravila!");
-		}
-		else if(PlayerJail[playerid][pJailed] == 3)
-		{
-			SetPlayerPosEx(playerid, 636.7744,-601.3240,16.3359, 0, 0, false);
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
-		}
-		else if(PlayerJail[playerid][pJailed] == 5) // Treatment
-		{
-			TogglePlayerControllable(playerid, 1);
-			ClearAnim(playerid);
-			SetPlayerPosEx(playerid, 1185.4681,-1323.8542,13.5720, 0, 0, false);
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zavrsilo je vase lijecenje, otpusteni ste iz bolnice!");
-		}
-		PlayerJail[playerid][pJailed] = 0;
-		PlayerJail[playerid][pJailTime] = 0;
-	}
-	else if(PlayerJail[playerid][pJailTime] < 0)
-		PlayerJail[playerid][pJailTime] = 0;
-		
-		
-	if(PlayerDrugStatus[playerid][pDrugUsed] != 0)
-	{
-		if(-- PlayerDrugStatus[playerid][pDrugSeconds] <= 0)
-		{
-			PlayerDrugStatus[playerid][pDrugSeconds] = 0;
-			PlayerDrugStatus[playerid][pDrugUsed] = 0;
-		}
-	}
-	if(PlayerDrugStatus[playerid][pDrugOrder] > 0)
-	{
-		-- PlayerDrugStatus[playerid][pDrugOrder];
-	}
-	
-	HungerCheck(playerid);
-	AFKCheck(playerid);
-	AC_SavePlayerWeapons(playerid);
-	return 1;	
-}
-
-timer PlayerGlobalTask[1000](playerid)
-{
-	if(!Player_SafeSpawned(playerid) || !IsPlayerConnected(playerid)) 
-		return 1;
-	
-	if(gettimestamp() >= PlayerTick[playerid][ptMainTimer])
-		PlayerMinuteTask(playerid);	
-	
-	new tmphour,tmpmins,tmpsecs;
-	GetServerTime(tmphour,tmpmins,tmpsecs);
-	SetPlayerTime(playerid,tmphour,tmpmins);
-	
-	static
-		pcar = INVALID_VEHICLE_ID;
-	
-	if((pcar = GetPlayerVehicleID(playerid)) != INVALID_VEHICLE_ID && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-	{
-		static
-			Float:vhealth;
-
-		GetVehicleHealth(pcar, vhealth);
-		
-		if(vhealth < 250.0)
-		{
-			AC_SetVehicleHealth(pcar, 260.0);
-			CallLocalFunction("OnPlayerCrashVehicle", "idf", playerid, pcar, 0.0);
-			
-			new
-				engine, lights, alarm, doors, bonnet, boot, objective;
-			
-			GetVehicleParamsEx(pcar, engine, lights, alarm, doors, bonnet, boot, objective);
-			SetVehicleParamsEx(pcar, 0, lights, alarm, doors, bonnet, boot, objective);
-			
-			VehicleInfo[pcar][vEngineRunning] = false;
-		}
-	}	
-	return 1;
 }
 
 /*
